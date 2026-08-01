@@ -4,7 +4,7 @@ import Link from "next/link"
 import { PROJECTS } from "@/lib/project-data"
 import { ContactForm } from "./contact-form"
 
-const ACCENTS = ["var(--orange)", "var(--gold)", "var(--blue)", "var(--orange)"]
+const ACCENTS = ["var(--yellow)", "var(--green)", "var(--yellow)", "var(--green)"]
 
 export const PortfolioLayout = () => {
   return (

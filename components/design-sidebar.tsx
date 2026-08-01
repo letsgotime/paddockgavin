@@ -28,10 +28,7 @@ export const DesignSidebar = () => {
   return (
     <nav
       className="flex flex-col w-full h-full"
-      style={{
-        background: "var(--panel)",
-        borderRight: "1px solid var(--line)",
-      }}
+      style={{ background: "var(--panel)", borderRight: "1px solid var(--line)" }}
     >
       {/* 4-colour livery bar */}
       <div className="bars flex-shrink-0"><i /><i /><i /><i /></div>
@@ -42,7 +39,6 @@ export const DesignSidebar = () => {
       >
         {/* ── IDENTITY ── */}
         <div className="flex flex-col gap-8">
-          {/* Name + location */}
           <div>
             <p className="eyebrow mb-2">Agentic Engineering Studio</p>
             <h1
@@ -69,15 +65,15 @@ export const DesignSidebar = () => {
             </p>
           </div>
 
-          {/* CTAs — inline text links, not bricks */}
+          {/* CTAs — inline underline links */}
           <div className="flex items-center gap-6">
             <a
               href="#work"
               className="eyebrow"
               style={{
-                color: "var(--orange)",
+                color: "var(--yellow)",
                 letterSpacing: "0.22em",
-                borderBottom: "1px solid var(--orange)",
+                borderBottom: "1px solid var(--yellow)",
                 paddingBottom: 2,
                 transition: "opacity 0.18s",
               }}
@@ -92,7 +88,6 @@ export const DesignSidebar = () => {
 
         {/* ── ROTATING CREDENTIAL ── */}
         <div style={{ marginTop: "auto", paddingTop: 40 }}>
-          {/* Thin hairline */}
           <div style={{ height: 1, background: "var(--line)", marginBottom: 24 }} />
 
           <div
@@ -107,7 +102,7 @@ export const DesignSidebar = () => {
               className="font-display uppercase"
               style={{
                 fontSize: "clamp(26px, 3.2vw, 36px)",
-                color: "var(--orange)",
+                color: "var(--yellow)",
                 lineHeight: 1,
                 letterSpacing: "-0.02em",
               }}
@@ -122,7 +117,7 @@ export const DesignSidebar = () => {
             </p>
           </div>
 
-          {/* Dots */}
+          {/* Pip dots */}
           <div className="flex gap-1.5 mt-4">
             {CREDENTIALS.map((_, i) => (
               <button
@@ -132,7 +127,7 @@ export const DesignSidebar = () => {
                 style={{
                   width: i === idx ? 20 : 5,
                   height: 5,
-                  background: i === idx ? "var(--orange)" : "var(--line)",
+                  background: i === idx ? "var(--yellow)" : "var(--line)",
                   border: "none",
                   cursor: "pointer",
                   transition: "all 0.28s ease",
@@ -142,7 +137,7 @@ export const DesignSidebar = () => {
           </div>
         </div>
 
-        {/* ── BOTTOM WORDMARK ── */}
+        {/* ── TAGLINE ── */}
         <p
           className="eyebrow"
           style={{ marginTop: 28, color: "var(--line)", fontSize: 9 }}

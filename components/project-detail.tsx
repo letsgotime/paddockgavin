@@ -53,7 +53,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
           className="driver-plate transition-opacity hover:opacity-70"
           style={{ textDecoration: "none" }}
         >
-          <strong style={{ color: "#fff" }}>Gavin Paddock</strong>
+          <strong style={{ color: "#fff" }}>Gavin Brooks</strong>
           <span style={{ color: "var(--steel-deep)", margin: "0 6px" }}>·</span>
           Back
         </Link>
