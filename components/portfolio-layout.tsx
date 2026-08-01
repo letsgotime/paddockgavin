@@ -4,14 +4,7 @@ import Link from "next/link"
 import { PROJECTS } from "@/lib/project-data"
 import { ContactForm } from "./contact-form"
 
-// Accent colours cycle: yellow, green, blue, yellow, green
-const ACCENT_COLORS = [
-  "var(--yellow)",
-  "var(--green)",
-  "var(--blue)",
-  "var(--yellow)",
-  "var(--green)",
-]
+const ACCENTS = ["var(--orange)", "var(--gold)", "var(--blue)", "var(--orange)"]
 
 export const PortfolioLayout = () => {
   return (
@@ -20,147 +13,153 @@ export const PortfolioLayout = () => {
       className="flex-1 overflow-y-auto"
       style={{ background: "var(--navy)" }}
     >
-      {/* Section header */}
+      {/* ── INDEX HEADER — floats above the stack ── */}
       <div
-        className="px-8 pt-10 pb-6"
-        style={{ borderBottom: "1px solid var(--line)" }}
+        style={{
+          padding: "clamp(32px, 5vw, 56px) clamp(24px, 4vw, 48px) 0",
+          borderBottom: "1px solid var(--line)",
+          paddingBottom: "clamp(24px, 3vw, 36px)",
+        }}
       >
-        <div className="sector-tab sector-tab-yellow">
-          <i>The Garage</i>
-        </div>
+        <p className="eyebrow mb-4">Selected work</p>
         <h2
-          className="font-display uppercase text-white tracking-[-0.02em] leading-[1.02]"
-          style={{ fontSize: "clamp(24px, 3.6vw, 38px)", marginBottom: 0 }}
+          className="font-display uppercase text-white leading-[0.96] tracking-[-0.02em] text-balance"
+          style={{ fontSize: "clamp(28px, 4.5vw, 52px)" }}
         >
-          Cars, builds,{" "}
-          <span style={{ color: "var(--yellow)" }}>and software.</span>
+          The builds.
         </h2>
       </div>
 
-      {/* Grid: 2px gap — panels sit on a hairline */}
-      <div
-        style={{
-          display: "grid",
-          gap: 2,
-          background: "var(--line)",
-          border: "1px solid var(--line)",
-        }}
-      >
+      {/* ── PROJECT LIST — no borders, photography bleeds ── */}
+      <div>
         {PROJECTS.map((project, index) => (
           <Link
             key={project.id}
             href={`/work/${project.id}`}
-            className="group block relative overflow-hidden"
+            className="group block relative"
             style={{
-              background: "var(--panel)",
+              borderBottom: "1px solid var(--line)",
             }}
           >
-            {/* Left accent rule */}
+            {/* Full-bleed hero image */}
             <div
-              className="absolute left-0 top-0 bottom-0 w-[3px] z-10"
-              style={{ background: ACCENT_COLORS[index] }}
-            />
+              className="relative w-full overflow-hidden"
+              style={{ height: "clamp(240px, 42vw, 480px)" }}
+            >
+              <img
+                src={project.heroImage}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                style={{ display: "block" }}
+              />
 
-            <div className="flex gap-0" style={{ minHeight: 220 }}>
-              {/* Photo */}
+              {/* Dark scrim — bottom 60% — so text floats readable */}
               <div
-                className="relative overflow-hidden flex-shrink-0"
-                style={{ width: "42%", minWidth: 180 }}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(8,12,22,0.96) 0%, rgba(8,12,22,0.5) 45%, transparent 75%)",
+                }}
+              />
+
+              {/* Floating top-left: accent + tag */}
+              <div
+                className="absolute top-0 left-0 flex items-center gap-3"
+                style={{ padding: "clamp(14px, 2vw, 22px)" }}
               >
-                <img
-                  src={project.heroImage}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  style={{ display: "block" }}
-                />
-                {/* Notch fade overlay */}
                 <div
-                  className="absolute inset-0 pointer-events-none"
                   style={{
-                    background:
-                      "linear-gradient(90deg, transparent 70%, var(--panel) 100%)",
+                    width: 3,
+                    height: 16,
+                    background: ACCENTS[index],
+                    flexShrink: 0,
                   }}
                 />
-                {/* Caption bar */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 px-3 py-2"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(10,21,35,.94), transparent)",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 10,
-                    letterSpacing: "0.1em",
-                    color: "#DCE3EC",
-                  }}
+                <span
+                  className="eyebrow"
+                  style={{ color: "rgba(244,246,250,0.6)", fontSize: 9 }}
                 >
-                  {project.caption}
-                </div>
+                  {"tag" in project
+                    ? (project as any).tag
+                    : project.services.join(" · ")}
+                </span>
               </div>
 
-              {/* Content */}
+              {/* Floating top-right: year */}
               <div
-                className="flex flex-col justify-between flex-1 py-5 pr-5"
-                style={{ paddingLeft: "calc(3px + 20px)" }}
+                className="absolute top-0 right-0"
+                style={{ padding: "clamp(14px, 2vw, 22px)" }}
               >
-                <div>
-                  {/* Tag */}
+                <span
+                  className="eyebrow"
+                  style={{ color: "rgba(244,246,250,0.35)", fontSize: 9 }}
+                >
+                  {project.year}
+                </span>
+              </div>
+
+              {/* Ghost index numeral */}
+              <div
+                className="absolute bottom-0 right-0 pointer-events-none select-none"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(80px, 18vw, 180px)",
+                  color: "rgba(244,246,250,0.03)",
+                  lineHeight: 0.8,
+                  letterSpacing: "-0.04em",
+                  paddingRight: "clamp(12px, 2vw, 24px)",
+                }}
+                aria-hidden="true"
+              >
+                {String(index + 1).padStart(2, "0")}
+              </div>
+
+              {/* Floating bottom: title + excerpt */}
+              <div
+                className="absolute bottom-0 left-0 right-0"
+                style={{ padding: "clamp(20px, 3vw, 36px)" }}
+              >
+                <h3
+                  className="font-display uppercase text-white leading-[0.96] tracking-[-0.02em] text-balance"
+                  style={{
+                    fontSize: "clamp(20px, 3.2vw, 36px)",
+                    marginBottom: 10,
+                  }}
+                >
+                  {project.title}
+                </h3>
+                <p
+                  className="leading-snug"
+                  style={{
+                    color: "rgba(244,246,250,0.6)",
+                    fontSize: 13,
+                    maxWidth: "52ch",
+                  }}
+                >
+                  {project.overview.content.slice(0, 110)}
+                  {project.overview.content.length > 110 ? "…" : ""}
+                </p>
+
+                {/* View arrow — appears on hover */}
+                <div
+                  className="flex items-center gap-2 mt-3 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                  style={{ color: ACCENTS[index] }}
+                >
                   <span
-                    className="block font-sans font-bold uppercase tracking-[0.2em] mb-2"
-                    style={{
-                      fontSize: 11.5,
-                      color: ACCENT_COLORS[index],
-                    }}
+                    className="eyebrow"
+                    style={{ color: ACCENTS[index], fontSize: 9 }}
                   >
-                    {"tag" in project ? (project as any).tag : project.services.join(" · ")}
+                    View project
                   </span>
-
-                  {/* Title */}
-                  <h3
-                    className="font-display uppercase text-white tracking-[-0.02em] leading-[1.02] text-balance"
-                    style={{ fontSize: "clamp(16px, 2.2vw, 22px)", marginBottom: 8 }}
-                  >
-                    {project.title}
-                  </h3>
-
-                  {/* Overview excerpt */}
-                  <p
-                    className="leading-relaxed"
-                    style={{
-                      color: "#C4CBD6",
-                      fontSize: 14,
-                      maxWidth: "44ch",
-                    }}
-                  >
-                    {project.overview.content.slice(0, 120)}
-                    {project.overview.content.length > 120 ? "…" : ""}
-                  </p>
-                </div>
-
-                {/* Footer row */}
-                <div className="flex items-center justify-between mt-4">
-                  <div
-                    className="telemetry"
-                    style={{ fontSize: 10, border: "none", background: "transparent" }}
-                  >
-                    <span style={{ paddingLeft: 0 }}>
-                      {project.year}
-                    </span>
-                  </div>
-
-                  <span
-                    className="notch-btn inline-flex items-center gap-1.5 font-sans font-bold uppercase tracking-[0.04em] transition-all duration-300 opacity-0 group-hover:opacity-100"
-                    style={{
-                      fontSize: 11,
-                      padding: "7px 14px",
-                      background: "var(--yellow)",
-                      color: "#101010",
-                    }}
-                  >
-                    View
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                      <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="#101010" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
+                  <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+                    <path
+                      d="M1 5h12M9 1l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
@@ -168,25 +167,30 @@ export const PortfolioLayout = () => {
         ))}
       </div>
 
-      {/* Kerb stripe separator */}
-      <div className="kerb-green mt-px" />
+      {/* ── KERB STRIPE ── */}
+      <div className="kerb" style={{ marginTop: 0 }} />
 
-      {/* Contact section */}
-      <div className="px-8 py-14">
+      {/* ── CONTACT ── */}
+      <div style={{ padding: "clamp(48px, 7vw, 80px) clamp(24px, 4vw, 48px)" }}>
         <ContactForm />
       </div>
 
-      {/* Footer race number watermark */}
+      {/* ── FOOTER ── */}
       <div
-        className="w-full pb-12 flex justify-end px-8 items-center pointer-events-none"
+        style={{
+          borderTop: "1px solid var(--line)",
+          padding: "20px clamp(24px, 4vw, 48px)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <div
-          className="racenum select-none"
-          aria-hidden="true"
-          style={{ opacity: 0.18 }}
-        >
-          20
-        </div>
+        <p className="eyebrow" style={{ fontSize: 9 }}>
+          Paddock20™ · Nashville, TN
+        </p>
+        <p className="eyebrow" style={{ fontSize: 9, color: "var(--line)" }}>
+          Digest. Develop. Deliver.™
+        </p>
       </div>
     </div>
   )
