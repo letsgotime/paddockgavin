@@ -13,7 +13,8 @@
 export const PROJECTS = [
   {
     id: "lot-ops",
-    title: "duPont REGISTRY Lot Ops",
+    title: "DRX Lot Assistant™",
+    tag: "Live Operations · Software",
     year: "2024",
     services: ["Lot Operations", "Software"],
     stats: [
@@ -51,7 +52,8 @@ export const PROJECTS = [
   },
   {
     id: "supercariq",
-    title: "SupercarIQ",
+    title: "SupercarIQ™",
+    tag: "AI · Market Intel",
     year: "2024",
     services: ["Software", "AI"],
     caption: "See a car, know everything",
@@ -83,6 +85,7 @@ export const PROJECTS = [
   {
     id: "gloss-game",
     title: "The Gloss Game",
+    tag: "Detailing · Paint Correction",
     year: "2023",
     services: ["Detailing", "Paint Correction"],
     caption: "Gunther Werks 993 — four-frame correction sequence",
@@ -113,7 +116,8 @@ export const PROJECTS = [
   },
   {
     id: "tires-timepieces",
-    title: "Tires & Timepieces",
+    title: "Tires & Timepieces™",
+    tag: "Events · Experiential",
     year: "2023",
     services: ["Events", "Experiential"],
     caption: "$64M+ in display assets — one room, two days",

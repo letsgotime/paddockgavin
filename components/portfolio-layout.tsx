@@ -111,7 +111,7 @@ export const PortfolioLayout = () => {
                       color: ACCENT_COLORS[index],
                     }}
                   >
-                    {project.services.join(" · ")}
+                    {"tag" in project ? (project as any).tag : project.services.join(" · ")}
                   </span>
 
                   {/* Title */}

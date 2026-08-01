@@ -14,6 +14,7 @@ interface ProjectStat {
 interface ProjectData {
   id: string
   title: string
+  tag?: string
   year: string
   services: string[]
   stats?: ProjectStat[]
@@ -65,7 +66,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             color: "var(--steel-deep)",
           }}
         >
-          {project.services.join(" · ")}
+          {project.tag ?? project.services.join(" · ")}
         </span>
       </div>
 
@@ -78,7 +79,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
       >
         {/* Header */}
         <header className="mb-12" style={{ animation: "fadeInUp 0.55s ease-out both" }}>
-          <div className="sector-tab w-fit mb-4"><i>{project.services.join(" · ")}</i></div>
+          <div className="sector-tab w-fit mb-4"><i>{project.tag ?? project.services.join(" · ")}</i></div>
           <h1
             className="font-display uppercase text-white tracking-[-0.02em] leading-[1.02] text-balance"
             style={{ fontSize: "clamp(26px, 5vw, 46px)", marginBottom: 20 }}
