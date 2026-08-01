@@ -18,7 +18,7 @@ const AboutContent = () => (
     <div className="flex flex-col gap-6 p-8 md:p-10">
       {/* Driver plate */}
       <p className="driver-plate">
-        <strong style={{ color: "#fff" }}>Gavin Paddock</strong>
+        <strong style={{ color: "#fff" }}>Gavin Brooks</strong>
         <span style={{ color: "var(--steel-deep)", margin: "0 6px" }}>·</span>
         Nashville, TN
       </p>
@@ -99,24 +99,26 @@ export const AboutModal = () => {
   const TriggerButton = () => (
     <button
       onClick={() => setOpen(true)}
-      className="notch-btn inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.04em] w-full transition-all"
+      className="eyebrow"
       style={{
-        fontSize: 15,
-        padding: "15px 26px",
         background: "transparent",
-        color: "#fff",
-        border: "1px solid var(--line)",
+        border: "none",
+        color: "var(--steel)",
         cursor: "pointer",
+        letterSpacing: "0.22em",
+        borderBottom: "1px solid var(--line)",
+        paddingBottom: 2,
+        transition: "color 0.18s, border-color 0.18s",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
+        el.style.color = "var(--white)"
         el.style.borderColor = "var(--steel)"
-        el.style.background = "rgba(255,255,255,0.04)"
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
+        el.style.color = "var(--steel)"
         el.style.borderColor = "var(--line)"
-        el.style.background = "transparent"
       }}
     >
       About

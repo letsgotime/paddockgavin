@@ -51,7 +51,7 @@ export const DesignSidebar = () => {
             >
               Gavin
               <br />
-              Paddock
+              Brooks
             </h1>
             <p className="eyebrow mt-3" style={{ color: "var(--steel)" }}>
               Nashville, TN — Paddock20™
@@ -69,10 +69,22 @@ export const DesignSidebar = () => {
             </p>
           </div>
 
-          {/* CTAs */}
-          <div className="flex flex-col gap-2.5">
-            <a href="#work" className="btn-primary justify-center text-center" style={{ width: "100%" }}>
-              See the work
+          {/* CTAs — inline text links, not bricks */}
+          <div className="flex items-center gap-6">
+            <a
+              href="#work"
+              className="eyebrow"
+              style={{
+                color: "var(--orange)",
+                letterSpacing: "0.22em",
+                borderBottom: "1px solid var(--orange)",
+                paddingBottom: 2,
+                transition: "opacity 0.18s",
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = "0.7")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = "1")}
+            >
+              See the work ↓
             </a>
             <AboutModal />
           </div>
