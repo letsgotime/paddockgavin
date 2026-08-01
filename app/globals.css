@@ -4,38 +4,37 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* PaddockGavin — all colours are real automotive paints */
-  --yellow: #F8B800;        /* Porsche Signalgelb 114 / L114 */
-  --yellow-hi: #FFC81F;
-  --green: #00D2BE;         /* Mercedes-AMG Petronas F1 */
-  --green-hi: #3FE3D2;
-  --green-deep: #00302B;    /* type ON green */
-  --blue: #005185;          /* Ferrari Primary Blue — FILL ONLY */
-  --blue-pale: #CFE4F4;
-  --steel: #B4B6B2;         /* body copy on dark */
-  --steel-deep: #848482;    /* borders, captions */
-  --navy: #0E1A2A;          /* Asphalt Navy — the base */
-  --panel: #152538;
-  --deep: #0A1523;
-  --line: #27384F;
+  /* PaddockGavin — automotive palette */
+  --orange: #EF4A18;        /* IQ Orange — primary accent */
+  --orange-hi: #FF5C28;
+  --gold: #F2C94C;          /* TrackDay Yellow */
+  --gold-hi: #FFD966;
+  --blue: #57C7F5;          /* Speed Blue */
+  --steel: #8B93A7;         /* Signal Grey — body copy */
+  --steel-deep: #5A6275;    /* borders, captions */
+  --navy: #0A0E1A;          /* Paddock Navy — base */
+  --panel: #0F1525;         /* slightly lifted panel */
+  --surface: #141C2E;       /* card surface */
+  --line: #1E2A3E;          /* hairline borders */
+  --white: #F0F2F6;
 
-  /* Semantic aliases for Tailwind @theme */
+  /* Semantic tokens */
   --background: var(--navy);
-  --foreground: #E6EAF0;
-  --card: var(--panel);
-  --card-foreground: #E6EAF0;
+  --foreground: var(--white);
+  --card: var(--surface);
+  --card-foreground: var(--white);
   --border: var(--line);
-  --input: var(--panel);
-  --ring: var(--green);
+  --input: var(--surface);
+  --ring: var(--orange);
   --muted: var(--panel);
   --muted-foreground: var(--steel);
   --radius: 0px;
 }
 
 @theme inline {
-  --font-sans: "Archivo", "Arial", system-ui, sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --font-display: "Archivo Black", "Arial Black", Impact, system-ui, sans-serif;
+  --font-display: "Titillium Web", "Arial Narrow", Arial, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -47,19 +46,16 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
-  /* Brand tokens */
-  --color-yellow: var(--yellow);
-  --color-yellow-hi: var(--yellow-hi);
-  --color-green: var(--green);
-  --color-green-deep: var(--green-deep);
+  --color-orange: var(--orange);
+  --color-gold: var(--gold);
   --color-blue: var(--blue);
-  --color-blue-pale: var(--blue-pale);
   --color-steel: var(--steel);
   --color-steel-deep: var(--steel-deep);
   --color-navy: var(--navy);
   --color-panel: var(--panel);
-  --color-deep: var(--deep);
+  --color-surface: var(--surface);
   --color-line: var(--line);
+  --color-white: var(--white);
 }
 
 @layer base {
@@ -70,130 +66,114 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    font-size: 17px;
-    line-height: 1.62;
+    font-size: 15px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  a { color: inherit; text-decoration: none; }
 }
 
-/* ---- Livery utilities (used across all components) ---- */
-
-/* Four-colour garage-door bar */
-.bars {
+/* ── Livery stripe — one thin bar, not a whole band ── */
+.livery-bar {
   display: flex;
-  height: 5px;
-  width: 100%;
-}
-.bars i { flex: 1; }
-.bars i:nth-child(1) { background: var(--yellow); }
-.bars i:nth-child(2) { background: var(--green); }
-.bars i:nth-child(3) { background: var(--blue); }
-.bars i:nth-child(4) { background: var(--steel-deep); }
-
-/* Kerb stripe — rumble strip between sections */
-.kerb {
-  height: 9px;
-  background: repeating-linear-gradient(112deg, var(--yellow) 0 24px, var(--deep) 24px 48px);
-}
-.kerb-green {
-  height: 9px;
-  background: repeating-linear-gradient(112deg, var(--green) 0 24px, var(--deep) 24px 48px);
-}
-.kerb-blue {
-  height: 9px;
-  background: repeating-linear-gradient(112deg, var(--blue) 0 24px, var(--deep) 24px 48px);
-}
-
-/* Sector tab — skewed section label */
-.sector-tab {
-  display: inline-block;
-  transform: skewX(-12deg);
-  background: var(--green);
-  color: var(--green-deep);
-  padding: 7px 17px;
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin: 0 0 14px;
-}
-.sector-tab i {
-  display: inline-block;
-  transform: skewX(12deg);
-  font-style: normal;
-}
-.sector-tab-yellow {
-  background: var(--yellow);
-  color: #101010;
-}
-
-/* Driver plate */
-.driver-plate {
-  display: inline-flex;
-  align-items: center;
-  gap: 11px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--steel);
-}
-.driver-plate::before {
-  content: "";
-  width: 26px;
   height: 3px;
-  background: var(--green);
+  width: 100%;
   flex-shrink: 0;
 }
+.livery-bar i { flex: 1; }
+.livery-bar i:nth-child(1) { background: var(--orange); }
+.livery-bar i:nth-child(2) { background: var(--gold); }
+.livery-bar i:nth-child(3) { background: var(--blue); }
+.livery-bar i:nth-child(4) { background: var(--steel-deep); }
 
-/* Telemetry bar */
-.telemetry {
+/* ── Eyebrow label — mono, spaced, no box ── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--steel-deep);
+}
+
+/* ── Accent dot ── */
+.dot-orange { color: var(--orange); }
+.dot-gold   { color: var(--gold); }
+.dot-blue   { color: var(--blue); }
+
+/* ── Ghost button ── */
+.btn-ghost {
   display: inline-flex;
-  flex-wrap: wrap;
-  border: 1px solid var(--line);
-  background: #0C1929;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-mono);
   font-size: 10.5px;
-  letter-spacing: 0.15em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--steel);
+  border: 1px solid var(--line);
+  padding: 10px 18px;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  background: transparent;
 }
-.telemetry span {
-  padding: 9px 15px;
-  border-right: 1px solid var(--line);
+.btn-ghost:hover {
+  color: var(--white);
+  border-color: var(--steel-deep);
+}
+
+/* ── Primary button ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--orange);
+  border: 1px solid var(--orange);
+  padding: 11px 22px;
+  transition: background 0.2s, transform 0.15s;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: var(--orange-hi);
+  transform: translateY(-1px);
+}
+
+/* ── Fade-in animation ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Telemetry row — data list ── */
+.telemetry-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.telemetry-row dt {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--steel-deep);
-  white-space: nowrap;
+  margin-bottom: 3px;
 }
-.telemetry span:last-child { border-right: 0; }
-.telemetry b { color: var(--green); font-weight: 700; }
-
-/* Start lights */
-.lights { display: flex; gap: 10px; align-items: center; }
-.lights i {
-  width: 14px; height: 14px; border-radius: 50%;
-  background: #1B2C42; border: 1px solid #2C4159;
+.telemetry-row dd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin: 0;
 }
-.lights i.on {
-  background: var(--green); border-color: var(--green);
-  box-shadow: 0 0 12px rgba(0,210,190,.55);
-}
-
-/* Panel notch */
-.notch-panel {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
-}
-.notch-btn {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
-}
-.notch-fig {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-}
-
-/* Race number watermark */
-.racenum {
-  font-family: var(--font-display);
-  font-size: 110px;
-  line-height: 0.8;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255,255,255,0.16);
+.telemetry-cell {
+  padding: 12px 20px 12px 0;
+  margin-right: 28px;
 }
