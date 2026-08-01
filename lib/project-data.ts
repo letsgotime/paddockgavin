@@ -34,6 +34,7 @@ export const PROJECTS = [
       content:
         "$125M+ in monthly throughput running through a lot that one person is responsible for staging, moving, and keeping clean. That number is current. The retainer is active.",
     },
+    streamVideoId: "9f5630795b88f3613e8ecf7645297cf5",
     heroImage: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&h=900&fit=crop",
     galleryImages: [
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1200&h=900&fit=crop",
