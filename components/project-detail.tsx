@@ -1,9 +1,10 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { getNextProject } from "@/lib/project-data"
 import { ContactForm } from "./contact-form"
+import { CfImage } from "./cf-image"
+import { CfStreamPlayer } from "./cf-stream-player"
 
 interface ProjectData {
   id: string
@@ -18,14 +19,8 @@ interface ProjectData {
   outcome: { title: string; content: string }
   heroImage: string
   galleryImages: string[]
+  streamVideoId?: string
   nextProject: string
-}
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.55, ease: "easeOut" },
 }
 
 export function ProjectDetail({ project }: { project: ProjectData }) {
@@ -76,7 +71,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
         }}
       >
         {/* Header */}
-        <motion.header className="mb-12" {...fadeInUp}>
+        <header className="mb-12" style={{ animation: "fadeInUp 0.55s ease-out both" }}>
           <div className="sector-tab w-fit mb-4"><i>{project.services.join(" · ")}</i></div>
           <h1
             className="font-display uppercase text-white tracking-[-0.02em] leading-[1.02] text-balance"
@@ -99,17 +94,17 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
               </a>
             </span>
           </div>
-        </motion.header>
+        </header>
 
         {/* Hero image */}
-        <motion.figure
+        <figure
           className="notch-fig"
-          style={{ margin: "0 0 40px", position: "relative", border: "1px solid var(--line)" }}
-          {...fadeInUp}
+          style={{ margin: "0 0 40px", position: "relative", border: "1px solid var(--line)", animation: "fadeInUp 0.55s ease-out both" }}
         >
-          <img
+          <CfImage
             src={project.heroImage}
             alt={project.title}
+            variant="hero"
             className="w-full"
             style={{ display: "block", aspectRatio: "16/9", objectFit: "cover" }}
           />
@@ -129,10 +124,18 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
           >
             {project.caption}
           </figcaption>
-        </motion.figure>
+        </figure>
+
+        {/* Optional Stream video */}
+        {project.streamVideoId && (
+          <CfStreamPlayer
+            videoId={project.streamVideoId}
+            caption={`${project.title} — video`}
+          />
+        )}
 
         {/* Overview */}
-        <motion.div
+        <div
           className="notch-panel"
           style={{
             background: "var(--panel)",
@@ -141,7 +144,6 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             position: "relative",
             marginBottom: 4,
           }}
-          {...fadeInUp}
         >
           <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: "var(--yellow)" }} />
           <h2
@@ -153,25 +155,22 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
           <p style={{ color: "#C4CBD6", fontSize: 15, lineHeight: 1.65, margin: 0 }}>
             {project.overview.content}
           </p>
-        </motion.div>
+        </div>
 
         {/* Gallery */}
         <div
           style={{ display: "grid", gap: 2, background: "var(--line)", border: "1px solid var(--line)", margin: "2px 0" }}
         >
           {project.galleryImages.map((src, index) => (
-            <motion.figure
-              key={index}
-              style={{ margin: 0, position: "relative" }}
-              {...fadeInUp}
-            >
-              <img
+            <figure key={index} style={{ margin: 0, position: "relative" }}>
+              <CfImage
                 src={src}
                 alt={`${project.title} — frame ${index + 1}`}
+                variant="wall"
                 className="w-full"
                 style={{ display: "block", aspectRatio: "16/9", objectFit: "cover" }}
               />
-            </motion.figure>
+            </figure>
           ))}
         </div>
 
@@ -179,7 +178,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
         <div className="kerb my-1" />
 
         {/* Direction */}
-        <motion.div
+        <div
           className="notch-panel"
           style={{
             background: "var(--panel)",
@@ -188,7 +187,6 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             position: "relative",
             marginBottom: 4,
           }}
-          {...fadeInUp}
         >
           <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: "var(--green)" }} />
           <h2
@@ -200,10 +198,10 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
           <p style={{ color: "#C4CBD6", fontSize: 15, lineHeight: 1.65, margin: 0 }}>
             {project.direction.content}
           </p>
-        </motion.div>
+        </div>
 
         {/* Outcome */}
-        <motion.div
+        <div
           style={{
             background: "var(--blue)",
             border: "1px solid #0A6BAA",
@@ -212,7 +210,6 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%)",
             marginBottom: 40,
           }}
-          {...fadeInUp}
         >
           <h2
             className="font-display uppercase tracking-[0.1em]"
@@ -223,13 +220,10 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
           <p style={{ color: "var(--blue-pale)", fontSize: 15, lineHeight: 1.65, margin: 0 }}>
             {project.outcome.content}
           </p>
-        </motion.div>
+        </div>
 
         {/* Next project */}
-        <motion.div
-          className="flex justify-center mb-16"
-          {...fadeInUp}
-        >
+        <div className="flex justify-center mb-16">
           <Link
             href={`/work/${nextProject.id}`}
             className="notch-btn inline-flex items-center gap-3 font-sans font-bold uppercase tracking-[0.04em] transition-colors"
@@ -257,21 +251,18 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
               <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
-        </motion.div>
+        </div>
 
         <ContactForm />
 
         {/* Footer watermark */}
-        <motion.div
+        <div
           className="flex justify-end mt-16 mb-8 pointer-events-none"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
+          style={{ opacity: 0.14 }}
+          aria-hidden="true"
         >
-          <div className="racenum select-none" aria-hidden="true" style={{ opacity: 0.14 }}>
-            20
-          </div>
-        </motion.div>
+          <div className="racenum select-none">20</div>
+        </div>
       </div>
     </div>
   )

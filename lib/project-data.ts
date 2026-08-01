@@ -1,3 +1,15 @@
+/**
+ * CLOUDFLARE IMAGES: When you have a CF image ID ready, replace the Unsplash
+ * URL with just the UUID from the CF Images dashboard, e.g.:
+ *   heroImage: "abc123-uuid-from-cf-images-dashboard"
+ *
+ * CfImage detects whether the value is a URL or a bare ID automatically.
+ *
+ * CLOUDFLARE STREAM: Add streamVideoId to any project to show a Stream
+ * video player above the overview panel on that project's detail page.
+ * Example: streamVideoId: "abc123videouid"
+ */
+
 export const PROJECTS = [
   {
     id: "lot-ops",
