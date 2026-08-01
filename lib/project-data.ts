@@ -15,24 +15,30 @@ export const PROJECTS = [
     id: "lot-ops",
     title: "duPont REGISTRY Lot Ops",
     year: "2024",
-    services: ["Lot Operations", "Events"],
+    services: ["Lot Operations", "Software"],
+    stats: [
+      { label: "Base", value: "Nashville, TN" },
+      { label: "Mode", value: "Day · Night · Event" },
+      { label: "Throughput", value: "$125M+/mo" },
+      { label: "Status", value: "Active" },
+    ],
     caption: "The lot at sunrise — cars queued before the doors open",
     linkText: "dupontregistry.com",
     linkUrl: "https://www.dupontregistry.com",
     overview: {
       title: "The operation",
       content:
-        "70,000 square feet. Every car that moves — consignment arrivals, dealer trades, auction pulls, photo staging — comes through lot ops first. The job is spatial, logistical, and unforgiving. A Senna that was clean at 7am needs to still be clean at 4pm when the photographer shows up.",
+        "70,000 square feet. Every car that moves — consignment arrivals, dealer trades, auction pulls, photo staging — runs through a single ops system. The tool handles the spatial and logistical load so nothing falls through. A Senna that was clean at 7am is still clean at 4pm when the photographer shows up.",
     },
     direction: {
-      title: "The discipline",
+      title: "The tool",
       content:
-        "Available light. Phone camera. No filters. Detail shots over hero shots — a caliper, a badge, the floor. The one clean cutout in the library is a GT3 RS with a real alpha channel. 81 images, all WebP, all captioned.",
+        "Built to run three modes: Base (standard lot flow), Day (open hours, buyer traffic, live inventory), Night (post-close, transporter arrivals, next-day staging). Each mode surfaces a different task set. One system, three operating states.",
     },
     outcome: {
       title: "The result",
       content:
-        "$125M+ in monthly throughput running through a lot that one person is responsible for staging, moving, and keeping clean. That number is current. The retainer is active.",
+        "$125M+ in monthly throughput running through a lot that one ops system is responsible for staging, moving, and keeping clean. That number is current. The retainer is active.",
     },
     streamVideoId: "9f5630795b88f3613e8ecf7645297cf5",
     heroImage: "https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&h=900&fit=crop",

@@ -6,11 +6,17 @@ import { ContactForm } from "./contact-form"
 import { CfImage } from "./cf-image"
 import { CfStreamPlayer } from "./cf-stream-player"
 
+interface ProjectStat {
+  label: string
+  value: string
+}
+
 interface ProjectData {
   id: string
   title: string
   year: string
   services: string[]
+  stats?: ProjectStat[]
   caption: string
   linkText: string
   linkUrl: string
@@ -80,20 +86,83 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             {project.title}
           </h1>
 
-          <div className="telemetry">
-            <span>Year <b>{project.year}</b></span>
-            {project.services.map((s) => (
-              <span key={s}>{s}</span>
-            ))}
-            <span>
-              <a
-                href={project.linkUrl}
-                style={{ color: "var(--green)", textDecoration: "none", fontWeight: 700 }}
-              >
-                {project.linkText}
-              </a>
-            </span>
-          </div>
+          {project.stats ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                gap: 1,
+                background: "var(--line)",
+                border: "1px solid var(--line)",
+                marginTop: 20,
+              }}
+            >
+              {project.stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  style={{
+                    background: "var(--panel)",
+                    padding: "12px 16px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9.5,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase" as const,
+                      color: "var(--steel-deep)",
+                      marginBottom: 4,
+                    }}
+                  >
+                    {stat.label}
+                  </div>
+                  <div
+                    className="font-display uppercase"
+                    style={{ color: "var(--green)", fontSize: 13, letterSpacing: "0.06em", fontWeight: 700 }}
+                  >
+                    {stat.value}
+                  </div>
+                </div>
+              ))}
+              <div style={{ background: "var(--panel)", padding: "12px 16px" }}>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9.5,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase" as const,
+                    color: "var(--steel-deep)",
+                    marginBottom: 4,
+                  }}
+                >
+                  Link
+                </div>
+                <a
+                  href={project.linkUrl}
+                  className="font-display uppercase"
+                  style={{ color: "var(--green)", fontSize: 13, letterSpacing: "0.06em", fontWeight: 700, textDecoration: "none" }}
+                >
+                  {project.linkText}
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="telemetry">
+              <span>Year <b>{project.year}</b></span>
+              {project.services.map((s) => (
+                <span key={s}>{s}</span>
+              ))}
+              <span>
+                <a
+                  href={project.linkUrl}
+                  style={{ color: "var(--green)", textDecoration: "none", fontWeight: 700 }}
+                >
+                  {project.linkText}
+                </a>
+              </span>
+            </div>
+          )}
         </header>
 
         {/* Hero image */}
