@@ -349,7 +349,7 @@ export function SiteNav({ active = "home" }: Props) {
             style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", height: 5 }}
           >
             <i style={{ flex: 1, background: "#F8B800" }} />
-            <i style={{ flex: 1, background: "#00D2BE" }} />
+            <i style={{ flex: 1, background: logoAccent }} />
             <i style={{ flex: 1, background: "#005185" }} />
             <i style={{ flex: 1, background: "#848482" }} />
           </div>
