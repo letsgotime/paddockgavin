@@ -87,7 +87,7 @@ export default function CreatorDayPage() {
         style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
       >
         <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/speedway-row.webp" alt="" fill style={{ objectFit: "cover" }} />
+          <Image src="/images/cullinan-speedway.webp" alt="" fill style={{ objectFit: "cover" }} />
         </div>
         <div
           style={{
@@ -340,8 +340,8 @@ export default function CreatorDayPage() {
           }}
         >
           <Image
-            src="/images/gt3rs-lineup.jpg"
-            alt="Two GT3 RSs and a G-Wagen 4x4 squared at dusk"
+            src="/images/donuts-lot.webp"
+            alt="Cars lined up across the lot at the meet"
             fill
             style={{ objectFit: "cover" }}
           />

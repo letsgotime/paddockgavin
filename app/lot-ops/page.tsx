@@ -51,7 +51,7 @@ export default function LotOpsPage() {
       {/* Fixed background */}
       <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.18 }}>
-          <Image src="/images/gavin-work.webp" alt="" fill style={{ objectFit: "cover" }} priority />
+          <Image src="/images/gavin-gwagen.webp" alt="" fill style={{ objectFit: "cover" }} priority />
         </div>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(248,184,0,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
       </div>

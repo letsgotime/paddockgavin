@@ -40,7 +40,7 @@ const EVENTS = [
     when: "Golden hour to golden hour",
     entry: "Free",
     blurb: "Four to five installations with cars, and creators of every kind invited. Shoot, film, paint, create \u2014 post your best, duPont votes, winner takes the bundle and a full day with a duPont car.",
-    img: "/images/speedway-row-sq.webp",
+    img: "/images/cullinan-speedway-sq.webp",
     href: "/events/creator-day",
     cta: "The page",
     tone: "#F8B800",
@@ -193,7 +193,7 @@ export default function EventsPage() {
 
         {/* Creator Day feature card */}
         <section id="creator-day" style={{ position: "relative", background: "linear-gradient(150deg,rgba(248,184,0,.1),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(248,184,0,.3)", borderTop: "3px solid #F8B800", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", isolation: "isolate", padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
-          <Image src="/images/speedway-row.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }} />
+          <Image src="/images/cullinan-speedway.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(160deg,rgba(14,26,42,.97) 0%,rgba(14,26,42,.9) 52%,rgba(14,26,42,.64) 100%)" }} />
           <div style={{ flex: "6 1 320px", minWidth: 0, display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
@@ -224,9 +224,9 @@ export default function EventsPage() {
           <div style={{ flex: "4 1 240px", minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignContent: "center" }}>
             {[
               { src: "/images/creator-booth-alt.jpg", alt: "Shooting the Ford GT MkII in the studio", mt: 0 },
-              { src: "/images/gt3rs-floor-sq.webp",   alt: "996 GT3 RS Cup Conversion on the floor",  mt: 18 },
-              { src: "/images/senna-splitter-sq.webp",alt: "Senna splitter, up close",                mt: 0 },
-              { src: "/images/veyron-wing-sq.webp",   alt: "Veyron wing",                             mt: 18 },
+              { src: "/images/cage-rig-sq.webp",       alt: "Caged race build on the floor",           mt: 18 },
+              { src: "/images/aston-wheel-sq.webp",    alt: "Aston Martin wheel, up close",            mt: 0 },
+              { src: "/images/f458-side-sq.webp",      alt: "Ferrari 458 side profile",                mt: 18 },
             ].map((img, i) => (
               <div key={i} style={{ aspectRatio: "1", overflow: "hidden", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", position: "relative", marginTop: img.mt }}>
                 <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover" }} />
@@ -298,7 +298,7 @@ export default function EventsPage() {
 
         {/* Full bleed — urus on deck */}
         <section style={{ position: "relative", width: "100%", height: "clamp(340px,56vh,600px)", overflow: "hidden" }}>
-          <Image src="/images/urus-deck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
+          <Image src="/images/ferrari-upperdeck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,.12) 42%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 0 20px", display: "flex", alignItems: "center", gap: 11 }}>

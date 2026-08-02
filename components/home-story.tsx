@@ -31,7 +31,7 @@ export function HomeStory() {
         </div>
 
         <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", background: "rgba(21,37,56,.4)" }}>
-          <Image src="/images/gavin-work.webp" alt="Gavin on the lot" fill style={{ objectFit: "cover" }} loading="lazy" />
+          <Image src="/images/gavin-gwagen.webp" alt="Gavin on the lot" fill style={{ objectFit: "cover" }} loading="lazy" />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "28px 18px 16px", background: "linear-gradient(to top,rgba(10,21,35,.92),transparent)" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#8B93A7" }}>
               Lot Operations · duPont REGISTRY

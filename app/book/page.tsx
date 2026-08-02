@@ -52,7 +52,7 @@ const KINDS = [
     tone: "#B4B6B2",
     blurb: "Reach out on IG or LinkedIn, or put it in the form \u2014 it all lands with me.",
     hint: "Whatever it is",
-    img: "/images/gavin-work-sq.webp",
+    img: "/images/gavin-gwagen-sq.webp",
   },
 ]
 
