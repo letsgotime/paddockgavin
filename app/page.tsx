@@ -55,8 +55,8 @@ export default function HomePage() {
         <HomeStory />
       </Stage>
 
-      {/* ── BREAK ── 458 + 296 showroom lineup ─────── */}
-      <PhotoBreak src="/images/f458-wide.webp" pos="center 35%" />
+      {/* ── BREAK ── Green 993 on the transporter ──── */}
+      <PhotoBreak src="/images/g993-out.webp" pos="center 40%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
