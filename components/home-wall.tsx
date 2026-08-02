@@ -47,7 +47,7 @@ const SEED_CAPTIONS = [
   "Holy Trinity storage",
   "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
   "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
-  "Downpipe off, hunting for the cats",
+  "992 GT3 Catback Exhaust inspection, looking for cats lol",
   "918 and P1 nose to nose on the duPont lot",
   "918 Spyder with the Weissach red accents, tucked in the garage",
 ]
