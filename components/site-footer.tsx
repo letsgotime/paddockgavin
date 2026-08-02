@@ -115,7 +115,7 @@ export function SiteFooter() {
                 aria-hidden="true"
                 width={40}
                 height={40}
-                style={{ height: 40, width: 40, display: "block", flexShrink: 0 }}
+                style={{ display: "block", flexShrink: 0, objectFit: "contain" }}
               />
               <p
                 style={{
@@ -129,7 +129,7 @@ export function SiteFooter() {
                 }}
               >
                 <span style={{ color: "#F8B800" }}>Paddock</span>
-                <span style={{ color: "#00D2BE" }}>Gavin</span>
+                <span style={{ color: "#57C7F5" }}>Gavin</span>
               </p>
             </div>
             <p
