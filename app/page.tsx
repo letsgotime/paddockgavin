@@ -79,8 +79,8 @@ export default function HomePage() {
         <HomeMediaKit />
       </Stage>
 
-      {/* ── BREAK ── Cullinan doors at the event ───── */}
-      <PhotoBreak src="/images/cullinan-doors.webp" pos="center 35%" />
+      {/* ── BREAK ── Black car at sunset ───────────── */}
+      <PhotoBreak src="/images/creator-hero.jpg" pos="center 40%" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}
       <Stage sec="contact">
