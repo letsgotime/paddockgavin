@@ -30,36 +30,63 @@ const UPCOMING = [
   {
     key: "donuts",
     title: "Donuts with duPont",
-    blurb: "Last Saturday of every month, 8am to noon. Bring the car you drove or just bring yourself.",
-    when: "8am \u2013 Noon",
+    blurb: "Last Saturday of every month, 8\u201311am. Bring the car you drove or just bring yourself. Oh, we have coffee too.",
+    when: "8\u201311am",
     entry: "Free",
     entryTone: "#00D2BE",
     tone: "#F8B800",
-    cta: "See all dates",
+    cta: "Come by",
     href: "/donuts",
-    img: "/images/donuts-lot.webp",
-    recurring: true,
+    img: "/images/donuts-square-sq.webp",
+    date: null as string | null,
+  },
+  {
+    key: "private",
+    title: "Private client evening",
+    blurb: "The floor booked out for a collector group. Closed to the public, listed so you can see the room gets used this way.",
+    when: "Evening",
+    entry: "Booked",
+    entryTone: "#F8B800",
+    tone: "#4BA3DE",
+    cta: "Ask about yours",
+    href: "#inquire",
+    img: "/images/ferrari-red-sq.webp",
+    date: "2026-09-12",
   },
   {
     key: "creator",
     title: "Creator Day",
-    blurb: "September 19. duPont sets up four to five installations and opens the floor to creators of every kind.",
-    when: "Sep 19, 2026",
-    entry: "By invite",
-    entryTone: "#F8B800",
-    tone: "#00D2BE",
-    cta: "Creator Day",
-    href: "/donuts",
+    blurb: "Four to five installations with cars, and creators of every kind invited. Shoot, film, paint, create — post your best, duPont votes, winner takes the bundle and a full day with a duPont car.",
+    when: "Golden hour to golden hour",
+    entry: "Free",
+    entryTone: "#00D2BE",
+    tone: "#F8B800",
+    cta: "The page",
+    href: "#creator-day",
     img: "/images/creator-booth-alt.jpg",
-    recurring: false,
+    date: "2026-09-19",
   },
 ]
 
+function midday(iso: string) { return Date.parse(iso + "T12:00:00") }
+function countdownLabel(iso: string) {
+  const days = Math.ceil((midday(iso) - Date.now()) / 86400000)
+  if (days > 1) return `in ${days} days`
+  if (days === 1) return "tomorrow"
+  if (days === 0) return "today"
+  return "done"
+}
+
 export default function EventsPage() {
-  const nextDonut = nextLastSaturday()
-  const nextMonth  = MONTHS[nextDonut.getMonth()] + " " + nextDonut.getFullYear()
+  const nextDonut  = nextLastSaturday()
+  const nextMonth  = MONTHS[nextDonut.getMonth()].slice(0, 3).toUpperCase()
   const nextDay    = String(nextDonut.getDate())
-  const nextDow    = DAYS[nextDonut.getDay()]
+  const nextDow    = DAYS[nextDonut.getDay()].slice(0, 3).toUpperCase()
+
+  // Next upcoming dated event (for ticker)
+  const nextDated = UPCOMING
+    .filter(e => e.date && midday(e.date) > Date.now() - 43200000)
+    .sort((a, b) => midday(a.date!) - midday(b.date!))[0]
 
   const [form, setForm]   = useState({ name: "", email: "", phone: "", date: "", size: "", notes: "" })
   const [status, setStatus] = useState<Status>("idle")
@@ -169,7 +196,7 @@ export default function EventsPage() {
               whiteSpace: "nowrap",
             }}
           >
-            Donuts with duPont &middot; {nextMonth} {nextDay}
+            {nextDated ? `${nextDated.title} \u00b7 ${countdownLabel(nextDated.date!)}` : `Donuts with duPont \u00b7 date on Instagram`}
           </span>
         </div>
       </div>
@@ -417,40 +444,19 @@ export default function EventsPage() {
                   minWidth: 64,
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                    fontSize: 12,
-                    letterSpacing: ".18em",
-                    textTransform: "uppercase",
-                    color: e.tone,
-                  }}
-                >
-                  {e.recurring ? MONTHS[nextDonut.getMonth()].slice(0, 3).toUpperCase() : "SEP"}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "Archivo, Helvetica, sans-serif",
-                    fontWeight: 900,
-                    fontSize: "clamp(26px,3vw,36px)",
-                    lineHeight: 1,
-                    color: "#FFFFFF",
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                >
-                  {e.recurring ? nextDay : "19"}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                    fontSize: 11.5,
-                    letterSpacing: ".16em",
-                    textTransform: "uppercase",
-                    color: "#91918F",
-                  }}
-                >
-                  {e.recurring ? nextDow.slice(0, 3).toUpperCase() : "FRI"}
-                </span>
+                {(() => {
+                  const d = e.date ? new Date(midday(e.date)) : null
+                  const mon  = d ? MONTHS[d.getMonth()].slice(0, 3).toUpperCase() : nextMonth
+                  const day  = d ? String(d.getDate())                             : nextDay
+                  const dow  = d ? DAYS[d.getDay()].slice(0, 3).toUpperCase()      : nextDow
+                  return (
+                    <>
+                      <span style={{ fontFamily:"ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize:12, letterSpacing:".18em", textTransform:"uppercase", color:e.tone }}>{mon}</span>
+                      <span style={{ fontFamily:"Archivo,Helvetica,sans-serif", fontWeight:900, fontSize:"clamp(26px,3vw,36px)", lineHeight:1, color:"#FFFFFF", fontVariantNumeric:"tabular-nums" }}>{day}</span>
+                      <span style={{ fontFamily:"ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize:11.5, letterSpacing:".16em", textTransform:"uppercase", color:"#91918F" }}>{dow}</span>
+                    </>
+                  )
+                })()}
               </div>
 
               {/* Text */}
@@ -569,6 +575,101 @@ export default function EventsPage() {
               </div>
             </div>
           ))}
+        </section>
+
+        {/* Creator Day feature section */}
+        <section
+          id="creator-day"
+          style={{
+            position: "relative",
+            background: "linear-gradient(150deg,rgba(248,184,0,.10),rgba(255,255,255,.014))",
+            backdropFilter: "blur(24px) saturate(160%)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%)",
+            border: "1px solid rgba(248,184,0,.3)",
+            borderTop: "3px solid #F8B800",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
+            clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
+            overflow: "hidden",
+            isolation: "isolate",
+            padding: "clamp(22px,3.4vw,36px)",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "clamp(20px,3vw,36px)",
+          }}
+        >
+          {/* Background speedway image */}
+          <Image
+            src="/images/cullinan-speedway.webp"
+            alt=""
+            aria-hidden="true"
+            fill
+            style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }}
+            loading="lazy"
+          />
+          <span
+            aria-hidden="true"
+            style={{
+              position: "absolute", inset: 0, zIndex: -1,
+              background: "linear-gradient(160deg,rgba(14,26,42,.97) 0%,rgba(14,26,42,.9) 52%,rgba(14,26,42,.64) 100%)",
+            }}
+          />
+
+          {/* Left: text */}
+          <div style={{ flex: "6 1 320px", minWidth: 0, display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "6px 16px" }}>
+                <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>
+                  Sep 19 &middot; Creator Day
+                </span>
+              </span>
+              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00D2BE" }}>
+                {countdownLabel("2026-09-19")}
+              </span>
+            </div>
+            <h2 style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 900, fontSize: "clamp(28px,4.4vw,48px)", lineHeight: 1, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
+              Golden hour to golden hour,{" "}
+              <span style={{ color: "#F8B800" }}>with the cars</span>
+            </h2>
+            <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(16.5px,1.6vw,18px)", lineHeight: 1.58, color: "#DFE5EC", maxWidth: "58ch" }}>
+              duPont REGISTRY sets up four to five installations with cars, and creators of every kind are invited. Shoot, film, paint, create &mdash; then post your best work.
+            </p>
+            <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(16.5px,1.6vw,18px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "58ch" }}>
+              duPont votes, and the winner takes a creator bundle from a leading brand plus a full day to create with a duPont car of their choice.
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <a
+                href="https://ig.me/m/itspaddockgavin"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}
+              >
+                DM @itspaddockgavin
+              </a>
+              <a
+                href="#inquire"
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}
+              >
+                Book the floor
+              </a>
+            </div>
+          </div>
+
+          {/* Right: staggered 2×2 photo grid */}
+          <div style={{ flex: "4 1 240px", minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignContent: "center" }}>
+            {[
+              { src: "/images/creator-booth-alt.jpg", alt: "Shooting the Ford GT MkII in the studio", mt: 0 },
+              { src: "/images/ford-gt-studio-sq.webp", alt: "Ford GT studio angle", mt: 18 },
+              { src: "/images/ferrari-red-sq.webp", alt: "Ferrari on the floor", mt: 0 },
+              { src: "/images/donuts-inside.webp", alt: "The Donuts with duPont floor", mt: 18 },
+            ].map((img, i) => (
+              <div
+                key={i}
+                style={{ aspectRatio: "1", overflow: "hidden", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", marginTop: img.mt, position: "relative" }}
+              >
+                <Image src={img.src} alt={img.alt} fill loading="lazy" style={{ objectFit: "cover" }} />
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Full-bleed photo */}

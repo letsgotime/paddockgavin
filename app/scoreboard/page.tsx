@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -138,6 +139,23 @@ export default function ScoreboardPage() {
   return (
     <>
       <SiteNav active="scoreboard" />
+
+      {/* Fixed dark photo background — matches design doc */}
+      <div
+        aria-hidden="true"
+        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
+      >
+        <div style={{ position: "absolute", inset: 0, opacity: 0.18 }}>
+          <Image src="/images/918-p1.webp" alt="" fill style={{ objectFit: "cover" }} priority />
+        </div>
+        <div
+          style={{
+            position: "absolute", inset: 0,
+            background: "radial-gradient(1100px 740px at 86% -6%,rgba(0,210,190,.20),transparent 60%),radial-gradient(1000px 700px at 2% 34%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))",
+          }}
+        />
+      </div>
+
       <main
         style={{
           position: "relative",

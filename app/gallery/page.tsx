@@ -128,6 +128,7 @@ function chapterFromCaption(caption: string): string {
 export default function GalleryPage() {
   const [items, setItems] = useState<WallItem[]>([])
   const [filter, setFilter] = useState("all")
+  const [view, setView] = useState<"chapters" | "grid">("chapters")
   const [lb, setLb] = useState<LightboxState | null>(null)
   const [profile, setProfile] = useState<{ username?: string; followersCount?: number } | null>(null)
   const [loaded, setLoaded] = useState(false)
@@ -334,6 +335,22 @@ export default function GalleryPage() {
             )
           })}
           <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 8 }} />
+          <button
+            type="button"
+            onClick={() => setView(v => v === "chapters" ? "grid" : "chapters")}
+            style={{
+              flex: "0 0 auto", cursor: "pointer",
+              fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", textTransform: "uppercase",
+              padding: "9px 15px",
+              border: "1px solid rgba(255,255,255,.20)",
+              background: "rgba(255,255,255,.05)",
+              color: "#EDF1F6",
+              clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {view === "chapters" ? "Grid" : "Chapters"}
+          </button>
         </div>
       </div>
       <div aria-hidden="true" style={{ height: 60 }} />
@@ -386,15 +403,35 @@ export default function GalleryPage() {
           </div>
         </header>
 
-        {/* Chapters */}
-        {CHAPTERS.map((ch, ci) => {
-          const chItems = items.filter((i) => filter === "all" || i.chapter === ch.id).filter((i) => filter !== "all" || i.chapter === ch.id)
-          // When "all", show per chapter; when filtered, only show matching chapter
+        {/* Flat grid view */}
+        {view === "grid" && (() => {
+          const gridItems = filter === "all" ? items : items.filter(i => i.chapter === filter)
+          return (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(190px,46%),1fr))", gap: "clamp(10px,1.5vw,16px)", gridAutoFlow: "dense" }}>
+              {gridItems.map((item, idx) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => openLightbox(gridItems, idx)}
+                  style={{ position:"relative", display:"block", padding:0, border:"1px solid rgba(255,255,255,.11)", cursor:"pointer", background:"rgba(21,37,56,.5)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)", boxShadow:"inset 0 1px 0 rgba(255,255,255,.13)", overflow:"hidden", width:"100%", textAlign:"left", aspectRatio:"1", clipPath:"polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", transition:"border-color .2s" }}
+                >
+                  {item.src && <Image src={item.src} alt={item.caption} fill loading="lazy" sizes="(max-width:768px) 50vw,25vw" style={{ objectFit:"cover" }} />}
+                  <span style={{ position:"absolute", left:0, right:0, bottom:0, padding:"28px 10px 9px", pointerEvents:"none", background:"linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,0))", display:"block" }}>
+                    <span style={{ display:"block", fontFamily:"Archivo,Helvetica,sans-serif", fontWeight:600, fontSize:12, lineHeight:1.4, color:"#EDF1F6" }}>{item.caption}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          )
+        })()}
+
+        {/* Chapters view */}
+        {view === "chapters" && CHAPTERS.map((ch, ci) => {
           const visibleItems = filter === "all"
             ? items.filter((i) => i.chapter === ch.id)
             : filter === ch.id ? items.filter((i) => i.chapter === ch.id) : []
           if (visibleItems.length === 0 && filter !== "all") return null
-          const pool = filter === "all" ? items.filter((i) => i.chapter === ch.id) : visibleItems
+          const pool = visibleItems
           return (
             <section
               key={ch.id}
