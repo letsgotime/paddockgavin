@@ -9,7 +9,6 @@ type Shift = "day" | "night"
 // This component wraps the fixed background + status bar under the nav
 export function HomeHero() {
   const [shift, setShift]         = useState<Shift>("day")
-  const [clock, setClock]         = useState("—")
   const [golden, setGolden]       = useState("—")
   const [goldenPct, setGoldenPct] = useState(0)
   const [secName, setSecName]     = useState("Intro")
@@ -25,15 +24,7 @@ export function HomeHero() {
         }).format(now)
       )
       const s = hour >= 8 && hour < 18 ? "day" : "night"
-      const c = now
-        .toLocaleTimeString("en-US", {
-          timeZone: "America/Chicago",
-          hour: "numeric",
-          minute: "2-digit",
-        })
-        .replace(/\s/g, "\u2009")
       setShift(s)
-      setClock(c)
 
       // Progress within shift: 08:00–18:00 or 18:00–08:00 (30hr night)
       const mins = now.getHours() * 60 + now.getMinutes()
@@ -71,14 +62,34 @@ export function HomeHero() {
         const sunset = t("sunset")
         const rise   = t("sunrise")
         const nowTs  = Date.now()
-        if (nowTs >= rise - 30 * 60000 && nowTs <= rise + 30 * 60000) {
-          setGolden("Sunrise golden hour now")
-        } else if (nowTs >= sunset - 30 * 60000 && nowTs <= sunset + 30 * 60000) {
-          setGolden("Sunset golden hour now")
-        } else if (nowTs < sunset) {
-          setGolden(`Sunset ${fmt(sunset)}`)
+        // Golden hour windows: ~40min before each, ~30min after
+        const riseStart = rise - 40 * 60000
+        const riseEnd   = rise + 30 * 60000
+        const setStart  = sunset - 40 * 60000
+        const setEnd    = sunset + 30 * 60000
+
+        if (nowTs >= riseStart && nowTs <= riseEnd) {
+          setGolden("Sunrise · happening now")
+        } else if (nowTs >= setStart && nowTs <= setEnd) {
+          setGolden("Sunset · happening now")
+        } else if (nowTs < riseStart) {
+          // Before sunrise golden hour today — show it
+          setGolden(`Sunrise ${fmt(riseStart)}`)
+        } else if (nowTs < setStart) {
+          // Between sunrise end and sunset golden hour — show sunset
+          setGolden(`Sunset ${fmt(setStart)}`)
         } else {
-          setGolden(`Next sunrise ~${fmt(rise + 86400000)}`)
+          // Past sunset — fetch tomorrow's sunrise
+          const tom = new Date(now)
+          tom.setDate(tom.getDate() + 1)
+          const td = `${tom.getFullYear()}-${String(tom.getMonth()+1).padStart(2,"0")}-${String(tom.getDate()).padStart(2,"0")}`
+          const j2 = await (await fetch(`https://api.sunrise-sunset.org/json?lat=36.1627&lng=-86.7816&formatted=0&date=${td}`)).json()
+          if (j2.results && j2.status === "OK") {
+            const tRise = new Date(j2.results.sunrise).getTime()
+            setGolden(`Sunrise ${fmt(tRise - 40 * 60000)}`)
+          } else {
+            setGolden("Sunrise · tomorrow")
+          }
         }
       } catch {
         setGolden("—")
@@ -240,18 +251,6 @@ export function HomeHero() {
             >
               {golden}
             </span>
-          </span>
-          <span
-            style={{
-              fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-              fontSize: 13.5,
-              letterSpacing: ".08em",
-              color: "#EDF1F6",
-              fontVariantNumeric: "tabular-nums",
-              flex: "0 0 auto",
-            }}
-          >
-            {clock}
           </span>
           {/* progress line */}
           <i
