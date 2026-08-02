@@ -198,7 +198,7 @@ export function SiteNav({ active = "home" }: Props) {
                 }}
               >
                 <span style={{ color: "#F8B800" }}>Paddock</span>
-                <span style={{ color: "#00D2BE" }}>Gavin</span>
+                <span style={{ color: "#57C7F5" }}>Gavin</span>
               </span>
             </Link>
 
