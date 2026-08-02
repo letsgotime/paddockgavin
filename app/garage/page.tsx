@@ -12,12 +12,20 @@ const CARS: { name: string; meta: string }[] = [
 
 // Photo grid — shots Gavin has
 const SHOTS = [
-  { src: "/images/918-p1.webp",        alt: "918 Spyder and McLaren P1" },
-  { src: "/images/918-grey.webp",      alt: "918 Spyder rear quarter" },
-  { src: "/images/918-pipes.webp",     alt: "918 exhaust pipes" },
-  { src: "/images/aston-wheel.webp",   alt: "Aston Martin cabin" },
-  { src: "/images/cullinan-doors.webp",alt: "Rolls-Royce Cullinan" },
-  { src: "/images/carrera-traffic.jpg",alt: "Carrera S in Nashville traffic" },
+  { src: "/images/g993-out.webp",           alt: "Sage green 993 custom off the Troy Carz carrier" },
+  { src: "/images/g993-cabin.webp",         alt: "993 interior — carbon dash, terracotta leather, manual shifter" },
+  { src: "/images/g993-ramp.webp",          alt: "993 nose and gold Brembo wheel on the carrier ramp" },
+  { src: "/images/g993-fire-sq.webp",       alt: "993 carbon floor with fire extinguisher mounted" },
+  { src: "/images/ferrari-upperdeck.webp",  alt: "Black Ferrari loaded on upper deck of enclosed hauler" },
+  { src: "/images/ferrari-red.webp",        alt: "Red Ferrari 488 on the floor with Defenders and exotics" },
+  { src: "/images/ford-gt-studio.webp",     alt: "Shooting the white Ford GT Le Mans race car in studio" },
+  { src: "/images/gavin-gwagen.webp",       alt: "Gavin with the white Mercedes-Maybach G650" },
+  { src: "/images/918-p1.webp",             alt: "918 Spyder and McLaren P1" },
+  { src: "/images/918-grey.webp",           alt: "918 Spyder rear quarter" },
+  { src: "/images/918-pipes.webp",          alt: "918 exhaust pipes" },
+  { src: "/images/aston-wheel.webp",        alt: "Aston Martin cabin" },
+  { src: "/images/cullinan-doors.webp",     alt: "Rolls-Royce Cullinan" },
+  { src: "/images/carrera-traffic.jpg",     alt: "Carrera S in Nashville traffic" },
 ]
 
 function buildRows() {

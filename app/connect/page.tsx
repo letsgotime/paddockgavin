@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -240,6 +241,27 @@ export default function ConnectPage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "clamp(14px,3vw,20px)", flexWrap: "wrap" }}>
+            {/* Face photo */}
+            <div
+              style={{
+                flex: "0 0 auto",
+                width: "clamp(84px,20vw,110px)",
+                aspectRatio: "1",
+                border: "1px solid rgba(255,255,255,.18)",
+                clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
+                overflow: "hidden",
+                background: "rgba(21,37,56,.6)",
+                position: "relative",
+              }}
+            >
+              <Image
+                src="/images/gavin-bar-sq.webp"
+                alt="Gavin Brooks"
+                fill
+                style={{ objectFit: "cover" }}
+                sizes="110px"
+              />
+            </div>
             <div style={{ flex: "1 1 200px", minWidth: 0, display: "flex", flexDirection: "column", gap: 9 }}>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 9 }}>
                 <i
