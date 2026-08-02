@@ -53,7 +53,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Yellow 992 on the showroom floor ── */}
-      <PhotoBreak src="/images/donuts-z06.webp" pos="center 45%" credit="@ItsPaddockGavin" />
+      <PhotoBreak src="/images/donuts-z06.webp" pos="center 45%" credit="PaddockGavin" />
 
       {/* ── 2. STORY ──────────────────────────────── */}
       <Stage sec="story">
@@ -61,7 +61,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Outdoor car show lot ───────────── */}
-      <PhotoBreak src="/images/donuts-lot.webp" pos="center 30%" credit="@ItsPaddockGavin" />
+      <PhotoBreak src="/images/donuts-lot.webp" pos="center 30%" credit="PaddockGavin" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
@@ -69,7 +69,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Donuts Cars & Coffee interior ── */}
-      <PhotoBreak src="/images/donuts-inside.webp" pos="center 65%" credit="@ItsPaddockGavin" />
+      <PhotoBreak src="/images/donuts-inside.webp" pos="center 65%" credit="PaddockGavin" />
 
       {/* ── 4. THE GARAGE ─────────────────────────── */}
       <Stage sec="garage">
@@ -77,7 +77,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Green 993 GW being loaded ─────── */}
-      <PhotoBreak src="/images/g993-out.webp" pos="center 40%" credit="@ItsPaddockGavin" />
+      <PhotoBreak src="/images/g993-out.webp" pos="center 40%" credit="PaddockGavin" />
 
       {/* ── 5. FOR BRANDS ─────────────────────────── */}
       <Stage sec="mediakit">
