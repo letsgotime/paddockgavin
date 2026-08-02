@@ -44,7 +44,7 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "918 Spyder center-exit titanium pipes on the duPont Registry lot",
+  "Holy Trinity storage",
   "Widebody Cullinan on air, suicide doors open at the show",
   "997 Carrera catching the light on Franklin Rd",
   "Downpipe off, hunting for the cats",
