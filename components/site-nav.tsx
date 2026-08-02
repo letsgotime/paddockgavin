@@ -137,6 +137,8 @@ export function SiteNav({ active = "home" }: Props) {
   const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
   const logoAccent = shift === "day" ? "#57C7F5" : "#00D2BE"
+  // 28° shifts teal (#00D2BE ~174°) to Speed Blue (#57C7F5 ~202°). Gold (45°+28°=73°) stays yellow.
+  const markFilter = shift === "day" ? "hue-rotate(28deg)" : "none"
 
   return (
     <>
@@ -187,7 +189,7 @@ export function SiteNav({ active = "home" }: Props) {
                 alt="PG mark"
                 width={32}
                 height={32}
-                style={{ height: 32, width: "auto", display: "block" }}
+                style={{ height: 32, width: "auto", display: "block", filter: markFilter, transition: "filter .4s ease" }}
               />
               <span
                 style={{
