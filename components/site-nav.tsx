@@ -166,7 +166,7 @@ export function SiteNav({ active = "home" }: Props) {
               display: "flex",
               alignItems: "center",
               gap: "clamp(10px,2vw,20px)",
-              padding: "11px clamp(14px,4vw,40px)",
+              padding: "11px clamp(20px,4vw,48px)",
             }}
           >
             {/* Logo */}
