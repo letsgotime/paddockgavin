@@ -10,7 +10,7 @@ type Step = 0 | 1 | 2 | 3 | 4   // 0 Car · 1 Condition · 2 Route · 3 You · 4
 const STEPS = [
   { label: "The car",     datum: "Step 01", head: "Tell me what",     sub: "you have.",         blurb: "Start with the VIN and our decoder pulls the rest. No VIN to hand? Type what you know."                                                                                              },
   { label: "Condition",   datum: "Step 02", head: "How it has",        sub: "been kept.",        blurb: "Straight answers here are worth money. A car with a known story sells faster than a perfect one with gaps."                                                                           },
-  { label: "The route",   datum: "Step 03", head: "Where it",          sub: "should sell.",      blurb: "Three inventories, three different buyers. Pick one, or leave it to the concierge."                                                                                                   },
+  { label: "The route",   datum: "Step 03", head: "Where it",          sub: "should sell.",      blurb: "Four inventories, four different buyers. Pick one, or leave it to the concierge."                                                                                                    },
   { label: "You",         datum: "Step 04", head: "Where do I",        sub: "reach you?",        blurb: "This goes to the duPont REGISTRY auction concierge. They come back within 24 to 48 business hours with a number and the inventory it belongs in."                                     },
   { label: "Sent",        datum: "",        head: "Got it —",           sub: "I will come back to you.", blurb: "" },
 ]
@@ -141,9 +141,10 @@ export default function IntakePage() {
     }
   }
 
+  // Route step: "Not sure yet" is a valid empty state — always allow advancing
   const canNext = step === 0 ? !!(v.year || v.make || v.model)
     : step === 1 ? true
-    : step === 2 ? !!v.route
+    : step === 2 ? true
     : step === 3 ? !!(v.name && v.email)
     : false
 
@@ -164,7 +165,7 @@ export default function IntakePage() {
   const summary = [
     { k: "Car",       v: cap([v.year, v.make, v.model, v.trim].filter(Boolean).join(" ")) },
     { k: "Mileage",   v: v.mileage ? Number(String(v.mileage).replace(/[^0-9]/g, "")).toLocaleString("en-US") + " MI" : "—" },
-    { k: "VIN",       v: v.vin ? "…" + v.vin.slice(-8) : "—" },
+    { k: "VIN",       v: v.vin ? v.vin.slice(-8) : "—" },
     { k: "Title",     v: cap(v.title) },
     { k: "Accidents", v: cap(v.accident) },
     { k: "Owners",    v: cap(v.owners) },
@@ -465,7 +466,7 @@ export default function IntakePage() {
                 disabled={!canNext}
                 style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: canNext ? "pointer" : "not-allowed", opacity: canNext ? 1 : 0.45 }}
               >
-                {["Next: Condition", "Next: Route", "Next: Your details", "Almost there"][step]}
+                {["Next: Condition", "Next: Route", "Almost there", ""][step]}
               </button>
             )}
           </div>
