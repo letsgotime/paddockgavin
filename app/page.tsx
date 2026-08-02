@@ -55,8 +55,8 @@ export default function HomePage() {
         <HomeStory />
       </Stage>
 
-      {/* ── BREAK ── Cullinan doors ────────────────── */}
-      <PhotoBreak src="/images/cullinan-doors.webp" pos="center 30%" />
+      {/* ── BREAK ── 918 + P1 nose-to-nose ────────── */}
+      <PhotoBreak src="/images/918-p1.webp" pos="center 40%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
