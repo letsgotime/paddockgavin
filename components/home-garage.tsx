@@ -50,6 +50,9 @@ export function HomeGarage() {
         {SHOTS.map((s) => (
           <Link key={s.src} href="/gallery" style={{ position: "relative", display: "block", aspectRatio: "3/2", overflow: "hidden", background: "rgba(21,37,56,.4)", textDecoration: "none" }}>
             <Image src={s.src} alt={s.caption} fill style={{ objectFit: "cover", objectPosition: s.pos, transition: "transform .4s ease" }} loading="lazy" />
+            <span style={{ position: "absolute", bottom: 7, right: 10, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 9.5, letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", pointerEvents: "none" }}>
+              &copy; PaddockGavin
+            </span>
           </Link>
         ))}
       </div>
