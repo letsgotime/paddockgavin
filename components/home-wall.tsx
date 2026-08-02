@@ -463,12 +463,13 @@ export function HomeWall() {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid — flex so the last row stretches to fill (no barren gaps) */}
         <div
           style={{
             flex: "1 1 100%",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill,minmax(min(200px,46%),1fr))",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "stretch",
             gap: "clamp(12px,1.8vw,18px)",
           }}
         >
@@ -489,10 +490,10 @@ export function HomeWall() {
                 WebkitBackdropFilter: "blur(18px) saturate(150%)",
                 boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
                 overflow: "hidden",
-                width: "100%",
+                flex: c.wide ? "3 1 320px" : "2 1 220px",
+                minWidth: 0,
                 textAlign: "left",
                 aspectRatio: c.wide ? "3/2" : "4/5",
-                gridColumn: c.wide ? "span 2" : "auto",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
               }}
             >
