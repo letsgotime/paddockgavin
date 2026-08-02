@@ -8,10 +8,10 @@ type Shift = "day" | "night"
 // Sub-bar shows current section name + golden hour + progress pct
 // This component wraps the fixed background + status bar under the nav
 export function HomeHero() {
-  const [shift, setShift]         = useState<Shift>("day")
-  const [golden, setGolden]       = useState("—")
-  const [goldenPct, setGoldenPct] = useState(0)
-  const [secName, setSecName]     = useState("Intro")
+  const [shift, setShift]   = useState<Shift>("day")
+  const [golden, setGolden] = useState("—")
+  const [scrollPct, setScrollPct] = useState(0)
+  const [secName, setSecName]     = useState("PaddockGavin")
 
   useEffect(() => {
     const tick = () => {
@@ -26,17 +26,7 @@ export function HomeHero() {
       const s = hour >= 8 && hour < 18 ? "day" : "night"
       setShift(s)
 
-      // Progress within shift: 08:00–18:00 or 18:00–08:00 (30hr night)
-      const mins = now.getHours() * 60 + now.getMinutes()
-      let pct = 0
-      if (s === "day") {
-        pct = Math.min(1, Math.max(0, (mins - 8 * 60) / (10 * 60)))
-      } else {
-        const nightMins = mins >= 18 * 60 ? mins - 18 * 60 : mins + 6 * 60
-        pct = Math.min(1, Math.max(0, nightMins / (14 * 60)))
       }
-      setGoldenPct(pct)
-    }
 
     const fetchGolden = async () => {
       const fmt = (ms: number) =>
@@ -96,33 +86,50 @@ export function HomeHero() {
       }
     }
 
-    // Section detection via IntersectionObserver
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const label = e.target.getAttribute("data-screen-label")
-            if (label) setSecName(label)
-          }
-        })
-      },
-      { threshold: 0.4 }
-    )
-    document.querySelectorAll("[data-screen-label]").forEach((el) => observer.observe(el))
+    const SEC_LABEL: Record<string, string> = {
+      intro:    "PaddockGavin",
+      wall:     "The wall",
+      story:    "Who's filming this",
+      shifts:   "Two shifts",
+      garage:   "The garage",
+      mediakit: "For brands",
+      contact:  "Ask me anything",
+    }
+
+    const onScroll = () => {
+      // Scroll %
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const pct = max > 0 ? Math.min(100, Math.round((window.scrollY / max) * 100)) : 0
+      setScrollPct(pct)
+
+      // Active section — first [data-sec] whose top <= 160px from viewport top
+      let found: string | null = null
+      document.querySelectorAll<HTMLElement>("[data-sec]").forEach((el) => {
+        const r = el.getBoundingClientRect()
+        if (r.top <= 160 && r.bottom > 160) found = el.getAttribute("data-sec")
+      })
+      if (found && SEC_LABEL[found]) setSecName(SEC_LABEL[found])
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
 
     tick()
     fetchGolden()
+    onScroll()
     const t = setInterval(tick, 20000)
     const g = setInterval(fetchGolden, 300000)
     return () => {
       clearInterval(t)
       clearInterval(g)
-      observer.disconnect()
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
     }
   }, [])
 
-  const accent = shift === "day" ? "#F8B800" : "#00D2BE"
-  const pctStr = Math.round(goldenPct * 100) + "%"
+  const accent  = shift === "day" ? "#F8B800" : "#00D2BE"
+  const pctStr  = String(scrollPct).padStart(2, "0") + "%"
+  const railPct = scrollPct + "%"
 
   return (
     <>
@@ -252,7 +259,19 @@ export function HomeHero() {
               {golden}
             </span>
           </span>
-          {/* progress line */}
+          <span
+            style={{
+              fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+              fontSize: 13.5,
+              letterSpacing: ".08em",
+              color: "#EDF1F6",
+              fontVariantNumeric: "tabular-nums",
+              flex: "0 0 auto",
+            }}
+          >
+            {pctStr}
+          </span>
+          {/* scroll progress rail */}
           <i
             aria-hidden="true"
             style={{
@@ -260,15 +279,15 @@ export function HomeHero() {
               left: 0,
               bottom: 0,
               height: 2,
-              width: pctStr,
+              width: railPct,
               background: "linear-gradient(90deg,#00D2BE,#F8B800)",
               transition: "width .12s linear",
             }}
           />
         </div>
       </div>
-      {/* Spacer for sub-bar */}
-      <div aria-hidden="true" style={{ height: 50 }} />
+      {/* Spacer for sub-bar — also marks top section */}
+      <div data-sec="intro" aria-hidden="true" style={{ height: 50 }} />
     </>
   )
 }

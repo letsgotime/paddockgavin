@@ -27,12 +27,12 @@ export default function HomePage() {
           gap: "clamp(14px,2.4vw,22px)",
         }}
       >
-        <HomeWall />
-        <HomeStory />
-        <HomeTwoShifts />
-        <HomeGarage />
-        <HomeMediaKit />
-        <HomeAskMe />
+        <div data-sec="wall"><HomeWall /></div>
+        <div data-sec="story"><HomeStory /></div>
+        <div data-sec="shifts"><HomeTwoShifts /></div>
+        <div data-sec="garage"><HomeGarage /></div>
+        <div data-sec="mediakit"><HomeMediaKit /></div>
+        <div data-sec="contact"><HomeAskMe /></div>
       </main>
       <SiteFooter />
     </>
