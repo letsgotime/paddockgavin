@@ -23,7 +23,7 @@ function Stage({ children, sec }: { children: React.ReactNode; sec: string }) {
   return (
     <div
       data-sec={sec}
-      style={{ width: "100%", maxWidth: 1180, margin: "0 auto", padding: "clamp(72px,11vw,144px) clamp(16px,5vw,48px)" }}
+      style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1180, margin: "0 auto", padding: "clamp(72px,11vw,144px) clamp(16px,5vw,48px)" }}
     >
       {children}
     </div>
@@ -37,7 +37,7 @@ export default function HomePage() {
       <HomeHero />
 
       {/* ── 1. THE WALL ───────────────────────────── */}
-      <div data-sec="wall" style={{ paddingTop: "clamp(48px,7vw,96px)" }}>
+      <div data-sec="wall" style={{ position: "relative", zIndex: 1, paddingTop: "clamp(48px,7vw,96px)" }}>
         <HomeWall />
       </div>
 
