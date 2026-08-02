@@ -44,7 +44,7 @@ const BUILDS = [
     name: "paddockgavin.com",
     host: "",
     href: "",
-    what: "This site. Cloudflare in front of it, and it fills itself in.",
+    what: "This site. Cloudflare in front of it, Behold feeding the wall, and it fills itself in.",
     status: "live" as const,
     datum: "You are on it",
     group: "live" as Group,
@@ -65,6 +65,7 @@ const BUILDS = [
     host: "",
     href: "",
     what: "Founded 2021. A good company, and a side hustle. Folded into PaddockGavin.",
+
     status: "retired" as const,
     datum: "2021 \u2013 2026",
     group: "past" as Group,

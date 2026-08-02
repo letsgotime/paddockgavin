@@ -25,7 +25,7 @@ export function HomeStory() {
           }}
         >
           <Image
-            src="/images/creator-hero.jpg"
+            src="/images/gavin-work.webp"
             alt="Gavin on the lot"
             fill
             style={{ objectFit: "cover" }}
@@ -146,7 +146,8 @@ export function HomeStory() {
             A few dozen of my own over the years, and a lot more found for other people. The technology work moved to nights.
           </p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <span
+            <Link
+              href="/garage"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -159,28 +160,10 @@ export function HomeStory() {
                 color: "#101010",
                 padding: "15px 26px",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
-              }}
-            >
-              Nashville, Tennessee
-            </span>
-            <Link
-              href="/garage"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 700,
-                fontSize: 15,
-                letterSpacing: ".04em",
-                textTransform: "uppercase",
-                color: "#EDF1F6",
-                border: "1px solid rgba(255,255,255,.28)",
-                padding: "15px 26px",
-                clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
                 textDecoration: "none",
               }}
             >
-              29 cars. Open the register
+              Why a paddock
             </Link>
           </div>
         </div>

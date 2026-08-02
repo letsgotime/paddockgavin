@@ -5,19 +5,22 @@
 
 :root {
   /* ── PALETTE — all real automotive paint ── */
-  --yellow:      #F8B800;   /* Porsche Signalgelb 114 — PRIMARY: headlines, buttons, wordmark */
-  --yellow-hi:   #FFC81F;
-  --green:       #00D2BE;   /* Mercedes-AMG Petronas F1 — SECONDARY INK: tabs, labels, links */
-  --green-deep:  #00302B;   /* type ON green */
-  --blue:        #005185;   /* Ferrari Primary Blue — FILL ONLY, never as ink on navy */
-  --blue-pale:   #CFE4F4;
-  --steel:       #B4B6B2;   /* body copy on dark */
-  --steel-deep:  #848482;   /* borders, captions */
-  --navy:        #0E1A2A;   /* Asphalt Navy — base */
-  --panel:       #152538;
-  --deep:        #0A1523;
-  --line:        #27384F;
-  --white:       #F4F6FA;
+  --yellow:        #F8B800;   /* Porsche Signalgelb 114 — PRIMARY: headlines, buttons, wordmark */
+  --yellow-hi:     #FFC81F;
+  --green:         #00D2BE;   /* Mercedes-AMG Petronas F1 — SECONDARY INK: tabs, labels, links */
+  --green-deep:    #00302B;   /* type ON green */
+  --purple:        #6E2C8F;   /* Dodge Plum Crazy FC7 — logo mark only, on light stock */
+  --purple-hi:     #AB63CF;   /* same hue lifted — logo on dark / mark accent */
+  --blue:          #005185;   /* Ferrari Primary Blue — FILL ONLY, never as ink on navy */
+  --blue-pale:     #CFE4F4;
+  --steel:         #B4B6B2;   /* body copy on dark */
+  --steel-deep:    #848482;   /* borders, captions */
+  --navy:          #0E1A2A;   /* Asphalt Navy — base */
+  --panel:         #152538;
+  --deep:          #0A1523;
+  --line:          #27384F;
+  --carbon:        #0F1318;   /* Carbon fibre — deepest bg */
+  --white:         #F4F6FA;
 
   --background: var(--navy);
   --foreground: var(--white);
@@ -47,12 +50,17 @@
   --color-muted-foreground:  var(--muted-foreground);
   --color-yellow:            var(--yellow);
   --color-green:             var(--green);
+  --color-purple:            var(--purple);
+  --color-purple-hi:         var(--purple-hi);
   --color-blue:              var(--blue);
+  --color-blue-pale:         var(--blue-pale);
   --color-steel:             var(--steel);
   --color-steel-deep:        var(--steel-deep);
   --color-navy:              var(--navy);
   --color-panel:             var(--panel);
+  --color-deep:              var(--deep);
   --color-line:              var(--line);
+  --color-carbon:            var(--carbon);
   --color-white:             var(--white);
 }
 

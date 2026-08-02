@@ -5,6 +5,7 @@ import { HomeWall } from "@/components/home-wall"
 import { HomeStory } from "@/components/home-story"
 import { HomeTwoShifts } from "@/components/home-two-shifts"
 import { HomeGarage } from "@/components/home-garage"
+import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 export default function HomePage() {
@@ -26,11 +27,12 @@ export default function HomePage() {
           gap: "clamp(14px,2.4vw,22px)",
         }}
       >
-        <HomeWall />
-        <HomeStory />
-        <HomeTwoShifts />
-        <HomeGarage />
-        <HomeAskMe />
+        <div data-sec="wall"><HomeWall /></div>
+        <div data-sec="story"><HomeStory /></div>
+        <div data-sec="shifts"><HomeTwoShifts /></div>
+        <div data-sec="garage"><HomeGarage /></div>
+        <div data-sec="mediakit"><HomeMediaKit /></div>
+        <div data-sec="contact"><HomeAskMe /></div>
       </main>
       <SiteFooter />
     </>
