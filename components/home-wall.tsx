@@ -44,10 +44,10 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
+  "918 Spyder center-exit titanium pipes on the duPont Registry lot",
   "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
   "964 Carrera catching the light on Franklin Rd",
-  "Holy Trinity storage",
+  "Downpipe off, hunting for the cats",
   "918 and P1 nose to nose on the duPont lot",
   "918 in Liquid Metal Silver, eleven minutes before sunset",
 ]
