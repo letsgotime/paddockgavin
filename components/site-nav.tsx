@@ -137,11 +137,9 @@ export function SiteNav({ active = "home" }: Props) {
   const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
   // Logo accent: Speed Blue on day, teal on night
-  const logoAccent  = shift === "day" ? "#57C7F5" : "#00D2BE"
-  // CSS filter to tint the PG mark PNG: day = blue hue, night = teal
-  const markFilter  = shift === "day"
-    ? "hue-rotate(168deg) saturate(1.3) brightness(1.1)"
-    : "none"
+  const logoAccent = shift === "day" ? "#57C7F5" : "#00D2BE"
+  // Separate mark PNGs — no filter hacks
+  const markSrc    = shift === "day" ? "/images/mark-day.png" : "/images/mark-on-dark-96.png"
 
   return (
     <>
@@ -188,17 +186,11 @@ export function SiteNav({ active = "home" }: Props) {
               }}
             >
               <Image
-                src="/images/mark-on-dark-96.png"
+                src={markSrc}
                 alt="PG mark"
                 width={32}
                 height={32}
-                style={{
-                  height: 32,
-                  width: "auto",
-                  display: "block",
-                  filter: markFilter,
-                  transition: "filter .6s ease",
-                }}
+                style={{ height: 32, width: "auto", display: "block" }}
               />
               <span
                 style={{
