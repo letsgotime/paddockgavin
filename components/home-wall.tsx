@@ -44,7 +44,7 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "Charging day for two-thirds of the Holy Trinity",
+  "Charging time for two-thirds of the Holy Trinity",
   "Cullinan on the banking — doors up, nobody around",
   "Carrera S through downtown Nashville at last light",
   "Downpipe off — first look at what was hiding under there",
