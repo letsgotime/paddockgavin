@@ -4,8 +4,8 @@ import Link from "next/link"
 const SHOTS = [
   { src: "/images/f458-side.webp",          caption: "Ferrari 458 Italia side profile",  pos: "center 35%" },
   { src: "/images/ford-gt-studio.webp",     caption: "Ford GT studio",                   pos: "center 40%" },
-  { src: "/images/g993-out.webp",             caption: "Gunther Werks 993 being loaded",  pos: "center 40%" },
-  { src: "/images/donuts-inside.webp",       caption: "Cars & Coffee indoor show",        pos: "center 65%" },
+  { src: "/images/g993-cabin.webp",           caption: "Gunther Werks 993 interior",      pos: "center 50%" },
+  { src: "/images/f458-seats.webp",           caption: "Ferrari 458 racing interior",      pos: "center 50%" },
   { src: "/images/ferrari-296.webp",         caption: "Ferrari 296 warehouse lineup",     pos: "center 40%" },
   { src: "/images/f458-extinguisher.webp",   caption: "458 fire extinguisher mount",      pos: "center 30%" },
 ]
