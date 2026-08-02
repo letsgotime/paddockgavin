@@ -107,26 +107,31 @@ export function SiteFooter() {
         >
           {/* Brand column */}
           <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-            <Image
-              src="/images/mark-on-dark-96.png"
-              alt="PG mark"
-              width={44}
-              height={44}
-              style={{ height: 44, width: "auto", display: "block" }}
-            />
-            <p
-              style={{
-                margin: 0,
-                fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(21px,2vw,27px)",
-                letterSpacing: "-.02em",
-                textTransform: "uppercase",
-              }}
-            >
-              <span style={{ color: "#F8B800" }}>Paddock</span>
-              <span style={{ color: "#00D2BE" }}>Gavin</span>
-            </p>
+            {/* Logo lockup — mark + wordmark side by side, never smashed */}
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+              <Image
+                src="/images/mark-on-dark-96.png"
+                alt=""
+                aria-hidden="true"
+                width={40}
+                height={40}
+                style={{ height: 40, width: 40, display: "block", flexShrink: 0 }}
+              />
+              <p
+                style={{
+                  margin: 0,
+                  fontFamily: "Archivo, Helvetica, sans-serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(22px,2vw,28px)",
+                  letterSpacing: "-.02em",
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span style={{ color: "#F8B800" }}>Paddock</span>
+                <span style={{ color: "#00D2BE" }}>Gavin</span>
+              </p>
+            </div>
             <p
               style={{
                 margin: 0,

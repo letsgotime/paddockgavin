@@ -198,7 +198,9 @@ export function HomeHero() {
             overflow: "hidden",
           }}
         >
+          {/* Section name — hidden on mobile */}
           <span
+            className="pg-hide-xs"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -235,7 +237,9 @@ export function HomeHero() {
               flex: "0 0 auto",
             }}
           >
+            {/* "Golden hour" label — hidden on mobile, value always shown */}
             <span
+              className="pg-hide-xs"
               style={{
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                 fontSize: 13,

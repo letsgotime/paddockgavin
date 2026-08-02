@@ -44,12 +44,12 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "918 Spyder exhaust note on the highway ramp",
-  "Cullinan doors open at the speedway",
-  "Carrera S in Nashville traffic, late afternoon",
-  "Downpipe — first look after teardown",
-  "918 and the P1 side by side, duPont lot",
-  "918 grey at golden hour",
+  "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
+  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
+  "992 GT3 Catback Exhaust inspection, looking for cats lol",
+  "Holy Trinity storage",
+  "918 and P1 nose to nose on the duPont lot",
+  "918 in Liquid Metal Silver, eleven minutes before sunset",
 ]
 
 const SEED_IMAGES = [
@@ -202,9 +202,13 @@ export function HomeWall() {
         id="wall"
         ref={revealRef}
         style={{
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 clamp(16px,5vw,48px)",
           display: "flex",
           flexWrap: "wrap",
-          gap: "clamp(14px,2.4vw,22px)",
+          gap: "clamp(48px,7vw,96px)",
           scrollMarginTop: 140,
         }}
       >
@@ -336,11 +340,11 @@ export function HomeWall() {
         {/* Right column */}
         <div
           style={{
-            flex: "4 1 260px",
+            flex: "4 1 280px",
             minWidth: 0,
             display: "flex",
             flexDirection: "column",
-            gap: "clamp(14px,2.4vw,22px)",
+            gap: "clamp(32px,5vw,56px)",
           }}
         >
           {/* Story card */}

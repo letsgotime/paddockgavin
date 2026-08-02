@@ -297,7 +297,7 @@ export default function EventsPage() {
         </section>
 
         {/* Full bleed — urus on deck */}
-        <section style={{ position: "relative", left: "50%", marginLeft: "-50vw", width: "100vw", height: "clamp(340px,56vh,600px)", overflow: "hidden" }}>
+        <section style={{ position: "relative", width: "100%", height: "clamp(340px,56vh,600px)", overflow: "hidden" }}>
           <Image src="/images/urus-deck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,.12) 42%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>

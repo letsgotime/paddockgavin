@@ -334,9 +334,7 @@ export default function CreatorDayPage() {
         <section
           style={{
             position: "relative",
-            left: "50%",
-            marginLeft: "-50vw",
-            width: "100vw",
+            width: "100%",
             height: "clamp(460px,84vh,820px)",
             overflow: "hidden",
           }}

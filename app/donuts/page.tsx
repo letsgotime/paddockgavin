@@ -138,7 +138,7 @@ export default function DonutsPage() {
         </section>
 
         {/* Full bleed — overflow */}
-        <section style={{ position: "relative", left: "50%", marginLeft: "-50vw", width: "100vw", height: "clamp(360px,60vh,640px)", overflow: "hidden" }}>
+        <section style={{ position: "relative", width: "100%", height: "clamp(360px,60vh,640px)", overflow: "hidden" }}>
           <Image src="/images/donuts-overflow.webp" alt="The overflow. It fills up early and keeps filling" fill style={{ objectFit: "cover", objectPosition: "center 78%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,.12) 42%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>
