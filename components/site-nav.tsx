@@ -136,9 +136,6 @@ export function SiteNav({ active = "home" }: Props) {
 
   const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
-  const logoAccent = shift === "day" ? "#57C7F5" : "#00D2BE"
-  // 28° shifts teal (#00D2BE ~174°) to Speed Blue (#57C7F5 ~202°). Gold (45°+28°=73°) stays yellow.
-  const markFilter = shift === "day" ? "hue-rotate(28deg)" : "none"
 
   return (
     <>
@@ -146,8 +143,8 @@ export function SiteNav({ active = "home" }: Props) {
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 80 }}>
         {/* Garage-door livery bar */}
         <div aria-hidden="true" style={{ display: "flex", height: 5 }}>
-          <i style={{ flex: 1, background: "#F8B800", transition: "background .6s ease" }} />
-          <i style={{ flex: 1, background: logoAccent, transition: "background .6s ease" }} />
+          <i style={{ flex: 1, background: "#F8B800" }} />
+          <i style={{ flex: 1, background: "#57C7F5" }} />
           <i style={{ flex: 1, background: "#005185" }} />
           <i style={{ flex: 1, background: "#848482" }} />
         </div>
@@ -189,7 +186,7 @@ export function SiteNav({ active = "home" }: Props) {
                 alt="PG mark"
                 width={32}
                 height={32}
-                style={{ height: 32, width: "auto", display: "block", filter: markFilter, transition: "filter .4s ease" }}
+                style={{ height: 32, width: "auto", display: "block" }}
               />
               <span
                 style={{
@@ -201,7 +198,7 @@ export function SiteNav({ active = "home" }: Props) {
                 }}
               >
                 <span style={{ color: "#F8B800" }}>Paddock</span>
-                <span style={{ color: logoAccent, transition: "color .6s ease" }}>Gavin</span>
+                <span style={{ color: "#00D2BE" }}>Gavin</span>
               </span>
             </Link>
 
