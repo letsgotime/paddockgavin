@@ -311,8 +311,8 @@
 }
 
 /* ── MOBILE UTILS ── */
-/* Hide on phones (< 480px) */
-@media (max-width: 479px) {
+/* Hide on narrow phones (< 620px) — keeps nav bar from overflowing */
+@media (max-width: 619px) {
   .pg-hide-xs { display: none !important; }
 }
 
