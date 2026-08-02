@@ -13,71 +13,62 @@ export default function HomePage() {
     <>
       <SiteNav active="home" />
       <HomeHero />
-      <main
+
+      {/* ── WALL — full width, first thing ── */}
+      <div data-sec="wall" style={{ paddingTop: "clamp(60px,9vw,120px)" }}>
+        <HomeWall />
+      </div>
+
+      {/* ── STORY — chapter break, big breathing room ── */}
+      <div data-sec="story" style={{ paddingTop: "clamp(100px,14vw,200px)" }}>
+        <HomeStory />
+      </div>
+
+      {/* ── TWO SHIFTS — its own stage ── */}
+      <div data-sec="shifts" style={{ paddingTop: "clamp(100px,14vw,200px)" }}>
+        <HomeTwoShifts />
+      </div>
+
+      {/* ── GARAGE — wide open ── */}
+      <div
+        data-sec="garage"
         style={{
-          position: "relative",
-          zIndex: 1,
-          display: "flex",
-          flexDirection: "column",
-          /* Editorial funnel: generous breathing room between every section */
-          gap: "clamp(64px,10vw,140px)",
-          paddingBottom: "clamp(64px,10vw,140px)",
+          paddingTop: "clamp(100px,14vw,200px)",
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "clamp(100px,14vw,200px) clamp(16px,5vw,48px) 0",
         }}
       >
-        {/* The Wall — full-bleed, no padding */}
-        <div data-sec="wall">
-          <HomeWall />
-        </div>
+        <HomeGarage />
+      </div>
 
-        {/* Story — constrained content, full-bleed photo inside */}
-        <div data-sec="story">
-          <HomeStory />
-        </div>
+      {/* ── MEDIA KIT ── */}
+      <div
+        data-sec="mediakit"
+        style={{
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "clamp(100px,14vw,200px) clamp(16px,5vw,48px) 0",
+        }}
+      >
+        <HomeMediaKit />
+      </div>
 
-        {/* Two Shifts — constrained content, full-bleed photo inside */}
-        <div data-sec="shifts">
-          <HomeTwoShifts />
-        </div>
+      {/* ── ASK ME — closing stage ── */}
+      <div
+        data-sec="contact"
+        style={{
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "clamp(100px,14vw,200px) clamp(16px,5vw,48px) clamp(100px,14vw,200px)",
+        }}
+      >
+        <HomeAskMe />
+      </div>
 
-        {/* Garage */}
-        <div
-          data-sec="garage"
-          style={{
-            maxWidth: 1180,
-            width: "100%",
-            margin: "0 auto",
-            padding: "0 clamp(12px,4vw,40px)",
-          }}
-        >
-          <HomeGarage />
-        </div>
-
-        {/* Media Kit */}
-        <div
-          data-sec="mediakit"
-          style={{
-            maxWidth: 1180,
-            width: "100%",
-            margin: "0 auto",
-            padding: "0 clamp(12px,4vw,40px)",
-          }}
-        >
-          <HomeMediaKit />
-        </div>
-
-        {/* Ask Me */}
-        <div
-          data-sec="contact"
-          style={{
-            maxWidth: 1180,
-            width: "100%",
-            margin: "0 auto",
-            padding: "0 clamp(12px,4vw,40px)",
-          }}
-        >
-          <HomeAskMe />
-        </div>
-      </main>
       <SiteFooter />
     </>
   )

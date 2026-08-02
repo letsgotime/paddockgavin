@@ -205,10 +205,10 @@ export function HomeWall() {
           maxWidth: 1180,
           width: "100%",
           margin: "0 auto",
-          padding: "0 clamp(12px,4vw,40px)",
+          padding: "0 clamp(16px,5vw,48px)",
           display: "flex",
           flexWrap: "wrap",
-          gap: "clamp(16px,2.4vw,24px)",
+          gap: "clamp(48px,7vw,96px)",
           scrollMarginTop: 140,
         }}
       >
@@ -340,11 +340,11 @@ export function HomeWall() {
         {/* Right column */}
         <div
           style={{
-            flex: "4 1 260px",
+            flex: "4 1 280px",
             minWidth: 0,
             display: "flex",
             flexDirection: "column",
-            gap: "clamp(14px,2.4vw,22px)",
+            gap: "clamp(32px,5vw,56px)",
           }}
         >
           {/* Story card */}
