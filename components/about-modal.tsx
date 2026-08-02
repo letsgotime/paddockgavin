@@ -18,7 +18,7 @@ const AboutContent = () => (
     <div className="flex flex-col gap-6 p-8 md:p-10">
       {/* Driver plate */}
       <p className="driver-plate">
-        <strong style={{ color: "#fff" }}>Gavin Paddock</strong>
+        <strong style={{ color: "#fff" }}>Gavin Brooks</strong>
         <span style={{ color: "var(--steel-deep)", margin: "0 6px" }}>·</span>
         Nashville, TN
       </p>
@@ -41,29 +41,28 @@ const AboutContent = () => (
         style={{ color: "var(--steel)", fontSize: 15 }}
       >
         <p>
-          Lot operations manager at duPont REGISTRY. The 70,000-square-foot facility
-          where the cars that show up in the videos go first. If something&apos;s moving,
-          it comes through lot ops.
+          Agentic engineering studio out of Nashville. Built the ops tool running
+          $125M+/month through the duPont REGISTRY lot — active retainer, production
+          software, not a prototype. The tool handles what would otherwise fall through.
         </p>
         <p>
-          On the other shift: SupercarIQ, a tool that identifies any supercar from a
-          photo and returns spec, heritage, and what the collector market has been doing
-          with it. Built because the question came up every day on the lot and the
-          answer was always slower than it should be.
+          Also: SupercarIQ, a tool that identifies any supercar from a photo and returns
+          spec, heritage, and collector market data. Built because the question came up
+          every day on the lot and the answer was always slower than it should be.
         </p>
         <p>
-          The arc matters: started solving problems with Excel before there were better
-          tools. That&apos;s the IP. Human judgment and AI speed — production software,
-          not prototypes.
+          The arc: Excel pivot tables before no-code existed, certified across Microsoft
+          and Google enterprise stacks, then full-stack, then agentic. AI accelerates a
+          person who already knows how to do the work.
         </p>
       </div>
 
       {/* Telemetry */}
       <div className="telemetry mt-2">
-        <span>Brokered <b>78</b></span>
-        <span>Your fee <b>$0</b></span>
-        <span>Cars owned <b>29</b></span>
-        <span>Years <b>30+</b></span>
+        <span>Base <b>Nashville, TN</b></span>
+        <span>Revenue driven <b>$1.2B+</b></span>
+        <span>Throughput <b>$125M+/mo</b></span>
+        <span>Stack <b>Agentic</b></span>
       </div>
 
       {/* Kerb stripe */}
@@ -100,24 +99,26 @@ export const AboutModal = () => {
   const TriggerButton = () => (
     <button
       onClick={() => setOpen(true)}
-      className="notch-btn inline-flex items-center justify-center gap-2 font-sans font-bold uppercase tracking-[0.04em] w-full transition-all"
+      className="eyebrow"
       style={{
-        fontSize: 15,
-        padding: "15px 26px",
         background: "transparent",
-        color: "#fff",
-        border: "1px solid var(--line)",
+        border: "none",
+        color: "var(--steel)",
         cursor: "pointer",
+        letterSpacing: "0.22em",
+        borderBottom: "1px solid var(--line)",
+        paddingBottom: 2,
+        transition: "color 0.18s, border-color 0.18s",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
+        el.style.color = "var(--white)"
         el.style.borderColor = "var(--steel)"
-        el.style.background = "rgba(255,255,255,0.04)"
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
+        el.style.color = "var(--steel)"
         el.style.borderColor = "var(--line)"
-        el.style.background = "transparent"
       }}
     >
       About

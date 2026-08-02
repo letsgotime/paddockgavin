@@ -4,32 +4,45 @@ import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _archivo = Archivo({ subsets: ["latin"], variable: "--font-sans" })
+const _archivo = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-sans",
+  display: "swap",
+})
 const _archivoblack = Archivo_Black({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-display",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "Gavin Paddock — Nashville",
+  title: "PaddockGavin — two shifts, one paddock",
   description:
-    "Lot ops. Detailing. Supercar IQ. The person running the operation at duPont REGISTRY is also building the software.",
-  generator: "v0.app",
+    "Gavin runs lot operations and events for duPont REGISTRY by day, and builds software by night. Nashville, Tennessee.",
+  openGraph: {
+    title: "PaddockGavin — two shifts, one paddock",
+    description: "Cars used to be the reward. Now they're the work. Nashville, Tennessee.",
+    siteName: "PaddockGavin",
+    locale: "en_US",
+    type: "website",
+  },
+  robots: { index: true, follow: true },
 }
 
 export const viewport: Viewport = {
   themeColor: "#0E1A2A",
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="bg-[#0E1A2A]">
-      <body className="font-sans antialiased bg-[#0E1A2A] text-[#E6EAF0]">
+    <html lang="en" className="bg-[#0A1523]">
+      <body className={`${_archivo.variable} ${_archivoblack.variable} font-sans antialiased bg-[#0A1523] text-[#B4B6B2]`}>
         {children}
         <Analytics />
       </body>

@@ -4,136 +4,149 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* PaddockGavin — all colours are real automotive paints */
-  --yellow: #F8B800;        /* Porsche Signalgelb 114 / L114 */
-  --yellow-hi: #FFC81F;
-  --green: #00D2BE;         /* Mercedes-AMG Petronas F1 */
-  --green-hi: #3FE3D2;
-  --green-deep: #00302B;    /* type ON green */
-  --blue: #005185;          /* Ferrari Primary Blue — FILL ONLY */
-  --blue-pale: #CFE4F4;
-  --steel: #B4B6B2;         /* body copy on dark */
-  --steel-deep: #848482;    /* borders, captions */
-  --navy: #0E1A2A;          /* Asphalt Navy — the base */
-  --panel: #152538;
-  --deep: #0A1523;
-  --line: #27384F;
+  /* ── PALETTE — all real automotive paint ── */
+  --yellow:      #F8B800;   /* Porsche Signalgelb 114 — PRIMARY: headlines, buttons, wordmark */
+  --yellow-hi:   #FFC81F;
+  --green:       #00D2BE;   /* Mercedes-AMG Petronas F1 — SECONDARY INK: tabs, labels, links */
+  --green-deep:  #00302B;   /* type ON green */
+  --blue:        #005185;   /* Ferrari Primary Blue — FILL ONLY, never as ink on navy */
+  --blue-pale:   #CFE4F4;
+  --steel:       #B4B6B2;   /* body copy on dark */
+  --steel-deep:  #848482;   /* borders, captions */
+  --navy:        #0E1A2A;   /* Asphalt Navy — base */
+  --panel:       #152538;
+  --deep:        #0A1523;
+  --line:        #27384F;
+  --white:       #F4F6FA;
 
-  /* Semantic aliases for Tailwind @theme */
   --background: var(--navy);
-  --foreground: #E6EAF0;
+  --foreground: var(--white);
   --card: var(--panel);
-  --card-foreground: #E6EAF0;
+  --card-foreground: var(--white);
   --border: var(--line);
   --input: var(--panel);
-  --ring: var(--green);
+  --ring: var(--yellow);
   --muted: var(--panel);
   --muted-foreground: var(--steel);
   --radius: 0px;
 }
 
 @theme inline {
-  --font-sans: "Archivo", "Arial", system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --font-display: "Archivo Black", "Arial Black", Impact, system-ui, sans-serif;
+  --font-sans:    "Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-mono:    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: "Archivo Black", "Arial Black", Arial, system-ui, sans-serif;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  /* Brand tokens */
-  --color-yellow: var(--yellow);
-  --color-yellow-hi: var(--yellow-hi);
-  --color-green: var(--green);
-  --color-green-deep: var(--green-deep);
-  --color-blue: var(--blue);
-  --color-blue-pale: var(--blue-pale);
-  --color-steel: var(--steel);
-  --color-steel-deep: var(--steel-deep);
-  --color-navy: var(--navy);
-  --color-panel: var(--panel);
-  --color-deep: var(--deep);
-  --color-line: var(--line);
+  --color-background:        var(--background);
+  --color-foreground:        var(--foreground);
+  --color-card:              var(--card);
+  --color-card-foreground:   var(--card-foreground);
+  --color-border:            var(--border);
+  --color-input:             var(--input);
+  --color-ring:              var(--ring);
+  --color-muted:             var(--muted);
+  --color-muted-foreground:  var(--muted-foreground);
+  --color-yellow:            var(--yellow);
+  --color-green:             var(--green);
+  --color-blue:              var(--blue);
+  --color-steel:             var(--steel);
+  --color-steel-deep:        var(--steel-deep);
+  --color-navy:              var(--navy);
+  --color-panel:             var(--panel);
+  --color-line:              var(--line);
+  --color-white:             var(--white);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
-    font-size: 17px;
-    line-height: 1.62;
+    font-size: 15px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+  a { color: inherit; text-decoration: none; }
 }
 
-/* ---- Livery utilities (used across all components) ---- */
-
-/* Four-colour garage-door bar */
+/* ── LIVERY BAR — yellow > green > blue > steel ── */
+.livery-bar,
 .bars {
   display: flex;
-  height: 5px;
+  height: 4px;
   width: 100%;
+  flex-shrink: 0;
 }
-.bars i { flex: 1; }
-.bars i:nth-child(1) { background: var(--yellow); }
-.bars i:nth-child(2) { background: var(--green); }
-.bars i:nth-child(3) { background: var(--blue); }
-.bars i:nth-child(4) { background: var(--steel-deep); }
+.livery-bar i, .bars i { flex: 1; }
+.livery-bar i:nth-child(1), .bars i:nth-child(1) { background: var(--yellow); }
+.livery-bar i:nth-child(2), .bars i:nth-child(2) { background: var(--green); }
+.livery-bar i:nth-child(3), .bars i:nth-child(3) { background: var(--blue); }
+.livery-bar i:nth-child(4), .bars i:nth-child(4) { background: var(--steel-deep); }
 
-/* Kerb stripe — rumble strip between sections */
+/* ── KERB STRIPE — diagonal, between sections ── */
 .kerb {
   height: 9px;
-  background: repeating-linear-gradient(112deg, var(--yellow) 0 24px, var(--deep) 24px 48px);
+  width: 100%;
+  background: repeating-linear-gradient(
+    112deg,
+    var(--yellow) 0px 24px,
+    var(--deep)   24px 48px
+  );
 }
 .kerb-green {
   height: 9px;
-  background: repeating-linear-gradient(112deg, var(--green) 0 24px, var(--deep) 24px 48px);
+  width: 100%;
+  background: repeating-linear-gradient(
+    112deg,
+    var(--green) 0px 24px,
+    var(--deep)  24px 48px
+  );
 }
 .kerb-blue {
   height: 9px;
-  background: repeating-linear-gradient(112deg, var(--blue) 0 24px, var(--deep) 24px 48px);
+  width: 100%;
+  background: repeating-linear-gradient(
+    112deg,
+    var(--blue) 0px 24px,
+    var(--deep) 24px 48px
+  );
 }
 
-/* Sector tab — skewed section label */
+/* ── SECTOR TAB — skewed label, green fill ── */
 .sector-tab {
   display: inline-block;
   transform: skewX(-12deg);
   background: var(--green);
   color: var(--green-deep);
-  padding: 7px 17px;
-  font-size: 11.5px;
+  padding: 6px 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  margin: 0 0 14px;
 }
 .sector-tab i {
   display: inline-block;
   transform: skewX(12deg);
   font-style: normal;
 }
-.sector-tab-yellow {
+.sector-tab.yellow {
   background: var(--yellow);
   color: #101010;
 }
 
-/* Driver plate */
+/* ── DRIVER PLATE — mono label with green dash ── */
 .driver-plate {
   display: inline-flex;
   align-items: center;
   gap: 11px;
   font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--steel);
@@ -145,13 +158,23 @@
   background: var(--green);
   flex-shrink: 0;
 }
+.driver-plate b { color: #fff; font-weight: 700; }
 
-/* Telemetry bar */
+/* ── EYEBROW — floating mono label ── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--steel-deep);
+}
+
+/* ── TELEMETRY — sparse data row ── */
 .telemetry {
   display: inline-flex;
   flex-wrap: wrap;
   border: 1px solid var(--line);
-  background: #0C1929;
+  background: var(--deep);
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: 0.15em;
@@ -166,34 +189,117 @@
 .telemetry span:last-child { border-right: 0; }
 .telemetry b { color: var(--green); font-weight: 700; }
 
-/* Start lights */
+/* ── PRIMARY BUTTON — yellow fill, dark text ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #101010;
+  background: var(--yellow);
+  border: none;
+  padding: 14px 26px;
+  cursor: pointer;
+  transition: background 0.18s;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
+}
+.btn-primary:hover { background: var(--yellow-hi); }
+
+/* ── GHOST BUTTON ── */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid #3B4E68;
+  padding: 13px 26px;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
+}
+.btn-ghost:hover {
+  border-color: var(--steel);
+  background: rgba(255,255,255,0.04);
+}
+
+/* ── CARD — notched panel with accent left border ── */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: clamp(22px, 3.5vw, 32px);
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+}
+.card::after {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--yellow);
+}
+.card.green::after { background: var(--green); }
+.card.fill {
+  background: var(--blue);
+  border-color: #0A6BAA;
+}
+
+/* ── ACCENT SLASH ── */
+.accent-slash {
+  width: 32px;
+  height: 2px;
+  background: var(--yellow);
+  flex-shrink: 0;
+}
+
+/* ── FLOAT LABEL — overlaid on photography ── */
+.float-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244,246,250,0.55);
+}
+
+/* ── RACE NUMBER — ghost numeral ── */
+.racenum {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 14vw, 140px);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255,255,255,0.06);
+}
+
+/* ── START LIGHTS ── */
 .lights { display: flex; gap: 10px; align-items: center; }
 .lights i {
   width: 14px; height: 14px; border-radius: 50%;
   background: #1B2C42; border: 1px solid #2C4159;
 }
 .lights i.on {
-  background: var(--green); border-color: var(--green);
-  box-shadow: 0 0 12px rgba(0,210,190,.55);
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 12px rgba(0,210,190,0.55);
 }
 
-/* Panel notch */
-.notch-panel {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
-}
-.notch-btn {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 11px), calc(100% - 11px) 100%, 0 100%);
-}
-.notch-fig {
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+/* ── ANIMATIONS ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Race number watermark */
-.racenum {
-  font-family: var(--font-display);
-  font-size: 110px;
-  line-height: 0.8;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255,255,255,0.16);
-}
+/* ── LEGACY ALIASES ── */
+.notch-btn  { cursor: pointer; }
+.notch-panel { position: relative; }
