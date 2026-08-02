@@ -45,11 +45,11 @@ const BEHOLD_FEEDS = [
 
 const SEED_CAPTIONS = [
   "918 Spyder center-exit titanium pipes on the duPont Registry lot",
-  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
-  "964 Carrera catching the light on Franklin Rd",
+  "Widebody Cullinan on air, suicide doors open at the show",
+  "997 Carrera catching the light on Franklin Rd",
   "Downpipe off, hunting for the cats",
   "918 and P1 nose to nose on the duPont lot",
-  "918 in Liquid Metal Silver, eleven minutes before sunset",
+  "918 Spyder with the Weissach red accents, tucked in the garage",
 ]
 
 const SEED_IMAGES = [
