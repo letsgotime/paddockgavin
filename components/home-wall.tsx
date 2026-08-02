@@ -45,7 +45,7 @@ const BEHOLD_FEEDS = [
 
 const SEED_CAPTIONS = [
   "Holy Trinity storage",
-  "Widebody Cullinan on air, suicide doors open at the show",
+  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
   "997 Carrera catching the light on Franklin Rd",
   "Downpipe off, hunting for the cats",
   "918 and P1 nose to nose on the duPont lot",
