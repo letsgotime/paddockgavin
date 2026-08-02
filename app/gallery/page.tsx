@@ -266,7 +266,7 @@ export default function GalleryPage() {
   const readouts = [
     { label: "Pillars", value: "3", tone: "#00D2BE" },
     { label: "Frames", value: loaded ? String(items.length) : "\u2014", tone: "#F8B800" },
-    { label: "Followers", value: profile?.followersCount ? fmt(profile.followersCount) : "@itspaddockgavin", tone: "#4BA3DE" },
+    { label: "Followers", value: profile?.followersCount ? fmt(profile.followersCount) : "@PaddockGavin", tone: "#4BA3DE" },
   ]
 
   return (
@@ -529,7 +529,7 @@ export default function GalleryPage() {
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
             <a
-              href="https://instagram.com/itspaddockgavin"
+              href="https://instagram.com/PaddockGavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#00D2BE", color: "#00302B", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}

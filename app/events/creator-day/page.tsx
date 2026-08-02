@@ -87,7 +87,7 @@ export default function CreatorDayPage() {
         style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
       >
         <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/speedway-row.webp" alt="" fill style={{ objectFit: "cover" }} />
+          <Image src="/images/cullinan-speedway.webp" alt="" fill style={{ objectFit: "cover" }} />
         </div>
         <div
           style={{
@@ -227,7 +227,7 @@ export default function CreatorDayPage() {
               RSVP
             </a>
             <a
-              href="https://ig.me/m/itspaddockgavin"
+              href="https://ig.me/m/PaddockGavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -239,7 +239,7 @@ export default function CreatorDayPage() {
                 textDecoration: "none",
               }}
             >
-              DM @itspaddockgavin
+              DM @PaddockGavin
             </a>
           </div>
         </section>
@@ -340,8 +340,8 @@ export default function CreatorDayPage() {
           }}
         >
           <Image
-            src="/images/gt3rs-lineup.jpg"
-            alt="Two GT3 RSs and a G-Wagen 4x4 squared at dusk"
+            src="/images/donuts-lot.webp"
+            alt="Cars lined up across the lot at the meet"
             fill
             style={{ objectFit: "cover" }}
           />
@@ -475,7 +475,7 @@ export default function CreatorDayPage() {
                     fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4",
                   }}
                 >
-                  {status === "error" ? "Could not send \u2014 DM @itspaddockgavin instead" : status === "sent" ? "I\u2019ll be in touch" : "Free entry \u00b7 all welcome"}
+                  {status === "error" ? "Could not send \u2014 DM @PaddockGavin instead" : status === "sent" ? "I\u2019ll be in touch" : "Free entry \u00b7 all welcome"}
                 </span>
               </div>
             </div>

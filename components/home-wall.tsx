@@ -44,12 +44,12 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
-  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
-  "992 GT3 Catback Exhaust inspection, looking for cats lol",
   "Holy Trinity storage",
-  "918 and P1 nose to nose on the duPont lot",
-  "918 in Liquid Metal Silver, eleven minutes before sunset",
+  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
+  "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
+  "992 GT3 Catback Exhaust inspection, looking for cats lol",
+  "Holy Trinity Charging Center",
+  "918 Spyder with the Weissach red accents, tucked in the garage",
 ]
 
 const SEED_IMAGES = [
@@ -185,7 +185,7 @@ export function HomeWall() {
     { label: "Frames",  value: String(items.length), tone: "#00D2BE" },
     { label: "Shot on", value: "A phone",             tone: "#F8B800" },
     ...(profile?.followersCount
-      ? [{ label: `@${profile.username || "itspaddockgavin"}`, value: profile.followersCount >= 1000 ? (profile.followersCount / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(profile.followersCount), tone: "#B4B6B2" }]
+      ? [{ label: `@${profile.username || "PaddockGavin"}`, value: profile.followersCount >= 1000 ? (profile.followersCount / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(profile.followersCount), tone: "#B4B6B2" }]
       : [{ label: "Location", value: "Nashville TN", tone: "#B4B6B2" }]),
   ]
 
@@ -463,12 +463,13 @@ export function HomeWall() {
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid — flex so the last row stretches to fill (no barren gaps) */}
         <div
           style={{
             flex: "1 1 100%",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill,minmax(min(200px,46%),1fr))",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "stretch",
             gap: "clamp(12px,1.8vw,18px)",
           }}
         >
@@ -489,10 +490,10 @@ export function HomeWall() {
                 WebkitBackdropFilter: "blur(18px) saturate(150%)",
                 boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
                 overflow: "hidden",
-                width: "100%",
+                flex: c.wide ? "3 1 min(320px,90%)" : "2 1 min(220px,44%)",
+                minWidth: 0,
                 textAlign: "left",
                 aspectRatio: c.wide ? "3/2" : "4/5",
-                gridColumn: c.wide ? "span 2" : "auto",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
               }}
             >
@@ -571,7 +572,7 @@ export function HomeWall() {
         {/* CTA row */}
         <div style={{ flex: "1 1 100%", display: "flex", gap: 10, flexWrap: "wrap" }}>
           <a
-            href="https://instagram.com/itspaddockgavin"
+            href="https://instagram.com/PaddockGavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -589,7 +590,7 @@ export function HomeWall() {
               textDecoration: "none",
             }}
           >
-            Follow @itspaddockgavin
+            Follow @PaddockGavin
           </a>
           <a
             href="/gallery"

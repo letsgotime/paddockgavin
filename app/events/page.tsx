@@ -40,7 +40,7 @@ const EVENTS = [
     when: "Golden hour to golden hour",
     entry: "Free",
     blurb: "Four to five installations with cars, and creators of every kind invited. Shoot, film, paint, create \u2014 post your best, duPont votes, winner takes the bundle and a full day with a duPont car.",
-    img: "/images/speedway-row-sq.webp",
+    img: "/images/cullinan-speedway-sq.webp",
     href: "/events/creator-day",
     cta: "The page",
     tone: "#F8B800",
@@ -193,7 +193,7 @@ export default function EventsPage() {
 
         {/* Creator Day feature card */}
         <section id="creator-day" style={{ position: "relative", background: "linear-gradient(150deg,rgba(248,184,0,.1),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(248,184,0,.3)", borderTop: "3px solid #F8B800", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", isolation: "isolate", padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
-          <Image src="/images/speedway-row.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }} />
+          <Image src="/images/cullinan-speedway.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(160deg,rgba(14,26,42,.97) 0%,rgba(14,26,42,.9) 52%,rgba(14,26,42,.64) 100%)" }} />
           <div style={{ flex: "6 1 320px", minWidth: 0, display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
@@ -215,8 +215,8 @@ export default function EventsPage() {
               <Link href="/events/creator-day" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 Creator Day, the page
               </Link>
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                or DM @itspaddockgavin
+              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+                or DM @PaddockGavin
               </a>
             </div>
           </div>
@@ -224,9 +224,9 @@ export default function EventsPage() {
           <div style={{ flex: "4 1 240px", minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignContent: "center" }}>
             {[
               { src: "/images/creator-booth-alt.jpg", alt: "Shooting the Ford GT MkII in the studio", mt: 0 },
-              { src: "/images/gt3rs-floor-sq.webp",   alt: "996 GT3 RS Cup Conversion on the floor",  mt: 18 },
-              { src: "/images/senna-splitter-sq.webp",alt: "Senna splitter, up close",                mt: 0 },
-              { src: "/images/veyron-wing-sq.webp",   alt: "Veyron wing",                             mt: 18 },
+              { src: "/images/cage-rig-sq.webp",       alt: "Caged race build on the floor",           mt: 18 },
+              { src: "/images/aston-wheel-sq.webp",    alt: "Aston Martin wheel, up close",            mt: 0 },
+              { src: "/images/f458-side-sq.webp",      alt: "Ferrari 458 side profile",                mt: 18 },
             ].map((img, i) => (
               <div key={i} style={{ aspectRatio: "1", overflow: "hidden", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", position: "relative", marginTop: img.mt }}>
                 <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover" }} />
@@ -298,7 +298,7 @@ export default function EventsPage() {
 
         {/* Full bleed — urus on deck */}
         <section style={{ position: "relative", width: "100%", height: "clamp(340px,56vh,600px)", overflow: "hidden" }}>
-          <Image src="/images/urus-deck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
+          <Image src="/images/ferrari-upperdeck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,.12) 42%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 0 20px", display: "flex", alignItems: "center", gap: 11 }}>
@@ -320,8 +320,8 @@ export default function EventsPage() {
               <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Private events &middot; your date</span>
               <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.8vw,42px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch" }}>Your event, on duPont REGISTRY&rsquo;s floor</h2>
               <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "50ch" }}>The room is duPont&rsquo;s, in Lebanon, and booking it out is part of my job. It&rsquo;s not just the room that makes it special &mdash; it&rsquo;s what&rsquo;s passing through while you&rsquo;re there. Send a date and I&rsquo;ll check it.</p>
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.4)", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
-                Rather DM? @itspaddockgavin
+              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.4)", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
+                Rather DM? @PaddockGavin
               </a>
             </div>
             <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -352,7 +352,7 @@ export default function EventsPage() {
                   {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
                 </button>
                 <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4" }}>
-                  {status === "error" ? "Could not send \u2014 DM @itspaddockgavin instead" : status === "sent" ? "Landed in my inbox" : "DM @itspaddockgavin for a faster response"}
+                  {status === "error" ? "Could not send \u2014 DM @PaddockGavin instead" : status === "sent" ? "Landed in my inbox" : "DM @PaddockGavin for a faster response"}
                 </span>
               </div>
             </div>

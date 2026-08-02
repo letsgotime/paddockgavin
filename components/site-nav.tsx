@@ -134,8 +134,8 @@ export function SiteNav({ active = "home" }: Props) {
     return () => { document.documentElement.style.overflow = "" }
   }, [open])
 
-  const shiftColor = shift === "day" ? "#F8B800" : "#00D2BE"
-  const shiftLabel = shift === "day" ? "Day shift" : "Night shift"
+  const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
+  const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
 
   return (
     <>
@@ -166,7 +166,7 @@ export function SiteNav({ active = "home" }: Props) {
               display: "flex",
               alignItems: "center",
               gap: "clamp(10px,2vw,20px)",
-              padding: "11px clamp(14px,4vw,40px)",
+              padding: "11px clamp(20px,4vw,48px) 11px clamp(20px,4vw,48px)",
             }}
           >
             {/* Logo */}
@@ -198,7 +198,7 @@ export function SiteNav({ active = "home" }: Props) {
                 }}
               >
                 <span style={{ color: "#F8B800" }}>Paddock</span>
-                <span style={{ color: "#00D2BE" }}>Gavin</span>
+                <span style={{ color: "#57C7F5" }}>Gavin</span>
               </span>
             </Link>
 
@@ -610,7 +610,7 @@ export function SiteNav({ active = "home" }: Props) {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com/itspaddockgavin"
+                href="https://instagram.com/PaddockGavin"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -648,7 +648,7 @@ export function SiteNav({ active = "home" }: Props) {
                     color: "#EDF1F6",
                   }}
                 >
-                  @itspaddockgavin
+                  @PaddockGavin
                 </p>
               </a>
             </div>
