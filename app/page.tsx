@@ -10,7 +10,7 @@ import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 // Full-bleed photo break — no max-width, edge to edge
-function PhotoBreak({ src, pos = "center 40%", h = "clamp(180px,28vw,320px)" }: { src: string; pos?: string; h?: string }) {
+function PhotoBreak({ src, pos = "center 40%", h = "clamp(280px,42vw,440px)" }: { src: string; pos?: string; h?: string }) {
   return (
     <div aria-hidden="true" style={{ width: "100%", height: h, position: "relative", overflow: "hidden" }}>
       <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
