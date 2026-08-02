@@ -55,16 +55,16 @@ export default function HomePage() {
         <HomeStory />
       </Stage>
 
-      {/* ── BREAK ── F458 vents ────────────────────── */}
-      <PhotoBreak src="/images/f458-vents.webp" pos="center 40%" />
+      {/* ── BREAK ── Cullinan doors ────────────────── */}
+      <PhotoBreak src="/images/cullinan-doors.webp" pos="center 30%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
         <HomeTwoShifts />
       </Stage>
 
-      {/* ── BREAK ── 993 on fire road ──────────────── */}
-      <PhotoBreak src="/images/g993-fire.webp" pos="center 35%" />
+      {/* ── BREAK ── Gavin at the event ────────────── */}
+      <PhotoBreak src="/images/gavin-bar.webp" pos="center top" />
 
       {/* ── 4. THE GARAGE ─────────────────────────── */}
       <Stage sec="garage">
