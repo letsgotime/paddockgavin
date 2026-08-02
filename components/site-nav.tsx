@@ -82,7 +82,7 @@ export function SiteNav({ active = "home" }: Props) {
       const e = t("civil_twilight_end") - t("sunset")
       return [
         { name: "Sunrise", start: t("sunrise") - (m * 2) / 3, end: t("sunrise") + m },
-        { name: "Sunset", start: t("sunset") - e, end: t("sunset") + (e * 2) / 3 },
+        { name: "Evening", start: t("sunset") - e, end: t("sunset") + (e * 2) / 3 },
       ]
     }
     try {

@@ -59,15 +59,17 @@ export function HomeHero() {
         const setEnd    = sunset + 30 * 60000
 
         if (nowTs >= riseStart && nowTs <= riseEnd) {
-          setGolden("Sunrise · happening now")
+          const minsLeft = Math.max(1, Math.round((riseEnd - nowTs) / 60000))
+          setGolden(`Golden hour · now · ${minsLeft} min left`)
         } else if (nowTs >= setStart && nowTs <= setEnd) {
-          setGolden("Sunset · happening now")
+          const minsLeft = Math.max(1, Math.round((setEnd - nowTs) / 60000))
+          setGolden(`Golden hour · now · ${minsLeft} min left`)
         } else if (nowTs < riseStart) {
-          // Before sunrise golden hour today — show it
-          setGolden(`Sunrise ${fmt(riseStart)}`)
+          const dur = Math.round((riseEnd - riseStart) / 60000)
+          setGolden(`Golden hour ${fmt(riseStart)} · ${dur} min`)
         } else if (nowTs < setStart) {
-          // Between sunrise end and sunset golden hour — show sunset
-          setGolden(`Sunset ${fmt(setStart)}`)
+          const dur = Math.round((setEnd - setStart) / 60000)
+          setGolden(`Golden hour ${fmt(setStart)} · ${dur} min`)
         } else {
           // Past sunset — fetch tomorrow's sunrise
           const tom = new Date(now)
