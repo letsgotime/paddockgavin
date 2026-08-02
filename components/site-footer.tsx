@@ -281,6 +281,7 @@ export function SiteFooter() {
             {[
               { href: "/gallery",                  label: "The gallery",      ext: false },
               { href: "/garage",                   label: "The garage",       ext: false },
+              { href: "/why-a-paddock",            label: "Why a Paddock",    ext: false },
               { href: "/connect",                  label: "Every link",       ext: false },
               { href: "https://gavinbrookshq.com", label: "gavinbrookshq.com", ext: true },
             ].map((l) => (

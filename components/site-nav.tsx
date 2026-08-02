@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { key: "scoreboard",href: "/scoreboard",label: "Scoreboard",         note: "What I build",       tone: "#4BA3DE" },
   { key: "events",    href: "/events",    label: "Events",             note: "Book the floor",     tone: "#4BA3DE" },
   { key: "donuts",    href: "/donuts",    label: "Donuts with duPont", note: "Come by",            tone: "#F8B800" },
+  { key: "why",       href: "/why-a-paddock", label: "Why a Paddock",  note: "The word",           tone: "#00D2BE" },
   { key: "lotops",    href: "/lot-ops",   label: "Lot ops",            note: "The gate at eight",  tone: "#00D2BE" },
   { key: "book",      href: "/book",      label: "Book it",            note: "Club, vendor, sales",tone: "#F8B800" },
   { key: "connect",   href: "/connect",   label: "Connect",            note: "Every link",         tone: "#00D2BE" },
