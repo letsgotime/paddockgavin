@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -8,45 +8,47 @@ import { SiteFooter } from "@/components/site-footer"
 type Step = 0 | 1 | 2 | 3 | 4   // 0 Car · 1 Condition · 2 Route · 3 You · 4 Done
 
 const STEPS = [
-  { label: "The car",        datum: "Step 1 of 4" },
-  { label: "Condition",      datum: "Step 2 of 4" },
-  { label: "What you want",  datum: "Step 3 of 4" },
-  { label: "Your details",   datum: "Step 4 of 4" },
-  { label: "Done",           datum: ""            },
+  { label: "The car",     datum: "Step 01", head: "Tell me what",     sub: "you have.",         blurb: "Start with the VIN and our decoder pulls the rest. No VIN to hand? Type what you know."                                                                                              },
+  { label: "Condition",   datum: "Step 02", head: "How it has",        sub: "been kept.",        blurb: "Straight answers here are worth money. A car with a known story sells faster than a perfect one with gaps."                                                                           },
+  { label: "The route",   datum: "Step 03", head: "Where it",          sub: "should sell.",      blurb: "Three inventories, three different buyers. Pick one, or leave it to the concierge."                                                                                                   },
+  { label: "You",         datum: "Step 04", head: "Where do I",        sub: "reach you?",        blurb: "This goes to the duPont REGISTRY auction concierge. They come back within 24 to 48 business hours with a number and the inventory it belongs in."                                     },
+  { label: "Sent",        datum: "",        head: "Got it —",           sub: "I will come back to you.", blurb: "" },
 ]
 
 const ROUTES = [
-  { id: "list",   name: "List it on duPont REGISTRY",    speed: "Full exposure",     blurb: "The largest luxury and exotic marketplace. Your car in front of a global buyer pool."    },
-  { id: "net",    name: "Network it to a buyer first",   speed: "Faster close",      blurb: "Show it quietly to pre-qualified buyers before it goes public. Works for high-value cars." },
-  { id: "either", name: "Whichever gets it done faster", speed: "Your call",         blurb: "Tell me the spec and the timeline, and I will recommend the right route."                  },
+  { id: "wholesale", name: "WHOLESALE",      speed: "Fastest",      blurb: "Dealer to dealer, run through Manheim Nashville on Wednesdays. A clean number and the car is gone. No tyre kickers, no weekend viewings." },
+  { id: "drlive",    name: "dR LIVE AUCTION",speed: "No reserve",   blurb: "A no reserve live auction at live.dupontregistry.com. Select vehicles are taken on through dR LIVE Consignment to run in it."           },
+  { id: "retail",    name: "dR RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it — takes longer, and usually pays the most."  },
+  { id: "unsure",    name: "NOT SURE YET",   speed: "Ask me",       blurb: "Tell us the car and what matters most — speed or price — and the concierge will point you at the right inventory."                        },
 ]
 
-const CONDITION_OPTS = {
-  overall:   ["Excellent", "Good", "Fair", "Project"],
-  title:     ["Clean", "Salvage", "Rebuilt", "Not sure"],
-  accidents: ["None", "Minor", "Major", "Not sure"],
-  owners:    ["1", "2", "3+", "Not sure"],
-}
+const CHIP_GROUPS = [
+  { key: "title",    label: "Title status",    opts: ["Clean", "Salvage", "Rebuilt", "Lien on it"]           },
+  { key: "accident", label: "Accident history",opts: ["None", "Reported, repaired", "Not sure"]              },
+  { key: "owners",   label: "Owners",          opts: ["I am the first", "Second", "Third or more", "Not sure"]},
+  { key: "records",  label: "Service records", opts: ["Full history", "Partial", "None"]                      },
+]
 
 interface V {
   year: string; make: string; model: string; trim: string;
   mileage: string; trans: string; ext: string; int: string; vin: string;
   provenance: string; mods: string; notes: string;
-  overall: string; title: string; accidents: string; owners: string;
+  title: string; accident: string; owners: string; records: string;
   price: string; timing: string; route: string;
-  name: string; phone: string; email: string;
+  name: string; phone: string; email: string; zip: string;
 }
 
 const EMPTY: V = {
   year: "", make: "", model: "", trim: "",
   mileage: "", trans: "", ext: "", int: "", vin: "",
   provenance: "", mods: "", notes: "",
-  overall: "", title: "", accidents: "", owners: "",
+  title: "", accident: "", owners: "", records: "",
   price: "", timing: "", route: "",
-  name: "", phone: "", email: "",
+  name: "", phone: "", email: "", zip: "",
 }
 
 type SendStatus = "idle" | "sending" | "sent" | "error"
+type VinState = "idle" | "busy" | "ok" | "warn"
 
 const inputSt: React.CSSProperties = {
   width: "100%", background: "#122135", border: "1px solid #2A3B52",
@@ -60,16 +62,63 @@ const labelSt: React.CSSProperties = {
   letterSpacing: ".13em", textTransform: "uppercase", color: "#9BA5B3",
 }
 
+function titleCase(x: string) {
+  return String(x || "").toLowerCase().replace(/\b([a-z])/g, (_, c) => c.toUpperCase())
+}
+
 export default function IntakePage() {
-  const [step, setStep]   = useState<Step>(0)
-  const [v, setV]         = useState<V>(EMPTY)
-  const [send, setSend]   = useState<SendStatus>("idle")
+  const [step, setStep]           = useState<Step>(0)
+  const [v, setV]                 = useState<V>(EMPTY)
+  const [send, setSend]           = useState<SendStatus>("idle")
+  const [vinStatus, setVinStatus] = useState("")
+  const [vinState, setVinState]   = useState<VinState>("idle")
 
   const set = (k: keyof V) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setV((prev) => ({ ...prev, [k]: e.target.value }))
 
   const toggle = (k: keyof V, val: string) =>
     setV((prev) => ({ ...prev, [k]: prev[k] === val ? "" : val }))
+
+  const decodeVin = useCallback(async (vin: string) => {
+    if (vin.length !== 17) {
+      setVinStatus(`A VIN is 17 characters — ${vin.length} so far`)
+      setVinState("warn")
+      return
+    }
+    setVinStatus("Decoding…")
+    setVinState("busy")
+    try {
+      const res  = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/${encodeURIComponent(vin)}?format=json`)
+      const json = await res.json()
+      const d    = (json.Results && json.Results[0]) || {}
+      if (!d.Make && !d.ModelYear) {
+        setVinStatus("Our decoder found nothing for that VIN — fill it in by hand")
+        setVinState("warn")
+        return
+      }
+      const next: Partial<V> = {}
+      if (d.ModelYear)         next.year  = d.ModelYear
+      if (d.Make)              next.make  = titleCase(d.Make)
+      if (d.Model)             next.model = titleCase(d.Model)
+      const trim = d.Trim || d.Series || ""
+      if (trim)                next.trim  = titleCase(trim)
+      const trans = d.TransmissionStyle || (d.TransmissionSpeeds ? `${d.TransmissionSpeeds}-speed` : "")
+      if (trans)               next.trans = titleCase(trans)
+      setV((prev) => ({ ...prev, ...next }))
+      setVinStatus([next.year, next.make, next.model].filter(Boolean).join(" ") + " — check it and fill in the rest")
+      setVinState("ok")
+    } catch {
+      setVinStatus("Our decoder is not answering — fill it in by hand")
+      setVinState("warn")
+    }
+  }, [])
+
+  const onVinInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 17)
+    setV((prev) => ({ ...prev, vin: val }))
+    if (val.length === 17) setTimeout(() => decodeVin(val), 60)
+    else if (vinStatus) { setVinStatus(""); setVinState("idle") }
+  }
 
   const submit = async () => {
     if (send === "sending") return
@@ -82,8 +131,6 @@ export default function IntakePage() {
           kind: "intake",
           message: `Intake: ${v.year} ${v.make} ${v.model}`.trim() || "Car intake",
           page: "/intake",
-          year: v.year, make: v.make, model: v.model, trim: v.trim,
-          mileage: v.mileage, vin: v.vin, color: v.ext,
           ...v,
         }),
       })
@@ -102,32 +149,31 @@ export default function IntakePage() {
 
   const pct = step >= 4 ? 100 : ((step + 1) / 4) * 100
 
-  const chip = (group: keyof V, val: string) => (
-    <button
-      key={val}
-      type="button"
-      onClick={() => toggle(group, val)}
-      style={{
-        background: v[group] === val ? "rgba(248,184,0,.1)" : "transparent",
-        border: `1px solid ${v[group] === val ? "#F8B800" : "rgba(255,255,255,.22)"}`,
-        color: "#DDE3EB",
-        fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 14,
-        letterSpacing: ".1em", textTransform: "uppercase", padding: "12px 18px",
-        cursor: "pointer", transition: "border-color .18s,background .18s",
-      }}
-    >
-      {val}
-    </button>
-  )
+  const vinStatusColor = vinState === "ok" ? "#00D2BE" : vinState === "warn" ? "#F8B800" : "#9BA5B3"
+
+  const routeName = (ROUTES.find((r) => r.id === v.route) || {}).name
+
+  const cap = (x?: string) => x ? String(x).toUpperCase() : "—"
+  const money = (x?: string) => {
+    if (!x) return "—"
+    const n = String(x).replace(/[^0-9.]/g, "")
+    if (!n) return String(x).toUpperCase()
+    return "$" + Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 })
+  }
 
   const summary = [
-    v.year && { k: "Year",    v: v.year    },
-    v.make && { k: "Make",    v: v.make    },
-    v.model && { k: "Model",   v: v.model   },
-    v.mileage && { k: "Miles",   v: v.mileage },
-    v.ext && { k: "Colour",  v: v.ext     },
-    v.price && { k: "Asking",  v: v.price   },
-  ].filter(Boolean) as { k: string; v: string }[]
+    { k: "Car",       v: cap([v.year, v.make, v.model, v.trim].filter(Boolean).join(" ")) },
+    { k: "Mileage",   v: v.mileage ? Number(String(v.mileage).replace(/[^0-9]/g, "")).toLocaleString("en-US") + " MI" : "—" },
+    { k: "VIN",       v: v.vin ? "…" + v.vin.slice(-8) : "—" },
+    { k: "Title",     v: cap(v.title) },
+    { k: "Accidents", v: cap(v.accident) },
+    { k: "Owners",    v: cap(v.owners) },
+    { k: "Records",   v: cap(v.records) },
+    { k: "Asking",    v: money(v.price) },
+    { k: "Route",     v: routeName || "—" },
+  ]
+
+  const cur = STEPS[Math.min(step, 4)]
 
   return (
     <>
@@ -142,14 +188,14 @@ export default function IntakePage() {
         {/* Step header */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 14, margin: "0 0 clamp(16px,2vw,24px)" }}>
           <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: "clamp(15px,1.05vw,19px)", letterSpacing: ".14em", color: "#4BA3DE", fontVariantNumeric: "tabular-nums", flex: "0 0 auto" }}>
-            {step < 4 ? `0${step + 1}` : ""}
+            {step < 4 ? `Step ${step + 1} of 4` : "Sent"}
           </span>
           <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: "clamp(15px,1.05vw,19px)", letterSpacing: ".16em", textTransform: "uppercase", color: "#EDF1F6", flex: "0 0 auto" }}>
-            {STEPS[step].label}
+            {cur.label}
           </span>
           <i style={{ flex: "1 1 auto", height: 5, background: "repeating-linear-gradient(90deg,rgba(255,255,255,.26) 0 1px,transparent 1px 7px)" }} />
           <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: "clamp(13.5px,.85vw,16px)", letterSpacing: ".15em", textTransform: "uppercase", color: "#B8C1CD", flex: "0 0 auto" }}>
-            {STEPS[step].datum}
+            {cur.datum}
           </span>
         </div>
 
@@ -159,37 +205,65 @@ export default function IntakePage() {
         </div>
 
         {/* Headline */}
-        {step < 4 && (
+        {step < 5 && (
           <>
             <h1 style={{ margin: "0 0 14px", maxWidth: "22ch" }}>
               <span style={{ display: "block", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 800, fontSize: "clamp(30px,3vw,44px)", lineHeight: 1, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>
-                {["Tell me about the car", "How does it present?", "Which way do you want to go?", "Where do I send the reply?"][step]}
+                {cur.head}
               </span>
               <span style={{ display: "block", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 400, fontSize: "clamp(29px,2.9vw,42px)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#F8B800" }}>
-                {["Year, make, model, VIN.", "Honest is fine.", "I\u2019ll get you to the right room.", "Name and email."][step]}
+                {cur.sub}
               </span>
             </h1>
-            <p style={{ margin: "0 0 clamp(26px,3.2vw,40px)", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "58ch" }}>
-              {[
-                "The fee to you is zero. Deals run on duPont\u2019s dealer licence. Start with what you know.",
-                "Provenance, condition and any mods. Nothing disqualifies a car \u2014 being straight with me means no surprises later.",
-                "Every car sells through duPont REGISTRY either way. Pick the route that fits the timeline.",
-                "A person answers \u2014 usually me. No auto-replies, no account managers.",
-              ][step]}
-            </p>
+            {cur.blurb && (
+              <p style={{ margin: "0 0 clamp(26px,3.2vw,40px)", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "58ch" }}>
+                {cur.blurb}
+              </p>
+            )}
           </>
         )}
 
         {/* ── STEP 0: The car ───────────────────────────────── */}
         {step === 0 && (
           <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F8B800", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,36px)" }}>
-            {/* VIN */}
+            {/* VIN row */}
             <div style={{ marginBottom: "clamp(18px,2.2vw,26px)", paddingBottom: "clamp(18px,2.2vw,26px)", borderBottom: "1px solid rgba(255,255,255,.13)" }}>
               <span style={labelSt}>VIN</span>
-              <input type="text" maxLength={17} autoCapitalize="characters" spellCheck={false} placeholder="Off the door jamb or the base of the windshield" value={v.vin} onChange={set("vin")} style={{ ...inputSt }} />
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <input
+                  type="text" maxLength={17} autoCapitalize="characters" spellCheck={false}
+                  placeholder="Off the door jamb or the base of the windshield"
+                  value={v.vin} onChange={onVinInput}
+                  style={{ ...inputSt, flex: "1 1 280px", minWidth: 0, letterSpacing: ".1em", textTransform: "uppercase" }}
+                />
+                <button
+                  type="button"
+                  onClick={() => decodeVin(v.vin)}
+                  style={{
+                    flex: "0 0 auto", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700,
+                    fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase",
+                    background: "#F8B800", color: "#0E1A2A", border: 0,
+                    padding: "13px 24px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
+                    cursor: "pointer",
+                  }}
+                >
+                  Decode
+                </button>
+              </div>
+              {vinStatus && (
+                <p style={{ margin: "10px 0 0", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: ".1em", textTransform: "uppercase", color: vinStatusColor }}>
+                  {vinStatus}
+                </p>
+              )}
             </div>
+
+            {/* Car fields */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(155px,100%),1fr))", gap: "clamp(15px,1.8vw,20px)" }}>
-              {([["Year","year","2019"],["Make","make","Porsche"],["Model","model","911 GT3"],["Trim","trim","Touring"],["Mileage","mileage","12,400"],["Transmission","trans","PDK"],["Exterior","ext","Guards Red"],["Interior","int","Black"]] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
+              {([
+                ["Year", "year", "2019"], ["Make", "make", "Porsche"], ["Model", "model", "911 GT3"],
+                ["Trim", "trim", "Touring"], ["Mileage", "mileage", "12,400"], ["Transmission", "trans", "PDK"],
+                ["Exterior", "ext", "Shark Blue"], ["Interior", "int", "Black leather"],
+              ] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
                 <label key={key} style={{ display: "block" }}>
                   <span style={labelSt}>{lbl}</span>
                   <input type="text" placeholder={ph} value={v[key]} onChange={set(key)} style={inputSt} />
@@ -202,13 +276,35 @@ export default function IntakePage() {
         {/* ── STEP 1: Condition ─────────────────────────────── */}
         {step === 1 && (
           <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #4BA3DE", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,36px)" }}>
-            {(Object.entries(CONDITION_OPTS) as [keyof typeof CONDITION_OPTS, string[]][]).map(([grp, opts]) => (
-              <div key={grp} style={{ marginBottom: "clamp(20px,2.4vw,28px)" }}>
-                <p style={{ margin: "0 0 12px", ...labelSt as object }}>{grp === "overall" ? "Overall" : grp === "title" ? "Title" : grp === "accidents" ? "Accidents" : "Previous owners"}</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>{opts.map((o) => chip(grp as keyof V, o))}</div>
+            {CHIP_GROUPS.map(({ key, label, opts }) => (
+              <div key={key} style={{ marginBottom: "clamp(20px,2.4vw,28px)" }}>
+                <p style={{ margin: "0 0 12px", ...labelSt as object }}>{label}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                  {opts.map((o) => (
+                    <button
+                      key={o}
+                      type="button"
+                      onClick={() => toggle(key as keyof V, o)}
+                      style={{
+                        background: v[key as keyof V] === o ? "rgba(248,184,0,.1)" : "transparent",
+                        border: `1px solid ${v[key as keyof V] === o ? "#F8B800" : "rgba(255,255,255,.22)"}`,
+                        color: "#DDE3EB",
+                        fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 14,
+                        letterSpacing: ".1em", textTransform: "uppercase", padding: "12px 18px",
+                        cursor: "pointer", transition: "border-color .18s,background .18s",
+                      }}
+                    >
+                      {o}
+                    </button>
+                  ))}
+                </div>
               </div>
             ))}
-            {([ ["Provenance","provenance","Where it came from, who had it, anything documented. Window sticker, build sheet, books and tools."], ["Modifications","mods","Wheels, exhaust, tune. Or tell me it is stock."], ["Anything I should know","notes","Chips, a warning light, service coming due. Telling me now saves us both a trip."] ] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
+            {([
+              ["Provenance", "provenance", "Where it came from, who had it, anything documented. Window sticker, build sheet, books and tools."],
+              ["Modifications", "mods", "Wheels, exhaust, tune. Or tell me it is stock."],
+              ["Anything I should know", "notes", "Chips, a warning light, service coming due. Telling me now saves us both a trip."],
+            ] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
               <label key={key} style={{ display: "block", marginBottom: 16 }}>
                 <span style={labelSt}>{lbl}</span>
                 <textarea placeholder={ph} value={v[key]} onChange={set(key)} style={{ ...inputSt, minHeight: 106, resize: "vertical" }} />
@@ -226,7 +322,13 @@ export default function IntakePage() {
                   key={r.id}
                   type="button"
                   onClick={() => setV((prev) => ({ ...prev, route: r.id }))}
-                  style={{ display: "block", width: "100%", textAlign: "left", background: v.route === r.id ? "rgba(248,184,0,.07)" : "#0A1523", border: `1px solid ${v.route === r.id ? "#F8B800" : "rgba(255,255,255,.16)"}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)", padding: "clamp(18px,2vw,26px)", cursor: "pointer", transition: "border-color .18s,background .18s" }}
+                  style={{
+                    display: "block", width: "100%", textAlign: "left",
+                    background: v.route === r.id ? "rgba(248,184,0,.07)" : "#0A1523",
+                    border: `1px solid ${v.route === r.id ? "#F8B800" : "rgba(255,255,255,.16)"}`,
+                    clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
+                    padding: "clamp(18px,2vw,26px)", cursor: "pointer", transition: "border-color .18s,background .18s",
+                  }}
                 >
                   <span style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 7 }}>
                     <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 17, letterSpacing: ".01em", color: "#fff" }}>{r.name}</span>
@@ -237,6 +339,8 @@ export default function IntakePage() {
                 </button>
               ))}
             </div>
+
+            {/* Price + timing */}
             <div style={{ marginTop: "clamp(16px,2vw,24px)", background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F8B800", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,32px)" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: "clamp(15px,1.8vw,20px)" }}>
                 <label style={{ display: "block" }}>
@@ -248,8 +352,14 @@ export default function IntakePage() {
                   <input type="text" placeholder="This month, or no rush" value={v.timing} onChange={set("timing")} style={inputSt} />
                 </label>
               </div>
-              <p style={{ margin: "14px 0 0", fontSize: 17, lineHeight: 1.55, color: "#9BA5B3" }}>A number here is not a commitment. It tells the concierge whether the room you picked can actually get there.</p>
+              <p style={{ margin: "14px 0 0", fontSize: 17, lineHeight: 1.55, color: "#9BA5B3" }}>
+                A number here is not a commitment. It tells the concierge whether the room you picked can actually get there.
+              </p>
             </div>
+
+            <p style={{ margin: "clamp(18px,2.2vw,26px) 0 0", fontSize: 17, lineHeight: 1.6, color: "#9BA5B3", maxWidth: "56ch" }}>
+              Not sure which? Leave it blank. Every car sells through duPont REGISTRY either way, and the concierge will tell you which inventory it belongs in.
+            </p>
           </>
         )}
 
@@ -257,7 +367,12 @@ export default function IntakePage() {
         {step === 3 && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: "clamp(18px,2.4vw,30px)", alignItems: "start" }}>
             <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #00D2BE", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,32px)" }}>
-              {([["Your name","name","Gavin"],["Email","email","name@domain.com"],["Phone","phone","Optional"]] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
+              {([
+                ["Name", "name", "Your name"],
+                ["Phone", "phone", "Best number for a text"],
+                ["Email", "email", "you@example.com"],
+                ["Where the car is", "zip", "ZIP or city"],
+              ] as [string, keyof V, string][]).map(([lbl, key, ph]) => (
                 <label key={key} style={{ display: "block", marginBottom: 16 }}>
                   <span style={labelSt}>{lbl}</span>
                   <input type="text" placeholder={ph} value={v[key]} onChange={set(key)} style={inputSt} />
@@ -267,31 +382,43 @@ export default function IntakePage() {
                 type="button"
                 onClick={submit}
                 disabled={send === "sending"}
-                style={{ width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", border: 0, padding: "16px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: "pointer", opacity: send === "sending" ? 0.7 : 1 }}
+                style={{
+                  width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14,
+                  letterSpacing: ".12em", textTransform: "uppercase",
+                  background: "#F8B800", color: "#0E1A2A", border: 0,
+                  padding: "16px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)",
+                  cursor: "pointer", opacity: send === "sending" ? 0.7 : 1,
+                }}
               >
-                {send === "sending" ? "Sending\u2026" : send === "error" ? "Try again" : "Send the intake"}
+                {send === "sending" ? "Sending…" : send === "error" ? "Try again" : "Send it to me"}
               </button>
-              {send === "error" && <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F8B800" }}>Could not send &mdash; DM @itspaddockgavin instead.</p>}
-              <p style={{ margin: "14px 0 0", fontSize: 16, lineHeight: 1.5, color: "#9BA5B3" }}>No obligation, and no dealer calling you six times.</p>
+              {send === "error" && (
+                <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F8B800" }}>
+                  Could not send — DM @itspaddockgavin instead.
+                </p>
+              )}
+              <p style={{ margin: "14px 0 0", fontSize: 16, lineHeight: 1.5, color: "#9BA5B3" }}>
+                Consignment is case by case. No obligation, and no dealer calling you six times.
+              </p>
             </div>
-            {/* Summary */}
-            {summary.length > 0 && (
-              <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 11, padding: "13px 16px 11px", borderBottom: "1px solid rgba(255,255,255,.14)" }}>
-                  <span style={{ ...labelSt, margin: 0, flex: "0 0 auto" }}>Your car</span>
-                  <i style={{ flex: "1 1 auto", height: 5, background: "repeating-linear-gradient(90deg,rgba(255,255,255,.26) 0 1px,transparent 1px 6px)" }} />
-                </div>
-                <div style={{ padding: "6px 16px 14px" }}>
-                  {summary.map((row) => (
-                    <div key={row.k} style={{ display: "flex", alignItems: "baseline", gap: 9, padding: "9px 0" }}>
-                      <span style={{ ...labelSt, margin: 0, flex: "0 0 auto" }}>{row.k}</span>
-                      <i style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.26)", transform: "translateY(-4px)" }} />
-                      <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".08em", color: "#fff", flex: "0 1 auto", textAlign: "right" }}>{row.v}</span>
-                    </div>
-                  ))}
-                </div>
+
+            {/* Summary card */}
+            <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 11, padding: "13px 16px 11px", borderBottom: "1px solid rgba(255,255,255,.14)" }}>
+                <span style={{ ...labelSt, margin: 0, flex: "0 0 auto" }}>Your car</span>
+                <i style={{ flex: "1 1 auto", height: 5, background: "repeating-linear-gradient(90deg,rgba(255,255,255,.26) 0 1px,transparent 1px 6px)" }} />
               </div>
-            )}
+              <div style={{ padding: "6px 16px 14px" }}>
+                {summary.map((row) => (
+                  <div key={row.k} style={{ display: "flex", alignItems: "baseline", gap: 9, padding: "9px 0", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
+                    <span style={{ ...labelSt, margin: 0, flex: "0 0 auto" }}>{row.k}</span>
+                    <i style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.26)", transform: "translateY(-4px)" }} />
+                    <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".08em", color: row.v === "—" ? "#4B5563" : "#fff", flex: "0 1 auto", textAlign: "right" }}>{row.v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
@@ -299,11 +426,22 @@ export default function IntakePage() {
         {step === 4 && (
           <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #00D2BE", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(26px,3.2vw,44px)" }}>
             <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.55, color: "#DDE3EB", maxWidth: "52ch" }}>
-              Got it. I&rsquo;ll look it over and reply directly. No auto-confirmation, just a real answer when I&rsquo;ve had a look at what you sent.
+              Your {[v.year, v.make, v.model].filter(Boolean).join(" ") || "car"} is in. Our auction concierge reviews every intake and will be in touch within 24 to 48 business hours — consignment cars are accepted on a case by case basis. If you want a second pair of eyes in the meantime, DM me and reference the car.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <Link href="/" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)" }}>Back to the site</Link>
-              <button type="button" onClick={() => { setV(EMPTY); setStep(0); setSend("idle") }} style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.26)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: "pointer" }}>Send another car</button>
+              <Link
+                href="/"
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}
+              >
+                Back to the site
+              </Link>
+              <button
+                type="button"
+                onClick={() => { setV(EMPTY); setStep(0); setSend("idle"); setVinStatus(""); setVinState("idle") }}
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.26)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: "pointer" }}
+              >
+                Send another car
+              </button>
             </div>
           </div>
         )}
@@ -312,11 +450,22 @@ export default function IntakePage() {
         {step < 4 && (
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: "clamp(24px,3vw,36px)" }}>
             {step > 0 && (
-              <button type="button" onClick={() => setStep((s) => (s - 1) as Step)} style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.26)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: "pointer" }}>Back</button>
+              <button
+                type="button"
+                onClick={() => setStep((s) => (s - 1) as Step)}
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "transparent", color: "#fff", border: "1px solid rgba(255,255,255,.26)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: "pointer" }}
+              >
+                Back
+              </button>
             )}
             {step < 3 && (
-              <button type="button" onClick={() => setStep((s) => (s + 1) as Step)} disabled={!canNext} style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: canNext ? "pointer" : "not-allowed", opacity: canNext ? 1 : 0.45 }}>
-                {["Next: Condition", "Next: Route", "Next: Your details"][step]}
+              <button
+                type="button"
+                onClick={() => setStep((s) => (s + 1) as Step)}
+                disabled={!canNext}
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: canNext ? "pointer" : "not-allowed", opacity: canNext ? 1 : 0.45 }}
+              >
+                {["Next: Condition", "Next: Route", "Next: Your details", "Almost there"][step]}
               </button>
             )}
           </div>
