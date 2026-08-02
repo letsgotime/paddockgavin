@@ -80,7 +80,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Black car at sunset ───────────── */}
-      <PhotoBreak src="/images/creator-hero.jpg" pos="center 40%" />
+      <PhotoBreak src="/images/creator-hero.jpg" pos="center 62%" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}
       <Stage sec="contact">
