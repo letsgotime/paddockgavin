@@ -46,7 +46,7 @@ const BEHOLD_FEEDS = [
 const SEED_CAPTIONS = [
   "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
   "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
-  "992 GT3 Catback Exhaust inspection, looking for cats lol",
+  "964 Carrera catching the light on Franklin Rd",
   "Holy Trinity storage",
   "918 and P1 nose to nose on the duPont lot",
   "918 in Liquid Metal Silver, eleven minutes before sunset",
