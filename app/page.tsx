@@ -2,6 +2,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { HomeHero } from "@/components/home-hero"
 import { HomeWall } from "@/components/home-wall"
+import { HomeShiftsCard } from "@/components/home-shifts-card"
 import { HomeStory } from "@/components/home-story"
 import { HomeTwoShifts } from "@/components/home-two-shifts"
 import { HomeGarage } from "@/components/home-garage"
@@ -9,7 +10,7 @@ import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 // Full-bleed photo break — no max-width, edge to edge
-function PhotoBreak({ src, pos = "center 40%", h = "clamp(320px,52vw,640px)" }: { src: string; pos?: string; h?: string }) {
+function PhotoBreak({ src, pos = "center 40%", h = "clamp(180px,28vw,320px)" }: { src: string; pos?: string; h?: string }) {
   return (
     <div aria-hidden="true" style={{ width: "100%", height: h, position: "relative", overflow: "hidden" }}>
       <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
@@ -40,6 +41,11 @@ export default function HomePage() {
       <div data-sec="wall" style={{ position: "relative", zIndex: 1, paddingTop: "clamp(48px,7vw,96px)" }}>
         <HomeWall />
       </div>
+
+      {/* ── DAY / NIGHT SHIFTS CARD ───────────────── */}
+      <Stage sec="shiftscard">
+        <HomeShiftsCard />
+      </Stage>
 
       {/* ── BREAK ── 918 exhaust ───────────────────── */}
       <PhotoBreak src="/images/918-pipes.webp" pos="center 42%" />
