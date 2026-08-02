@@ -7,17 +7,17 @@ import Link from "next/link"
 type Shift = "day" | "night"
 
 const NAV_ITEMS = [
-  { key: "home",      href: "/",          label: "Home",               note: "Two shifts",         tone: "#F8B800" },
-  { key: "gallery",   href: "/gallery",   label: "Gallery",            note: "Three pillars",      tone: "#00D2BE" },
-  { key: "cars",      href: "/garage",    label: "The garage",         note: "29 cars",            tone: "#B4B6B2" },
-  { key: "scoreboard",href: "/scoreboard",label: "Scoreboard",         note: "What I build",       tone: "#4BA3DE" },
-  { key: "events",    href: "/events",    label: "Events",             note: "Book the floor",     tone: "#4BA3DE" },
-  { key: "donuts",    href: "/donuts",    label: "Donuts with duPont", note: "Come by",            tone: "#F8B800" },
-  { key: "why",       href: "/why-a-paddock", label: "Why a Paddock",  note: "The word",           tone: "#00D2BE" },
-  { key: "lotops",    href: "/lot-ops",   label: "Lot ops",            note: "The gate at eight",  tone: "#00D2BE" },
-  { key: "book",      href: "/book",      label: "Book it",            note: "Club, vendor, sales",tone: "#F8B800" },
-  { key: "connect",   href: "/connect",   label: "Connect",            note: "Every link",         tone: "#00D2BE" },
-  { key: "intake",    href: "/intake",    label: "Sell a car",         note: "Start the intake",   tone: "#4BA3DE" },
+  { key: "home",      href: "/",                  label: "Home",               note: "Two shifts",      tone: "#F8B800" },
+  { key: "gallery",   href: "/gallery",            label: "Gallery",            note: "Three pillars",   tone: "#00D2BE" },
+  { key: "cars",      href: "/garage",             label: "The garage",         note: "29 cars",         tone: "#B4B6B2" },
+  { key: "scoreboard",href: "/scoreboard",         label: "Scoreboard",         note: "What I build",    tone: "#4BA3DE" },
+  { key: "events",    href: "/events",             label: "Events",             note: "Book the floor",  tone: "#4BA3DE" },
+  { key: "donuts",    href: "/donuts",             label: "Donuts with duPont", note: "Come by",         tone: "#F8B800" },
+  { key: "creator",   href: "/events/creator-day", label: "Creator Day",        note: "Sep 19",          tone: "#00D2BE" },
+  { key: "why",       href: "/why-a-paddock",      label: "Why a Paddock",      note: "The word",        tone: "#00D2BE" },
+  { key: "lotops",    href: "/lot-ops",            label: "Lot Ops in Action",  note: "Gate at 8",       tone: "#F8B800" },
+  { key: "connect",   href: "/connect",            label: "Connect",            note: "Every link",      tone: "#00D2BE" },
+  { key: "intake",    href: "/intake",             label: "Sell a car",         note: "Start the intake",tone: "#4BA3DE" },
 ]
 
 interface Props {
@@ -563,7 +563,7 @@ export function SiteNav({ active = "home" }: Props) {
 
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/in/gavinbrooks-leader/"
+                href="https://www.linkedin.com/in/gavinbrooksleader"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
