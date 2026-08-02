@@ -44,10 +44,10 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "Charging time for two-thirds of the Holy Trinity",
-  "Cullinan on the banking — doors up, nobody around",
-  "Carrera S through downtown Nashville at last light",
-  "Downpipe off — first look at what was hiding under there",
+  "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse",
+  "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee",
+  "992 GT3 Catback Exhaust inspection, looking for cats lol",
+  "Holy Trinity storage",
   "918 and P1 nose to nose on the duPont lot",
   "918 in Liquid Metal Silver, eleven minutes before sunset",
 ]
