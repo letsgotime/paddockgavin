@@ -44,12 +44,12 @@ const BEHOLD_FEEDS = [
 ].filter(Boolean)
 
 const SEED_CAPTIONS = [
-  "918 Spyder exhaust note on the highway ramp",
-  "Cullinan doors open at the speedway",
-  "Carrera S in Nashville traffic, late afternoon",
-  "Downpipe — first look after teardown",
-  "918 and the P1 side by side, duPont lot",
-  "918 grey at golden hour",
+  "Charging day for two-thirds of the Holy Trinity",
+  "Cullinan on the banking — doors up, nobody around",
+  "Carrera S through downtown Nashville at last light",
+  "Downpipe off — first look at what was hiding under there",
+  "918 and P1 nose to nose on the duPont lot",
+  "918 in Liquid Metal Silver, eleven minutes before sunset",
 ]
 
 const SEED_IMAGES = [
