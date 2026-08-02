@@ -56,7 +56,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Ferrari red profile ───────────── */}
-      <PhotoBreak src="/images/ferrari-red.webp" pos="center 75%" />
+      <PhotoBreak src="/images/ferrari-red.webp" pos="center 25%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
