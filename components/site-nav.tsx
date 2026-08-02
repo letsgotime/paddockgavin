@@ -137,8 +137,6 @@ export function SiteNav({ active = "home" }: Props) {
   const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
   const logoAccent = shift === "day" ? "#57C7F5" : "#00D2BE"
-  // Real logo — 22° shift moves teal swoosh to Speed Blue, barely touches the navy
-  const markFilter = shift === "day" ? "hue-rotate(22deg)" : "none"
 
   return (
     <>
@@ -185,11 +183,11 @@ export function SiteNav({ active = "home" }: Props) {
               }}
             >
               <Image
-                src="/images/pg-logo-real.png"
+                src="/images/mark-on-dark-96.png"
                 alt="PG mark"
                 width={32}
                 height={32}
-                style={{ height: 32, width: "auto", display: "block", filter: markFilter, transition: "filter .4s ease" }}
+                style={{ height: 32, width: "auto", display: "block" }}
               />
               <span
                 style={{
