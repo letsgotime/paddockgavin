@@ -312,45 +312,213 @@ export function SiteFooter() {
           </nav>
         </div>
 
+        {/* Partnership + Press blocks */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))",
+            gap: 16,
+            marginBottom: "clamp(28px,3.5vw,44px)",
+          }}
+        >
+          {/* Brand partnership pitch */}
+          <div
+            style={{
+              background: "linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.01))",
+              border: "1px solid rgba(255,255,255,.1)",
+              borderTop: `3px solid ${accent}`,
+              padding: "clamp(18px,2.5vw,28px)",
+            }}
+          >
+            <p
+              style={{
+                margin: "0 0 6px",
+                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                fontSize: 11,
+                letterSpacing: ".2em",
+                textTransform: "uppercase",
+                color: "#91918F",
+              }}
+            >
+              Brand partnerships
+            </p>
+            <p style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "clamp(16px,1.8vw,20px)", color: "#FFFFFF", lineHeight: 1.2 }}>
+              Put it in front of{" "}
+              <span style={{ color: accent }}>people who buy cars</span>
+            </p>
+            <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.55, color: "#B4B6B2" }}>
+              Around a million views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
+              {[["~1M", "views/mo"], ["~7,900", "followers"], ["Owners &\ncollectors", "audience"]].map(([k, v]) => (
+                <div key={k} style={{ background: "rgba(255,255,255,.07)", padding: "8px 12px" }}>
+                  <p style={{ margin: "0 0 2px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 15, fontWeight: 700, color: accent, whiteSpace: "pre-line" }}>{k}</p>
+                  <p style={{ margin: 0, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>{v}</p>
+                </div>
+              ))}
+            </div>
+            <a
+              href="/partner"
+              style={{
+                display: "inline-block",
+                marginTop: 4,
+                padding: "10px 22px",
+                background: accent,
+                color: accent === "#F8B800" ? "#101010" : "#00302B",
+                fontFamily: "Archivo, Helvetica, sans-serif",
+                fontWeight: 800,
+                fontSize: 12.5,
+                letterSpacing: ".12em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+              }}
+            >
+              Start a partnership
+            </a>
+            <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "#91918F" }}>
+              or{" "}
+              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
+                DM @itspaddockgavin
+              </a>
+            </p>
+          </div>
+
+          {/* Press block */}
+          <div
+            style={{
+              background: "linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.01))",
+              border: "1px solid rgba(255,255,255,.1)",
+              borderTop: "3px solid #00D2BE",
+              padding: "clamp(18px,2.5vw,28px)",
+            }}
+          >
+            <p
+              style={{
+                margin: "0 0 6px",
+                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                fontSize: 11,
+                letterSpacing: ".2em",
+                textTransform: "uppercase",
+                color: "#91918F",
+              }}
+            >
+              Press &amp; media
+            </p>
+            <p style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "clamp(16px,1.8vw,20px)", color: "#FFFFFF", lineHeight: 1.2 }}>
+              Credentialing us{" "}
+              <span style={{ color: "#00D2BE" }}>for your event</span>
+            </p>
+            <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.55, color: "#B4B6B2" }}>
+              Independent automotive publication, original photography and video only. Masthead, audience figures, editorial standards and prior credentials are all on the press page.
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
+              {["Masthead", "Audience figures", "Editorial standards", "Prior credentials"].map((k) => (
+                <span
+                  key={k}
+                  style={{
+                    padding: "5px 10px",
+                    background: "rgba(0,210,190,.1)",
+                    border: "1px solid rgba(0,210,190,.25)",
+                    fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                    fontSize: 10.5,
+                    letterSpacing: ".12em",
+                    textTransform: "uppercase",
+                    color: "#00D2BE",
+                  }}
+                >
+                  {k}
+                </span>
+              ))}
+            </div>
+            <a
+              href="/press"
+              style={{
+                display: "inline-block",
+                padding: "10px 22px",
+                border: "1px solid #00D2BE",
+                color: "#00D2BE",
+                fontFamily: "Archivo, Helvetica, sans-serif",
+                fontWeight: 800,
+                fontSize: 12.5,
+                letterSpacing: ".12em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+              }}
+            >
+              The press page
+            </a>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            flexWrap: "wrap",
             borderTop: "1px solid rgba(255,255,255,.12)",
-            padding: "16px 0 24px",
+            padding: "18px 0 8px",
           }}
         >
-          <p
+          {/* Disclosures */}
+          <p style={{ margin: "0 0 8px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
+            Cars are sourced and consigned through duPont REGISTRY, Lebanon, Tennessee, on their dealer licence. Gavin Brooks is their employee and is not a licensed dealer. There is no broker fee to you.
+          </p>
+          <p style={{ margin: "0 0 16px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
+            Some links earn a commission. Paid, gifted and affiliate content is always disclosed on the piece itself. Photography and video made at duPont REGISTRY appears with their permission.
+          </p>
+          <p style={{ margin: "0 0 16px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
+            PaddockGavin™, Supercar IQ™, I Got Receipts™, Paddock20™, GavinBrooksHQ™ and The Scoreboard™ are trade marks of Gavin Brooks, in use with registration in progress.{" "}
+            <a href="/legal/trademarks" style={{ color: "#91918F", textDecoration: "underline", textUnderlineOffset: 3 }}>Full list and what you may use.</a>
+          </p>
+          {/* Legal row */}
+          <div
             style={{
-              margin: 0,
-              fontFamily: "Archivo, Helvetica, sans-serif",
-              fontWeight: 600,
-              fontSize: 13.5,
-              letterSpacing: ".09em",
-              textTransform: "uppercase",
-              color: "#91918F",
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              flexWrap: "wrap",
+              paddingTop: 8,
+              paddingBottom: 24,
             }}
           >
-            Cars sourced and consigned through duPont REGISTRY
-          </p>
-          <i
-            aria-hidden="true"
-            style={{ flex: "1 1 auto", height: 1, minWidth: 20, background: "rgba(255,255,255,.1)", display: "block" }}
-          />
-          <p
-            style={{
-              margin: 0,
-              fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-              fontSize: 13,
-              letterSpacing: ".1em",
-              color: "#91918F",
-            }}
-          >
-            {year}
-          </p>
+            <p style={{ margin: 0, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".08em", color: "#91918F" }}>
+              &copy; {year} Gavin Brooks
+            </p>
+            <i aria-hidden="true" style={{ flex: "1 1 auto", height: 1, minWidth: 16, background: "rgba(255,255,255,.08)", display: "block" }} />
+            {[
+              { href: "/legal/terms", label: "Terms" },
+              { href: "/legal/privacy", label: "Privacy" },
+              { href: "/legal/trademarks", label: "Trade marks" },
+              { href: "/press", label: "Press" },
+            ].map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                style={{
+                  fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                  fontSize: 12,
+                  letterSpacing: ".1em",
+                  textTransform: "uppercase",
+                  color: "#91918F",
+                  textDecoration: "none",
+                }}
+              >
+                {l.label}
+              </a>
+            ))}
+            <a
+              href="https://ig.me/m/itspaddockgavin"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                fontSize: 12,
+                letterSpacing: ".1em",
+                color: "#00D2BE",
+                textDecoration: "none",
+              }}
+            >
+              A person answers &rsaquo;
+            </a>
+          </div>
         </div>
       </div>
     </footer>
