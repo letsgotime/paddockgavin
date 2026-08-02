@@ -6,11 +6,11 @@ import Link from "next/link"
 
 export function SiteFooter() {
   const [shift, setShift] = useState<"day" | "night">("day")
-  const [clock, setClock] = useState("—")
+  const [clock, setClock] = useState("\u2014")
 
   useEffect(() => {
     const tick = () => {
-      const now  = new Date()
+      const now = new Date()
       const hour = Number(
         new Intl.DateTimeFormat("en-US", {
           timeZone: "America/Chicago",
@@ -34,22 +34,20 @@ export function SiteFooter() {
     return () => clearInterval(t)
   }, [])
 
-  const accent      = shift === "day" ? "#F8B800" : "#00D2BE"
-  const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
-  const year        = String(new Date().getFullYear())
+  const accent = shift === "day" ? "#F8B800" : "#00D2BE"
+  const shiftLabel = shift === "day" ? "Day shift" : "Night shift"
+  const year = String(new Date().getFullYear())
 
   return (
     <footer
       style={{
         position: "relative",
-        background:
-          "linear-gradient(180deg,rgba(10,21,35,.55),rgba(10,21,35,.9))",
+        background: "linear-gradient(180deg,rgba(10,21,35,.55),rgba(10,21,35,.9))",
         backdropFilter: "blur(26px) saturate(160%)",
         WebkitBackdropFilter: "blur(26px) saturate(160%)",
         borderTop: "1px solid rgba(255,255,255,.12)",
         boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)",
-        padding:
-          "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0",
+        padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0",
       }}
     >
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -64,7 +62,7 @@ export function SiteFooter() {
           }}
         >
           <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-            <i aria-hidden="true" style={{ width: 26, height: 3, background: accent }} />
+            <i aria-hidden="true" style={{ width: 26, height: 3, background: accent, display: "block" }} />
             <span
               style={{
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
@@ -79,12 +77,7 @@ export function SiteFooter() {
           </span>
           <i
             aria-hidden="true"
-            style={{
-              flex: "1 1 auto",
-              minWidth: 16,
-              height: 1,
-              background: "rgba(255,255,255,.12)",
-            }}
+            style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.12)", display: "block" }}
           />
           <a
             href="#top"
@@ -95,20 +88,19 @@ export function SiteFooter() {
               letterSpacing: ".14em",
               textTransform: "uppercase",
               color: "#B4B6B2",
-              transition: "color .18s",
               textDecoration: "none",
+              transition: "color .18s",
             }}
           >
             Back to top
           </a>
         </div>
 
-        {/* Four column grid */}
+        {/* Four-column grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit,minmax(min(230px,100%),1fr))",
+            gridTemplateColumns: "repeat(auto-fit,minmax(min(230px,100%),1fr))",
             gap: "clamp(22px,3vw,44px)",
             paddingBottom: "clamp(26px,3.2vw,42px)",
           }}
@@ -164,13 +156,12 @@ export function SiteFooter() {
                 letterSpacing: ".08em",
                 color: "#00D2BE",
                 textDecoration: "none",
-                transition: "color .18s",
               }}
             >
               @itspaddockgavin
             </a>
             <a
-              href="https://www.linkedin.com/in/gavinbrooks-leader/"
+              href="https://www.linkedin.com/in/gavinbrooksleader"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -179,7 +170,6 @@ export function SiteFooter() {
                 letterSpacing: ".08em",
                 color: "#00D2BE",
                 textDecoration: "none",
-                transition: "color .18s",
               }}
             >
               LinkedIn &middot; Gavin Brooks
@@ -201,14 +191,14 @@ export function SiteFooter() {
                 color: "#91918F",
               }}
             >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F8B800" }} />
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F8B800", display: "block" }} />
               Day shift
             </p>
             {[
-              { href: "/gallery",  label: "Lot ops in action" },
-              { href: "/donuts",   label: "Donuts with duPont" },
-              { href: "/intake",   label: "Find me a car" },
-              { href: "/work",     label: "Buy from duPont" },
+              { href: "/gallery", label: "Lot ops in action" },
+              { href: "/donuts",  label: "Donuts with duPont" },
+              { href: "/intake",  label: "Find me a car" },
+              { href: "/work",    label: "Buy from duPont" },
             ].map((l) => (
               <Link
                 key={l.href}
@@ -222,7 +212,6 @@ export function SiteFooter() {
                   textTransform: "uppercase",
                   color: "#DDE3EB",
                   textDecoration: "none",
-                  transition: "color .18s",
                 }}
               >
                 {l.label}
@@ -245,14 +234,14 @@ export function SiteFooter() {
                 color: "#91918F",
               }}
             >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#00D2BE" }} />
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#00D2BE", display: "block" }} />
               Night shift
             </p>
             {[
-              { href: "/scoreboard",              label: "The scoreboard",  ext: false },
-              { href: "https://supercariq.com",   label: "Supercar IQ",    ext: true  },
-              { href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks", label: "The Gloss Game", ext: true },
-              { href: "https://paddock20.com",    label: "Paddock20",       ext: true  },
+              { href: "/scoreboard",                                                   label: "The scoreboard",  ext: false },
+              { href: "https://supercariq.com",                                        label: "Supercar IQ",     ext: true  },
+              { href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks",        label: "The Gloss Game",  ext: true  },
+              { href: "https://paddock20.com",                                         label: "Paddock20",       ext: true  },
             ].map((l) => (
               <a
                 key={l.href}
@@ -268,7 +257,6 @@ export function SiteFooter() {
                   textTransform: "uppercase",
                   color: "#DDE3EB",
                   textDecoration: "none",
-                  transition: "color .18s",
                 }}
               >
                 {l.label}
@@ -291,9 +279,9 @@ export function SiteFooter() {
               Elsewhere
             </p>
             {[
-              { href: "/gallery",                  label: "The gallery",     ext: false },
-              { href: "/garage",                   label: "The garage",      ext: false },
-              { href: "/connect",                  label: "Every link",      ext: false },
+              { href: "/gallery",                  label: "The gallery",      ext: false },
+              { href: "/garage",                   label: "The garage",       ext: false },
+              { href: "/connect",                  label: "Every link",       ext: false },
               { href: "https://gavinbrookshq.com", label: "gavinbrookshq.com", ext: true },
             ].map((l) => (
               <a
@@ -310,7 +298,6 @@ export function SiteFooter() {
                   textTransform: "uppercase",
                   color: "#DDE3EB",
                   textDecoration: "none",
-                  transition: "color .18s",
                 }}
               >
                 {l.label}
@@ -345,7 +332,7 @@ export function SiteFooter() {
           </p>
           <i
             aria-hidden="true"
-            style={{ flex: "1 1 auto", height: 1, minWidth: 20, background: "rgba(255,255,255,.1)" }}
+            style={{ flex: "1 1 auto", height: 1, minWidth: 20, background: "rgba(255,255,255,.1)", display: "block" }}
           />
           <p
             style={{

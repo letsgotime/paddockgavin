@@ -5,6 +5,7 @@ import { HomeWall } from "@/components/home-wall"
 import { HomeStory } from "@/components/home-story"
 import { HomeTwoShifts } from "@/components/home-two-shifts"
 import { HomeGarage } from "@/components/home-garage"
+import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
         <HomeStory />
         <HomeTwoShifts />
         <HomeGarage />
+        <HomeMediaKit />
         <HomeAskMe />
       </main>
       <SiteFooter />
