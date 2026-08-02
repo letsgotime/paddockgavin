@@ -80,7 +80,7 @@ export function HomeShiftsCard() {
               <span
                 style={{
                   flexShrink: 0,
-                  marginTop: 3,
+                  marginTop: 6,
                   width: 6,
                   height: 6,
                   borderRadius: "50%",
@@ -153,7 +153,7 @@ export function HomeShiftsCard() {
               <span
                 style={{
                   flexShrink: 0,
-                  marginTop: 3,
+                  marginTop: 6,
                   width: 6,
                   height: 6,
                   borderRadius: "50%",
