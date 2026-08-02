@@ -10,11 +10,16 @@ import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 // Full-bleed photo break — no max-width, edge to edge
-function PhotoBreak({ src, pos = "center 40%", h = "clamp(280px,42vw,440px)" }: { src: string; pos?: string; h?: string }) {
+function PhotoBreak({ src, pos = "center 40%", h = "clamp(280px,42vw,440px)", credit }: { src: string; pos?: string; h?: string; credit?: string }) {
   return (
-    <div aria-hidden="true" style={{ width: "100%", height: h, position: "relative", overflow: "hidden" }}>
+    <div aria-hidden={!credit} style={{ width: "100%", height: h, position: "relative", overflow: "hidden" }}>
       <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.55) 0%,rgba(10,21,35,0) 38%,rgba(10,21,35,0) 62%,rgba(10,21,35,.55) 100%)" }} />
+      {credit && (
+        <p style={{ position: "absolute", bottom: 10, right: 14, margin: 0, fontFamily: "Inter, sans-serif", fontSize: 10, letterSpacing: "0.08em", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" }}>
+          &copy; {credit}
+        </p>
+      )}
     </div>
   )
 }
@@ -80,7 +85,7 @@ export default function HomePage() {
       </Stage>
 
       {/* ── BREAK ── Black car at sunset ───────────── */}
-      <PhotoBreak src="/images/creator-hero.jpg" pos="center 62%" />
+      <PhotoBreak src="/images/creator-hero.jpg" pos="center 62%" credit="Rickey Bohr" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}
       <Stage sec="contact">
