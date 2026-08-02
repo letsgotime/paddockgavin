@@ -63,8 +63,8 @@ export default function HomePage() {
         <HomeTwoShifts />
       </Stage>
 
-      {/* ── BREAK ── 993 on the ramp ───────────────── */}
-      <PhotoBreak src="/images/g993-ramp.webp" pos="center 30%" />
+      {/* ── BREAK ── 918 charging center ───────────── */}
+      <PhotoBreak src="/images/918-charging.webp" pos="center 45%" />
 
       {/* ── 4. THE GARAGE ─────────────────────────── */}
       <Stage sec="garage">
