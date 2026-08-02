@@ -47,8 +47,8 @@ export default function HomePage() {
         <HomeShiftsCard />
       </Stage>
 
-      {/* ── BREAK ── Cullinan on speedway ──────────── */}
-      <PhotoBreak src="/images/cullinan-speedway.webp" pos="center 35%" />
+      {/* ── BREAK ── Yellow 992 on the showroom floor ── */}
+      <PhotoBreak src="/images/donuts-z06.webp" pos="center 45%" />
 
       {/* ── 2. STORY ──────────────────────────────── */}
       <Stage sec="story">
