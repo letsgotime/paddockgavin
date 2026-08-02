@@ -86,7 +86,7 @@ const sections = [
     num: "07",
     heading: "Your say over it",
     body: [
-      "Ask me what I hold about you and I will tell you. Ask me to delete it and I will, unless I am required to keep it. Ask me to correct it and I will. There is no form for this and no wait — DM @itspaddockgavin and say what you want done.",
+      "Ask me what I hold about you and I will tell you. Ask me to delete it and I will, unless I am required to keep it. Ask me to correct it and I will. There is no form for this and no wait — DM @PaddockGavin and say what you want done.",
       "Tennessee's Information Protection Act took effect on 1 July 2025 and applies to businesses above $25 million in revenue or handling 175,000 Tennessee residents' data. This site is far below both thresholds. The rights above are offered anyway, to everyone, wherever you live.",
     ],
   },
@@ -101,14 +101,14 @@ const sections = [
     num: "09",
     heading: "Being filmed at an event",
     body: [
-      "Donuts with duPont REGISTRY, Creator Day and the rest happen on duPont REGISTRY's floor, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
+      "Donuts with duPont REGISTRY, Creator Day and the rest happen on duPont REGISTRY's floor, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @PaddockGavin with enough detail to identify the shot, and it comes down.",
     ],
   },
   {
     num: "10",
     heading: "Changes, and reaching me",
     body: [
-      "If this policy changes the date at the top changes with it, and a material change gets said out loud rather than slipped in. Questions, requests and complaints all go to the same place: DM @itspaddockgavin.",
+      "If this policy changes the date at the top changes with it, and a material change gets said out loud rather than slipped in. Questions, requests and complaints all go to the same place: DM @PaddockGavin.",
     ],
   },
 ]

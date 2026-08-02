@@ -47,9 +47,9 @@ export function HomeAskMe() {
 
       {/* Quick links */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer"
+        <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer"
           style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
-          DM @itspaddockgavin
+          DM @PaddockGavin
         </a>
         <Link href="/connect"
           style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>

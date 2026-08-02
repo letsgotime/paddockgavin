@@ -227,7 +227,7 @@ export default function CreatorDayPage() {
               RSVP
             </a>
             <a
-              href="https://ig.me/m/itspaddockgavin"
+              href="https://ig.me/m/PaddockGavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -239,7 +239,7 @@ export default function CreatorDayPage() {
                 textDecoration: "none",
               }}
             >
-              DM @itspaddockgavin
+              DM @PaddockGavin
             </a>
           </div>
         </section>
@@ -475,7 +475,7 @@ export default function CreatorDayPage() {
                     fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4",
                   }}
                 >
-                  {status === "error" ? "Could not send \u2014 DM @itspaddockgavin instead" : status === "sent" ? "I\u2019ll be in touch" : "Free entry \u00b7 all welcome"}
+                  {status === "error" ? "Could not send \u2014 DM @PaddockGavin instead" : status === "sent" ? "I\u2019ll be in touch" : "Free entry \u00b7 all welcome"}
                 </span>
               </div>
             </div>

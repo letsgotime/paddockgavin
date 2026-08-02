@@ -228,7 +228,7 @@ export default function BookPage() {
               {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
             </button>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4" }}>
-              {status === "error" ? "Could not send from here \u2014 DM @itspaddockgavin instead" : status === "sent" ? "Landed with me" : "DM @itspaddockgavin for a faster response"}
+              {status === "error" ? "Could not send from here \u2014 DM @PaddockGavin instead" : status === "sent" ? "Landed with me" : "DM @PaddockGavin for a faster response"}
             </span>
           </div>
         </section>
@@ -236,8 +236,8 @@ export default function BookPage() {
         {/* Direct lines */}
         <section style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
           <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>Rather go direct?</span>
-          <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#00302B", background: "#00D2BE", padding: "12px 20px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
-            DM @itspaddockgavin
+          <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#00302B", background: "#00D2BE", padding: "12px 20px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
+            DM @PaddockGavin
           </a>
           <a href="https://www.linkedin.com/in/gavinbrooksleader" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.28)", padding: "12px 20px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
             LinkedIn

@@ -185,7 +185,7 @@ export function HomeWall() {
     { label: "Frames",  value: String(items.length), tone: "#00D2BE" },
     { label: "Shot on", value: "A phone",             tone: "#F8B800" },
     ...(profile?.followersCount
-      ? [{ label: `@${profile.username || "itspaddockgavin"}`, value: profile.followersCount >= 1000 ? (profile.followersCount / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(profile.followersCount), tone: "#B4B6B2" }]
+      ? [{ label: `@${profile.username || "PaddockGavin"}`, value: profile.followersCount >= 1000 ? (profile.followersCount / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(profile.followersCount), tone: "#B4B6B2" }]
       : [{ label: "Location", value: "Nashville TN", tone: "#B4B6B2" }]),
   ]
 
@@ -572,7 +572,7 @@ export function HomeWall() {
         {/* CTA row */}
         <div style={{ flex: "1 1 100%", display: "flex", gap: 10, flexWrap: "wrap" }}>
           <a
-            href="https://instagram.com/itspaddockgavin"
+            href="https://instagram.com/PaddockGavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -590,7 +590,7 @@ export function HomeWall() {
               textDecoration: "none",
             }}
           >
-            Follow @itspaddockgavin
+            Follow @PaddockGavin
           </a>
           <a
             href="/gallery"

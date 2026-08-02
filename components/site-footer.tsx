@@ -151,7 +151,7 @@ export function SiteFooter() {
               Lot Operations and Events Manager, duPont REGISTRY
             </p>
             <a
-              href="https://instagram.com/itspaddockgavin"
+              href="https://instagram.com/PaddockGavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -163,7 +163,7 @@ export function SiteFooter() {
                 textDecoration: "none",
               }}
             >
-              @itspaddockgavin
+              @PaddockGavin
             </a>
             <a
               href="https://www.linkedin.com/in/gavinbrooksleader"
@@ -377,8 +377,8 @@ export function SiteFooter() {
             </a>
             <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "#91918F" }}>
               or{" "}
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
-                DM @itspaddockgavin
+              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
+                DM @PaddockGavin
               </a>
             </p>
           </div>
@@ -505,7 +505,7 @@ export function SiteFooter() {
               </a>
             ))}
             <a
-              href="https://ig.me/m/itspaddockgavin"
+              href="https://ig.me/m/PaddockGavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{

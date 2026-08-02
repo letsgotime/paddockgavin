@@ -215,8 +215,8 @@ export default function EventsPage() {
               <Link href="/events/creator-day" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 Creator Day, the page
               </Link>
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                or DM @itspaddockgavin
+              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+                or DM @PaddockGavin
               </a>
             </div>
           </div>
@@ -320,8 +320,8 @@ export default function EventsPage() {
               <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Private events &middot; your date</span>
               <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.8vw,42px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch" }}>Your event, on duPont REGISTRY&rsquo;s floor</h2>
               <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "50ch" }}>The room is duPont&rsquo;s, in Lebanon, and booking it out is part of my job. It&rsquo;s not just the room that makes it special &mdash; it&rsquo;s what&rsquo;s passing through while you&rsquo;re there. Send a date and I&rsquo;ll check it.</p>
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.4)", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
-                Rather DM? @itspaddockgavin
+              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.4)", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
+                Rather DM? @PaddockGavin
               </a>
             </div>
             <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
@@ -352,7 +352,7 @@ export default function EventsPage() {
                   {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
                 </button>
                 <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4" }}>
-                  {status === "error" ? "Could not send \u2014 DM @itspaddockgavin instead" : status === "sent" ? "Landed in my inbox" : "DM @itspaddockgavin for a faster response"}
+                  {status === "error" ? "Could not send \u2014 DM @PaddockGavin instead" : status === "sent" ? "Landed in my inbox" : "DM @PaddockGavin for a faster response"}
                 </span>
               </div>
             </div>
