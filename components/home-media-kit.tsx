@@ -28,7 +28,7 @@ export function HomeMediaKit() {
           { label: "Cars owned",       value: "29",         color: "#F8B800" },
           { label: "Found for others", value: "78",         color: "#00D2BE" },
           { label: "Events run",       value: "200+",       color: "#8B93A7" },
-          { label: "Based",            value: "Nashville",  color: "#EF4A18" },
+          { label: "Based",            value: "Nashville",  color: "#57C7F5" },
         ].map((r) => (
           <div key={r.label} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(48px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color }}>

@@ -101,7 +101,7 @@ export function SiteFooter() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit,minmax(min(230px,100%),1fr))",
-            gap: "clamp(22px,3vw,44px)",
+            gap: "clamp(40px,5vw,72px)",
             paddingBottom: "clamp(26px,3.2vw,42px)",
           }}
         >

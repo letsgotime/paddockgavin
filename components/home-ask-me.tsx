@@ -77,11 +77,11 @@ export function HomeAskMe() {
         />
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <button type="button" onClick={submit}
-            style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: status === "sent" ? "#00D2BE" : "#EF4A18", color: status === "sent" ? "#003028" : "#FFFFFF", border: "none", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)" }}>
+            style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: status === "sent" ? "#57C7F5" : "#F2C94C", color: status === "sent" ? "#0A0E1A" : "#0A0E1A", border: "none", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)" }}>
             {status === "sent" ? "Sent — I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it"}
           </button>
           {status === "error" && (
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#EF4A18" }}>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#8B93A7" }}>
               Failed — DM me instead
             </span>
           )}
