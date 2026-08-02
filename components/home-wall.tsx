@@ -490,7 +490,7 @@ export function HomeWall() {
                 WebkitBackdropFilter: "blur(18px) saturate(150%)",
                 boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
                 overflow: "hidden",
-                flex: c.wide ? "3 1 320px" : "2 1 220px",
+                flex: c.wide ? "3 1 min(320px,90%)" : "2 1 min(220px,44%)",
                 minWidth: 0,
                 textAlign: "left",
                 aspectRatio: c.wide ? "3/2" : "4/5",
