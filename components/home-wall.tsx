@@ -202,9 +202,13 @@ export function HomeWall() {
         id="wall"
         ref={revealRef}
         style={{
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 clamp(12px,4vw,40px)",
           display: "flex",
           flexWrap: "wrap",
-          gap: "clamp(14px,2.4vw,22px)",
+          gap: "clamp(16px,2.4vw,24px)",
           scrollMarginTop: 140,
         }}
       >

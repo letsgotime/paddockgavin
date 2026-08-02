@@ -17,22 +17,66 @@ export default function HomePage() {
         style={{
           position: "relative",
           zIndex: 1,
-          minWidth: 0,
-          maxWidth: 1180,
-          margin: "0 auto",
-          padding:
-            "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)",
           display: "flex",
           flexDirection: "column",
-          gap: "clamp(14px,2.4vw,22px)",
+          /* Editorial funnel: generous breathing room between every section */
+          gap: "clamp(64px,10vw,140px)",
+          paddingBottom: "clamp(64px,10vw,140px)",
         }}
       >
-        <div data-sec="wall"><HomeWall /></div>
-        <div data-sec="story"><HomeStory /></div>
-        <div data-sec="shifts"><HomeTwoShifts /></div>
-        <div data-sec="garage"><HomeGarage /></div>
-        <div data-sec="mediakit"><HomeMediaKit /></div>
-        <div data-sec="contact"><HomeAskMe /></div>
+        {/* The Wall — full-bleed, no padding */}
+        <div data-sec="wall">
+          <HomeWall />
+        </div>
+
+        {/* Story — constrained content, full-bleed photo inside */}
+        <div data-sec="story">
+          <HomeStory />
+        </div>
+
+        {/* Two Shifts — constrained content, full-bleed photo inside */}
+        <div data-sec="shifts">
+          <HomeTwoShifts />
+        </div>
+
+        {/* Garage */}
+        <div
+          data-sec="garage"
+          style={{
+            maxWidth: 1180,
+            width: "100%",
+            margin: "0 auto",
+            padding: "0 clamp(12px,4vw,40px)",
+          }}
+        >
+          <HomeGarage />
+        </div>
+
+        {/* Media Kit */}
+        <div
+          data-sec="mediakit"
+          style={{
+            maxWidth: 1180,
+            width: "100%",
+            margin: "0 auto",
+            padding: "0 clamp(12px,4vw,40px)",
+          }}
+        >
+          <HomeMediaKit />
+        </div>
+
+        {/* Ask Me */}
+        <div
+          data-sec="contact"
+          style={{
+            maxWidth: 1180,
+            width: "100%",
+            margin: "0 auto",
+            padding: "0 clamp(12px,4vw,40px)",
+          }}
+        >
+          <HomeAskMe />
+        </div>
       </main>
       <SiteFooter />
     </>

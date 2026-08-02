@@ -32,7 +32,15 @@ export function HomeTwoShifts() {
       <section
         data-screen-label="Two shifts"
         id="shifts"
-        style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}
+        style={{
+          maxWidth: 1180,
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 clamp(12px,4vw,40px)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "clamp(16px,2.4vw,24px)",
+        }}
       >
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>

@@ -246,6 +246,7 @@ export function SiteNav({ active = "home" }: Props) {
                 {shiftLabel}
               </span>
               <span
+                className="pg-hide-xs"
                 style={{
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 13,
@@ -283,6 +284,7 @@ export function SiteNav({ active = "home" }: Props) {
               }}
             >
               <span
+                className="pg-hide-xs"
                 style={{
                   fontFamily: "Archivo, Helvetica, sans-serif",
                   fontWeight: 700,
