@@ -55,32 +55,32 @@ export default function HomePage() {
         <HomeStory />
       </Stage>
 
-      {/* ── BREAK ── Ferrari red profile ───────────── */}
-      <PhotoBreak src="/images/ferrari-red.webp" pos="center 25%" />
+      {/* ── BREAK ── 458 + 296 showroom lineup ─────── */}
+      <PhotoBreak src="/images/f458-wide.webp" pos="center 35%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
         <HomeTwoShifts />
       </Stage>
 
-      {/* ── BREAK ── 918 charging center ───────────── */}
-      <PhotoBreak src="/images/918-charging.webp" pos="center 45%" />
+      {/* ── BREAK ── Donuts Cars & Coffee interior ── */}
+      <PhotoBreak src="/images/donuts-inside.webp" pos="center 65%" />
 
       {/* ── 4. THE GARAGE ─────────────────────────── */}
       <Stage sec="garage">
         <HomeGarage />
       </Stage>
 
-      {/* ── BREAK ── Ferrari upper deck ────────────── */}
-      <PhotoBreak src="/images/ferrari-upperdeck.webp" pos="center 40%" />
+      {/* ── BREAK ── Carrera in traffic ─────────────── */}
+      <PhotoBreak src="/images/carrera-traffic.jpg" pos="center 40%" />
 
       {/* ── 5. FOR BRANDS ─────────────────────────── */}
       <Stage sec="mediakit">
         <HomeMediaKit />
       </Stage>
 
-      {/* ── BREAK ── Cage rig detail ───────────────── */}
-      <PhotoBreak src="/images/cage-rig.webp" pos="center 50%" />
+      {/* ── BREAK ── Cullinan doors at the event ───── */}
+      <PhotoBreak src="/images/cullinan-doors.webp" pos="center 35%" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}
       <Stage sec="contact">
