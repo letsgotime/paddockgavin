@@ -2,12 +2,12 @@ import Image from "next/image"
 import Link from "next/link"
 
 const SHOTS = [
-  { src: "/images/f458-wide.webp",          caption: "Ferrari 458 wide shot" },
-  { src: "/images/f458-wheel.webp",         caption: "458 forged wheel detail" },
-  { src: "/images/f458-seats.webp",         caption: "458 Alcantara interior" },
-  { src: "/images/gavin-bar.webp",          caption: "Gavin at the event" },
-  { src: "/images/donuts-z06.webp",         caption: "Z06 at the Donuts meet" },
-  { src: "/images/ferrari-296.webp",        caption: "Ferrari 296 GTB" },
+  { src: "/images/f458-side.webp",          caption: "Ferrari 458 Italia side profile",  pos: "center 35%" },
+  { src: "/images/ford-gt-studio.webp",     caption: "Ford GT studio",                   pos: "center 40%" },
+  { src: "/images/g993-out.webp",           caption: "993 GT3 outside the paddock",      pos: "center 30%" },
+  { src: "/images/donuts-overflow.webp",    caption: "Overflow lot at the Donuts meet",  pos: "center 45%" },
+  { src: "/images/downpipe.webp",           caption: "Catback detail work",              pos: "center 40%" },
+  { src: "/images/f458-extinguisher.webp",  caption: "458 fire extinguisher mount",      pos: "center 30%" },
 ]
 
 export function HomeGarage() {
@@ -46,10 +46,10 @@ export function HomeGarage() {
       </div>
 
       {/* Photo grid — no borders, no clips, just images */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(220px,45%),1fr))", gap: "clamp(6px,1vw,10px)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(260px,45%),1fr))", gap: "clamp(6px,1vw,10px)" }}>
         {SHOTS.map((s) => (
-          <Link key={s.src} href="/gallery" style={{ position: "relative", display: "block", aspectRatio: "4/3", overflow: "hidden", background: "rgba(21,37,56,.4)", textDecoration: "none" }}>
-            <Image src={s.src} alt={s.caption} fill style={{ objectFit: "cover", transition: "transform .4s ease" }} loading="lazy" />
+          <Link key={s.src} href="/gallery" style={{ position: "relative", display: "block", aspectRatio: "3/2", overflow: "hidden", background: "rgba(21,37,56,.4)", textDecoration: "none" }}>
+            <Image src={s.src} alt={s.caption} fill style={{ objectFit: "cover", objectPosition: s.pos, transition: "transform .4s ease" }} loading="lazy" />
           </Link>
         ))}
       </div>
