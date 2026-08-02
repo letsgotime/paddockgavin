@@ -47,40 +47,40 @@ export default function HomePage() {
         <HomeShiftsCard />
       </Stage>
 
-      {/* ── BREAK ── 918 exhaust ───────────────────── */}
-      <PhotoBreak src="/images/918-pipes.webp" pos="center 42%" />
+      {/* ── BREAK ── F458 front ────────────────────── */}
+      <PhotoBreak src="/images/f458-front.webp" pos="center 55%" />
 
       {/* ── 2. STORY ──────────────────────────────── */}
       <Stage sec="story">
         <HomeStory />
       </Stage>
 
-      {/* ── BREAK ── Cullinan doors up ─────────────── */}
-      <PhotoBreak src="/images/cullinan-doors.webp" pos="center 30%" />
+      {/* ── BREAK ── F458 vents ────────────────────── */}
+      <PhotoBreak src="/images/f458-vents.webp" pos="center 40%" />
 
       {/* ── 3. TWO SHIFTS ─────────────────────────── */}
       <Stage sec="shifts">
         <HomeTwoShifts />
       </Stage>
 
-      {/* ── BREAK ── 918 + P1 nose-to-nose ─────────── */}
-      <PhotoBreak src="/images/918-p1.webp" pos="center 35%" />
+      {/* ── BREAK ── 993 on fire road ──────────────── */}
+      <PhotoBreak src="/images/g993-fire.webp" pos="center 35%" />
 
       {/* ── 4. THE GARAGE ─────────────────────────── */}
       <Stage sec="garage">
         <HomeGarage />
       </Stage>
 
-      {/* ── BREAK ── Donuts inside ─────────────────── */}
-      <PhotoBreak src="/images/donuts-inside.webp" pos="center 38%" />
+      {/* ── BREAK ── 918 charging ──────────────────── */}
+      <PhotoBreak src="/images/918-charging.webp" pos="center 38%" />
 
       {/* ── 5. FOR BRANDS ─────────────────────────── */}
       <Stage sec="mediakit">
         <HomeMediaKit />
       </Stage>
 
-      {/* ── BREAK ── Carrera in traffic ─────────────── */}
-      <PhotoBreak src="/images/carrera-traffic.jpg" pos="center 50%" />
+      {/* ── BREAK ── Donuts lot overflow ───────────── */}
+      <PhotoBreak src="/images/donuts-lot.webp" pos="center 50%" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}
       <Stage sec="contact">

@@ -2,12 +2,12 @@ import Image from "next/image"
 import Link from "next/link"
 
 const SHOTS = [
-  { src: "/images/918-p1.webp",         caption: "918 Spyder and McLaren P1" },
-  { src: "/images/918-pipes.webp",      caption: "918 exhaust pipes" },
-  { src: "/images/918-grey.webp",       caption: "918 Spyder rear quarter" },
-  { src: "/images/aston-wheel.webp",    caption: "Aston Martin Vantage cabin" },
-  { src: "/images/cullinan-doors.webp", caption: "Rolls-Royce Cullinan" },
-  { src: "/images/carrera-traffic.jpg", caption: "Carrera S in Nashville" },
+  { src: "/images/f458-wide.webp",          caption: "Ferrari 458 wide shot" },
+  { src: "/images/f458-wheel.webp",         caption: "458 forged wheel detail" },
+  { src: "/images/f458-seats.webp",         caption: "458 Alcantara interior" },
+  { src: "/images/gavin-bar.webp",          caption: "Gavin at the event" },
+  { src: "/images/donuts-z06.webp",         caption: "Z06 at the Donuts meet" },
+  { src: "/images/ferrari-296.webp",        caption: "Ferrari 296 GTB" },
 ]
 
 export function HomeGarage() {
