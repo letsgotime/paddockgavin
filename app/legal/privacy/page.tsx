@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "Privacy — PaddockGavin",
-  description: "No account to make, no newsletter you didn't ask for, and nothing sold to anybody. Here is the whole of it.",
+  description: "What this site collects, who else can see it, how long it is kept, and how to ask for it to be removed.",
 }
 
 const UPDATED = "August 2026"
@@ -154,7 +154,7 @@ export default function PrivacyPage() {
             }}
           >
             What I collect,{" "}
-            <span style={{ color: "#00D2BE" }}>which is almost nothing</span>
+            <span style={{ color: "#00D2BE" }}>and what I do with it</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 620 }}>
             No account to make, no newsletter you didn&apos;t ask for, and nothing sold to anybody. Here is the whole of it.

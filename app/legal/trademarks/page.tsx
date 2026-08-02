@@ -143,7 +143,7 @@ export default function TrademarksPage() {
             The Scoreboard is not a list of projects. It is a format: a timing-tower layout where every build carries one real datum — a launch date that counts itself down, where to buy it, or the year it was retired — scored by status and grouped by whether it ships, runs or is finished.
           </p>
           <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            The arrangement, the status vocabulary, the scoring logic and the way it plugs into live data are mine. Copy the idea of listing your projects and good luck to you. Copy this layout, these states and this scoring and we are going to have a conversation.
+            The arrangement, the status vocabulary, the scoring logic and the way it plugs into live data are mine. The idea of listing your projects is not protectable and never claimed to be. This specific layout, these specific states and this scoring format are. Using them without permission is an infringement claim, not a conversation.
           </p>
         </section>
 

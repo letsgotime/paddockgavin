@@ -74,8 +74,8 @@ export default function PressPage() {
             Press &amp; Media
           </p>
           <h1 style={{ margin: "0 0 18px", fontWeight: 900, fontSize: "clamp(32px,5vw,56px)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
-            Credentials,{" "}
-            <span style={{ color: "#00D2BE" }}>and who to ask</span>
+            Independent publication.{" "}
+            <span style={{ color: "#00D2BE" }}>Everything you need to credential us.</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 640 }}>
             PaddockGavin is an independent automotive publication covering exotic and collector cars from inside the operation that moves them. Everything a credentialing office needs is on this page.
@@ -255,7 +255,7 @@ export default function PressPage() {
             Credentialing us for your event?
           </p>
           <p style={{ margin: "0 0 20px", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
-            DM @itspaddockgavin on Instagram with the date, the location and what access is on offer. All supporting documents are available same day.
+            Send the date, the location and what access is on offer. Assignment letters, a W-9, certificates of insurance and prior credential history are all available the same day.
           </p>
           <a
             href="https://ig.me/m/itspaddockgavin"
@@ -274,7 +274,7 @@ export default function PressPage() {
               textDecoration: "none",
             }}
           >
-            DM @itspaddockgavin
+            Start the conversation
           </a>
         </div>
 

@@ -70,7 +70,7 @@ export default function PartnerPage() {
             <span style={{ color: "#F8B800" }}>people who buy cars</span>
           </h1>
           <p style={{ margin: "0 0 36px", fontSize: 18, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 660 }}>
-            Around a million views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
+            ~1,000,000 views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
           </p>
 
           {/* Stat row */}
@@ -149,7 +149,7 @@ export default function PartnerPage() {
         {/* The rules */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <h2 style={{ margin: "0 0 20px", fontWeight: 800, fontSize: "clamp(20px,2.5vw,28px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>
-            How it works
+            The rules of the partnership
           </h2>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {rules.map((r, i) => (

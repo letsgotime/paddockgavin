@@ -87,7 +87,7 @@ const sections = [
     num: "07",
     heading: "What I cannot promise",
     body: [
-      "This site is provided as it is. I do not guarantee it is available, error-free, or current. Specifications, prices, dates and availability change without notice. Advice here is general — it is not a professional inspection, appraisal, valuation or legal opinion. Links to other sites are not endorsements. To the fullest extent Tennessee law allows, I am not liable for indirect or consequential loss arising from your use of this site.",
+      "This site is provided as-is, without warranty of availability, accuracy or fitness for a particular purpose. Specifications, prices, dates and availability change without notice. Advice here is general in nature: it is not a professional inspection, appraisal, valuation or legal opinion. Links to other sites are not endorsements of those sites or their content. To the fullest extent permitted by Tennessee law, I am not liable for indirect or consequential loss arising from use of this site.",
     ],
   },
   {
@@ -159,7 +159,7 @@ export default function TermsPage() {
             <span style={{ color: "#F8B800" }}>in plain English</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 620 }}>
-            What you can do with what you find here, what happens when a car changes hands, and which of these things is mine versus my employer&apos;s. No filler.
+            What you can do with what you find here, what happens when a car changes hands, and which of these things is mine versus my employer&apos;s.
           </p>
           <p
             style={{

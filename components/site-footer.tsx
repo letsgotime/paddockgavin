@@ -347,7 +347,7 @@ export function SiteFooter() {
               <span style={{ color: accent }}>people who buy cars</span>
             </p>
             <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.55, color: "#B4B6B2" }}>
-              Around a million views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
+              ~1,000,000 views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
               {[["~1M", "views/mo"], ["~7,900", "followers"], ["Owners &\ncollectors", "audience"]].map(([k, v]) => (
