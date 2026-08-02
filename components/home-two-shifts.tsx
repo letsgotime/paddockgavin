@@ -453,9 +453,7 @@ export function HomeTwoShifts() {
         data-screen-label="The lot"
         style={{
           position: "relative",
-          left: "50%",
-          marginLeft: "-50vw",
-          width: "100vw",
+          width: "100%",
           height: "clamp(340px,58vh,620px)",
           overflow: "hidden",
         }}
