@@ -113,9 +113,9 @@ export function SiteFooter() {
                 src="/images/mark-on-dark-96.png"
                 alt=""
                 aria-hidden="true"
-                width={40}
+                width={73}
                 height={40}
-                style={{ display: "block", flexShrink: 0, objectFit: "contain" }}
+                style={{ display: "block", flexShrink: 0, objectFit: "contain", width: "auto", height: 40 }}
               />
               <p
                 style={{
