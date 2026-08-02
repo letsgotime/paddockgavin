@@ -76,8 +76,8 @@ export default function HomePage() {
         <HomeGarage />
       </Stage>
 
-      {/* ── BREAK ── Carrera in traffic ─────────────── */}
-      <PhotoBreak src="/images/carrera-traffic.jpg" pos="center 40%" />
+      {/* ── BREAK ── Ferrari 296 warehouse lineup ───── */}
+      <PhotoBreak src="/images/ferrari-296.webp" pos="center 50%" />
 
       {/* ── 5. FOR BRANDS ─────────────────────────── */}
       <Stage sec="mediakit">
