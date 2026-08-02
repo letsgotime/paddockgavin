@@ -83,15 +83,37 @@ const CHAPTERS = [
 ]
 
 const SEED: Record<string, string[]> = {
-  "nobody-films": ["Where the trunk release hides", "The latch, once you know", "Cup holders, all of them", "No visor on this one", "Charge port, driver side", "The switch nobody finds"],
-  "what-id-put-on-it": ["Talbot Yellow, corrected", "Ceramic on a wrap: don\u2019t", "Swirls under the light", "The towel that did it"],
-  "the-room": ["Donuts with duPont, 8am", "Off the transporter", "Tires & Timepieces", "The deck on a full morning"],
+  "nobody-films": [
+    "Where the trunk release hides", "993 cabin — carbon and terracotta", "Fire bottle, strapped in",
+    "The latch, once you know", "Cup holders, all of them", "Charge port, driver side",
+    "The switch nobody finds", "G-Wagen doors open at the barn",
+  ],
+  "what-id-put-on-it": [
+    "Talbot Yellow, corrected", "Ferrari red in the warehouse", "The 993 in Guards Green",
+    "Ceramic on a wrap: don\u2019t", "Swirls under the light",
+  ],
+  "the-room": [
+    "Donuts with duPont, 8am", "Ferrari on the upper deck", "Off the transporter — 993",
+    "Ford GT in the studio", "Tires & Timepieces", "The deck on a full morning",
+    "Ferrari in the lot", "The ramp, rearview",
+  ],
 }
 
 const SEED_IMAGES: Record<string, string[]> = {
-  "nobody-films": ["/images/918-pipes.webp", "/images/f458-dash.webp", "/images/f458-extinguisher.webp", "/images/aston-wheel.webp", "/images/downpipe.webp", "/images/f458-vents.webp"],
-  "what-id-put-on-it": ["/images/918-grey.webp", "/images/ferrari-296.webp", "/images/carrera-traffic.jpg", "/images/f458-front.webp"],
-  "the-room": ["/images/donuts-floor.webp", "/images/donuts-inside.webp", "/images/cullinan-doors.webp", "/images/donuts-lot.webp"],
+  "nobody-films": [
+    "/images/918-pipes.webp", "/images/g993-cabin-sq.webp", "/images/g993-fire-sq.webp",
+    "/images/f458-dash.webp", "/images/f458-extinguisher.webp", "/images/aston-wheel.webp",
+    "/images/downpipe.webp", "/images/gavin-gwagen-sq.webp",
+  ],
+  "what-id-put-on-it": [
+    "/images/918-grey.webp", "/images/ferrari-red-sq.webp", "/images/g993-out-sq.webp",
+    "/images/ferrari-296.webp", "/images/carrera-traffic.jpg",
+  ],
+  "the-room": [
+    "/images/donuts-floor.webp", "/images/ferrari-upperdeck-sq.webp", "/images/g993-ramp-sq.webp",
+    "/images/ford-gt-studio-sq.webp", "/images/donuts-inside.webp", "/images/cullinan-doors.webp",
+    "/images/ferrari-red.webp", "/images/g993-out.webp",
+  ],
 }
 
 function chapterFromCaption(caption: string): string {
