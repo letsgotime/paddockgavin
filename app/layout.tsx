@@ -44,11 +44,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "PaddockGavin",
-    startupImage: "/brand/app-icon-512.png",
-  },
-  icons: {
-    icon:  [{ url: "/brand/favicon-32.png", sizes: "32x32" }, { url: "/brand/favicon-48.png", sizes: "48x48" }],
-    apple: [{ url: "/brand/app-icon-192.png", sizes: "192x192" }],
   },
 }
 

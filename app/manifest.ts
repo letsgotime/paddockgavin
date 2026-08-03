@@ -12,12 +12,14 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait-primary",
     categories: ["automotive", "lifestyle", "shopping"],
     icons: [
-      { src: "/brand/app-icon-192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
-      { src: "/brand/app-icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" },
-      { src: "/brand/favicon-32.png",   sizes: "32x32",   type: "image/png" },
+      { src: "/images/app-icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/images/app-icon-192.png", sizes: "192x192", type: "image/png", purpose: "maskable" },
+      { src: "/images/app-icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/images/app-icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/images/favicon-32.png",   sizes: "32x32",   type: "image/png" },
     ],
     screenshots: [
-      { src: "/brand/wordmark-dark-bg.png", sizes: "1280x720", type: "image/png", label: "PaddockGavin home" },
+      { src: "/images/wordmark-dark-bg.png", sizes: "1280x720", type: "image/png", label: "PaddockGavin home" },
     ],
     shortcuts: [
       { name: "The Gloss Game",  short_name: "Gloss",  url: "/gloss-game",  description: "Book about car detailing" },
