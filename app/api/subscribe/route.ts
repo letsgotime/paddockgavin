@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { emailSubscribers } from "@/lib/db/schema"
 import { Resend } from "resend"
+import { render } from "@react-email/render"
+import SubscriberWelcome from "@/emails/subscriber-welcome"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -23,13 +25,23 @@ export async function POST(req: NextRequest) {
     // Save to Neon
     await db.insert(emailSubscribers).values({ email, source, ip })
 
-    // Notify paddock20@gmail.com via Resend
     if (process.env.RESEND_API_KEY) {
+      // Welcome email to the subscriber
+      const welcomeHtml = await render(SubscriberWelcome({ source }))
       await resend.emails.send({
-        from:    "PaddockGavin <noreply@paddockgavin.com>",
+        from:    "Gavin Brooks <gavin@paddockgavin.com>",
+        to:      email,
+        subject: "You're in the paddock.",
+        html:    welcomeHtml,
+        text:    `Hey — you signed up via ${source}. Welcome.\n\npaddockgavin.com`,
+      })
+
+      // Internal alert to paddock20@gmail.com
+      await resend.emails.send({
+        from:    "PaddockGavin <gavin@paddockgavin.com>",
         to:      "paddock20@gmail.com",
-        subject: `New subscriber — ${source}`,
-        text:    `New email subscriber.\n\nEmail: ${email}\nSource: ${source}\nIP: ${ip ?? "unknown"}\nTime: ${new Date().toISOString()}`,
+        subject: `New subscriber via ${source} — ${email}`,
+        text:    `New subscriber.\n\nEmail: ${email}\nSource: ${source}\nIP: ${ip ?? "unknown"}\nTime: ${new Date().toISOString()}`,
       })
     }
 
