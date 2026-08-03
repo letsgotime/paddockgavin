@@ -59,15 +59,17 @@ export function HomeHero() {
         const setEnd    = sunset + 30 * 60000
 
         if (nowTs >= riseStart && nowTs <= riseEnd) {
-          setGolden("Sunrise · happening now")
+          const minsLeft = Math.max(1, Math.round((riseEnd - nowTs) / 60000))
+          setGolden(`Golden hour · now · ${minsLeft} min left`)
         } else if (nowTs >= setStart && nowTs <= setEnd) {
-          setGolden("Sunset · happening now")
+          const minsLeft = Math.max(1, Math.round((setEnd - nowTs) / 60000))
+          setGolden(`Golden hour · now · ${minsLeft} min left`)
         } else if (nowTs < riseStart) {
-          // Before sunrise golden hour today — show it
-          setGolden(`Sunrise ${fmt(riseStart)}`)
+          const dur = Math.round((riseEnd - riseStart) / 60000)
+          setGolden(`Golden hour ${fmt(riseStart)} · ${dur} min`)
         } else if (nowTs < setStart) {
-          // Between sunrise end and sunset golden hour — show sunset
-          setGolden(`Sunset ${fmt(setStart)}`)
+          const dur = Math.round((setEnd - setStart) / 60000)
+          setGolden(`Golden hour ${fmt(setStart)} · ${dur} min`)
         } else {
           // Past sunset — fetch tomorrow's sunrise
           const tom = new Date(now)
@@ -229,48 +231,80 @@ export function HomeHero() {
             </span>
           </span>
           <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 10 }} />
+
+          {/* Golden hour — premium redesign */}
           <span
             style={{
               display: "inline-flex",
-              alignItems: "baseline",
-              gap: 8,
+              alignItems: "center",
+              gap: "clamp(10px,1.6vw,18px)",
               flex: "0 0 auto",
             }}
           >
-            {/* "Golden hour" label — hidden on mobile, value always shown */}
+            {/* Label + rule — desktop only */}
             <span
               className="pg-hide-xs"
               style={{
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 13,
-                letterSpacing: ".18em",
-                textTransform: "uppercase",
-                color: "#EDF1F6",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
               }}
             >
-              Golden hour
+              <i
+                aria-hidden="true"
+                style={{
+                  display: "block",
+                  width: 22,
+                  height: 1,
+                  background: "linear-gradient(90deg,transparent,#F2C94C)",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "Archivo, Helvetica, sans-serif",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  fontSize: 12,
+                  letterSpacing: ".06em",
+                  textTransform: "lowercase",
+                  color: "rgba(242,201,76,.7)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                golden hour
+              </span>
             </span>
+
+            {/* Time — always visible */}
             <span
               style={{
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 13.5,
-                letterSpacing: ".08em",
-                color: "#F8B800",
+                fontFamily: "Archivo Black, Archivo, Helvetica, sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(15px,1.6vw,19px)",
+                letterSpacing: "-.01em",
+                color: "#F2C94C",
                 fontVariantNumeric: "tabular-nums",
                 whiteSpace: "nowrap",
+                lineHeight: 1,
               }}
             >
               {golden}
             </span>
           </span>
+
+          {/* Minutes remaining — desktop only */}
           <span
+            className="pg-hide-xs"
             style={{
-              fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-              fontSize: 13.5,
-              letterSpacing: ".08em",
-              color: "#EDF1F6",
+              fontFamily: "Archivo, Helvetica, sans-serif",
+              fontWeight: 400,
+              fontSize: 12,
+              letterSpacing: ".12em",
+              textTransform: "uppercase",
+              color: "rgba(242,201,76,.55)",
               fontVariantNumeric: "tabular-nums",
               flex: "0 0 auto",
+              opacity: 0.45,
             }}
           >
             {pctStr}

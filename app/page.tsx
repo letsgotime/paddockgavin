@@ -84,7 +84,7 @@ export default function HomePage() {
         <HomeMediaKit />
       </Stage>
 
-      {/* ── BREAK ── Black car at sunset ───────────── */}
+      {/* ── BREAK ── Aston Martin at golden hour ───── */}
       <PhotoBreak src="/images/creator-hero.jpg" pos="center 62%" credit="Rickey Bohr" />
 
       {/* ── 6. ASK ME ─────────────────────────────── */}

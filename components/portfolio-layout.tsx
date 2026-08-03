@@ -81,7 +81,9 @@ export const PortfolioLayout = () => {
                 >
                   {"tag" in project
                     ? (project as any).tag
-                    : project.services.join(" · ")}
+                    : "services" in project
+                      ? (project as any).services.join(" · ")
+                      : ""}
                 </span>
               </div>
 
