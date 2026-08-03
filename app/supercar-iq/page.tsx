@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -8,17 +8,32 @@ import { SiteFooter } from "@/components/site-footer"
 const arch = "Archivo,Helvetica,Arial,sans-serif"
 const mono = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 
-const LAYERS = [
-  { label: "Factory spec",       val: "25 pts", pts: "#00D2BE" },
-  { label: "Safety record",      val: "25 pts", pts: "#00D2BE" },
-  { label: "Market fingerprint", val: "25 pts", pts: "#00D2BE" },
-  { label: "Visual tells",       val: "25 pts", pts: "#848482" },
-]
 
 export default function SupercarIQPage() {
+  const DEFS = [
+    { label: "Factory spec",       v: 30 },
+    { label: "Safety record",      v: 50 },
+    { label: "Market fingerprint", v: 75 },
+    { label: "Visual tells",       v: 100 },
+  ]
+  const STATUS = ["Spec on file", "+ recalls and crash ratings", "+ live market fingerprint", "Fully studied \u2014 scan-ready"]
   const [active, setActive] = useState(0)
-  const score = active < 3 ? `${(active + 1) * 25}/100` : "100/100"
-  const meterW = `${(active + 1) * 25}%`
+  const [auto, setAuto] = useState(true)
+  const autoRef = useRef(auto)
+  autoRef.current = auto
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reduced) { setActive(3); setAuto(false); return }
+    const t = setInterval(() => {
+      if (!autoRef.current) return
+      setActive(a => a >= 3 ? 0 : a + 1)
+    }, 2200)
+    return () => clearInterval(t)
+  }, [])
+
+  const score = `${DEFS[active].v}/100`
+  const meterW = `${DEFS[active].v}%`
 
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
@@ -36,7 +51,7 @@ export default function SupercarIQPage() {
             <p style={{ margin: "0 0 28px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Supercar IQ reads a photo and answers with the whole record &mdash; factory spec, tire sizes, recalls, crash ratings, what it sells for and where. Not a guess dressed up as an answer: a file that was built before you ever raised the phone.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
               <a href="#preorder" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; from $4.99</a>
-              <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow the build</a>
+              <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow @PaddockGavin</a>
             </div>
           </div>
           <figure style={{ margin: 0, position: "relative", border: "1px solid #27384F", background: "#0A1523", overflow: "hidden" }}>
@@ -108,14 +123,15 @@ export default function SupercarIQPage() {
               <div style={{ display: "block", height: "100%", width: meterW, background: "#00D2BE", transition: "width .5s cubic-bezier(.2,.7,.2,1)" }} />
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              {LAYERS.map((l, i) => (
-                <button key={l.label} onClick={() => setActive(i)} style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", textAlign: "left", background: i === active ? "rgba(0,210,190,.08)" : "transparent", border: `1px solid ${i === active ? "#00D2BE" : "#27384F"}`, padding: "12px 14px", cursor: "pointer", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", transition: "background .25s,border-color .25s" }}>
+              {DEFS.map((l, i) => (
+                <button key={l.label} onClick={() => { setActive(i); setAuto(false) }} style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", textAlign: "left", background: i === active ? "rgba(0,210,190,.08)" : "transparent", border: `1px solid ${i === active ? "#00D2BE" : "#27384F"}`, padding: "12px 14px", cursor: "pointer", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", transition: "background .25s,border-color .25s" }}>
                   <i style={{ width: 8, height: 8, flex: "0 0 auto", background: i <= active ? "#00D2BE" : "#27384F", transition: "background .25s" }} />
                   <span style={{ flex: "1 1 auto", fontFamily: arch, fontWeight: 800, fontSize: 13.5, letterSpacing: ".12em", textTransform: "uppercase", color: i <= active ? "#FFFFFF" : "#848482" }}>{l.label}</span>
-                  <span style={{ fontFamily: mono, fontSize: 12.5, letterSpacing: ".14em", color: i <= active ? "#00D2BE" : "#848482" }}>{l.val}</span>
+                  <span style={{ fontFamily: mono, fontSize: 12.5, letterSpacing: ".14em", color: i <= active ? "#00D2BE" : "#848482" }}>{i <= active ? `+${l.v}` : "\u2014"}</span>
                 </button>
               ))}
             </div>
+            <p style={{ margin: "16px 0 0", fontFamily: mono, fontSize: 12.5, letterSpacing: ".1em", textTransform: "uppercase", color: "#848482", minHeight: 18 }}>{STATUS[active]}</p>
           </div>
         </div>
       </section>
@@ -159,6 +175,7 @@ export default function SupercarIQPage() {
               </div>
             ))}
           </div>
+          <p style={{ margin: "22px 0 0", fontSize: 15.5, lineHeight: 1.6, color: "#848482", maxWidth: "54ch" }}>Pre-orders run at <a href="https://supercariq.com" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>supercariq.com</a>. Follow <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>@PaddockGavin</a> for build updates between now and launch.</p>
         </div>
       </section>
 
