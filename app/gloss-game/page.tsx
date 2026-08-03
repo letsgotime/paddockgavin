@@ -108,7 +108,7 @@ function Cover({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
           The<br />Gloss<br />Game<sup style={{ fontSize: ".28em", verticalAlign: "super" }}>™</sup>
         </p>
         <p style={{ margin: "10px 0 0", fontFamily: S.serif, fontStyle: "italic", fontSize: size === "lg" ? 14 : 12, lineHeight: 1.4, color: S.steel }}>
-          This isn&apos;t detailing.<br />It&apos;s discipline on display.
+          You spent six figures on the finish.<br />Protect it like you did.
         </p>
       </div>
       {/* bottom */}
@@ -225,7 +225,7 @@ export default function GlossGamePage() {
                   The Gloss<br />Game<sup style={{ fontSize: ".22em", verticalAlign: "super" }}>™</sup>
                 </h1>
                 <p style={{ margin: "0 0 28px", fontFamily: S.serif, fontStyle: "italic", fontWeight: 300, fontSize: "clamp(18px,2.4vw,24px)", lineHeight: 1.42, color: S.paper, maxWidth: "28ch" }}>
-                  This isn&apos;t detailing.<br />It&apos;s discipline on display.
+                  You spent six figures on the finish.<br />Most detailers are guessing.
                 </p>
               </R>
               <R delay={80}>
@@ -251,10 +251,10 @@ export default function GlossGamePage() {
         <section style={{ margin: "clamp(40px,5vw,64px) 0 0", borderTop: "1px solid rgba(255,255,255,.08)", borderBottom: "1px solid rgba(255,255,255,.08)", background: "rgba(255,255,255,.02)", padding: "22px 0", overflow: "hidden" }}>
           <div style={{ ...wide, display: "flex", gap: "clamp(20px,5vw,56px)", flexWrap: "wrap", alignItems: "center" }}>
             {[
-              ["\u201cYou don\u2019t wash a car. You reset a finish.\u201d","Chapter 3"],
-              ["\u201cThe tire is clean when it squeaks.\u201d","Chapter 4"],
-              ["\u201cLayer with purpose, not with fear.\u201d","Chapter 8"],
-              ["\u201cSome people meditate. I wash.\u201d","Chapter 1"],
+              ["\u201cIf you paid six figures for the paint, you owe it the right mitt.\u201d","Chapter 3"],
+              ["\u201cMost swirl marks come from the wash, not from the road.\u201d","Chapter 3"],
+              ["\u201cThe person with the buffer is guessing unless they know what is under it.\u201d","Chapter 5"],
+              ["\u201cA ceramic coat on top of bad prep is an expensive mistake.\u201d","Chapter 5"],
             ].map(([q, s]) => (
               <div key={s} style={{ flex: "1 1 200px" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: S.serif, fontStyle: "italic", fontSize: 15, lineHeight: 1.4, color: S.paper }}>{q}</p>
@@ -275,12 +275,12 @@ export default function GlossGamePage() {
             </R>
             <R delay={60}>
               <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>
-                <span style={{ float: "left", fontFamily: S.disp, fontWeight: 900, fontSize: 72, lineHeight: .82, padding: "8px 14px 0 0", color: S.orange }}>I</span>
-                t didn&apos;t start in a shop. Saturday morning meant the car was done before anything else happened. Every time. No exceptions and no shortcuts and no rhythm if it was skipped.
+                <span style={{ float: "left", fontFamily: S.disp, fontWeight: 900, fontSize: 72, lineHeight: .82, padding: "8px 14px 0 0", color: S.orange }}>T</span>
+                he most expensive mistake most exotic owners make is trusting the wrong person with the wrong products on a finish that cost more than most people&apos;s cars. It happens the first time. Then the swirls are there and they are not coming out without correction.
               </p>
-              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>By 1995 I was fifteen and driving up to La Jolla to do it for people who paid. Twenty-five dollars for a wash and wax. A hundred and twenty-five if the car needed everything.</p>
-              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>Fifty-five thousand dollars is what it cost to find out what actually works. Spent over thirty years, on a few dozen of my own cars and on more client and friend cars than I kept count of. Most of that money went on finding out what I didn&apos;t need.</p>
-              <p style={{ margin: 0, fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>The book is twelve chapters of what came out of that. The order matters. The reasons matter. The products are in a list in chapter ten. The reasons each one is in there took thirty years and they are in the chapters before it.</p>
+              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>I started detailing at fourteen in Escondido. By fifteen I was driving to La Jolla to do it for people who paid. Over thirty years I put fifty-five thousand dollars into learning what actually protects a finish and what just looks like it does.</p>
+              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>This book is what I wish someone had given me the first time I stood in front of a paint job worth protecting. Not what products to buy. The reason behind the order — because the order is what the products can and cannot do.</p>
+              <p style={{ margin: 0, fontFamily: S.serif, fontSize: "clamp(17px,2vw,20px)", lineHeight: 1.72, color: S.body }}>If you own something worth protecting, you owe it to the finish to understand what is being done to it. Chapter five alone is worth the price of the book.</p>
             </R>
           </div>
         </section>
@@ -331,7 +331,7 @@ export default function GlossGamePage() {
             <R>
               <p style={{ margin: "0 0 8px", fontFamily: S.mono, fontSize: 10.5, letterSpacing: ".22em", textTransform: "uppercase", color: S.orange }}>03 &middot; Eight systems, not tips</p>
               <h2 style={{ margin: "0 0 12px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(26px,4vw,42px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>What you walk away with</h2>
-              <p style={{ margin: "0 0 36px", fontFamily: S.sans, fontSize: 16, lineHeight: 1.64, color: S.body, maxWidth: "58ch" }}>Not a product list. Not theory. Systems built on a driveway, tested on a few dozen of my own cars, and written down in the order you would actually do them.</p>
+              <p style={{ margin: "0 0 36px", fontFamily: S.sans, fontSize: 16, lineHeight: 1.64, color: S.body, maxWidth: "58ch" }}>Not a product list. The reasoning behind each step, so when someone is standing in front of your car you know whether they are doing it right — or doing it wrong in a way you will see for years.</p>
             </R>
             <div style={{ display: "grid", gap: 2 }}>
               {[
@@ -367,12 +367,12 @@ export default function GlossGamePage() {
             </R>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(300px,100%),1fr))", gap: 2 }}>
               {[
-                ["\u201cYou don\u2019t wash a car. You reset a finish.\u201d","Ch. 3"],
-                ["\u201cMost swirls come from rinse buckets, not dirty paint.\u201d","Ch. 3"],
-                ["\u201cThe tire is clean when it squeaks.\u201d","Ch. 4"],
-                ["\u201cTime shrinks when rhythm grows.\u201d","Ch. 2"],
-                ["\u201cGloss is like cardio. You lose it if you skip the rhythm.\u201d","Ch. 8"],
-                ["\u201cDon\u2019t layer out of fear. Layer with purpose.\u201d","Ch. 8"],
+                ["\u201cThe finish on a serious car is not a cosmetic. It is a surface that needs a system.\u201d","Ch. 1"],
+                ["\u201cIf you paid six figures for the paint, you owe it the right mitt.\u201d","Ch. 3"],
+                ["\u201cMost swirl marks come from the wash, not from the road.\u201d","Ch. 3"],
+                ["\u201cA ceramic coat on top of bad prep is an expensive mistake.\u201d","Ch. 5"],
+                ["\u201cThe person with the buffer is guessing unless they know what is under it.\u201d","Ch. 5"],
+                ["\u201cLayer with purpose. Not out of fear, and not to add product.\u201d","Ch. 8"],
               ].map(([q, ch], i) => (
                 <R key={i} delay={i * 40}>
                   <div style={{ background: "rgba(255,255,255,.025)", border: "1px solid rgba(255,255,255,.08)", padding: "clamp(20px,2.8vw,32px)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 14, minHeight: 140 }}>
@@ -391,9 +391,9 @@ export default function GlossGamePage() {
             <div style={{ display: "grid", gap: "clamp(32px,5vw,72px)", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", alignItems: "start" }}>
               <R>
                 <p style={{ margin: "0 0 8px", fontFamily: S.mono, fontSize: 10.5, letterSpacing: ".22em", textTransform: "uppercase", color: S.gold }}>Free &middot; No catch</p>
-                <h2 style={{ margin: "0 0 16px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(24px,3.8vw,38px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>The whole product list before you buy anything</h2>
-                <p style={{ margin: "0 0 12px", fontFamily: S.sans, fontSize: 15.5, lineHeight: 1.64, color: S.body }}>Fifty-four products across eight zones. Every link checked. The eight that pay a commission are marked so you can see them.</p>
-                <p style={{ margin: 0, fontFamily: S.sans, fontSize: 15.5, lineHeight: 1.64, color: S.body }}>It is the shopping half of chapter ten. What it does not have is the reason each one is in there. That half took thirty years and it is in the book.</p>
+                <h2 style={{ margin: "0 0 16px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(24px,3.8vw,38px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>Everything that goes on the car. Free. Before you buy anything.</h2>
+                <p style={{ margin: "0 0 12px", fontFamily: S.sans, fontSize: 15.5, lineHeight: 1.64, color: S.body }}>Fifty-four products across eight zones. What goes on which surface, in which order, with which tools. Every link verified. Affiliate items marked.</p>
+                <p style={{ margin: 0, fontFamily: S.sans, fontSize: 15.5, lineHeight: 1.64, color: S.body }}>The index tells you what. The book tells you why — and on a six-figure finish, the why is the part that matters.</p>
               </R>
               <R delay={80}>
                 <div style={{ background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.1)", borderTop: `3px solid ${S.gold}`, padding: "clamp(22px,3vw,36px)" }}>
@@ -411,15 +411,15 @@ export default function GlossGamePage() {
           <div style={col}>
             <R>
               <p style={{ margin: "0 0 8px", fontFamily: S.mono, fontSize: 10.5, letterSpacing: ".22em", textTransform: "uppercase", color: S.orange }}>05 &middot; Who this is for</p>
-              <h2 style={{ margin: "0 0 28px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(24px,3.8vw,38px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>A driveway and a folding table</h2>
+              <h2 style={{ margin: "0 0 28px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(24px,3.8vw,38px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>The finish on your car has a price tag. Protect it like it does.</h2>
             </R>
             <R delay={60}>
-              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.72, color: S.body }}>Flip cars. Client preps. Daily drivers that used to pop. Cars going back on lease, and garage queens that have been sitting since the last two rainstorms.</p>
-              <p style={{ margin: 0, fontFamily: S.serif, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.72, color: S.body }}>It assumes a driveway and a folding table, not a shop. That is what I started with and the rules do not change at four hundred square feet or forty.</p>
+              <p style={{ margin: "0 0 20px", fontFamily: S.serif, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.72, color: S.body }}>This book is for owners who want to know what is being done to their car — not to do it themselves necessarily, but to be able to tell whether the person doing it knows what they are doing.</p>
+              <p style={{ margin: 0, fontFamily: S.serif, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.72, color: S.body }}>It works on a $400K Enzo and it works on a $40K M3. The chemistry does not change. The order does not change. The standard does not change.</p>
             </R>
             <R delay={100}>
               <div style={{ marginTop: 32, display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(180px,100%),1fr))", gap: 2 }}>
-                {["Daily drivers","Garage queens","Lease turn-ins","Flip cars","Client preps","Exotic owners"].map(t => (
+                {["Porsche owners","Ferrari owners","McLaren owners","Lamborghini owners","BMW M owners","Any car worth protecting"].map(t => (
                   <div key={t} style={{ padding: "14px 16px", background: "rgba(255,255,255,.03)", border: "1px solid rgba(255,255,255,.07)" }}>
                     <span style={{ fontFamily: S.mono, fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: S.paper }}>{t}</span>
                   </div>
@@ -472,7 +472,7 @@ export default function GlossGamePage() {
                 <div>
                   <p style={{ margin: "0 0 8px", fontFamily: S.mono, fontSize: 10.5, letterSpacing: ".22em", textTransform: "uppercase", color: S.orange }}>Get the book</p>
                   <h2 style={{ margin: "0 0 16px", fontFamily: S.disp, fontWeight: 900, fontSize: "clamp(28px,4.2vw,48px)", letterSpacing: "-.03em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>The Gloss Game™</h2>
-                  <p style={{ margin: "0 0 28px", fontFamily: S.sans, fontSize: 16, lineHeight: 1.64, color: S.body, maxWidth: "46ch" }}>Twelve chapters. The full Juice Box index with the reason each product is in it. The seven-day Gloss Reset written as a journal you fill in as you go.</p>
+                  <p style={{ margin: "0 0 28px", fontFamily: S.sans, fontSize: 16, lineHeight: 1.64, color: S.body, maxWidth: "46ch" }}>Twelve chapters on what the finish on a serious car actually needs. The Juice Box index with the reasoning behind every product. The seven-day Gloss Reset — written as a journal you work through on the car itself.</p>
 
                   <div style={{ marginBottom: 28 }}>
                     <Stars n={5} label="Paperback · $19.99" />
