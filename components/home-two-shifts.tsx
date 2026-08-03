@@ -50,13 +50,13 @@ export function HomeTwoShifts() {
             Day · 08:00 &rarr; 18:00
           </span>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.05, letterSpacing: "-.025em", textTransform: "uppercase", color: "#FFFFFF" }}>
-            The lot, and the room it sits in
+            Lot operations at duPont REGISTRY, Nashville
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#C4CBD6" }}>
-            The gate opens at eight. Every car off a truck gets checked, cleaned, photographed, written up, and put somewhere safe. Nothing leaves until it&apos;s verified.
+            Every exotic and luxury car on the Lebanon lot goes through inspection, photography, writeup, and staging before it reaches a buyer. The gate opens at eight. Nothing leaves until it clears.
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#8B93A7" }}>
-            Lot Operations and Events Manager at duPont REGISTRY, Lebanon. The gate, the coffee, and the calendar run through me.
+            Lot Operations and Events Manager, duPont REGISTRY — the largest exotic car marketplace in the country. The gate, the calendar, and the camera all run through the same person.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingTop: 4 }}>
             <Link href="/donuts" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
@@ -74,10 +74,10 @@ export function HomeTwoShifts() {
             Night · after hours
           </span>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.05, letterSpacing: "-.025em", textTransform: "uppercase", color: "#FFFFFF" }}>
-            My desk, after the gate shuts
+            Automotive software and content, Nashville
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#C4CBD6" }}>
-            Twenty-six years of technology didn&apos;t go anywhere. It moved to evenings, and it builds the things I kept wishing existed while I was on the lot.
+            Twenty-six years in technology don&apos;t disappear when the gate closes. Supercar IQ, The Gloss Game on Amazon, Paddock20 — tools built by someone who spent the day on the lot, not someone who read about it.
           </p>
           <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid rgba(255,255,255,.1)", marginTop: 4 }}>
             {[

@@ -1,3 +1,18 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "PaddockGavin — Two shifts. One paddock.",
+  description:
+    "Gavin runs lot operations and events for duPont REGISTRY by day, and builds software by night. Nashville, Tennessee.",
+  openGraph: {
+    title: "PaddockGavin — Two shifts. One paddock.",
+    description: "Cars used to be the reward. Now they're the work.",
+    url: "https://paddockgavin.com",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
+}
+
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { HomeHero } from "@/components/home-hero"
@@ -40,6 +55,7 @@ export default function HomePage() {
   return (
     <>
       <SiteNav active="home" />
+      <h1 className="sr-only">PaddockGavin — Lot operations and events by day, software by night. Nashville, Tennessee.</h1>
       <HomeHero />
 
       {/* ── 1. THE WALL ───────────────────────────── */}
