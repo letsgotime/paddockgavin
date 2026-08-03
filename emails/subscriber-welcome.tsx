@@ -1,11 +1,11 @@
 import {
   Body,
   Container,
+  Font,
   Head,
   Heading,
   Hr,
   Html,
-  Img,
   Link,
   Preview,
   Row,
@@ -17,14 +17,16 @@ import {
 // ─── Brand tokens ────────────────────────────────────────────────────────────
 const NAVY    = "#0A0E1A"
 const PANEL   = "#0E1A2A"
-const BORDER  = "rgba(255,255,255,0.10)"
+const CARD    = "#152538"
+const BORDER  = "#27384F"
 const ORANGE  = "#EF4A18"
 const GOLD    = "#F2C94C"
 const TEAL    = "#57C7F5"
+const STEEL   = "#8B93A7"
 const WHITE   = "#EDF1F6"
-const MUTED   = "#8B93A7"
-const arch    = "'Helvetica Neue', Helvetica, Arial, sans-serif"
-const mono    = "ui-monospace, 'Courier New', Courier, monospace"
+const BODY    = "#C8D0DB"
+const arch    = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const mono    = "'Courier New', Courier, monospace"
 
 interface SubscriberWelcomeProps {
   source?: string  // e.g. "juice-box", "gloss-game", "site"
@@ -40,24 +42,67 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
 
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <Font
+          fontFamily="Archivo"
+          fallbackFontFamily="Helvetica"
+          webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }}
+          fontWeight={400}
+          fontStyle="normal"
+        />
+        <Font
+          fontFamily="Archivo"
+          fallbackFontFamily="Helvetica"
+          webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }}
+          fontWeight={700}
+          fontStyle="normal"
+        />
+        <Font
+          fontFamily="Archivo"
+          fallbackFontFamily="Helvetica"
+          webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }}
+          fontWeight={900}
+          fontStyle="normal"
+        />
+      </Head>
       <Preview>You&apos;re in. Welcome to the paddock.</Preview>
 
       <Body style={{ background: NAVY, margin: 0, padding: 0, fontFamily: arch }}>
 
-        {/* ── Header ── */}
-        <Section style={{ background: PANEL, borderBottom: `1px solid ${BORDER}`, padding: "28px 32px" }}>
+        {/* ── Speed stripe header ── */}
+        <Section style={{ background: PANEL, padding: "0 0 0 0" }}>
+          <Container style={{ maxWidth: 600 }}>
+            <Row>
+              {[ORANGE, GOLD, TEAL, STEEL].map((c, i) => (
+                <Column key={i} style={{ width: "25%", padding: 0 }}>
+                  <div style={{ height: 4, background: c }} />
+                </Column>
+              ))}
+            </Row>
+          </Container>
+        </Section>
+
+        {/* ── Wordmark bar ── */}
+        <Section style={{ background: PANEL, borderBottom: `1px solid ${BORDER}`, padding: "20px 32px 22px" }}>
           <Container style={{ maxWidth: 600 }}>
             <Row>
               <Column>
-                <Text style={{ margin: 0, fontFamily: mono, fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: MUTED }}>
-                  PaddockGavin
-                </Text>
-                <Text style={{ margin: "2px 0 0", fontFamily: arch, fontWeight: 800, fontSize: 22, letterSpacing: "-0.02em", color: WHITE }}>
-                  Two shifts. One paddock.
-                </Text>
+                {/* PG mark + wordmark */}
+                <Row>
+                  <Column style={{ width: 44, verticalAlign: "middle" }}>
+                    {/* Inline SVG PG mark rendered as HTML via dangerouslySetInnerHTML not possible — use text badge instead */}
+                    <div style={{ width: 36, height: 36, background: ORANGE, display: "inline-block", textAlign: "center", lineHeight: "36px" }}>
+                      <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, letterSpacing: "-0.02em", color: WHITE, lineHeight: "36px", padding: 0 }}>PG</Text>
+                    </div>
+                  </Column>
+                  <Column style={{ verticalAlign: "middle" }}>
+                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 20, letterSpacing: "-0.01em", color: WHITE }}>
+                      PADDOCK<span style={{ color: GOLD }}>GAVIN</span>
+                    </Text>
+                  </Column>
+                </Row>
               </Column>
-              <Column style={{ textAlign: "right" }}>
+              <Column style={{ textAlign: "right", verticalAlign: "middle" }}>
                 <Text style={{ margin: 0, fontFamily: mono, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE }}>
                   {label}
                 </Text>
@@ -65,9 +110,6 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
             </Row>
           </Container>
         </Section>
-
-        {/* ── Orange accent stripe ── */}
-        <Section style={{ background: ORANGE, padding: "3px 0", margin: 0 }} />
 
         {/* ── Hero copy ── */}
         <Section style={{ background: NAVY, padding: "48px 32px 36px" }}>
@@ -90,7 +132,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
         <Section style={{ padding: "0 32px 36px" }}>
           <Container style={{ maxWidth: 600 }}>
             <Row>
-              {[ORANGE, GOLD, TEAL, MUTED].map((c, i) => (
+              {[ORANGE, GOLD, TEAL, STEEL].map((c, i) => (
                 <Column key={i} style={{ width: "25%", padding: 0 }}>
                   <div style={{ height: 4, background: c }} />
                 </Column>
@@ -102,7 +144,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
         {/* ── Quick links ── */}
         <Section style={{ background: PANEL, padding: "32px 32px", borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
           <Container style={{ maxWidth: 600 }}>
-            <Text style={{ margin: "0 0 20px", fontFamily: mono, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: MUTED }}>
+            <Text style={{ margin: "0 0 20px", fontFamily: mono, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: STEEL }}>
               While you&apos;re here
             </Text>
             <Row style={{ marginBottom: 14 }}>
@@ -141,11 +183,11 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
         {/* ── Footer ── */}
         <Section style={{ background: NAVY, padding: "28px 32px" }}>
           <Container style={{ maxWidth: 600 }}>
-            <Text style={{ margin: "0 0 8px", fontFamily: mono, fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: MUTED }}>
+            <Text style={{ margin: "0 0 8px", fontFamily: mono, fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: STEEL }}>
               Digest. Develop. Deliver.
             </Text>
-            <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 13, lineHeight: 1.6, color: MUTED }}>
-              Nashville, TN &middot; A <Link href="https://gotimemotorsports.com" style={{ color: MUTED }}>GoTime Motorsports</Link> company
+            <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 13, lineHeight: 1.6, color: STEEL }}>
+              Nashville, TN &middot; A <Link href="https://gotimemotorsports.com" style={{ color: STEEL }}>GoTime Motorsports</Link> company
             </Text>
             <Hr style={{ border: "none", borderTop: `1px solid ${BORDER}`, margin: "0 0 16px" }} />
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 12, color: "#4A5568" }}>

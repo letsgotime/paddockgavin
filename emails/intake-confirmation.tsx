@@ -1,6 +1,7 @@
 import {
   Body,
   Container,
+  Font,
   Head,
   Heading,
   Hr,
@@ -16,15 +17,16 @@ import {
 // ─── Brand tokens ────────────────────────────────────────────────────────────
 const NAVY   = "#0A0E1A"
 const PANEL  = "#0E1A2A"
-const BORDER = "rgba(255,255,255,0.10)"
+const CARD   = "#152538"
+const BORDER = "#27384F"
 const ORANGE = "#EF4A18"
 const GOLD   = "#F2C94C"
 const TEAL   = "#57C7F5"
 const STEEL  = "#8B93A7"
 const WHITE  = "#EDF1F6"
 const BODY   = "#C8D0DB"
-const arch   = "'Helvetica Neue', Helvetica, Arial, sans-serif"
-const mono   = "ui-monospace, 'Courier New', Courier, monospace"
+const arch   = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const mono   = "'Courier New', Courier, monospace"
 
 export interface IntakeConfirmationProps {
   firstName: string
@@ -49,31 +51,50 @@ export default function IntakeConfirmation({
 
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <Font fontFamily="Archivo" fallbackFontFamily="Helvetica" webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }} fontWeight={400} fontStyle="normal" />
+        <Font fontFamily="Archivo" fallbackFontFamily="Helvetica" webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }} fontWeight={700} fontStyle="normal" />
+        <Font fontFamily="Archivo" fallbackFontFamily="Helvetica" webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }} fontWeight={900} fontStyle="normal" />
+      </Head>
       <Preview>Got it, {firstName}. Your request is in the paddock.</Preview>
 
       <Body style={{ background: NAVY, margin: 0, padding: 0, fontFamily: arch }}>
 
-        {/* ── Header ── */}
-        <Section style={{ background: PANEL, padding: "0 32px", borderBottom: `1px solid ${BORDER}` }}>
+        {/* ── Speed stripe top bar ── */}
+        <Section style={{ background: PANEL, padding: 0 }}>
           <Container style={{ maxWidth: 600 }}>
-            <Row style={{ marginBottom: 0 }}>
+            <Row>
               {[ORANGE, GOLD, TEAL, STEEL].map((c, i) => (
                 <Column key={i} style={{ width: "25%", padding: 0 }}>
-                  <div style={{ height: 3, background: c }} />
+                  <div style={{ height: 4, background: c }} />
                 </Column>
               ))}
             </Row>
-            <Row style={{ padding: "22px 0 20px" }}>
-              <Column>
-                <Text style={{ margin: 0, fontFamily: mono, fontSize: 10, letterSpacing: "0.24em", textTransform: "uppercase", color: STEEL }}>
-                  PaddockGavin
-                </Text>
-                <Text style={{ margin: "4px 0 0", fontFamily: arch, fontWeight: 900, fontSize: 22, letterSpacing: "-0.02em", color: WHITE }}>
-                  Find Me a Car
-                </Text>
+          </Container>
+        </Section>
+
+        {/* ── Header ── */}
+        <Section style={{ background: PANEL, padding: "20px 32px 22px", borderBottom: `1px solid ${BORDER}` }}>
+          <Container style={{ maxWidth: 600 }}>
+            <Row>
+              <Column style={{ verticalAlign: "middle" }}>
+                <Row>
+                  <Column style={{ width: 44, verticalAlign: "middle" }}>
+                    <div style={{ width: 36, height: 36, background: ORANGE, textAlign: "center" }}>
+                      <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, color: WHITE, lineHeight: "36px", padding: 0 }}>PG</Text>
+                    </div>
+                  </Column>
+                  <Column style={{ verticalAlign: "middle" }}>
+                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, letterSpacing: "0.02em", color: WHITE }}>
+                      PADDOCK<span style={{ color: GOLD }}>GAVIN</span>
+                    </Text>
+                    <Text style={{ margin: "2px 0 0", fontFamily: arch, fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: TEAL }}>
+                      Find Me a Car
+                    </Text>
+                  </Column>
+                </Row>
               </Column>
-              <Column style={{ textAlign: "right" }}>
+              <Column style={{ textAlign: "right", verticalAlign: "middle" }}>
                 <Text style={{ margin: 0, fontFamily: mono, fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: STEEL }}>
                   Ref
                 </Text>
@@ -107,7 +128,7 @@ export default function IntakeConfirmation({
         {hasSpec && (
           <Section style={{ padding: "0 32px 40px" }}>
             <Container style={{ maxWidth: 600 }}>
-              <div style={{ background: PANEL, border: `1px solid ${BORDER}`, padding: "24px 24px" }}>
+              <div style={{ background: CARD, border: `1px solid ${BORDER}`, padding: "24px 24px" }}>
                 <Text style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: STEEL }}>
                   Your request on file
                 </Text>
