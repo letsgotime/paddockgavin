@@ -25,9 +25,9 @@ import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 
 // Full-bleed photo break — no max-width, edge to edge
-function PhotoBreak({ src, pos = "center 40%", h = "clamp(280px,42vw,440px)", credit }: { src: string; pos?: string; h?: string; credit?: string }) {
+function PhotoBreak({ src, pos = "center 40%", credit }: { src: string; pos?: string; h?: string; credit?: string }) {
   return (
-    <div aria-hidden={!credit} style={{ width: "100%", height: h, position: "relative", overflow: "hidden" }}>
+    <div aria-hidden={!credit} className="pg-photo-break">
       <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.55) 0%,rgba(10,21,35,0) 38%,rgba(10,21,35,0) 62%,rgba(10,21,35,.55) 100%)" }} />
       {credit && (
@@ -44,7 +44,7 @@ function Stage({ children, sec }: { children: React.ReactNode; sec: string }) {
   return (
     <div
       data-sec={sec}
-      style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 1180, margin: "0 auto", padding: "clamp(72px,11vw,144px) clamp(16px,5vw,48px)" }}
+      className="pg-stage"
     >
       {children}
     </div>

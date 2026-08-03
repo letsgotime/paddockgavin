@@ -5,7 +5,7 @@ export function HomeMediaKit() {
     <section
       data-screen-label="For brands"
       id="mediakit"
-      style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,6vw,72px)" }}
+      style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,5vw,64px)" }}
     >
       {/* Eyebrow */}
       <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#F2C94C" }}>
@@ -31,7 +31,7 @@ export function HomeMediaKit() {
           { label: "Based",            value: "Nashville",  color: "#57C7F5" },
         ].map((r) => (
           <div key={r.label} style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 0 }}>
-            <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(36px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <span className="pg-stat-value" style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(36px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {r.value}
             </span>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#8B93A7" }}>
