@@ -29,7 +29,7 @@ const BODY   = "#C8D0DB"
 const arch   = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const mono   = "'Courier New', Courier, monospace"
 
-const STRIPE = ["#F2C94C", "#00D2BE", "#1E3A5F", "#8B93A7"] as const
+const STRIPE = ["#F8B800", "#00D2BE", "#005185", "#848482"] as const
 
 export interface WireframeDigestIssueProps {
   issueNumber: string           // "012"
