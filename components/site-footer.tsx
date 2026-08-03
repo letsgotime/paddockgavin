@@ -250,6 +250,7 @@ export function SiteFooter() {
               { href: "/scoreboard",          label: "The scoreboard",  ext: false },
               { href: "/supercar-iq",         label: "Supercar IQ",     ext: false },
               { href: "/gloss-game",          label: "The Gloss Game",  ext: false },
+              { href: "/affiliates",          label: "Affiliates & Partners", ext: false },
               { href: "https://paddock20.com",label: "Paddock20",       ext: true  },
             ].map((l) => (
               <a
