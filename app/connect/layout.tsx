@@ -1,19 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
-
 export const metadata: Metadata = {
-  title: "Connect — PaddockGavin",
-  description:
-    "Get in touch with Gavin. Partnerships, press, lot operations, events, or software projects. Nashville, Tennessee.",
-  openGraph: {
-    title: "Connect — PaddockGavin",
-    description: "Partnerships, press, events, or software. Get in touch.",
-    url: "https://paddockgavin.com/connect",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Connect — PaddockGavin" }],
-  },
+  title: "Every Link — PaddockGavin",
+  description: "All PaddockGavin links in one place. Instagram, YouTube, TikTok, duPont REGISTRY lot, Supercar IQ, The Gloss Game on Amazon, Paddock20, and more.",
+  openGraph: { title: "Every Link — PaddockGavin", description: "All PaddockGavin links — Instagram, YouTube, TikTok, duPont REGISTRY, Supercar IQ, Amazon, Paddock20.", url: "https://paddockgavin.com/connect", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin Links" }] },
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
-
-export default function ConnectLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
-}
+export default function Layout({ children }: { children: React.ReactNode }) { return <>{children}</> }

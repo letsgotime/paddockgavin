@@ -1,19 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
-
 export const metadata: Metadata = {
-  title: "Lot Ops — PaddockGavin",
-  description:
-    "How Gavin manages one of the most valuable exotic car lots in the country at duPont REGISTRY Lebanon, TN. $125M+ in inventory per month.",
-  openGraph: {
-    title: "Lot Ops — PaddockGavin",
-    description: "$125M+ in exotic inventory. Here's how the lot actually runs.",
-    url: "https://paddockgavin.com/lot-ops",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Lot Ops — PaddockGavin" }],
-  },
+  title: "Lot Ops in Action — PaddockGavin",
+  description: "Lot operations at duPont REGISTRY Lebanon, Tennessee. Every exotic car that arrives goes through inspection, photography, staging, and verification before a buyer sees it.",
+  openGraph: { title: "Lot Ops in Action — PaddockGavin", description: "Lot operations at duPont REGISTRY Lebanon. Inspection, photography, staging, and verification for exotic and luxury cars.", url: "https://paddockgavin.com/lot-ops", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Lot Operations duPont REGISTRY" }] },
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
-
-export default function LotOpsLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
-}
+export default function Layout({ children }: { children: React.ReactNode }) { return <>{children}</> }
