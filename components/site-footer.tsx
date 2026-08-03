@@ -115,7 +115,7 @@ export function SiteFooter() {
                 aria-hidden="true"
                 width={73}
                 height={40}
-                style={{ display: "block", flexShrink: 0, objectFit: "contain", width: "auto", height: 40 }}
+                style={{ display: "block", flexShrink: 0, width: "auto", height: 40 }}
               />
               <p
                 style={{

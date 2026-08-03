@@ -184,9 +184,9 @@ export function SiteNav({ active = "home" }: Props) {
               <Image
                 src="/images/mark-on-dark-96.png"
                 alt="PG mark"
-                width={32}
+                width={58}
                 height={32}
-                style={{ height: 32, width: "auto", display: "block" }}
+                style={{ height: 32, width: "auto", display: "block", flexShrink: 0 }}
               />
               <span
                 style={{
