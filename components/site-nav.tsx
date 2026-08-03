@@ -165,8 +165,8 @@ export function SiteNav({ active = "home" }: Props) {
               margin: "0 auto",
               display: "flex",
               alignItems: "center",
-              gap: "clamp(10px,2vw,20px)",
-              padding: "11px clamp(20px,4vw,48px) 11px clamp(20px,4vw,48px)",
+              gap: "clamp(8px,2vw,20px)",
+              padding: "10px clamp(14px,4vw,48px)",
             }}
           >
             {/* Logo */}
@@ -233,6 +233,7 @@ export function SiteNav({ active = "home" }: Props) {
                 }}
               />
               <span
+                className="pg-hide-xs"
                 style={{
                   fontFamily: "Archivo, Helvetica, sans-serif",
                   fontWeight: 700,
@@ -267,7 +268,8 @@ export function SiteNav({ active = "home" }: Props) {
               aria-label="Open menu"
               style={{
                 flex: "0 0 auto",
-                height: 40,
+                height: 44,
+                minWidth: 44,
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
@@ -279,7 +281,7 @@ export function SiteNav({ active = "home" }: Props) {
                 WebkitBackdropFilter: "blur(14px)",
                 clipPath:
                   "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
-                transition: "border-color .18s",
+                transition: "border-color .18s,background .18s",
                 color: "#EDF1F6",
               }}
             >
@@ -296,9 +298,13 @@ export function SiteNav({ active = "home" }: Props) {
               >
                 Menu
               </span>
-              <span style={{ display: "flex", flexDirection: "column", gap: 4, width: 18 }}>
-                <i style={{ display: "block", height: 2, background: "#EDF1F6" }} />
-                <i style={{ display: "block", height: 2, background: "#EDF1F6" }} />
+              <span
+                aria-hidden="true"
+                style={{ display: "flex", flexDirection: "column", gap: 4.5, width: 20 }}
+              >
+                <i style={{ display: "block", height: 2, background: "#EDF1F6", borderRadius: 1 }} />
+                <i style={{ display: "block", height: 2, background: "#EDF1F6", borderRadius: 1 }} />
+                <i style={{ display: "block", height: 2, width: "70%", background: "#EDF1F6", borderRadius: 1 }} />
               </span>
             </button>
           </div>
@@ -355,8 +361,7 @@ export function SiteNav({ active = "home" }: Props) {
               position: "relative",
               maxWidth: 1180,
               margin: "0 auto",
-              padding:
-                "clamp(72px,8vw,104px) clamp(16px,4vw,40px) clamp(40px,6vw,72px)",
+              padding: "clamp(60px,7vw,104px) clamp(16px,4vw,40px) clamp(40px,6vw,72px)",
             }}
           >
             {/* Header row */}
@@ -400,8 +405,8 @@ export function SiteNav({ active = "home" }: Props) {
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
                 style={{
-                  width: 44,
-                  height: 40,
+                  width: 48,
+                  height: 44,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -409,7 +414,7 @@ export function SiteNav({ active = "home" }: Props) {
                   background: "rgba(255,255,255,.05)",
                   border: "1px solid rgba(255,255,255,.2)",
                   color: "#EDF1F6",
-                  fontSize: 22,
+                  fontSize: 28,
                   lineHeight: 1,
                   clipPath:
                     "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
@@ -440,14 +445,17 @@ export function SiteNav({ active = "home" }: Props) {
                       display: "flex",
                       alignItems: "center",
                       gap: "clamp(12px,1.6vw,18px)",
-                      padding: "clamp(13px,1.6vw,17px) 12px clamp(13px,1.6vw,17px) 4px",
-                      borderBottom: `1px solid ${isActive ? "rgba(255,255,255,.28)" : "rgba(255,255,255,.10)"}`,
+                      padding: "clamp(14px,1.6vw,17px) 12px clamp(14px,1.6vw,17px) 0",
+                      borderBottom: `1px solid ${isActive ? "rgba(255,255,255,.22)" : "rgba(255,255,255,.08)"}`,
+                      borderLeft: isActive ? `3px solid ${item.tone}` : "3px solid transparent",
+                      paddingLeft: isActive ? 10 : 0,
                       textDecoration: "none",
-                      background: isActive ? "rgba(255,255,255,.05)" : "transparent",
-                      transition: "background .2s,padding-left .2s",
+                      background: isActive ? "rgba(255,255,255,.04)" : "transparent",
+                      transition: "background .2s,border-color .2s,padding-left .2s",
                     }}
                   >
                     <span
+                      className="pg-hide-xs"
                       style={{
                         fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                         fontSize: 13,
@@ -463,26 +471,27 @@ export function SiteNav({ active = "home" }: Props) {
                       style={{
                         fontFamily: "Archivo, Helvetica, sans-serif",
                         fontWeight: 800,
-                        fontSize: "clamp(22px,2.6vw,34px)",
+                        fontSize: "clamp(20px,2.6vw,34px)",
                         letterSpacing: "-.022em",
-                        lineHeight: 1.04,
+                        lineHeight: 1.08,
                         color: isActive ? "#FFFFFF" : "#EDF1F6",
-                        flex: "0 1 auto",
-                        textWrap: "balance" as never,
+                        flex: "1 1 auto",
                       }}
                     >
                       {item.label}
                     </span>
                     <i
                       aria-hidden="true"
+                      className="pg-hide-xs"
                       style={{
-                        flex: "1 1 auto",
+                        flex: "0 1 40px",
                         minWidth: 10,
                         height: 0,
                         borderBottom: "1px dotted rgba(255,255,255,.16)",
                       }}
                     />
                     <span
+                      className="pg-hide-xs"
                       style={{
                         fontFamily: "Archivo, Helvetica, sans-serif",
                         fontWeight: 600,
@@ -496,6 +505,18 @@ export function SiteNav({ active = "home" }: Props) {
                     >
                       {item.note}
                     </span>
+                    <i
+                      aria-hidden="true"
+                      style={{
+                        flex: "0 0 auto",
+                        width: 16,
+                        height: 16,
+                        borderRight: `2px solid ${isActive ? item.tone : "rgba(255,255,255,.2)"}`,
+                        borderTop: `2px solid ${isActive ? item.tone : "rgba(255,255,255,.2)"}`,
+                        transform: "rotate(45deg)",
+                        marginLeft: 4,
+                      }}
+                    />
                   </Link>
                 )
               })}
