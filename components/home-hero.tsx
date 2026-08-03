@@ -129,8 +129,9 @@ export function HomeHero() {
     }
   }, [])
 
-  const accent  = shift === "day" ? "#F8B800" : "#00D2BE"
-  const pctStr  = String(scrollPct).padStart(2, "0") + "%"
+  const accent     = shift === "day" ? "#F8B800" : "#00D2BE"
+  const shiftLabel = shift === "day" ? "Day Shift" : "Night Shift"
+  const pctStr     = String(scrollPct).padStart(2, "0") + "%"
   const railPct = scrollPct + "%"
 
   return (
@@ -200,31 +201,61 @@ export function HomeHero() {
             overflow: "hidden",
           }}
         >
-          {/* Section name — hidden on mobile */}
+          {/* Shift indicator — always visible on left */}
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              flex: "0 0 auto",
+            }}
+          >
+            <i
+              aria-hidden="true"
+              style={{
+                width: 9,
+                height: 9,
+                borderRadius: "50%",
+                background: accent,
+                boxShadow: `0 0 8px 2px ${accent}55`,
+                flex: "0 0 auto",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "Archivo, Helvetica, sans-serif",
+                fontWeight: 700,
+                fontSize: 12,
+                letterSpacing: ".18em",
+                textTransform: "uppercase",
+                color: "#EDF1F6",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {shiftLabel}
+            </span>
+          </span>
+
+          {/* Section name — desktop only */}
           <span
             className="pg-hide-xs"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 10,
+              gap: 8,
               flex: "0 0 auto",
-              minWidth: 0,
+              paddingLeft: 4,
+              borderLeft: "1px solid rgba(255,255,255,.14)",
             }}
           >
-            <i
-              aria-hidden="true"
-              style={{ width: 26, height: 3, background: accent, flex: "0 0 auto" }}
-            />
             <span
               style={{
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 12.5,
-                letterSpacing: ".2em",
+                fontSize: 11.5,
+                letterSpacing: ".18em",
                 textTransform: "uppercase",
-                color: "#EDF1F6",
+                color: "rgba(237,241,246,.45)",
                 whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
               }}
             >
               {secName}
