@@ -69,7 +69,7 @@ const CHAPTERS = [
   {
     id: "what-id-put-on-it",
     label: "What I'd put on it",
-    tone: "#F8B800",
+    tone: "#F2C94C",
     minmax: "min(300px,100%)",
     blurb: "Paint, by car. What goes on it, what stays off it, and what the light does afterwards.",
   },
@@ -265,7 +265,7 @@ export default function GalleryPage() {
 
   const readouts = [
     { label: "Pillars", value: "3", tone: "#00D2BE" },
-    { label: "Frames", value: loaded ? String(items.length) : "\u2014", tone: "#F8B800" },
+    { label: "Frames", value: loaded ? String(items.length) : "\u2014", tone: "#F2C94C" },
     { label: "Followers", value: profile?.followersCount ? fmt(profile.followersCount) : "@PaddockGavin", tone: "#4BA3DE" },
   ]
 
@@ -320,9 +320,9 @@ export default function GalleryPage() {
                   flex: "0 0 auto", cursor: "pointer",
                   fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".12em", textTransform: "uppercase",
                   padding: "9px 15px",
-                  border: `1px solid ${active ? "#F8B800" : "rgba(255,255,255,.20)"}`,
-                  background: active ? "rgba(248,184,0,.14)" : "rgba(255,255,255,.05)",
-                  color: active ? "#F8B800" : "#EDF1F6",
+                  border: `1px solid ${active ? "#F2C94C" : "rgba(255,255,255,.20)"}`,
+                  background: active ? "rgba(242,201,76,.14)" : "rgba(255,255,255,.05)",
+                  color: active ? "#F2C94C" : "#EDF1F6",
                   clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
                   whiteSpace: "nowrap", transition: "border-color .16s,color .16s",
                 }}
@@ -377,7 +377,7 @@ export default function GalleryPage() {
             >
               Shot between jobs,
               <br />
-              <span style={{ color: "#F8B800" }}>in whatever light was there</span>
+              <span style={{ color: "#F2C94C" }}>in whatever light was there</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "56ch" }}>
               Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of the metal belongs to duPont REGISTRY &mdash; I run their lot, so I&rsquo;m the one standing next to it.

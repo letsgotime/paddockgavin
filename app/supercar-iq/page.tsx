@@ -46,11 +46,11 @@ export default function SupercarIQPage() {
             <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 26px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Launches Sep 2026 &middot; pre-order open</span></span>
             <h1 style={{ margin: "0 0 18px", fontWeight: 900, fontSize: "clamp(38px,5.6vw,68px)", lineHeight: 1.02, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", fontFamily: arch }}>
               <span style={{ display: "block" }}>Point it at a supercar.</span>
-              <span style={{ display: "block", color: "#F8B800" }}>Get the dossier.</span>
+              <span style={{ display: "block", color: "#F2C94C" }}>Get the dossier.</span>
             </h1>
             <p style={{ margin: "0 0 28px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Supercar IQ reads a photo and answers with the whole record &mdash; factory spec, tire sizes, recalls, crash ratings, what it sells for and where. Not a guess dressed up as an answer: a file that was built before you ever raised the phone.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
-              <a href="#preorder" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; from $4.99</a>
+              <a href="#preorder" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; from $4.99</a>
               <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow @PaddockGavin</a>
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function SupercarIQPage() {
           <div style={{ margin: "34px 0 0", border: "1px solid #27384F", background: "#0E1A2A" }}>
             {[["SCAN","The whole record, the moment the car is identified."],["GARAGE","The same record pinned to your car, with your price, dates and notes on top."],["VALUE","The capsule\u2019s range against the live market feed \u2014 two sources checking each other."],["STUDIO","The dossier condensed into a card and caption, ready to post."]].map(([k,v]) => (
               <div key={String(k)} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: "0 clamp(14px,2vw,24px)", alignItems: "baseline", borderBottom: "1px solid #27384F", padding: "15px clamp(14px,2vw,22px)" }}>
-                <span style={{ fontFamily: mono, fontSize: 13, letterSpacing: ".14em", color: "#F8B800" }}>{k}</span>
+                <span style={{ fontFamily: mono, fontSize: 13, letterSpacing: ".14em", color: "#F2C94C" }}>{k}</span>
                 <span style={{ fontSize: 16.5, lineHeight: 1.6, color: "#B4B6B2" }}>{v}</span>
               </div>
             ))}
@@ -157,13 +157,13 @@ export default function SupercarIQPage() {
       {/* Pre-order */}
       <section id="preorder" style={{ background: "#0A1523", padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <div aria-hidden="true" style={{ height: 9, background: "repeating-linear-gradient(112deg,#F8B800 0 24px,#0A1523 24px 48px)", margin: "0 0 clamp(28px,4vw,44px)" }} />
+          <div aria-hidden="true" style={{ height: 9, background: "repeating-linear-gradient(112deg,#F2C94C 0 24px,#0A1523 24px 48px)", margin: "0 0 clamp(28px,4vw,44px)" }} />
           <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Pre-order</span></span>
           <h2 style={{ margin: "0 0 14px", fontWeight: 900, fontSize: "clamp(28px,3.2vw,44px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "22ch", fontFamily: arch }}>Hold your seat before the doors open</h2>
           <p style={{ margin: "0 0 34px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "54ch" }}>Pre-order locks the early price. The app lands at the end of September; your access starts the day it does.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: 14, maxWidth: 820 }}>
             {[{tier:"First 60 days",color:"#00D2BE",price:"$4.99",sub:"with pre-order",desc:"Two months of the full record \u2014 every scan, every capsule \u2014 for the price of a coffee."},
-              {tier:"First 12 months",color:"#F8B800",price:"$19.99",sub:"/year",desc:"A full year, locked before the price moves."}].map(({tier,color,price,sub,desc}) => (
+              {tier:"First 12 months",color:"#F2C94C",price:"$19.99",sub:"/year",desc:"A full year, locked before the price moves."}].map(({tier,color,price,sub,desc}) => (
               <div key={tier} style={{ background: "#152538", border: "1px solid #27384F", borderTop: `3px solid ${color}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3vw,30px)", display: "flex", flexDirection: "column", gap: 10 }}>
                 <p style={{ margin: 0, fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color }}>{tier}</p>
                 <p style={{ margin: 0, display: "flex", alignItems: "baseline", gap: 8 }}>
@@ -171,7 +171,7 @@ export default function SupercarIQPage() {
                   <span style={{ fontSize: 15, color: "#B4B6B2" }}>{sub}</span>
                 </p>
                 <p style={{ margin: "0 0 8px", fontSize: 16, lineHeight: 1.6, color: "#B4B6B2" }}>{desc}</p>
-                <a href="https://supercariq.com" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; {price}</a>
+                <a href="https://supercariq.com" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; {price}</a>
               </div>
             ))}
           </div>

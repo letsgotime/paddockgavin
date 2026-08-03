@@ -41,7 +41,7 @@ function buildHtml(body: InquiryBody): string {
   return `<!DOCTYPE html><html><body style="background:#0E1A2A;color:#EDF1F6;font-family:Arial,sans-serif;padding:32px">
 <div style="max-width:600px;margin:0 auto">
   <div style="display:flex;height:5px;margin-bottom:24px">
-    <div style="flex:1;background:#F8B800"></div>
+    <div style="flex:1;background:#F2C94C"></div>
     <div style="flex:1;background:#00D2BE"></div>
     <div style="flex:1;background:#005185"></div>
     <div style="flex:1;background:#848482"></div>

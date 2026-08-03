@@ -129,7 +129,7 @@ export function HomeHero() {
     }
   }, [])
 
-  const accent     = shift === "day" ? "#F8B800" : "#00D2BE"
+  const accent     = shift === "day" ? "#F2C94C" : "#00D2BE"
   const shiftLabel = shift === "day" ? "Day Shift" : "Night Shift"
   const pctStr     = String(scrollPct).padStart(2, "0") + "%"
   const railPct = scrollPct + "%"
@@ -349,7 +349,7 @@ export function HomeHero() {
               bottom: 0,
               height: 2,
               width: railPct,
-              background: "linear-gradient(90deg,#00D2BE,#F8B800)",
+              background: "linear-gradient(90deg,#00D2BE,#F2C94C)",
               transition: "width .12s linear",
             }}
           />

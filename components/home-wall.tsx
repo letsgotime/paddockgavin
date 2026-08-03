@@ -183,7 +183,7 @@ export function HomeWall() {
 
   const readouts = [
     { label: "Frames",  value: String(items.length), tone: "#00D2BE" },
-    { label: "Shot on", value: "A phone",             tone: "#F8B800" },
+    { label: "Shot on", value: "A phone",             tone: "#F2C94C" },
     ...(profile?.followersCount
       ? [{ label: `@${profile.username || "PaddockGavin"}`, value: profile.followersCount >= 1000 ? (profile.followersCount / 1000).toFixed(1).replace(/\.0$/, "") + "K" : String(profile.followersCount), tone: "#B4B6B2" }]
       : [{ label: "Location", value: "Nashville TN", tone: "#B4B6B2" }]),
@@ -401,7 +401,7 @@ export function HomeWall() {
               }}
             >
               Cars were the reward.{" "}
-              <span style={{ color: "#F8B800" }}>Now they&apos;re the work.</span>
+              <span style={{ color: "#F2C94C" }}>Now they&apos;re the work.</span>
             </h2>
             <p
               style={{

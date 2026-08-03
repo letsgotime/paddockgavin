@@ -24,13 +24,13 @@ export function HomeGarage() {
 
       {/* Headline */}
       <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(44px,8vw,96px)", lineHeight: .97, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "13ch" }}>
-        Everything I&apos;ve owned,{" "}<span style={{ color: "#F8B800" }}>and what happened to it.</span>
+        Everything I&apos;ve owned,{" "}<span style={{ color: "#F2C94C" }}>and what happened to it.</span>
       </h2>
 
       {/* Stats — huge, open */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,45%),1fr))", gap: "clamp(24px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,.1)", paddingTop: "clamp(28px,4vw,48px)" }}>
         {[
-          { label: "Owned",       value: "29",      color: "#F8B800" },
+          { label: "Owned",       value: "29",      color: "#F2C94C" },
           { label: "Years",       value: "30+",     color: "#00D2BE" },
           { label: "Found for others", value: "78", color: "#8B93A7" },
         ].map((s) => (
@@ -59,7 +59,7 @@ export function HomeGarage() {
 
       {/* CTAs */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <Link href="/garage" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+        <Link href="/garage" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
           Open the register
         </Link>
         <Link href="/gallery" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>

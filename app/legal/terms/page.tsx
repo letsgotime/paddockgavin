@@ -156,7 +156,7 @@ export default function TermsPage() {
             }}
           >
             The terms,{" "}
-            <span style={{ color: "#F8B800" }}>in plain English</span>
+            <span style={{ color: "#F2C94C" }}>in plain English</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 620 }}>
             What you can do with what you find here, what happens when a car changes hands, and which of these things is mine versus my employer&apos;s.
@@ -192,7 +192,7 @@ export default function TermsPage() {
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 12,
                   letterSpacing: ".2em",
-                  color: "#F8B800",
+                  color: "#F2C94C",
                   flexShrink: 0,
                 }}
               >

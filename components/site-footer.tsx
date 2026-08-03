@@ -34,7 +34,7 @@ export function SiteFooter() {
     return () => clearInterval(t)
   }, [])
 
-  const accent = shift === "day" ? "#F8B800" : "#00D2BE"
+  const accent = shift === "day" ? "#F2C94C" : "#00D2BE"
   const shiftLabel = shift === "day" ? "Day shift" : "Night shift"
   const year = String(new Date().getFullYear())
 
@@ -115,7 +115,7 @@ export function SiteFooter() {
                 aria-hidden="true"
                 width={73}
                 height={40}
-                style={{ display: "block", flexShrink: 0, objectFit: "contain", width: "auto", height: 40 }}
+                style={{ display: "block", flexShrink: 0, width: "auto", height: 40 }}
               />
               <p
                 style={{
@@ -128,7 +128,7 @@ export function SiteFooter() {
                   whiteSpace: "nowrap",
                 }}
               >
-                <span style={{ color: "#F8B800" }}>Paddock</span>
+                <span style={{ color: "#F2C94C" }}>Paddock</span>
                 <span style={{ color: "#57C7F5" }}>Gavin</span>
               </p>
             </div>
@@ -196,7 +196,7 @@ export function SiteFooter() {
                 color: "#91918F",
               }}
             >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F8B800", display: "block" }} />
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F2C94C", display: "block" }} />
               Day shift
             </p>
             {[
@@ -372,7 +372,7 @@ export function SiteFooter() {
                 marginTop: 4,
                 padding: "10px 22px",
                 background: accent,
-                color: accent === "#F8B800" ? "#101010" : "#00302B",
+                color: accent === "#F2C94C" ? "#101010" : "#00302B",
                 fontFamily: "Archivo, Helvetica, sans-serif",
                 fontWeight: 800,
                 fontSize: 12.5,

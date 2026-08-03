@@ -7,15 +7,15 @@ import Link from "next/link"
 type Shift = "day" | "night"
 
 const NAV_ITEMS = [
-  { key: "home",      href: "/",                  label: "Home",               note: "Two shifts",      tone: "#F8B800" },
+  { key: "home",      href: "/",                  label: "Home",               note: "Two shifts",      tone: "#F2C94C" },
   { key: "gallery",   href: "/gallery",            label: "Gallery",            note: "Three pillars",   tone: "#00D2BE" },
   { key: "cars",      href: "/garage",             label: "The garage",         note: "29 cars",         tone: "#B4B6B2" },
   { key: "scoreboard",href: "/scoreboard",         label: "Scoreboard",         note: "What I build",    tone: "#4BA3DE" },
   { key: "events",    href: "/events",             label: "Events",             note: "Book the floor",  tone: "#4BA3DE" },
-  { key: "donuts",    href: "/donuts",             label: "Donuts with duPont", note: "Come by",         tone: "#F8B800" },
+  { key: "donuts",    href: "/donuts",             label: "Donuts with duPont", note: "Come by",         tone: "#F2C94C" },
   { key: "creator",   href: "/events/creator-day", label: "Creator Day",        note: "Sep 19",          tone: "#00D2BE" },
   { key: "why",       href: "/why-a-paddock",      label: "Why a Paddock",      note: "The word",        tone: "#00D2BE" },
-  { key: "lotops",    href: "/lot-ops",            label: "Lot Ops in Action",  note: "Gate at 8",       tone: "#F8B800" },
+  { key: "lotops",    href: "/lot-ops",            label: "Lot Ops in Action",  note: "Gate at 8",       tone: "#F2C94C" },
   { key: "connect",   href: "/connect",            label: "Connect",            note: "Every link",      tone: "#00D2BE" },
   { key: "intake",    href: "/intake",             label: "Sell a car",         note: "Start the intake",tone: "#4BA3DE" },
 ]
@@ -134,7 +134,7 @@ export function SiteNav({ active = "home" }: Props) {
     return () => { document.documentElement.style.overflow = "" }
   }, [open])
 
-  const shiftColor  = shift === "day" ? "#F8B800" : "#00D2BE"
+  const shiftColor  = shift === "day" ? "#F2C94C" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
 
   return (
@@ -143,7 +143,7 @@ export function SiteNav({ active = "home" }: Props) {
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 80 }}>
         {/* Garage-door livery bar */}
         <div aria-hidden="true" style={{ display: "flex", height: 5 }}>
-          <i style={{ flex: 1, background: "#F8B800" }} />
+          <i style={{ flex: 1, background: "#F2C94C" }} />
           <i style={{ flex: 1, background: "#00D2BE" }} />
           <i style={{ flex: 1, background: "#005185" }} />
           <i style={{ flex: 1, background: "#848482" }} />
@@ -184,9 +184,9 @@ export function SiteNav({ active = "home" }: Props) {
               <Image
                 src="/images/mark-on-dark-96.png"
                 alt="PG mark"
-                width={32}
+                width={58}
                 height={32}
-                style={{ height: 32, width: "auto", display: "block" }}
+                style={{ height: 32, width: "auto", display: "block", flexShrink: 0 }}
               />
               <span
                 style={{
@@ -197,7 +197,7 @@ export function SiteNav({ active = "home" }: Props) {
                   textTransform: "uppercase",
                 }}
               >
-                <span style={{ color: "#F8B800" }}>Paddock</span>
+                <span style={{ color: "#F2C94C" }}>Paddock</span>
                 <span style={{ color: "#57C7F5" }}>Gavin</span>
               </span>
             </Link>
@@ -341,7 +341,7 @@ export function SiteNav({ active = "home" }: Props) {
               inset: 0,
               pointerEvents: "none",
               background:
-                "radial-gradient(900px 620px at 84% 4%,rgba(0,210,190,.16),transparent 60%),radial-gradient(800px 600px at 6% 90%,rgba(248,184,0,.10),transparent 62%)",
+                "radial-gradient(900px 620px at 84% 4%,rgba(0,210,190,.16),transparent 60%),radial-gradient(800px 600px at 6% 90%,rgba(242,201,76,.10),transparent 62%)",
             }}
           />
 
@@ -350,7 +350,7 @@ export function SiteNav({ active = "home" }: Props) {
             aria-hidden="true"
             style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", height: 5 }}
           >
-            <i style={{ flex: 1, background: "#F8B800" }} />
+            <i style={{ flex: 1, background: "#F2C94C" }} />
             <i style={{ flex: 1, background: "#00D2BE" }} />
             <i style={{ flex: 1, background: "#005185" }} />
             <i style={{ flex: 1, background: "#848482" }} />
@@ -562,7 +562,7 @@ export function SiteNav({ active = "home" }: Props) {
                     fontWeight: 700,
                     fontSize: "clamp(21px,2vw,27px)",
                     letterSpacing: "-.01em",
-                    color: "#F8B800",
+                    color: "#F2C94C",
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >

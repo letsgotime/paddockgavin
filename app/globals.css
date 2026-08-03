@@ -5,8 +5,8 @@
 
 :root {
   /* ── PALETTE — all real automotive paint ── */
-  --yellow:        #F8B800;   /* Porsche Signalgelb 114 — PRIMARY: headlines, buttons, wordmark */
-  --yellow-hi:     #FFC81F;
+  --yellow:        #F2C94C;   /* TrackDay Yellow — PRIMARY: headlines, buttons, wordmark */
+  --yellow-hi:     #F7DC7A;
   --green:         #00D2BE;   /* Mercedes-AMG Petronas F1 — SECONDARY INK: tabs, labels, links */
   --green-deep:    #00302B;   /* type ON green */
   --purple:        #6E2C8F;   /* Dodge Plum Crazy FC7 — logo mark only, on light stock */

@@ -148,7 +148,7 @@ export default function WhyAPaddockPage() {
                 color: "#FFFFFF",
               }}
             >
-              Why a<br /><span style={{ color: "#F8B800" }}>paddock</span>
+              Why a<br /><span style={{ color: "#F2C94C" }}>paddock</span>
             </h1>
             <p
               style={{
@@ -252,7 +252,7 @@ export default function WhyAPaddockPage() {
             backdropFilter: "blur(24px) saturate(160%)",
             WebkitBackdropFilter: "blur(24px) saturate(160%)",
             border: "1px solid rgba(255,255,255,.11)",
-            borderLeft: "3px solid #F8B800",
+            borderLeft: "3px solid #F2C94C",
             boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
@@ -288,7 +288,7 @@ export default function WhyAPaddockPage() {
           <span
             style={{
               display: "inline-block", transform: "skewX(-12deg)",
-              background: "#F8B800", padding: "6px 16px", alignSelf: "flex-start",
+              background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start",
             }}
           >
             <span
@@ -368,7 +368,7 @@ export default function WhyAPaddockPage() {
             <span
               style={{
                 display: "inline-block", transform: "skewX(-12deg)",
-                background: "#F8B800", padding: "6px 16px", alignSelf: "flex-start",
+                background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start",
               }}
             >
               <span
@@ -525,7 +525,7 @@ export default function WhyAPaddockPage() {
               style={{
                 display: "inline-flex", alignItems: "center",
                 fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase",
-                background: "#F8B800", color: "#101010",
+                background: "#F2C94C", color: "#101010",
                 padding: "15px 26px",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
                 textDecoration: "none",

@@ -37,7 +37,7 @@ export function HomeAskMe() {
 
       {/* Headline */}
       <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(44px,8vw,96px)", lineHeight: .97, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "12ch" }}>
-        Send it and{" "}<span style={{ color: "#F8B800" }}>I&apos;ll answer.</span>
+        Send it and{" "}<span style={{ color: "#F2C94C" }}>I&apos;ll answer.</span>
       </h2>
 
       {/* Subtext */}
@@ -48,7 +48,7 @@ export function HomeAskMe() {
       {/* Quick links */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
         <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer"
-          style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+          style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
           DM @PaddockGavin
         </a>
         <Link href="/connect"

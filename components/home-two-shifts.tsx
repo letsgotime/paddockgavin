@@ -24,7 +24,7 @@ export function HomeTwoShifts() {
   }, [])
 
   const isDay   = shift === "day"
-  const accent  = isDay ? "#F8B800" : "#00D2BE"
+  const accent  = isDay ? "#F2C94C" : "#00D2BE"
 
   return (
     <section
@@ -45,8 +45,8 @@ export function HomeTwoShifts() {
       {/* Two columns — no cards, just ruled left borders */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "clamp(32px,5vw,64px)" }}>
         {/* Day */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingLeft: "clamp(20px,2.4vw,28px)", borderLeft: `3px solid #F8B800` }}>
-          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#F8B800" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingLeft: "clamp(20px,2.4vw,28px)", borderLeft: `3px solid #F2C94C` }}>
+          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
             Day · 08:00 &rarr; 18:00
           </span>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.05, letterSpacing: "-.025em", textTransform: "uppercase", color: "#FFFFFF" }}>
@@ -59,7 +59,7 @@ export function HomeTwoShifts() {
             Lot Operations and Events Manager at duPont REGISTRY, Lebanon. The gate, the coffee, and the calendar run through me.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingTop: 4 }}>
-            <Link href="/donuts" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+            <Link href="/donuts" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
               Donuts with duPont
             </Link>
             <Link href="/events" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
@@ -82,7 +82,7 @@ export function HomeTwoShifts() {
           <div style={{ display: "flex", flexDirection: "column", borderTop: "1px solid rgba(255,255,255,.1)", marginTop: 4 }}>
             {[
               { href: "https://supercariq.com", label: "Supercar IQ", meta: "Sept 2026", color: "#00D2BE" },
-              { href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks", label: "The Gloss Game", meta: "On Amazon", color: "#F8B800" },
+              { href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks", label: "The Gloss Game", meta: "On Amazon", color: "#F2C94C" },
               { href: "https://paddock20.com", label: "Paddock20", meta: "Software studio", color: "#8B93A7" },
             ].map((item) => (
               <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer"

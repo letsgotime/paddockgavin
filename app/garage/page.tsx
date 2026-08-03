@@ -36,7 +36,7 @@ function buildRows() {
       n:         String(i + 1).padStart(2, "0"),
       name:      c ? c.name : "Slot open",
       meta:      c ? c.meta : "\u2014",
-      numColor:  c ? "#F8B800" : "#5A6472",
+      numColor:  c ? "#F2C94C" : "#5A6472",
       nameColor: c ? "#FFFFFF" : "#6E7887",
       metaColor: c ? "#B8C1CD" : "#5A6472",
       filled:    Boolean(c),
@@ -68,7 +68,7 @@ export default function GaragePage() {
           pointerEvents: "none",
         }}
       >
-        <i style={{ flex: "1 1 0", background: "#F8B800" }} />
+        <i style={{ flex: "1 1 0", background: "#F2C94C" }} />
         <i style={{ flex: "1 1 0", background: "#00D2BE" }} />
         <i style={{ flex: "1 1 0", background: "#005185" }} />
         <i style={{ flex: "1 1 0", background: "#B4B6B2" }} />
@@ -122,7 +122,7 @@ export default function GaragePage() {
               WebkitBackdropFilter: "blur(26px) saturate(1.5)",
               border: "1px solid rgba(255,255,255,.14)",
               borderTop: "1px solid rgba(255,255,255,.26)",
-              borderLeft: "2px solid #F8B800",
+              borderLeft: "2px solid #F2C94C",
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
               boxShadow: "0 34px 90px -24px rgba(0,0,0,.8)",
               padding: "clamp(24px,2.6vw,40px)",
@@ -186,7 +186,7 @@ export default function GaragePage() {
                   fontSize: "clamp(30px,3.1vw,46px)",
                   lineHeight: 1.1,
                   letterSpacing: "-.02em",
-                  color: "#F8B800",
+                  color: "#F2C94C",
                 }}
               >
                 have been mine.
@@ -511,7 +511,7 @@ export default function GaragePage() {
                   fontSize: "clamp(28px,2.4vw,37px)",
                   lineHeight: 1.14,
                   letterSpacing: "-.02em",
-                  color: "#F8B800",
+                  color: "#F2C94C",
                 }}
               >
                 like these?
@@ -541,7 +541,7 @@ export default function GaragePage() {
                 fontSize: 14,
                 letterSpacing: ".12em",
                 textTransform: "uppercase",
-                background: "#F8B800",
+                background: "#F2C94C",
                 color: "#0E1A2A",
                 padding: "15px 26px",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)",

@@ -13,7 +13,7 @@ const KINDS = [
     key: "club",
     eyebrow: "Donuts with duPont",
     title: "Book your club",
-    tone: "#F8B800",
+    tone: "#F2C94C",
     blurb: "Bring the whole club to a Donuts morning and park together. Tell me the headcount.",
     hint: "How many cars, which club, which month",
     img: "/images/donuts-overflow-sq.webp",
@@ -22,7 +22,7 @@ const KINDS = [
     key: "vendor",
     eyebrow: "Donuts with duPont",
     title: "Reserve your vendor location",
-    tone: "#F8B800",
+    tone: "#F2C94C",
     blurb: "$250 gets a vendor spot, $100 gets VIP parking \u2014 both inside the building. Five and ten of them, and half the proceeds go to a rotating charity every quarter.",
     hint: "What you sell, inside or VIP, which month",
     img: "/images/donuts-inside-sq.webp",
@@ -125,7 +125,7 @@ export default function BookPage() {
         <div style={{ position: "absolute", inset: 0, opacity: 0.2 }}>
           <Image src="/images/donuts-floor.webp" alt="" fill style={{ objectFit: "cover" }} priority />
         </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(248,184,0,.14),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.14),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
       </div>
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
@@ -135,11 +135,11 @@ export default function BookPage() {
           <Image src="/images/donuts-floor.webp" alt="The floor, set for it" fill style={{ objectFit: "cover", objectPosition: "center 60%" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "6px 16px", alignSelf: "flex-start" }}>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; duPont REGISTRY, Lebanon TN</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
-              Tell me what you&rsquo;re <span style={{ color: "#F8B800" }}>bringing</span>
+              Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
               Pick the one that fits, give me the shape of it, and I&rsquo;ll come back with the details. Every one of these lands with me.
@@ -151,7 +151,7 @@ export default function BookPage() {
         <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
           {[
             { k: "Next Donuts",   v: nextDonuts, tone: "#00D2BE" },
-            { k: "Creator Day",   v: creatorIn,  tone: "#F8B800" },
+            { k: "Creator Day",   v: creatorIn,  tone: "#F2C94C" },
             { k: "Vendor spots",  v: "5 in \u00b7 10 VIP", tone: "#EDF1F6" },
             { k: "To charity",    v: "50% quarterly",      tone: "#00D2BE" },
           ].map(row => (
@@ -171,7 +171,7 @@ export default function BookPage() {
                 key={k.key}
                 type="button"
                 onClick={() => { setPicked(k.key); setStatus("idle"); document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" }) }}
-                style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(248,184,0,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", backdropFilter: "blur(20px) saturate(155%)", WebkitBackdropFilter: "blur(20px) saturate(155%)", border: on ? "1px solid rgba(248,184,0,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
+                style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", backdropFilter: "blur(20px) saturate(155%)", WebkitBackdropFilter: "blur(20px) saturate(155%)", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
               >
                 <div style={{ position: "absolute", inset: 0, zIndex: -1 }}>
                   <Image src={k.img} alt="" fill style={{ objectFit: "cover", opacity: 0.36 }} />
@@ -180,7 +180,7 @@ export default function BookPage() {
                 <span style={{ display: "flex", alignItems: "center", gap: 10, width: "100%" }}>
                   <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: k.tone }}>{k.eyebrow}</span>
                   <i aria-hidden="true" style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.18)" }} />
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: on ? "#F8B800" : "#91918F" }}>{on ? "Selected" : "Pick"}</span>
+                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: on ? "#F2C94C" : "#91918F" }}>{on ? "Selected" : "Pick"}</span>
                 </span>
                 <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "clamp(19px,2.2vw,24px)", letterSpacing: "-.016em", lineHeight: 1.12, color: "#FFFFFF" }}>{k.title}</span>
                 <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15.5, lineHeight: 1.52, color: "#C4CBD6" }}>{k.blurb}</span>
@@ -196,7 +196,7 @@ export default function BookPage() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Booking</span>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "5px 13px" }}>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "5px 13px" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#101010" }}>{cur.title}</span>
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 12, height: 1, background: "rgba(255,255,255,.2)", display: "block" }} />
@@ -223,7 +223,7 @@ export default function BookPage() {
             <button
               type="button"
               onClick={submit}
-              style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}
+              style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}
             >
               {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
             </button>

@@ -51,7 +51,7 @@ export default function GlossGamePage() {
         <div style={{ borderBottom: "1px solid #27384F", background: "#0E1A2A" }}>
           <div style={{ maxWidth: 1000, margin: "0 auto", padding: "13px clamp(20px,5vw,40px)", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 12, fontFamily: mono, fontSize: 12.5, letterSpacing: ".24em", textTransform: "uppercase", color: "#EDF1F6" }}>
-              <i aria-hidden="true" style={{ width: 34, height: 4, background: "#F8B800", flex: "0 0 auto" }} />
+              <i aria-hidden="true" style={{ width: 34, height: 4, background: "#F2C94C", flex: "0 0 auto" }} />
               {day ? "Day shift" : "Night shift"} &middot; {time} Nashville
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", height: 1, background: "#27384F", minWidth: 40 }} />
@@ -67,16 +67,16 @@ export default function GlossGamePage() {
               <div style={{ flex: "1.2 1 min(480px,100%)", minWidth: "min(440px,100%)" }}>
                 <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The car detailing book &middot; by Gavin Brooks</p>
                 <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(38px,6.6vw,68px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "17ch" }}>
-                  Most swirl marks<br /><span style={{ color: "#F8B800" }}>come from the wash.</span>
+                  Most swirl marks<br /><span style={{ color: "#F2C94C" }}>come from the wash.</span>
                 </h1>
                 <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the road. The mitt, the bucket, the towel that did the wheels first. The Gloss Game is the order that stops it &mdash; what to buy, what touches the paint, and in what sequence, so the shine you build on Saturday is still there on Friday.</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", marginTop: 30, padding: "20px 24px", background: "#152538", border: "1px solid #27384F", borderLeft: "4px solid #F8B800" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", marginTop: 30, padding: "20px 24px", background: "#152538", border: "1px solid #27384F", borderLeft: "4px solid #F2C94C" }}>
                   {[["Paperback","$19.99"],["Inside","12 chapters \u00b7 96 pages"],["Edition","First \u00b7 August 2025"],["Ships","Prime \u00b7 in stock"]].map(([k,v]) => (
                     <div key={String(k)} style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "#B4B6B2" }}>{k}<b style={{ display: "block", color: "#FFFFFF", fontFamily: arch, fontSize: 19, fontWeight: 900, letterSpacing: "-.01em", marginTop: 3 }}>{v}</b></div>
                   ))}
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", marginTop: 30 }}>
-                  <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 16, letterSpacing: ".03em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "16px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the paperback &middot; $19.99</a>
+                  <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 16, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the paperback &middot; $19.99</a>
                   <a href={KINDLE_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Kindle &middot; $9.99</a>
                   <span style={{ fontSize: 14, color: "#B4B6B2" }}>The back half is a workbook. It wants a pen.</span>
                 </div>
@@ -85,7 +85,7 @@ export default function GlossGamePage() {
                 <div style={{ aspectRatio: "1025/1600", background: "#0E1A2A", border: "1px solid rgba(255,255,255,.14)", overflow: "hidden", filter: "drop-shadow(0 34px 40px rgba(0,0,0,.55))" }}>
                   <div style={{ width: "100%", height: "100%", background: "#152538", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <div style={{ textAlign: "center", padding: 24 }}>
-                      <p style={{ margin: "0 0 8px", fontFamily: arch, fontWeight: 900, fontSize: 28, color: "#F8B800", letterSpacing: "-.02em", textTransform: "uppercase" }}>The Gloss Game</p>
+                      <p style={{ margin: "0 0 8px", fontFamily: arch, fontWeight: 900, fontSize: 28, color: "#F2C94C", letterSpacing: "-.02em", textTransform: "uppercase" }}>The Gloss Game</p>
                       <p style={{ margin: 0, fontFamily: serif, fontStyle: "italic", fontSize: 14, color: "#B4B6B2" }}>Gavin Brooks</p>
                     </div>
                   </div>
@@ -99,7 +99,7 @@ export default function GlossGamePage() {
           <section style={{ padding: "clamp(48px,7vw,80px) 0", borderBottom: "1px solid #27384F" }}>
             <div style={{ maxWidth: 760 }}>
               <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The reason you&rsquo;re on this page</p>
-              <h2 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(28px,4.4vw,42px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>The shelf is full.<br /><span style={{ color: "#F8B800" }}>The shine still fades.</span></h2>
+              <h2 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(28px,4.4vw,42px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>The shelf is full.<br /><span style={{ color: "#F2C94C" }}>The shine still fades.</span></h2>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>You know the moment. Sunday went to the whole car, and by Friday the hood looks like nobody was there. The swirls came back two washes after the correction. The bottle that promised depth left streaks you can read in the garage light.</p>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>So you bought a better soap. Then a plusher towel. Then a coating. The line in the door caught the sun anyway.</p>
               <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>The products were never the problem. The order was &mdash; which bucket, which mitt, what touches the paint after the wheels. The Gloss Game is that order, written down so you can run it.</p>
@@ -118,7 +118,7 @@ export default function GlossGamePage() {
                     <b style={{ color: "#00D2BE", fontFamily: mono, fontSize: 17, margin: "0 8px" }}>&rarr;</b>
                   </span>
                 ))}
-                <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#152538", border: "1px solid #F8B800", padding: "11px 18px" }}><b style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: arch, fontWeight: 900, fontSize: 16, color: "#F8B800", textTransform: "uppercase" }}>Paint</b></span>
+                <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#152538", border: "1px solid #F2C94C", padding: "11px 18px" }}><b style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: arch, fontWeight: 900, fontSize: 16, color: "#F2C94C", textTransform: "uppercase" }}>Paint</b></span>
               </div>
               {[
                 ["Why do swirl marks come back after every wash?","Because the wash is where they start. Chapters two and three code the whole thing \u2014 buckets, mitts, towels by panel \u2014 so nothing dirty touches clean paint twice."],
@@ -133,7 +133,7 @@ export default function GlossGamePage() {
                 </div>
               ))}
               <p style={{ margin: "clamp(20px,3vw,28px) 0 0", fontFamily: mono, fontSize: 13, letterSpacing: ".14em", textTransform: "uppercase" }}>
-                <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#F8B800", borderBottom: "1px solid rgba(248,184,0,.45)", paddingBottom: 2 }}>The whole order is $19.99 &rarr;</a>
+                <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#F2C94C", borderBottom: "1px solid rgba(242,201,76,.45)", paddingBottom: 2 }}>The whole order is $19.99 &rarr;</a>
               </p>
             </div>
           </section>
@@ -171,14 +171,14 @@ export default function GlossGamePage() {
                 ["12","The standard","What all of this is actually for."],
               ].map(([n,t,s]) => (
                 <div key={n} style={{ flex: "1 1 min(240px,100%)", minWidth: "min(240px,100%)", background: "#0A1523", padding: "22px 20px 24px", boxShadow: "-1px 0 0 rgba(255,255,255,.1),0 -1px 0 rgba(255,255,255,.1)" }}>
-                  <span style={{ fontFamily: mono, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: "#F8B800" }}>{n}</span>
+                  <span style={{ fontFamily: mono, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: "#F2C94C" }}>{n}</span>
                   <p style={{ margin: "8px 0 4px", fontFamily: arch, fontWeight: 800, fontSize: 15.5, color: "#FFFFFF" }}>{t}</p>
                   <p style={{ margin: 0, fontFamily: serif, fontSize: 14, lineHeight: 1.5, color: "#B4B6B2" }}>{s}</p>
                 </div>
               ))}
             </div>
             <p style={{ margin: "clamp(20px,3vw,28px) 0 0", fontFamily: mono, fontSize: 13, letterSpacing: ".14em", textTransform: "uppercase" }}>
-              <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#F8B800", borderBottom: "1px solid rgba(248,184,0,.45)", paddingBottom: 2 }}>All twelve chapters &middot; $19.99 &rarr;</a>
+              <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#F2C94C", borderBottom: "1px solid rgba(242,201,76,.45)", paddingBottom: 2 }}>All twelve chapters &middot; $19.99 &rarr;</a>
             </p>
           </section>
 
@@ -189,7 +189,7 @@ export default function GlossGamePage() {
                 <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>Chapter ten is free</h2>
                 <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The full product index &mdash; every zone, every link checked, the paid ones marked &mdash; free with your email. The reasoning behind each product is in the other eleven chapters.</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
-                  <Link href="/juice-box" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the index &rarr;</Link>
+                  <Link href="/juice-box" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the index &rarr;</Link>
                   <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#7FE8DC", textDecoration: "none" }}>Full book &middot; $19.99 &rarr;</a>
                 </div>
               </div>

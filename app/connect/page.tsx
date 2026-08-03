@@ -31,7 +31,7 @@ const GROUPS = [
         note: "Every clip, filtered by pillar",
         href: "/#wall",
         target: "_self",
-        tone: "#F8B800",
+        tone: "#F2C94C",
         datum: null as string | null,
       },
       {
@@ -48,7 +48,7 @@ const GROUPS = [
   {
     key: "come",
     label: "Come see us",
-    tone: "#F8B800",
+    tone: "#F2C94C",
     links: [
       {
         key: "donuts",
@@ -56,7 +56,7 @@ const GROUPS = [
         note: "Free, monthly, 8\u201311am in Lebanon TN",
         href: "/donuts",
         target: "_self",
-        tone: "#F8B800",
+        tone: "#F2C94C",
         datum: "Free",
       },
       {
@@ -81,7 +81,7 @@ const GROUPS = [
         note: "The book, on Amazon today",
         href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks",
         target: "_blank",
-        tone: "#F8B800",
+        tone: "#F2C94C",
         datum: "Buy",
       },
       {
@@ -115,7 +115,7 @@ const GROUPS = [
         note: "Sourced through duPont REGISTRY. The fee to you is zero",
         href: "/intake",
         target: "_self",
-        tone: "#F8B800",
+        tone: "#F2C94C",
         datum: "No fee",
       },
       {
@@ -180,7 +180,7 @@ export default function ConnectPage() {
     return () => clearInterval(t)
   }, [])
 
-  const accent = shift === "day" ? "#F8B800" : "#00D2BE"
+  const accent = shift === "day" ? "#F2C94C" : "#00D2BE"
 
   const saveCard = () => {
     const card = [
@@ -206,7 +206,7 @@ export default function ConnectPage() {
 
   const readouts = [
     { label: "Instagram", value: `@${HANDLE}`, tone: "#00D2BE" },
-    { label: "Based",     value: "Nashville, TN", tone: "#F8B800" },
+    { label: "Based",     value: "Nashville, TN", tone: "#F2C94C" },
     { label: "Replies from", value: "Me", tone: "#B4B6B2" },
   ]
 
@@ -234,7 +234,7 @@ export default function ConnectPage() {
           style={{
             position: "absolute", inset: 0, transition: "background 1.4s ease",
             background: shift === "day"
-              ? "radial-gradient(900px 640px at 82% -8%,rgba(248,184,0,.17),transparent 60%),radial-gradient(900px 660px at 4% 34%,rgba(0,81,133,.38),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.82),rgba(10,21,35,.94))"
+              ? "radial-gradient(900px 640px at 82% -8%,rgba(242,201,76,.17),transparent 60%),radial-gradient(900px 660px at 4% 34%,rgba(0,81,133,.38),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.82),rgba(10,21,35,.94))"
               : "radial-gradient(900px 640px at 84% -6%,rgba(0,210,190,.19),transparent 60%),radial-gradient(900px 660px at 4% 32%,rgba(0,81,133,.46),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))",
           }}
         />
@@ -293,7 +293,7 @@ export default function ConnectPage() {
                   fontSize: "clamp(30px,7vw,46px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase",
                 }}
               >
-                <span style={{ color: "#F8B800" }}>Paddock</span>
+                <span style={{ color: "#F2C94C" }}>Paddock</span>
                 <span style={{ color: "#00D2BE" }}>Gavin</span>
               </h1>
               <span
@@ -307,7 +307,7 @@ export default function ConnectPage() {
               <span
                 style={{
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                  fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#F8B800",
+                  fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#F2C94C",
                 }}
               >
                 A life bent toward cars
@@ -348,7 +348,7 @@ export default function ConnectPage() {
               justifyContent: "center", minHeight: 56,
               fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15,
               letterSpacing: ".06em", textTransform: "uppercase",
-              background: "#F8B800", color: "#101010", border: 0, padding: "16px 24px",
+              background: "#F2C94C", color: "#101010", border: 0, padding: "16px 24px",
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
             }}
           >
