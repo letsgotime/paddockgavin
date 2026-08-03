@@ -9,7 +9,7 @@ export function HomeStory() {
       </span>
 
       <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(44px,8vw,96px)", lineHeight: .97, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "12ch" }}>
-        Cars were the reward.{" "}<span style={{ color: "#F8B800" }}>Now they&apos;re the work.</span>
+        Cars were the reward.{" "}<span style={{ color: "#F2C94C" }}>Now they&apos;re the work.</span>
       </h2>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(40px,6vw,80px)", alignItems: "start" }}>
@@ -21,7 +21,7 @@ export function HomeStory() {
             A few dozen of my own over the years. A lot more found for other people. The technology work moved to nights.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingTop: 8 }}>
-            <Link href="/why-a-paddock" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+            <Link href="/why-a-paddock" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
               Why a Paddock
             </Link>
             <Link href="/scoreboard" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>

@@ -78,7 +78,7 @@ export default function TrademarksPage() {
             }}
           >
             Everything here{" "}
-            <span style={{ color: "#F8B800" }}>has an owner</span>
+            <span style={{ color: "#F2C94C" }}>has an owner</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 640 }}>
             The marks, the work, and what happens when somebody helps themselves. Stated once, clearly, so nobody has to guess.
@@ -102,7 +102,7 @@ export default function TrademarksPage() {
         {/* 01 The marks */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>01</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>01</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The marks</h2>
           </div>
           <p style={{ margin: "0 0 24px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -136,7 +136,7 @@ export default function TrademarksPage() {
         {/* 02 The Scoreboard */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>02</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>02</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The Scoreboard</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -150,7 +150,7 @@ export default function TrademarksPage() {
         {/* 03 The work itself */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>03</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>03</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The work itself</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -167,7 +167,7 @@ export default function TrademarksPage() {
         {/* 04 What you can do */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>04</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>04</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>What you can do without asking</h2>
           </div>
           <ul style={{ margin: 0, padding: "0 0 0 0", listStyle: "none" }}>
@@ -186,13 +186,13 @@ export default function TrademarksPage() {
         {/* 05 What gets a letter */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>05</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>05</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>What gets a letter</h2>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {willGetLetter.map((item, i) => (
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,.05)", fontSize: 15.5, lineHeight: 1.55, color: "#C4CBD6" }}>
-                <span style={{ color: "#F8B800", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>&#8212;</span>
+                <span style={{ color: "#F2C94C", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>&#8212;</span>
                 {item}
               </li>
             ))}
@@ -205,7 +205,7 @@ export default function TrademarksPage() {
         {/* 06 Reporting */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>06</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>06</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Reporting something</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>

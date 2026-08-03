@@ -36,30 +36,30 @@ export async function POST() {
         <tr>
           <td style="padding:16px;background:#0E1A2A;border:1px solid rgba(255,255,255,.1);">
             <p style="margin:0 0 8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#57C7F5;">Monogram · PG mark</p>
-            <a href="${SITE}/brand/pg-monogram.svg" style="color:#EF4A18;font-size:14px;text-decoration:none;">Download SVG →</a>
+            <a href="${SITE}/brand/pg-monogram.svg" style="color:#F2C94C;font-size:14px;text-decoration:none;">Download SVG →</a>
           </td>
         </tr>
         <tr><td style="height:8px;"></td></tr>
         <tr>
           <td style="padding:16px;background:#0E1A2A;border:1px solid rgba(255,255,255,.1);">
             <p style="margin:0 0 8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#57C7F5;">Wordmark · Dark background</p>
-            <a href="${SITE}/brand/pg-wordmark-dark.svg" style="color:#EF4A18;font-size:14px;text-decoration:none;">Download SVG →</a>
+            <a href="${SITE}/brand/pg-wordmark-dark.svg" style="color:#F2C94C;font-size:14px;text-decoration:none;">Download SVG →</a>
           </td>
         </tr>
         <tr><td style="height:8px;"></td></tr>
         <tr>
           <td style="padding:16px;background:#F5F5F0;border:1px solid rgba(0,0,0,.08);">
             <p style="margin:0 0 8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#0A0E1A;">Wordmark · Light background</p>
-            <a href="${SITE}/brand/pg-wordmark-light.svg" style="color:#EF4A18;font-size:14px;text-decoration:none;">Download SVG →</a>
+            <a href="${SITE}/brand/pg-wordmark-light.svg" style="color:#F2C94C;font-size:14px;text-decoration:none;">Download SVG →</a>
           </td>
         </tr>
         <tr><td style="height:8px;"></td></tr>
         <tr>
           <td style="padding:16px;background:#0E1A2A;border:1px solid rgba(255,255,255,.1);">
             <p style="margin:0 0 8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#57C7F5;">PNG files (existing)</p>
-            <a href="${SITE}/images/logo-on-dark.png" style="color:#EF4A18;font-size:14px;text-decoration:none;">logo-on-dark.png →</a><br>
-            <a href="${SITE}/images/logo-on-light.png" style="color:#EF4A18;font-size:14px;text-decoration:none;">logo-on-light.png →</a><br>
-            <a href="${SITE}/images/mark-on-dark.png" style="color:#EF4A18;font-size:14px;text-decoration:none;">mark-on-dark.png →</a>
+            <a href="${SITE}/images/logo-on-dark.png" style="color:#F2C94C;font-size:14px;text-decoration:none;">logo-on-dark.png →</a><br>
+            <a href="${SITE}/images/logo-on-light.png" style="color:#F2C94C;font-size:14px;text-decoration:none;">logo-on-light.png →</a><br>
+            <a href="${SITE}/images/mark-on-dark.png" style="color:#F2C94C;font-size:14px;text-decoration:none;">mark-on-dark.png →</a>
           </td>
         </tr>
       </table>

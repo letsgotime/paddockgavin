@@ -189,7 +189,7 @@ export default function PrivacyPage() {
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 12,
                   letterSpacing: ".2em",
-                  color: "#F8B800",
+                  color: "#F2C94C",
                   flexShrink: 0,
                 }}
               >

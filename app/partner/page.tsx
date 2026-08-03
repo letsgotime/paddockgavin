@@ -67,7 +67,7 @@ export default function PartnerPage() {
           </p>
           <h1 style={{ margin: "0 0 18px", fontWeight: 900, fontSize: "clamp(32px,5.5vw,62px)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
             Put it in front of{" "}
-            <span style={{ color: "#F8B800" }}>people who buy cars</span>
+            <span style={{ color: "#F2C94C" }}>people who buy cars</span>
           </h1>
           <p style={{ margin: "0 0 36px", fontSize: 18, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 660 }}>
             ~1,000,000 views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
@@ -98,7 +98,7 @@ export default function PartnerPage() {
                     fontSize: "clamp(20px,2.8vw,30px)",
                     fontWeight: 700,
                     letterSpacing: "-.02em",
-                    color: "#F8B800",
+                    color: "#F2C94C",
                     whiteSpace: "pre-line",
                   }}
                   dangerouslySetInnerHTML={{ __html: s.k }}
@@ -135,7 +135,7 @@ export default function PartnerPage() {
                 style={{
                   background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
                   border: "1px solid rgba(255,255,255,.1)",
-                  borderTop: "3px solid #F8B800",
+                  borderTop: "3px solid #F2C94C",
                   padding: "clamp(20px,2.5vw,28px)",
                 }}
               >
@@ -154,7 +154,7 @@ export default function PartnerPage() {
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {rules.map((r, i) => (
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(255,255,255,.06)", fontSize: 15.5, lineHeight: 1.55, color: "#C4CBD6" }}>
-                <span style={{ color: "#F8B800", fontWeight: 700, flexShrink: 0, marginTop: 2 }}>&#10003;</span>
+                <span style={{ color: "#F2C94C", fontWeight: 700, flexShrink: 0, marginTop: 2 }}>&#10003;</span>
                 {r}
               </li>
             ))}
@@ -173,7 +173,7 @@ export default function PartnerPage() {
             style={{
               background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
               border: "1px solid rgba(255,255,255,.11)",
-              borderLeft: "3px solid #F8B800",
+              borderLeft: "3px solid #F2C94C",
               padding: "clamp(24px,3vw,40px)",
             }}
           >
@@ -188,7 +188,7 @@ export default function PartnerPage() {
                 style={{
                   display: "inline-block",
                   padding: "13px 28px",
-                  background: "#F8B800",
+                  background: "#F2C94C",
                   color: "#101010",
                   fontWeight: 800,
                   fontSize: 13.5,

@@ -8,13 +8,13 @@ export function HomeMediaKit() {
       style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,6vw,72px)" }}
     >
       {/* Eyebrow */}
-      <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#F8B800" }}>
+      <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#F2C94C" }}>
         For brands
       </span>
 
       {/* Headline */}
       <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(44px,8vw,96px)", lineHeight: .97, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch" }}>
-        The audience,{" "}<span style={{ color: "#F8B800" }}>in numbers.</span>
+        The audience,{" "}<span style={{ color: "#F2C94C" }}>in numbers.</span>
       </h2>
 
       {/* Body */}
@@ -25,7 +25,7 @@ export function HomeMediaKit() {
       {/* Stats — big, open */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,45%),1fr))", gap: "clamp(24px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,.1)", paddingTop: "clamp(28px,4vw,48px)" }}>
         {[
-          { label: "Cars owned",       value: "29",         color: "#F8B800" },
+          { label: "Cars owned",       value: "29",         color: "#F2C94C" },
           { label: "Found for others", value: "78",         color: "#00D2BE" },
           { label: "Events run",       value: "200+",       color: "#8B93A7" },
           { label: "Based",            value: "Nashville",  color: "#57C7F5" },
@@ -43,7 +43,7 @@ export function HomeMediaKit() {
 
       {/* CTAs */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <a href="#contact" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+        <a href="#contact" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
           Pitch a brand deal
         </a>
         <Link href="/connect" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>

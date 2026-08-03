@@ -150,7 +150,7 @@ export default function IntakePage() {
 
   const pct = step >= 4 ? 100 : ((step + 1) / 4) * 100
 
-  const vinStatusColor = vinState === "ok" ? "#00D2BE" : vinState === "warn" ? "#F8B800" : "#9BA5B3"
+  const vinStatusColor = vinState === "ok" ? "#00D2BE" : vinState === "warn" ? "#F2C94C" : "#9BA5B3"
 
   const routeName = (ROUTES.find((r) => r.id === v.route) || {}).name
 
@@ -202,7 +202,7 @@ export default function IntakePage() {
 
         {/* Progress bar */}
         <div style={{ position: "relative", height: 11, margin: "0 0 clamp(28px,3.6vw,44px)", background: "repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 1px,transparent 1px 7px)" }}>
-          <i style={{ position: "absolute", top: -4, bottom: -4, left: 0, width: `${pct}%`, background: "#F8B800", transition: "width .4s cubic-bezier(.16,1,.3,1)" }} />
+          <i style={{ position: "absolute", top: -4, bottom: -4, left: 0, width: `${pct}%`, background: "#F2C94C", transition: "width .4s cubic-bezier(.16,1,.3,1)" }} />
         </div>
 
         {/* Headline */}
@@ -212,7 +212,7 @@ export default function IntakePage() {
               <span style={{ display: "block", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 800, fontSize: "clamp(30px,3vw,44px)", lineHeight: 1, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>
                 {cur.head}
               </span>
-              <span style={{ display: "block", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 400, fontSize: "clamp(29px,2.9vw,42px)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#F8B800" }}>
+              <span style={{ display: "block", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 400, fontSize: "clamp(29px,2.9vw,42px)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#F2C94C" }}>
                 {cur.sub}
               </span>
             </h1>
@@ -226,7 +226,7 @@ export default function IntakePage() {
 
         {/* ── STEP 0: The car ───────────────────────────────── */}
         {step === 0 && (
-          <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F8B800", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,36px)" }}>
+          <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,36px)" }}>
             {/* VIN row */}
             <div style={{ marginBottom: "clamp(18px,2.2vw,26px)", paddingBottom: "clamp(18px,2.2vw,26px)", borderBottom: "1px solid rgba(255,255,255,.13)" }}>
               <span style={labelSt}>VIN</span>
@@ -243,7 +243,7 @@ export default function IntakePage() {
                   style={{
                     flex: "0 0 auto", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700,
                     fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase",
-                    background: "#F8B800", color: "#0E1A2A", border: 0,
+                    background: "#F2C94C", color: "#0E1A2A", border: 0,
                     padding: "13px 24px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
                     cursor: "pointer",
                   }}
@@ -287,8 +287,8 @@ export default function IntakePage() {
                       type="button"
                       onClick={() => toggle(key as keyof V, o)}
                       style={{
-                        background: v[key as keyof V] === o ? "rgba(248,184,0,.1)" : "transparent",
-                        border: `1px solid ${v[key as keyof V] === o ? "#F8B800" : "rgba(255,255,255,.22)"}`,
+                        background: v[key as keyof V] === o ? "rgba(242,201,76,.1)" : "transparent",
+                        border: `1px solid ${v[key as keyof V] === o ? "#F2C94C" : "rgba(255,255,255,.22)"}`,
                         color: "#DDE3EB",
                         fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 14,
                         letterSpacing: ".1em", textTransform: "uppercase", padding: "12px 18px",
@@ -325,8 +325,8 @@ export default function IntakePage() {
                   onClick={() => setV((prev) => ({ ...prev, route: r.id }))}
                   style={{
                     display: "block", width: "100%", textAlign: "left",
-                    background: v.route === r.id ? "rgba(248,184,0,.07)" : "#0A1523",
-                    border: `1px solid ${v.route === r.id ? "#F8B800" : "rgba(255,255,255,.16)"}`,
+                    background: v.route === r.id ? "rgba(242,201,76,.07)" : "#0A1523",
+                    border: `1px solid ${v.route === r.id ? "#F2C94C" : "rgba(255,255,255,.16)"}`,
                     clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
                     padding: "clamp(18px,2vw,26px)", cursor: "pointer", transition: "border-color .18s,background .18s",
                   }}
@@ -334,7 +334,7 @@ export default function IntakePage() {
                   <span style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 7 }}>
                     <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 17, letterSpacing: ".01em", color: "#fff" }}>{r.name}</span>
                     <i style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.26)", transform: "translateY(-4px)" }} />
-                    <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 13.5, letterSpacing: ".13em", textTransform: "uppercase", color: "#F8B800" }}>{r.speed}</span>
+                    <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 600, fontSize: 13.5, letterSpacing: ".13em", textTransform: "uppercase", color: "#F2C94C" }}>{r.speed}</span>
                   </span>
                   <span style={{ display: "block", fontSize: 17, lineHeight: 1.5, color: "#B9C2CE" }}>{r.blurb}</span>
                 </button>
@@ -342,7 +342,7 @@ export default function IntakePage() {
             </div>
 
             {/* Price + timing */}
-            <div style={{ marginTop: "clamp(16px,2vw,24px)", background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F8B800", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,32px)" }}>
+            <div style={{ marginTop: "clamp(16px,2vw,24px)", background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,32px)" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: "clamp(15px,1.8vw,20px)" }}>
                 <label style={{ display: "block" }}>
                   <span style={labelSt}>What you want for it</span>
@@ -387,7 +387,7 @@ export default function IntakePage() {
                   width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center",
                   fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14,
                   letterSpacing: ".12em", textTransform: "uppercase",
-                  background: "#F8B800", color: "#0E1A2A", border: 0,
+                  background: "#F2C94C", color: "#0E1A2A", border: 0,
                   padding: "16px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)",
                   cursor: "pointer", opacity: send === "sending" ? 0.7 : 1,
                 }}
@@ -395,7 +395,7 @@ export default function IntakePage() {
                 {send === "sending" ? "Sending…" : send === "error" ? "Try again" : "Send it to me"}
               </button>
               {send === "error" && (
-                <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F8B800" }}>
+                <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F2C94C" }}>
                   Could not send — DM @PaddockGavin instead.
                 </p>
               )}
@@ -432,7 +432,7 @@ export default function IntakePage() {
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link
                 href="/"
-                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}
               >
                 Back to the site
               </Link>
@@ -464,7 +464,7 @@ export default function IntakePage() {
                 type="button"
                 onClick={() => setStep((s) => (s + 1) as Step)}
                 disabled={!canNext}
-                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F8B800", color: "#0E1A2A", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: canNext ? "pointer" : "not-allowed", opacity: canNext ? 1 : 0.45 }}
+                style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", cursor: canNext ? "pointer" : "not-allowed", opacity: canNext ? 1 : 0.45 }}
               >
                 {["Next: Condition", "Next: Route", "Almost there", ""][step]}
               </button>

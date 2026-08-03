@@ -73,7 +73,7 @@ const BUILDS = [
 ]
 
 const STACK = [
-  { key: "stream", role: "Video", name: "Cloudflare Stream", note: "Every clip, with captions burned in and poster frames it makes itself.", tone: "#F8B800" },
+  { key: "stream", role: "Video", name: "Cloudflare Stream", note: "Every clip, with captions burned in and poster frames it makes itself.", tone: "#F2C94C" },
   { key: "images", role: "Photos", name: "Cloudflare Images", note: "One upload, five named sizes. The gallery never asks for a resize.", tone: "#00D2BE" },
   { key: "edge", role: "In front", name: "Cloudflare DDoS & WAF", note: "The site sits behind it, so a bad day for the internet is not a bad day here.", tone: "#4BA3DE" },
   { key: "behold", role: "The feed", name: "Behold", note: "Three Instagram accounts, read straight into the wall and the gallery.", tone: "#00D2BE" },
@@ -82,7 +82,7 @@ const STACK = [
 
 const TONE = {
   live:     { tone: "#00D2BE", pillBg: "rgba(0,210,190,.16)",  pillLine: "rgba(0,210,190,.42)",  pillInk: "#7FE6DC" },
-  shipped:  { tone: "#F8B800", pillBg: "rgba(248,184,0,.16)",  pillLine: "rgba(248,184,0,.42)",  pillInk: "#FFD866" },
+  shipped:  { tone: "#F2C94C", pillBg: "rgba(242,201,76,.16)",  pillLine: "rgba(242,201,76,.42)",  pillInk: "#FFD866" },
   building: { tone: "#4BA3DE", pillBg: "rgba(0,81,133,.55)",   pillLine: "#0A6BAA",              pillInk: "#CFE4F4" },
   retired:  { tone: "#848482", pillBg: "rgba(255,255,255,.05)", pillLine: "rgba(255,255,255,.18)", pillInk: "#B4B6B2" },
 }
@@ -546,7 +546,7 @@ export default function ScoreboardPage() {
               style={{
                 display: "inline-block",
                 transform: "skewX(-12deg)",
-                background: "#F8B800",
+                background: "#F2C94C",
                 padding: "6px 16px",
               }}
             >
@@ -719,7 +719,7 @@ export default function ScoreboardPage() {
                 fontSize: 15,
                 letterSpacing: ".04em",
                 textTransform: "uppercase",
-                background: "#F8B800",
+                background: "#F2C94C",
                 color: "#101010",
                 padding: "15px 26px",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",

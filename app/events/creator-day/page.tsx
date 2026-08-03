@@ -92,7 +92,7 @@ export default function CreatorDayPage() {
         <div
           style={{
             position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 720px at 82% -6%,rgba(248,184,0,.15),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.95))",
+            background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.15),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.95))",
           }}
         />
       </div>
@@ -109,7 +109,7 @@ export default function CreatorDayPage() {
           style={{
             position: "relative",
             minHeight: "clamp(440px,62vh,620px)",
-            border: "1px solid rgba(248,184,0,.3)",
+            border: "1px solid rgba(242,201,76,.3)",
             boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             overflow: "hidden",
@@ -136,7 +136,7 @@ export default function CreatorDayPage() {
             style={{ position: "relative", padding: "clamp(22px,3.6vw,42px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 780 }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-              <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "6px 16px" }}>
+              <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
                 <span
                   style={{
                     display: "inline-block", transform: "skewX(12deg)",
@@ -151,7 +151,7 @@ export default function CreatorDayPage() {
                 style={{
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase",
-                  color: "#F8B800", background: "#0E1A2A", padding: "7px 14px",
+                  color: "#F2C94C", background: "#0E1A2A", padding: "7px 14px",
                   clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
                 }}
               >
@@ -178,7 +178,7 @@ export default function CreatorDayPage() {
               <br />
               <span
                 style={{
-                  background: "#F8B800", color: "#101010", padding: "1px 14px",
+                  background: "#F2C94C", color: "#101010", padding: "1px 14px",
                   WebkitBoxDecorationBreak: "clone",
                   boxDecorationBreak: "clone" as React.CSSProperties["boxDecorationBreak"],
                 }}
@@ -196,7 +196,7 @@ export default function CreatorDayPage() {
             backdropFilter: "blur(24px) saturate(160%)",
             WebkitBackdropFilter: "blur(24px) saturate(160%)",
             border: "1px solid rgba(255,255,255,.12)",
-            borderLeft: "3px solid #F8B800",
+            borderLeft: "3px solid #F2C94C",
             boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(20px,3vw,30px)",
@@ -219,7 +219,7 @@ export default function CreatorDayPage() {
                 display: "inline-flex", alignItems: "center",
                 fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15,
                 letterSpacing: ".04em", textTransform: "uppercase",
-                background: "#F8B800", color: "#101010", padding: "15px 28px",
+                background: "#F2C94C", color: "#101010", padding: "15px 28px",
                 clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
                 textDecoration: "none",
               }}
@@ -294,10 +294,10 @@ export default function CreatorDayPage() {
                 border: "1px solid rgba(255,255,255,.10)",
               },
               {
-                dots: ["#F8B800", "#F8B800", "#F8B800"],
+                dots: ["#F2C94C", "#F2C94C", "#F2C94C"],
                 title: "Winner takes the bag",
                 body: "A creator bundle from a leading brand, plus a full day to create with a duPont car of your choice.",
-                border: "1px solid rgba(248,184,0,.3)",
+                border: "1px solid rgba(242,201,76,.3)",
               },
             ].map((card, i) => (
               <div
@@ -351,7 +351,7 @@ export default function CreatorDayPage() {
           />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 0 20px", display: "flex", alignItems: "center", gap: 11 }}>
-              <i aria-hidden="true" style={{ width: 26, height: 3, background: "#F8B800", flex: "0 0 auto", display: "block" }} />
+              <i aria-hidden="true" style={{ width: 26, height: 3, background: "#F2C94C", flex: "0 0 auto", display: "block" }} />
               <span
                 style={{
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
@@ -463,7 +463,7 @@ export default function CreatorDayPage() {
                     cursor: "pointer", display: "inline-flex", alignItems: "center",
                     fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15,
                     letterSpacing: ".04em", textTransform: "uppercase",
-                    background: "#F8B800", color: "#101010", border: 0, padding: "15px 28px",
+                    background: "#F2C94C", color: "#101010", border: 0, padding: "15px 28px",
                     clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
                   }}
                 >

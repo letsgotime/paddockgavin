@@ -32,8 +32,8 @@ export function HomeShiftsCard() {
       {/* ── DAY SHIFT ── */}
       <div
         style={{
-          background: "rgba(248,184,0,0.06)",
-          border: "1px solid rgba(248,184,0,0.18)",
+          background: "rgba(242,201,76,0.06)",
+          border: "1px solid rgba(242,201,76,0.18)",
           padding: "clamp(28px,4vw,48px)",
           display: "flex",
           flexDirection: "column",
@@ -47,7 +47,7 @@ export function HomeShiftsCard() {
               fontSize: 11,
               letterSpacing: ".24em",
               textTransform: "uppercase",
-              color: "#F8B800",
+              color: "#F2C94C",
             }}
           >
             Day shift &middot; 08:00 &rarr; 18:00
@@ -65,11 +65,11 @@ export function HomeShiftsCard() {
             }}
           >
             On the lot.<br />
-            <span style={{ color: "#F8B800" }}>duPont REGISTRY.</span>
+            <span style={{ color: "#F2C94C" }}>duPont REGISTRY.</span>
           </h3>
         </div>
 
-        <div style={{ height: 1, background: "rgba(248,184,0,0.2)", width: "100%" }} />
+        <div style={{ height: 1, background: "rgba(242,201,76,0.2)", width: "100%" }} />
 
         <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 16 }}>
           {DAY.map((text, i) => (
@@ -81,7 +81,7 @@ export function HomeShiftsCard() {
                   width: 7,
                   height: 7,
                   borderRadius: "50%",
-                  border: "1.5px solid #F8B800",
+                  border: "1.5px solid #F2C94C",
                   display: "block",
                 }}
               />

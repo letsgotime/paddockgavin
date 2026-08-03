@@ -53,7 +53,7 @@ export default function LotOpsPage() {
         <div style={{ position: "absolute", inset: 0, opacity: 0.18 }}>
           <Image src="/images/gavin-gwagen.webp" alt="" fill style={{ objectFit: "cover" }} priority />
         </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(248,184,0,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
       </div>
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
@@ -63,17 +63,17 @@ export default function LotOpsPage() {
           <Image src="/images/ferrari-upperdeck.webp" alt="Coming off the transporter at duPont REGISTRY" fill style={{ objectFit: "cover", objectPosition: "center 55%" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,42px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "6px 16px", alignSelf: "flex-start" }}>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; duPont REGISTRY, Lebanon TN</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,66px)", lineHeight: 1.02, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
-              The gate opens<br /><span style={{ color: "#F8B800" }}>at eight</span>
+              The gate opens<br /><span style={{ color: "#F2C94C" }}>at eight</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#EDF1F6", maxWidth: "54ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
               The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place. I run duPont REGISTRY&rsquo;s lot operations, and this is what that looks like.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+              <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 Watch the mornings
               </a>
               <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", backdropFilter: "blur(8px)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
@@ -90,7 +90,7 @@ export default function LotOpsPage() {
             {[
               { k: "The floor", v: "70,000 sq ft, duPont\u2019s", tone: "#00D2BE" },
               { k: "Gate",      v: "8:00 am",                     tone: "#00D2BE" },
-              { k: "Right now", v: lotNow || "\u2014",            tone: "#F8B800" },
+              { k: "Right now", v: lotNow || "\u2014",            tone: "#F2C94C" },
               { k: "Outbound",  v: "Verified first",              tone: "#00D2BE" },
             ].map(row => (
               <span key={row.k} style={{ display: "flex", flexDirection: "column", gap: 7 }}>
@@ -133,16 +133,16 @@ export default function LotOpsPage() {
         </section>
 
         {/* The crew */}
-        <section style={{ background: "linear-gradient(150deg,rgba(248,184,0,.09),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(248,184,0,.28)", borderLeft: "3px solid #F8B800", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
+        <section style={{ background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.28)", borderLeft: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F8B800", padding: "6px 16px" }}>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>The crew</span>
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>It never stops</span>
           </div>
           <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.8vw,42px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "22ch" }}>
-            Four of us run <span style={{ color: "#F8B800" }}>the warehouse</span>
+            Four of us run <span style={{ color: "#F2C94C" }}>the warehouse</span>
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "60ch" }}>
             Me and three lot ops techs, on duPont REGISTRY&rsquo;s warehouse floor. It never stops, it never looks the same two days running, and the cars passing through are some of the most sought-after in the world.
@@ -167,7 +167,7 @@ export default function LotOpsPage() {
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "56ch" }}>Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.</p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <Link href="/book" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+            <Link href="/book" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
               Buy, trade or sell
             </Link>
           </div>

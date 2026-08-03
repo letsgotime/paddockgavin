@@ -91,7 +91,7 @@ export default function PressPage() {
         {/* Masthead */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>01</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>01</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The masthead</h2>
           </div>
           <div style={{ overflowX: "auto" }}>
@@ -122,7 +122,7 @@ export default function PressPage() {
         {/* Audience */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>02</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>02</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Audience</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -141,7 +141,7 @@ export default function PressPage() {
                 {audience.map((row, i) => (
                   <tr key={i}>
                     <td style={{ padding: "11px 14px", color: "#B4B6B2", borderBottom: "1px solid rgba(255,255,255,.06)" }}>{row.metric}</td>
-                    <td style={{ padding: "11px 14px", color: "#F8B800", fontWeight: 700, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 15, borderBottom: "1px solid rgba(255,255,255,.06)" }}>{row.figure}</td>
+                    <td style={{ padding: "11px 14px", color: "#F2C94C", fontWeight: 700, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 15, borderBottom: "1px solid rgba(255,255,255,.06)" }}>{row.figure}</td>
                     <td style={{ padding: "11px 14px", color: "#91918F", fontSize: 13, borderBottom: "1px solid rgba(255,255,255,.06)" }}>{row.source}</td>
                   </tr>
                 ))}
@@ -153,7 +153,7 @@ export default function PressPage() {
         {/* Coverage */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>03</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>03</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>What gets covered</h2>
           </div>
           <p style={{ margin: "0 0 16px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -172,7 +172,7 @@ export default function PressPage() {
         {/* Requesting a credential */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>04</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>04</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Requesting a credential from us</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
@@ -205,7 +205,7 @@ export default function PressPage() {
         {/* Editorial standards */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>05</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>05</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Editorial standards</h2>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
@@ -224,7 +224,7 @@ export default function PressPage() {
         {/* Assets */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F8B800", flexShrink: 0 }}>06</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>06</span>
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Assets for publication</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>

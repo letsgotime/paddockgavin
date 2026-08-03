@@ -78,9 +78,9 @@ export default function EmailPreviewPage() {
                 fontSize: 13,
                 letterSpacing: ".06em",
                 cursor: "pointer",
-                border: `1px solid ${active === t.id ? "#EF4A18" : "rgba(255,255,255,.15)"}`,
+                border: `1px solid ${active === t.id ? "#F2C94C" : "rgba(255,255,255,.15)"}`,
                 background: active === t.id ? "rgba(239,74,24,.12)" : "transparent",
-                color: active === t.id ? "#EF4A18" : "#EDF1F6",
+                color: active === t.id ? "#F2C94C" : "#EDF1F6",
                 transition: "all .18s",
               }}
             >

@@ -84,7 +84,7 @@ export default function JuiceBoxPage() {
         <section style={{ padding: "clamp(50px,7vw,78px) 0 clamp(40px,6vw,60px)", borderBottom: "1px solid #27384F" }}>
           <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The official index &middot; from The Gloss Game™</p>
           <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(38px,6.6vw,68px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch" }}>
-            The GoTime<br /><span style={{ color: "#F8B800" }}>Juice Box™</span>
+            The GoTime<br /><span style={{ color: "#F2C94C" }}>Juice Box™</span>
           </h1>
           <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote &mdash; the ones that keep earning their slot. Roughly $55K went through this garage finding them, on twenty-nine of his own cars plus clients&rsquo; and friends&rsquo;. This is what stayed within reach.</p>
           <div style={{ marginTop: 26, maxWidth: "62ch" }}>
@@ -128,7 +128,7 @@ export default function JuiceBoxPage() {
                       placeholder="you@example.com" required
                       style={{ flex: "1 1 220px", minWidth: 0, background: "rgba(6,14,24,.55)", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.22)", padding: "16px 18px", fontFamily: arch, fontSize: 16, clipPath: "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%)", outline: "none" }}
                     />
-                    <button type="submit" disabled={status === "sending"} style={{ fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F8B800", color: "#101010", border: 0, cursor: "pointer", padding: "15px 24px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}>
+                    <button type="submit" disabled={status === "sending"} style={{ fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", border: 0, cursor: "pointer", padding: "15px 24px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}>
                       {status === "sending" ? "Sending\u2026" : "Send me the index"}
                     </button>
                   </div>
@@ -177,7 +177,7 @@ export default function JuiceBoxPage() {
               <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>The index is chapter ten</h2>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The order that makes these products work is the other eleven chapters. Ninety-six pages, and the back half is the workbook.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", marginTop: 24 }}>
-                <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F8B800", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the book &middot; $19.99</a>
+                <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the book &middot; $19.99</a>
                 <Link href="/gloss-game" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#7FE8DC", textDecoration: "none" }}>See the whole system &rarr;</Link>
               </div>
             </div>
