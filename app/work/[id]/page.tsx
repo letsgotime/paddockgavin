@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: `${project.title} — PaddockGavin`,
       description: project.caption ?? `${project.title} — built by PaddockGavin.`,
       url: `https://paddockgavin.com/work/${id}`,
-      images: [{ url: "/og/home.png", width: 1200, height: 630, alt: project.title }],
+      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: project.title }],
     },
-    twitter: { card: "summary_large_image", images: ["/og/home.png"] },
+    twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
   }
 }
 

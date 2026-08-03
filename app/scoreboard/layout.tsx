@@ -9,9 +9,9 @@ export const metadata: Metadata = {
     title: "Scoreboard — PaddockGavin",
     description: "Live lot stats. Units moved, days on lot, throughput.",
     url: "https://paddockgavin.com/scoreboard",
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Scoreboard — PaddockGavin" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Scoreboard — PaddockGavin" }],
   },
-  twitter: { card: "summary_large_image", images: ["/og/home.png"] },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
 
 export default function ScoreboardLayout({ children }: { children: React.ReactNode }) {

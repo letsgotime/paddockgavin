@@ -9,9 +9,9 @@ export const metadata: Metadata = {
     title: "Juice Box — PaddockGavin",
     description: "An honest take on EVs from someone who lives in the ICE world.",
     url: "https://paddockgavin.com/juice-box",
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "Juice Box — PaddockGavin" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Juice Box — PaddockGavin" }],
   },
-  twitter: { card: "summary_large_image", images: ["/og/home.png"] },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
 
 export default function JuiceBoxLayout({ children }: { children: React.ReactNode }) {

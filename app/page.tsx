@@ -8,9 +8,9 @@ export const metadata: Metadata = {
     title: "PaddockGavin — Two shifts. One paddock.",
     description: "Cars used to be the reward. Now they're the work.",
     url: "https://paddockgavin.com",
-    images: [{ url: "/og/home.png", width: 1200, height: 630, alt: "PaddockGavin" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
   },
-  twitter: { card: "summary_large_image", images: ["/og/home.png"] },
+  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
 
 import { SiteNav } from "@/components/site-nav"
@@ -55,6 +55,7 @@ export default function HomePage() {
   return (
     <>
       <SiteNav active="home" />
+      <h1 className="sr-only">PaddockGavin — Lot operations and events by day, software by night. Nashville, Tennessee.</h1>
       <HomeHero />
 
       {/* ── 1. THE WALL ───────────────────────────── */}
