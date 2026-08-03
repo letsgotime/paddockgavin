@@ -29,7 +29,7 @@ const arch    = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const mono    = "'Courier New', Courier, monospace"
 
 // Four-bar speed stripe — exact brand order
-const STRIPE = ["#F2C94C", "#00D2BE", "#1E3A5F", "#3D4E63"] as const
+const STRIPE = ["#F2C94C", "#00D2BE", "#1E3A5F", "#8B93A7"] as const
 
 interface SubscriberWelcomeProps {
   source?: string  // e.g. "juice-box", "gloss-game", "site"

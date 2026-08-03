@@ -64,7 +64,7 @@ export default function RootLayout({
           <div style={{ flex: 1, background: "#F2C94C" }} />
           <div style={{ flex: 1, background: "#00D2BE" }} />
           <div style={{ flex: 1, background: "#1E3A5F" }} />
-          <div style={{ flex: 1, background: "#3D4E63" }} />
+          <div style={{ flex: 1, background: "#8B93A7" }} />
         </div>
         <ScrollProgress />
         {children}
