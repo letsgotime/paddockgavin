@@ -20,14 +20,15 @@ const NAVY   = "#0A0E1A"
 const PANEL  = "#0E1A2A"
 const CARD   = "#152538"
 const BORDER = "#27384F"
-const ORANGE = "#F2C94C"
-const GOLD   = "#F2C94C"
-const TEAL   = "#57C7F5"
-const STEEL  = "#8B93A7"
+const GOLD   = "#F2C94C"   // TrackDay Yellow
+const TEAL   = "#57C7F5"   // Speed Blue (wordmark)
+const STEEL  = "#8B93A7"   // Signal Grey
 const WHITE  = "#EDF1F6"
 const BODY   = "#C8D0DB"
 const arch   = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const mono   = "'Courier New', Courier, monospace"
+
+const STRIPE = ["#F2C94C", "#00D2BE", "#1E3A5F", "#3D4E63"] as const
 
 export interface IntakeConfirmationProps {
   firstName: string
@@ -65,9 +66,9 @@ export default function IntakeConfirmation({
         <Section style={{ background: PANEL, padding: 0 }}>
           <Container style={{ maxWidth: 600 }}>
             <Row>
-              {[ORANGE, GOLD, TEAL, STEEL].map((c, i) => (
+              {STRIPE.map((c, i) => (
                 <Column key={i} style={{ width: "25%", padding: 0 }}>
-                  <div style={{ height: 4, background: c }} />
+                  <div style={{ height: 5, background: c }} />
                 </Column>
               ))}
             </Row>
@@ -103,7 +104,7 @@ export default function IntakeConfirmation({
                 <Text style={{ margin: 0, fontFamily: mono, fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: STEEL }}>
                   Ref
                 </Text>
-                <Text style={{ margin: "4px 0 0", fontFamily: mono, fontSize: 13, letterSpacing: "0.1em", color: ORANGE }}>
+                <Text style={{ margin: "4px 0 0", fontFamily: mono, fontSize: 13, letterSpacing: "0.1em", color: GOLD }}>
                   {refNumber}
                 </Text>
               </Column>
@@ -168,7 +169,7 @@ export default function IntakeConfirmation({
               What happens now
             </Text>
             {[
-              { n: "01", c: ORANGE, text: "I review your spec against current inventory at duPont REGISTRY — Nashville and national." },
+              { n: "01", c: GOLD, text: "I review your spec against current inventory at duPont REGISTRY — Nashville and national." },
               { n: "02", c: GOLD,   text: "If there&apos;s a match or a lead, I reach back out directly. No middleman, no handoff." },
               { n: "03", c: TEAL,   text: "If the right car isn&apos;t there yet, I&apos;ll tell you that too. No invented urgency." },
             ].map(({ n, c, text }) => (

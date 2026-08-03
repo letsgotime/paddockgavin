@@ -62,9 +62,9 @@ export default function RootLayout({
         {/* Four-bar speed stripe — pinned to top of every page */}
         <div aria-hidden="true" style={{ display: "flex", width: "100%", height: 5, position: "fixed", top: 0, left: 0, zIndex: 9999 }}>
           <div style={{ flex: 1, background: "#F2C94C" }} />
-          <div style={{ flex: 1, background: "#57C7F5" }} />
+          <div style={{ flex: 1, background: "#00D2BE" }} />
           <div style={{ flex: 1, background: "#1E3A5F" }} />
-          <div style={{ flex: 1, background: "#0A1523" }} />
+          <div style={{ flex: 1, background: "#3D4E63" }} />
         </div>
         <ScrollProgress />
         {children}

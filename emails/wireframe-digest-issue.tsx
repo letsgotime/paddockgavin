@@ -21,14 +21,15 @@ const NAVY   = "#0A0E1A"
 const PANEL  = "#0E1A2A"
 const CARD   = "#152538"
 const BORDER = "#27384F"
-const ORANGE = "#F2C94C"
-const GOLD   = "#F2C94C"
-const TEAL   = "#57C7F5"
-const STEEL  = "#8B93A7"
+const GOLD   = "#F2C94C"   // TrackDay Yellow
+const TEAL   = "#57C7F5"   // Speed Blue (wordmark)
+const STEEL  = "#8B93A7"   // Signal Grey
 const WHITE  = "#EDF1F6"
 const BODY   = "#C8D0DB"
 const arch   = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const mono   = "'Courier New', Courier, monospace"
+
+const STRIPE = ["#F2C94C", "#00D2BE", "#1E3A5F", "#3D4E63"] as const
 
 export interface WireframeDigestIssueProps {
   issueNumber: string           // "012"
@@ -72,9 +73,9 @@ export default function WireframeDigestIssue({
         <Section style={{ background: PANEL, padding: 0 }}>
           <Container style={{ maxWidth: 600 }}>
             <Row>
-              {[ORANGE, GOLD, TEAL, STEEL].map((c, i) => (
+              {STRIPE.map((c, i) => (
                 <Column key={i} style={{ width: "25%", padding: 0 }}>
-                  <div style={{ height: 4, background: c }} />
+                  <div style={{ height: 5, background: c }} />
                 </Column>
               ))}
             </Row>
@@ -110,7 +111,7 @@ export default function WireframeDigestIssue({
                 <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 22, letterSpacing: "-0.025em", lineHeight: 1, color: WHITE }}>
                   Issue #{issueNumber}
                 </Text>
-                <Text style={{ margin: "4px 0 0", fontFamily: mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: ORANGE }}>
+                <Text style={{ margin: "4px 0 0", fontFamily: mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: GOLD }}>
                   {kicker}
                 </Text>
               </Column>
@@ -154,7 +155,7 @@ export default function WireframeDigestIssue({
             <Button
               href={postUrl}
               style={{
-                background: ORANGE,
+                background: GOLD,
                 color: WHITE,
                 fontFamily: arch,
                 fontWeight: 800,
@@ -194,10 +195,10 @@ export default function WireframeDigestIssue({
               )}
               {instagramCaption && (
                 <>
-                  <Text style={{ margin: "0 0 6px", fontFamily: mono, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: ORANGE }}>
+                  <Text style={{ margin: "0 0 6px", fontFamily: mono, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: GOLD }}>
                     Instagram
                   </Text>
-                  <Text style={{ margin: 0, fontFamily: arch, fontSize: 14, lineHeight: 1.6, color: BODY, borderLeft: `2px solid ${ORANGE}`, paddingLeft: 14 }}>
+                  <Text style={{ margin: 0, fontFamily: arch, fontSize: 14, lineHeight: 1.6, color: BODY, borderLeft: `2px solid ${GOLD}`, paddingLeft: 14 }}>
                     {instagramCaption}
                   </Text>
                 </>
