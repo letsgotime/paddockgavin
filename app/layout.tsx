@@ -36,16 +36,53 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
     url: SITE,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
+    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin — Two shifts. One paddock." }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@PaddockGavin",
     creator: "@PaddockGavin",
-    images: ["/opengraph-image"],
+    images: [`${SITE}/opengraph-image`],
   },
+  keywords: ["lot operations Nashville", "duPont REGISTRY", "exotic car content creator Tennessee", "duPont REGISTRY Lebanon Tennessee", "paddock gavin", "automotive software Nashville", "luxury car lot operations", "exotic car events Nashville"],
   robots: { index: true, follow: true },
   manifest: "/manifest.webmanifest",
+  other: {
+    "application/ld+json": JSON.stringify([
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": `${SITE}/#person`,
+        name: "Gavin Brooks",
+        url: SITE,
+        image: `${SITE}/images/gavin-on-lot.jpg`,
+        jobTitle: "Lot Operations and Events Manager",
+        worksFor: { "@type": "Organization", name: "duPont REGISTRY", url: "https://www.dupontregistry.com" },
+        address: { "@type": "PostalAddress", addressLocality: "Nashville", addressRegion: "TN", addressCountry: "US" },
+        sameAs: [
+          "https://www.instagram.com/paddockgavin/",
+          "https://www.linkedin.com/in/gavinbrooks-leader/",
+          "https://github.com/letsgotime",
+          "https://www.youtube.com/@paddockgavin",
+          "https://www.tiktok.com/@paddockgavin",
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${SITE}/#website`,
+        url: SITE,
+        name: "PaddockGavin",
+        description: "Lot ops and events by day. Software by night. Nashville, Tennessee.",
+        author: { "@id": `${SITE}/#person` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: { "@type": "EntryPoint", urlTemplate: `${SITE}/?q={search_term_string}` },
+          "query-input": "required name=search_term_string",
+        },
+      },
+    ]),
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -87,54 +124,6 @@ export default function RootLayout({
         <ScrollProgress />
         {children}
         <Analytics />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "Person",
-                "@id": `${SITE}/#person`,
-                name: "Gavin Brooks",
-                url: SITE,
-                image: `${SITE}/images/gavin-on-lot.jpg`,
-                jobTitle: "Lot Operations and Events Manager",
-                worksFor: {
-                  "@type": "Organization",
-                  name: "duPont REGISTRY",
-                  url: "https://www.dupontregistry.com",
-                },
-                address: {
-                  "@type": "PostalAddress",
-                  addressLocality: "Nashville",
-                  addressRegion: "TN",
-                  addressCountry: "US",
-                },
-                sameAs: [
-                  "https://www.instagram.com/paddockgavin/",
-                  "https://www.linkedin.com/in/gavinbrooks-leader/",
-                  "https://github.com/letsgotime",
-                  "https://www.youtube.com/@paddockgavin",
-                  "https://www.tiktok.com/@paddockgavin",
-                ],
-              },
-              {
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                "@id": `${SITE}/#website`,
-                url: SITE,
-                name: "PaddockGavin",
-                description: "Lot ops and events by day. Software by night. Nashville, Tennessee.",
-                author: { "@id": `${SITE}/#person` },
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target: { "@type": "EntryPoint", urlTemplate: `${SITE}/?q={search_term_string}` },
-                  "query-input": "required name=search_term_string",
-                },
-              },
-            ]),
-          }}
-        />
       </body>
     </html>
   )
