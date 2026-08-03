@@ -1,24 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" fill="none">
-  <!-- Light background -->
-  <rect width="520" height="100" fill="#FFFFFF"/>
-  <!-- Speed stripes -->
-  <rect x="18" y="18" width="7" height="40" rx="1" fill="#EF4A18" transform="skewX(-12)"/>
-  <rect x="29" y="18" width="7" height="40" rx="1" fill="#F2C94C" transform="skewX(-12)"/>
-  <rect x="40" y="18" width="7" height="40" rx="1" fill="#57C7F5" transform="skewX(-12)"/>
-  <rect x="51" y="18" width="7" height="40" rx="1" fill="#8B93A7" transform="skewX(-12)"/>
-  <!-- Wordmark -->
-  <text x="78" y="68"
-    font-family="Archivo Black, Archivo, Helvetica, sans-serif"
-    font-weight="900"
-    font-size="52"
-    letter-spacing="-1.5"
-    fill="#0A0E1A">PaddockGavin</text>
-  <!-- Tagline -->
-  <text x="79" y="86"
-    font-family="Archivo, Helvetica, sans-serif"
-    font-weight="400"
-    font-style="italic"
-    font-size="13"
-    letter-spacing="0.5"
-    fill="#8B93A7">two shifts · one paddock</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 80" fill="none">
+  <text x="0"  y="66" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="76" fill="#D4A017">P</text>
+  <text x="46" y="66" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="76" fill="#2A9AB8">G</text>
+  <text x="126" y="58" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="50" fill="#1A3A6B">Paddock</text>
+  <text x="388" y="58" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="50" fill="#0A0E1A">Gavin</text>
+  <text x="127" y="76" font-family="Arial,sans-serif" font-size="13" fill="#555E6E">A life bent toward cars.</text>
 </svg>

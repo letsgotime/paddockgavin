@@ -1,18 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-  <!-- Background -->
-  <rect width="200" height="200" fill="#0A0E1A"/>
-  <!-- Speed stripes — four bars -->
-  <rect x="18" y="22" width="8" height="48" rx="1" fill="#EF4A18" transform="skewX(-12)"/>
-  <rect x="30" y="22" width="8" height="48" rx="1" fill="#F2C94C" transform="skewX(-12)"/>
-  <rect x="42" y="22" width="8" height="48" rx="1" fill="#57C7F5" transform="skewX(-12)"/>
-  <rect x="54" y="22" width="8" height="48" rx="1" fill="#8B93A7" transform="skewX(-12)"/>
-  <!-- PG letterform -->
-  <text x="100" y="140" text-anchor="middle"
-    font-family="Archivo Black, Archivo, Helvetica, sans-serif"
-    font-weight="900"
-    font-size="96"
-    letter-spacing="-4"
-    fill="#EDF1F6">PG</text>
-  <!-- Bottom rule -->
-  <rect x="32" y="162" width="136" height="2" fill="#EF4A18"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174 120" fill="none">
+  <!-- P letter — gold #F2C94C -->
+  <text x="8" y="96" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="108" fill="#F2C94C" letter-spacing="-8">P</text>
+  <!-- G letter — Speed Blue #57C7F5, offset right and slightly overlapping -->
+  <text x="62" y="96" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="108" fill="#57C7F5" letter-spacing="-8">G</text>
+  <!-- Speed stripe accent under G -->
+  <rect x="62" y="100" width="104" height="4" rx="2" fill="#EF4A18" opacity="0.7"/>
 </svg>

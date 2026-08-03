@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Row,
@@ -89,15 +90,18 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
               <Column>
                 {/* PG mark + wordmark */}
                 <Row>
-                  <Column style={{ width: 44, verticalAlign: "middle" }}>
-                    {/* Inline SVG PG mark rendered as HTML via dangerouslySetInnerHTML not possible — use text badge instead */}
-                    <div style={{ width: 36, height: 36, background: ORANGE, display: "inline-block", textAlign: "center", lineHeight: "36px" }}>
-                      <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, letterSpacing: "-0.02em", color: WHITE, lineHeight: "36px", padding: 0 }}>PG</Text>
-                    </div>
+                  <Column style={{ width: 48, verticalAlign: "middle" }}>
+                    <Img
+                      src="https://paddockgavin.com/images/mark-on-dark-96.png"
+                      alt="PG"
+                      width={40}
+                      height={40}
+                      style={{ display: "block" }}
+                    />
                   </Column>
-                  <Column style={{ verticalAlign: "middle" }}>
-                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 20, letterSpacing: "-0.01em", color: WHITE }}>
-                      PADDOCK<span style={{ color: GOLD }}>GAVIN</span>
+                  <Column style={{ verticalAlign: "middle", paddingLeft: 4 }}>
+                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 20, letterSpacing: "-0.01em", lineHeight: 1 }}>
+                      <span style={{ color: GOLD }}>Paddock</span><span style={{ color: TEAL }}>Gavin</span>
                     </Text>
                   </Column>
                 </Row>

@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Row,
@@ -79,16 +80,20 @@ export default function IntakeConfirmation({
             <Row>
               <Column style={{ verticalAlign: "middle" }}>
                 <Row>
-                  <Column style={{ width: 44, verticalAlign: "middle" }}>
-                    <div style={{ width: 36, height: 36, background: ORANGE, textAlign: "center" }}>
-                      <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, color: WHITE, lineHeight: "36px", padding: 0 }}>PG</Text>
-                    </div>
+                  <Column style={{ width: 48, verticalAlign: "middle" }}>
+                    <Img
+                      src="https://paddockgavin.com/images/mark-on-dark-96.png"
+                      alt="PG"
+                      width={38}
+                      height={38}
+                      style={{ display: "block" }}
+                    />
                   </Column>
-                  <Column style={{ verticalAlign: "middle" }}>
-                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, letterSpacing: "0.02em", color: WHITE }}>
-                      PADDOCK<span style={{ color: GOLD }}>GAVIN</span>
+                  <Column style={{ verticalAlign: "middle", paddingLeft: 4 }}>
+                    <Text style={{ margin: 0, fontFamily: arch, fontWeight: 900, fontSize: 14, letterSpacing: "-0.01em", lineHeight: 1 }}>
+                      <span style={{ color: GOLD }}>Paddock</span><span style={{ color: TEAL }}>Gavin</span>
                     </Text>
-                    <Text style={{ margin: "2px 0 0", fontFamily: arch, fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: TEAL }}>
+                    <Text style={{ margin: "3px 0 0", fontFamily: arch, fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", color: TEAL }}>
                       Find Me a Car
                     </Text>
                   </Column>
