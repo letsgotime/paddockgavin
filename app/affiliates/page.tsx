@@ -105,7 +105,7 @@ export default function AffiliatesPage() {
   return (
     <>
       <SiteNav />
-      <main style={{ background: "#0A1523", color: "#C4CBD6", overflowX: "hidden" }}>
+      <main style={{ background: "#0A1523", color: "#D4DAE2", overflowX: "hidden" }}>
 
         {/* ── Hero ── */}
         <section style={{ padding: "clamp(70px,10vw,120px) clamp(18px,5vw,64px) clamp(20px,3vw,36px)" }}>
@@ -122,7 +122,7 @@ export default function AffiliatesPage() {
 
         {/* ── Disclosure note ── */}
         <section style={{ padding: "0 clamp(18px,5vw,64px) clamp(34px,5vw,62px)" }}>
-          <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, color: "#91918F", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0, maxWidth: "70ch" }}>
+          <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, color: "#B8BEC8", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0, maxWidth: "70ch" }}>
             <b style={{ color: "#EDF1F6", fontWeight: 400 }}>5 of the links on this page pay me a commission</b>{" "}
             and each one is marked. Nothing is here because it pays. Everything here is something I bought
             with my own money first, most of it years before anybody offered me anything.
@@ -133,7 +133,7 @@ export default function AffiliatesPage() {
         <section style={{ padding: "clamp(50px,8vw,104px) clamp(18px,5vw,64px)" }}>
           {/* Folio */}
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 26 }}>
-            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#91918F" }}>01</i>
+            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#B8BEC8" }}>01</i>
             <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>In the garage</span>
             <span style={{ flex: "1 1 auto", height: 1, background: "rgba(255,255,255,.13)" }} />
           </div>
@@ -143,7 +143,7 @@ export default function AffiliatesPage() {
               <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
                 What I actually reach for
               </h2>
-              <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#C4CBD6", margin: 0, maxWidth: "64ch" }}>
+              <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#D4DAE2", margin: 0, maxWidth: "64ch" }}>
                 Where there is a code, it is yours. Where there is not one yet, the link still goes to the
                 right place and I will put the code up the day it exists.
               </p>
@@ -163,7 +163,7 @@ export default function AffiliatesPage() {
                 <p style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(23px,2.6vw,29px)", lineHeight: 1.02, letterSpacing: "-.035em", color: "#fff", textTransform: "uppercase", margin: 0 }}>
                   {b.name}
                 </p>
-                <p style={{ margin: 0, fontFamily: serif, fontSize: 15.5, lineHeight: 1.5, color: "#91918F", flex: "1 1 auto" }}>
+                <p style={{ margin: 0, fontFamily: serif, fontSize: 15.5, lineHeight: 1.5, color: "#B8BEC8", flex: "1 1 auto" }}>
                   {b.desc}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
@@ -173,7 +173,7 @@ export default function AffiliatesPage() {
                     </span>
                   ) : (
                     <span style={{ display: "inline-flex", alignItems: "center", transform: "skewX(-12deg)", border: "1px solid rgba(255,255,255,.24)", padding: "8px 15px" }}>
-                      <b style={{ transform: "skewX(12deg)", fontFamily: mono, fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F", fontWeight: 400 }}>Code coming</b>
+                      <b style={{ transform: "skewX(12deg)", fontFamily: mono, fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", color: "#B8BEC8", fontWeight: 400 }}>Code coming</b>
                     </span>
                   )}
                   <a href={b.href} rel="noopener nofollow sponsored" target="_blank"
@@ -189,14 +189,14 @@ export default function AffiliatesPage() {
         {/* ── 02 The other shift ── */}
         <section style={{ padding: "0 clamp(18px,5vw,64px) clamp(50px,8vw,104px)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 26 }}>
-            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#91918F" }}>02</i>
+            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#B8BEC8" }}>02</i>
             <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>The other shift</span>
             <span style={{ flex: "1 1 auto", height: 1, background: "rgba(255,255,255,.13)" }} />
           </div>
           <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
             Not car care
           </h2>
-          <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#C4CBD6", margin: "0 0 clamp(18px,2.6vw,32px)", maxWidth: "64ch" }}>
+          <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#D4DAE2", margin: "0 0 clamp(18px,2.6vw,32px)", maxWidth: "64ch" }}>
             Two shifts, and the second one runs late. This is what gets me through it.
           </p>
           <div style={{ display: "grid", borderTop: "1px solid rgba(255,255,255,.10)", borderLeft: "1px solid rgba(255,255,255,.10)", maxWidth: 420 }}>
@@ -210,12 +210,12 @@ export default function AffiliatesPage() {
                 <p style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(23px,2.6vw,29px)", lineHeight: 1.02, letterSpacing: "-.035em", color: "#fff", textTransform: "uppercase", margin: 0 }}>
                   {b.name}
                 </p>
-                <p style={{ margin: 0, fontFamily: serif, fontSize: 15.5, lineHeight: 1.5, color: "#91918F", flex: "1 1 auto" }}>
+                <p style={{ margin: 0, fontFamily: serif, fontSize: 15.5, lineHeight: 1.5, color: "#B8BEC8", flex: "1 1 auto" }}>
                   {b.desc}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
                   <span style={{ display: "inline-flex", alignItems: "center", transform: "skewX(-12deg)", border: "1px solid rgba(255,255,255,.24)", padding: "8px 15px" }}>
-                    <b style={{ transform: "skewX(12deg)", fontFamily: mono, fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F", fontWeight: 400 }}>Code coming</b>
+                    <b style={{ transform: "skewX(12deg)", fontFamily: mono, fontSize: 11, letterSpacing: ".16em", textTransform: "uppercase", color: "#B8BEC8", fontWeight: 400 }}>Code coming</b>
                   </span>
                   <a href={b.href} rel="noopener nofollow sponsored" target="_blank"
                     style={{ fontFamily: mono, fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#00D2BE", borderBottom: "1px solid rgba(0,210,190,.4)", paddingBottom: 2, marginLeft: "auto", textDecoration: "none" }}>
@@ -230,18 +230,18 @@ export default function AffiliatesPage() {
         {/* ── 03 The crew ── */}
         <section style={{ padding: "0 clamp(18px,5vw,64px) clamp(50px,8vw,104px)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 26 }}>
-            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#91918F" }}>03</i>
+            <i style={{ fontStyle: "normal", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", color: "#B8BEC8" }}>03</i>
             <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>The crew</span>
             <span style={{ flex: "1 1 auto", height: 1, background: "rgba(255,255,255,.13)" }} />
           </div>
           <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
             The people who made it look like this
           </h2>
-          <p style={{ fontFamily: serif, fontSize: "clamp(18px,2vw,20px)", lineHeight: 1.7, color: "#C4CBD6", margin: "0 0 8px", maxWidth: "64ch" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(18px,2vw,20px)", lineHeight: 1.7, color: "#D4DAE2", margin: "0 0 8px", maxWidth: "64ch" }}>
             Every photo and every clip on this site came from somebody standing somewhere holding something,
             usually early, usually in bad light, usually while I was busy.
           </p>
-          <p style={{ fontFamily: serif, fontSize: "clamp(18px,2vw,20px)", lineHeight: 1.7, color: "#C4CBD6", margin: "0 0 clamp(14px,2.4vw,28px)", maxWidth: "64ch" }}>
+          <p style={{ fontFamily: serif, fontSize: "clamp(18px,2vw,20px)", lineHeight: 1.7, color: "#D4DAE2", margin: "0 0 clamp(14px,2.4vw,28px)", maxWidth: "64ch" }}>
             You made the experience the experience. I could not have done any of this without you.
           </p>
           <div style={{ borderTop: "1px solid rgba(255,255,255,.13)" }}>
@@ -252,12 +252,12 @@ export default function AffiliatesPage() {
               </div>
             ))}
           </div>
-          <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".06em", color: "#91918F", margin: "20px 0 26px" }}>
+          <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".06em", color: "#B8BEC8", margin: "20px 0 26px" }}>
             Contracted through{" "}
             <a href="https://instagram.com/PaddockGavin" rel="noopener" target="_blank" style={{ color: "#00D2BE" }}>@PaddockGavin</a>.
             Produced by Bekah.
           </p>
-          <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, color: "#91918F", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0, maxWidth: "70ch" }}>
+          <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, color: "#B8BEC8", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0, maxWidth: "70ch" }}>
             <b style={{ color: "#EDF1F6", fontWeight: 400 }}>This list is shorter than it should be.</b>{" "}
             Names go up as I work back through the tags, rather than guessing and putting the wrong name
             under somebody else&apos;s picture.
