@@ -46,7 +46,7 @@ export function HomeGarage() {
       </div>
 
       {/* Photo grid — no borders, no clips, just images */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(260px,45%),1fr))", gap: "clamp(6px,1vw,10px)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "clamp(6px,1vw,10px)" }}>
         {SHOTS.map((s) => (
           <Link key={s.src} href="/gallery" style={{ position: "relative", display: "block", aspectRatio: "3/2", overflow: "hidden", background: "rgba(21,37,56,.4)", textDecoration: "none" }}>
             <Image src={s.src} alt={s.caption} fill style={{ objectFit: "cover", objectPosition: s.pos, transition: "transform .4s ease" }} loading="lazy" />

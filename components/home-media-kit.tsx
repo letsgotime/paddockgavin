@@ -23,18 +23,18 @@ export function HomeMediaKit() {
       </p>
 
       {/* Stats — big, open */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,45%),1fr))", gap: "clamp(24px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,.1)", paddingTop: "clamp(28px,4vw,48px)" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "clamp(24px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,.1)", paddingTop: "clamp(28px,4vw,48px)" }}>
         {[
           { label: "Cars owned",       value: "29",         color: "#F2C94C" },
           { label: "Found for others", value: "78",         color: "#00D2BE" },
           { label: "Events run",       value: "200+",       color: "#8B93A7" },
           { label: "Based",            value: "Nashville",  color: "#57C7F5" },
         ].map((r) => (
-          <div key={r.label} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(48px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color }}>
+          <div key={r.label} style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 0 }}>
+            <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(36px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {r.value}
             </span>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#8B93A7" }}>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#8B93A7" }}>
               {r.label}
             </span>
           </div>
