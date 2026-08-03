@@ -232,7 +232,7 @@ export default function WhyAPaddockPage() {
               textTransform: "uppercase", color: "#FFFFFF",
             }}
           >
-            What a paddock is
+            What a paddock is — and why it fits lot operations
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
             It&rsquo;s the part of a racetrack most people never see. Behind pit lane, where the transporters park and the teams work.
@@ -308,7 +308,7 @@ export default function WhyAPaddockPage() {
               textTransform: "uppercase", color: "#FFFFFF",
             }}
           >
-            Most of it isn&rsquo;t the car
+            Personal garage maintenance in Lebanon, Tennessee
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
             People think a garage is where you work on the car. Mine is mostly where I put things away.
@@ -388,7 +388,7 @@ export default function WhyAPaddockPage() {
                 textTransform: "uppercase", color: "#FFFFFF",
               }}
             >
-              The gate opens at eight
+              Lot operations at duPont REGISTRY Lebanon, Tennessee
             </h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
               The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place.
@@ -441,7 +441,7 @@ export default function WhyAPaddockPage() {
               textTransform: "uppercase", color: "#FFFFFF",
             }}
           >
-            What a car is
+            What exotic car ownership actually means
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#CFE4F4", maxWidth: "60ch" }}>
             A car is one of the few things you buy with your whole personality. Nobody agonizes over a refrigerator. You pick one and you&rsquo;ve told everybody what you think is beautiful, what you&rsquo;ll put up with, and what you&rsquo;d rather not admit you can afford.
@@ -513,6 +513,15 @@ export default function WhyAPaddockPage() {
               The flip
             </span>
           </span>
+          <h2
+            style={{
+              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
+              fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
+              textTransform: "uppercase", color: "#FFFFFF",
+            }}
+          >
+            From technology leadership to exotic car lot operations
+          </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.9vw,19px)", lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
             I led technology for a long time. The whole way through I was buying cars, selling cars and reading about cars, without ever working around them.
           </p>
