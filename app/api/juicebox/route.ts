@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
+import { db } from "@/lib/db"
+import { emailSubscribers } from "@/lib/db/schema"
+import { Resend } from "resend"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   try {
@@ -6,19 +11,28 @@ export async function POST(req: NextRequest) {
     const email   = (body.email   ?? "").trim().toLowerCase()
     const company = (body.company ?? "").trim() // honeypot
 
-    // honeypot — bots fill it, humans don't
-    if (company) return NextResponse.json({ ok: true }) // silent drop
+    if (company) return NextResponse.json({ ok: true })
 
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       return NextResponse.json({ error: "Invalid email address." }, { status: 400 })
     }
 
-    // TODO: wire to your email provider (Resend, Mailchimp, etc.)
-    // For now: log and return success so the funnel works immediately.
-    console.log("[juicebox] new subscriber:", email)
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? null
+
+    await db.insert(emailSubscribers).values({ email, source: "juice-box", ip })
+
+    if (process.env.RESEND_API_KEY) {
+      await resend.emails.send({
+        from:    "PaddockGavin <noreply@paddockgavin.com>",
+        to:      "paddock20@gmail.com",
+        subject: "New Juice Box subscriber",
+        text:    `Email: ${email}\nSource: juice-box\nIP: ${ip ?? "unknown"}\nTime: ${new Date().toISOString()}`,
+      })
+    }
 
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.error("[juicebox]", err)
     return NextResponse.json({ error: "Server error. Try again." }, { status: 500 })
   }
 }
