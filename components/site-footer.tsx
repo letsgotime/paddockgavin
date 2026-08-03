@@ -200,10 +200,14 @@ export function SiteFooter() {
               Day shift
             </p>
             {[
-              { href: "/gallery", label: "Lot ops in action" },
-              { href: "/donuts",  label: "Donuts with duPont" },
-              { href: "/intake",  label: "Find me a car" },
-              { href: "/work",    label: "Buy from duPont" },
+              { href: "/vlog",      label: "The Vlog" },
+              { href: "/gallery",   label: "The gallery" },
+              { href: "/lot-ops",   label: "Lot ops in action" },
+              { href: "/donuts",    label: "Donuts with duPont" },
+              { href: "/creator",   label: "Creator Day" },
+              { href: "/book",      label: "Book it" },
+              { href: "/intake",    label: "Find me a car" },
+              { href: "/work",      label: "Buy from duPont" },
             ].map((l) => (
               <Link
                 key={l.href}
@@ -243,10 +247,10 @@ export function SiteFooter() {
               Night shift
             </p>
             {[
-              { href: "/scoreboard",                                                   label: "The scoreboard",  ext: false },
-              { href: "https://supercariq.com",                                        label: "Supercar IQ",     ext: true  },
-              { href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks",        label: "The Gloss Game",  ext: true  },
-              { href: "https://paddock20.com",                                         label: "Paddock20",       ext: true  },
+              { href: "/scoreboard",          label: "The scoreboard",  ext: false },
+              { href: "/supercar-iq",         label: "Supercar IQ",     ext: false },
+              { href: "/gloss-game",          label: "The Gloss Game",  ext: false },
+              { href: "https://paddock20.com",label: "Paddock20",       ext: true  },
             ].map((l) => (
               <a
                 key={l.href}
@@ -284,11 +288,14 @@ export function SiteFooter() {
               Elsewhere
             </p>
             {[
-              { href: "/gallery",                  label: "The gallery",      ext: false },
-              { href: "/garage",                   label: "The garage",       ext: false },
-              { href: "/why-a-paddock",            label: "Why a Paddock",    ext: false },
-              { href: "/connect",                  label: "Every link",       ext: false },
-              { href: "https://gavinbrookshq.com", label: "gavinbrookshq.com", ext: true },
+              { href: "/gallery",                   label: "The gallery",       ext: false },
+              { href: "/why-a-paddock",             label: "Why a paddock",     ext: false },
+              { href: "/cars",                      label: "The garage",        ext: false },
+              { href: "/cars/e92",                  label: "The E92 build",     ext: false },
+              { href: "/cars/r8",                   label: "The R8",            ext: false },
+              { href: "/connect",                   label: "Every link",        ext: false },
+              { href: "https://gavinbrookshq.com",  label: "gavinbrookshq.com", ext: true  },
+              { href: "/legal/privacy",             label: "Privacy",           ext: false },
             ].map((l) => (
               <a
                 key={l.href}
