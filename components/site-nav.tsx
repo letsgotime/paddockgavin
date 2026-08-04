@@ -9,7 +9,7 @@ type Shift = "day" | "night"
 const NAV_ITEMS = [
   { key: "home",      href: "/",                  label: "Home",               note: "Two shifts",      tone: "#F2C94C" },
   { key: "gallery",   href: "/gallery",            label: "Gallery",            note: "Three pillars",   tone: "#00D2BE" },
-  { key: "cars",      href: "/garage",             label: "The garage",         note: "29 cars",         tone: "#B4B6B2" },
+  { key: "cars",      href: "/cars",               label: "The garage",         note: "29 cars",         tone: "#B4B6B2" },
   { key: "scoreboard",href: "/scoreboard",         label: "Scoreboard",         note: "What I build",    tone: "#4BA3DE" },
   { key: "events",    href: "/events",             label: "Events",             note: "Book the floor",  tone: "#4BA3DE" },
   { key: "donuts",    href: "/donuts",             label: "Donuts with duPont", note: "Come by",         tone: "#F2C94C" },

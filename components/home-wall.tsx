@@ -208,7 +208,7 @@ export function HomeWall() {
           padding: "0 clamp(16px,5vw,48px)",
           display: "flex",
           flexWrap: "wrap",
-          gap: "clamp(48px,7vw,96px)",
+          gap: "clamp(28px,5vw,72px)",
           scrollMarginTop: 140,
         }}
       >
@@ -241,7 +241,7 @@ export function HomeWall() {
                 background: "transparent",
                 cursor: "pointer",
                 aspectRatio: "9/16",
-                maxHeight: "74vh",
+                maxHeight: "55vh",
                 overflow: "hidden",
               }}
             >

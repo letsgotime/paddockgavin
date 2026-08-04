@@ -316,6 +316,88 @@
   .pg-hide-xs { display: none !important; }
 }
 
+/* ── PAGE STAGE + PHOTO BREAK ── */
+.pg-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vw, 120px) clamp(20px, 5vw, 48px);
+}
+.pg-photo-break {
+  width: 100%;
+  height: clamp(200px, 42vw, 440px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── MOBILE OVERHAUL — everything below 640px ── */
+@media (max-width: 640px) {
+
+  /* Stage: tighter vertical rhythm */
+  .pg-stage {
+    padding: 40px 18px;
+  }
+
+  /* Photo breaks: shorter on phones */
+  .pg-photo-break {
+    height: 200px;
+  }
+
+  /* All section headlines: pull back the huge clamp values */
+  .pg-stage h2 {
+    font-size: clamp(32px, 9vw, 52px) !important;
+    line-height: 1.0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Stats block: shrink value numbers so Nashville fits */
+  .pg-stat-value {
+    font-size: 28px !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+
+  /* Eyebrow mono labels */
+  .pg-stage > span:first-child,
+  .pg-stage > section > span:first-child {
+    font-size: 10px !important;
+    letter-spacing: .18em !important;
+  }
+
+  /* Body paragraphs */
+  .pg-stage p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Section gap */
+  .pg-stage section,
+  .pg-stage > section {
+    gap: 28px !important;
+  }
+
+  /* Two-column grids collapse to single on phone */
+  .pg-stage .pg-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  /* CTA buttons: full-width stacked on mobile */
+  .pg-stage a[style*="clip-path"],
+  .pg-stage button[style*="clip-path"] {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Telemetry bar: strip everything except shift dot + label */
+  .pg-telemetry-golden { display: none !important; }
+  .pg-telemetry-pct    { display: none !important; }
+  .pg-telemetry-sec    { display: none !important; }
+}
+
 /* ── LEGACY ALIASES ── */
 .notch-btn  { cursor: pointer; }
 .notch-panel { position: relative; }

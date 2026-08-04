@@ -238,7 +238,7 @@ export function HomeHero() {
 
           {/* Section name — desktop only */}
           <span
-            className="pg-hide-xs"
+            className="pg-hide-xs pg-telemetry-sec"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -265,6 +265,7 @@ export function HomeHero() {
 
           {/* Golden hour — premium redesign */}
           <span
+            className="pg-telemetry-golden"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -325,7 +326,7 @@ export function HomeHero() {
 
           {/* Minutes remaining — desktop only */}
           <span
-            className="pg-hide-xs"
+            className="pg-hide-xs pg-telemetry-pct"
             style={{
               fontFamily: "Archivo, Helvetica, sans-serif",
               fontWeight: 400,

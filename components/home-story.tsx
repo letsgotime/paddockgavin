@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export function HomeStory() {
   return (
-    <section id="story" style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,6vw,72px)" }}>
+    <section id="story" style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,5vw,64px)" }}>
       <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>
         Who&apos;s filming this
       </span>
@@ -12,7 +12,7 @@ export function HomeStory() {
         Cars were the reward.{" "}<span style={{ color: "#F2C94C" }}>Now they&apos;re the work.</span>
       </h2>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(40px,6vw,80px)", alignItems: "start" }}>
+      <div className="pg-two-col" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(32px,5vw,64px)", alignItems: "start" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(18px,1.9vw,22px)", lineHeight: 1.65, color: "#C4CBD6" }}>
             Gavin Brooks. Lot Operations and Events Manager at duPont REGISTRY, Lebanon, Tennessee — the largest exotic and luxury car marketplace in the country. Every car on the lot has been through his hands before it reaches a buyer.

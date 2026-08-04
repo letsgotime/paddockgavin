@@ -30,7 +30,7 @@ export function HomeTwoShifts() {
     <section
       data-screen-label="Two shifts"
       id="shifts"
-      style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,6vw,72px)" }}
+      style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,5vw,64px)" }}
     >
       {/* Eyebrow */}
       <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: accent }}>
@@ -43,7 +43,7 @@ export function HomeTwoShifts() {
       </h2>
 
       {/* Two columns — no cards, just ruled left borders */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "clamp(32px,5vw,64px)" }}>
+      <div className="pg-two-col" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "clamp(32px,5vw,64px)" }}>
         {/* Day */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20, paddingLeft: "clamp(20px,2.4vw,28px)", borderLeft: `3px solid #F2C94C` }}>
           <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
