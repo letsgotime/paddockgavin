@@ -89,6 +89,32 @@ const ACTS: Act[] = [
     cta: { label: "Ask about the twenty seats", href: `${RANCH}/show` },
   },
   {
+    id: "visit",
+    kicker: "If you are planning the drive",
+    title: "Plan your visit",
+    lede: "Saturday, October 10, 2026. Gates at nine, field clear by three.",
+    body: [
+      "The Piston Powered Ranch is an October car show in Tennessee, held at Rancho Jaramillo in Unionville, Bedford County, about an hour south of Nashville. Turn in off Highway 41-A and the marshals will point you down the ranch road.",
+      "Spectator parking sits on the pasture south of the show field. Bring a hat, bring a chair if you like one, and bring cash for the vendors who prefer it.",
+    ],
+    img: "/images/ranch/ppr-walk.jpg",
+    focal: "center 62%",
+    tone: "#B4B6B2",
+    lists: [
+      {
+        head: "The day",
+        tone: "#F2C94C",
+        items: ["Saturday, October 10, 2026", "Nine in the morning to three", "Spectator admission complimentary"],
+      },
+      {
+        head: "Finding it",
+        tone: "#00D2BE",
+        items: ["Rancho Jaramillo, Unionville TN", "An hour south of Nashville", "In off Highway 41-A"],
+      },
+    ],
+    cta: { label: "Open the site map", href: `${RANCH}/map` },
+  },
+  {
     id: "partners",
     kicker: "If you want your name on the day",
     title: "Stand beside it, not only in the crowd",

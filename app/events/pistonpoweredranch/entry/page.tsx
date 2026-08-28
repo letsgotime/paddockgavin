@@ -19,6 +19,9 @@ export default function Page() {
       ]}
       img="/images/918-p1.webp"
       focal="center 50%"
+      bandImg="/images/ranch/ppr-field.jpg"
+      bandFocal="center 45%"
+      closeImg="/images/aston-wheel.webp"
       tone="#00D2BE"
       asksHead="What to send"
       asks={[
@@ -28,6 +31,7 @@ export default function Page() {
         { t: "Who is bringing it", b: "You, or the person who will be standing beside it." },
       ]}
       note="Waiting in silence is its own answer. Every submission gets a reply."
+      closeLine="Send it. You will hear back either way."
       cta={{ label: "Submit your car", href: "https://piston-powered-ranch.vercel.app/show" }}
     />
   )

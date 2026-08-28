@@ -19,6 +19,9 @@ export default function Page() {
       ]}
       img="/images/cullinan-doors.webp"
       focal="center 50%"
+      bandImg="/images/donuts-inside.webp"
+      bandFocal="center 50%"
+      closeImg="/images/donuts-floor.webp"
       tone="#4BA3DE"
       asksHead="What to tell us"
       asks={[
@@ -27,6 +30,7 @@ export default function Page() {
         { t: "Power and water", b: "What you need on site so we can place you properly." },
         { t: "Who is working it", b: "How many people will be behind the table." },
       ]}
+      closeLine="Tell us what you sell. We will tell you where you fit."
       cta={{ label: "Apply for a space", href: "/connect" }}
     />
   )

@@ -19,6 +19,9 @@ export default function Page() {
       ]}
       img="/images/ranch/ppr-dusk.jpg"
       focal="center 58%"
+      bandImg="/images/donuts-overflow.webp"
+      bandFocal="center 55%"
+      closeImg="/images/ranch/ppr-walk.jpg"
       tone="#F2C94C"
       asksHead="Positions"
       asks={[
@@ -28,6 +31,7 @@ export default function Page() {
         { t: "Tell us the goal", b: "What you want the day to do for you, and we will build the position around it." },
       ]}
       note="A share of every net dollar goes to Community Elementary School. Your name sits beside that."
+      closeLine="Tell us what you want the day to do for you."
       cta={{ label: "Start the conversation", href: "/connect" }}
     />
   )

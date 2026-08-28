@@ -2,11 +2,11 @@ import type React from "react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "The Piston Powered Ranch — PaddockGavin",
+  title: "The Piston Powered Ranch — Tennessee Car Show, October 10 2026",
   description:
-    "The 12 most curated acres in automotive. Three hundred cars at Rancho Jaramillo in Unionville, Tennessee, an hour south of Nashville, on Saturday October 10 2026. Spectating is free, benefiting Community Elementary School.",
+    "An October car show in Tennessee: three hundred collector cars at Rancho Jaramillo in Unionville, an hour south of Nashville, on Saturday October 10 2026. Spectator admission complimentary, benefiting Community Elementary School.",
   openGraph: {
-    title: "The Piston Powered Ranch — PaddockGavin",
+    title: "The Piston Powered Ranch — Tennessee Car Show, October 10 2026",
     description:
       "The 12 most curated acres in automotive. October 10 2026, an hour south of Nashville. Spectating is free.",
     url: "https://paddockgavin.com/events/pistonpoweredranch",
