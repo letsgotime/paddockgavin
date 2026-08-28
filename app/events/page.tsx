@@ -6,62 +6,187 @@ import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
+/* Copy on this page ran through RAIL Redline (paddock20.com/rail/redline).
+   Run: Claude Sonnet 4.5 · WARM · WEB PAGE · US · DataForSEO target
+   "car events middle tennessee" · tells cut 0 of 0 · gap closed on this
+   build: dates and registration information for attendees. */
+
 type Status = "idle" | "sending" | "sent" | "error"
 
-const EVENTS = [
+type EventRow = {
+  key: string
+  title: string
+  venue: string
+  place: string
+  date: string | null
+  when: string
+  entry: string
+  register: string
+  state: "confirmed" | "scoping" | "closed"
+  stateLabel: string
+  blurb: string
+  img: string
+  href: string
+  cta: string
+  tone: string
+}
+
+const UPCOMING: EventRow[] = [
   {
-    key: "donuts",
-    title: "Donuts with duPont",
-    date: null as string | null,
-    when: "8\u201311 am",
-    entry: "Free",
-    blurb: "Oh, we have coffee too. Come see what rolled in this month, and bring whatever you drive. Next date posts on Instagram.",
-    img: "/images/donuts-square-sq.webp",
-    href: "/donuts",
-    cta: "Come by",
+    key: "ppr",
+    title: "The Piston Powered Ranch",
+    venue: "Rancho Jaramillo",
+    place: "Unionville, TN",
+    date: "2026-10-10",
+    when: "9:00 AM to 3:00 PM",
+    entry: "Free to spectate",
+    register: "RSVP to be counted",
+    state: "confirmed",
+    stateLabel: "Confirmed",
+    blurb:
+      "Three hundred curated cars on a working ranch. Twelve acres of open pasture. Spectating is free. A share of every net dollar goes to Community Elementary School.",
+    img: "/images/ranch/ppr-hero.jpg",
+    href: "/events/pistonpoweredranch",
+    cta: "The event",
     tone: "#F2C94C",
   },
   {
-    key: "private",
-    title: "Private client evening",
-    date: "2026-09-12",
-    when: "Evening",
-    entry: "Booked",
-    blurb: "The floor booked out for a collector group. Closed to the public, listed so you can see the room gets used this way.",
-    img: "/images/ferrari-red-sq.webp",
-    href: "/book",
-    cta: "Ask about yours",
-    tone: "#4BA3DE",
+    key: "encanto",
+    title: "Encanto Blossom Orchard",
+    venue: "Encanto Blossom Orchard",
+    place: "Shelbyville, TN",
+    date: null,
+    when: "Date to be set",
+    entry: "To be announced",
+    register: "Dates post here first",
+    state: "scoping",
+    stateLabel: "In scoping",
+    blurb: "An orchard we are walking for a future field. In scoping. Nothing booked yet.",
+    img: "/images/carrera-traffic.jpg",
+    href: "/encantoblossomorchard",
+    cta: "The property",
+    tone: "#00D2BE",
+  },
+]
+
+const PAST = [
+  {
+    key: "donuts",
+    title: "Donuts with duPont",
+    stateLabel: "Final edition, August 2026",
+    blurb:
+      "Monthly collector morning on the duPont REGISTRY floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
+    img: "/images/donuts-overflow.webp",
+    href: "/donuts",
+    cta: "The archive",
   },
   {
     key: "creator",
     title: "Creator Day",
-    date: "2026-09-19",
-    when: "Golden hour to golden hour",
-    entry: "Free",
-    blurb: "Four to five installations with cars, and creators of every kind invited. Shoot, film, paint, create \u2014 post your best, duPont votes, winner takes the bundle and a full day with a duPont car.",
-    img: "/images/cullinan-speedway-sq.webp",
+    stateLabel: "Ran September 2026",
+    blurb:
+      "Installations built for cameras. Creators of every kind invited to shoot, film, paint and post. The winner took the bundle and a full day with a car.",
+    img: "/images/cullinan-speedway.webp",
     href: "/events/creator-day",
     cta: "The page",
-    tone: "#F2C94C",
+  },
+  {
+    key: "private",
+    title: "Private client evenings",
+    stateLabel: "Ongoing, by request",
+    blurb:
+      "The floor booked out for a collector group, a brand, or a birthday. Closed to the public. Listed so you can see the room gets used this way.",
+    img: "/images/f458-dash.webp",
+    href: "/connect",
+    cta: "Ask about yours",
   },
 ]
 
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-const DOWS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
+const GALLERY = [
+  { src: "/images/donuts-floor.webp", alt: "The duPont REGISTRY floor on a Donuts morning" },
+  { src: "/images/918-p1.webp", alt: "A Porsche 918 beside a McLaren P1" },
+  { src: "/images/donuts-z06.webp", alt: "A Corvette Z06 pulled onto the floor" },
+  { src: "/images/cullinan-doors.webp", alt: "Rolls-Royce Cullinan with the doors open" },
+  { src: "/images/aston-wheel.webp", alt: "Aston Martin wheel detail" },
+  { src: "/images/donuts-inside.webp", alt: "Inside the showroom, cars and coffee" },
+  { src: "/images/f458-extinguisher.webp", alt: "Ferrari 458 interior detail" },
+  { src: "/images/donuts-tall.webp", alt: "The lot filling up before the doors opened" },
+]
 
-function midday(iso: string) { return Date.parse(iso + "T12:00:00") }
+const VENUES = [
+  {
+    name: "Rancho Jaramillo",
+    place: "Unionville, TN",
+    spec: "408 acres with 12 in use",
+    img: "/images/ranch/ppr-dusk.jpg",
+    href: "/events/pistonpoweredranch",
+    live: true,
+  },
+  {
+    name: "Encanto Blossom Orchard",
+    place: "Shelbyville, TN",
+    spec: "In scoping",
+    img: "/images/carrera-traffic.jpg",
+    href: "/encantoblossomorchard",
+    live: false,
+  },
+]
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
+const CLIP_LG = "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)"
+const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
+const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+
+function midday(iso: string) {
+  return Date.parse(iso + "T12:00:00")
+}
+function daysUntil(iso: string, now: number) {
+  const t = new Date(now)
+  const today = Date.parse(
+    `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}T00:00:00`,
+  )
+  return Math.round((Date.parse(iso + "T00:00:00") - today) / 86400000)
+}
 function countdown(iso: string, now: number) {
-  const days = Math.ceil((midday(iso) - now) / 86400000)
+  const days = daysUntil(iso, now)
   if (days > 1) return `in ${days} days`
   if (days === 1) return "tomorrow"
   if (days === 0) return "today"
   return "done"
 }
+function dateParts(iso: string) {
+  const d = new Date(midday(iso))
+  return { m: MONTHS[d.getMonth()], d: d.getDate(), y: d.getFullYear() }
+}
+
+function Tag({ children, bg = "#F2C94C", fg = "#101010" }: { children: React.ReactNode; bg?: string; fg?: string }) {
+  return (
+    <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: bg, padding: "6px 15px", alignSelf: "flex-start" }}>
+      <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: fg }}>
+        {children}
+      </span>
+    </span>
+  )
+}
+
+function Eyebrow({ children, color = "#00D2BE" }: { children: React.ReactNode; color?: string }) {
+  return <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color }}>{children}</span>
+}
+
+function SectionHead({ title, right }: { title: string; right: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", borderBottom: "1px solid rgba(255,255,255,.14)", paddingBottom: 10 }}>
+      <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3vw,32px)", letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>{title}</h2>
+      {right}
+    </div>
+  )
+}
 
 export default function EventsPage() {
   const [now, setNow] = useState(Date.now())
-  const [form, setForm] = useState({ name: "", reach: "", date: "", message: "" })
+  const [form, setForm] = useState({ name: "", reach: "", where: "", message: "" })
   const [status, setStatus] = useState<Status>("idle")
 
   useEffect(() => {
@@ -69,9 +194,9 @@ export default function EventsPage() {
     return () => clearInterval(t)
   }, [])
 
-  const update = (k: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setForm(f => ({ ...f, [k]: e.target.value }))
+  const update =
+    (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }))
 
   const submit = async () => {
     if (!form.name.trim() || !form.reach.trim() || status === "sending") return
@@ -80,7 +205,7 @@ export default function EventsPage() {
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: "book-the-floor", ...form, page: "events" }),
+        body: JSON.stringify({ kind: "venue-offer", ...form, page: "events" }),
       })
       setStatus(res.ok ? "sent" : "error")
     } catch {
@@ -88,21 +213,20 @@ export default function EventsPage() {
     }
   }
 
-  const dated = EVENTS.filter(e => e.date && midday(e.date) > now - 43200000)
-    .sort((a, b) => midday(a.date!) - midday(b.date!))
-  const next = dated[0]
-  const creatorIn = countdown("2026-09-19", now)
+  const next = UPCOMING.filter((e) => e.date && midday(e.date) > now - 43200000).sort(
+    (a, b) => midday(a.date!) - midday(b.date!),
+  )[0]
 
   const inputStyle: React.CSSProperties = {
     background: "rgba(10,21,35,.55)",
     border: "1px solid rgba(255,255,255,.24)",
     color: "#EDF1F6",
-    fontFamily: "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontFamily: ARCHIVO,
     fontSize: 16,
     padding: "13px 15px",
-    clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
+    clipPath: CLIP_SM,
     width: "100%",
-    boxSizing: "border-box" as const,
+    boxSizing: "border-box",
     outline: "none",
   }
 
@@ -112,253 +236,226 @@ export default function EventsPage() {
 
       <style>{`
         @keyframes pgPulse{0%,100%{opacity:1}50%{opacity:.3}}
-        @keyframes pgKb{from{transform:scale(1) translateY(0)}to{transform:scale(1.09) translateY(-1.6%)}}
+        @keyframes pgKb{from{transform:scale(1) translateY(0)}to{transform:scale(1.08) translateY(-1.5%)}}
+        .pgCard{transition:transform .22s cubic-bezier(.16,.84,.32,1)}
+        @media (hover:hover){.pgCard:hover{transform:translateY(-3px)}}
+        .pgShotImg{transition:transform .5s cubic-bezier(.16,.84,.32,1)}
+        @media (hover:hover){.pgShot:hover .pgShotImg{transform:scale(1.06)}}
+        @media (prefers-reduced-motion:reduce){
+          .pgCard,.pgShotImg{transition:none!important}
+          .pgCard:hover{transform:none!important}
+          [data-kb]{animation:none!important}
+        }
       `}</style>
 
-      {/* Fixed background */}
-      <div
-        aria-hidden="true"
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.24 }}>
-          <Image src="/images/donuts-lot.webp" alt="" fill style={{ objectFit: "cover" }} priority />
+      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
+        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
+          <Image src="/images/ranch/ppr-field.jpg" alt="" fill style={{ objectFit: "cover" }} priority />
         </div>
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.85),rgba(10,21,35,.95))",
-          }}
-        />
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.96))" }} />
       </div>
 
-      {/* Ticker bar */}
+      {/* Ticker */}
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)" }}>
-        <div
-          style={{
-            maxWidth: 1180, margin: "0 auto",
-            background: "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018))",
-            backdropFilter: "blur(26px) saturate(170%)",
-            WebkitBackdropFilter: "blur(26px) saturate(170%)",
-            border: "1px solid rgba(255,255,255,.12)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.16)",
-            clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
-            padding: "11px clamp(14px,2.4vw,22px)",
-            display: "flex", alignItems: "center", gap: "clamp(10px,2vw,18px)", overflow: "hidden",
-          }}
-        >
+        <div style={{ maxWidth: 1180, margin: "0 auto", background: "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018))", backdropFilter: "blur(26px) saturate(170%)", WebkitBackdropFilter: "blur(26px) saturate(170%)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.16)", clipPath: CLIP, padding: "11px clamp(14px,2.4vw,22px)", display: "flex", alignItems: "center", gap: "clamp(10px,2vw,18px)", overflow: "hidden" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
-            <i aria-hidden="true" style={{ width: 9, height: 9, borderRadius: "50%", background: "#F2C94C", animation: "pgPulse 2.2s ease-in-out infinite", flex: "0 0 auto", display: "block" }} />
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap" }}>
-              Next on the floor
-            </span>
+            <i aria-hidden="true" style={{ width: 9, height: 9, borderRadius: "50%", background: "#F2C94C", animation: "pgPulse 2.2s ease-in-out infinite", display: "block" }} />
+            <span style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap" }}>Next on the field</span>
           </span>
           <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 10 }} />
-          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#F2C94C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>
-            {next ? `${next.title} \u00b7 ${countdown(next.date!, now)}` : "Donuts with duPont \u00b7 date on Instagram"}
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#F2C94C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>
+            {next ? next.title : "Dates post here first"}
           </span>
-          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#00D2BE", fontVariantNumeric: "tabular-nums", flex: "0 0 auto", whiteSpace: "nowrap" }}>
-            {next ? countdown(next.date!, now) : ""}
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#00D2BE", fontVariantNumeric: "tabular-nums", flex: "0 0 auto", whiteSpace: "nowrap" }}>
+            {next?.date ? countdown(next.date, now) : ""}
           </span>
         </div>
       </div>
       <div aria-hidden="true" style={{ height: 52 }} />
 
-      <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
-
+      <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(18px,3vw,30px)" }}>
         {/* Hero */}
-        <section style={{ position: "relative", minHeight: "clamp(400px,58vh,580px)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-          <Image src="/images/donuts-overflow.webp" alt="The overflow lot filling up on a Donuts morning" fill style={{ objectFit: "cover", objectPosition: "center 88%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 8%,rgba(10,21,35,.34) 55%,rgba(10,21,35,.3) 100%)" }} />
-          <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 740 }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Events &middot; Lebanon, TN</span>
-            </span>
-            <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
-              Cars like these<br />
-              <span style={{ color: "#F2C94C" }}>are better shared</span>
+        <section style={{ position: "relative", minHeight: "clamp(400px,58vh,580px)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: CLIP_LG, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
+          <Image data-kb="" src="/images/ranch/ppr-hero.jpg" alt="Open pasture at Rancho Jaramillo before the field is set" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 8%,rgba(10,21,35,.4) 55%,rgba(10,21,35,.3) 100%)" }} />
+          <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
+            <Tag>Car events &middot; Middle Tennessee</Tag>
+            <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
+              Every field
+              <br />
+              <span style={{ color: "#F2C94C" }}>we open</span>
             </h1>
-            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.56, color: "#E4E9F0", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.8)" }}>
-              That&rsquo;s why we put something on duPont REGISTRY&rsquo;s floor every month &mdash; so you can stand next to the one you&rsquo;ve only seen on a screen, ask how it works, and bring whatever you drive. I&rsquo;m their events manager, so the calendar runs through me.
+            <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.56, color: "#E4E9F0", maxWidth: "58ch", textShadow: "0 1px 10px rgba(10,21,35,.8)" }}>
+              We produce collector car events in Middle Tennessee. Working ranches. Orchards. Showroom floors. What is booked runs at the top of this page. What already ran sits below. The properties we represent close it out.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <Link href="/donuts" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                Donuts with duPont
+              <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                The Piston Powered Ranch
               </Link>
-              <a href="#inquire" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", backdropFilter: "blur(8px)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                Book the floor
+              <a href="#property" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", backdropFilter: "blur(8px)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                Bring us a property
               </a>
             </div>
           </div>
         </section>
 
-        {/* Creator Day feature card */}
-        <section id="creator-day" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.1),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.3)", borderTop: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", isolation: "isolate", padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
-          <Image src="/images/cullinan-speedway.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.4, zIndex: -1 }} />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(160deg,rgba(14,26,42,.97) 0%,rgba(14,26,42,.9) 52%,rgba(14,26,42,.64) 100%)" }} />
-          <div style={{ flex: "6 1 320px", minWidth: 0, display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-              <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
-                <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Sep 19 &middot; Creator Day</span>
-              </span>
-              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00D2BE" }}>{creatorIn}</span>
-            </div>
-            <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(28px,4.4vw,48px)", lineHeight: 1, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
-              Golden hour to golden hour,{" "}<span style={{ color: "#F2C94C" }}>with the cars</span>
-            </h2>
-            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16.5px,1.6vw,18px)", lineHeight: 1.58, color: "#DFE5EC", maxWidth: "58ch" }}>
-              duPont REGISTRY sets up four to five installations with cars, and creators of every kind are invited. Shoot, film, paint, create &mdash; then post your best work.
-            </p>
-            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16.5px,1.6vw,18px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "58ch" }}>
-              duPont votes, and the winner takes a creator bundle from a leading brand plus a full day to create with a duPont car of their choice.
-            </p>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-              <Link href="/events/creator-day" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                Creator Day, the page
-              </Link>
-              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                or DM @PaddockGavin
-              </a>
-            </div>
+        {/* Coming up */}
+        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
+          <SectionHead title="Coming up" right={<Eyebrow>{UPCOMING.length} on the calendar</Eyebrow>} />
+
+          {UPCOMING.map((e) => {
+            const dp = e.date ? dateParts(e.date) : null
+            return (
+              <article key={e.key} className="pgCard" style={{ position: "relative", border: "1px solid rgba(255,255,255,.13)", borderTop: `3px solid ${e.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: CLIP_LG, overflow: "hidden", isolation: "isolate", display: "flex", flexWrap: "wrap", minHeight: 300 }}>
+                <Image src={e.img} alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.34, zIndex: -1 }} />
+                <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(150deg,rgba(14,26,42,.97) 0%,rgba(14,26,42,.9) 50%,rgba(14,26,42,.6) 100%)" }} />
+
+                <div style={{ flex: "0 0 auto", width: "clamp(112px,15vw,150px)", borderRight: "1px solid rgba(255,255,255,.12)", padding: "clamp(18px,2.4vw,26px) 10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: 2, background: "rgba(10,21,35,.35)" }}>
+                  {dp ? (
+                    <>
+                      <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: e.tone }}>{dp.m}</span>
+                      <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(38px,5.4vw,58px)", lineHeight: 1, color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{dp.d}</span>
+                      <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".16em", color: "#B4B6B2" }}>{dp.y}</span>
+                      <span style={{ marginTop: 8, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#00D2BE", textAlign: "center" }}>{countdown(e.date!, now)}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.2vw,32px)", lineHeight: 1, color: "#FFFFFF", textAlign: "center" }}>TBA</span>
+                      <span style={{ marginTop: 6, fontFamily: MONO, fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "#B4B6B2", textAlign: "center" }}>Date to be set</span>
+                    </>
+                  )}
+                </div>
+
+                <div style={{ flex: "1 1 320px", minWidth: 0, padding: "clamp(20px,2.8vw,32px)", display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    <Tag bg={e.state === "confirmed" ? "#F2C94C" : "#00D2BE"} fg={e.state === "confirmed" ? "#101010" : "#00302B"}>
+                      {e.stateLabel}
+                    </Tag>
+                    <Eyebrow color="#B4B6B2">
+                      {e.venue} &middot; {e.place}
+                    </Eyebrow>
+                  </div>
+                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.4vw,38px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>{e.title}</h3>
+                  <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "62ch" }}>{e.blurb}</p>
+                  <dl style={{ margin: "2px 0 0", display: "flex", gap: "clamp(16px,3vw,32px)", flexWrap: "wrap" }}>
+                    {[
+                      ["Hours", e.when],
+                      ["Entry", e.entry],
+                      ["How to come", e.register],
+                    ].map(([k, v]) => (
+                      <div key={k} style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                        <dt style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#848482" }}>{k}</dt>
+                        <dd style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, color: "#EDF1F6" }}>{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div style={{ marginTop: "auto", paddingTop: 14 }}>
+                    <Link href={e.href} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14.5, letterSpacing: ".05em", textTransform: "uppercase", background: e.state === "confirmed" ? "#F2C94C" : "transparent", color: e.state === "confirmed" ? "#101010" : "#EDF1F6", border: e.state === "confirmed" ? "1px solid #F2C94C" : "1px solid rgba(255,255,255,.34)", padding: "13px 24px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+                      {e.cta}
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </section>
+
+        {/* What already ran */}
+        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
+          <SectionHead title="What already ran" right={<Eyebrow color="#B4B6B2">The record</Eyebrow>} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: "clamp(12px,2vw,18px)" }}>
+            {PAST.map((e) => (
+              <article key={e.key} className="pgCard" style={{ position: "relative", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)", clipPath: CLIP, overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column", minHeight: 268 }}>
+                <Image src={e.img} alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.26, zIndex: -1 }} />
+                <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(160deg,rgba(14,26,42,.96),rgba(14,26,42,.88))" }} />
+                <div style={{ padding: "clamp(18px,2.4vw,24px)", display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
+                  <Eyebrow color="#848482">{e.stateLabel}</Eyebrow>
+                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(19px,2.2vw,23px)", lineHeight: 1.08, letterSpacing: "-.018em", textTransform: "uppercase", color: "#FFFFFF" }}>{e.title}</h3>
+                  <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C9D1DB" }}>{e.blurb}</p>
+                  <div style={{ marginTop: "auto", paddingTop: 12 }}>
+                    <Link href={e.href} style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none", borderBottom: "1px solid rgba(0,210,190,.45)", paddingBottom: 2 }}>
+                      {e.cta}
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
-          {/* 2x2 photo grid */}
-          <div style={{ flex: "4 1 240px", minWidth: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, alignContent: "center" }}>
-            {[
-              { src: "/images/creator-booth-alt.jpg", alt: "Shooting the Ford GT MkII in the studio", mt: 0 },
-              { src: "/images/cage-rig-sq.webp",       alt: "Caged race build on the floor",           mt: 18 },
-              { src: "/images/aston-wheel-sq.webp",    alt: "Aston Martin wheel, up close",            mt: 0 },
-              { src: "/images/f458-side-sq.webp",      alt: "Ferrari 458 side profile",                mt: 18 },
-            ].map((img, i) => (
-              <div key={i} style={{ aspectRatio: "1", overflow: "hidden", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", position: "relative", marginTop: img.mt }}>
-                <Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover" }} />
+        </section>
+
+        {/* Gallery */}
+        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
+          <SectionHead
+            title="The gallery"
+            right={
+              <Link href="/gallery" style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>
+                All of it
+              </Link>
+            }
+          />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))", gap: "clamp(8px,1.4vw,12px)" }}>
+            {GALLERY.map((g) => (
+              <div key={g.src} className="pgShot" style={{ position: "relative", aspectRatio: "4 / 3", overflow: "hidden", border: "1px solid rgba(255,255,255,.1)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)" }}>
+                <Image className="pgShotImg" src={g.src} alt={g.alt} fill sizes="(max-width:700px) 50vw, 25vw" style={{ objectFit: "cover" }} />
               </div>
             ))}
           </div>
         </section>
 
-        {/* Coming up */}
-        <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", padding: "6px 2px 0" }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#00D2BE", padding: "6px 16px" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Coming up</span>
-            </span>
-            <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>
-              {EVENTS.length} listed
-            </span>
-          </div>
-
-          {EVENTS.map((e) => {
-            const d = e.date ? new Date(midday(e.date)) : null
-            const mon = d ? MONTHS[d.getMonth()] : "Every"
-            const day = d ? String(d.getDate()) : "\u25CF"
-            const dow = d ? DOWS[d.getDay()] : "month"
-            const entryTone = e.entry === "Free" ? "#00D2BE" : "#F2C94C"
-            return (
-              <div key={e.key} style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch", gap: "clamp(14px,2.4vw,24px)", background: "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", backdropFilter: "blur(20px) saturate(155%)", WebkitBackdropFilter: "blur(20px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${e.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)" }}>
-                {/* Thumbnail */}
-                <div style={{ flex: "0 0 auto", width: "clamp(96px,14vw,150px)", alignSelf: "center" }}>
-                  <div style={{ aspectRatio: "1", overflow: "hidden", border: "1px solid rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%)", position: "relative" }}>
-                    <Image src={e.img} alt={e.title} fill style={{ objectFit: "cover" }} />
-                  </div>
+        {/* Venues */}
+        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
+          <SectionHead title="The properties we represent" right={<Eyebrow>Venues</Eyebrow>} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(12px,2vw,18px)" }}>
+            {VENUES.map((v) => (
+              <Link key={v.name} href={v.href} className="pgCard" style={{ position: "relative", minHeight: 210, border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, overflow: "hidden", isolation: "isolate", display: "flex", alignItems: "flex-end", textDecoration: "none" }}>
+                <Image src={v.img} alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.5, zIndex: -1 }} />
+                <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(to top,rgba(10,21,35,.96) 12%,rgba(10,21,35,.42) 100%)" }} />
+                <div style={{ padding: "clamp(16px,2.2vw,22px)", display: "flex", flexDirection: "column", gap: 6, width: "100%" }}>
+                  <Eyebrow color={v.live ? "#F2C94C" : "#B4B6B2"}>{v.place}</Eyebrow>
+                  <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(20px,2.4vw,26px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>{v.name}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".12em", textTransform: "uppercase", color: "#B4B6B2" }}>{v.spec}</span>
                 </div>
-                {/* Date column */}
-                <div style={{ flex: "0 0 auto", alignSelf: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 64 }}>
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: e.tone }}>{mon}</span>
-                  <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3vw,36px)", lineHeight: 1, color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{day}</span>
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>{dow}</span>
-                </div>
-                {/* Title / blurb */}
-                <div style={{ flex: "3 1 240px", minWidth: 0, alignSelf: "center", display: "flex", flexDirection: "column", gap: 8 }}>
-                  <h3 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "clamp(19px,2.2vw,26px)", letterSpacing: "-.016em", lineHeight: 1.12, color: "#FFFFFF" }}>{e.title}</h3>
-                  <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15.5, lineHeight: 1.52, color: "#C4CBD6", maxWidth: "52ch" }}>{e.blurb}</p>
-                </div>
-                {/* Meta + CTA */}
-                <div style={{ flex: "2 1 220px", minWidth: 0, alignSelf: "center", display: "flex", flexDirection: "column", gap: 8 }}>
-                  {[
-                    { label: "Time",  value: e.when, valueTone: "#EDF1F6" },
-                    { label: "Where", value: "Lebanon, TN", valueTone: "#EDF1F6" },
-                    { label: "Entry", value: e.entry, valueTone: entryTone },
-                  ].map(row => (
-                    <span key={row.label} style={{ display: "flex", alignItems: "baseline", gap: 9 }}>
-                      <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F", flex: "0 0 auto" }}>{row.label}</span>
-                      <i aria-hidden="true" style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.2)" }} />
-                      <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".1em", textTransform: "uppercase", color: row.valueTone, flex: "0 0 auto" }}>{row.value}</span>
-                    </span>
-                  ))}
-                  <div style={{ marginTop: 6 }}>
-                    <Link href={e.href} style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 13.5, letterSpacing: ".06em", textTransform: "uppercase", background: e.tone, color: "#101010", padding: "12px 20px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
-                      {e.cta}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </section>
-
-        {/* Full bleed — urus on deck */}
-        <section style={{ position: "relative", width: "100%", height: "clamp(340px,56vh,600px)", overflow: "hidden" }}>
-          <Image src="/images/ferrari-upperdeck.webp" alt="On the duPont REGISTRY Logistics deck, strapped and going" fill style={{ objectFit: "cover" }} />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,.12) 42%,rgba(10,21,35,.3) 100%)" }} />
-          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "0 clamp(12px,4vw,40px)" }}>
-            <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 0 20px", display: "flex", alignItems: "center", gap: 11 }}>
-              <i aria-hidden="true" style={{ width: 26, height: 3, background: "#F2C94C", flex: "0 0 auto", display: "block" }} />
-              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", lineHeight: 1.5, textTransform: "uppercase", color: "#EDF1F6", textShadow: "0 1px 10px rgba(10,21,35,.9)" }}>On the duPont REGISTRY Logistics deck, strapped and going</span>
-            </div>
+              </Link>
+            ))}
           </div>
         </section>
 
-        {/* Book the floor form */}
-        <section
-          id="inquire"
-          style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", isolation: "isolate", padding: "clamp(22px,3.2vw,34px)", scrollMarginTop: 150 }}
-        >
-          <Image src="/images/donuts-floor.webp" alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.2, zIndex: -1 }} />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(0,50,82,.6),rgba(0,40,66,.78))", zIndex: -1 }} />
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,40px)" }}>
-            <div style={{ flex: "4 1 280px", minWidth: 0, display: "flex", flexDirection: "column", gap: 14 }}>
-              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Private events &middot; your date</span>
-              <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.8vw,42px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch" }}>Your event, on duPont REGISTRY&rsquo;s floor</h2>
-              <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "50ch" }}>The room is duPont&rsquo;s, in Lebanon, and booking it out is part of my job. It&rsquo;s not just the room that makes it special &mdash; it&rsquo;s what&rsquo;s passing through while you&rsquo;re there. Send a date and I&rsquo;ll check it.</p>
-              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#FFFFFF", border: "1px solid rgba(255,255,255,.4)", padding: "13px 22px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>
-                Rather DM? @PaddockGavin
-              </a>
-            </div>
-            <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <label style={{ flex: "1 1 160px", display: "flex", flexDirection: "column", gap: 7 }}>
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Your name</span>
-                  <input type="text" value={form.name} onChange={update("name")} placeholder="Name" style={inputStyle} />
-                </label>
-                <label style={{ flex: "1 1 160px", display: "flex", flexDirection: "column", gap: 7 }}>
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>How I reach you</span>
-                  <input type="text" value={form.reach} onChange={update("reach")} placeholder="Phone, email or @handle" style={inputStyle} />
-                </label>
-                <label style={{ flex: "1 1 140px", display: "flex", flexDirection: "column", gap: 7 }}>
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>The date</span>
-                  <input type="text" value={form.date} onChange={update("date")} placeholder="When" style={inputStyle} />
-                </label>
-              </div>
-              <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-                <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>What it is</span>
-                <textarea rows={3} value={form.message} onChange={update("message")} placeholder="Headcount, the occasion, anything else" style={{ ...inputStyle, resize: "vertical", minHeight: 84, lineHeight: 1.5 }} />
-              </label>
-              <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+        {/* Bring us a property */}
+        <section id="property" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
+          <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            <Tag>Have ground</Tag>
+            <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.4vw,36px)", lineHeight: 1.03, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>
+              Bring us a property
+            </h2>
+            <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "50ch" }}>
+              A ranch, an orchard, an airfield, a floor. If it holds cars and people, tell us where it is. We handle curation, ticketing, marshals and the site plan.
+            </p>
+          </div>
+          <div style={{ flex: "4 1 280px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+            {status === "sent" ? (
+              <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 16, lineHeight: 1.5, color: "#00D2BE" }}>
+                Got it. We will come back to you at the address you left.
+              </p>
+            ) : (
+              <>
+                <input style={inputStyle} placeholder="Your name" value={form.name} onChange={update("name")} />
+                <input style={inputStyle} placeholder="Email or phone" value={form.reach} onChange={update("reach")} />
+                <input style={inputStyle} placeholder="Where is the property" value={form.where} onChange={update("where")} />
+                <textarea style={{ ...inputStyle, minHeight: 92, resize: "vertical" }} placeholder="Anything else" value={form.message} onChange={update("message")} />
+                {status === "error" && (
+                  <span style={{ fontFamily: ARCHIVO, fontSize: 14, color: "#F2994A" }}>That did not send. Try again, or email gavin@paddock20.com.</span>
+                )}
                 <button
-                  type="button"
                   onClick={submit}
-                  style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}
+                  disabled={status === "sending"}
+                  style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", border: "none", padding: "15px 26px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, clipPath: CLIP_SM }}
                 >
-                  {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
+                  {status === "sending" ? "Sending" : "Send it"}
                 </button>
-                <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4" }}>
-                  {status === "error" ? "Could not send \u2014 DM @PaddockGavin instead" : status === "sent" ? "Landed in my inbox" : "DM @PaddockGavin for a faster response"}
-                </span>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </section>
-
       </main>
 
       <SiteFooter />
