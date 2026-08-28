@@ -244,9 +244,9 @@ export default function PistonPoweredRanchPage() {
               October 10, 2026 &middot; Rancho Jaramillo &middot; Unionville, Tennessee
             </span>
             <h1 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.032em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch", ["--d" as string]: "90ms" }}>
-              The 12 most curated
+              Three hundred cars
               <br />
-              <span style={{ color: "#F2C94C" }}>acres in automotive</span>
+              <span style={{ color: "#F2C94C" }}>twelve curated acres</span>
             </h1>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(19px,2.6vw,26px)", lineHeight: 1.3, color: "#FFFFFF", maxWidth: "42ch", ["--d" as string]: "180ms" }}>
               Open to everyone, for one Saturday.
