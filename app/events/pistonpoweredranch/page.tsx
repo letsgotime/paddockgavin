@@ -354,7 +354,7 @@ export default function PistonPoweredRanchPage() {
               A share of every net dollar goes to Community Elementary School
             </h2>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "46ch", ["--d" as string]: "150ms" }}>
-              The school is down the road from the gate. That is the whole reason the field opens.
+              The school is down the road from the gate. A good day is better shared, so we open the field, look after the community that makes it possible, and come back and do it again.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", ["--d" as string]: "210ms" }}>
               <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
