@@ -65,7 +65,7 @@ const ACTS: Act[] = [
       },
       { head: "Not this time", tone: "#E5484D", items: ["Trucks", "SUVs"] },
     ],
-    cta: { label: "Send us your car", href: `${RANCH}/show` },
+    cta: { label: "How entry works", href: "/events/pistonpoweredranch/entry" },
   },
   {
     id: "vip",
@@ -97,7 +97,7 @@ const ACTS: Act[] = [
     img: "/images/cullinan-doors.webp",
     focal: "center 50%",
     tone: "#4BA3DE",
-    cta: { label: "Start the conversation", href: `${RANCH}/clubs` },
+    cta: { label: "Sponsor the day", href: "/events/pistonpoweredranch/sponsor" },
   },
 ]
 
@@ -299,7 +299,7 @@ export default function PistonPoweredRanchPage() {
                         )}
 
                         {a.cta && (
-                          <a href={a.cta.href} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 4, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: a.tone, color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                          <a href={a.cta.href} target={a.cta.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ alignSelf: "flex-start", marginTop: 4, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: a.tone, color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                             {a.cta.label}
                           </a>
                         )}
