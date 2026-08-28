@@ -4,11 +4,11 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "The Piston Powered Ranch — PaddockGavin",
   description:
-    "Three hundred curated cars on a working ranch. Saturday October 10 2026, 9:00 AM to 3:00 PM at Rancho Jaramillo in Unionville, Tennessee. Spectating is free, benefiting Community Elementary School.",
+    "The 12 most curated acres in automotive. Three hundred cars at Rancho Jaramillo in Unionville, Tennessee, an hour south of Nashville, on Saturday October 10 2026. Spectating is free, benefiting Community Elementary School.",
   openGraph: {
     title: "The Piston Powered Ranch — PaddockGavin",
     description:
-      "Three hundred curated cars on a working ranch. October 10 2026, Unionville TN. Spectating is free.",
+      "The 12 most curated acres in automotive. October 10 2026, an hour south of Nashville. Spectating is free.",
     url: "https://paddockgavin.com/events/pistonpoweredranch",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "The Piston Powered Ranch" }],
   },

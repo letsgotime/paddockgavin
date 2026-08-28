@@ -198,12 +198,15 @@ export default function PistonPoweredRanchPage() {
               October 10, 2026 &middot; Rancho Jaramillo &middot; Unionville, Tennessee
             </span>
             <h1 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.032em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch", ["--d" as string]: "90ms" }}>
-              Come stand
+              The 12 most curated
               <br />
-              <span style={{ color: "#F2C94C" }}>in the field</span>
+              <span style={{ color: "#F2C94C" }}>acres in automotive</span>
             </h1>
-            <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(17px,2.1vw,21px)", lineHeight: 1.5, color: "#E7ECF3", maxWidth: "42ch", ["--d" as string]: "180ms" }}>
-              Three hundred cars. One Tennessee ranch. A Saturday that ends at golden hour. Standing here costs nothing.
+            <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(19px,2.6vw,26px)", lineHeight: 1.3, color: "#FFFFFF", maxWidth: "42ch", ["--d" as string]: "180ms" }}>
+              Open to everyone, for one Saturday.
+            </p>
+            <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.55, color: "#C9D1DB", maxWidth: "44ch", ["--d" as string]: "220ms" }}>
+              Three hundred cars on a working ranch an hour south of Nashville. The day ends at golden hour. Standing here costs nothing.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
               <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -320,7 +323,7 @@ export default function PistonPoweredRanchPage() {
                 The land
               </span>
               <h2 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.6vw,50px)", lineHeight: 1.02, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch", ["--d" as string]: "80ms" }}>
-                The 12 most curated acres in automotive, at Rancho Jaramillo, an hour south of Nashville
+                Four hundred and eight acres. Twelve of them opened.
               </h2>
               <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "48ch", ["--d" as string]: "150ms" }}>
                 Four hundred and eight acres of working ranch in Unionville, Tennessee, and twelve of them opened for one Saturday. Not a venue dressed as a ranch. Cars turn in off Highway 41-A and follow the ranch road out to the pasture, and for one day the cattle have company.
