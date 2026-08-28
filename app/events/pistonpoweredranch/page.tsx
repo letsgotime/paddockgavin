@@ -74,7 +74,7 @@ const ACTS: Act[] = [
     title: "VIP turns a day on the ranch into a curated experience",
     lede: "Twenty seats in two rooms. Both are hosted. One goes further out.",
     body: [
-      "Every VIP seat comes with the hospitality: a shaded tent with the air kept moving, table service, your choice of whiskey, wine or dinner, and a meal from the Angus that graze this same pasture. A shirt and a hat you keep. The corral and the petting zoo for whoever you brought. Shaded photo areas and a step and repeat built for stills, video and live feeds.",
+      "Every VIP seat comes with the hospitality: a shaded tent with the air kept moving, table service, and a meal from the Angus that graze this same pasture. A shirt and a hat you keep. The corral and the petting zoo for whoever you brought. Shaded photo areas and a step and repeat built for stills, video and live feeds.",
       "The difference between the two is how far in you get.",
     ],
     img: "/images/ranch/ppr-dusk.jpg",
@@ -87,7 +87,7 @@ const ACTS: Act[] = [
         line: "The hosted room, on the rail above the show field.",
         items: [
           "Shaded tent, table service, air kept moving",
-          "Whiskey, wine or dinner, your choice",
+          "A bottle of whiskey, a bottle of wine, or dinner at Southall or Sinatra, arranged before you arrive",
           "A meal from the ranch's own Angus",
           "Commemorative shirt and hat",
           "Corral, petting zoo, and the photo areas",
