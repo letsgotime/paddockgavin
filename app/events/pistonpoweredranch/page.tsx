@@ -39,9 +39,9 @@ const ACTS: Act[] = [
     title: "You do not need a car to belong here",
     lede: "Gates open at nine and close at three, and everything between is yours.",
     body: [
-      "Rows you can walk slowly. Engines you hear before you see. A field wide enough that nobody is standing in your photograph.",
+      "Spectator admission is complimentary. Rows you can walk slowly, engines you hear before you see, and a field wide enough that nobody is standing in your photograph.",
       "Bring the children. Bring your mother. Bring whoever you have been meaning to take somewhere.",
-      "Tell us you are coming so we know how much shade to put up.",
+      "Turn in off Highway 41-A and the marshals will wave you down the ranch road to the pasture. Tell us you are coming so we know how much shade to put up.",
     ],
     img: "/images/ranch/ppr-walk.jpg",
     focal: "center 55%",
@@ -206,7 +206,7 @@ export default function PistonPoweredRanchPage() {
               Open to everyone, for one Saturday.
             </p>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.55, color: "#C9D1DB", maxWidth: "44ch", ["--d" as string]: "220ms" }}>
-              The curation of a concours lawn, on ground that still runs cattle. Three hundred cars an hour south of Nashville, and the day ends at golden hour. Standing here costs nothing.
+              The curation of a concours lawn, on ground that still runs cattle. Three hundred collector cars across twelve acres, an hour south of Nashville.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
               <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
