@@ -30,8 +30,9 @@ export default function Page() {
         { t: "Power and water", b: "What you need on site so we can place you properly." },
         { t: "Who is working it", b: "How many people will be behind the table." },
       ]}
-      closeLine="Tell us what you sell. We will tell you where you fit."
-      cta={{ label: "Apply for a space", href: "/connect" }}
+      form={{ kind: "vendor-application", head: "Tell us what you sell. We will tell you where you fit.", orgLabel: "Business name", askLabel: "What you sell, the footprint you need, power and water, and how many are working it" }}
+      closeLine="Every enquiry is answered."
+      cta={{ label: "Apply for a space", href: "#apply" }}
     />
   )
 }

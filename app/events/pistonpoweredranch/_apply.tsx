@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -30,7 +30,10 @@ export type ApplyProps = {
   cta: { label: string; href: string }
   note?: string
   closeLine: string
+  form?: { kind: string; head: string; orgLabel: string; askLabel: string }
 }
+
+type Status = "idle" | "sending" | "sent" | "error"
 
 export function ApplyPage(p: ApplyProps) {
   useEffect(() => {
@@ -148,6 +151,8 @@ export function ApplyPage(p: ApplyProps) {
           </div>
         </section>
 
+        {p.form && <ApplyForm tone={p.tone} form={p.form} />}
+
         <section style={{ position: "relative" }}>
           <div className="pgBand" aria-hidden="true">
             <Image src={p.closeImg} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
@@ -178,5 +183,92 @@ export function ApplyPage(p: ApplyProps) {
       </main>
       <SiteFooter />
     </>
+  )
+}
+
+function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps["form"]> }) {
+  const [f, setF] = useState({ name: "", org: "", reach: "", message: "" })
+  const [status, setStatus] = useState<Status>("idle")
+
+  const up = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setF((x) => ({ ...x, [k]: e.target.value }))
+
+  const send = async () => {
+    if (!f.name.trim() || !f.reach.trim() || status === "sending") return
+    setStatus("sending")
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: form.kind, ...f, page: "piston-powered-ranch" }),
+      })
+      setStatus(res.ok ? "sent" : "error")
+    } catch {
+      setStatus("error")
+    }
+  }
+
+  const input: React.CSSProperties = {
+    background: "rgba(10,21,35,.6)",
+    border: "1px solid rgba(255,255,255,.22)",
+    color: "#EDF1F6",
+    fontFamily: ARCHIVO,
+    fontSize: 16,
+    padding: "14px 16px",
+    clipPath: CLIP_SM,
+    width: "100%",
+    boxSizing: "border-box",
+    outline: "none",
+  }
+
+  return (
+    <section id="apply" style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,9vh,96px)", scrollMarginTop: 110 }}>
+      <div
+        data-r=""
+        style={{
+          border: "1px solid rgba(255,255,255,.13)",
+          borderTop: `3px solid ${tone}`,
+          background: "rgba(21,37,56,.55)",
+          clipPath: CLIP,
+          padding: "clamp(22px,4vw,40px)",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "clamp(20px,3vw,36px)",
+        }}
+      >
+        <div style={{ flex: "4 1 260px", minWidth: 0 }}>
+          <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.2vw,32px)", lineHeight: 1.05, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            {form.head}
+          </h2>
+        </div>
+        <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+          {status === "sent" ? (
+            <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 17, lineHeight: 1.5, color: "#00D2BE" }}>
+              Received. We answer every one of these, and you will hear from us at what you left.
+            </p>
+          ) : (
+            <>
+              <input style={input} placeholder="Your name" value={f.name} onChange={up("name")} />
+              <input style={input} placeholder={form.orgLabel} value={f.org} onChange={up("org")} />
+              <input style={input} placeholder="Email or phone" value={f.reach} onChange={up("reach")} />
+              <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />
+              {status === "error" && (
+                <span style={{ fontFamily: ARCHIVO, fontSize: 14, color: "#F2994A" }}>
+                  That did not send. Try again, or email gavin@paddock20.com.
+                </span>
+              )}
+              <button
+                onClick={send}
+                disabled={status === "sending"}
+                className="pgGo"
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", border: "none", padding: "16px 28px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? .6 : 1, clipPath: CLIP_SM }}
+              >
+                {status === "sending" ? "Sending" : "Send it"}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
   )
 }

@@ -30,6 +30,7 @@ type Act = {
   cta?: { label: string; href: string }
   lists?: { head: string; items: string[]; tone: string }[]
   grid?: { t: string; b: string }[]
+  tiers?: { name: string; tone: string; line: string; items: string[] }[]
 }
 
 const ACTS: Act[] = [
@@ -71,22 +72,41 @@ const ACTS: Act[] = [
     id: "vip",
     kicker: "If you would rather be looked after",
     title: "VIP turns a day on the ranch into a curated experience",
-    lede: "Twenty seats, for people who would rather experience the day than attend it.",
-    body: [],
+    lede: "Twenty seats in two rooms. Both are hosted. One goes further out.",
+    body: [
+      "Every VIP seat comes with the hospitality: a shaded tent with the air kept moving, table service, your choice of whiskey, wine or dinner, and a meal from the Angus that graze this same pasture. A shirt and a hat you keep. The corral and the petting zoo for whoever you brought. Shaded photo areas and a step and repeat built for stills, video and live feeds.",
+      "The difference between the two is how far in you get.",
+    ],
     img: "/images/ranch/ppr-dusk.jpg",
     focal: "center 60%",
     tone: "#F2C94C",
-    grid: [
-      { t: "Whiskey, wine, or dinner", b: "Your choice, and it is waiting when you arrive." },
-      { t: "Table service", b: "Under a shaded tent, with the air kept moving." },
-      { t: "Raised on this ground", b: "A meal from the Angus that graze the same pasture." },
-      { t: "Someone who stays with you", b: "A concierge from the ranch, to answer what you ask and book the day you want next." },
-      { t: "The quiet ride out", b: "Golf cart or hay ride to a place the crowd never finds, where the pictures are better and Oscar has time to talk." },
-      { t: "Corral and petting zoo", b: "Horses and a small menagerie, for the people who brought children." },
-      { t: "Made for cameras", b: "Shaded photo areas and a step and repeat, built for stills, video and live feeds." },
-      { t: "The small things", b: "Hay rides behind a horse all day. Hay straws in the cocktails. A shirt and hat you keep." },
+    tiers: [
+      {
+        name: "The Terrace",
+        tone: "#00D2BE",
+        line: "The hosted room, on the rail above the show field.",
+        items: [
+          "Shaded tent, table service, air kept moving",
+          "Whiskey, wine or dinner, your choice",
+          "A meal from the ranch's own Angus",
+          "Commemorative shirt and hat",
+          "Corral, petting zoo, and the photo areas",
+        ],
+      },
+      {
+        name: "The Owner's Table",
+        tone: "#F2C94C",
+        line: "Everything on The Terrace, and the part of the ranch the crowd never reaches.",
+        items: [
+          "The quiet ride out by golf cart or hay ride",
+          "A place the crowd never finds, for the pictures",
+          "Time with Oscar, away from the noise",
+          "A concierge from the ranch who stays with you",
+          "Hay rides behind a horse, hay straws in the cocktails",
+        ],
+      },
     ],
-    cta: { label: "Ask about the twenty seats", href: `${RANCH}/show` },
+    cta: { label: "Ask about the twenty seats", href: "/events/pistonpoweredranch/sponsor" },
   },
   {
     id: "visit",
@@ -308,6 +328,25 @@ export default function PistonPoweredRanchPage() {
                                 {l.items.map((it) => (
                                   <span key={it} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(14.5px,1.5vw,16px)", color: "#EDF1F6" }}>{it}</span>
                                 ))}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {a.tiers && (
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: 14 }}>
+                            {a.tiers.map((t) => (
+                              <div key={t.name} className="pgTile" style={{ border: `1px solid ${t.tone}3d`, borderTop: `3px solid ${t.tone}`, background: "rgba(10,21,35,.55)", clipPath: CLIP_SM, padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
+                                <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(19px,2.3vw,24px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: t.tone }}>{t.name}</span>
+                                <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#E7ECF3" }}>{t.line}</span>
+                                <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
+                                  {t.items.map((it) => (
+                                    <li key={it} style={{ fontFamily: ARCHIVO, fontSize: 14, lineHeight: 1.45, color: "#C4CCD6", paddingLeft: 14, position: "relative" }}>
+                                      <span aria-hidden="true" style={{ position: "absolute", left: 0, top: 8, width: 5, height: 5, borderRadius: "50%", background: t.tone }} />
+                                      {it}
+                                    </li>
+                                  ))}
+                                </ul>
                               </div>
                             ))}
                           </div>
