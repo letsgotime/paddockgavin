@@ -206,7 +206,7 @@ export default function PistonPoweredRanchPage() {
               Open to everyone, for one Saturday.
             </p>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.55, color: "#C9D1DB", maxWidth: "44ch", ["--d" as string]: "220ms" }}>
-              Three hundred cars on a working ranch an hour south of Nashville. The day ends at golden hour. Standing here costs nothing.
+              The curation of a concours lawn, on ground that still runs cattle. Three hundred cars an hour south of Nashville, and the day ends at golden hour. Standing here costs nothing.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
               <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
