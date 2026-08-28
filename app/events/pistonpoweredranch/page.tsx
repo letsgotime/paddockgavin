@@ -320,10 +320,10 @@ export default function PistonPoweredRanchPage() {
                 The land
               </span>
               <h2 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.6vw,50px)", lineHeight: 1.02, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch", ["--d" as string]: "80ms" }}>
-                Four hundred and eight acres. Twelve of them opened.
+                The 12 most curated acres in automotive, at Rancho Jaramillo, an hour south of Nashville
               </h2>
               <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "48ch", ["--d" as string]: "150ms" }}>
-                Rancho Jaramillo is a working ranch in Bedford County, not a venue dressed as one. Cars turn in off Highway 41-A and follow the ranch road out to the pasture, and for one Saturday the cattle have company.
+                Four hundred and eight acres of working ranch in Unionville, Tennessee, and twelve of them opened for one Saturday. Not a venue dressed as a ranch. Cars turn in off Highway 41-A and follow the ranch road out to the pasture, and for one day the cattle have company.
               </p>
               <div data-r="" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(148px,1fr))", gap: 12, marginTop: 6, ["--d" as string]: "210ms" }}>
                 {[
