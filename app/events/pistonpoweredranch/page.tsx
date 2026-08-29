@@ -213,6 +213,15 @@ export default function PistonPoweredRanchPage() {
         [data-r]{opacity:0;transform:translate3d(0,26px,0)}
         [data-r].in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms),transform .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms)}
         .pgBand{position:sticky;top:0;height:100svh;overflow:hidden}
+        .pgTeaser{display:grid;grid-template-columns:minmax(300px,360px) 1fr;gap:clamp(20px,3vw,38px);align-items:center}
+        .pgTeaserFilm{position:relative;aspect-ratio:9/16;overflow:hidden;background:#0A1523;border:1px solid rgba(255,255,255,.14);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+        .pgTeaserSay{display:flex;flex-direction:column;min-width:0}
+        .pgTeaserFacts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+        @media (max-width:980px){
+          .pgTeaser{grid-template-columns:1fr;gap:24px}
+          .pgTeaserFilm{max-width:min(78vw,340px);margin:0 auto;width:100%}
+          .pgTeaserFacts{grid-template-columns:1fr;gap:14px}
+        }
         .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center}
         .pgOpen{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;transition:grid-template-rows .6s cubic-bezier(.16,.84,.32,1),opacity .45s ease}
         .pgOpen.on{grid-template-rows:1fr;opacity:1}
@@ -279,59 +288,72 @@ export default function PistonPoweredRanchPage() {
             lands: drop teaser.mp4 into public/video and it plays. Until it is
             there the poster carries the block on its own, so the page is never
             broken by a missing file. */}
-        <section id="teaser" style={{ position: "relative", background: "#0A1523", padding: "clamp(56px,10vh,120px) 0" }}>
-          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
+        {/* The film is 9:16, shot on a phone. In a 1180px container that always
+            leaves space beside it, so the space has to carry something: the
+            ranch is behind the whole block rather than flat navy, and the right
+            column holds the copy, the three facts and the way in. It is a real
+            grid, not flex-wrap, so the desktop and phone layouts are each
+            designed rather than one being a side effect of the other. */}
+        <section id="teaser" style={{ position: "relative", overflow: "hidden", padding: "clamp(56px,10vh,120px) 0" }}>
+          <Image src="/images/ranch/ppr-light.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 42%" }} />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(10,21,35,.9) 0%,rgba(10,21,35,.72) 40%,rgba(10,21,35,.94) 100%)" }} />
+          <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
             <div
               data-r=""
+              className="pgTeaser"
               style={{
-                background: "rgba(10,21,35,.58)",
+                background: "rgba(10,21,35,.5)",
                 backdropFilter: "blur(30px) saturate(180%)",
                 WebkitBackdropFilter: "blur(30px) saturate(180%)",
                 border: "1px solid rgba(255,255,255,.16)",
                 borderTop: "3px solid #F2C94C",
                 boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
                 clipPath: CLIP,
-                padding: "clamp(20px,3.4vw,34px)",
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
+                padding: "clamp(20px,3.2vw,34px)",
               }}
             >
-              <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
-                One Saturday in October
-              </span>
-              <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
-                The ground it happens on
-              </h2>
-              {/* The film is 720x1280 portrait, shot on a phone, so the block is
-                  built around that shape rather than letterboxing it into a
-                  16:9 frame. On a wide screen it sits beside the copy; on a
-                  phone it stacks. */}
-              <div style={{ display: "flex", gap: "clamp(16px,3vw,30px)", alignItems: "center", flexWrap: "wrap" }}>
-                <div style={{ position: "relative", flex: "0 1 300px", aspectRatio: "9 / 16", maxHeight: "70vh", overflow: "hidden", clipPath: CLIP_SM, background: "#0A1523", border: "1px solid rgba(255,255,255,.14)" }}>
-                  {TEASER ? (
-                    <video
-                      src={TEASER}
-                      poster="/images/ranch/ppr-rail.jpg"
-                      controls
-                      playsInline
-                      preload="none"
-                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                    />
-                  ) : (
-                    <Image
-                      src="/images/ranch/ppr-rail.jpg"
-                      alt="A bay looking out over the pallet rail at Rancho Jaramillo, late afternoon"
-                      fill
-                      sizes="300px"
-                      style={{ objectFit: "cover", objectPosition: "center 38%" }}
-                    />
-                  )}
-                </div>
-                <p style={{ flex: "1 1 300px", margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.62, color: "#C9D1DB", maxWidth: "44ch" }}>
-                  Rancho Jaramillo is a working cattle ranch. For one Saturday in October, twelve
-                  acres of it hold three hundred collector cars, and the gate is open to everyone.
+              <div className="pgTeaserFilm">
+                {TEASER ? (
+                  <video
+                    src={TEASER}
+                    poster="/images/ranch/ppr-rail.jpg"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                ) : (
+                  <Image src="/images/ranch/ppr-rail.jpg" alt="A bay looking out over the pallet rail at Rancho Jaramillo" fill sizes="(max-width:860px) 100vw, 360px" style={{ objectFit: "cover", objectPosition: "center 38%" }} />
+                )}
+              </div>
+
+              <div className="pgTeaserSay">
+                <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
+                  One Saturday in October
+                </span>
+                <h2 style={{ margin: "10px 0 0", fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF" }}>
+                  The ground it<br />happens on
+                </h2>
+                <p style={{ margin: "16px 0 0", fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.62, color: "#C9D1DB", maxWidth: "46ch" }}>
+                  Rancho Jaramillo is a working cattle ranch, four hundred and eight acres of it,
+                  an hour south of Nashville. For one Saturday in October, twelve of those acres
+                  hold three hundred collector cars, and the gate is open to everyone.
                 </p>
+                <div className="pgTeaserFacts">
+                  {[
+                    ["Saturday, October 10", "Gates at nine, field clear by three"],
+                    ["Three hundred cars", "Chosen one at a time"],
+                    ["Complimentary", "Spectators, no ticket needed"],
+                  ].map(([t, b]) => (
+                    <div key={t}>
+                      <b style={{ display: "block", fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(14.5px,1.5vw,16px)", color: "#FFFFFF", letterSpacing: "-.01em" }}>{t}</b>
+                      <span style={{ display: "block", marginTop: 3, fontFamily: ARCHIVO, fontSize: 13.5, lineHeight: 1.45, color: "#9BA7B5" }}>{b}</span>
+                    </div>
+                  ))}
+                </div>
+                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                  Tell us you are coming
+                </a>
               </div>
             </div>
           </div>
