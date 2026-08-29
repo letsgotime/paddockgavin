@@ -11,6 +11,10 @@ import { SiteFooter } from "@/components/site-footer"
    were removed. No price or date appears here that has not been confirmed. */
 
 const RANCH = "https://piston-powered-ranch.vercel.app"
+
+// Set to "/video/teaser.mp4" the day the film is in public/video. While it is
+// null the block shows the photograph on its own, with no player chrome.
+const TEASER: string | null = null
 const SHOW_DAY = "2026-10-10"
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -298,16 +302,30 @@ export default function PistonPoweredRanchPage() {
               <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
                 The ground it happens on
               </h2>
+              {/* A still is a still. Rendering a <video> with only a poster gives
+                  the viewer player chrome and 00:00 over a photograph, which reads
+                  as a video that will not play. The film gets its own element the
+                  day the file exists, and not before. */}
               <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden", clipPath: CLIP_SM, background: "#0A1523" }}>
-                <video
-                  poster="/images/ranch/ppr-rail.jpg"
-                  controls
-                  playsInline
-                  preload="none"
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                >
-                  <source src="/video/teaser.mp4" type="video/mp4" />
-                </video>
+                {TEASER ? (
+                  <video
+                    poster="/images/ranch/ppr-rail.jpg"
+                    controls
+                    playsInline
+                    preload="none"
+                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  >
+                    <source src={TEASER} type="video/mp4" />
+                  </video>
+                ) : (
+                  <Image
+                    src="/images/ranch/ppr-rail.jpg"
+                    alt="A bay looking out over the pallet rail at Rancho Jaramillo, late afternoon"
+                    fill
+                    sizes="(max-width: 1180px) 100vw, 1180px"
+                    style={{ objectFit: "cover", objectPosition: "center 38%" }}
+                  />
+                )}
               </div>
               <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(14.5px,1.6vw,17px)", lineHeight: 1.6, color: "#C9D1DB", maxWidth: "56ch" }}>
                 Rancho Jaramillo is a working cattle ranch. For one Saturday in October, twelve acres
