@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import VisitOps from "./VisitOps"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -390,7 +391,9 @@ export default function PistonPoweredRanchPage() {
                           </p>
                         ))}
 
-                        {a.lists && (
+                        {a.id === "visit" ? (
+                          <VisitOps />
+                        ) : a.lists ? (
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                             {a.lists.map((l) => (
                               <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -401,7 +404,7 @@ export default function PistonPoweredRanchPage() {
                               </div>
                             ))}
                           </div>
-                        )}
+                        ) : null}
 
                         {a.tiers && (
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: 14 }}>
