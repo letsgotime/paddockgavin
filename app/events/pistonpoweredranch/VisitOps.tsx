@@ -3,37 +3,52 @@
 import { useEffect, useState } from "react"
 
 /**
- * The visit panel. It replaced two boxes of bulleted text that carried no live
- * data and nothing anyone could act on.
+ * The visit panel, rebuilt in the instrument language /show uses.
  *
- * Everything here is real: the address is the one on the deed, the gate
- * coordinates are the surveyed turn in off Highway 41-A, and the weather comes
- * from the National Weather Service grid the ranch actually sits in. Nothing
- * is estimated, and when a source is silent the row says so rather than
- * showing a plausible number.
+ * The first version was label and value rows, which read like a spreadsheet.
+ * This is the pattern from the ranch site: the number leads at display size,
+ * the label supports it underneath, and a bar carries the one thing a number
+ * alone cannot show, which is how far through something we are.
+ *
+ * Every value is real. The address is the one on the deed, the coordinates are
+ * the surveyed turn in off Highway 41-A, and the weather is the National
+ * Weather Service grid the ranch sits in. When a source is silent the card
+ * says so rather than showing a plausible number.
  */
 
 const ADDRESS = "179 Enon Church Rd, Unionville, TN 37180"
 const GATE = { lat: 35.63751, lng: -86.59323 }
 const SHOW = "2026-10-10T09:00:00-05:00"
-// The grid the ranch falls in. Resolved once from api.weather.gov/points and
-// pinned, because the lookup is a second round trip for a value that never
-// changes.
+const ANNOUNCE = "2026-08-26T00:00:00-05:00" // the run up, for the progress bar
 const NWS_FORECAST = "https://api.weather.gov/gridpoints/OHX/59,34/forecast"
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace"
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const CLIP = "polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))"
 
-type Period = { name: string; startTime: string; temperature: number; temperatureUnit: string; shortForecast: string; probabilityOfPrecipitation?: { value: number | null } }
+type Period = { name: string; startTime: string; temperature: number; temperatureUnit: string; shortForecast: string }
 
-function Row({ label, value, sub, tone }: { label: string; value: React.ReactNode; sub?: string; tone?: string }) {
+function Card({ tone, value, unit, label, sub, fill, ring }: {
+  tone: string; value: string; unit?: string; label: string; sub?: string; fill?: number; ring?: boolean
+}) {
   return (
-    <div style={{ display: "flex", alignItems: "baseline", gap: 14, padding: "11px 0", borderBottom: "1px solid rgba(255,255,255,.09)" }}>
-      <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "#8E9AA8", flex: "0 0 116px" }}>{label}</span>
-      <span style={{ flex: 1, minWidth: 0 }}>
-        <span style={{ display: "block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(14.5px,1.5vw,16.5px)", color: tone || "#EDF1F6", fontVariantNumeric: "tabular-nums" }}>{value}</span>
-        {sub ? <span style={{ display: "block", marginTop: 2, fontFamily: ARCHIVO, fontSize: 13, color: "#9BA7B5", lineHeight: 1.45 }}>{sub}</span> : null}
-      </span>
+    <div style={{
+      position: "relative", overflow: "hidden", padding: "20px 22px 18px", clipPath: CLIP,
+      background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+      border: "1px solid rgba(255,255,255,.12)", borderTop: `3px solid ${tone}`,
+    }}>
+      {ring ? <span aria-hidden="true" className="pgRing" style={{ borderColor: `${tone}28` }} /> : null}
+      <div style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 38, lineHeight: 1, letterSpacing: "-.03em", color: "#fff", fontVariantNumeric: "tabular-nums" }}>
+        {value}
+        {unit ? <span style={{ fontSize: 16, fontWeight: 700, color: "#9BA7B5", marginLeft: 6 }}>{unit}</span> : null}
+      </div>
+      <div style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#9BA7B5", fontWeight: 600, marginTop: 8 }}>{label}</div>
+      {sub ? <div style={{ fontFamily: ARCHIVO, fontSize: 13, lineHeight: 1.45, color: "#C9D1DB", marginTop: 6 }}>{sub}</div> : null}
+      {typeof fill === "number" ? (
+        <div style={{ height: 5, borderRadius: 999, background: "rgba(255,255,255,.1)", marginTop: 12, overflow: "hidden" }}>
+          <span style={{ display: "block", height: "100%", width: `${Math.max(0, Math.min(100, fill))}%`, borderRadius: 999, background: "linear-gradient(90deg,#3D8FD6,#00D2BE)", transition: "width 1.2s cubic-bezier(.16,.84,.32,1)" }} />
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -46,15 +61,11 @@ export default function VisitOps() {
 
   useEffect(() => {
     setNow(Date.now())
-    const t = setInterval(() => setNow(Date.now()), 1000)
+    const t = setInterval(() => setNow(Date.now()), 30000)
     return () => clearInterval(t)
   }, [])
 
   useEffect(() => {
-    // The forecast only reaches seven days out, so for most of the run up this
-    // is the ranch's weather today rather than the weather on show day. The
-    // label says which, because implying we know October's weather in August
-    // would be a lie.
     const ctl = new AbortController()
     const timer = setTimeout(() => ctl.abort(), 6000)
     fetch(NWS_FORECAST, { signal: ctl.signal, headers: { Accept: "application/geo+json" } })
@@ -71,12 +82,11 @@ export default function VisitOps() {
   }, [])
 
   const gates = new Date(SHOW).getTime()
-  const ms = now === null ? null : gates - now
-  const d = ms === null ? null : Math.floor(ms / 864e5)
-  const h = ms === null ? null : Math.floor((ms % 864e5) / 36e5)
-  const m = ms === null ? null : Math.floor((ms % 36e5) / 6e4)
-
+  const start = new Date(ANNOUNCE).getTime()
+  const days = now === null ? null : Math.max(0, Math.ceil((gates - now) / 864e5))
+  const elapsed = now === null ? 0 : ((now - start) / (gates - start)) * 100
   const isShowDay = wx?.startTime?.slice(0, 10) === "2026-10-10"
+
   const maps = {
     google: `https://www.google.com/maps/dir/?api=1&destination=${GATE.lat},${GATE.lng}`,
     apple: `https://maps.apple.com/?daddr=${GATE.lat},${GATE.lng}&dirflg=d`,
@@ -86,64 +96,62 @@ export default function VisitOps() {
   async function copyAddress() {
     try {
       await navigator.clipboard.writeText(ADDRESS)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
-    } catch { /* clipboard refused; the address is on screen either way */ }
+      setCopied(true); setTimeout(() => setCopied(false), 1800)
+    } catch { /* clipboard refused; the address is on screen anyway */ }
   }
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 14 }}>
-      {/* the clock */}
-      <div style={{ border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: "polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))", padding: "18px 20px" }}>
-        <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#F2C94C" }}>Gates open in</span>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: 10, minHeight: 46 }}>
-          {d === null ? (
-            <span style={{ fontFamily: MONO, fontSize: 13, color: "#8E9AA8" }}>counting…</span>
-          ) : (
-            <>
-              <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 42, lineHeight: 1, letterSpacing: "-.03em", color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{d}</span>
-              <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "#9BA7B5" }}>days</span>
-              <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 22, lineHeight: 1, color: "#E7ECF3", fontVariantNumeric: "tabular-nums", marginLeft: 4 }}>{String(h).padStart(2, "0")}:{String(m).padStart(2, "0")}</span>
-            </>
-          )}
-        </div>
-        <div style={{ marginTop: 14 }}>
-          <Row label="The day" value="Saturday, October 10, 2026" />
-          <Row label="Gates" value="Nine in the morning" sub="Field clear by three" />
-          <Row label="Admission" value="Complimentary" sub="Spectators, no ticket needed" tone="#00D2BE" />
-        </div>
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+      <style>{`
+        .pgRing{position:absolute;right:-8px;bottom:-8px;width:74px;height:74px;border-radius:50%;border:2px solid;pointer-events:none}
+        .pgRing::before{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(0,210,190,.14);border-top-color:rgba(0,210,190,.55)}
+        @media (prefers-reduced-motion: no-preference){.pgRing::before{animation:pgSpin 9s linear infinite}}
+        @keyframes pgSpin{to{transform:rotate(360deg)}}
+        .pgTele{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+        .pgFind{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+        @media (max-width:720px){.pgFind{grid-template-columns:1fr;align-items:start}}
+      `}</style>
+
+      <div className="pgTele">
+        <Card tone="#F2C94C" value={days === null ? "—" : String(days)} unit={days === 1 ? "day" : "days"}
+              label="Until the gates" sub="Saturday, October 10, 2026" fill={elapsed} ring />
+        <Card tone="#00D2BE" value="9—3" label="Gates open" sub="Nine in the morning, field clear by three" />
+        <Card tone="#4BA3DE" value="300" label="Cars on the field" sub="Chosen one at a time" />
+        <Card
+          tone={wxState === "ok" ? "#B4B6B2" : "#5B6672"}
+          value={wxState === "ok" && wx ? `${wx.temperature}°` : wxState === "loading" ? "··" : "—"}
+          unit={wxState === "ok" && wx ? wx.temperatureUnit : undefined}
+          label={isShowDay ? "Show day forecast" : "At the ranch now"}
+          sub={
+            wxState === "ok" && wx ? wx.shortForecast
+            : wxState === "loading" ? "Reading the National Weather Service"
+            : "The National Weather Service did not answer"
+          }
+        />
       </div>
 
-      {/* finding it */}
-      <div style={{ border: "1px solid rgba(0,210,190,.26)", borderTop: "3px solid #00D2BE", background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: "polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))", padding: "18px 20px" }}>
-        <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#00D2BE" }}>Finding it</span>
-        <div style={{ marginTop: 10 }}>
-          <Row label="Address" value={ADDRESS} sub="Rancho Jaramillo, Bedford County" />
-          <Row label="The gate" value={`${GATE.lat}, ${GATE.lng}`} sub="Turn in off Highway 41-A, then the ranch road" />
-          <Row label="From Nashville" value="About an hour south" />
-          <Row
-            label={isShowDay ? "Show day" : "At the ranch"}
-            value={
-              wxState === "ok" && wx ? `${wx.temperature}°${wx.temperatureUnit} · ${wx.shortForecast}` :
-              wxState === "loading" ? "reading…" : "weather unavailable"
-            }
-            sub={
-              wxState === "ok" && wx
-                ? (isShowDay ? "National Weather Service forecast for October 10" : "Conditions now. The October 10 forecast appears once it is inside the seven day window.")
-                : wxState === "down" ? "The National Weather Service did not answer" : undefined
-            }
-            tone={wxState === "ok" ? "#EDF1F6" : "#9BA7B5"}
-          />
-        </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 14 }}>
-          {([["Google Maps", maps.google], ["Waze", maps.waze], ["Apple Maps", maps.apple]] as const).map(([label, href]) => (
-            <a key={label} href={href} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, letterSpacing: ".04em", color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "9px 15px", textDecoration: "none" }}>
-              {label}
-            </a>
-          ))}
-          <button onClick={copyAddress} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, letterSpacing: ".04em", cursor: "pointer", color: copied ? "#04211D" : "#EDF1F6", background: copied ? "#00D2BE" : "rgba(255,255,255,.06)", border: `1px solid ${copied ? "#00D2BE" : "rgba(255,255,255,.16)"}`, borderRadius: 999, padding: "9px 15px" }}>
-            {copied ? "Copied" : "Copy address"}
-          </button>
+      <div style={{
+        padding: "20px 22px", clipPath: CLIP,
+        background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+        border: "1px solid rgba(255,255,255,.12)", borderTop: "3px solid #00D2BE",
+      }}>
+        <div className="pgFind">
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00D2BE", fontWeight: 600 }}>Finding it</div>
+            <div style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(17px,2vw,21px)", color: "#fff", marginTop: 8, letterSpacing: "-.015em" }}>{ADDRESS}</div>
+            <div style={{ fontFamily: ARCHIVO, fontSize: 13.5, color: "#9BA7B5", marginTop: 5, lineHeight: 1.5 }}>
+              Rancho Jaramillo, Bedford County. Turn in off Highway 41-A, then the ranch road.
+              <span style={{ fontFamily: MONO, color: "#7F8A99" }}> {GATE.lat}, {GATE.lng}</span>
+            </div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+            {([["Google", maps.google], ["Waze", maps.waze], ["Apple", maps.apple]] as const).map(([l, href]) => (
+              <a key={l} href={href} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "9px 15px", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
+            ))}
+            <button onClick={copyAddress} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, cursor: "pointer", color: copied ? "#04211D" : "#EDF1F6", background: copied ? "#00D2BE" : "rgba(255,255,255,.06)", border: `1px solid ${copied ? "#00D2BE" : "rgba(255,255,255,.16)"}`, borderRadius: 999, padding: "9px 15px", whiteSpace: "nowrap" }}>
+              {copied ? "Copied" : "Copy address"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
