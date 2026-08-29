@@ -45,29 +45,36 @@ const ACTS: Act[] = [
       "Bring the children. Bring your mother. Bring whoever you have been meaning to take somewhere.",
       "Turn in off Highway 41-A and the marshals will wave you down the ranch road to the pasture. Tell us you are coming so we know how much shade to put up.",
     ],
-    img: "/images/ranch/ppr-walk.jpg",
-    focal: "center 55%",
+    img: "/images/ranch/ppr-rail.jpg",
+    focal: "center 34%",
     tone: "#F2C94C",
     cta: { label: "Tell us you are coming", href: `${RANCH}/spectate` },
   },
   {
-    id: "show",
-    kicker: "If you are bringing a car",
-    title: "Three hundred places, chosen one at a time",
-    lede: "Send us yours and you will hear back either way.",
-    body: ["Waiting in silence is its own answer, and we would rather give you a real one."],
-    img: "/images/918-p1.webp",
-    focal: "center 50%",
-    tone: "#00D2BE",
+    id: "visit",
+    kicker: "If you are planning the drive",
+    title: "Plan your visit",
+    lede: "Saturday, October 10, 2026. Gates at nine, field clear by three.",
+    body: [
+      "The Piston Powered Ranch is an October car show in Tennessee, held at Rancho Jaramillo in Unionville, Bedford County, about an hour south of Nashville. Turn in off Highway 41-A and the marshals will point you down the ranch road.",
+      "Spectator parking sits on the pasture south of the show field. Bring a hat, bring a chair if you like one, and bring cash for the vendors who prefer it.",
+    ],
+    img: "/images/ranch/ppr-bins.jpg",
+    focal: "center 52%",
+    tone: "#B4B6B2",
     lists: [
       {
-        head: "On the field",
-        tone: "#00D2BE",
-        items: ["Exotics", "Muscle", "Golf carts that turn heads, in two, four or six seats"],
+        head: "The day",
+        tone: "#F2C94C",
+        items: ["Saturday, October 10, 2026", "Nine in the morning to three", "Spectator admission complimentary"],
       },
-      { head: "Not this time", tone: "#E5484D", items: ["Trucks", "SUVs"] },
+      {
+        head: "Finding it",
+        tone: "#00D2BE",
+        items: ["Rancho Jaramillo, Unionville TN", "An hour south of Nashville", "In off Highway 41-A"],
+      },
     ],
-    cta: { label: "How entry works", href: "/events/pistonpoweredranch/entry" },
+    cta: { label: "Open the site map", href: `${RANCH}/map` },
   },
   {
     id: "vip",
@@ -110,30 +117,23 @@ const ACTS: Act[] = [
     cta: { label: "Ask about the twenty seats", href: "/events/pistonpoweredranch/sponsor" },
   },
   {
-    id: "visit",
-    kicker: "If you are planning the drive",
-    title: "Plan your visit",
-    lede: "Saturday, October 10, 2026. Gates at nine, field clear by three.",
-    body: [
-      "The Piston Powered Ranch is an October car show in Tennessee, held at Rancho Jaramillo in Unionville, Bedford County, about an hour south of Nashville. Turn in off Highway 41-A and the marshals will point you down the ranch road.",
-      "Spectator parking sits on the pasture south of the show field. Bring a hat, bring a chair if you like one, and bring cash for the vendors who prefer it.",
-    ],
-    img: "/images/ranch/ppr-walk.jpg",
-    focal: "center 62%",
-    tone: "#B4B6B2",
+    id: "show",
+    kicker: "If you are bringing a car",
+    title: "Three hundred places, chosen one at a time",
+    lede: "Send us yours and you will hear back either way.",
+    body: ["Waiting in silence is its own answer, and we would rather give you a real one."],
+    img: "/images/ranch/ppr-barn.jpg",
+    focal: "center 46%",
+    tone: "#00D2BE",
     lists: [
       {
-        head: "The day",
-        tone: "#F2C94C",
-        items: ["Saturday, October 10, 2026", "Nine in the morning to three", "Spectator admission complimentary"],
-      },
-      {
-        head: "Finding it",
+        head: "On the field",
         tone: "#00D2BE",
-        items: ["Rancho Jaramillo, Unionville TN", "An hour south of Nashville", "In off Highway 41-A"],
+        items: ["Exotics", "Muscle", "Golf carts that turn heads, in two, four or six seats"],
       },
+      { head: "Not this time", tone: "#E5484D", items: ["Trucks", "SUVs"] },
     ],
-    cta: { label: "Open the site map", href: `${RANCH}/map` },
+    cta: { label: "How entry works", href: "/events/pistonpoweredranch/entry" },
   },
   {
     id: "partners",
@@ -141,8 +141,8 @@ const ACTS: Act[] = [
     title: "Stand beside it, not only in the crowd",
     lede: "Vendor row, sponsorship, and blocks held for car clubs arriving together.",
     body: ["Tell us what you sell or who you are bringing, and we will tell you where you fit on the field."],
-    img: "/images/cullinan-doors.webp",
-    focal: "center 50%",
+    img: "/images/ranch/ppr-light.jpg",
+    focal: "center 40%",
     tone: "#4BA3DE",
     ctas: [
       { label: "Sponsor the day", href: "/events/pistonpoweredranch/sponsor" },
@@ -270,13 +270,60 @@ export default function PistonPoweredRanchPage() {
           </div>
         </section>
 
+        {/* The teaser. Marketing launches 30 August and this is where the film
+            lands: drop teaser.mp4 into public/video and it plays. Until it is
+            there the poster carries the block on its own, so the page is never
+            broken by a missing file. */}
+        <section id="teaser" style={{ position: "relative", background: "#0A1523", padding: "clamp(56px,10vh,120px) 0" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
+            <div
+              data-r=""
+              style={{
+                background: "rgba(10,21,35,.58)",
+                backdropFilter: "blur(30px) saturate(180%)",
+                WebkitBackdropFilter: "blur(30px) saturate(180%)",
+                border: "1px solid rgba(255,255,255,.16)",
+                borderTop: "3px solid #F2C94C",
+                boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
+                clipPath: CLIP,
+                padding: "clamp(20px,3.4vw,34px)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+              }}
+            >
+              <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
+                One Saturday in October
+              </span>
+              <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
+                The ground it happens on
+              </h2>
+              <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden", clipPath: CLIP_SM, background: "#0A1523" }}>
+                <video
+                  poster="/images/ranch/ppr-rail.jpg"
+                  controls
+                  playsInline
+                  preload="none"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                >
+                  <source src="/video/teaser.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(14.5px,1.6vw,17px)", lineHeight: 1.6, color: "#C9D1DB", maxWidth: "56ch" }}>
+                Rancho Jaramillo is a working cattle ranch. For one Saturday in October, twelve acres
+                of it hold three hundred collector cars, and the gate is open to everyone.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {ACTS.map((a, ai) => {
           const isOpen = open === a.id
           return (
             <section key={a.id} id={a.id} style={{ position: "relative", scrollMarginTop: 128 }}>
               <div className="pgBand" aria-hidden="true">
                 <Image src={a.img} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: a.focal }} />
-                <span style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.86) 0%,rgba(10,21,35,.42) 34%,rgba(10,21,35,.94) 100%)" }} />
+                <span style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.78) 0%,rgba(10,21,35,.3) 36%,rgba(10,21,35,.9) 100%)" }} />
               </div>
 
               <div style={{ position: "relative", marginTop: "-56svh", paddingBottom: "clamp(40px,9vh,96px)" }}>
@@ -284,12 +331,12 @@ export default function PistonPoweredRanchPage() {
                   <div
                     data-r=""
                     style={{
-                      background: "rgba(10,21,35,.82)",
-                      backdropFilter: "blur(26px) saturate(165%)",
-                      WebkitBackdropFilter: "blur(26px) saturate(165%)",
-                      border: "1px solid rgba(255,255,255,.13)",
+                      background: "rgba(10,21,35,.58)",
+                      backdropFilter: "blur(30px) saturate(180%)",
+                      WebkitBackdropFilter: "blur(30px) saturate(180%)",
+                      border: "1px solid rgba(255,255,255,.16)",
                       borderTop: `3px solid ${a.tone}`,
-                      boxShadow: "0 30px 90px rgba(0,0,0,.5)",
+                      boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
                       clipPath: CLIP,
                       padding: "clamp(22px,4vw,44px)",
                       display: "flex",
@@ -328,7 +375,7 @@ export default function PistonPoweredRanchPage() {
                         {a.lists && (
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                             {a.lists.map((l) => (
-                              <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "rgba(21,37,56,.5)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
+                              <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
                                 <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: l.tone }}>{l.head}</span>
                                 {l.items.map((it) => (
                                   <span key={it} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(14.5px,1.5vw,16px)", color: "#EDF1F6" }}>{it}</span>
@@ -341,7 +388,7 @@ export default function PistonPoweredRanchPage() {
                         {a.tiers && (
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: 14 }}>
                             {a.tiers.map((t) => (
-                              <div key={t.name} className="pgTile" style={{ border: `1px solid ${t.tone}3d`, borderTop: `3px solid ${t.tone}`, background: "rgba(10,21,35,.55)", clipPath: CLIP_SM, padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
+                              <div key={t.name} className="pgTile" style={{ border: `1px solid ${t.tone}3d`, borderTop: `3px solid ${t.tone}`, background: "rgba(10,21,35,.4)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
                                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(19px,2.3vw,24px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: t.tone }}>{t.name}</span>
                                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#E7ECF3" }}>{t.line}</span>
                                 <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
@@ -360,7 +407,7 @@ export default function PistonPoweredRanchPage() {
                         {a.grid && (
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(232px,1fr))", gap: 12 }}>
                             {a.grid.map((g) => (
-                              <div key={g.t} className="pgTile" style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(21,37,56,.5)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 6 }}>
+                              <div key={g.t} className="pgTile" style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 6 }}>
                                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 15, letterSpacing: "-.008em", textTransform: "uppercase", color: a.tone }}>{g.t}</span>
                                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C4CCD6" }}>{g.b}</span>
                               </div>
