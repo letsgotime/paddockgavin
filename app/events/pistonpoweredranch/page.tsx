@@ -15,7 +15,7 @@ const RANCH = "https://piston-powered-ranch.vercel.app"
 
 // Set to "/video/teaser.mp4" the day the film is in public/video. While it is
 // null the block shows the photograph on its own, with no player chrome.
-const TEASER: string | null = null
+const TEASER: string | null = "/video/teaser.mp4"
 const SHOW_DAY = "2026-10-10"
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -303,35 +303,36 @@ export default function PistonPoweredRanchPage() {
               <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch" }}>
                 The ground it happens on
               </h2>
-              {/* A still is a still. Rendering a <video> with only a poster gives
-                  the viewer player chrome and 00:00 over a photograph, which reads
-                  as a video that will not play. The film gets its own element the
-                  day the file exists, and not before. */}
-              <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden", clipPath: CLIP_SM, background: "#0A1523" }}>
-                {TEASER ? (
-                  <video
-                    poster="/images/ranch/ppr-rail.jpg"
-                    controls
-                    playsInline
-                    preload="none"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  >
-                    <source src={TEASER} type="video/mp4" />
-                  </video>
-                ) : (
-                  <Image
-                    src="/images/ranch/ppr-rail.jpg"
-                    alt="A bay looking out over the pallet rail at Rancho Jaramillo, late afternoon"
-                    fill
-                    sizes="(max-width: 1180px) 100vw, 1180px"
-                    style={{ objectFit: "cover", objectPosition: "center 38%" }}
-                  />
-                )}
+              {/* The film is 720x1280 portrait, shot on a phone, so the block is
+                  built around that shape rather than letterboxing it into a
+                  16:9 frame. On a wide screen it sits beside the copy; on a
+                  phone it stacks. */}
+              <div style={{ display: "flex", gap: "clamp(16px,3vw,30px)", alignItems: "center", flexWrap: "wrap" }}>
+                <div style={{ position: "relative", flex: "0 1 300px", aspectRatio: "9 / 16", maxHeight: "70vh", overflow: "hidden", clipPath: CLIP_SM, background: "#0A1523", border: "1px solid rgba(255,255,255,.14)" }}>
+                  {TEASER ? (
+                    <video
+                      src={TEASER}
+                      poster="/images/ranch/ppr-rail.jpg"
+                      controls
+                      playsInline
+                      preload="none"
+                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    />
+                  ) : (
+                    <Image
+                      src="/images/ranch/ppr-rail.jpg"
+                      alt="A bay looking out over the pallet rail at Rancho Jaramillo, late afternoon"
+                      fill
+                      sizes="300px"
+                      style={{ objectFit: "cover", objectPosition: "center 38%" }}
+                    />
+                  )}
+                </div>
+                <p style={{ flex: "1 1 300px", margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.62, color: "#C9D1DB", maxWidth: "44ch" }}>
+                  Rancho Jaramillo is a working cattle ranch. For one Saturday in October, twelve
+                  acres of it hold three hundred collector cars, and the gate is open to everyone.
+                </p>
               </div>
-              <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(14.5px,1.6vw,17px)", lineHeight: 1.6, color: "#C9D1DB", maxWidth: "56ch" }}>
-                Rancho Jaramillo is a working cattle ranch. For one Saturday in October, twelve acres
-                of it hold three hundred collector cars, and the gate is open to everyone.
-              </p>
             </div>
           </div>
         </section>
