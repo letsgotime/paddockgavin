@@ -28,6 +28,7 @@ type Act = {
   focal: string
   tone: string
   cta?: { label: string; href: string }
+  ctas?: { label: string; href: string }[]
   lists?: { head: string; items: string[]; tone: string }[]
   grid?: { t: string; b: string }[]
   tiers?: { name: string; tone: string; line: string; items: string[] }[]
@@ -143,7 +144,11 @@ const ACTS: Act[] = [
     img: "/images/cullinan-doors.webp",
     focal: "center 50%",
     tone: "#4BA3DE",
-    cta: { label: "Sponsor the day", href: "/events/pistonpoweredranch/sponsor" },
+    ctas: [
+      { label: "Sponsor the day", href: "/events/pistonpoweredranch/sponsor" },
+      { label: "Take a vendor space", href: "/events/pistonpoweredranch/vendor" },
+      { label: "Bring a club block", href: `${RANCH}/clubs/` },
+    ],
   },
 ]
 
@@ -367,6 +372,16 @@ export default function PistonPoweredRanchPage() {
                           <a href={a.cta.href} target={a.cta.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ alignSelf: "flex-start", marginTop: 4, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: a.tone, color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                             {a.cta.label}
                           </a>
+                        )}
+
+                        {a.ctas && (
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 4 }}>
+                            {a.ctas.map((c, ci) => (
+                              <a key={c.href} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: ci === 0 ? a.tone : "transparent", color: ci === 0 ? "#101010" : "#EDF1F6", border: ci === 0 ? `1px solid ${a.tone}` : "1px solid rgba(255,255,255,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                                {c.label}
+                              </a>
+                            ))}
+                          </div>
                         )}
                       </div>
                     </div>

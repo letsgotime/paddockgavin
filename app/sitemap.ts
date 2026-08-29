@@ -20,6 +20,12 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "/scoreboard",              priority: 0.75, changeFrequency: "weekly"  },
   { url: "/events",                  priority: 0.75, changeFrequency: "monthly" },
   { url: "/events/creator-day",      priority: 0.7,  changeFrequency: "monthly" },
+  // The Piston Powered Ranch, Oct 10 2026. The flagship event was missing from
+  // this list entirely, so the only way in was the crawl from /events.
+  { url: "/events/pistonpoweredranch",        priority: 0.95, changeFrequency: "daily"   },
+  { url: "/events/pistonpoweredranch/entry",  priority: 0.9,  changeFrequency: "weekly"  },
+  { url: "/events/pistonpoweredranch/vendor", priority: 0.8,  changeFrequency: "weekly"  },
+  { url: "/events/pistonpoweredranch/sponsor",priority: 0.8,  changeFrequency: "weekly"  },
   { url: "/donuts",                  priority: 0.7,  changeFrequency: "monthly" },
   // Night shift / products
   { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
