@@ -1,0 +1,242 @@
+"use client"
+
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useState, type ReactNode } from "react"
+import { useCrm } from "@/lib/crm/useCrm"
+import { signIn, signOut } from "@/lib/crm/client"
+import { PADDOCKGAVIN } from "@/lib/crm/brand"
+
+/**
+ * The frame every CRM surface sits in.
+ *
+ * One job: work out who you are and which event this route is about, then
+ * either show the surface or the sign in. Twelve tools used to each answer
+ * those questions for themselves, three round trips apiece, and they drifted.
+ * Now it happens once per navigation and the surface receives the answer.
+ *
+ * The rail is the same shape as the one on the ranch tools, deliberately, so
+ * moving between the old surfaces and the ported ones does not feel like two
+ * different products while the port is half done.
+ */
+
+const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+
+type Surface = { label: string; seg: string; d: string; money?: boolean }
+
+const SURFACES: Surface[] = [
+  { label: "HQ", seg: "hq", d: "M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" },
+  { label: "The Ledger", seg: "ledger", d: "M4 5h16M4 12h16M4 19h10" },
+  { label: "Targets", seg: "targets", d: "M12 3v18 M3 12h18 M12 7a5 5 0 100 10 5 5 0 000-10z" },
+  { label: "Board", seg: "board", d: "M4 4h6v7H4z M14 4h6v11h-6z M4 15h6v5H4z M14 19h6" },
+  { label: "The Asks", seg: "asks", d: "M9 6h11 M9 12h11 M9 18h11 M4 6h.01 M4 12h.01 M4 18h.01" },
+  { label: "Crew", seg: "crew", d: "M17 20v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2 M9.5 6.5a3 3 0 106 0 3 3 0 00-6 0" },
+  { label: "The Awards", seg: "awards", d: "M8 4h8v5a4 4 0 01-8 0z M12 13v4 M9 21h6 M5 5h3 M16 5h3" },
+  { label: "Grounds", seg: "grounds", d: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z M9 4v14 M15 6v14" },
+  { label: "Budget", seg: "budget", d: "M3 6h18v12H3z M3 10h18 M7 14h4", money: true },
+  { label: "Chat", seg: "chat", d: "M21 11.5a8.4 8.4 0 01-9 8.4 9.9 9.9 0 01-3.8-.7L3 21l1.9-4.9A8.3 8.3 0 013.6 11.5a8.4 8.4 0 019-8.4 8.4 8.4 0 018.4 8.4z" },
+]
+
+export default function CrmShell({ slug, children }: { slug: string; children: ReactNode }) {
+  const crm = useCrm(slug)
+  const path = usePathname()
+  const [open, setOpen] = useState(false)
+  const [email, setEmail] = useState("")
+  const [pass, setPass] = useState("")
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState("")
+
+  /* The CRM is our product, so the chrome is Paddock Amber whichever event is
+     loaded. The event's own colour appears once, as a dot on the rail, so you
+     can tell at a glance which world you are working in without the tool
+     repainting itself into somebody else's brand. */
+  const accent = PADDOCKGAVIN.accent
+  const eventDot = crm.event?.accent || PADDOCKGAVIN.second!
+
+  if (crm.unknownEvent) {
+    return (
+      <Frame>
+        <h1 style={h1}>No such event</h1>
+        <p style={lede}>
+          Nothing in the CRM answers to <code style={code}>{slug}</code>. Check the address, or
+          pick one from <Link href="/events" style={{ color: accent }}>the events list</Link>.
+        </p>
+      </Frame>
+    )
+  }
+
+  if (crm.staff === null) {
+    return (
+      <Frame>
+        <p style={{ ...lede, fontFamily: MONO, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase" }}>
+          Checking
+        </p>
+      </Frame>
+    )
+  }
+
+  if (!crm.staff) {
+    return (
+      <Frame>
+        <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: accent }}>
+          {crm.event?.name ?? "The events CRM"}
+        </div>
+        <h1 style={h1}>Staff sign in</h1>
+        <p style={lede}>
+          This is the working side of the event. Use the address the invitation went to; if it is
+          your first time, pick a password and the account is made on the spot.
+        </p>
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault()
+            setBusy(true)
+            setErr("")
+            const problem = await signIn(email.trim(), pass)
+            setBusy(false)
+            if (problem) setErr(problem)
+            else void crm.refresh()
+          }}
+          style={{ display: "grid", gap: 11, maxWidth: 380, marginTop: 22 }}
+        >
+          <label style={lbl} htmlFor="crmEmail">Email</label>
+          <input id="crmEmail" type="email" autoComplete="email" required value={email}
+                 onChange={(e) => setEmail(e.target.value)} style={input} />
+          <label style={lbl} htmlFor="crmPass">Password</label>
+          <input id="crmPass" type="password" autoComplete="current-password" required value={pass}
+                 onChange={(e) => setPass(e.target.value)} style={input} />
+          <button type="submit" disabled={busy} style={{ ...primary, background: accent, opacity: busy ? 0.6 : 1 }}>
+            {busy ? "Signing in" : "Sign in"}
+          </button>
+          {err ? <p style={{ ...lede, color: "#ef6d70", fontSize: 14 }}>{err}</p> : null}
+        </form>
+      </Frame>
+    )
+  }
+
+  const visible = SURFACES.filter((s) => !s.money || crm.money)
+  const initials = (crm.profile?.full_name || crm.me || "?")
+    .trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase()
+
+  return (
+    <div style={{ minHeight: "100vh", background: "#070d14", color: "#dbe2ea", fontFamily: ARCHIVO }}>
+      <style>{`
+        .crmRail{position:fixed;left:0;top:0;bottom:0;z-index:40;width:60px;overflow:hidden;
+          display:flex;flex-direction:column;background:rgba(11,18,27,.82);
+          border-right:1px solid rgba(255,255,255,.11);backdrop-filter:blur(22px) saturate(1.5);
+          -webkit-backdrop-filter:blur(22px) saturate(1.5);transition:width .2s cubic-bezier(.16,.84,.32,1)}
+        .crmRail:hover,.crmRail:focus-within{width:212px}
+        .crmRail .lbl{opacity:0;transition:opacity .16s;white-space:nowrap}
+        .crmRail:hover .lbl,.crmRail:focus-within .lbl{opacity:1}
+        .crmBody{padding-left:60px}
+        .crmScrim{display:none}
+        @media (max-width:900px){
+          .crmRail{width:264px;transform:translateX(-101%);transition:transform .24s cubic-bezier(.16,.84,.32,1);
+            box-shadow:0 0 40px rgba(0,0,0,.6)}
+          .crmRail.open{transform:none}
+          .crmRail .lbl{opacity:1}
+          .crmBody{padding-left:0;padding-top:52px}
+          .crmPill{display:flex!important}
+          .crmScrim.on{display:block;position:fixed;inset:0;z-index:39;background:rgba(4,8,13,.55)}
+        }
+        @media (prefers-reduced-motion:reduce){.crmRail{transition:none}}
+      `}</style>
+
+      <button className="crmPill" onClick={() => setOpen((v) => !v)} aria-label="Open navigation"
+        style={{ display: "none", position: "fixed", left: 12, top: 10, zIndex: 41, height: 36,
+          alignItems: "center", padding: "0 14px", borderRadius: 999, cursor: "pointer", color: "#fff",
+          border: "1px solid rgba(255,255,255,.19)", background: "rgba(11,18,27,.86)",
+          font: `700 12.5px/1 ${ARCHIVO}` }}>
+        {crm.event?.name ?? "CRM"}
+      </button>
+      <div className={`crmScrim${open ? " on" : ""}`} onClick={() => setOpen(false)} />
+
+      <aside className={`crmRail${open ? " open" : ""}`} aria-label="Event navigation">
+        <div style={{ padding: "13px 0 11px 17px", borderBottom: "1px solid rgba(255,255,255,.09)" }}>
+          <div className="lbl" style={{ font: `900 12.5px/1.25 ${ARCHIVO}`, color: "#fff",
+            letterSpacing: "-.01em", display: "flex", alignItems: "center", gap: 7 }}>
+            <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%",
+              background: eventDot, flex: "0 0 auto" }} />
+            {crm.event?.name}
+          </div>
+          <div className="lbl" style={{ fontFamily: MONO, fontSize: 9.5, letterSpacing: ".12em",
+            textTransform: "uppercase", color: "#7f8a99", marginTop: 4 }}>
+            {crm.event?.status === "active" ? "In planning" : crm.event?.status ?? ""}
+          </div>
+        </div>
+
+        <nav style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
+          {visible.map((s) => {
+            const href = `/events/${slug}/${s.seg}`
+            const here = path === href || path?.startsWith(href + "/")
+            return (
+              <Link key={s.seg} href={href} title={s.label} onClick={() => setOpen(false)}
+                style={{ display: "flex", alignItems: "center", gap: 13, height: 42, paddingLeft: 18,
+                  textDecoration: "none", position: "relative", whiteSpace: "nowrap",
+                  color: here ? "#fff" : "#a9b4c2",
+                  background: here ? "rgba(248,184,0,.1)" : "transparent" }}>
+                {here ? <span style={{ position: "absolute", left: 0, top: 8, bottom: 8, width: 3,
+                  borderRadius: "0 3px 3px 0", background: accent }} /> : null}
+                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor"
+                     strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+                     style={{ flex: "0 0 auto" }}>
+                  <path d={s.d} />
+                </svg>
+                <span className="lbl" style={{ font: `600 13px/1 ${ARCHIVO}` }}>{s.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
+
+        <div style={{ padding: "11px 0 14px 17px", borderTop: "1px solid rgba(255,255,255,.09)",
+          display: "flex", alignItems: "center", gap: 11, whiteSpace: "nowrap" }}>
+          <span style={{ width: 26, height: 26, borderRadius: "50%", background: "#00d2be",
+            color: "#04211d", font: `900 10px/26px ${ARCHIVO}`, textAlign: "center", flex: "0 0 auto" }}>
+            {initials}
+          </span>
+          <button className="lbl" onClick={() => { void signOut().then(() => crm.refresh()) }}
+            style={{ font: `600 11.5px/1 ${ARCHIVO}`, color: "#7f8a99", background: "none",
+              border: 0, cursor: "pointer", padding: 0, textAlign: "left" }}>
+            {crm.profile?.full_name || crm.me}
+            <br />
+            <span style={{ fontSize: 10.5, color: "#5f6a77" }}>Sign out</span>
+          </button>
+        </div>
+      </aside>
+
+      <div className="crmBody">{children}</div>
+    </div>
+  )
+}
+
+/* ---------- the signed out / error frame ---------- */
+function Frame({ children }: { children: ReactNode }) {
+  return (
+    <div style={{ minHeight: "100vh", background: "#070d14", color: "#dbe2ea", fontFamily: ARCHIVO,
+      display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px" }}>
+      <div style={{ width: "100%", maxWidth: 560 }}>{children}</div>
+    </div>
+  )
+}
+
+const h1: React.CSSProperties = {
+  margin: "10px 0 0", font: `900 clamp(30px,6vw,44px)/1.02 ${ARCHIVO}`,
+  letterSpacing: "-.032em", color: "#fff",
+}
+const lede: React.CSSProperties = { margin: "12px 0 0", fontSize: 16, color: "#a9b4c2", maxWidth: "58ch" }
+const lbl: React.CSSProperties = {
+  fontFamily: MONO, fontSize: 9.5, letterSpacing: ".14em", textTransform: "uppercase",
+  color: "#7f8a99", fontWeight: 600, marginBottom: -6,
+}
+const input: React.CSSProperties = {
+  font: `400 15px/1.4 ${ARCHIVO}`, color: "#fff", background: "rgba(0,0,0,.3)",
+  border: "1px solid rgba(255,255,255,.13)", borderRadius: 10, padding: "11px 13px",
+}
+const primary: React.CSSProperties = {
+  font: `900 15px/1 ${ARCHIVO}`, color: "#04211d", border: 0, borderRadius: 12,
+  padding: "13px 22px", cursor: "pointer", marginTop: 4,
+}
+const code: React.CSSProperties = {
+  fontFamily: MONO, fontSize: 14, background: "rgba(255,255,255,.08)",
+  padding: "2px 6px", borderRadius: 4,
+}
