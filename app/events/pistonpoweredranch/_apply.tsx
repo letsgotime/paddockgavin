@@ -198,48 +198,47 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     if (!f.name.trim() || !f.reach.trim() || status === "sending") return
     setStatus("sending")
 
-    /* Record the submission before anything else. Until now these forms wrote
-       nowhere at all: they sent one internal email and that was the only copy
-       of the entry. The insert runs on the anonymous Data API session, which is
-       what the RLS policy on submissions expects. */
+    /* Two paths, deliberately independent.
+       The CRM write is the one we want, but the anonymous Data API session it
+       needs does not exist: Neon Auth on this project offers email and password
+       only, with no anonymous method, and paddockgavin.com is not yet a trusted
+       origin. So the write is attempted and its failure is logged rather than
+       shown, because the email below still reaches a person. The moment a
+       server side credential exists this becomes the primary path again. */
     const reach = f.reach.trim()
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
-    const client = db()
-    if (!client) {
-      setStatus("error")
-      return
-    }
-    const saved = await client.from("submissions").insert([
-      {
-        type: form.kind,
-        applicant_name: f.name.trim(),
-        email: isEmail ? reach.toLowerCase() : "",
-        phone: isEmail ? null : reach,
-        status: "pending",
-        details: {
-          org: f.org.trim(),
-          message: f.message.trim(),
-          reach,
-          page: "piston-powered-ranch",
-        },
-      },
-    ])
-    if (saved?.error) {
-      setStatus("error")
-      return
+    const payload = { kind: form.kind, ...f }
+
+    try {
+      const client = db()
+      if (client) {
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
+        const saved = await client.from("submissions").insert([
+          {
+            type: form.kind,
+            applicant_name: f.name.trim(),
+            email: isEmail ? reach.toLowerCase() : "",
+            phone: isEmail ? null : reach,
+            status: "pending",
+            details: { org: f.org.trim(), message: f.message.trim(), reach, page: "piston-powered-ranch" },
+          },
+        ])
+        if (saved?.error) console.warn("[apply] not recorded in the CRM:", saved.error.message)
+      }
+    } catch (err) {
+      console.warn("[apply] not recorded in the CRM:", err)
     }
 
-    /* The entry is on record now, so a mail failure is not the visitor's
-       problem and must not be reported to them as one. */
-    setStatus("sent")
+    /* This is what decides what the visitor is told, because this is the path
+       that reaches a human today. */
     try {
-      await fetch("/api/apply", {
+      const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: form.kind, ...f }),
+        body: JSON.stringify(payload),
       })
+      setStatus(res.ok ? "sent" : "error")
     } catch {
-      // Saved. Somebody answers it by hand.
+      setStatus("error")
     }
   }
 
