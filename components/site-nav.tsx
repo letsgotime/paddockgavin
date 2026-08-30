@@ -631,7 +631,7 @@ export function SiteNav({ active = "home" }: Props) {
 
               {/* Instagram */}
               <a
-                href="https://instagram.com/PaddockGavin"
+                href="https://instagram.com/itspaddockgavin"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -669,7 +669,7 @@ export function SiteNav({ active = "home" }: Props) {
                     color: "#EDF1F6",
                   }}
                 >
-                  @PaddockGavin
+                  @itspaddockgavin
                 </p>
               </a>
             </div>

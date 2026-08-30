@@ -182,7 +182,7 @@ export default function PartnerPage() {
             </p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <a
-                href="https://ig.me/m/PaddockGavin"
+                href="https://ig.me/m/itspaddockgavin"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -197,7 +197,7 @@ export default function PartnerPage() {
                   textDecoration: "none",
                 }}
               >
-                DM @PaddockGavin
+                DM @itspaddockgavin
               </a>
               <Link
                 href="/press"

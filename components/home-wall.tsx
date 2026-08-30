@@ -572,7 +572,7 @@ export function HomeWall() {
         {/* CTA row */}
         <div style={{ flex: "1 1 100%", display: "flex", gap: 10, flexWrap: "wrap" }}>
           <a
-            href="https://instagram.com/PaddockGavin"
+            href="https://instagram.com/itspaddockgavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -590,7 +590,7 @@ export function HomeWall() {
               textDecoration: "none",
             }}
           >
-            Follow @PaddockGavin
+            Follow @itspaddockgavin
           </a>
           <a
             href="/gallery"

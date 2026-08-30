@@ -51,7 +51,7 @@ export default function SupercarIQPage() {
             <p style={{ margin: "0 0 28px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Supercar IQ reads a photo and answers with the whole record &mdash; factory spec, tire sizes, recalls, crash ratings, what it sells for and where. Not a guess dressed up as an answer: a file that was built before you ever raised the phone.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
               <a href="#preorder" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; from $4.99</a>
-              <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow @PaddockGavin</a>
+              <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow @itspaddockgavin</a>
             </div>
           </div>
           <figure style={{ margin: 0, position: "relative", border: "1px solid #27384F", background: "#0A1523", overflow: "hidden" }}>
@@ -175,7 +175,7 @@ export default function SupercarIQPage() {
               </div>
             ))}
           </div>
-          <p style={{ margin: "22px 0 0", fontSize: 15.5, lineHeight: 1.6, color: "#848482", maxWidth: "54ch" }}>Pre-orders run at <a href="https://supercariq.com" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>supercariq.com</a>. Follow <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>@PaddockGavin</a> for build updates between now and launch.</p>
+          <p style={{ margin: "22px 0 0", fontSize: 15.5, lineHeight: 1.6, color: "#848482", maxWidth: "54ch" }}>Pre-orders run at <a href="https://supercariq.com" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>supercariq.com</a>. Follow <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>@itspaddockgavin</a> for build updates between now and launch.</p>
         </div>
       </section>
 

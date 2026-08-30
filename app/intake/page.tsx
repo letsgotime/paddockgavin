@@ -396,7 +396,7 @@ export default function IntakePage() {
               </button>
               {send === "error" && (
                 <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F2C94C" }}>
-                  Could not send — DM @PaddockGavin instead.
+                  Could not send — DM @itspaddockgavin instead.
                 </p>
               )}
               <p style={{ margin: "14px 0 0", fontSize: 16, lineHeight: 1.5, color: "#9BA5B3" }}>

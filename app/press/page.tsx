@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 const UPDATED = "August 2026"
 
 const masthead = [
-  { role: "Editor and lead photographer", who: "Gavin Brooks", contact: "DM @PaddockGavin" },
+  { role: "Editor and lead photographer", who: "Gavin Brooks", contact: "DM @itspaddockgavin" },
   { role: "Publication", who: "PaddockGavin · paddockgavin.com", contact: "Nashville, Tennessee" },
   { role: "Founded", who: "2026 · successor to GoTime Motorsports, 2021", contact: "" },
   { role: "Beat", who: "Exotic and collector cars, logistics, events, detailing", contact: "" },
 ]
 
 const audience = [
-  { metric: "Instagram followers", figure: "~7,900", source: "@PaddockGavin, verifiable in-app" },
+  { metric: "Instagram followers", figure: "~8,000", source: "@itspaddockgavin, verifiable in-app" },
   { metric: "Views, trailing 30 days", figure: "~1,000,000", source: "Instagram Insights" },
   { metric: "Publishing cadence", figure: "Multiple times weekly", source: "Post history" },
   { metric: "Primary audience", figure: "Enthusiasts, owners, collectors, trade", source: "Instagram Insights" },
@@ -176,7 +176,7 @@ export default function PressPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Requesting a credential from us</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Bringing us to your event, or offering a vehicle loan? DM @PaddockGavin with the date, the location and what access is on offer. Assignment letters on publication letterhead, a W-9, certificates of insurance and prior credential history are all available on request, same day.
+            Bringing us to your event, or offering a vehicle loan? DM @itspaddockgavin with the date, the location and what access is on offer. Assignment letters on publication letterhead, a W-9, certificates of insurance and prior credential history are all available on request, same day.
           </p>
           <p style={{ margin: "0 0 12px", fontSize: 14, lineHeight: 1.6, color: "#91918F", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", letterSpacing: ".1em", textTransform: "uppercase" }}>
             What a credentialing office typically needs:
@@ -258,7 +258,7 @@ export default function PressPage() {
             Send the date, the location and what access is on offer. Assignment letters, a W-9, certificates of insurance and prior credential history are all available the same day.
           </p>
           <a
-            href="https://ig.me/m/PaddockGavin"
+            href="https://ig.me/m/itspaddockgavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{

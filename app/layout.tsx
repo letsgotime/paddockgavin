@@ -60,7 +60,7 @@ export const metadata: Metadata = {
         worksFor: { "@type": "Organization", name: "duPont REGISTRY", url: "https://www.dupontregistry.com" },
         address: { "@type": "PostalAddress", addressLocality: "Nashville", addressRegion: "TN", addressCountry: "US" },
         sameAs: [
-          "https://www.instagram.com/paddockgavin/",
+          "https://www.instagram.com/itspaddockgavin/",
           "https://www.linkedin.com/in/gavinbrooks-leader/",
           "https://github.com/letsgotime",
           "https://www.youtube.com/@paddockgavin",

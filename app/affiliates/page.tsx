@@ -254,7 +254,7 @@ export default function AffiliatesPage() {
           </div>
           <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".06em", color: "#B8BEC8", margin: "20px 0 26px" }}>
             Contracted through{" "}
-            <a href="https://instagram.com/PaddockGavin" rel="noopener" target="_blank" style={{ color: "#00D2BE" }}>@PaddockGavin</a>.
+            <a href="https://instagram.com/itspaddockgavin" rel="noopener" target="_blank" style={{ color: "#00D2BE" }}>@itspaddockgavin</a>.
             Produced by Bekah.
           </p>
           <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, color: "#B8BEC8", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0, maxWidth: "70ch" }}>
@@ -287,9 +287,9 @@ export default function AffiliatesPage() {
                 style={{ display: "inline-flex", alignItems: "center", fontFamily: disp, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#00D2BE", color: "#00302B", padding: "17px 32px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 13px),calc(100% - 13px) 100%,0 100%)", textDecoration: "none" }}>
                 Tell me which one
               </a>
-              <a href="https://ig.me/m/PaddockGavin" rel="noopener" target="_blank"
+              <a href="https://ig.me/m/itspaddockgavin" rel="noopener" target="_blank"
                 style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#BBD4E6", borderBottom: "1px solid rgba(187,212,230,.4)", paddingBottom: 2, textDecoration: "none" }}>
-                or DM @PaddockGavin
+                or DM @itspaddockgavin
               </a>
             </div>
           </div>

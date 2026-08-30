@@ -179,7 +179,7 @@ export default function TrademarksPage() {
             ))}
           </ul>
           <p style={{ margin: "20px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>
-            Most people asking whether they can use something are asking in good faith, and the answer is usually yes. DM @PaddockGavin and ask — it takes a minute and it saves both of us the other kind of conversation.
+            Most people asking whether they can use something are asking in good faith, and the answer is usually yes. DM @itspaddockgavin and ask — it takes a minute and it saves both of us the other kind of conversation.
           </p>
         </section>
 
@@ -230,7 +230,7 @@ export default function TrademarksPage() {
             ))}
           </ul>
           <p style={{ margin: "20px 0 0", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
-            Send it to DM @PaddockGavin. Copyright and trade mark notices get answered before anything else in the inbox.
+            Send it to DM @itspaddockgavin. Copyright and trade mark notices get answered before anything else in the inbox.
           </p>
         </section>
 

@@ -355,7 +355,7 @@ export default function ConnectPage() {
             {saved ? "Saved to contacts" : "Save my contact"}
           </button>
           <a
-            href="https://ig.me/m/PaddockGavin"
+            href="https://ig.me/m/itspaddockgavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -371,7 +371,7 @@ export default function ConnectPage() {
               textDecoration: "none",
             }}
           >
-            DM @PaddockGavin
+            DM @itspaddockgavin
           </a>
         </div>
 
@@ -456,7 +456,7 @@ export default function ConnectPage() {
             The fastest lane
           </span>
           <a
-            href="https://ig.me/m/PaddockGavin"
+            href="https://ig.me/m/itspaddockgavin"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -465,7 +465,7 @@ export default function ConnectPage() {
               color: "#FFFFFF", overflowWrap: "anywhere", textDecoration: "none",
             }}
           >
-            DM @PaddockGavin
+            DM @itspaddockgavin
           </a>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 16, lineHeight: 1.55, color: "#CFE4F4" }}>
             DMs get seen between jobs, and a person answers &mdash; usually me. Forms on the events pages land the same day.

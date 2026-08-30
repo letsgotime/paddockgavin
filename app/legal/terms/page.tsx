@@ -25,7 +25,7 @@ const sections = [
       "Everything on this site is protected by copyright: the photographs, the video, the writing, the captions, the layout, the code and the design system. You may look at it, link to it, and share a link. You may not copy it, repost it, re-upload it, feed it to a model, or use it in anything commercial without written permission.",
       "The watermark is not decoration. Where a mark appears on an image or a clip, it is copyright management information under 17 U.S.C. § 1202. Removing it, cropping it out or altering it to hide where the file came from is its own violation, separate from the copying. It carries statutory damages of $2,500 to $25,000 per instance, with no requirement that the work be registered first. If you find one of my files with the mark taken off, so will I.",
       "I enforce this. Takedowns go out, and where the use is commercial or the mark has been removed, it does not stop at a takedown. duPont REGISTRY holds and enforces its own rights in its own property, separately and at its own discretion; nothing here speaks for them.",
-      "Think a use might be fine? Ask first. DM @PaddockGavin. Most reasonable requests get a yes.",
+      "Think a use might be fine? Ask first. DM @itspaddockgavin. Most reasonable requests get a yes.",
     ],
   },
   {
@@ -109,7 +109,7 @@ const sections = [
     num: "10",
     heading: "Reaching a person",
     body: [
-      "One inbox, and it is mine. DM @PaddockGavin, or use the form on any page. Copyright and trade mark notices get answered first. The trade mark page lists what to include so it can be acted on straight away.",
+      "One inbox, and it is mine. DM @itspaddockgavin, or use the form on any page. Copyright and trade mark notices get answered first. The trade mark page lists what to include so it can be acted on straight away.",
     ],
   },
 ]

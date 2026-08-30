@@ -508,7 +508,7 @@ export default function ScoreboardPage() {
               }}
             />
             <a
-              href="https://ig.me/m/PaddockGavin"
+              href="https://ig.me/m/itspaddockgavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{

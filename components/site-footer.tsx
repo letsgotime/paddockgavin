@@ -151,7 +151,7 @@ export function SiteFooter() {
               Lot Operations and Events Manager, duPont REGISTRY
             </p>
             <a
-              href="https://instagram.com/PaddockGavin"
+              href="https://instagram.com/itspaddockgavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -163,7 +163,7 @@ export function SiteFooter() {
                 textDecoration: "none",
               }}
             >
-              @PaddockGavin
+              @itspaddockgavin
             </a>
             <a
               href="https://www.linkedin.com/in/gavinbrooksleader"
@@ -180,6 +180,52 @@ export function SiteFooter() {
               LinkedIn &middot; Gavin Brooks
             </a>
           </div>
+
+          {/* Events nav */}
+          <nav aria-label="On the calendar" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <p
+              style={{
+                margin: "0 0 10px",
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
+                fontSize: 12,
+                letterSpacing: ".18em",
+                textTransform: "uppercase",
+                color: "#91918F",
+              }}
+            >
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#EDF1F6", display: "block" }} />
+              On the calendar
+            </p>
+            {[
+              { href: "/events/pistonpoweredranch",         label: "The Piston Powered Ranch" },
+              { href: "/events/pistonpoweredranch/entry",   label: "Enter a car" },
+              { href: "/events/pistonpoweredranch/sponsor", label: "Become a sponsor" },
+              { href: "/events/pistonpoweredranch/vendor",  label: "Take a stall" },
+              { href: "/events/creator-day",                label: "Creator Day" },
+              { href: "/encantoblossomorchard",             label: "Encanto Blossom Orchard" },
+              { href: "/events",                            label: "Every event" },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                style={{
+                  padding: "7px 0",
+                  fontFamily: "Archivo, Helvetica, sans-serif",
+                  fontWeight: 600,
+                  fontSize: 14.5,
+                  letterSpacing: ".08em",
+                  textTransform: "uppercase",
+                  color: "#DDE3EB",
+                  textDecoration: "none",
+                }}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
 
           {/* Day shift nav */}
           <nav aria-label="Day shift" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -204,7 +250,6 @@ export function SiteFooter() {
               { href: "/gallery",   label: "The gallery" },
               { href: "/lot-ops",   label: "Lot ops in action" },
               { href: "/donuts",    label: "Donuts with duPont" },
-              { href: "/events/creator-day", label: "Creator Day" },
               { href: "/book",      label: "Book it" },
               { href: "/intake",    label: "Find me a car" },
               { href: "https://www.dupontregistry.com", label: "Buy from duPont" },
@@ -289,14 +334,13 @@ export function SiteFooter() {
               Elsewhere
             </p>
             {[
-              { href: "/gallery",                   label: "The gallery",       ext: false },
               { href: "/why-a-paddock",             label: "Why a paddock",     ext: false },
               { href: "/cars",                      label: "The garage",        ext: false },
               { href: "/cars/e92",                  label: "The E92 build",     ext: false },
               { href: "/cars/r8",                   label: "The R8",            ext: false },
+              { href: "/juice-box",                 label: "The Juice Box",     ext: false },
               { href: "/connect",                   label: "Every link",        ext: false },
               { href: "https://gavinbrookshq.com",  label: "gavinbrookshq.com", ext: true  },
-              { href: "/legal/privacy",             label: "Privacy",           ext: false },
             ].map((l) => (
               <a
                 key={l.href}
@@ -385,8 +429,8 @@ export function SiteFooter() {
             </a>
             <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "#91918F" }}>
               or{" "}
-              <a href="https://ig.me/m/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
-                DM @PaddockGavin
+              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
+                DM @itspaddockgavin
               </a>
             </p>
           </div>
@@ -513,7 +557,7 @@ export function SiteFooter() {
               </a>
             ))}
             <a
-              href="https://ig.me/m/PaddockGavin"
+              href="https://ig.me/m/itspaddockgavin"
               target="_blank"
               rel="noopener noreferrer"
               style={{
