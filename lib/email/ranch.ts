@@ -38,6 +38,7 @@ const HAIR = "#D9D3C8"
 const DISPLAY = "Cinzel, 'Trajan Pro', Georgia, 'Times New Roman', serif"
 const TEXT = "Georgia, 'Times New Roman', Times, serif"
 const LABEL = "'Helvetica Neue', Helvetica, Arial, sans-serif"
+const MONO = "'SF Mono', Menlo, Consolas, 'Courier New', monospace"
 
 export type Block =
   | { kind: "p"; text: string }
@@ -47,6 +48,7 @@ export type Block =
   | { kind: "button"; label: string; href: string }
   | { kind: "rule" }
   | { kind: "quiet"; text: string }
+  | { kind: "links"; rows: { label: string; url: string; note?: string }[] }
 
 export interface RanchEmail {
   preheader: string
@@ -116,6 +118,24 @@ function renderBlock(b: Block): string {
             <td style="padding:${i === 0 ? "16px" : "10px"} 0 ${i === b.rows.length - 1 ? "16px" : "10px"};font-family:${LABEL};font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:${MUTE};white-space:nowrap;vertical-align:top" valign="top">${esc(r.label)}</td>
             <td align="right" style="padding:${i === 0 ? "16px" : "10px"} 0 ${i === b.rows.length - 1 ? "16px" : "10px"};font-family:${TEXT};font-size:16px;line-height:1.45;color:${INK};mso-line-height-rule:exactly" valign="top">${esc(r.value)}</td>
           </tr>`,
+            )
+            .join("")}
+        </table></td></tr>`
+
+    /* Full URLs, laid out. A welcome email gets referred back to for months, and
+       a link whose text says "here" is worthless the second time it is opened.
+       The address is printed as well as linked, so it survives being forwarded,
+       printed, or read in a client that strips anchors. */
+    case "links":
+      return `<tr><td style="padding:2px 0 24px">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid ${HAIR}">
+          ${b.rows
+            .map(
+              (r) => `<tr><td style="padding:14px 0;border-bottom:1px solid ${HAIR}">
+            <div style="font-family:${LABEL};font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:${MUTE};padding-bottom:5px">${esc(r.label)}</div>
+            <a href="${esc(r.url)}" style="font-family:${MONO};font-size:13.5px;line-height:1.5;color:${RED};text-decoration:none;word-break:break-all">${esc(r.url)}</a>
+            ${r.note ? `<div style="font-family:${TEXT};font-size:14.5px;line-height:1.55;color:${BODY};padding-top:6px">${esc(r.note)}</div>` : ""}
+          </td></tr>`,
             )
             .join("")}
         </table></td></tr>`
@@ -246,6 +266,13 @@ export function renderRanchText(e: RanchEmail): string {
     else if (b.kind === "list") lines.push(...b.items.map((i) => `  - ${i}`), "")
     else if (b.kind === "facts") lines.push(...b.rows.map((r) => `  ${r.label}: ${r.value}`), "")
     else if (b.kind === "button") lines.push(`${b.label}: ${b.href}`, "")
+    else if (b.kind === "links") {
+      for (const r of b.rows) {
+        lines.push(`${r.label.toUpperCase()}`, `  ${r.url}`)
+        if (r.note) lines.push(`  ${r.note}`)
+        lines.push("")
+      }
+    }
   }
   if (e.signoff) lines.push(e.signoff, "")
   lines.push("Saturday 10 October 2026, 9am to 3pm", "Rancho Jaramillo, Unionville, Tennessee", "A PaddockGavin event, benefiting Community Elementary School")

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { renderRanchEmail } from "@/lib/email/ranch"
 import { ranchTemplate, CATALOGUE } from "@/lib/email/ranch-templates"
+import { welcomeEmail, TEAM } from "@/lib/email/ranch-welcome"
 import { render } from "@react-email/render"
 import SubscriberWelcome from "@/emails/subscriber-welcome"
 import WireframeDigestIssue from "@/emails/wireframe-digest-issue"
@@ -46,7 +47,23 @@ export async function GET(req: NextRequest) {
          <h1 style="font-family:Cinzel,Georgia,serif;font-size:40px;margin:12px 0 8px;letter-spacing:.01em">The email set</h1>
          <p style="color:#4A535E;margin:0 0 8px;max-width:66ch;font-size:16.5px">${CATALOGUE.length} messages. Every one renders through the same module that sends it, so this is the real markup rather than a mock. Click any of them to open it full size.</p>
          <p style="color:#8A93A0;margin:0 0 34px;font-size:13.5px">Cinzel is loaded on this page but will not load in most inboxes, so the display line falls back to Georgia there. That fallback is what the design was drawn for.</p>
-         ${groups
+         <section style="margin:0 0 42px">
+           <h2 style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#8A93A0;font-weight:600;margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid #DDD8CE">The team <span style="color:#C3BDB2">${TEAM.length}</span></h2>
+           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px">
+           ${TEAM.map((p) => {
+             const slug = p.name.toLowerCase().split(" ")[0]
+             return `<figure style="margin:0">
+               <div style="position:relative;width:340px;height:430px;overflow:hidden;border:1px solid #DDD8CE;border-radius:10px;background:#EDE9E1;box-shadow:0 2px 10px rgba(0,0,0,.06)">
+                 <iframe src="?id=welcome-${slug}" scrolling="no" loading="lazy" style="position:absolute;top:0;left:0;width:620px;height:790px;border:0;transform:scale(.548);transform-origin:0 0"></iframe>
+                 <a href="?id=welcome-${slug}" target="_blank" style="position:absolute;inset:0;display:block"></a>
+               </div>
+               <figcaption style="padding:9px 2px 0">
+                 <a href="?id=welcome-${slug}" target="_blank" style="color:#14181D;text-decoration:none;font-weight:600;font-size:14.5px">Welcome, ${p.name}</a>
+                 <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8A93A0;margin-top:2px">${p.seesMoney ? "sees cost" : "cost withheld"}</div>
+               </figcaption></figure>`
+           }).join("")}
+           </div></section>
+       ${groups
            .map(
              (g) => `<section style="margin:0 0 42px">
              <h2 style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#8A93A0;font-weight:600;margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid #DDD8CE">${g.title} <span style="color:#C3BDB2">${g.of.length}</span></h2>
@@ -57,6 +74,15 @@ export async function GET(req: NextRequest) {
        </div></body></html>`,
       { headers: { "Content-Type": "text/html; charset=utf-8" } },
     )
+  }
+
+  /* One per person, because the money line differs and the sign in address is
+     not always the one they would guess. */
+  if (id.startsWith("welcome-")) {
+    const who = id.slice("welcome-".length).toLowerCase()
+    const p = TEAM.find((x) => x.name.toLowerCase().split(" ")[0] === who)
+    if (!p) return new NextResponse("Unknown person. Try welcome-oscar, welcome-bekah, welcome-gavin, welcome-arnie or welcome-josh.", { status: 404 })
+    return new NextResponse(renderRanchEmail(welcomeEmail(p)), { headers: { "Content-Type": "text/html; charset=utf-8" } })
   }
 
   if (id.startsWith("ranch-")) {
