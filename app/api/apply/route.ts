@@ -22,22 +22,15 @@ import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "
    loop or be dropped. Different sender, same destination, no collision. */
 const NOREPLY = "The Piston Powered Ranch <noreply@pistonpoweredranch.com>"
 
-/* The role groups bounced on the first live send, so this stays on the address
-   proven to deliver until they accept mail. A desk alert that bounces is a lost
-   entry notification, which is worse than an unglamorous reply address.
-   ROLE holds the destinations; swap DESK to it once a test to entries@ lands. */
-const ROLE: Record<Kind, string> = {
+/* The role addresses are live: verified by a send from noreply@, which Google
+   treats as an external sender because it is a Resend identity rather than a
+   Workspace user. That is the exact path a real alert takes, and it delivered
+   to all four on 30 August. */
+const DESK: Record<Kind, string> = {
   entry: "entries@pistonpoweredranch.com",
   "sponsor-application": "sponsors@pistonpoweredranch.com",
   "vendor-application": "vendors@pistonpoweredranch.com",
 }
-const PROVEN = "paddock20auto@gmail.com"
-const DESK: Record<Kind, string> = {
-  entry: PROVEN,
-  "sponsor-application": PROVEN,
-  "vendor-application": PROVEN,
-}
-void ROLE
 
 type Kind = "entry" | "sponsor-application" | "vendor-application"
 
