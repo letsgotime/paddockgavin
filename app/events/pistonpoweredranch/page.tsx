@@ -15,7 +15,7 @@ import { SmoothScroll } from "@/components/smooth-scroll"
    The run's invented specifics, a $750 VIP price and a January submission date,
    were removed. No price or date appears here that has not been confirmed. */
 
-const RANCH = "https://pistonpoweredranch.com"
+const RANCH = "https://piston-powered-ranch.vercel.app"
 const EVENT_ID = "6ad3f289-8103-4c69-b10e-923790fb8a88"
 
 // Set to "/video/teaser.mp4" the day the film is in public/video. While it is
