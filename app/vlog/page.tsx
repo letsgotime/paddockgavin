@@ -4,7 +4,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
-  title: "The Vlog — PaddockGavin",
+  title: "The Vlog",
   description: "The PaddockGavin vlog — vertical phone video from the duPont REGISTRY lot in Lebanon and Gavin\u2019s own garage. Clips land on Instagram first.",
 }
 

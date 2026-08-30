@@ -5,7 +5,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
-  title: "The R8 — PaddockGavin",
+  title: "The R8",
   description: "The R8 V10 log: the foam bath, the V10 under glass, the deck lid up in the garage, and the shortlist that ended at an R8.",
 }
 

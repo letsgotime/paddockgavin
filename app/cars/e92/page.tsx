@@ -5,7 +5,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
-  title: "The E92 — PaddockGavin",
+  title: "The E92",
   description: "The E92 M3 build log: 25 hours on the paint, vents out and DLUX-coated, ECS stud conversion, wheels corrected and finished in gloss black.",
 }
 

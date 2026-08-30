@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Privacy — PaddockGavin",
+  title: "Privacy",
   description: "What this site collects, who else can see it, how long it is kept, and how to ask for it to be removed.",
 }
 

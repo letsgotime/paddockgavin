@@ -5,7 +5,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
-  title: "Encanto Blossom Orchard — PaddockGavin",
+  title: "Encanto Blossom Orchard",
   description:
     "An orchard in Shelbyville, Tennessee we are walking for a future field. In scoping. Nothing booked yet.",
 }

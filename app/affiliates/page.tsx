@@ -4,11 +4,11 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
-  title: "Affiliates & Partners — PaddockGavin",
+  title: "Affiliates & Partners",
   description:
     "The brands I actually use and the people who shot the photos. Codes where I have them, credit where it is owed, and a standing offer to fix anything I got wrong.",
   openGraph: {
-    title: "Affiliates & Partners — PaddockGavin",
+    title: "Affiliates & Partners",
     description:
       "The brands I actually use and the people who shot the photos. Codes where I have them, credit where it is owed.",
     url: "https://paddockgavin.com/affiliates",
