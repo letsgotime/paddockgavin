@@ -217,7 +217,7 @@ export default function PistonPoweredRanchPage() {
         @keyframes pgKen{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-1.5%)}}
         [data-r]{opacity:0;transform:translate3d(0,26px,0)}
         [data-r].in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms),transform .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms)}
-        .pgBand{position:sticky;top:0;height:100svh;overflow:hidden}
+        .pgBand{position:sticky;top:0;height:100svh;overflow:hidden;will-change:transform;transform:translateZ(0)}
         .pgTeaser{display:grid;grid-template-columns:minmax(300px,360px) 1fr;gap:clamp(20px,3vw,38px);align-items:center}
         .pgTeaserFilm{position:relative;aspect-ratio:9/16;overflow:hidden;background:#0A1523;border:1px solid rgba(255,255,255,.14);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
         .pgTeaserSay{display:flex;flex-direction:column;min-width:0}
@@ -312,9 +312,7 @@ export default function PistonPoweredRanchPage() {
               data-r=""
               className="pgTeaser"
               style={{
-                background: "rgba(10,21,35,.5)",
-                backdropFilter: "blur(30px) saturate(180%)",
-                WebkitBackdropFilter: "blur(30px) saturate(180%)",
+                background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))",
                 border: "1px solid rgba(255,255,255,.16)",
                 borderTop: "3px solid var(--accent)",
                 boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
@@ -383,9 +381,7 @@ export default function PistonPoweredRanchPage() {
                   <div
                     data-r=""
                     style={{
-                      background: "rgba(10,21,35,.58)",
-                      backdropFilter: "blur(30px) saturate(180%)",
-                      WebkitBackdropFilter: "blur(30px) saturate(180%)",
+                      background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))",
                       border: "1px solid rgba(255,255,255,.16)",
                       borderTop: `3px solid ${a.tone}`,
                       boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
