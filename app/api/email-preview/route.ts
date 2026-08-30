@@ -14,19 +14,46 @@ export async function GET(req: NextRequest) {
   /* The ranch set, rendered through the same modules that send, so the preview
      is the real markup rather than a lookalike. ?id=ranch lists everything. */
   if (id === "ranch") {
-    const rows = CATALOGUE.map(
-      (c) =>
-        `<tr><td style="padding:9px 14px;border-bottom:1px solid #E4DFD5"><a href="?id=ranch-${c.surface}-${c.stage}" style="color:#B3121A;text-decoration:none;font-weight:600">${c.label}</a></td>
-         <td style="padding:9px 14px;border-bottom:1px solid #E4DFD5;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#6E7A8A">${c.surface} &middot; ${c.stage}</td></tr>`,
-    ).join("")
+    const groups: { title: string; of: typeof CATALOGUE }[] = [
+      { title: "Cars", of: CATALOGUE.filter((c) => c.surface === "entry") },
+      { title: "Vendors", of: CATALOGUE.filter((c) => c.surface === "vendor") },
+      { title: "Sponsors", of: CATALOGUE.filter((c) => c.surface === "sponsor") },
+      { title: "Spectators", of: CATALOGUE.filter((c) => c.surface === "spectator") },
+    ]
+    const card = (c: (typeof CATALOGUE)[number]) => `
+      <figure style="margin:0">
+        <div style="position:relative;width:340px;height:430px;overflow:hidden;border:1px solid #DDD8CE;border-radius:10px;background:#EDE9E1;box-shadow:0 2px 10px rgba(0,0,0,.06)">
+          <iframe src="?id=ranch-${c.surface}-${c.stage}" scrolling="no" loading="lazy"
+            style="position:absolute;top:0;left:0;width:620px;height:790px;border:0;transform:scale(.548);transform-origin:0 0"></iframe>
+          <a href="?id=ranch-${c.surface}-${c.stage}" target="_blank"
+             style="position:absolute;inset:0;display:block" aria-label="Open ${c.label}"></a>
+        </div>
+        <figcaption style="padding:9px 2px 0">
+          <a href="?id=ranch-${c.surface}-${c.stage}" target="_blank" style="color:#14181D;text-decoration:none;font-weight:600;font-size:14.5px">${c.label}</a>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8A93A0;margin-top:2px">${c.surface} &middot; ${c.stage}</div>
+        </figcaption>
+      </figure>`
     return new NextResponse(
-      `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ranch email set</title></head>
-       <body style="margin:0;background:#F7F6F3;font-family:Georgia,serif;color:#14181D">
-       <div style="max-width:760px;margin:0 auto;padding:48px 20px">
-         <p style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#B3121A;margin:0">The Piston Powered Ranch</p>
-         <h1 style="font-size:34px;margin:12px 0 6px;letter-spacing:-.02em">The email set</h1>
-         <p style="color:#3F4750;margin:0 0 26px">${CATALOGUE.length} messages, every surface and every stage a submission passes through. Each one renders through the same module that sends it.</p>
-         <table style="width:100%;border-collapse:collapse;background:#fff;border:1px solid #E4DFD5;border-radius:10px;overflow:hidden">${rows}</table>
+      `<!doctype html><html lang="en"><head><meta charset="utf-8">
+       <meta name="viewport" content="width=device-width,initial-scale=1">
+       <title>Ranch email set</title>
+       <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Libre+Franklin:wght@400;600;800&display=swap">
+       </head>
+       <body style="margin:0;background:#F7F6F3;color:#14181D;font-family:'Libre Franklin',-apple-system,Arial,sans-serif">
+       <div style="max-width:1240px;margin:0 auto;padding:44px 22px 90px">
+         <p style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#B3121A;margin:0;font-weight:600">The Piston Powered Ranch</p>
+         <h1 style="font-family:Cinzel,Georgia,serif;font-size:40px;margin:12px 0 8px;letter-spacing:.01em">The email set</h1>
+         <p style="color:#4A535E;margin:0 0 8px;max-width:66ch;font-size:16.5px">${CATALOGUE.length} messages. Every one renders through the same module that sends it, so this is the real markup rather than a mock. Click any of them to open it full size.</p>
+         <p style="color:#8A93A0;margin:0 0 34px;font-size:13.5px">Cinzel is loaded on this page but will not load in most inboxes, so the display line falls back to Georgia there. That fallback is what the design was drawn for.</p>
+         ${groups
+           .map(
+             (g) => `<section style="margin:0 0 42px">
+             <h2 style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#8A93A0;font-weight:600;margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid #DDD8CE">${g.title} <span style="color:#C3BDB2">${g.of.length}</span></h2>
+             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px">${g.of.map(card).join("")}</div>
+           </section>`,
+           )
+           .join("")}
        </div></body></html>`,
       { headers: { "Content-Type": "text/html; charset=utf-8" } },
     )
