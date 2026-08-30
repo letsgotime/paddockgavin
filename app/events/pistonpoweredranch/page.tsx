@@ -6,12 +6,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { CrmLogin } from "@/components/crm-login"
+import { RsvpBlock } from "@/components/rsvp-block"
 
 /* Copy ran through RAIL Redline (paddock20.com/rail/redline), WARM / WEB PAGE / US.
    The run's invented specifics, a $750 VIP price and a January submission date,
    were removed. No price or date appears here that has not been confirmed. */
 
 const RANCH = "https://pistonpoweredranch.com"
+const EVENT_ID = "6ad3f289-8103-4c69-b10e-923790fb8a88"
 
 // Set to "/video/teaser.mp4" the day the film is in public/video. While it is
 // null the block shows the photograph on its own, with no player chrome.
@@ -206,6 +209,7 @@ export default function PistonPoweredRanchPage() {
   return (
     <>
       <SiteNav active="events" />
+      <CrmLogin />
 
       <style>{`
         @keyframes pgPulse{0%,100%{opacity:1}50%{opacity:.28}}
@@ -542,6 +546,11 @@ export default function PistonPoweredRanchPage() {
         </section>
       </main>
 
+      <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <RsvpBlock eventId={EVENT_ID} accent="#F2C94C" source="event-page" />
+        </div>
+      </section>
       <SiteFooter />
     </>
   )

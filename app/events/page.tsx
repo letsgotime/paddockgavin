@@ -5,6 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { CrmLogin } from "@/components/crm-login"
+import { RsvpBlock } from "@/components/rsvp-block"
 
 /* Copy on this page ran through RAIL Redline (paddock20.com/rail/redline).
    Run: Claude Sonnet 4.5 · WARM · WEB PAGE · US · DataForSEO target
@@ -233,6 +235,7 @@ export default function EventsPage() {
   return (
     <>
       <SiteNav active="events" />
+      <CrmLogin />
 
       <style>{`
         @keyframes pgPulse{0%,100%{opacity:1}50%{opacity:.3}}
