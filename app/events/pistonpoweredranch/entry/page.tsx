@@ -32,7 +32,7 @@ export default function Page() {
       ]}
       note="Waiting in silence is its own answer. Every submission gets a reply."
       closeLine="Send it. You will hear back either way."
-      cta={{ label: "Submit your car", href: "https://piston-powered-ranch.vercel.app/show" }}
+      cta={{ label: "Submit your car", href: "https://piston-powered-ranch.vercel.app/console/#submit" }}
     />
   )
 }
