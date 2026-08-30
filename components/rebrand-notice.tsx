@@ -105,10 +105,13 @@ export function RebrandNotice() {
         }}
       >
         <div className="pgRebrandRow" style={{ display: "flex", flex: "1 1 auto", minWidth: 0 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 9, flex: "1 1 auto", minWidth: 0 }}>
+          <span style={{ display: "flex", alignItems: "flex-start", gap: 9, flex: "1 1 auto", minWidth: 0 }}>
             <i
               aria-hidden="true"
-              style={{ width: 7, height: 7, borderRadius: "50%", background: "#F2C94C", flex: "0 0 auto" }}
+              /* marginTop lands the dot on the first line rather than centred
+                 against the whole block, which is what it did once the text
+                 wrapped to two lines on a phone. */
+              style={{ width: 7, height: 7, marginTop: 7, borderRadius: "50%", background: "#F2C94C", flex: "0 0 auto" }}
             />
             <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.45, color: "#EDF1F6" }}>
               <b style={{ fontWeight: 800 }}>GoTime Motorsports is now PaddockGavin.</b>{" "}
