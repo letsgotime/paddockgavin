@@ -61,7 +61,7 @@ const ACTS: Act[] = [
       "Bring the children. Bring your mother. Bring whoever you have been meaning to take somewhere.",
       "Turn in off Highway 41-A and the marshals will wave you down the ranch road to the pasture. Tell us you are coming so we know how much shade to put up.",
     ],
-    img: "/images/ranch/ppr-rail.jpg",
+    img: "/images/ranch/ppr-gate.jpg",
     focal: "center 34%",
     tone: "var(--accent)",
     cta: { label: "Tell us you are coming", href: `${RANCH}/spectate` },
