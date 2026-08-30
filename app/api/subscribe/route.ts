@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const { email, source = "site", honeypot } = body
 
-    // Honeypot — bots fill this field
+    // Honeypot, bots fill this field
     if (honeypot) return NextResponse.json({ ok: true })
 
     // Basic validation
@@ -33,14 +33,17 @@ export async function POST(req: NextRequest) {
         to:      email,
         subject: "You're in the paddock.",
         html:    welcomeHtml,
-        text:    `Hey — you signed up via ${source}. Welcome.\n\npaddockgavin.com`,
+        text:    `Hey, you signed up via ${source}. Welcome.\n\nTo stop these, reply with the word unsubscribe.\n\npaddockgavin.com`,
+        headers: {
+          "List-Unsubscribe": "<mailto:gavin@paddockgavin.com?subject=Unsubscribe>",
+        },
       })
 
       // Internal alert to paddock20@gmail.com
       await resend.emails.send({
         from:    "PaddockGavin <gavin@paddockgavin.com>",
         to:      "paddock20@gmail.com",
-        subject: `New subscriber via ${source} — ${email}`,
+        subject: `New subscriber via ${source} · ${email}`,
         text:    `New subscriber.\n\nEmail: ${email}\nSource: ${source}\nIP: ${ip ?? "unknown"}\nTime: ${new Date().toISOString()}`,
       })
     }

@@ -37,7 +37,7 @@ export interface WireframeDigestIssueProps {
   title: string                 // "Why Your AI-Built Site Is Invisible to Google"
   kicker: string                // "SEO · Cluster 2.5"
   slug: string                  // "ai-built-website-not-showing-in-google"
-  lede: string                  // 2–3 sentence hook
+  lede: string                  // 2 to 3 sentence hook
   body: string                  // Full article text (plain, no HTML)
   ctaLabel?: string             // "Read the full post"
   linkedInPost?: string         // optional LinkedIn teaser copy
@@ -51,7 +51,7 @@ export default function WireframeDigestIssue({
   kicker         = "Agentic Engineering · Cluster 1.1",
   slug           = "what-is-agentic-engineering",
   lede           = "Everyone is calling their intern an AI engineer. Here is what the term actually means when real production software is involved.",
-  body           = "Lorem ipsum — paste article body here.",
+  body           = "Paste the article body here.",
   ctaLabel       = "Read the full post",
   linkedInPost,
   instagramCaption,
@@ -65,7 +65,7 @@ export default function WireframeDigestIssue({
         <Font fontFamily="Archivo" fallbackFontFamily="Helvetica" webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }} fontWeight={700} fontStyle="normal" />
         <Font fontFamily="Archivo" fallbackFontFamily="Helvetica" webFont={{ url: "https://fonts.gstatic.com/s/archivo/v19/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDJp8B1oJ0vyVA.woff2", format: "woff2" }} fontWeight={900} fontStyle="normal" />
       </Head>
-      <Preview>Wireframe Digest #{issueNumber} — {title}</Preview>
+      <Preview>Wireframe Digest #{issueNumber} · {title}</Preview>
 
       <Body style={{ background: NAVY, margin: 0, padding: 0, fontFamily: arch }}>
 
@@ -181,7 +181,7 @@ export default function WireframeDigestIssue({
           <Section style={{ background: PANEL, padding: "32px 32px", borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}` }}>
             <Container style={{ maxWidth: 600 }}>
               <Text style={{ margin: "0 0 20px", fontFamily: mono, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: STEEL }}>
-                Social copy — ready to paste
+                Social copy, ready to paste
               </Text>
               {linkedInPost && (
                 <>
@@ -216,7 +216,7 @@ export default function WireframeDigestIssue({
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 13, lineHeight: 1.6, color: STEEL }}>
               <Link href="https://paddockgavin.com/blog" style={{ color: STEEL }}>paddockgavin.com/blog</Link>
               {" "}&middot;{" "}
-              <Link href="https://gotimemotorsports.com" style={{ color: STEEL }}>A GoTime Motorsports company</Link>
+              <span style={{ color: STEEL }}>A GoTime Motorsports company</span>
             </Text>
             <Hr style={{ border: "none", borderTop: `1px solid ${BORDER}`, margin: "0 0 16px" }} />
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 12, color: "#4A5568" }}>

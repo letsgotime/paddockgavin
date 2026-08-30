@@ -4,7 +4,7 @@ import { Resend } from "resend"
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const RECIPIENTS = [
-  { email: "bekah@gotimemotorsports.com", name: "Bekah" },
+  { email: "bekahstallard@gmail.com",     name: "Bekah" },
   { email: "gavinbrooks20@gmail.com",      name: "Gavin" },
 ]
 
@@ -20,7 +20,7 @@ export async function POST() {
       resend.emails.send({
         from:    "PaddockGavin <noreply@paddockgavin.com>",
         to:      email,
-        subject: "PaddockGavin — Official Logo Files",
+        subject: "PaddockGavin · Official Logo Files",
         html: `
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +30,7 @@ export async function POST() {
     <tr><td>
       <p style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#8B93A7;margin:0 0 24px;">PaddockGavin · Brand Assets</p>
       <h1 style="font-size:28px;font-weight:900;letter-spacing:-.02em;color:#EDF1F6;margin:0 0 8px;">Hey ${name},</h1>
-      <p style="font-size:16px;line-height:1.6;color:#8B93A7;margin:0 0 32px;">Here are the official PaddockGavin logo files. Three formats — monogram, wordmark on dark, wordmark on light. SVG is the master; use it anywhere you need to resize.</p>
+      <p style="font-size:16px;line-height:1.6;color:#8B93A7;margin:0 0 32px;">Here are the official PaddockGavin logo files. Three formats: monogram, wordmark on dark, wordmark on light. SVG is the master; use it anywhere you need to resize.</p>
 
       <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 32px;">
         <tr>
@@ -64,7 +64,7 @@ export async function POST() {
         </tr>
       </table>
 
-      <p style="font-size:13px;color:#8B93A7;margin:0;">Questions — reply to this email.<br><span style="color:#EDF1F6;">PaddockGavin</span> · Nashville</p>
+      <p style="font-size:13px;color:#8B93A7;margin:0;">Questions? Reply to this email.<br><span style="color:#EDF1F6;">PaddockGavin</span> · Nashville</p>
     </td></tr>
   </table>
 </body>

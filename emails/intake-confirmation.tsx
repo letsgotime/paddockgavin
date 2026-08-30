@@ -45,7 +45,7 @@ export default function IntakeConfirmation({
   make       = "Porsche",
   model      = "GT3",
   year       = "2024",
-  budget     = "$200,000–$220,000",
+  budget     = "$200,000 to $220,000",
   notes      = "",
   refNumber  = "PG-2026-0001",
 }: IntakeConfirmationProps) {
@@ -119,12 +119,12 @@ export default function IntakeConfirmation({
               Request received, {firstName}.
             </Heading>
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 16.5, lineHeight: 1.65, color: BODY }}>
-              I&apos;ve got your spec. I work the duPont REGISTRY lot every day —
-              that means I see what&apos;s actually here before it goes online, and I know
+              I&apos;ve got your spec. I work the duPont REGISTRY lot every day, so
+              I see what&apos;s actually here before it goes online, and I know
               the sellers worth talking to.
             </Text>
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 16.5, lineHeight: 1.65, color: BODY }}>
-              Expect a reply within <span style={{ color: GOLD, fontWeight: 700 }}>24–48 hours</span>.
+              Expect a reply within <span style={{ color: GOLD, fontWeight: 700 }}>24 to 48 hours</span>.
               If something comes across the lot that matches exactly, you&apos;ll hear sooner.
             </Text>
           </Container>
@@ -139,8 +139,8 @@ export default function IntakeConfirmation({
                   Your request on file
                 </Text>
                 {[
-                  { label: "Vehicle",  value: [year, make, model].filter(Boolean).join(" ") || "—" },
-                  { label: "Budget",   value: budget || "—" },
+                  { label: "Vehicle",  value: [year, make, model].filter(Boolean).join(" ") || "Not given" },
+                  { label: "Budget",   value: budget || "Not given" },
                   { label: "Notes",    value: notes  || "None provided" },
                   { label: "Ref",      value: refNumber },
                 ].map(({ label, value }) => (
@@ -169,7 +169,7 @@ export default function IntakeConfirmation({
               What happens now
             </Text>
             {[
-              { n: "01", c: GOLD, text: "I review your spec against current inventory at duPont REGISTRY — Nashville and national." },
+              { n: "01", c: GOLD, text: "I review your spec against current inventory at duPont REGISTRY, Nashville and national." },
               { n: "02", c: GOLD,   text: "If there&apos;s a match or a lead, I reach back out directly. No middleman, no handoff." },
               { n: "03", c: TEAL,   text: "If the right car isn&apos;t there yet, I&apos;ll tell you that too. No invented urgency." },
             ].map(({ n, c, text }) => (
@@ -195,7 +195,7 @@ export default function IntakeConfirmation({
             </Text>
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 13, lineHeight: 1.6, color: STEEL }}>
               Nashville, TN &middot; <Link href="https://paddockgavin.com" style={{ color: STEEL }}>paddockgavin.com</Link>
-              {" "}&middot; <Link href="https://gotimemotorsports.com" style={{ color: STEEL }}>GoTime Motorsports</Link>
+              {" "}&middot; <span style={{ color: STEEL }}>GoTime Motorsports</span>
             </Text>
             <Hr style={{ border: "none", borderTop: `1px solid ${BORDER}`, margin: "0 0 16px" }} />
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 12, color: "#4A5568" }}>

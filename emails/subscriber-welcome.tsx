@@ -28,7 +28,7 @@ const BODY    = "#C8D0DB"
 const arch    = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const mono    = "'Courier New', Courier, monospace"
 
-// Four-bar speed stripe — exact brand order
+// Four-bar speed stripe, exact brand order
 const STRIPE = ["#F8B800", "#00D2BE", "#005185", "#848482"] as const
 
 interface SubscriberWelcomeProps {
@@ -125,7 +125,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
             </Heading>
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 16.5, lineHeight: 1.65, color: "#C8D0DB" }}>
               Signed up via <span style={{ color: GOLD }}>{label}</span>. That&apos;s noted.
-              You&apos;ll hear from me when there&apos;s something worth saying —
+              You&apos;ll hear from me when there&apos;s something worth saying:
               builds, breakdowns, and a few things I probably shouldn&apos;t post anywhere else.
             </Text>
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 16.5, lineHeight: 1.65, color: "#C8D0DB" }}>
@@ -159,7 +159,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
               </Column>
               <Column>
                 <Link href="https://paddockgavin.com/cars" style={{ fontFamily: arch, fontWeight: 700, fontSize: 15, color: WHITE, textDecoration: "none" }}>
-                  The Garage — 29 cars, every story
+                  The Garage · 29 cars, every story
                 </Link>
               </Column>
             </Row>
@@ -169,7 +169,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
               </Column>
               <Column>
                 <Link href="https://paddockgavin.com/supercar-iq" style={{ fontFamily: arch, fontWeight: 700, fontSize: 15, color: WHITE, textDecoration: "none" }}>
-                  Supercar IQ — launching soon
+                  Supercar IQ · launching soon
                 </Link>
               </Column>
             </Row>
@@ -179,7 +179,7 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
               </Column>
               <Column>
                 <Link href="https://paddockgavin.com/vlog" style={{ fontFamily: arch, fontWeight: 700, fontSize: 15, color: WHITE, textDecoration: "none" }}>
-                  The Vlog — @PaddockGavin
+                  The Vlog · @itspaddockgavin
                 </Link>
               </Column>
             </Row>
@@ -193,12 +193,13 @@ export default function SubscriberWelcome({ source = "site" }: SubscriberWelcome
               Digest. Develop. Deliver.
             </Text>
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 13, lineHeight: 1.6, color: STEEL }}>
-              Nashville, TN &middot; A <Link href="https://gotimemotorsports.com" style={{ color: STEEL }}>GoTime Motorsports</Link> company
+              Nashville, TN &middot; A <span style={{ color: STEEL }}>GoTime Motorsports</span> company
             </Text>
             <Hr style={{ border: "none", borderTop: `1px solid ${BORDER}`, margin: "0 0 16px" }} />
             <Text style={{ margin: 0, fontFamily: arch, fontSize: 12, color: "#4A5568" }}>
               You signed up at paddockgavin.com. No spam, ever.
               {" "}<Link href="https://paddockgavin.com/legal/privacy" style={{ color: "#4A5568" }}>Privacy policy</Link>.
+              {" "}<Link href="mailto:gavin@paddockgavin.com?subject=Unsubscribe" style={{ color: "#4A5568" }}>Unsubscribe</Link>.
             </Text>
           </Container>
         </Section>

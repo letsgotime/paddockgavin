@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-// Email destination is held server-side — never rendered client-side
+// Email destination is held server-side, never rendered client-side
 const TO = "paddock20auto@gmail.com"
 
 type InquiryKind = "ask-me" | "book-the-floor" | "creator-day-rsvp" | "intake" | "work"
@@ -23,11 +23,11 @@ interface InquiryBody {
 }
 
 const SUBJECTS: Record<InquiryKind, string> = {
-  "ask-me": "PaddockGavin — Ask Me",
-  "book-the-floor": "PaddockGavin — Book the Floor",
-  "creator-day-rsvp": "PaddockGavin — Creator Day RSVP",
-  intake: "PaddockGavin — Car Intake",
-  work: "PaddockGavin — Work With Us",
+  "ask-me": "PaddockGavin · Ask Me",
+  "book-the-floor": "PaddockGavin · Book the Floor",
+  "creator-day-rsvp": "PaddockGavin · Creator Day RSVP",
+  intake: "PaddockGavin · Car Intake",
+  work: "PaddockGavin · Work With Us",
 }
 
 function buildHtml(body: InquiryBody): string {
@@ -63,7 +63,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    const subject = SUBJECTS[body.kind] ?? "PaddockGavin — Inquiry"
+    const subject = SUBJECTS[body.kind] ?? "PaddockGavin · Inquiry"
+
+    // Replying to the alert should reach the person who wrote in. Only set it when
+    // reach is actually an address: Resend rejects the whole send on a bad reply_to.
+    const replyTo =
+      body.reach && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.reach.trim())
+        ? body.reach.trim()
+        : undefined
 
     // Use Resend if the API key is present; fall back to a logged no-op in dev
     const RESEND_API_KEY = process.env.RESEND_API_KEY
@@ -75,8 +82,9 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "PaddockGavin <onboarding@resend.dev>",
+          from: "PaddockGavin <noreply@paddockgavin.com>",
           to: [TO],
+          ...(replyTo ? { reply_to: replyTo } : {}),
           subject,
           html: buildHtml(body),
         }),
@@ -88,7 +96,7 @@ export async function POST(req: Request) {
       }
     } else {
       // Dev: log and succeed silently
-      console.log("[inquiry] No RESEND_API_KEY — would send:", { to: TO, subject, body })
+      console.log("[inquiry] No RESEND_API_KEY, would send:", { to: TO, subject, body })
     }
 
     return NextResponse.json({ ok: true })
