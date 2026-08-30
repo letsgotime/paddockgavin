@@ -10,7 +10,6 @@ import { CrmLogin } from "@/components/crm-login"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { RanchGallery } from "@/components/ranch-gallery"
 import { RanchMark } from "@/components/ranch-mark"
-import { SmoothScroll } from "@/components/smooth-scroll"
 
 /* Copy ran through RAIL Redline (paddock20.com/rail/redline), WARM / WEB PAGE / US.
    The run's invented specifics, a $750 VIP price and a January submission date,
@@ -208,7 +207,6 @@ export default function PistonPoweredRanchPage() {
 
   return (
     <>
-      <SmoothScroll />
       <SiteNav active="events" />
       <CrmLogin />
 
@@ -228,7 +226,7 @@ export default function PistonPoweredRanchPage() {
           .pgTeaserFacts{grid-template-columns:1fr;gap:14px}
         }
         .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center;will-change:transform}
-        .pgOpen{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;transition:grid-template-rows .6s cubic-bezier(.16,.84,.32,1),opacity .45s ease}
+        .pgOpen{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;contain:content;transition:grid-template-rows .6s cubic-bezier(.16,.84,.32,1),opacity .45s ease}
         .pgOpen.on{grid-template-rows:1fr;opacity:1}
         .pgOpen>div{min-height:0}
         .pgChev{display:inline-block;line-height:1;transition:transform .4s cubic-bezier(.16,.84,.32,1)}
@@ -242,11 +240,6 @@ export default function PistonPoweredRanchPage() {
         }
       `}</style>
 
-      <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 80, background: "rgba(255,255,255,.08)" }}>
-        <div style={{ height: "100%", width: "100%", transformOrigin: "left center",
-          transform: "scaleX(var(--pg-scroll, 0))", willChange: "transform",
-          background: "linear-gradient(90deg,var(--accent-strong),var(--second-strong))" }} />
-      </div>
 
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
         <div style={{ maxWidth: 1180, margin: "0 auto", background: "rgba(10,21,35,.72)", backdropFilter: "blur(22px) saturate(160%)", WebkitBackdropFilter: "blur(22px) saturate(160%)", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, padding: "10px clamp(14px,2.4vw,20px)", display: "flex", alignItems: "center", gap: 12 }}>
@@ -315,7 +308,7 @@ export default function PistonPoweredRanchPage() {
                 background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))",
                 border: "1px solid rgba(255,255,255,.16)",
                 borderTop: "3px solid var(--accent-strong)",
-                boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
+                boxShadow: "0 16px 38px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.05) inset",
                 clipPath: CLIP,
                 padding: "clamp(20px,3.2vw,34px)",
               }}
@@ -384,7 +377,7 @@ export default function PistonPoweredRanchPage() {
                       background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))",
                       border: "1px solid rgba(255,255,255,.16)",
                       borderTop: `3px solid ${a.tone}`,
-                      boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
+                      boxShadow: "0 16px 38px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.05) inset",
                       clipPath: CLIP,
                       padding: "clamp(22px,4vw,44px)",
                       display: "flex",
