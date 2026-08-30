@@ -424,9 +424,7 @@ export default function PistonPoweredRanchPage() {
                           </p>
                         ))}
 
-                        {a.id === "visit" ? (
-                          <VisitOps />
-                        ) : a.lists ? (
+                        {a.lists ? (
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                             {a.lists.map((l) => (
                               <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
@@ -556,6 +554,14 @@ export default function PistonPoweredRanchPage() {
       <div style={{ display: "flex", justifyContent: "center", paddingTop: 26 }}>
         <RanchMark width={74} opacity={0.9} label="Rancho Jaramillo, Unionville Tennessee" />
       </div>
+      <section id="ops" style={{ position: "relative", padding: "clamp(40px,7vh,86px) clamp(16px,5vw,40px) clamp(10px,2vh,24px)" }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+          <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)", fontWeight: 600 }}>
+            Live from the ranch
+          </span>
+          <VisitOps />
+        </div>
+      </section>
       <RanchGallery accent="var(--accent)" />
       <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>

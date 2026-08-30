@@ -12,8 +12,17 @@ const TITLE = "The Piston Powered Ranch · Tennessee Car Show · Oct 10 2026"
 const DESC =
   "Three hundred collector cars on twelve acres at Rancho Jaramillo, an hour south of Nashville. Saturday October 10, 2026. Admission is complimentary."
 const CARD = "https://paddockgavin.com/og/ppr-og-1200.jpg"
+/* The same event, shared from the ranch's own door, unfurls in the ranch's
+   own brand: the bull mark, Cinzel, Jaramillo Red on Ranch Ink. Canonical
+   and og:url still point at the hub, because that is the URL that outlives
+   the domain and holds the archive. Only the picture changes. */
+const RANCHO_CARD = "https://pistonpoweredranch.com/og/ppr-rancho-og.jpg"
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  const h = await headers()
+  const ranchDoor = h.get("x-pg-brand") === "pistonpoweredranch"
+  const card = ranchDoor ? RANCHO_CARD : CARD
+  return {
   title: TITLE,
   description: DESC,
   alternates: { canonical: "https://paddockgavin.com/events/pistonpoweredranch" },
@@ -25,14 +34,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: CARD,
+        url: card,
         width: 1200,
         height: 628,
         alt: "The Piston Powered Ranch at Rancho Jaramillo, Unionville Tennessee",
       },
     ],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESC, images: [CARD] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESC, images: [card] },
+  }
 }
 
 /**
