@@ -92,6 +92,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
           href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&display=swap"
         />
       ) : null}
+      <style>{`
+        /* The ranch marks are in the markup on both doors so the two are
+           byte identical, and this is what removes them from ours. It ships
+           unconditionally on purpose: putting it inside the rancho only block
+           is what let them appear on paddockgavin.com. */
+        [data-brand="paddockgavin"] .rjMark { display: none !important; }
+      `}</style>
       {ranchDoor ? (
         <style>{`
           /* Display type carries the brand; body copy stays Archivo in both,
@@ -112,7 +119,6 @@ export default async function Layout({ children }: { children: React.ReactNode }
           /* The modern ranch bit: hairline rules in Jaramillo Red under the
              section marks, the way a brand from a working property signs
              things rather than shouting. */
-          [data-brand="rancho"] .rjMark { display: flex; }
           [data-brand="rancho"] h2::after {
             content: "";
             display: block;
