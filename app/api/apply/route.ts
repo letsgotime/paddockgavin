@@ -13,12 +13,20 @@ import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "
  * not exist at all, and one to the desk that answers it.
  */
 
-/* Sending from pistonpoweredranch.com works: the domain is verified in Resend.
-   Receiving does not yet, because the forwarding rules are not set up, so
-   replies point at the inbox known to work. Change REPLY_TO to the role address
-   once entries@ and sponsors@ forward. */
-const REPLY_TO = "paddock20auto@gmail.com"
-const DESK = "paddock20auto@gmail.com"
+/* pistonpoweredranch.com now receives: MX points at Google Workspace, and the
+   role addresses are groups behind it. So replies go to the desk that owns the
+   surface rather than to one person's gmail.
+
+   Desk alerts are sent from noreply@ rather than from the role address, because
+   a Google group receiving a message whose From is the group's own address can
+   loop or be dropped. Different sender, same destination, no collision. */
+const NOREPLY = "The Piston Powered Ranch <noreply@pistonpoweredranch.com>"
+
+const DESK: Record<Kind, string> = {
+  entry: "entries@pistonpoweredranch.com",
+  "sponsor-application": "sponsors@pistonpoweredranch.com",
+  "vendor-application": "vendors@pistonpoweredranch.com",
+}
 
 type Kind = "entry" | "sponsor-application" | "vendor-application"
 
@@ -192,7 +200,7 @@ export async function POST(req: Request) {
         send({
           from: cfg.from,
           to: [reach],
-          reply_to: REPLY_TO,
+          reply_to: DESK[b.kind],
           subject: cfg.subject,
           html: renderRanchEmail(doc),
           text: renderRanchText(doc),
@@ -203,9 +211,9 @@ export async function POST(req: Request) {
     const desk = deskDoc(b.kind, name, org, reach, message, isEmail)
     jobs.push(
       send({
-        from: cfg.from,
-        to: [DESK],
-        reply_to: isEmail ? reach : REPLY_TO,
+        from: NOREPLY,
+        to: [DESK[b.kind]],
+        reply_to: isEmail ? reach : DESK[b.kind],
         subject: `${cfg.deskSubject}: ${name}${org ? `, ${org}` : ""}`,
         html: renderRanchEmail(desk),
         text: renderRanchText(desk),
