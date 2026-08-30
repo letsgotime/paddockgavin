@@ -39,6 +39,9 @@ export type Stage =
   | "vip"
   | "packages"
   | "invoice"
+  | "merch"
+  | "nudge"
+  | "thanks"
 
 export interface Vars {
   name?: string
@@ -61,6 +64,7 @@ export interface Vars {
   power?: string
   dueBy?: string
   payUrl?: string
+  shopUrl?: string
   /** Receipt fields. */
   amount?: string
   receiptNo?: string
@@ -175,6 +179,12 @@ function entryT(stage: Stage, v: Vars): Rendered | null {
 
     case "vip":
       return vipT("entry", v)
+
+    case "merch":
+      return merchT("entry", v)
+
+    case "thanks":
+      return thanksT("entry", v)
 
     case "week-before":
       return {
@@ -313,6 +323,12 @@ function vendorT(stage: Stage, v: Vars): Rendered | null {
     case "packages":
       return packagesVendorT(v)
 
+    case "nudge":
+      return nudgeT("vendor", v)
+
+    case "thanks":
+      return thanksT("vendor", v)
+
     case "invoice":
       return invoiceT("vendor", v)
 
@@ -433,6 +449,12 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
     case "packages":
       return packagesSponsorT(v)
 
+    case "nudge":
+      return nudgeT("sponsor", v)
+
+    case "thanks":
+      return thanksT("sponsor", v)
+
     case "invoice":
       return invoiceT("sponsor", v)
 
@@ -510,6 +532,8 @@ function spectatorT(stage: Stage, v: Vars): Rendered | null {
   }
 
   if (stage === "vip") return vipT("spectator", v)
+  if (stage === "merch") return merchT("spectator", v)
+  if (stage === "thanks") return thanksT("spectator", v)
 
   const r = RUN[stage]
   if (!r) return null
@@ -672,6 +696,80 @@ function invoiceT(surface: Surface, v: Vars): Rendered {
   }
 }
 
+/* Merch, offered before the day rather than sold at it. Nothing here names a
+   product, because the shop is not built yet and inventing a t-shirt is how an
+   email becomes a complaint. It names the reason and links the shop. */
+function merchT(surface: Surface, v: Vars): Rendered {
+  return {
+    from: FROM[surface],
+    subject: "Something to wear on the tenth",
+    preheader: "Ordered before, worn on the day. Nothing needed at the gate.",
+    eyebrow: "Before the day",
+    heading: "Something to wear on the tenth",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, this is the only thing we will try to sell you before October, and it is entirely optional.` },
+      { kind: "p", text: "Anything ordered now arrives before the tenth, so it can be worn on the day rather than carried home in a bag. Nothing is sold at the gate that is not sold here first." },
+      ...(v.shopUrl ? ([{ kind: "button", label: "See what there is", href: v.shopUrl }] as Block[]) : ([{ kind: "quiet", text: "[shop link to come]" }] as Block[])),
+      { kind: "quiet", text: "Entry is still free, and it stays free whether you buy anything or not." },
+    ],
+    signoff: "What is left after the cost of the day goes to Community Elementary School.",
+    unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
+  }
+}
+
+/* The follow up, for somebody who asked and then went quiet. One message, and
+   it gives them an easy way to say no, because a clean no is worth more in
+   September than a maybe that has to be chased in October. */
+function nudgeT(surface: Surface, v: Vars): Rendered {
+  const what = surface === "vendor" ? "a stall" : "a partnership"
+  return {
+    from: FROM[surface],
+    subject: "Still holding a space, and happy to let it go",
+    preheader: "One message, and an easy way to say no.",
+    eyebrow: "Following up",
+    heading: "Still holding a space",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, we spoke about ${what} for the tenth and I have not heard back, which is completely fine.` },
+      { kind: "p", text: "The reason I am writing is that the row fills, and I would rather hold your place deliberately than hold it by accident while somebody else asks for it." },
+      { kind: "p", text: "Two replies help either way. Say yes and I will send the invoice. Say not this year and I will take you off the list and stop writing, with no hard feelings and a standing invitation to come as our guest." },
+      { kind: "quiet", text: "A no in September costs nobody anything. A no in October costs somebody a space they wanted." },
+      WHEN,
+    ],
+    signoff: surface === "vendor" ? "Bekah Stallard, who reads this address." : "Gavin Brooks and Bekah Stallard, who both read this address.",
+  }
+}
+
+/* The day after. It closes the loop, and it is the only message of the year
+   that asks for nothing at all. Numbers are merge fields: the count of cars and
+   the amount raised are known on the eleventh, not now. */
+function thanksT(surface: Surface, v: Vars): Rendered {
+  const who =
+    surface === "entry" ? "for bringing a car"
+    : surface === "vendor" ? "for trading with us"
+    : surface === "sponsor" ? "for backing the day"
+    : "for coming"
+  return {
+    from: FROM[surface],
+    subject: "Thank you, and what the day did",
+    preheader: "What happened, what it raised, and nothing to do.",
+    eyebrow: "The day after",
+    heading: "Thank you",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, thank you ${who}.` },
+      {
+        kind: "facts",
+        rows: [
+          { label: "Cars on the field", value: v.org || gap },
+          { label: "Raised for the school", value: v.amount || gap },
+        ],
+      },
+      { kind: "p", text: "Photographs from the day follow next week and they are yours to use, with no watermark and nothing to credit." },
+      { kind: "quiet", text: "There is nothing to do with this email. It is the one message of the year that asks for nothing." },
+    ],
+    signoff: "Same ground, same weekend, next year. You will hear from us long before then.",
+  }
+}
+
 /* ---------------------------------------------------------------- receipts */
 
 function receiptT(surface: "vendor" | "sponsor", v: Vars): Rendered {
@@ -727,13 +825,17 @@ export const CATALOGUE: { surface: Surface; stage: Stage; label: string }[] = [
   { surface: "entry", stage: "waitlisted", label: "Car waitlisted" },
   { surface: "entry", stage: "declined", label: "Car not accepted" },
   { surface: "entry", stage: "vip", label: "Entrant, VIP upgrade" },
+  { surface: "entry", stage: "merch", label: "Entrant, merch" },
   { surface: "entry", stage: "week-before", label: "Entrant, week before" },
+  { surface: "entry", stage: "thanks", label: "Entrant, day after" },
   { surface: "vendor", stage: "received", label: "Stall enquiry received" },
   { surface: "vendor", stage: "approved", label: "Stall confirmed" },
   { surface: "vendor", stage: "waitlisted", label: "Stall waitlisted" },
   { surface: "vendor", stage: "declined", label: "Vendor row full" },
   { surface: "vendor", stage: "week-before", label: "Vendor, week before" },
+  { surface: "vendor", stage: "thanks", label: "Vendor, day after" },
   { surface: "vendor", stage: "packages", label: "Vendor packages" },
+  { surface: "vendor", stage: "nudge", label: "Vendor follow up" },
   { surface: "vendor", stage: "invoice", label: "Vendor invoice" },
   { surface: "vendor", stage: "receipt", label: "Vendor receipt" },
   { surface: "sponsor", stage: "received", label: "Partner enquiry received" },
@@ -741,14 +843,18 @@ export const CATALOGUE: { surface: Surface; stage: Stage; label: string }[] = [
   { surface: "sponsor", stage: "assets", label: "Artwork chase" },
   { surface: "sponsor", stage: "declined", label: "Partner declined" },
   { surface: "sponsor", stage: "week-before", label: "Sponsor, week before" },
+  { surface: "sponsor", stage: "thanks", label: "Sponsor, day after" },
   { surface: "sponsor", stage: "packages", label: "Sponsor packages" },
+  { surface: "sponsor", stage: "nudge", label: "Sponsor follow up" },
   { surface: "sponsor", stage: "invoice", label: "Sponsor invoice" },
   { surface: "sponsor", stage: "receipt", label: "Sponsor receipt" },
   { surface: "spectator", stage: "received", label: "RSVP counted" },
   { surface: "spectator", stage: "vip", label: "Spectator, VIP upgrade" },
+  { surface: "spectator", stage: "merch", label: "Spectator, merch" },
   { surface: "spectator", stage: "t-14", label: "Spectator, 14 days out" },
   { surface: "spectator", stage: "t-10", label: "Spectator, 10 days out" },
   { surface: "spectator", stage: "t-7", label: "Spectator, 7 days out" },
   { surface: "spectator", stage: "t-3", label: "Spectator, 3 days out" },
   { surface: "spectator", stage: "t-1", label: "Spectator, day before" },
+  { surface: "spectator", stage: "thanks", label: "Spectator, day after" },
 ]
