@@ -33,6 +33,12 @@ export type Stage =
   | "t-7"
   | "t-3"
   | "t-1"
+  /* Campaign stages. Free general admission stays the headline everywhere, so
+     these sell an upgrade to people who have already said yes, never a ticket
+     to people who think they need one. */
+  | "vip"
+  | "packages"
+  | "invoice"
 
 export interface Vars {
   name?: string
@@ -48,6 +54,13 @@ export interface Vars {
       because inventing one is what put a promise in here that nobody made. */
   body?: string
   body2?: string
+  /** Vendor and sponsor packages. Sizes are known; fees are not, so they are
+      merge fields rather than numbers I would be guessing at. */
+  size?: string
+  fee?: string
+  power?: string
+  dueBy?: string
+  payUrl?: string
   /** Receipt fields. */
   amount?: string
   receiptNo?: string
@@ -159,6 +172,9 @@ function entryT(stage: Stage, v: Vars): Rendered | null {
         ],
         signoff: "If you enter again next year, reply to this email and we will keep the thread so you are not starting from nothing.",
       }
+
+    case "vip":
+      return vipT("entry", v)
 
     case "week-before":
       return {
@@ -294,6 +310,12 @@ function vendorT(stage: Stage, v: Vars): Rendered | null {
     case "receipt":
       return receiptT("vendor", v)
 
+    case "packages":
+      return packagesVendorT(v)
+
+    case "invoice":
+      return invoiceT("vendor", v)
+
     default:
       return null
   }
@@ -408,6 +430,12 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
     case "receipt":
       return receiptT("sponsor", v)
 
+    case "packages":
+      return packagesSponsorT(v)
+
+    case "invoice":
+      return invoiceT("sponsor", v)
+
     default:
       return null
   }
@@ -481,6 +509,8 @@ function spectatorT(stage: Stage, v: Vars): Rendered | null {
     }
   }
 
+  if (stage === "vip") return vipT("spectator", v)
+
   const r = RUN[stage]
   if (!r) return null
 
@@ -521,6 +551,124 @@ function spectatorT(stage: Stage, v: Vars): Rendered | null {
         ? "Three hundred cars, chosen one at a time. We will see you tomorrow."
         : undefined,
     unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
+  }
+}
+
+/* ------------------------------------------------------------- campaigns */
+
+/* Free to attend is the headline and stays the headline. This is offered to a
+   warm list, after somebody has already said they are coming, and it never
+   implies a ticket is needed. The two tiers are quoted as ranges because ranges
+   are what exist: the perks that separate them are not written down yet, so
+   this names what is settled and stops. */
+function vipT(surface: Surface, v: Vars): Rendered {
+  return {
+    from: FROM[surface],
+    subject: "A different way to watch the tenth",
+    preheader: "Still free to come. This is the version with a chair and shade.",
+    eyebrow: "Optional, and only if you want it",
+    heading: "A different way to watch",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, you are already on the list and nothing about that changes. Entry is free and it stays free.` },
+      { kind: "p", text: "For anyone who would rather not spend six hours standing on grass, there are two ways to take the day at a slower pace. Both are limited by the number of chairs that fit, not by a sales target." },
+      {
+        kind: "facts",
+        rows: [
+          { label: "VIP Patio", value: "From $249" },
+          { label: "VIP Owners Quarters", value: "From $499" },
+        ],
+      },
+      { kind: "p", text: "What each includes is being finalised with the ranch this week, and we would rather send you the detail than a promise. Reply with the word patio or quarters and we will hold you a place and send the specifics the moment they are set." },
+      { kind: "quiet", text: "If you would rather just walk the field, do exactly that. Three hundred cars, free, and nobody will ask you for anything." },
+    ],
+    signoff: "Every dollar above the cost of putting the day on goes to Community Elementary School.",
+    unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
+  }
+}
+
+/* Vendors. Sizes and power are settled, fees are not, so the fee is a merge
+   field with no default and renders as an obvious gap rather than a number. */
+function packagesVendorT(v: Vars): Rendered {
+  return {
+    from: FROM.vendor,
+    subject: "Stall sizes, power, and what it costs",
+    preheader: "Four footprints, generator power, and how to pay.",
+    eyebrow: "Vendor row",
+    heading: "What is available",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, here is the whole picture so you can decide in one sitting.` },
+      {
+        kind: "facts",
+        rows: [
+          { label: "10 by 10", value: v.fee || gap },
+          { label: "10 by 20", value: gap },
+          { label: "20 by 20", value: gap },
+          { label: "40 by 40", value: gap },
+          { label: "Generator power", value: v.power || "Available, tell us your draw" },
+        ],
+      },
+      { kind: "p", text: "The row is kept deliberately short so every stall is worth walking to, which is also why we ask what you sell before we quote a size." },
+      { kind: "p", text: "Say which footprint you want and whether you need power. We invoice from this system, you pay from the invoice, and your pitch is held the moment it clears." },
+      ...(v.payUrl ? ([{ kind: "button", label: "Pay your invoice", href: v.payUrl }] as Block[]) : []),
+      WHEN,
+    ],
+    signoff: "Bekah Stallard answers this address and handles the row.",
+  }
+}
+
+/* Sponsors. No price appears here, by standing rule: the conversation decides
+   the number, and a figure in an email decides it badly. */
+function packagesSponsorT(v: Vars): Rendered {
+  return {
+    from: FROM.sponsor,
+    subject: "What a partnership looks like on the tenth",
+    preheader: "What is on the table, and what we need to know from you.",
+    eyebrow: "Partnership",
+    heading: "What is on the table",
+    blocks: [
+      { kind: "lead", text: `${v.org || "Your company"} in front of three hundred chosen cars, on a working ranch, on one Saturday in October.` },
+      { kind: "p", text: "We do not sell tiers off a sheet. What is worth doing depends on what you actually want out of the day, and the honest version of that conversation takes ten minutes rather than a deck." },
+      { kind: "p", text: "What is settled and worth knowing before it:" },
+      {
+        kind: "list",
+        items: [
+          "Three hundred cars, every one chosen rather than first come",
+          "Free for the public, so the gate is not a filter on who sees you",
+          "One working ranch, one day, no competing stages",
+          "The day benefits Community Elementary School",
+        ],
+      },
+      { kind: "p", text: "Tell us what a good outcome looks like for you and we will tell you straight whether the tenth can deliver it. Where it can, we invoice from this system and everything runs through one person from there." },
+      WHEN,
+    ],
+    signoff: "Gavin Brooks and Bekah Stallard both read this address.",
+  }
+}
+
+/* An invoice is an ask for money, so it says exactly what for, exactly how
+   much, and exactly by when. Nothing else belongs in it. */
+function invoiceT(surface: Surface, v: Vars): Rendered {
+  return {
+    from: FROM[surface],
+    subject: `Invoice ${v.receiptNo || ""}`.trim() || "Your invoice",
+    preheader: "What it covers, what it costs, and the date it is due.",
+    eyebrow: "Invoice",
+    heading: "Ready when you are",
+    blocks: [
+      { kind: "lead", text: `${first(v)}, here is the invoice we agreed.` },
+      {
+        kind: "facts",
+        rows: [
+          { label: "Invoice", value: v.receiptNo || gap },
+          { label: "For", value: v.covers || gap },
+          { label: "Amount", value: v.amount || gap },
+          { label: "Due by", value: v.dueBy || gap },
+        ],
+      },
+      ...(v.payUrl ? ([{ kind: "button", label: "Pay this invoice", href: v.payUrl }] as Block[]) : []),
+      { kind: "p", text: "Paying it holds your place. Until it clears the space stays on the list, which is not us being difficult: it is the only fair way to run a row that fills." },
+      { kind: "quiet", text: "A receipt follows automatically the moment it clears. If anything above is wrong, reply and we will reissue it the same day rather than ask you to pay it anyway." },
+    ],
   }
 }
 
@@ -578,20 +726,26 @@ export const CATALOGUE: { surface: Surface; stage: Stage; label: string }[] = [
   { surface: "entry", stage: "approved", label: "Car accepted" },
   { surface: "entry", stage: "waitlisted", label: "Car waitlisted" },
   { surface: "entry", stage: "declined", label: "Car not accepted" },
+  { surface: "entry", stage: "vip", label: "Entrant, VIP upgrade" },
   { surface: "entry", stage: "week-before", label: "Entrant, week before" },
   { surface: "vendor", stage: "received", label: "Stall enquiry received" },
   { surface: "vendor", stage: "approved", label: "Stall confirmed" },
   { surface: "vendor", stage: "waitlisted", label: "Stall waitlisted" },
   { surface: "vendor", stage: "declined", label: "Vendor row full" },
   { surface: "vendor", stage: "week-before", label: "Vendor, week before" },
+  { surface: "vendor", stage: "packages", label: "Vendor packages" },
+  { surface: "vendor", stage: "invoice", label: "Vendor invoice" },
   { surface: "vendor", stage: "receipt", label: "Vendor receipt" },
   { surface: "sponsor", stage: "received", label: "Partner enquiry received" },
   { surface: "sponsor", stage: "approved", label: "Partnership confirmed" },
   { surface: "sponsor", stage: "assets", label: "Artwork chase" },
   { surface: "sponsor", stage: "declined", label: "Partner declined" },
   { surface: "sponsor", stage: "week-before", label: "Sponsor, week before" },
+  { surface: "sponsor", stage: "packages", label: "Sponsor packages" },
+  { surface: "sponsor", stage: "invoice", label: "Sponsor invoice" },
   { surface: "sponsor", stage: "receipt", label: "Sponsor receipt" },
   { surface: "spectator", stage: "received", label: "RSVP counted" },
+  { surface: "spectator", stage: "vip", label: "Spectator, VIP upgrade" },
   { surface: "spectator", stage: "t-14", label: "Spectator, 14 days out" },
   { surface: "spectator", stage: "t-10", label: "Spectator, 10 days out" },
   { surface: "spectator", stage: "t-7", label: "Spectator, 7 days out" },
