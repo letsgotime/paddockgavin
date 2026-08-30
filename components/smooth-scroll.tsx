@@ -22,10 +22,38 @@ import { useEffect } from "react"
  */
 export function SmoothScroll() {
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (reduced.matches) return
+    const root = document.documentElement
 
-    let lenis: { raf: (t: number) => void; destroy: () => void } | null = null
+    /* Progress is published as a custom property rather than an event, because
+       Lenis swallows the native scroll event and anything listening for one
+       goes quiet. Whoever wants it reads var(--pg-scroll); nothing has to know
+       this component exists. */
+    const publish = (value: number) => {
+      root.style.setProperty("--pg-scroll", String(Math.max(0, Math.min(1, value))))
+    }
+    const fromDom = () => {
+      const max = root.scrollHeight - root.clientHeight
+      publish(max > 0 ? root.scrollTop / max : 0)
+    }
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (reduced.matches) {
+      // No inertia, but the bar still has to move.
+      let ticking = false
+      const onScroll = () => {
+        if (ticking) return
+        ticking = true
+        requestAnimationFrame(() => {
+          ticking = false
+          fromDom()
+        })
+      }
+      fromDom()
+      window.addEventListener("scroll", onScroll, { passive: true })
+      return () => window.removeEventListener("scroll", onScroll)
+    }
+
+    let lenis: { raf: (t: number) => void; destroy: () => void; on: (e: string, cb: (a: { scroll: number; limit: number }) => void) => void } | null = null
     let frame = 0
     let cancelled = false
 
@@ -46,6 +74,10 @@ export function SmoothScroll() {
         autoRaf: false,
       })
       lenis = instance as unknown as typeof lenis
+      instance.on("scroll", ({ scroll, limit }: { scroll: number; limit: number }) => {
+        publish(limit > 0 ? scroll / limit : 0)
+      })
+      fromDom()
 
       const loop = (time: number) => {
         instance.raf(time)

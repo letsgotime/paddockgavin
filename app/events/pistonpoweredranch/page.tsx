@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import VisitOps from "./VisitOps"
 import Image from "next/image"
 import Link from "next/link"
@@ -165,7 +165,6 @@ const ACTS: Act[] = [
 export default function PistonPoweredRanchPage() {
   const [now, setNow] = useState(Date.now())
   const [open, setOpen] = useState<string | null>("look")
-  const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -188,30 +187,10 @@ export default function PistonPoweredRanchPage() {
       els.forEach((e) => io?.observe(e))
     }
     const t = setInterval(() => setNow(Date.now()), 60000)
-    /* The progress bar used to run through React state, so every scroll tick
-       re-rendered this whole component. That is what made it bump. It now
-       writes a transform straight to the one element that changes, once per
-       animation frame, which the compositor handles without touching layout
-       or React at all. */
-    let ticking = false
-    const paintProgress = () => {
-      ticking = false
-      const h = document.documentElement
-      const max = h.scrollHeight - h.clientHeight
-      const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0
-      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`
-    }
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(paintProgress)
-    }
-    paintProgress()
-    window.addEventListener("scroll", onScroll, { passive: true })
+
     return () => {
       io?.disconnect()
       clearInterval(t)
-      window.removeEventListener("scroll", onScroll)
     }
   }, [open])
 
@@ -258,8 +237,8 @@ export default function PistonPoweredRanchPage() {
       `}</style>
 
       <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 80, background: "rgba(255,255,255,.08)" }}>
-        <div ref={barRef} style={{ height: "100%", width: "100%", transformOrigin: "left center",
-          transform: "scaleX(0)", willChange: "transform",
+        <div style={{ height: "100%", width: "100%", transformOrigin: "left center",
+          transform: "scaleX(var(--pg-scroll, 0))", willChange: "transform",
           background: "linear-gradient(90deg,#F2C94C,#00D2BE)" }} />
       </div>
 
