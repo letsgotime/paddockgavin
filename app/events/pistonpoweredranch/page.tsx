@@ -24,6 +24,11 @@ const TEASER: string | null = "/video/teaser.mp4"
 const SHOW_DAY = "2026-10-10"
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+/* The display face is the brand's. Cinzel on the ranch's own domain,
+   Archivo in our hub. Body copy stays Archivo in both: a serif running
+   text this long reads worse, and "more branded" is not the same as
+   better. */
+const DISPLAY = "var(--display, Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif)"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
 const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
@@ -57,7 +62,7 @@ const ACTS: Act[] = [
     ],
     img: "/images/ranch/ppr-rail.jpg",
     focal: "center 34%",
-    tone: "#F2C94C",
+    tone: "var(--accent)",
     cta: { label: "Tell us you are coming", href: `${RANCH}/spectate` },
   },
   {
@@ -75,12 +80,12 @@ const ACTS: Act[] = [
     lists: [
       {
         head: "The day",
-        tone: "#F2C94C",
+        tone: "var(--accent)",
         items: ["Saturday, October 10, 2026", "Nine in the morning to three", "Spectator admission complimentary"],
       },
       {
         head: "Finding it",
-        tone: "#00D2BE",
+        tone: "var(--second)",
         items: ["Rancho Jaramillo, Unionville TN", "An hour south of Nashville", "In off Highway 41-A"],
       },
     ],
@@ -97,11 +102,11 @@ const ACTS: Act[] = [
     ],
     img: "/images/ranch/ppr-dusk.jpg",
     focal: "center 60%",
-    tone: "#F2C94C",
+    tone: "var(--accent)",
     tiers: [
       {
         name: "The Terrace",
-        tone: "#00D2BE",
+        tone: "var(--second)",
         line: "The hosted room, on the rail above the show field.",
         items: [
           "Shaded tent, table service, air kept moving",
@@ -113,7 +118,7 @@ const ACTS: Act[] = [
       },
       {
         name: "The Owner's Table",
-        tone: "#F2C94C",
+        tone: "var(--accent)",
         line: "Everything on The Terrace, and the part of the ranch the crowd never reaches.",
         items: [
           "The quiet ride out by golf cart or hay ride",
@@ -134,11 +139,11 @@ const ACTS: Act[] = [
     body: ["Waiting in silence is its own answer, and we would rather give you a real one."],
     img: "/images/ranch/ppr-barn.jpg",
     focal: "center 46%",
-    tone: "#00D2BE",
+    tone: "var(--second)",
     lists: [
       {
         head: "On the field",
-        tone: "#00D2BE",
+        tone: "var(--second)",
         items: ["Exotics", "Muscle", "Golf carts that turn heads, in two, four or six seats"],
       },
       { head: "Not this time", tone: "#E5484D", items: ["Trucks", "SUVs"] },
@@ -239,17 +244,17 @@ export default function PistonPoweredRanchPage() {
       <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 80, background: "rgba(255,255,255,.08)" }}>
         <div style={{ height: "100%", width: "100%", transformOrigin: "left center",
           transform: "scaleX(var(--pg-scroll, 0))", willChange: "transform",
-          background: "linear-gradient(90deg,#F2C94C,#00D2BE)" }} />
+          background: "linear-gradient(90deg,var(--accent),var(--second))" }} />
       </div>
 
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
         <div style={{ maxWidth: 1180, margin: "0 auto", background: "rgba(10,21,35,.72)", backdropFilter: "blur(22px) saturate(160%)", WebkitBackdropFilter: "blur(22px) saturate(160%)", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, padding: "10px clamp(14px,2.4vw,20px)", display: "flex", alignItems: "center", gap: 12 }}>
-          <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "#F2C94C", animation: "pgPulse 2.4s ease-in-out infinite", flex: "0 0 auto" }} />
+          <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "pgPulse 2.4s ease-in-out infinite", flex: "0 0 auto" }} />
           <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             Saturday, October 10
           </span>
           <i aria-hidden="true" style={{ flex: "1 1 auto" }} />
-          <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "#00D2BE", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+          <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--second)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
             {days} days
           </span>
         </div>
@@ -260,13 +265,13 @@ export default function PistonPoweredRanchPage() {
           <Image className="pgKen" src="/images/ranch/ppr-hero.jpg" alt="The pasture at Rancho Jaramillo before the field is set" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 62%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.96) 6%,rgba(10,21,35,.35) 52%,rgba(10,21,35,.55) 100%)" }} />
           <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(20px,5vw,40px) clamp(52px,10vh,110px)", display: "flex", flexDirection: "column", gap: 18 }}>
-            <span data-r="" style={{ fontFamily: MONO, fontSize: "clamp(10.5px,1.3vw,12px)", letterSpacing: ".26em", textTransform: "uppercase", color: "#F2C94C" }}>
+            <span data-r="" style={{ fontFamily: MONO, fontSize: "clamp(10.5px,1.3vw,12px)", letterSpacing: ".26em", textTransform: "uppercase", color: "var(--accent)" }}>
               October 10, 2026 &middot; Rancho Jaramillo &middot; Unionville, Tennessee
             </span>
             <h1 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.032em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch", ["--d" as string]: "90ms" }}>
               Three hundred cars
               <br />
-              <span style={{ color: "#F2C94C" }}>twelve curated acres</span>
+              <span style={{ color: "var(--accent)" }}>twelve curated acres</span>
             </h1>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(19px,2.6vw,26px)", lineHeight: 1.3, color: "#FFFFFF", maxWidth: "42ch", ["--d" as string]: "180ms" }}>
               Open to everyone, for one Saturday.
@@ -275,7 +280,7 @@ export default function PistonPoweredRanchPage() {
               The curation of a concours lawn, on ground that still runs cattle. Three hundred collector cars across twelve acres, an hour south of Nashville.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <a href="#look" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -307,7 +312,7 @@ export default function PistonPoweredRanchPage() {
                 backdropFilter: "blur(30px) saturate(180%)",
                 WebkitBackdropFilter: "blur(30px) saturate(180%)",
                 border: "1px solid rgba(255,255,255,.16)",
-                borderTop: "3px solid #F2C94C",
+                borderTop: "3px solid var(--accent)",
                 boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
                 clipPath: CLIP,
                 padding: "clamp(20px,3.2vw,34px)",
@@ -329,7 +334,7 @@ export default function PistonPoweredRanchPage() {
               </div>
 
               <div className="pgTeaserSay">
-                <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
+                <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>
                   One Saturday in October
                 </span>
                 <h2 style={{ margin: "10px 0 0", fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4vw,44px)", lineHeight: 1.02, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF" }}>
@@ -352,7 +357,7 @@ export default function PistonPoweredRanchPage() {
                     </div>
                   ))}
                 </div>
-                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Tell us you are coming
                 </a>
               </div>
@@ -491,7 +496,7 @@ export default function PistonPoweredRanchPage() {
           </div>
           <div style={{ position: "relative", marginTop: "-56svh", paddingBottom: "clamp(40px,9vh,96px)" }}>
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)", display: "flex", flexDirection: "column", gap: 18 }}>
-              <span data-r="" style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "#00D2BE" }}>
+              <span data-r="" style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--second)" }}>
                 The land
               </span>
               <h2 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.6vw,50px)", lineHeight: 1.02, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch", ["--d" as string]: "80ms" }}>
@@ -522,7 +527,7 @@ export default function PistonPoweredRanchPage() {
 
         <section style={{ position: "relative", padding: "clamp(48px,10vh,120px) clamp(16px,5vw,40px) clamp(60px,12vh,140px)", background: "linear-gradient(180deg,rgba(10,21,35,1),rgba(14,26,42,1))" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start" }}>
-            <span data-r="" style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "#F2C94C" }}>
+            <span data-r="" style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>
               Why we run it
             </span>
             <h2 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(26px,4.4vw,46px)", lineHeight: 1.03, letterSpacing: "-.026em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "18ch", ["--d" as string]: "80ms" }}>
@@ -532,7 +537,7 @@ export default function PistonPoweredRanchPage() {
               The school is down the road from the gate. A good day is better shared, so we open the field, look after the community that makes it possible, and come back and do it again.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", ["--d" as string]: "210ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <Link href="/events" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -543,10 +548,10 @@ export default function PistonPoweredRanchPage() {
         </section>
       </main>
 
-      <RanchGallery accent="#F2C94C" />
+      <RanchGallery accent="var(--accent)" />
       <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <RsvpBlock eventId={EVENT_ID} accent="#F2C94C" source="event-page" />
+          <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" source="event-page" />
         </div>
       </section>
       <SiteFooter />
