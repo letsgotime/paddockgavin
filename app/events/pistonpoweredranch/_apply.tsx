@@ -208,13 +208,22 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     const reach = f.reach.trim()
     const payload = { kind: form.kind, ...f }
 
+    /* submissions.type is constrained to vehicle, vendor or sponsor. The form
+       kinds are named for the page they sit on, so they have to be mapped
+       rather than passed straight through. */
+    const DB_TYPE: Record<string, string> = {
+      entry: "vehicle",
+      "sponsor-application": "sponsor",
+      "vendor-application": "vendor",
+    }
+
     try {
       const client = db()
       if (client) {
         const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
         const saved = await client.from("submissions").insert([
           {
-            type: form.kind,
+            type: DB_TYPE[form.kind] ?? "vehicle",
             applicant_name: f.name.trim(),
             email: isEmail ? reach.toLowerCase() : "",
             phone: isEmail ? null : reach,
