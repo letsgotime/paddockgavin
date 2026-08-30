@@ -31,10 +31,11 @@ export function SmoothScroll() {
     const publish = (value: number) => {
       root.style.setProperty("--pg-scroll", String(Math.max(0, Math.min(1, value))))
     }
-    const fromDom = () => {
+    const domProgress = () => {
       const max = root.scrollHeight - root.clientHeight
-      publish(max > 0 ? root.scrollTop / max : 0)
+      return max > 0 ? root.scrollTop / max : 0
     }
+    const fromDom = () => publish(domProgress())
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
     if (reduced.matches) {
@@ -72,15 +73,27 @@ export function SmoothScroll() {
         // Native on touch. Phones do this better than any library.
         syncTouch: false,
         autoRaf: false,
+        // the page's own #look, #visit, #vip anchors
+        anchors: true,
       })
       lenis = instance as unknown as typeof lenis
-      instance.on("scroll", ({ scroll, limit }: { scroll: number; limit: number }) => {
-        publish(limit > 0 ? scroll / limit : 0)
-      })
       fromDom()
 
+      /* Published from the frame loop rather than from Lenis's scroll event.
+         The event did not fire here at all, and even where it does it misses
+         anything that moves the page without going through Lenis: an anchor
+         jump, a browser scroll restore, a programmatic scrollTo. Reading the
+         position once a frame is correct whatever moved it, and one property
+         write per frame costs nothing the compositor notices. */
+      let last = -1
       const loop = (time: number) => {
         instance.raf(time)
+        const now = (instance as unknown as { progress?: number }).progress
+        const value = typeof now === "number" && Number.isFinite(now) ? now : domProgress()
+        if (Math.abs(value - last) > 0.0005) {
+          last = value
+          publish(value)
+        }
         frame = requestAnimationFrame(loop)
       }
       frame = requestAnimationFrame(loop)
