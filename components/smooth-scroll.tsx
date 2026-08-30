@@ -19,28 +19,27 @@ import { useEffect } from "react"
 export function SmoothScroll() {
   useEffect(() => {
     const root = document.documentElement
-    let ticking = false
     let last = -1
 
+    /* Written straight from the scroll event rather than through
+       requestAnimationFrame. Browsers already coalesce passive scroll events
+       to about frame rate, and one custom property write is far too cheap to
+       need throttling. It also removes a real dependency: rAF does not run in
+       a background tab, and a progress bar that only works while you are
+       looking at it is a progress bar with a bug in it. */
     const publish = () => {
-      ticking = false
       const max = root.scrollHeight - root.clientHeight
       const value = max > 0 ? Math.min(1, Math.max(0, root.scrollTop / max)) : 0
       if (Math.abs(value - last) < 0.0005) return
       last = value
       root.style.setProperty("--pg-scroll", String(value))
     }
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(publish)
-    }
 
     publish()
-    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("scroll", publish, { passive: true })
     window.addEventListener("resize", publish, { passive: true })
     return () => {
-      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("scroll", publish)
       window.removeEventListener("resize", publish)
     }
   }, [])
