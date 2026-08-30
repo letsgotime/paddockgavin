@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ScrollProgress } from "@/components/scroll-progress"
+import { RebrandNotice } from "@/components/rebrand-notice"
 import "./globals.css"
 
 const _archivo = Archivo({
@@ -122,6 +123,7 @@ export default function RootLayout({
           <div style={{ flex: 1, background: "#848482" }} />
         </div>
         <ScrollProgress />
+        <RebrandNotice />
         {children}
         <Analytics />
       </body>
