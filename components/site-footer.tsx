@@ -204,10 +204,10 @@ export function SiteFooter() {
               { href: "/gallery",   label: "The gallery" },
               { href: "/lot-ops",   label: "Lot ops in action" },
               { href: "/donuts",    label: "Donuts with duPont" },
-              { href: "/creator",   label: "Creator Day" },
+              { href: "/events/creator-day", label: "Creator Day" },
               { href: "/book",      label: "Book it" },
               { href: "/intake",    label: "Find me a car" },
-              { href: "/work",      label: "Buy from duPont" },
+              { href: "https://www.dupontregistry.com", label: "Buy from duPont" },
             ].map((l) => (
               <Link
                 key={l.href}

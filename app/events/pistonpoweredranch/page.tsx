@@ -257,7 +257,7 @@ export default function PistonPoweredRanchPage() {
 
 
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
-        <div style={{ maxWidth: 1180, margin: "0 auto", background: "rgba(10,21,35,.72)", backdropFilter: "blur(22px) saturate(160%)", WebkitBackdropFilter: "blur(22px) saturate(160%)", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, padding: "10px clamp(14px,2.4vw,20px)", display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ maxWidth: 1180, margin: "0 auto", background: "linear-gradient(180deg,rgba(12,24,38,.94),rgba(10,21,35,.9))", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, padding: "10px clamp(14px,2.4vw,20px)", display: "flex", alignItems: "center", gap: 12 }}>
           <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-strong)", animation: "pgPulse 2.4s ease-in-out infinite", flex: "0 0 auto" }} />
           <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             Saturday, October 10
@@ -431,7 +431,7 @@ export default function PistonPoweredRanchPage() {
                         {a.lists ? (
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                             {a.lists.map((l) => (
-                              <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
+                              <div key={l.head} style={{ flex: "1 1 240px", border: `1px solid ${l.tone}44`, borderTop: `3px solid ${l.tone}`, background: "linear-gradient(160deg,rgba(23,40,60,.84),rgba(14,27,43,.9))", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 8 }}>
                                 <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: l.tone }}>{l.head}</span>
                                 {l.items.map((it) => (
                                   <span key={it} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(14.5px,1.5vw,16px)", color: "#EDF1F6" }}>{it}</span>
@@ -444,7 +444,7 @@ export default function PistonPoweredRanchPage() {
                         {a.tiers && (
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: 14 }}>
                             {a.tiers.map((t) => (
-                              <div key={t.name} className="pgTile" style={{ border: `1px solid ${t.tone}3d`, borderTop: `3px solid ${t.tone}`, background: "rgba(10,21,35,.4)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
+                              <div key={t.name} className="pgTile" style={{ border: `1px solid ${t.tone}3d`, borderTop: `3px solid ${t.tone}`, background: "linear-gradient(160deg,rgba(23,40,60,.84),rgba(14,27,43,.9))", clipPath: CLIP_SM, padding: "20px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
                                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(19px,2.3vw,24px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: t.tone }}>{t.name}</span>
                                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#E7ECF3" }}>{t.line}</span>
                                 <ul style={{ margin: "4px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7 }}>
@@ -463,7 +463,7 @@ export default function PistonPoweredRanchPage() {
                         {a.grid && (
                           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(232px,1fr))", gap: 12 }}>
                             {a.grid.map((g) => (
-                              <div key={g.t} className="pgTile" style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 6 }}>
+                              <div key={g.t} className="pgTile" style={{ border: "1px solid rgba(255,255,255,.12)", background: "linear-gradient(160deg,rgba(23,40,60,.84),rgba(14,27,43,.9))", clipPath: CLIP_SM, padding: "16px 18px", display: "flex", flexDirection: "column", gap: 6 }}>
                                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 15, letterSpacing: "-.008em", textTransform: "uppercase", color: a.tone }}>{g.t}</span>
                                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C4CCD6" }}>{g.b}</span>
                               </div>

@@ -196,7 +196,7 @@ export default function GlossGamePage() {
             </div>
             <div style={{ marginTop: "clamp(24px,4vw,36px)", display: "flex", flexWrap: "wrap", gap: "8px 24px" }}>
               <a href="https://instagram.com/PaddockGavin" target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>Tag your shelf &middot; @PaddockGavin</a>
-              <a href="https://gotimemotorsports.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>gotimemotorsports.com</a>
+              <span style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#00D2BE" }}>GoTime Motorsports</span>
               <a href="https://www.etsy.com/shop/GoTimeMotorsports" target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>The Etsy shelf</a>
             </div>
           </section>
