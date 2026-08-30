@@ -245,12 +245,12 @@ export default function PistonPoweredRanchPage() {
       <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 80, background: "rgba(255,255,255,.08)" }}>
         <div style={{ height: "100%", width: "100%", transformOrigin: "left center",
           transform: "scaleX(var(--pg-scroll, 0))", willChange: "transform",
-          background: "linear-gradient(90deg,var(--accent),var(--second))" }} />
+          background: "linear-gradient(90deg,var(--accent-strong),var(--second-strong))" }} />
       </div>
 
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
         <div style={{ maxWidth: 1180, margin: "0 auto", background: "rgba(10,21,35,.72)", backdropFilter: "blur(22px) saturate(160%)", WebkitBackdropFilter: "blur(22px) saturate(160%)", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, padding: "10px clamp(14px,2.4vw,20px)", display: "flex", alignItems: "center", gap: 12 }}>
-          <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "pgPulse 2.4s ease-in-out infinite", flex: "0 0 auto" }} />
+          <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-strong)", animation: "pgPulse 2.4s ease-in-out infinite", flex: "0 0 auto" }} />
           <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             Saturday, October 10
           </span>
@@ -272,7 +272,7 @@ export default function PistonPoweredRanchPage() {
             <h1 data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.032em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch", ["--d" as string]: "90ms" }}>
               Three hundred cars
               <br />
-              <span style={{ color: "var(--accent)" }}>twelve curated acres</span>
+              <span style={{ color: "var(--accent-strong)" }}>twelve curated acres</span>
             </h1>
             <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 700, fontSize: "clamp(19px,2.6vw,26px)", lineHeight: 1.3, color: "#FFFFFF", maxWidth: "42ch", ["--d" as string]: "180ms" }}>
               Open to everyone, for one Saturday.
@@ -281,7 +281,7 @@ export default function PistonPoweredRanchPage() {
               The curation of a concours lawn, on ground that still runs cattle. Three hundred collector cars across twelve acres, an hour south of Nashville.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <a href="#look" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -314,7 +314,7 @@ export default function PistonPoweredRanchPage() {
               style={{
                 background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))",
                 border: "1px solid rgba(255,255,255,.16)",
-                borderTop: "3px solid var(--accent)",
+                borderTop: "3px solid var(--accent-strong)",
                 boxShadow: "0 34px 100px rgba(0,0,0,.58), 0 2px 0 rgba(255,255,255,.05) inset",
                 clipPath: CLIP,
                 padding: "clamp(20px,3.2vw,34px)",
@@ -359,7 +359,7 @@ export default function PistonPoweredRanchPage() {
                     </div>
                   ))}
                 </div>
-                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Tell us you are coming
                 </a>
               </div>
@@ -536,7 +536,7 @@ export default function PistonPoweredRanchPage() {
               The school is down the road from the gate. A good day is better shared, so we open the field, look after the community that makes it possible, and come back and do it again.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", ["--d" as string]: "210ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent)", color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <Link href="/events" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
