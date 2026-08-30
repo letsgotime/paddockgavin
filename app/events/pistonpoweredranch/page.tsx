@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import VisitOps from "./VisitOps"
 import Image from "next/image"
 import Link from "next/link"
@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { CrmLogin } from "@/components/crm-login"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { RanchGallery } from "@/components/ranch-gallery"
+import { SmoothScroll } from "@/components/smooth-scroll"
 
 /* Copy ran through RAIL Redline (paddock20.com/rail/redline), WARM / WEB PAGE / US.
    The run's invented specifics, a $750 VIP price and a January submission date,
@@ -164,7 +165,7 @@ const ACTS: Act[] = [
 export default function PistonPoweredRanchPage() {
   const [now, setNow] = useState(Date.now())
   const [open, setOpen] = useState<string | null>("look")
-  const [progress, setProgress] = useState(0)
+  const barRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -187,12 +188,25 @@ export default function PistonPoweredRanchPage() {
       els.forEach((e) => io?.observe(e))
     }
     const t = setInterval(() => setNow(Date.now()), 60000)
-    const onScroll = () => {
+    /* The progress bar used to run through React state, so every scroll tick
+       re-rendered this whole component. That is what made it bump. It now
+       writes a transform straight to the one element that changes, once per
+       animation frame, which the compositor handles without touching layout
+       or React at all. */
+    let ticking = false
+    const paintProgress = () => {
+      ticking = false
       const h = document.documentElement
       const max = h.scrollHeight - h.clientHeight
-      setProgress(max > 0 ? Math.min(1, h.scrollTop / max) : 0)
+      const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0
+      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`
     }
-    onScroll()
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(paintProgress)
+    }
+    paintProgress()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
       io?.disconnect()
@@ -209,6 +223,7 @@ export default function PistonPoweredRanchPage() {
 
   return (
     <>
+      <SmoothScroll />
       <SiteNav active="events" />
       <CrmLogin />
 
@@ -227,7 +242,7 @@ export default function PistonPoweredRanchPage() {
           .pgTeaserFilm{max-width:min(78vw,340px);margin:0 auto;width:100%}
           .pgTeaserFacts{grid-template-columns:1fr;gap:14px}
         }
-        .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center}
+        .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center;will-change:transform}
         .pgOpen{display:grid;grid-template-rows:0fr;opacity:0;overflow:hidden;transition:grid-template-rows .6s cubic-bezier(.16,.84,.32,1),opacity .45s ease}
         .pgOpen.on{grid-template-rows:1fr;opacity:1}
         .pgOpen>div{min-height:0}
@@ -243,7 +258,9 @@ export default function PistonPoweredRanchPage() {
       `}</style>
 
       <div aria-hidden="true" style={{ position: "fixed", top: 0, left: 0, right: 0, height: 2, zIndex: 80, background: "rgba(255,255,255,.08)" }}>
-        <div style={{ height: "100%", width: `${(progress * 100).toFixed(2)}%`, background: "linear-gradient(90deg,#F2C94C,#00D2BE)" }} />
+        <div ref={barRef} style={{ height: "100%", width: "100%", transformOrigin: "left center",
+          transform: "scaleX(0)", willChange: "transform",
+          background: "linear-gradient(90deg,#F2C94C,#00D2BE)" }} />
       </div>
 
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
