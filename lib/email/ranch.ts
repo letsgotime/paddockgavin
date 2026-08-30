@@ -50,6 +50,12 @@ export type Block =
 
 export interface RanchEmail {
   preheader: string
+  /** A photographic plate under the rule. Optional, and deliberately so: it is
+      the one part of the message that can fail to arrive. Images are blocked by
+      default in Outlook and in Gmail for unknown senders, so the cell carries a
+      background colour and real alt text, and nothing the reader needs is only
+      in the picture. */
+  image?: { src: string; alt: string }
   eyebrow: string
   heading: string
   blocks: Block[]
@@ -176,6 +182,14 @@ export function renderRanchEmail(e: RanchEmail): string {
 
     <!-- The red rule. One brand gesture, at the top, and then restraint. -->
     <tr><td height="3" style="height:3px;line-height:3px;font-size:0;background:${RED_FILL}">&nbsp;</td></tr>
+${
+      e.image
+        ? `<tr><td bgcolor="${INK}" style="background:${INK};font-size:0;line-height:0">
+      <img src="${esc(e.image.src)}" width="600" height="300" alt="${esc(e.image.alt)}"
+        style="display:block;width:100%;max-width:600px;height:auto;border:0;outline:none;text-decoration:none;font-family:${LABEL};font-size:12px;line-height:1.5;color:#FAF8F4" />
+    </td></tr>`
+        : ""
+    }
 
     <tr><td class="pad" style="padding:34px 46px 0">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">

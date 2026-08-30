@@ -18,7 +18,21 @@ import type { Block, RanchEmail } from "./ranch"
  */
 
 export type Surface = "entry" | "vendor" | "sponsor" | "spectator"
-export type Stage = "received" | "approved" | "waitlisted" | "declined" | "week-before" | "receipt" | "assets"
+export type Stage =
+  | "received"
+  | "approved"
+  | "waitlisted"
+  | "declined"
+  | "week-before"
+  | "receipt"
+  | "assets"
+  /* The spectator run down to the gates. Five sends, opt out honoured at every
+     one of them, and the count is a promise made at RSVP so it has to hold. */
+  | "t-14"
+  | "t-10"
+  | "t-7"
+  | "t-3"
+  | "t-1"
 
 export interface Vars {
   name?: string
@@ -30,6 +44,10 @@ export interface Vars {
   loadIn?: string
   party?: string
   assetsDue?: string
+  /** Editorial body for a reminder. Supplied per send; there is no default,
+      because inventing one is what put a promise in here that nobody made. */
+  body?: string
+  body2?: string
   /** Receipt fields. */
   amount?: string
   receiptNo?: string
@@ -397,53 +415,112 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
 
 /* -------------------------------------------------------------- spectators */
 
+const PLATE = {
+  src: "https://paddockgavin.com/images/email/ppr-gate-band.jpg",
+  alt: "The Rancho Jaramillo gate, with the track running in past the sign",
+}
+
+/** The run down to the gates. Five sends, and the count is a promise made at
+ *  RSVP, so it has to hold. Editorial body is supplied per send: there is no
+ *  default, because inventing one is what put a promise in here nobody made. */
+const RUN: Record<string, { days: string; subject: string; eyebrow: string; heading: string; lead: string }> = {
+  "t-14": {
+    days: "14",
+    subject: "Two weeks to the tenth",
+    eyebrow: "Two weeks out",
+    heading: "Two weeks to the tenth",
+    lead: "Far enough out to plan the drive, close enough to put it in the diary properly.",
+  },
+  "t-10": {
+    days: "10",
+    subject: "Ten days out: what is on the field",
+    eyebrow: "Ten days out",
+    heading: "What is coming to the field",
+    lead: "The field is close to set. Here is what is coming.",
+  },
+  "t-7": {
+    days: "7",
+    subject: "One week: parking, timings and food",
+    eyebrow: "One week out",
+    heading: "One week out",
+    lead: "The practical email. Parking, timings, and what to expect when you arrive.",
+  },
+  "t-3": {
+    days: "3",
+    subject: "Three days: the forecast and what to wear",
+    eyebrow: "Three days out",
+    heading: "Three days out",
+    lead: "A field is a field. Here is what the week looks like and how to dress for it.",
+  },
+  "t-1": {
+    days: "1",
+    subject: "Tomorrow. Gates at nine",
+    eyebrow: "Tomorrow",
+    heading: "Gates open tomorrow at nine",
+    lead: "Everything is set. This is the last one before we see you.",
+  },
+}
+
 function spectatorT(stage: Stage, v: Vars): Rendered | null {
-  switch (stage) {
-    case "received":
-      return {
-        from: FROM.spectator,
-        subject: "You are counted for 10 October",
-        preheader: "No ticket, nothing to print, nothing to pay.",
-        eyebrow: "Free to attend",
-        heading: "You are counted",
-        blocks: [
-          { kind: "lead", text: `Thank you, ${first(v)}. Your party of ${v.party || "one"} is on the list.` },
-          { kind: "p", text: "There is no ticket and no charge. The count is what tells us how much food to cook and how many restrooms to hire, so saying you are coming genuinely helps." },
-          WHEN,
-          { kind: "quiet", text: "We will send parking and timings the week before. Nothing else will land in your inbox from us." },
-        ],
-        signoff: "Bring people. It is free for them too.",
-        unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
-      }
+  if (stage === "received") {
+    return {
+      from: FROM.spectator,
+      subject: "You are counted for 10 October",
+      preheader: "No ticket, nothing to print, nothing to pay.",
+      eyebrow: "Free to attend",
+      heading: "You are counted",
+      image: PLATE,
+      blocks: [
+        { kind: "lead", text: `Thank you, ${first(v)}. Your party of ${v.party || "one"} is on the list.` },
+        { kind: "p", text: "There is no ticket and no charge. The count is what tells us how much food to cook and how many restrooms to hire, so saying you are coming genuinely helps." },
+        WHEN,
+        { kind: "quiet", text: "Between now and the tenth we will send five short reminders, the last one the day before, and then nothing. Every one of them carries an unsubscribe link and we honour it the same day." },
+      ],
+      signoff: "Bring people. It is free for them too.",
+      unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
+    }
+  }
 
-    case "week-before":
-      return {
-        from: FROM.spectator,
-        subject: "Saturday: parking, timings and what to bring",
-        preheader: "The one email we promised, and then we are done.",
-        eyebrow: "This Saturday",
-        heading: "Everything for Saturday",
-        blocks: [
-          { kind: "lead", text: "This is the email we said we would send, and it is the last one." },
-          {
-            kind: "facts",
-            rows: [
-              { label: "Gates", value: "9am" },
-              { label: "Finish", value: "3pm" },
-              { label: "Parking", value: "Signed from Highway 41-A, free" },
-              { label: "Cost", value: "Nothing, for any of it" },
-            ],
-          },
-          { kind: "p", text: "The field is grass. Wear something you do not mind getting dusty, and flat shoes will serve you better than smart ones." },
-          { kind: "p", text: "Food is beef raised on this ground, dry aged and cooked here. Bring cash as well as a card, because signal on the ranch is patchy." },
-          { kind: "button", label: "Directions", href: "https://pistonpoweredranch.com" },
-        ],
-        signoff: "Three hundred cars, chosen one at a time. We will see you there.",
-        unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
-      }
+  const r = RUN[stage]
+  if (!r) return null
 
-    default:
-      return null
+  const blocks: Block[] = [{ kind: "lead", text: r.lead }]
+  /* Their words, when they arrive. Until then the gap is visible rather than
+     filled with something plausible. */
+  if (v.body) blocks.push({ kind: "p", text: v.body })
+  else blocks.push({ kind: "quiet", text: `[${r.days} day reminder: copy to come]` })
+  if (v.body2) blocks.push({ kind: "p", text: v.body2 })
+
+  blocks.push(
+    stage === "t-1"
+      ? {
+          kind: "facts",
+          rows: [
+            { label: "Gates", value: "9am tomorrow" },
+            { label: "Finish", value: "3pm" },
+            { label: "Parking", value: "Signed from Highway 41-A, free" },
+            { label: "Cost", value: "Nothing, for any of it" },
+          ],
+        }
+      : WHEN,
+  )
+  if (stage === "t-7" || stage === "t-3" || stage === "t-1") {
+    blocks.push({ kind: "button", label: "Directions", href: "https://pistonpoweredranch.com" })
+  }
+
+  return {
+    from: FROM.spectator,
+    subject: r.subject,
+    preheader: r.lead,
+    eyebrow: r.eyebrow,
+    heading: r.heading,
+    image: stage === "t-1" ? PLATE : undefined,
+    blocks,
+    signoff:
+      stage === "t-1"
+        ? "Three hundred cars, chosen one at a time. We will see you tomorrow."
+        : undefined,
+    unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
   }
 }
 
@@ -515,5 +592,9 @@ export const CATALOGUE: { surface: Surface; stage: Stage; label: string }[] = [
   { surface: "sponsor", stage: "week-before", label: "Sponsor, week before" },
   { surface: "sponsor", stage: "receipt", label: "Sponsor receipt" },
   { surface: "spectator", stage: "received", label: "RSVP counted" },
-  { surface: "spectator", stage: "week-before", label: "Spectator, week before" },
+  { surface: "spectator", stage: "t-14", label: "Spectator, 14 days out" },
+  { surface: "spectator", stage: "t-10", label: "Spectator, 10 days out" },
+  { surface: "spectator", stage: "t-7", label: "Spectator, 7 days out" },
+  { surface: "spectator", stage: "t-3", label: "Spectator, 3 days out" },
+  { surface: "spectator", stage: "t-1", label: "Spectator, day before" },
 ]
