@@ -11,7 +11,7 @@ import { SiteFooter } from "@/components/site-footer"
    The run's invented specifics, a $750 VIP price and a January submission date,
    were removed. No price or date appears here that has not been confirmed. */
 
-const RANCH = "https://piston-powered-ranch.vercel.app"
+const RANCH = "https://pistonpoweredranch.com"
 
 // Set to "/video/teaser.mp4" the day the film is in public/video. While it is
 // null the block shows the photograph on its own, with no player chrome.
