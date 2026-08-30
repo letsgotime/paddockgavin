@@ -8,6 +8,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { CrmLogin } from "@/components/crm-login"
 import { RsvpBlock } from "@/components/rsvp-block"
+import { RanchGallery } from "@/components/ranch-gallery"
 
 /* Copy ran through RAIL Redline (paddock20.com/rail/redline), WARM / WEB PAGE / US.
    The run's invented specifics, a $750 VIP price and a January submission date,
@@ -546,6 +547,7 @@ export default function PistonPoweredRanchPage() {
         </section>
       </main>
 
+      <RanchGallery accent="#F2C94C" />
       <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <RsvpBlock eventId={EVENT_ID} accent="#F2C94C" source="event-page" />
