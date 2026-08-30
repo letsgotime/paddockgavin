@@ -81,6 +81,10 @@ export function RsvpBlock({
 
   return (
     <div style={wrap}>
+      <style>{`
+        .rsvpPair{grid-template-columns:1fr 1fr}
+        @media (max-width:520px){.rsvpPair{grid-template-columns:1fr}}
+      `}</style>
       <div style={{ ...kicker, color: accent }}>Free to attend</div>
       <h3 style={h3}>Tell us you are coming</h3>
       <p style={lede}>
@@ -89,7 +93,7 @@ export function RsvpBlock({
       </p>
 
       <form onSubmit={send} style={{ display: "grid", gap: 10, marginTop: 16 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        <div className="rsvpPair" style={{ display: "grid", gap: 10 }}>
           <label style={{ display: "grid", gap: 5 }}>
             <span style={lbl}>Your name</span>
             <input

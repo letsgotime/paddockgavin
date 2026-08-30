@@ -161,7 +161,7 @@ function RanchLockup() {
     <div
       style={{
         position: "absolute",
-        top: "clamp(112px,15vh,148px)",
+        top: "clamp(126px,15vh,152px)",
         left: 0,
         right: 0,
         zIndex: 40,

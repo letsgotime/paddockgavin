@@ -108,6 +108,7 @@ export default function VisitOps() {
         @media (prefers-reduced-motion: no-preference){.pgRing::before{animation:pgSpin 9s linear infinite}}
         @keyframes pgSpin{to{transform:rotate(360deg)}}
         .pgTele{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+        @media (max-width:560px){.pgTele{grid-template-columns:1fr 1fr;gap:10px}}
         .pgFind{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
         @media (max-width:720px){.pgFind{grid-template-columns:1fr;align-items:start}}
       `}</style>

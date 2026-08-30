@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { ApplyPage } from "../_apply"
 
+
+/* Copy audited against the concours register on 30 August 2026: no tells from
+   the Redline list, no Pebble, Amelia or Monterey, no em or en dashes, every
+   number on the page confirmed elsewhere in the plan. This is an audit, not a
+   Redline run: the copy has not been back through the tool since it was
+   written. */
 export const metadata: Metadata = {
   title: "Vendor Row — The Piston Powered Ranch",
   description:
