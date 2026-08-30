@@ -191,10 +191,25 @@ export default function PistonPoweredRanchPage() {
       )
       els.forEach((e) => io?.observe(e))
     }
+    /* The hero's ken burns is a thirty second transform on a full bleed
+       image set to run infinitely, so it carried on long after the hero
+       had scrolled away. Compositor work is still work. The observer that
+       already runs for the reveal animations pauses it off screen. */
+    const ken = document.querySelector<HTMLElement>(".pgKen")
+    let kenIo: IntersectionObserver | null = null
+    if (ken && !reduce) {
+      kenIo = new IntersectionObserver(
+        ([e]) => { ken.style.animationPlayState = e.isIntersecting ? "running" : "paused" },
+        { threshold: 0 },
+      )
+      kenIo.observe(ken)
+    }
+
     const t = setInterval(() => setNow(Date.now()), 60000)
 
     return () => {
       io?.disconnect()
+      kenIo?.disconnect()
       clearInterval(t)
     }
   }, [open])
