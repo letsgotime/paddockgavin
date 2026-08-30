@@ -44,17 +44,36 @@ export const metadata: Metadata = {
  * JavaScript works out where it is. The design system is untouched: only these
  * five values move.
  */
+/**
+ * Two reds and two blues, because a brand colour and a text colour are not the
+ * same job.
+ *
+ * Measured against the page ground, Jaramillo Red is 3.89:1 and Jaramillo Blue
+ * is 1.57:1. Below 3:1 is not "hard to read", it is invisible, and that is
+ * exactly what shipped: every eyebrow and label on the ranch door was set in a
+ * colour nobody could make out. Our own amber is 12.29:1, so the page was
+ * designed against an accent that could carry text and I swapped in one that
+ * could not.
+ *
+ * So: -strong is the brand, used for fills, rules and display sizes where mass
+ * carries it. The plain token is the ink tint from the same ramp in the brand
+ * kit, and it passes AA for text at any size.
+ */
 const RANCHO = {
-  "--accent": "#E5141A",
-  "--second": "#1424A1",
+  "--accent": "#EF7A7D",        // 7.20:1
+  "--accent-strong": "#E5141A", // Jaramillo Red, for fills and large display
+  "--second": "#6E8FE8",        // 6.28:1
+  "--second-strong": "#1424A1", // Jaramillo Blue
   "--ink": "#0A1523",
   "--paper": "#FAF8F4",
   "--display": 'Cinzel, "Trajan Pro", "Times New Roman", serif',
 } as const
 
 const PADDOCKGAVIN = {
-  "--accent": "#F2C94C",
-  "--second": "#00D2BE",
+  "--accent": "#F2C94C",        // 12.29:1, carries text and fills alike
+  "--accent-strong": "#F2C94C",
+  "--second": "#00D2BE",        // 10.18:1
+  "--second-strong": "#00D2BE",
   "--ink": "#070D14",
   "--paper": "#EDF1F6",
   "--display": "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -93,17 +112,19 @@ export default async function Layout({ children }: { children: React.ReactNode }
           /* The modern ranch bit: hairline rules in Jaramillo Red under the
              section marks, the way a brand from a working property signs
              things rather than shouting. */
+          [data-brand="rancho"] .rjMark { display: flex; }
           [data-brand="rancho"] h2::after {
             content: "";
             display: block;
             width: 54px;
             height: 2px;
             margin-top: 14px;
-            background: var(--accent);
+            background: var(--accent-strong);
           }
         `}</style>
       ) : null}
-      <div data-brand={ranchDoor ? "rancho" : "paddockgavin"} style={tokens as React.CSSProperties}>
+      <div data-brand={ranchDoor ? "rancho" : "paddockgavin"}
+        style={{ ...(tokens as React.CSSProperties), position: "relative" }}>
         {ranchDoor ? <RanchLockup /> : null}
         {children}
       </div>
@@ -123,13 +144,16 @@ function RanchLockup() {
   return (
     <div
       style={{
-        position: "relative",
-        zIndex: 60,
+        position: "absolute",
+        top: "clamp(112px,15vh,148px)",
+        left: 0,
+        right: 0,
+        zIndex: 40,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 10,
-        padding: "26px 20px 4px",
+        gap: 9,
+        pointerEvents: "none",
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}

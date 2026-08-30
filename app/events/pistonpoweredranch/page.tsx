@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { CrmLogin } from "@/components/crm-login"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { RanchGallery } from "@/components/ranch-gallery"
+import { RanchMark } from "@/components/ranch-mark"
 import { SmoothScroll } from "@/components/smooth-scroll"
 
 /* Copy ran through RAIL Redline (paddock20.com/rail/redline), WARM / WEB PAGE / US.
@@ -301,6 +302,9 @@ export default function PistonPoweredRanchPage() {
             grid, not flex-wrap, so the desktop and phone layouts are each
             designed rather than one being a side effect of the other. */}
         <section id="teaser" style={{ position: "relative", overflow: "hidden", padding: "clamp(56px,10vh,120px) 0" }}>
+          <div aria-hidden="true" style={{ position: "absolute", right: "clamp(-40px,-3vw,-16px)", top: "8%", zIndex: 0, pointerEvents: "none" }}>
+            <RanchMark width={280} opacity={0.05} />
+          </div>
           <Image src="/images/ranch/ppr-light.jpg" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 42%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(10,21,35,.9) 0%,rgba(10,21,35,.72) 40%,rgba(10,21,35,.94) 100%)" }} />
           <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
@@ -527,6 +531,7 @@ export default function PistonPoweredRanchPage() {
 
         <section style={{ position: "relative", padding: "clamp(48px,10vh,120px) clamp(16px,5vw,40px) clamp(60px,12vh,140px)", background: "linear-gradient(180deg,rgba(10,21,35,1),rgba(14,26,42,1))" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start" }}>
+            <RanchMark width={70} opacity={0.86} align="left" />
             <span data-r="" style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>
               Why we run it
             </span>
@@ -548,9 +553,15 @@ export default function PistonPoweredRanchPage() {
         </section>
       </main>
 
+      <div style={{ display: "flex", justifyContent: "center", paddingTop: 26 }}>
+        <RanchMark width={74} opacity={0.9} label="Rancho Jaramillo, Unionville Tennessee" />
+      </div>
       <RanchGallery accent="var(--accent)" />
       <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "center", paddingBottom: 20 }}>
+            <RanchMark width={62} opacity={0.82} />
+          </div>
           <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" source="event-page" />
         </div>
       </section>
