@@ -10,14 +10,14 @@ import { ApplyPage } from "../_apply"
 export const metadata: Metadata = {
   title: "Enter a Car — The Piston Powered Ranch",
   description:
-    "Three hundred places on the field, all of them chosen. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo, an hour south of Nashville.",
+    "Three hundred places on the field, chosen from Nashville and from collections that travel. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo.",
 }
 
 export default function Page() {
   return (
     <ApplyPage
       kicker="Enter a car"
-      title="Three hundred places. All of them chosen."
+      title="Three hundred places. Chosen from Nashville, and from collections that travel."
       lede="Submit your car and you will hear back either way."
       body={[
         "We look for exotics, muscle, and golf carts worth a second look, in two, four or six seats. Trucks and SUVs do not show on this field.",
