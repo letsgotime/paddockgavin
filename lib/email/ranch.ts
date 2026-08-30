@@ -207,7 +207,7 @@ export function renderRanchEmail(e: RanchEmail): string {
         <tr><td align="center" style="font-family:${LABEL};font-size:11px;line-height:1.7;color:${MUTE}" class="mute">
           Saturday 10 October 2026 &middot; 9am to 3pm<br />
           Rancho Jaramillo, Unionville, Tennessee<br />
-          <span style="color:${HAIR}">&mdash;</span><br />
+          <span style="color:${HAIR};letter-spacing:.3em">&middot;&nbsp;&middot;&nbsp;&middot;</span><br />
           A PaddockGavin event, benefiting Community Elementary School
           ${e.unsubscribe ? `<br /><a href="${esc(e.unsubscribe)}" style="color:${MUTE};text-decoration:underline">Unsubscribe</a>` : ""}
         </td></tr>
