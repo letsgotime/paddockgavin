@@ -37,22 +37,36 @@ export function SmoothScroll() {
     }
     const fromDom = () => publish(domProgress())
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
-    if (reduced.matches) {
-      // No inertia, but the bar still has to move.
-      let ticking = false
-      const onScroll = () => {
-        if (ticking) return
-        ticking = true
-        requestAnimationFrame(() => {
-          ticking = false
-          fromDom()
-        })
-      }
+    /* Two independent paths write this, on purpose.
+       
+       The frame loop below is the good one: smooth, and correct whatever moved
+       the page. But it only runs while the tab is visible, because browsers
+       suspend requestAnimationFrame in a background tab, and it only exists at
+       all once the Lenis import has resolved. This listener covers the gap at
+       both ends, costs one property write per frame at most, and means the bar
+       cannot be left stranded by whichever path happens not to fire. */
+    let ticking = false
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        fromDom()
+      })
+      // rAF is asleep in a hidden tab, so write once directly as well.
       fromDom()
-      window.addEventListener("scroll", onScroll, { passive: true })
-      return () => window.removeEventListener("scroll", onScroll)
     }
+    fromDom()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    document.addEventListener("visibilitychange", fromDom)
+
+    const stopNative = () => {
+      window.removeEventListener("scroll", onScroll)
+      document.removeEventListener("visibilitychange", fromDom)
+    }
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (reduced.matches) return stopNative
 
     let lenis: { raf: (t: number) => void; destroy: () => void; on: (e: string, cb: (a: { scroll: number; limit: number }) => void) => void } | null = null
     let frame = 0
@@ -101,6 +115,7 @@ export function SmoothScroll() {
 
     return () => {
       cancelled = true
+      stopNative()
       if (frame) cancelAnimationFrame(frame)
       lenis?.destroy()
     }
