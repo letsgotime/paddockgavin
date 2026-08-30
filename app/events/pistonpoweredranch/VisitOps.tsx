@@ -114,13 +114,13 @@ export default function VisitOps() {
       `}</style>
 
       <div className="pgTele">
-        <Card tone="#F2C94C" value={days === null ? "—" : String(days)} unit={days === 1 ? "day" : "days"}
+        <Card tone="#F2C94C" value={days === null ? "··" : String(days)} unit={days === 1 ? "day" : "days"}
               label="Until the gates" sub="Saturday, October 10, 2026" fill={elapsed} ring />
-        <Card tone="#00D2BE" value="9—3" label="Gates open" sub="Nine in the morning, field clear by three" />
+        <Card tone="#00D2BE" value="9 to 3" label="Gates open" sub="Nine in the morning, field clear by three" />
         <Card tone="#4BA3DE" value="300" label="Cars on the field" sub="Chosen one at a time" />
         <Card
           tone={wxState === "ok" ? "#B4B6B2" : "#5B6672"}
-          value={wxState === "ok" && wx ? `${wx.temperature}°` : wxState === "loading" ? "··" : "—"}
+          value={wxState === "ok" && wx ? `${wx.temperature}°` : wxState === "loading" ? "··" : "··"}
           unit={wxState === "ok" && wx ? wx.temperatureUnit : undefined}
           label={isShowDay ? "Show day forecast" : "At the ranch now"}
           sub={

@@ -8,7 +8,7 @@ import { ApplyPage } from "../_apply"
    Redline run: the copy has not been back through the tool since it was
    written. */
 export const metadata: Metadata = {
-  title: "Sponsor the Day — The Piston Powered Ranch",
+  title: "Sponsor the Day · The Piston Powered Ranch",
   description:
     "Title, category exclusive and supporting sponsorship for The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo an hour south of Nashville. A share of every net dollar benefits Community Elementary School.",
 }

@@ -8,7 +8,7 @@ import { ApplyPage } from "../_apply"
    Redline run: the copy has not been back through the tool since it was
    written. */
 export const metadata: Metadata = {
-  title: "Vendor Row — The Piston Powered Ranch",
+  title: "Vendor Row · The Piston Powered Ranch",
   description:
     "Vendor spaces on the entry drive at The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo. Spaces start at $250 and scale with footprint.",
 }

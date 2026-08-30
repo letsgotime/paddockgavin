@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { db } from "@/lib/crm/client"
 
 /* Copy ran through RAIL Redline, WARM / WEB PAGE / US, zero tells, with an
    explicit instruction not to introduce facts absent from the draft. */
@@ -196,15 +197,49 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
   const send = async () => {
     if (!f.name.trim() || !f.reach.trim() || status === "sending") return
     setStatus("sending")
+
+    /* Record the submission before anything else. Until now these forms wrote
+       nowhere at all: they sent one internal email and that was the only copy
+       of the entry. The insert runs on the anonymous Data API session, which is
+       what the RLS policy on submissions expects. */
+    const reach = f.reach.trim()
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
+    const client = db()
+    if (!client) {
+      setStatus("error")
+      return
+    }
+    const saved = await client.from("submissions").insert([
+      {
+        type: form.kind,
+        applicant_name: f.name.trim(),
+        email: isEmail ? reach.toLowerCase() : "",
+        phone: isEmail ? null : reach,
+        status: "pending",
+        details: {
+          org: f.org.trim(),
+          message: f.message.trim(),
+          reach,
+          page: "piston-powered-ranch",
+        },
+      },
+    ])
+    if (saved?.error) {
+      setStatus("error")
+      return
+    }
+
+    /* The entry is on record now, so a mail failure is not the visitor's
+       problem and must not be reported to them as one. */
+    setStatus("sent")
     try {
-      const res = await fetch("/api/inquiry", {
+      await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ kind: form.kind, ...f, page: "piston-powered-ranch" }),
+        body: JSON.stringify({ kind: form.kind, ...f }),
       })
-      setStatus(res.ok ? "sent" : "error")
     } catch {
-      setStatus("error")
+      // Saved. Somebody answers it by hand.
     }
   }
 

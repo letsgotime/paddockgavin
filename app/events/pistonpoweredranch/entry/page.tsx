@@ -8,7 +8,7 @@ import { ApplyPage } from "../_apply"
    Redline run: the copy has not been back through the tool since it was
    written. */
 export const metadata: Metadata = {
-  title: "Enter a Car — The Piston Powered Ranch",
+  title: "Enter a Car · The Piston Powered Ranch",
   description:
     "Three hundred places on the field, chosen from Nashville and from collections that travel. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo.",
 }
@@ -38,7 +38,13 @@ export default function Page() {
       ]}
       note="Waiting in silence is its own answer. Every submission gets a reply."
       closeLine="Send it. You will hear back either way."
-      cta={{ label: "Submit your car", href: "https://piston-powered-ranch.vercel.app/console/#submit" }}
+      cta={{ label: "Submit your car", href: "#apply" }}
+      form={{
+        kind: "entry",
+        head: "Submit your car",
+        orgLabel: "Year, make and model",
+        askLabel: "Tell us about the car. History helps more than photographs.",
+      }}
     />
   )
 }
