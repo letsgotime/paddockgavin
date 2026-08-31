@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+const ACCENT = "#EF7A7D" // small text on a dark ground, nothing else
 
 /**
  * Where Stripe sends people after a successful payment.
@@ -32,7 +33,7 @@ export default function Page() {
               fontSize: 10.5,
               letterSpacing: ".2em",
               textTransform: "uppercase",
-              color: "#EF7A7D",
+              color: ACCENT,
               margin: 0,
               fontWeight: 600,
             }}
@@ -68,8 +69,8 @@ export default function Page() {
               href="/events/pistonpoweredranch"
               style={{
                 font: `800 14.5px/1 ${ARCHIVO}`,
-                color: "#0A1523",
-                background: "#EF7A7D",
+                color: "#FFFFFF",
+                background: "#E5141A",
                 borderRadius: 11,
                 padding: "14px 24px",
                 textDecoration: "none",

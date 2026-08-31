@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+const ACCENT = "#EF7A7D" // small text on a dark ground, nothing else
 
 export default function Page() {
   return (
@@ -41,7 +42,7 @@ export default function Page() {
               fontSize: 10.5,
               letterSpacing: ".2em",
               textTransform: "uppercase",
-              color: "#EF7A7D",
+              color: ACCENT,
               margin: "20px 0 0",
               fontWeight: 600,
             }}

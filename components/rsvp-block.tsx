@@ -25,12 +25,19 @@ type State = "idle" | "sending" | "done" | "error"
 export function RsvpBlock({
   eventId,
   accent = "#F2C94C",
+  fill,
   source = "events",
 }: {
   eventId: string
+  /** Small text on a dark ground. Needs contrast against the ground. */
   accent?: string
+  /** Button background. Needs its own text to have contrast against IT, which
+   *  is a different requirement and therefore a different colour. Passing one
+   *  value for both is what turned the button pink on the ranch. */
+  fill?: string
   source?: string
 }) {
+  const solid = fill || accent
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [party, setParty] = useState("2")
@@ -132,7 +139,7 @@ export function RsvpBlock({
           disabled={state === "sending"}
           style={{
             ...primary,
-            background: accent,
+            background: solid,
             opacity: state === "sending" ? 0.6 : 1,
             justifySelf: "start",
           }}

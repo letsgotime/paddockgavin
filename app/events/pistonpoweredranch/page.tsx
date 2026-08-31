@@ -62,7 +62,7 @@ const ACTS: Act[] = [
     ],
     img: "/images/ranch/ppr-gate.jpg",
     focal: "center 34%",
-    tone: "var(--accent)",
+    tone: "var(--accent-strong)",
     cta: { label: "Tell us you are coming", href: `${RANCH}/spectate` },
   },
   {
@@ -80,7 +80,7 @@ const ACTS: Act[] = [
     lists: [
       {
         head: "The day",
-        tone: "var(--accent)",
+        tone: "var(--accent-strong)",
         items: ["Saturday, October 10, 2026", "Nine in the morning to three", "Spectator admission complimentary"],
       },
       {
@@ -102,7 +102,7 @@ const ACTS: Act[] = [
     ],
     img: "/images/ranch/ppr-dusk.jpg",
     focal: "center 60%",
-    tone: "var(--accent)",
+    tone: "var(--accent-strong)",
     tiers: [
       {
         name: "The Terrace",
@@ -118,7 +118,7 @@ const ACTS: Act[] = [
       },
       {
         name: "The Owner's Table",
-        tone: "var(--accent)",
+        tone: "var(--accent-strong)",
         line: "Everything on The Terrace, and the part of the ranch the crowd never reaches.",
         items: [
           "The quiet ride out by golf cart or hay ride",
@@ -572,7 +572,7 @@ export default function PistonPoweredRanchPage() {
           <div style={{ display: "flex", justifyContent: "center", paddingBottom: 20 }}>
             <RanchMark width={62} opacity={0.82} />
           </div>
-          <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" source="event-page" />
+          <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" fill="var(--accent-strong)" source="event-page" />
         </div>
       </section>
       <SiteFooter />

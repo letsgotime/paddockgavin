@@ -19,8 +19,8 @@ import { FOOTPRINTS, POWER_OPTIONS, money, type Footprint } from "@/lib/stripe/c
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const ACCENT = "#EF7A7D"
-const FILL = "#E5141A"
+const ACCENT = "#EF7A7D" // small text on a dark ground, nothing else
+const FILL = "#E5141A"   // Jaramillo Red, for anything that paints a shape
 
 type State = "idle" | "starting" | "closed" | "error"
 
@@ -168,8 +168,8 @@ export function BoothPicker() {
             style={{
               display: "inline-block",
               font: `900 15px/1 ${ARCHIVO}`,
-              color: "#0A1523",
-              background: ACCENT,
+              color: "#FFFFFF",
+              background: FILL,
               borderRadius: 12,
               padding: "16px 30px",
               textDecoration: "none",
