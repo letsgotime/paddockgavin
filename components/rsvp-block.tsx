@@ -59,7 +59,23 @@ export function RsvpBlock({
         name: name.trim(),
         email: email.trim().toLowerCase(),
         party_size: Math.max(1, Math.min(20, Number(party) || 1)),
-        source,
+        /* Every RSVP so far recorded a null source, so there is no way to tell
+           which post filled the field. The prop stays, but it is no longer the
+           only thing between us and knowing: the host, the path and any
+           campaign parameter are read here so the column is never empty. */
+        source: (function () {
+          try {
+            const u = new URL(window.location.href)
+            const tag =
+              u.searchParams.get("utm_source") ||
+              u.searchParams.get("from") ||
+              u.searchParams.get("ref")
+            const where = u.hostname.replace(/^www\./, "") + u.pathname.replace(/\/$/, "")
+            return [source, tag, where].filter(Boolean).join(" | ").slice(0, 120)
+          } catch {
+            return source || "unknown"
+          }
+        })(),
       },
     ])
     if (r?.error) {
