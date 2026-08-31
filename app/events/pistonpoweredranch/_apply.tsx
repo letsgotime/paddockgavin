@@ -188,14 +188,20 @@ export function ApplyPage(p: ApplyProps) {
 }
 
 function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps["form"]> }) {
-  const [f, setF] = useState({ name: "", org: "", reach: "", message: "" })
+  const [f, setF] = useState({ name: "", org: "", reach: "", phone: "", message: "" })
   const [status, setStatus] = useState<Status>("idle")
+  const [why, setWhy] = useState("")
 
   const up = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setF((x) => ({ ...x, [k]: e.target.value }))
 
   const send = async () => {
-    if (!f.name.trim() || !f.reach.trim() || status === "sending") return
+    if (!f.name.trim() || status === "sending") return
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.reach.trim())) {
+      setStatus("error")
+      setWhy("We need an email address. A phone number alone means we cannot send you a decision.")
+      return
+    }
     setStatus("sending")
 
     /* Two paths, deliberately independent.
@@ -226,7 +232,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
             type: DB_TYPE[form.kind] ?? "vehicle",
             applicant_name: f.name.trim(),
             email: isEmail ? reach.toLowerCase() : "",
-            phone: isEmail ? null : reach,
+            phone: f.phone.trim() || (isEmail ? null : reach),
             status: "pending",
             details: { org: f.org.trim(), message: f.message.trim(), reach, page: "piston-powered-ranch" },
           },
@@ -293,11 +299,14 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
             <>
               <input style={input} placeholder="Your name" value={f.name} onChange={up("name")} />
               <input style={input} placeholder={form.orgLabel} value={f.org} onChange={up("org")} />
-              <input style={input} placeholder="Email or phone" value={f.reach} onChange={up("reach")} />
+              <input style={input} type="email" inputMode="email" autoComplete="email"
+                placeholder="Email, so we can write back" value={f.reach} onChange={up("reach")} />
+              <input style={input} type="tel" inputMode="tel" autoComplete="tel"
+                placeholder="Phone, optional" value={f.phone} onChange={up("phone")} />
               <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />
               {status === "error" && (
                 <span style={{ fontFamily: ARCHIVO, fontSize: 14, color: "#F2994A" }}>
-                  That did not send. Try again, or email gavin@paddock20.com.
+                  {why || "That did not send. Try again, or write to entries@pistonpoweredranch.com."}
                 </span>
               )}
               <button
