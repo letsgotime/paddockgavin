@@ -1,8 +1,9 @@
 /**
  * The Stripe catalogue, as it exists in the sandbox account.
  *
- * These ids are real objects in acct_1TpxSsF2UEFJidMh (testmode), created
- * 28 August 2026. They are not placeholders and they are not guesses. Every one
+ * These ids are real objects in acct_1UAWrtRJpXHmje77, the PaddockGavin
+ * sandbox, seeded 31 August 2026. The earlier set lived in the Paddock20
+ * sandbox and does not exist in this account. They are not placeholders and they are not guesses. Every one
  * carries metadata.event = piston-powered-ranch so multi event reporting can
  * filter cleanly later.
  *
@@ -29,29 +30,29 @@ export const CATALOG: Record<string, CatalogItem> = {
   vendorBooth: {
     key: "vendorBooth",
     name: "Vendor Booth Setup",
-    productId: "prod_V9enu9JiTGcrj6",
-    priceId: "price_1U9LUIF2UEFJidMh6NEX3ehx",
+    productId: "prod_VAskeBHu2wx7Oj",
+    priceId: "price_1UAWzGRJpXHmje77uDzxNMAg",
     cents: 25000,
   },
   supporting: {
     key: "supporting",
     name: "Supporting Sponsorship",
-    productId: "prod_V9eo9FZl4jEF2U",
-    priceId: "price_1U9LV7F2UEFJidMhoUoSPG8k",
+    productId: "prod_VAskNMROtPmvuq",
+    priceId: "price_1UAWzGRJpXHmje770wv7jUj9",
     cents: 50000,
   },
   secondaryTitle: {
     key: "secondaryTitle",
     name: "Secondary Title Sponsorship",
-    productId: "prod_V9eoOMEpBvLSxe",
-    priceId: "price_1U9LVGF2UEFJidMhtvrmvQsa",
+    productId: "prod_VAskun9aDAKszv",
+    priceId: "price_1UAWzHRJpXHmje779GTCTJYp",
     cents: 250000,
   },
   premierTitle: {
     key: "premierTitle",
     name: "Premier Title Sponsorship",
-    productId: "prod_V9epXEHXI2TGDy",
-    priceId: "price_1U9LVPF2UEFJidMhya1V1379",
+    productId: "prod_VAskygpO23zwTW",
+    priceId: "price_1UAWzIRJpXHmje77AkoTNkVM",
     cents: 500000,
   },
 }
