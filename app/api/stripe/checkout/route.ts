@@ -112,7 +112,15 @@ export async function POST(req: Request) {
     const json = await res.json()
     if (!res.ok) {
       console.error("[stripe/checkout]", json?.error?.message || res.status)
-      return NextResponse.json({ error: "stripe_error", detail: json?.error?.message }, { status: 502 })
+      /* 422 rather than 502 on purpose. Cloudflare sits in front of this and
+         replaces 5xx bodies with its own error page, which swallowed a plain
+         "Invalid API Key" and turned a one line misconfiguration into a hunt
+         through the logs. Stripe refusing a request is not a gateway failure
+         anyway: the gateway worked and the answer was no. */
+      return NextResponse.json(
+        { error: "stripe_error", detail: json?.error?.message || `Stripe returned ${res.status}` },
+        { status: 422 },
+      )
     }
 
     return NextResponse.json({ url: json.url, id: json.id })
