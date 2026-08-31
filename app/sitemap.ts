@@ -31,6 +31,7 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   // Night shift / products
   { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
   { url: "/juice-box",               priority: 0.8,  changeFrequency: "monthly" },
+  { url: "/shop",                    priority: 0.85, changeFrequency: "weekly"  },
   { url: "/supercar-iq",             priority: 0.85, changeFrequency: "weekly"  },
   // Partnerships
   { url: "/partner",                 priority: 0.7,  changeFrequency: "monthly" },

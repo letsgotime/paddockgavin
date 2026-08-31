@@ -338,6 +338,7 @@ export function SiteFooter() {
               { href: "/cars",                      label: "The garage",        ext: false },
               { href: "/cars/e92",                  label: "The E92 build",     ext: false },
               { href: "/cars/r8",                   label: "The R8",            ext: false },
+              { href: "/shop",                      label: "The shop",          ext: false },
               { href: "/juice-box",                 label: "The Juice Box",     ext: false },
               { href: "/connect",                   label: "Every link",        ext: false },
               { href: "https://gavinbrookshq.com",  label: "gavinbrookshq.com", ext: true  },
