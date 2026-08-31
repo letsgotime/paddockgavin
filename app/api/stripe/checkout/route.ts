@@ -87,6 +87,11 @@ export async function POST(req: Request) {
          the right kind, which is how one Stripe account serves many events. */
       metadata: {
         event: "piston-powered-ranch",
+        /* The ranch webhook looks the event row up by slug from this field.
+           It defaults to the ranch when absent, so today it would work by
+           accident. Sending it explicitly is what makes a second event work
+           on purpose. */
+        event_slug: "piston-powered-ranch",
         kind: item.key,
         product: item.productId,
         org: (b.org || "").slice(0, 120),
