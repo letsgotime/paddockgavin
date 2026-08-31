@@ -38,7 +38,7 @@ export default function Page() {
       ]}
       form={{ kind: "vendor-application", head: "Tell us what you sell. We will tell you where you fit.", orgLabel: "Business name", askLabel: "What you sell, the footprint you need, power and water, and how many are working it" }}
       closeLine="Every enquiry is answered."
-      cta={{ label: "Apply for a space", href: "#apply" }}
+      cta={{ label: "Reserve a booth", href: "/events/pistonpoweredranch/vendor/booth" }}
     />
   )
 }
