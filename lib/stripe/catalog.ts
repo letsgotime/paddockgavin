@@ -3,9 +3,11 @@
  *
  * These ids are real objects in acct_1UAWrtRJpXHmje77, the PaddockGavin
  * sandbox, seeded 31 August 2026. The earlier set lived in the Paddock20
- * sandbox and does not exist in this account. They are not placeholders and they are not guesses. Every one
- * carries metadata.event = piston-powered-ranch so multi event reporting can
- * filter cleanly later.
+ * sandbox and does not exist in this account.
+ *
+ * They are not placeholders and they are not guesses. Every one carries
+ * metadata.event = piston-powered-ranch, so when the next event runs under the
+ * same account its objects filter apart from these cleanly.
  *
  * Every price here is the STARTING tier. Footprint scaling and negotiated
  * amounts use ad hoc price_data on the Checkout Session with the product id
