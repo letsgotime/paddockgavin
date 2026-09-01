@@ -29,21 +29,6 @@ const EVENT_HOSTS: Record<string, string> = {
  */
 const SHORT_PATHS = new Set(["/entry", "/vendor", "/sponsor", "/targets"])
 
-/**
- * The team tools live on their own deployment, so these cannot be rewritten
- * without proxying their assets too. A redirect gives the same short address
- * and lands on the real thing.
- */
-const TOOLS = "https://piston-powered-ranch.vercel.app"
-const TOOL_PATHS: Record<string, string> = {
-  "/journey": "/journeys/",
-  "/journeys": "/journeys/",
-  "/collateral": "/collateral/",
-  "/brand": "/brand/rancho/",
-  "/chat": "/chat/",
-  "/console": "/console/",
-}
-
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") || "").toLowerCase().split(":")[0]
   const slug = EVENT_HOSTS[host]
@@ -52,9 +37,10 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
   const path = url.pathname.replace(/\/+$/, "") || "/"
 
-  // Tools sit on another deployment. Send people there rather than pretending.
-  const tool = TOOL_PATHS[path]
-  if (tool) return NextResponse.redirect(new URL(tool, TOOLS), 307)
+  /* The tools used to be redirected to their own deployment from here. They
+     are now served on this domain by the rewrites in next.config.ts, which is
+     what gives the team one session instead of two, so redirecting away would
+     undo the point of it. */
 
   // The bare domain is the event's landing page.
   if (url.pathname === "/") {
