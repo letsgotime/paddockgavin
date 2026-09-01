@@ -19,6 +19,8 @@ export interface EventBrand {
   secondText?: string
   display?: string
   body?: string
+  /** Google Fonts families to fetch, e.g. "Cinzel:wght@500;700;900". */
+  fonts?: string[]
   logo?: string
   logoOnDark?: string
   wordmark?: string
@@ -54,9 +56,13 @@ export interface EventAct {
 }
 
 export interface EventContent {
+  /** The credit under the venue's mark. */
+  producer?: string
   hero?: {
     img: string
     alt: string
+    /** Where the photograph is framed, as object-position. */
+    focal?: string
     eyebrow: string
     title: string
     titleAccent?: string

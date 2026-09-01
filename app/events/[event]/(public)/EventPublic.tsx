@@ -3,6 +3,10 @@
 import { useState } from "react"
 import Image from "next/image"
 import { RsvpBlock } from "@/components/rsvp-block"
+import { SiteNav } from "@/components/site-nav"
+import { SiteFooter } from "@/components/site-footer"
+import { CrmLogin } from "@/components/crm-login"
+import { RanchMark } from "@/components/ranch-mark"
 import { resolveHref, type EventRow, type EventAct, type EventCta } from "@/lib/events/types"
 
 /**
@@ -31,6 +35,15 @@ function brandVars(e: EventRow): React.CSSProperties {
     ["--display" as string]: b.display || "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
     ["--body" as string]: b.body || "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
   }
+}
+
+/** Whole days until the event, counted in the venue's day, not the reader's. */
+function daysUntil(iso: string | null): number | null {
+  if (!iso) return null
+  const at = (d: Date) =>
+    Date.parse(new Date(d).toLocaleDateString("en-CA", { timeZone: "America/Chicago" }) + "T00:00:00Z")
+  const left = Math.round((at(new Date(iso)) - at(new Date())) / 86400000)
+  return left < 0 ? null : left
 }
 
 /** Saturday, October 10, 2026. Fixed to the venue's day, not the reader's. */
@@ -168,23 +181,72 @@ export default function EventPublic({ event }: { event: EventRow }) {
     event.charity ? `Benefiting ${event.charity}` : "",
   ].filter(Boolean)
 
+  const left = daysUntil(event.starts_at)
+  const shortDay = event.starts_at
+    ? new Date(event.starts_at).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "America/Chicago" })
+    : ""
+  const b = event.brand || {}
+
   return (
-    <main style={{ ...brandVars(event), background: "var(--ink)", minHeight: "100vh" }}>
+    <div style={brandVars(event)}>
+      <style>{`
+        @keyframes evKen { from { transform: scale(1.02) } to { transform: scale(1.14) translateY(-1.5%) } }
+        .evKen { animation: evKen 30s ease-in-out infinite alternate; transform-origin: center; will-change: transform }
+        @media (prefers-reduced-motion: reduce) { .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%) } }
+      `}</style>
+      <SiteNav active="events" />
+      <CrmLogin />
+
+      {/* The date and the count, kept in view. Not a link, so it does not take
+          the tap that belongs to the menu behind it. */}
+      {shortDay && (
+        <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", display: "flex", alignItems: "center", gap: 12, padding: "9px 16px", borderRadius: 12, border: "1px solid rgba(255,255,255,.14)", background: "linear-gradient(180deg,rgba(12,24,38,.94),rgba(10,21,35,.9))", backdropFilter: "blur(10px)" }}>
+            <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-strong)", flex: "0 0 auto" }} />
+            <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {shortDay}
+            </span>
+            <i aria-hidden="true" style={{ flex: "1 1 auto" }} />
+            {left !== null && (
+              <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--second)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                {left === 0 ? "Today" : left === 1 ? "1 day" : `${left} days`}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* The venue's own mark, from its brand row. */}
+      {b.logo && (
+        <div style={{ position: "absolute", top: "clamp(126px,15vh,152px)", left: 0, right: 0, zIndex: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 9, pointerEvents: "none" }}>
+          <RanchMark
+            src={b.logoOnDark || b.logo}
+            alt={b.name || event.venue_name || event.name}
+            width={152}
+            ratio={475 / 748}
+            label={c.producer || "The day run by PaddockGavin"}
+          />
+        </div>
+      )}
+
+    <main style={{ background: "var(--ink)", minHeight: "100vh", position: "relative" }}>
       {hero && (
         <section style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
-          <Image src={hero.img} alt={hero.alt} fill priority sizes="100vw" style={{ objectFit: "cover" }} />
+          <Image className="evKen" src={hero.img} alt={hero.alt} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: hero.focal || "center 62%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.96) 6%,rgba(10,21,35,.34) 62%,rgba(10,21,35,.22))" }} />
           <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(20px,5vw,40px) clamp(52px,10vh,110px)", display: "grid", gap: 18 }}>
-            <p style={{
-              margin: 0,
-              fontFamily: MONO,
-              fontSize: "clamp(11px,1.3vw,12.5px)",
-              letterSpacing: ".22em",
-              textTransform: "uppercase",
-              color: "var(--accent)",
-              textShadow: "0 1px 3px rgba(4,9,16,.9), 0 0 14px rgba(4,9,16,.7)",
-            }}>
-              {hero.eyebrow}
+            <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 12 }}>
+              <i aria-hidden="true" style={{ width: 28, height: 3, background: "var(--accent-strong)", flex: "0 0 auto", borderRadius: 2 }} />
+              <span style={{
+                fontFamily: MONO,
+                fontSize: "clamp(11px,1.3vw,12.5px)",
+                letterSpacing: ".22em",
+                textTransform: "uppercase",
+                color: "#EDF1F6",
+                textShadow: "0 1px 4px rgba(4,9,16,.95)",
+              }}>
+                {hero.eyebrow}
+              </span>
             </p>
             <h1 style={{ margin: 0, fontFamily: "var(--display)", fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.02em", color: "#FFFFFF", textWrap: "balance" }}>
               {hero.title}
@@ -223,5 +285,7 @@ export default function EventPublic({ event }: { event: EventRow }) {
         </div>
       </section>
     </main>
+      <SiteFooter />
+    </div>
   )
 }
