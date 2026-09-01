@@ -163,7 +163,7 @@ export function RsvpBlock({
           {state === "sending" ? "Sending" : "Count me in"}
         </button>
         {state === "error" ? (
-          <p style={{ ...lede, color: "#ef6d70", fontSize: 14, margin: 0 }}>{why}</p>
+          <p style={{ ...lede, color: "#FF1A21", fontSize: 14, margin: 0 }}>{why}</p>
         ) : null}
       </form>
     </div>
