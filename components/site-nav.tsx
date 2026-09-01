@@ -227,9 +227,9 @@ export function SiteNav({ active = "home" }: Props) {
               }}
             >
               <Image
-                src="/images/mark-on-dark-96.png"
-                alt="PG mark"
-                width={58}
+                src={ranch ? "/brand/rj-mark-ondark.png" : "/images/mark-on-dark-96.png"}
+                alt={ranch ? "Rancho Jaramillo" : "PG mark"}
+                width={ranch ? 50 : 58}
                 height={32}
                 style={{ height: 32, width: "auto", display: "block", flexShrink: 0 }}
               />
@@ -242,8 +242,17 @@ export function SiteNav({ active = "home" }: Props) {
                   textTransform: "uppercase",
                 }}
               >
-                <span style={{ color: "#F2C94C" }}>Paddock</span>
-                <span style={{ color: "#57C7F5" }}>Gavin</span>
+                {ranch ? (
+                  <>
+                    <span style={{ color: "#EDF1F6" }}>The Piston </span>
+                    <span style={{ color: "#F2C94C" }}>Powered Ranch</span>
+                  </>
+                ) : (
+                  <>
+                    <span style={{ color: "#F2C94C" }}>Paddock</span>
+                    <span style={{ color: "#57C7F5" }}>Gavin</span>
+                  </>
+                )}
               </span>
             </Link>
 
