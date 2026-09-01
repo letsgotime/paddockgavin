@@ -193,13 +193,13 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
 
       <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center", marginTop: 20, padding: "12px 17px", borderRadius: 16, background: "rgba(17,27,40,.58)", border: "1px solid rgba(255,255,255,.11)" }}>
         {([["Categories", cats.length, "#fff"], ["With a name", withName, "#00D2BE"],
-           ["Nobody yet", cats.length - withName, "#E5484D"], ["Names in play", pros.length, "#F2C94C"]] as const).map(([l, v, c]) => (
+           ["Nobody yet", cats.length - withName, "#FF1A21"], ["Names in play", pros.length, "#F2C94C"]] as const).map(([l, v, c]) => (
           <span key={l} style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: "#a9b4c2" }}>
             {l}<b style={{ display: "block", fontSize: 19, fontWeight: 900, color: c, fontVariantNumeric: "tabular-nums" }}>{v}</b>
           </span>
         ))}
         <span style={{ marginLeft: "auto", fontFamily: MONO, fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase",
-          color: save === "error" ? "#E5484D" : save === "saved" ? "#00D2BE" : "#7f8a99" }}>
+          color: save === "error" ? "#FF1A21" : save === "saved" ? "#00D2BE" : "#7f8a99" }}>
           {{ ready: "Up to date", dirty: "Unsaved", saving: "Saving", saved: "Saved", error: `Not saved: ${why}` }[save]}
         </span>
       </div>
@@ -225,7 +225,7 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
                       <b style={{ display: "block", fontSize: 15.5, fontWeight: 900, color: "#fff", letterSpacing: "-.01em" }}>{c.name}</b>
                       {c.need ? <span style={{ display: "block", marginTop: 4, fontSize: 12.5, lineHeight: 1.45, color: "#a9b4c2" }}>{c.need}</span> : null}
                       <span style={{ display: "block", marginTop: 9, fontFamily: MONO, fontSize: 10.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#7f8a99" }}>
-                        {p.length ? <><b style={{ color: "#00D2BE" }}>{p.length}</b> in play</> : <span style={{ color: "#E5484D" }}>nobody yet</span>}
+                        {p.length ? <><b style={{ color: "#00D2BE" }}>{p.length}</b> in play</> : <span style={{ color: "#FF1A21" }}>nobody yet</span>}
                         {chosen ? <> &middot; <b style={{ color: "#00D2BE" }}>{chosen}</b> chosen</> : null}
                       </span>
                     </article>
