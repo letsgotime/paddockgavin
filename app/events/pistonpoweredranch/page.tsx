@@ -295,7 +295,7 @@ export default function PistonPoweredRanchPage() {
               The curation of a concours lawn, on ground that still runs cattle. Three hundred collector cars across twelve acres, an hour south of Nashville.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, ["--d" as string]: "260ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "var(--on-accent)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <a href="#look" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -373,7 +373,7 @@ export default function PistonPoweredRanchPage() {
                     </div>
                   ))}
                 </div>
-                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ alignSelf: "flex-start", marginTop: 22, display: "inline-block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "var(--on-accent)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Tell us you are coming
                 </a>
               </div>
@@ -550,7 +550,7 @@ export default function PistonPoweredRanchPage() {
               The school is down the road from the gate. A good day is better shared, so we open the field, look after the community that makes it possible, and come back and do it again.
             </p>
             <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", ["--d" as string]: "210ms" }}>
-              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href={`${RANCH}/spectate`} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "var(--accent-strong)", color: "var(--on-accent)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Tell us you are coming
               </a>
               <Link href="/events" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.32)", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}>
