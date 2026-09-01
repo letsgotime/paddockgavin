@@ -15,7 +15,7 @@ const BLUE   = "#005185"
 const STEEL  = "#848482"
 const WHITE  = "#EDF1F6"
 const MUTED  = "#8B93A7"
-const RED    = "#EF4444"
+const RED    = "#FF1A21"
 const GREEN  = "#22C55E"
 const ORANGE = "#F97316"
 
