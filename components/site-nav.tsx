@@ -20,6 +20,31 @@ const NAV_ITEMS = [
   { key: "intake",    href: "/intake",             label: "Sell a car",         note: "Start the intake",tone: "#4BA3DE" },
 ]
 
+/**
+ * The ranch's own menu, for pistonpoweredranch.com.
+ *
+ * Somebody arriving for a charity car show at a ranch was being handed the
+ * whole of PaddockGavin: the garage, the scoreboard, sell a car, lot ops. All
+ * true, none of it what they came for.
+ *
+ * Every destination here is on the event: the four subroutes exist, and show,
+ * look, ops and apply are real anchors on the landing page. Tones are gold and
+ * the ranch's text red, and no blue, which does not carry on the ink.
+ */
+const RANCH_ITEMS = [
+  { key: "day",      href: "/",                                    label: "The day",      note: "10 October",     tone: "#F2C94C" },
+  { key: "show",     href: "/#show",                               label: "The show",     note: "On the field",   tone: "#F2C94C" },
+  { key: "entry",    href: "/events/pistonpoweredranch/entry",      label: "Enter a car",  note: "By approval",    tone: "#FF1A21" },
+  { key: "rsvp",     href: "/#rsvp",                               label: "Spectate",     note: "Free to attend", tone: "#00D2BE" },
+  { key: "vendor",   href: "/events/pistonpoweredranch/vendor",     label: "Vendors",      note: "Take a stall",   tone: "#00D2BE" },
+  { key: "sponsor",  href: "/events/pistonpoweredranch/sponsor",    label: "Partners",     note: "Back the day",   tone: "#FF1A21" },
+  { key: "look",     href: "/#look",                               label: "The property", note: "Rancho Jaramillo", tone: "#F2C94C" },
+  { key: "ops",      href: "/#ops",                                label: "Finding it",   note: "Unionville TN",  tone: "#00D2BE" },
+]
+
+/** Gates at nine on Saturday 10 October 2026. */
+const EVENT_DAY = Date.UTC(2026, 9, 10)
+
 interface Props {
   active?: string
 }
@@ -30,6 +55,18 @@ export function SiteNav({ active = "home" }: Props) {
   const [clock, setClock] = useState("—")
   const [goldenFull, setGoldenFull] = useState("—")
   const [goldenNote, setGoldenNote] = useState("Working it out")
+  const [ranch, setRanch] = useState(false)
+  const [days, setDays] = useState(0)
+
+  /* Which front door this is. The page is identical on both; only the menu
+     changes, and it is closed on load, so nobody sees it settle. */
+  useEffect(() => {
+    const h = window.location.hostname.toLowerCase()
+    setRanch(h === "pistonpoweredranch.com" || h === "www.pistonpoweredranch.com")
+    const now = new Date()
+    const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+    setDays(Math.max(0, Math.round((EVENT_DAY - today) / 86400000)))
+  }, [])
 
   // Nashville shift tick
   const tick = useCallback(() => {
@@ -137,6 +174,14 @@ export function SiteNav({ active = "home" }: Props) {
   const shiftColor  = shift === "day" ? "#F2C94C" : "#00D2BE"
   const shiftLabel  = shift === "day" ? "Day shift" : "Night shift"
 
+  const navItems  = ranch ? RANCH_ITEMS : NAV_ITEMS
+  const pillTone  = ranch ? "#F2C94C" : shiftColor
+  const pillLabel = ranch ? "The Ranch" : shiftLabel
+  const pillValue = ranch ? (days === 0 ? "Today" : days === 1 ? "1 day" : `${days} days`) : clock
+  const eyebrow   = ranch
+    ? `Saturday 10 October \u00b7 gates at nine`
+    : `${shiftLabel} \u00b7 ${clock} Nashville`
+
   return (
     <>
       {/* Fixed nav bar */}
@@ -227,8 +272,8 @@ export function SiteNav({ active = "home" }: Props) {
                   width: 7,
                   height: 7,
                   borderRadius: "50%",
-                  background: shiftColor,
-                  boxShadow: `0 0 10px ${shiftColor}`,
+                  background: pillTone,
+                  boxShadow: `0 0 10px ${pillTone}`,
                   flex: "0 0 auto",
                 }}
               />
@@ -244,7 +289,7 @@ export function SiteNav({ active = "home" }: Props) {
                   whiteSpace: "nowrap",
                 }}
               >
-                {shiftLabel}
+                {pillLabel}
               </span>
               <span
                 className="pg-hide-xs"
@@ -252,12 +297,12 @@ export function SiteNav({ active = "home" }: Props) {
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 13,
                   letterSpacing: ".06em",
-                  color: shiftColor,
+                  color: pillTone,
                   fontVariantNumeric: "tabular-nums",
                   whiteSpace: "nowrap",
                 }}
               >
-                {clock}
+                {pillValue}
               </span>
             </span>
 
@@ -377,7 +422,7 @@ export function SiteNav({ active = "home" }: Props) {
               <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
                 <i
                   aria-hidden="true"
-                  style={{ width: 26, height: 3, background: shiftColor }}
+                  style={{ width: 26, height: 3, background: pillTone }}
                 />
                 <span
                   style={{
@@ -388,7 +433,7 @@ export function SiteNav({ active = "home" }: Props) {
                     color: "#EDF1F6",
                   }}
                 >
-                  {shiftLabel} &middot; {clock} Nashville
+                  {eyebrow}
                 </span>
               </span>
               <i
@@ -434,7 +479,7 @@ export function SiteNav({ active = "home" }: Props) {
                 gap: "0 clamp(24px,4vw,64px)",
               }}
             >
-              {NAV_ITEMS.map((item, i) => {
+              {navItems.map((item, i) => {
                 const isActive = active === item.key
                 return (
                   <Link

@@ -567,7 +567,7 @@ export default function PistonPoweredRanchPage() {
         </div>
       </section>
       <RanchGallery accent="var(--accent)" />
-      <section style={{ position: "relative", padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
+      <section id="rsvp" style={{ position: "relative", scrollMarginTop: 128, padding: "0 clamp(16px,5vw,40px) clamp(56px,10vh,120px)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "center", paddingBottom: 20 }}>
             <RanchMark width={62} opacity={0.82} />
