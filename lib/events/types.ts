@@ -57,7 +57,34 @@ export interface EventAct {
   grid?: { t: string; b: string }[]
 }
 
+export interface EventTeaser {
+  bg?: string
+  film?: string
+  poster?: string
+  posterAlt?: string
+  kicker?: string
+  title: string
+  body: string
+  facts?: [string, string][]
+  cta?: EventCta
+}
+
+export interface EventBand {
+  bg?: string
+  kicker?: string
+  title: string
+  body: string
+  stats?: [string, string][]
+  cta?: EventCta
+  ctas?: EventCta[]
+}
+
 export interface EventContent {
+  land?: EventBand
+  why?: EventBand
+  /** Which sections appear, and in what order. */
+  sections?: string[]
+  teaser?: EventTeaser
   /** The credit under the venue's mark. */
   producer?: string
   hero?: {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { loadEvent, loadEventSlugs } from "@/lib/events/load"
+import { loadEvent, loadEventSlugs, loadRunOfShow, loadMapFeatures, loadPartners } from "@/lib/events/load"
 import EventPublic from "./EventPublic"
 
 /**
@@ -49,6 +49,14 @@ export default async function EventPublicPage({ params }: { params: Promise<{ ev
   const e = await loadEvent(event)
   if (!e) notFound()
 
+  /* Fetched here rather than in the browser, so the day and the ground are in
+     the HTML with everything else. */
+  const [day, ground, partners] = await Promise.all([
+    loadRunOfShow(),
+    loadMapFeatures(e.id),
+    loadPartners(e.id),
+  ])
+
   /* Only what the row actually holds. An event with no end time says nothing
      about one rather than guessing. */
   const jsonLd: Record<string, unknown> = {
@@ -74,7 +82,7 @@ export default async function EventPublicPage({ params }: { params: Promise<{ ev
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <EventPublic event={e} />
+      <EventPublic event={e} day={day} ground={ground} partners={partners} />
     </>
   )
 }

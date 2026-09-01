@@ -62,3 +62,67 @@ export async function loadEventSlugs(): Promise<string[]> {
     return []
   }
 }
+
+export interface RunOfShowRow { time_label: string; activity: string }
+export interface MapFeatureRow { kind: string; name: string; category: string | null; blurb: string | null }
+export interface PartnerRow { company: string; category?: string | null; tier?: string | null }
+
+/**
+ * The day, as the public sees it.
+ *
+ * Reads public_run_of_show, a view over the operational list filtered to the
+ * lines marked is_public. The full list carries load-in, traffic control and
+ * load-out, which are nobody's business but ours.
+ *
+ * run_of_show has no event_id, so this is the same list for every event. That
+ * is a real gap for a second event and is worth fixing before there is one.
+ */
+export async function loadRunOfShow(): Promise<RunOfShowRow[]> {
+  const p = db()
+  if (!p) return []
+  try {
+    const { rows } = await p.query(`select time_label, activity from public.public_run_of_show order by sort_order`)
+    return rows as RunOfShowRow[]
+  } catch {
+    return []
+  }
+}
+
+/** Zones, routes and points of interest. Hidden features never leave the CRM. */
+export async function loadMapFeatures(eventId: string): Promise<MapFeatureRow[]> {
+  const p = db()
+  if (!p) return []
+  try {
+    const { rows } = await p.query(
+      `select kind, name, category, blurb
+         from public.map_features
+        where event_id = $1 and status <> 'hidden'
+        order by case kind when 'zone' then 0 when 'poi' then 1 else 2 end, sort`,
+      [eventId],
+    )
+    return rows as MapFeatureRow[]
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Who is actually coming, which is only ever the committed ones.
+ *
+ * The views do that filtering, because every account is still 'applied' and a
+ * list built on status would publish the ones we are chasing. Neither view
+ * carries a figure, so a price cannot reach a public page by accident.
+ */
+export async function loadPartners(eventId: string): Promise<{ vendors: PartnerRow[]; sponsors: PartnerRow[] }> {
+  const p = db()
+  if (!p) return { vendors: [], sponsors: [] }
+  try {
+    const [v, s] = await Promise.all([
+      p.query(`select company, category from public.public_vendors where event_id = $1 order by company`, [eventId]),
+      p.query(`select company, tier from public.public_sponsors where event_id = $1 order by company`, [eventId]),
+    ])
+    return { vendors: v.rows as PartnerRow[], sponsors: s.rows as PartnerRow[] }
+  } catch {
+    return { vendors: [], sponsors: [] }
+  }
+}
