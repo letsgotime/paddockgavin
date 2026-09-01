@@ -49,6 +49,10 @@ export type Block =
   | { kind: "rule" }
   | { kind: "quiet"; text: string }
   | { kind: "links"; rows: { label: string; url: string; note?: string }[] }
+  /* Photographs in a row, stacking on a phone. Each carries alt text over a
+     dark cell, so a blocked image leaves a caption rather than a hole, and
+     nothing here is ever the only place a fact appears. */
+  | { kind: "strip"; shots: { src: string; alt: string }[] }
 
 export interface RanchEmail {
   preheader: string
@@ -76,7 +80,7 @@ function preheaderPad(): string {
 }
 
 function paragraph(text: string, size = 16.5, color = BODY): string {
-  return `<tr><td style="padding:0 0 18px;font-family:${TEXT};font-size:${size}px;line-height:1.68;color:${color};mso-line-height-rule:exactly">${text}</td></tr>`
+  return `<tr><td class="p" style="padding:0 0 18px;font-family:${TEXT};font-size:${size}px;line-height:1.68;color:${color};mso-line-height-rule:exactly">${text}</td></tr>`
 }
 
 function renderBlock(b: Block): string {
@@ -142,8 +146,28 @@ function renderBlock(b: Block): string {
 
     /* Bulletproof button. The VML arm is what Outlook actually paints, because
        Word ignores padding on anchors and would otherwise render a bare link. */
+    case "strip": {
+      /* One row on a desktop, stacked on a phone by the .strip rules. Each cell
+         keeps the ink behind it and real alt text, so a client that blocks
+         images shows a caption on dark rather than a white gap. */
+      const shots = b.shots.slice(0, 3)
+      if (shots.length === 0) return ""
+      const w = Math.floor(508 / shots.length)
+      return `<tr><td style="padding:2px 0 26px">
+        <table role="presentation" class="strip" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+        ${shots
+          .map(
+            (s) => `<td width="${w}" valign="top" bgcolor="${INK}" style="width:${w}px;padding:0 4px 0 0;background:${INK};font-size:0;line-height:0">
+            <img src="${esc(s.src)}" width="${w}" alt="${esc(s.alt)}" style="display:block;width:100%;max-width:${w}px;height:auto;border:0;outline:none;text-decoration:none;font-family:${LABEL};font-size:11px;line-height:1.4;color:${PAPER}" />
+          </td>`,
+          )
+          .join("")}
+        </tr></table>
+      </td></tr>`
+    }
+
     case "button":
-      return `<tr><td style="padding:6px 0 28px">
+      return `<tr><td class="btn" style="padding:6px 0 28px">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="${RED_FILL}" style="background:${RED_FILL}">
         <!--[if mso]>
         <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${esc(b.href)}" style="height:46px;v-text-anchor:middle;width:250px" arcsize="0%" strokecolor="${RED_FILL}" fillcolor="${RED_FILL}">
@@ -175,8 +199,15 @@ export function renderRanchEmail(e: RanchEmail): string {
      mobile pass is safe to put here. Nothing structural depends on it. */
   @media only screen and (max-width:620px){
     .shell{width:100% !important}
-    .pad{padding-left:24px !important;padding-right:24px !important}
-    .h1{font-size:30px !important;line-height:1.14 !important}
+    .pad{padding-left:22px !important;padding-right:22px !important}
+    .h1{font-size:32px !important;line-height:1.1 !important}
+    /* Most of this list opens on a phone in Apple Mail, so the small screen
+       gets the roomier measure and the larger targets. A thumb is about 44px
+       across; anything under that is a miss. */
+    .p{font-size:17px !important;line-height:1.62 !important}
+    .btn a{display:block !important;width:100% !important;padding:17px 20px !important;font-size:17px !important}
+    .strip td{display:block !important;width:100% !important;padding:0 0 8px 0 !important}
+    .strip img{width:100% !important;height:auto !important}
   }
   /* Apple Mail and Outlook.com invert light emails. Holding the ground and the
      ink explicitly stops the paper turning grey and the red turning pink. */

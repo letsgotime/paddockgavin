@@ -30,6 +30,7 @@ export interface DigestVars {
 }
 
 const TOOLS = "https://pistonpoweredranch.com"
+const IMG = `${TOOLS}/images/email`
 
 function countdownLine(days: number | null): string {
   if (days === null) return "The day is here."
@@ -97,6 +98,17 @@ export function weeklyDigest(v: DigestVars): RanchEmail & { subject: string; fro
   })
   blocks.push({ kind: "button", label: "Everything about the day", href: TOOLS })
 
+  /* Three plates of the ground it happens on. Decorative, and deliberately so:
+     every fact above is already in words, so a blocked image costs nothing. */
+  blocks.push({
+    kind: "strip",
+    shots: [
+      { src: `${IMG}/strip-gate.jpg`, alt: "The gate at Rancho Jaramillo" },
+      { src: `${IMG}/strip-barn.jpg`, alt: "The barn on the show field" },
+      { src: `${IMG}/strip-dusk.jpg`, alt: "The pasture at dusk" },
+    ],
+  })
+
   blocks.push({ kind: "rule" })
   blocks.push({
     kind: "links",
@@ -120,6 +132,14 @@ export function weeklyDigest(v: DigestVars): RanchEmail & { subject: string; fro
     preheader: `Where the tenth of October stands. ${news.heads} coming so far.`,
     eyebrow: "The week",
     heading: countdownLine(news.daysLeft),
+    /* An animated gif, because it is the only motion an inbox actually plays:
+       Gmail and Outlook strip css animation entirely, and Outlook's engine is
+       Word. Its first frame is a photograph that stands alone, which is what
+       Outlook desktop will show and all anybody gets if images are blocked. */
+    image: {
+      src: `${IMG}/ranch-motion.gif`,
+      alt: `${event.venue_name ?? "The ranch"}, the week before the tenth of October`,
+    },
     blocks,
     signoff:
       "You are getting this because you told us you are coming. One short note a week until the day, and then nothing.",
