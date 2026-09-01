@@ -19,7 +19,7 @@ import { FOOTPRINTS, POWER_OPTIONS, money, type Footprint } from "@/lib/stripe/c
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const ACCENT = "#EF7A7D" // small text on a dark ground, nothing else
+const ACCENT = "#FF1A21" // Jaramillo Red lit for small text on the ink, 4.74:1. Text only, never a fill
 const FILL = "#E5141A"   // Jaramillo Red, for anything that paints a shape
 
 type State = "idle" | "starting" | "closed" | "error"
@@ -190,7 +190,7 @@ export function BoothPicker() {
           send you a link the moment it opens.
         </p>
       )}
-      {state === "error" && <p style={{ ...note, color: "#ef6d70" }}>{why}</p>}
+      {state === "error" && <p style={{ ...note, color: "#FF1A21" }}>{why}</p>}
     </div>
   )
 }
