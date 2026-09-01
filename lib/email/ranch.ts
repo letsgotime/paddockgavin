@@ -27,6 +27,11 @@
  */
 
 const RED = "#B3121A" // Jaramillo Red, darkened for text weight on paper: 7.1:1
+/* The photograph behind the sheet, and the colour to fall back to: its own
+   average, so a blocked image leaves the right dark rather than white. */
+const GROUND_IMG = "https://pistonpoweredranch.com/images/email/ground.jpg"
+const GROUND_SOLID = "#242626"
+
 const RED_FILL = "#E5141A" // the brand red itself, for rules and fills
 const INK = "#0A1523"
 const BODY = "#3A4553"
@@ -212,7 +217,7 @@ export function renderRanchEmail(e: RanchEmail): string {
   /* Apple Mail and Outlook.com invert light emails. Holding the ground and the
      ink explicitly stops the paper turning grey and the red turning pink. */
   @media (prefers-color-scheme:dark){
-    .ground{background:${SURROUND} !important}
+    .ground{background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat !important}
     .sheet{background:${PAPER} !important}
     .ink{color:${INK} !important}
     .body{color:${BODY} !important}
@@ -225,11 +230,30 @@ export function renderRanchEmail(e: RanchEmail): string {
 
 <div style="display:none;font-size:1px;color:${SURROUND};line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">${esc(e.preheader)}${preheaderPad()}</div>
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" style="background:${SURROUND}">
+<!--
+  The sheet floats on a photograph of the ground it is about.
+
+  Not glass, because no email client has backdrop-filter and nothing blurs
+  behind anything in an inbox. What reads as glass is the photograph behind, a
+  hairline of light on the sheet's edge and a shadow under it. The sheet itself
+  stays opaque: a translucent panel over a picture is exactly where letters
+  stop being readable in sunlight.
+
+  Set on the cell for clients that honour it and again in VML for Outlook,
+  whose Word engine ignores css background images. Both sit on GROUND_SOLID,
+  the photograph's own average, so a client that loads neither still gets the
+  right dark rather than white.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" background="${GROUND_IMG}" style="background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
 <tr><td align="center" style="padding:34px 12px">
 
   <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-  <table role="presentation" class="shell sheet" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:${PAPER}">
+  <!--[if gte mso 9]>
+    <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+      <v:fill type="frame" src="${GROUND_IMG}" color="${GROUND_SOLID}" />
+    </v:background>
+    <![endif]-->
+    <table role="presentation" class="shell sheet" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:${PAPER};border:1px solid rgba(255,255,255,.22);border-radius:14px;box-shadow:0 22px 60px rgba(4,9,16,.55);overflow:hidden">
 
     <!-- The red rule. One brand gesture, at the top, and then restraint. -->
     <tr><td height="3" style="height:3px;line-height:3px;font-size:0;background:${RED_FILL}">&nbsp;</td></tr>
