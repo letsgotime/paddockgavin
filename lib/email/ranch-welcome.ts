@@ -33,17 +33,21 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
 
     {
       kind: "p",
-      text: "Sign in with the address below. There is no separate password to remember for this: the account is the one you already use, and signing in sends you a link or accepts your Google login.",
+      text: "There is no password. Open the link below, put your address in the email box, and press Email me a sign in link. A link arrives, you click it, and you are in. That is the whole thing.",
     },
     {
       kind: "links",
       rows: [
         {
           label: "Sign in",
-          url: `${TOOLS}/hq`,
-          note: `Sign in as ${v.signInEmail}. If it does not recognise you, tell Gavin rather than making a second account.`,
+          url: `${TOOLS}/console/`,
+          note: `Use ${v.signInEmail}. It is the address on the staff list, so it is the one that opens the doors. Another address will sign in and show you nothing.`,
         },
       ],
+    },
+    {
+      kind: "quiet",
+      text: "The link is good for an hour and works once. It arrives from Neon rather than from us for now, so search the sender rather than looking for our name on it. If it is not in the inbox, it is in spam.",
     },
 
     { kind: "rule" },
@@ -78,14 +82,14 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
     {
       kind: "p",
       text: v.seesMoney
-        ? "The Ledger is the whole plan on one page: every job, what it costs, what has been paid and what is still owed. You are one of three people who see the money columns."
-        : "The Ledger is the whole plan on one page: every job, who owns it and where it stands. The money columns are held back to Oscar, Gavin and Bekah, so you will see the work without the costs. That is deliberate rather than a fault.",
+        ? "Journeys is the whole plan on one page: every job, what it costs, what has been paid and what is still owed. You are one of three people who see the money columns."
+        : "Journeys is the whole plan on one page: every job, who owns it and where it stands. The money columns are held back to Oscar, Gavin and Bekah, so you see the work without the costs. That is deliberate rather than a fault.",
     },
     {
       kind: "links",
       rows: [
-        { label: "The Ledger", url: `${TOOLS}/journeys/`, note: "The whole plan, every job, in order." },
-        { label: "Console", url: `${TOOLS}/console/`, note: "Entries, accounts, the run of show." },
+        { label: "Journeys", url: `${TOOLS}/journeys/`, note: "The whole plan, every job, in order. Start here." },
+        { label: "The entries queue", url: `${TOOLS}/console/#/ops`, note: "Every car, vendor and sponsor that came through the form." },
         { label: "The Board", url: `${TOOLS}/board/`, note: "Decisions waiting on a person." },
         { label: "The Asks", url: `${TOOLS}/asks/`, note: "What we need from other people." },
         { label: "Crew", url: `${TOOLS}/crew/`, note: "Volunteers, shifts and posts." },
@@ -119,9 +123,9 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
   return {
     from: "The Piston Powered Ranch <hello@pistonpoweredranch.com>",
     subject: "You are in. Everything for 10 October, in one place",
-    preheader: "Where to sign in, how the Team menu works, and the one link you give out.",
+    preheader: "No password. A link in your inbox, and the one address you give everyone else.",
     eyebrow: "Welcome",
-    heading: "Everything in one place",
+    heading: "Your way in",
     image: {
       src: "https://paddockgavin.com/images/email/ppr-gate-band.jpg",
       alt: "The Rancho Jaramillo gate, with the track running in past the sign",
@@ -136,7 +140,7 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
 export const TEAM: WelcomeVars[] = [
   { name: "Oscar Jaramillo", seesMoney: true, signInEmail: "oscarmillo@icloud.com" },
   { name: "Bekah Stallard", seesMoney: true, signInEmail: "bekahstallard@gmail.com" },
-  { name: "Gavin Brooks", seesMoney: true, signInEmail: "paddock20auto@gmail.com" },
+  { name: "Gavin Brooks", seesMoney: true, signInEmail: "gavin@paddockgavin.com" },
   { name: "Arnie", seesMoney: false, signInEmail: "sales@trickyair.com" },
   { name: "Josh", seesMoney: false, signInEmail: "mnstr63@gmail.com" },
 ]
