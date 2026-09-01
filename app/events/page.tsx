@@ -46,7 +46,7 @@ const UPCOMING: EventRow[] = [
     state: "confirmed",
     stateLabel: "Confirmed",
     blurb:
-      "Three hundred curated cars on a working ranch. Twelve acres of open pasture. Spectating is free. A share of every net dollar goes to Community Elementary School.",
+      "Three hundred curated cars on a working ranch. Fourteen curated acres of open pasture. Spectating is free. A share of every net dollar goes to Community Elementary School.",
     img: "/images/ranch/ppr-gate.jpg",
     href: "/events/pistonpoweredranch",
     cta: "The event",
