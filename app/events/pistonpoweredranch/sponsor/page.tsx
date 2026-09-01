@@ -22,7 +22,7 @@ export default function Page() {
       title="Who you reach"
       lede="Three hundred collector cars. The people who own them. Their families. Several hundred more who came to see what showed up."
       body={[
-        "Twelve acres an hour south of Nashville, on a working ranch that opens for one Saturday.",
+        "Fourteen curated acres an hour south of Nashville, on a working ranch that opens for one Saturday.",
         "Title sponsorship, category exclusives, and supporting positions are available. Pricing is a conversation, not a rate card, because what a partner needs is rarely what a sheet lists.",
       ]}
       img="/images/ranch/ppr-pasture.jpg"
