@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, type ReactNode } from "react"
 import { useCrm } from "@/lib/crm/useCrm"
-import { signIn, signOut, magicLink } from "@/lib/crm/client"
+import { signIn, signOut, magicLink, requestReset } from "@/lib/crm/client"
 import { PADDOCKGAVIN } from "@/lib/crm/brand"
 
 /**
@@ -48,6 +48,8 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
   const [err, setErr] = useState("")
   const [linkBusy, setLinkBusy] = useState(false)
   const [linkSaid, setLinkSaid] = useState("")
+  const [resetBusy, setResetBusy] = useState(false)
+  const [resetSaid, setResetSaid] = useState("")
 
   /* The CRM is our product, so the chrome is Paddock Amber whichever event is
      loaded. The event's own colour appears once, as a dot on the rail, so you
@@ -137,7 +139,38 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
           <button type="submit" disabled={busy} style={{ ...primary, background: accent, opacity: busy ? 0.6 : 1 }}>
             {busy ? "Signing in" : "Sign in"}
           </button>
-          {err ? <p style={{ ...lede, color: "#FF1A21", fontSize: 14 }}>{err}</p> : null}
+          {err ? <p style={{ ...lede, color: "#FF1A21", fontSize: 14, margin: 0 }}>{err}</p> : null}
+          <button
+            type="button"
+            disabled={resetBusy}
+            onClick={async () => {
+              const to = email.trim()
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+                setResetSaid("Put your email in the box at the top first.")
+                return
+              }
+              setResetBusy(true)
+              setResetSaid("")
+              const problem = await requestReset(to, window.location.href)
+              setResetBusy(false)
+              setResetSaid(problem ?? "If that address has a password, a reset is on its way to it.")
+            }}
+            style={{
+              background: "none",
+              border: 0,
+              padding: 0,
+              justifySelf: "start",
+              font: `500 14px/1.5 ${ARCHIVO}`,
+              color: accent,
+              textDecoration: "underline",
+              textUnderlineOffset: 3,
+              cursor: "pointer",
+              opacity: resetBusy ? 0.6 : 1,
+            }}
+          >
+            {resetBusy ? "Sending" : "Forgotten it? Send a reset link"}
+          </button>
+          {resetSaid ? <p style={{ ...lede, fontSize: 14, margin: 0 }}>{resetSaid}</p> : null}
         </form>
       </Frame>
     )

@@ -146,7 +146,16 @@ export async function signIn(email: string, password: string): Promise<string | 
      [body.name] Invalid input, which surfaces as a wrong password. Nobody
      types a name on a sign in form, so it comes off the address. */
   const made = await c.auth.signUp({ email, password, name: nameFromEmail(email) })
-  if (made.error) return made.error.message || first.error.message || "Could not sign in."
+  if (made.error) {
+    /* This form signs in and signs up through the same button, so a wrong
+       password for an account that exists comes back from the sign up leg as
+       "User already exists. Use another email." That is the opposite of what
+       the person should do: the address is right, the password is not. */
+    if (/already exists|already registered|user_already/i.test(made.error.message || "")) {
+      return "That password is not right for this address. Use the sign in link above, or reset it below."
+    }
+    return made.error.message || first.error.message || "Could not sign in."
+  }
   if (!made.data?.session) {
     const again = await c.auth.signInWithPassword({ email, password })
     if (again.error) return "Account created. Press sign in once more."
@@ -158,6 +167,28 @@ export async function signIn(email: string, password: string): Promise<string | 
 function nameFromEmail(email: string): string {
   const local = (email.split("@")[0] || "Staff").replace(/[._-]+/g, " ").trim()
   return local.charAt(0).toUpperCase() + local.slice(1) || "Staff"
+}
+
+/**
+ * A reset link, for somebody who set a password and cannot remember it.
+ *
+ * Returns null on success, or something to show them. Success is deliberately
+ * vague about whether the address exists, so this cannot be used to find out
+ * who is on the staff list.
+ */
+export async function requestReset(email: string, redirectTo: string): Promise<string | null> {
+  try {
+    const r = await fetch(`${AUTH_URL}/request-password-reset`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, redirectTo }),
+    })
+    if (r.status === 404) return "Password resets are not switched on. Use the sign in link instead."
+    if (!r.ok) return `Could not send the reset (${r.status}). Use the sign in link instead.`
+    return null
+  } catch {
+    return "Could not reach the sign in service. Check your connection."
+  }
 }
 
 /**
