@@ -217,7 +217,7 @@ export function renderRanchEmail(e: RanchEmail): string {
   /* Apple Mail and Outlook.com invert light emails. Holding the ground and the
      ink explicitly stops the paper turning grey and the red turning pink. */
   @media (prefers-color-scheme:dark){
-    .ground{background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat !important}
+    .ground{background:${GROUND_SOLID} url('${GROUND_IMG}') top center / 100% auto no-repeat !important}
     .sheet{background:${PAPER} !important}
     .ink{color:${INK} !important}
     .body{color:${BODY} !important}
@@ -226,7 +226,7 @@ export function renderRanchEmail(e: RanchEmail): string {
   a{color:${RED}}
 </style>
 </head>
-<body class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="margin:0;padding:0;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+<body class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="margin:0;padding:0;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / 100% auto no-repeat;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
 <!--[if gte mso 9]>
 <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
   <v:fill type="frame" src="${GROUND_IMG}" color="${GROUND_SOLID}" />
@@ -253,8 +253,9 @@ export function renderRanchEmail(e: RanchEmail): string {
 
   The photograph is one still frame from the ranch's own library, softened
   just enough to read as ground rather than compete with the letter on top.
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
-<tr><td align="center" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="padding:44px 16px;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="background:${GROUND_SOLID} url('${GROUND_IMG}') top center / 100% auto no-repeat">
+<tr><td align="center" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="padding:44px 16px;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / 100% auto no-repeat">
 
   <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
     <table role="presentation" class="shell sheet" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:${PAPER};border:1px solid rgba(255,255,255,.22);border-radius:14px;box-shadow:0 22px 60px rgba(4,9,16,.55);overflow:hidden">
