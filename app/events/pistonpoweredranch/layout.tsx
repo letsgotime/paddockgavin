@@ -16,7 +16,7 @@ const CARD = "https://paddockgavin.com/og/ppr-og-1200.jpg"
    own brand: the bull mark, Cinzel, Jaramillo Red on Ranch Ink. Canonical
    and og:url still point at the hub, because that is the URL that outlives
    the domain and holds the archive. Only the picture changes. */
-const RANCHO_CARD = "https://pistonpoweredranch.com/og/ppr-rancho-og.jpg"
+const RANCHO_CARD = "https://pistonpoweredranch.com/og/ppr-rancho-og-v2.jpg"
 
 export async function generateMetadata(): Promise<Metadata> {
   const h = await headers()
