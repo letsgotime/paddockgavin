@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { ranchShare } from "@/lib/events/ranch-share"
 import { ApplyPage } from "../_apply"
 
 
@@ -7,15 +8,12 @@ import { ApplyPage } from "../_apply"
    number on the page confirmed elsewhere in the plan. This is an audit, not a
    Redline run: the copy has not been back through the tool since it was
    written. */
-export const metadata: Metadata = {
-  /* Its own address, not the event page's. All three of these inherited
-     one canonical from the shared layout, so they told a crawler they
-     were the same page and only one of them could ever rank. */
-  alternates: { canonical: "https://pistonpoweredranch.com/entry" },
+export const metadata: Metadata = ranchShare({
+  path: "/entry",
   title: "Enter a Car · The Piston Powered Ranch",
   description:
     "Three hundred places on the field, chosen from Nashville and from collections that travel. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo.",
-}
+})
 
 export default function Page() {
   return (
