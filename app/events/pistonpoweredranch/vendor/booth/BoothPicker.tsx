@@ -197,7 +197,7 @@ export function BoothPicker() {
 
 const lbl: React.CSSProperties = {
   fontFamily: MONO,
-  fontSize: 9.5,
+  fontSize: 10,
   letterSpacing: ".14em",
   textTransform: "uppercase",
   color: "#8b95a3",

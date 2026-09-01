@@ -140,7 +140,7 @@ export default function JuiceBoxPage() {
           )}
 
           <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".06em", color: "#B4B6B2", margin: "16px 0 0", display: "flex", alignItems: "baseline", gap: 9 }}>
-            <span style={{ color: "#00D2BE", fontSize: 9 }}>&#9679;</span> Paid link &mdash; buying through it sends a commission Gavin&rsquo;s way, at no cost to you.
+            <span style={{ color: "#00D2BE", fontSize: 10 }}>&#9679;</span> Paid link &mdash; buying through it sends a commission Gavin&rsquo;s way, at no cost to you.
           </p>
           <p style={{ margin: "14px 0 0", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
             The reasoning behind each product is in the book. <Link href="/gloss-game" style={{ fontWeight: 600, color: "#00D2BE", textDecoration: "none" }}>See the whole system &rarr;</Link>

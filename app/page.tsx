@@ -31,7 +31,7 @@ function PhotoBreak({ src, pos = "center 40%", credit }: { src: string; pos?: st
       <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: pos }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.55) 0%,rgba(10,21,35,0) 38%,rgba(10,21,35,0) 62%,rgba(10,21,35,.55) 100%)" }} />
       {credit && (
-        <p style={{ position: "absolute", bottom: 10, right: 14, margin: 0, fontFamily: "Inter, sans-serif", fontSize: 10, letterSpacing: "0.08em", color: "rgba(255,255,255,0.55)", textTransform: "uppercase" }}>
+        <p style={{ position: "absolute", bottom: 10, right: 14, margin: 0, fontFamily: "Inter, sans-serif", fontSize: 10, letterSpacing: "0.08em", color: "rgba(255,255,255,0.82)", textTransform: "uppercase" }}>
           &copy; {credit}
         </p>
       )}

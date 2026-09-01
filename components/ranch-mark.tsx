@@ -51,10 +51,11 @@ export function RanchMark({
         <span
           style={{
             fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-            fontSize: 9,
-            letterSpacing: ".2em",
+            fontSize: 10.5,
+            letterSpacing: ".18em",
             textTransform: "uppercase",
-            color: "rgba(237,241,246,.52)",
+            color: "rgba(237,241,246,.94)",
+            textShadow: "0 1px 4px rgba(4,9,16,.95), 0 0 12px rgba(4,9,16,.85)",
             textAlign: align === "center" ? "center" : "left",
           }}
         >

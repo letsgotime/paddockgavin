@@ -140,7 +140,7 @@ export const DesignSidebar = () => {
         {/* ── TAGLINE ── */}
         <p
           className="eyebrow"
-          style={{ marginTop: 28, color: "var(--line)", fontSize: 9 }}
+          style={{ marginTop: 28, color: "var(--line)", fontSize: 10 }}
         >
           Digest. Develop. Deliver.™
         </p>

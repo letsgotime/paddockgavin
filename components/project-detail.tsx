@@ -109,7 +109,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
                   <div
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9.5,
+                      fontSize: 10,
                       letterSpacing: "0.18em",
                       textTransform: "uppercase" as const,
                       color: "var(--steel-deep)",
@@ -130,7 +130,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
                 <div
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: 9.5,
+                    fontSize: 10,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase" as const,
                     color: "var(--steel-deep)",

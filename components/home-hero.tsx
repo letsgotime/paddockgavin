@@ -254,7 +254,7 @@ export function HomeHero() {
                 fontSize: 11.5,
                 letterSpacing: ".18em",
                 textTransform: "uppercase",
-                color: "rgba(237,241,246,.45)",
+                color: "rgba(237,241,246,0.82)",
                 whiteSpace: "nowrap",
               }}
             >
@@ -333,7 +333,7 @@ export function HomeHero() {
               fontSize: 12,
               letterSpacing: ".12em",
               textTransform: "uppercase",
-              color: "rgba(242,201,76,.55)",
+              color: "rgba(242,201,76,0.82)",
               fontVariantNumeric: "tabular-nums",
               flex: "0 0 auto",
               opacity: 0.45,

@@ -68,7 +68,7 @@ export function ApplyPage(p: ApplyProps) {
         .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center}
         .pgBand{position:sticky;top:0;height:100svh;overflow:hidden}
         .pgTile{transition:transform .5s cubic-bezier(.16,.84,.32,1),border-color .3s}
-        @media (hover:hover){.pgTile:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.3)}}
+        @media (hover:hover){.pgTile:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.82)}}
         .pgGo{transition:transform .3s cubic-bezier(.16,.84,.32,1)}
         @media (hover:hover){.pgGo:hover{transform:translateY(-2px)}}
         @media (prefers-reduced-motion:reduce){

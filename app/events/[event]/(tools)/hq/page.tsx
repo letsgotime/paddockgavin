@@ -49,7 +49,7 @@ export default function Hq({ params }: { params: Promise<{ event: string }> }) {
             <b style={{ display: "block", fontSize: 15.5, fontWeight: 900, color: "#fff",
               letterSpacing: "-.012em" }}>{name}</b>
             <span style={{ display: "block", marginTop: 4, fontSize: 13, color: "#a9b4c2" }}>{what}</span>
-            <span style={{ display: "inline-block", marginTop: 9, fontFamily: MONO, fontSize: 9,
+            <span style={{ display: "inline-block", marginTop: 9, fontFamily: MONO, fontSize: 10,
               letterSpacing: ".12em", textTransform: "uppercase", color: "#F2C94C",
               background: "rgba(242,201,76,.14)", borderRadius: 999, padding: "3px 9px" }}>
               still on the ranch domain

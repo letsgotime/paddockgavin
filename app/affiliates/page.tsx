@@ -156,7 +156,7 @@ export default function AffiliatesPage() {
             {GARAGE.map((b) => (
               <div key={b.name} style={tileBase}>
                 {b.paid && (
-                  <span style={{ position: "absolute", top: 16, right: 20, fontFamily: mono, fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "#00D2BE" }}>
+                  <span style={{ position: "absolute", top: 16, right: 20, fontFamily: mono, fontSize: 10, letterSpacing: ".2em", textTransform: "uppercase", color: "#00D2BE" }}>
                     Paid link
                   </span>
                 )}
@@ -203,7 +203,7 @@ export default function AffiliatesPage() {
             {SHIFT.map((b) => (
               <div key={b.name} style={tileBase}>
                 {b.paid && (
-                  <span style={{ position: "absolute", top: 16, right: 20, fontFamily: mono, fontSize: 9, letterSpacing: ".2em", textTransform: "uppercase", color: "#00D2BE" }}>
+                  <span style={{ position: "absolute", top: 16, right: 20, fontFamily: mono, fontSize: 10, letterSpacing: ".2em", textTransform: "uppercase", color: "#00D2BE" }}>
                     Paid link
                   </span>
                 )}

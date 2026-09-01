@@ -122,7 +122,7 @@ export default function Page() {
                           top: 12,
                           left: 13,
                           fontFamily: MONO,
-                          fontSize: 9,
+                          fontSize: 10,
                           letterSpacing: ".16em",
                           textTransform: "uppercase",
                           color: "#EDF1F6",

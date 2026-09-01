@@ -256,7 +256,7 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
               background: eventDot, flex: "0 0 auto" }} />
             {crm.event?.name}
           </div>
-          <div className="lbl" style={{ fontFamily: MONO, fontSize: 9.5, letterSpacing: ".12em",
+          <div className="lbl" style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".12em",
             textTransform: "uppercase", color: "#7f8a99", marginTop: 4 }}>
             {crm.event?.status === "active" ? "In planning" : crm.event?.status ?? ""}
           </div>
@@ -343,7 +343,7 @@ const h1: React.CSSProperties = {
 }
 const lede: React.CSSProperties = { margin: "12px 0 0", fontSize: 16, color: "#a9b4c2", maxWidth: "58ch" }
 const lbl: React.CSSProperties = {
-  fontFamily: MONO, fontSize: 9.5, letterSpacing: ".14em", textTransform: "uppercase",
+  fontFamily: MONO, fontSize: 10, letterSpacing: ".14em", textTransform: "uppercase",
   color: "#7f8a99", fontWeight: 600, marginBottom: -6,
 }
 const input: React.CSSProperties = {

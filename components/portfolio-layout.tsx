@@ -77,7 +77,7 @@ export const PortfolioLayout = () => {
                 />
                 <span
                   className="eyebrow"
-                  style={{ color: "rgba(244,246,250,0.6)", fontSize: 9 }}
+                  style={{ color: "rgba(244,246,250,0.82)", fontSize: 10 }}
                 >
                   {"tag" in project
                     ? (project as any).tag
@@ -94,7 +94,7 @@ export const PortfolioLayout = () => {
               >
                 <span
                   className="eyebrow"
-                  style={{ color: "rgba(244,246,250,0.35)", fontSize: 9 }}
+                  style={{ color: "rgba(244,246,250,0.82)", fontSize: 10 }}
                 >
                   {project.year}
                 </span>
@@ -106,7 +106,7 @@ export const PortfolioLayout = () => {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "clamp(80px, 18vw, 180px)",
-                  color: "rgba(244,246,250,0.03)",
+                  color: "rgba(244,246,250,0.82)",
                   lineHeight: 0.8,
                   letterSpacing: "-0.04em",
                   paddingRight: "clamp(12px, 2vw, 24px)",
@@ -133,7 +133,7 @@ export const PortfolioLayout = () => {
                 <p
                   className="leading-snug"
                   style={{
-                    color: "rgba(244,246,250,0.6)",
+                    color: "rgba(244,246,250,0.82)",
                     fontSize: 13,
                     maxWidth: "52ch",
                   }}
@@ -149,7 +149,7 @@ export const PortfolioLayout = () => {
                 >
                   <span
                     className="eyebrow"
-                    style={{ color: ACCENTS[index], fontSize: 9 }}
+                    style={{ color: ACCENTS[index], fontSize: 10 }}
                   >
                     View project
                   </span>
@@ -187,10 +187,10 @@ export const PortfolioLayout = () => {
           alignItems: "center",
         }}
       >
-        <p className="eyebrow" style={{ fontSize: 9 }}>
+        <p className="eyebrow" style={{ fontSize: 10 }}>
           Paddock20™ · Nashville, TN
         </p>
-        <p className="eyebrow" style={{ fontSize: 9, color: "var(--line)" }}>
+        <p className="eyebrow" style={{ fontSize: 10, color: "var(--line)" }}>
           Digest. Develop. Deliver.™
         </p>
       </div>

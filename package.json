@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "node scripts/check-brand.mjs && next build",
+    "build": "node scripts/check-brand.mjs && node scripts/check-readable.mjs && next build",
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start",
-    "check:brand": "node scripts/check-brand.mjs"
+    "check:brand": "node scripts/check-brand.mjs",
+    "check:readable": "node scripts/check-readable.mjs"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",

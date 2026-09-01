@@ -104,7 +104,7 @@ export default function VisitOps() {
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <style>{`
         .pgRing{position:absolute;right:-8px;bottom:-8px;width:74px;height:74px;border-radius:50%;border:2px solid;pointer-events:none}
-        .pgRing::before{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(0,210,190,.14);border-top-color:rgba(0,210,190,.55)}
+        .pgRing::before{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(0,210,190,.14);border-top-color:rgba(0,210,190,0.82)}
         @media (prefers-reduced-motion: no-preference){.pgRing::before{animation:pgSpin 9s linear infinite}}
         @keyframes pgSpin{to{transform:rotate(360deg)}}
         .pgTele{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}

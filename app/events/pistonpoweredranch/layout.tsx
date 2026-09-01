@@ -185,10 +185,10 @@ function RanchLockup() {
       <span
         style={{
           fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-          fontSize: 9.5,
+          fontSize: 10,
           letterSpacing: ".22em",
           textTransform: "uppercase",
-          color: "rgba(237,241,246,.5)",
+          color: "rgba(237,241,246,0.82)",
         }}
       >
         The day run by PaddockGavin

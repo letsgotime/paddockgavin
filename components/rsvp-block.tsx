@@ -206,7 +206,7 @@ const lede: React.CSSProperties = {
 }
 const lbl: React.CSSProperties = {
   fontFamily: MONO,
-  fontSize: 9.5,
+  fontSize: 10,
   letterSpacing: ".14em",
   textTransform: "uppercase",
   color: "#7f8a99",

@@ -326,25 +326,25 @@ export default function EventPublic({
         </div>
       )}
 
-      {/* The venue's own mark, from its brand row. */}
-      {b.logo && (
-        <div style={{ position: "absolute", top: "clamp(126px,15vh,152px)", left: 0, right: 0, zIndex: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 9, pointerEvents: "none" }}>
-          <RanchMark
-            src={b.logoOnDark || b.logo}
-            alt={b.name || event.venue_name || event.name}
-            width={152}
-            ratio={475 / 748}
-            label={c.producer || "The day run by PaddockGavin"}
-          />
-        </div>
-      )}
-
     <main style={{ background: "var(--ink)", minHeight: "100vh", position: "relative" }}>
       {hero && (
-        <section style={{ position: "relative", minHeight: "100svh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
+        <section style={{ position: "relative", minHeight: "100svh", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden" }}>
           <Image className="evKen" src={hero.img} alt={hero.alt} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: hero.focal || "center 62%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.96) 6%,rgba(10,21,35,.34) 62%,rgba(10,21,35,.22))" }} />
-          <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(20px,5vw,40px) clamp(52px,10vh,110px)", display: "grid", gap: 18 }}>
+
+          {b.logo ? (
+            <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 9, padding: "clamp(96px,14vh,140px) 20px 0", pointerEvents: "none" }}>
+              <RanchMark
+                src={b.logoOnDark || b.logo}
+                alt={b.name || event.venue_name || event.name}
+                width={132}
+                ratio={475 / 748}
+                label={c.producer || "The day run by PaddockGavin"}
+              />
+            </div>
+          ) : <span />}
+
+          <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "clamp(24px,5vh,48px) clamp(20px,5vw,40px) clamp(52px,10vh,110px)", display: "grid", gap: 18 }}>
             <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 12 }}>
               <i aria-hidden="true" style={{ width: 28, height: 3, background: "var(--accent-strong)", flex: "0 0 auto", borderRadius: 2 }} />
               <span style={{

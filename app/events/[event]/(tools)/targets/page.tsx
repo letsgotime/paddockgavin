@@ -163,7 +163,7 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
           background:rgba(17,27,40,.58);border:1px solid rgba(255,255,255,.11);
           backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5)}
         .tgCat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tone);opacity:.85}
-        .tgCat:hover{border-color:rgba(255,255,255,.26)}
+        .tgCat:hover{border-color:rgba(255,255,255,0.82)}
         .tgSheet{position:fixed;inset:0;z-index:60;display:none}
         .tgSheet.on{display:block}
         .tgSheet .sc{position:absolute;inset:0;background:rgba(4,8,13,.66);backdrop-filter:blur(3px)}
