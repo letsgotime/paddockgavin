@@ -34,6 +34,12 @@
  *   Any other red-family colour on a ranch surface stops the build, pink or
  *   not, so a fourth red cannot appear.
  *
+ * RULE 3, everywhere: dark type never sits on the brand red.
+ *   A button painted #E5141A or var(--accent-strong) carries white
+ *   (var(--on-accent) resolves to white on the ranch door and dark on ours,
+ *   because the same token is amber there). "Count me in" shipped in near
+ *   black on red once. It will not again.
+ *
  * Runs before every build (`pnpm build`) and on demand (`pnpm check:brand`).
  * If it fires, the fix is the colour, never the rule.
  */
@@ -55,6 +61,10 @@ const RANCH_SURFACES = [
   "lib/email/ranch.ts",
   "emails/",
 ]
+
+/* Type colours that vanish on the brand red. */
+const DARK_TEXT = /\bcolor:\s*["'`](#(?:101010|04211d|0a1523|070d14|000000|000|111111|1a1a1a)|black)\b/i
+const RED_FILL = /\b(background|backgroundColor)\b[^,;]*?(#E5141A|var\(--accent-strong\))/i
 
 /* Properties that paint a shape rather than a glyph. */
 const FILL_PROPS =
@@ -206,6 +216,11 @@ for (const file of walk(ROOT)) {
         }
         push(rel, n, line, `${c.raw} is a red that is not the brand's. On ranch surfaces the only reds are ${JARAMILLO_RED} and, for text, ${RANCH_RED_TEXT} on the ink or ${RANCH_RED_INK} on paper.`)
       }
+    }
+
+    /* Dark type on the brand red. */
+    if (RED_FILL.test(line) && DARK_TEXT.test(line)) {
+      push(rel, n, line, "dark type on the brand red is unreadable. A red fill carries var(--on-accent) (white on the ranch).")
     }
 
     /* The text token painting a shape. --accent-strong on the same line is fine. */
