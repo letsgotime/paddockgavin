@@ -27,6 +27,10 @@ export interface EventBrand {
   logoOnDark?: string
   wordmark?: string
   icon?: string
+  /** The share card, 1200x630, absolute. Every event brings its own. */
+  og?: string
+  /** What the share card shows, for anyone who cannot see it. */
+  ogAlt?: string
   inkName?: string
   paperName?: string
   accentName?: string

@@ -35,12 +35,21 @@ export async function generateMetadata({ params }: { params: Promise<{ event: st
   const description = e.tagline || `${e.name} at ${e.venue_name ?? ""}.`.trim()
   const canonical = `https://paddockgavin.com/events/${e.slug}`
 
+  /* The share card comes off the event row like everything else here, so a
+     second event brings its own rather than inheriting the ranch's. Without
+     one, a shared link is a bare grey rectangle in every chat app, which is
+     what this page shipped as when it moved onto this template. */
+  const card = e.brand.og
+  const images = card
+    ? [{ url: card, width: 1200, height: 630, alt: e.brand.ogAlt || title }]
+    : undefined
+
   return {
     title,
     description,
     alternates: { canonical },
-    openGraph: { title, description, url: canonical, type: "website" },
-    twitter: { card: "summary_large_image", title, description },
+    openGraph: { title, description, url: canonical, type: "website", images },
+    twitter: { card: "summary_large_image", title, description, images: images?.map((i) => i.url) },
   }
 }
 
