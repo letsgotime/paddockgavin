@@ -9,11 +9,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const project = getProjectById(id)
   if (!project) return {}
   return {
-    title: `${project.title} — PaddockGavin`,
-    description: project.caption ?? `${project.title} — built by PaddockGavin. Nashville, Tennessee.`,
+    title: `${project.title} · PaddockGavin`,
+    description: project.caption ?? `${project.title}, built by PaddockGavin. Nashville, Tennessee.`,
     openGraph: {
-      title: `${project.title} — PaddockGavin`,
-      description: project.caption ?? `${project.title} — built by PaddockGavin.`,
+      title: `${project.title} · PaddockGavin`,
+      description: project.caption ?? `${project.title}, built by PaddockGavin.`,
       url: `https://paddockgavin.com/work/${id}`,
       images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: project.title }],
     },

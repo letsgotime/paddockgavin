@@ -55,7 +55,7 @@ export default function HomePage() {
   return (
     <>
       <SiteNav active="home" />
-      <h1 className="sr-only">PaddockGavin — Lot operations and events by day, software by night. Nashville, Tennessee.</h1>
+      <h1 className="sr-only">PaddockGavin · Lot operations and events by day, software by night. Nashville, Tennessee.</h1>
       <HomeHero />
 
       {/* ── 1. THE WALL ───────────────────────────── */}

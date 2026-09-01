@@ -23,13 +23,13 @@ export const PROJECTS = [
       { label: "Throughput", value: "$125M+/mo" },
       { label: "Status", value: "Active" },
     ],
-    caption: "The lot at sunrise — cars queued before the doors open",
+    caption: "The lot at sunrise, cars queued before the doors open",
     linkText: "dupontregistry.com",
     linkUrl: "https://www.dupontregistry.com",
     overview: {
       title: "The operation",
       content:
-        "70,000 square feet. Every car that moves — consignment arrivals, dealer trades, auction pulls, photo staging — runs through a single ops system. The tool handles the spatial and logistical load so nothing falls through. A Senna that was clean at 7am is still clean at 4pm when the photographer shows up.",
+        "70,000 square feet. Every car that moves, consignment arrivals, dealer trades, auction pulls, photo staging, runs through a single ops system. The tool handles the spatial and logistical load so nothing falls through. A Senna that was clean at 7am is still clean at 4pm when the photographer shows up.",
     },
     direction: {
       title: "The tool",
@@ -62,7 +62,7 @@ export const PROJECTS = [
     overview: {
       title: "The problem",
       content:
-        "See a car in traffic. At an event. In a video. The question is always the same — what is that exactly? Not just make/model. Spec, options, production numbers, what the collector market has been doing with it. The question came up every day on the lot and the answer was always slower than it should be.",
+        "See a car in traffic. At an event. In a video. The question is always the same, what is that exactly? Not just make/model. Spec, options, production numbers, what the collector market has been doing with it. The question came up every day on the lot and the answer was always slower than it should be.",
     },
     direction: {
       title: "The build",
@@ -72,7 +72,7 @@ export const PROJECTS = [
     outcome: {
       title: "The position",
       content:
-        "78 cars brokered. Fee to buyers: $0. The value is the access — knowing what the market has been doing with a car before you decide what to do with it. SupercarIQ is the tool that makes that knowledge portable.",
+        "78 cars brokered. Fee to buyers: $0. The value is the access, knowing what the market has been doing with a car before you decide what to do with it. SupercarIQ is the tool that makes that knowledge portable.",
     },
     heroImage: "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=1200&h=900&fit=crop",
     galleryImages: [
@@ -88,7 +88,7 @@ export const PROJECTS = [
     tag: "Detailing · Paint Correction",
     year: "2023",
     services: ["Detailing", "Paint Correction"],
-    caption: "Gunther Werks 993 — four-frame correction sequence",
+    caption: "Gunther Werks 993, four-frame correction sequence",
     linkText: "Ask what went on them",
     linkUrl: "#",
     overview: {
@@ -104,7 +104,7 @@ export const PROJECTS = [
     outcome: {
       title: "The standard",
       content:
-        "Available light, phone camera, no filters — because filters hide the work. The before and after are the pitch. If it looks right in available light at noon, it&apos;s right.",
+        "Available light, phone camera, no filters, because filters hide the work. The before and after are the pitch. If it looks right in available light at noon, it&apos;s right.",
     },
     heroImage: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200&h=900&fit=crop",
     galleryImages: [
@@ -120,13 +120,13 @@ export const PROJECTS = [
     tag: "Events · Experiential",
     year: "2023",
     services: ["Events", "Experiential"],
-    caption: "$64M+ in display assets — one room, two days",
+    caption: "$64M+ in display assets, one room, two days",
     linkText: "View event",
     linkUrl: "#",
     overview: {
       title: "The concept",
       content:
-        "Automotive and horological passion in the same room. Cars and watches share more than a collector base — they share the same language around provenance, finishing, and why something is worth what it is.",
+        "Automotive and horological passion in the same room. Cars and watches share more than a collector base, they share the same language around provenance, finishing, and why something is worth what it is.",
     },
     direction: {
       title: "The scale",
@@ -156,7 +156,7 @@ export const SERVICES_OPTIONS = [
   "Software Build",
   "Other",
 ]
-export const BUDGET_OPTIONS = ["Under $5K", "$5–$15K", "$15–$30K", "$30–$50K", "$50K+"]
+export const BUDGET_OPTIONS = ["Under $5K", "$5,$15K", "$15,$30K", "$30,$50K", "$50K+"]
 
 export function getProjectById(id: string) {
   return PROJECTS.find((p) => p.id === id)

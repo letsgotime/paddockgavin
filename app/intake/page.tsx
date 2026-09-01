@@ -12,14 +12,14 @@ const STEPS = [
   { label: "Condition",   datum: "Step 02", head: "How it has",        sub: "been kept.",        blurb: "Straight answers here are worth money. A car with a known story sells faster than a perfect one with gaps."                                                                           },
   { label: "The route",   datum: "Step 03", head: "Where it",          sub: "should sell.",      blurb: "Four inventories, four different buyers. Pick one, or leave it to the concierge."                                                                                                    },
   { label: "You",         datum: "Step 04", head: "Where do I",        sub: "reach you?",        blurb: "This goes to the duPont REGISTRY auction concierge. They come back within 24 to 48 business hours with a number and the inventory it belongs in."                                     },
-  { label: "Sent",        datum: "",        head: "Got it —",           sub: "I will come back to you.", blurb: "" },
+  { label: "Sent",        datum: "",        head: "Got it.",           sub: "I will come back to you.", blurb: "" },
 ]
 
 const ROUTES = [
   { id: "wholesale", name: "WHOLESALE",      speed: "Fastest",      blurb: "Dealer to dealer, run through Manheim Nashville on Wednesdays. A clean number and the car is gone. No tyre kickers, no weekend viewings." },
   { id: "drlive",    name: "dR LIVE AUCTION",speed: "No reserve",   blurb: "A no reserve live auction at live.dupontregistry.com. Select vehicles are taken on through dR LIVE Consignment to run in it."           },
-  { id: "retail",    name: "dR RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it — takes longer, and usually pays the most."  },
-  { id: "unsure",    name: "NOT SURE YET",   speed: "Ask me",       blurb: "Tell us the car and what matters most — speed or price — and the concierge will point you at the right inventory."                        },
+  { id: "retail",    name: "dR RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it, takes longer, and usually pays the most."  },
+  { id: "unsure",    name: "NOT SURE YET",   speed: "Ask me",       blurb: "Tell us the car and what matters most, speed or price, and the concierge will point you at the right inventory."                        },
 ]
 
 const CHIP_GROUPS = [
@@ -81,7 +81,7 @@ export default function IntakePage() {
 
   const decodeVin = useCallback(async (vin: string) => {
     if (vin.length !== 17) {
-      setVinStatus(`A VIN is 17 characters — ${vin.length} so far`)
+      setVinStatus(`A VIN is 17 characters, ${vin.length} so far`)
       setVinState("warn")
       return
     }
@@ -92,7 +92,7 @@ export default function IntakePage() {
       const json = await res.json()
       const d    = (json.Results && json.Results[0]) || {}
       if (!d.Make && !d.ModelYear) {
-        setVinStatus("Our decoder found nothing for that VIN — fill it in by hand")
+        setVinStatus("Our decoder found nothing for that VIN, fill it in by hand")
         setVinState("warn")
         return
       }
@@ -105,10 +105,10 @@ export default function IntakePage() {
       const trans = d.TransmissionStyle || (d.TransmissionSpeeds ? `${d.TransmissionSpeeds}-speed` : "")
       if (trans)               next.trans = titleCase(trans)
       setV((prev) => ({ ...prev, ...next }))
-      setVinStatus([next.year, next.make, next.model].filter(Boolean).join(" ") + " — check it and fill in the rest")
+      setVinStatus([next.year, next.make, next.model].filter(Boolean).join(" ") + ", check it and fill in the rest")
       setVinState("ok")
     } catch {
-      setVinStatus("Our decoder is not answering — fill it in by hand")
+      setVinStatus("Our decoder is not answering, fill it in by hand")
       setVinState("warn")
     }
   }, [])
@@ -154,9 +154,9 @@ export default function IntakePage() {
 
   const routeName = (ROUTES.find((r) => r.id === v.route) || {}).name
 
-  const cap = (x?: string) => x ? String(x).toUpperCase() : "—"
+  const cap = (x?: string) => x ? String(x).toUpperCase() : "not set"
   const money = (x?: string) => {
-    if (!x) return "—"
+    if (!x) return "not set"
     const n = String(x).replace(/[^0-9.]/g, "")
     if (!n) return String(x).toUpperCase()
     return "$" + Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 })
@@ -164,14 +164,14 @@ export default function IntakePage() {
 
   const summary = [
     { k: "Car",       v: cap([v.year, v.make, v.model, v.trim].filter(Boolean).join(" ")) },
-    { k: "Mileage",   v: v.mileage ? Number(String(v.mileage).replace(/[^0-9]/g, "")).toLocaleString("en-US") + " MI" : "—" },
-    { k: "VIN",       v: v.vin ? v.vin.slice(-8) : "—" },
+    { k: "Mileage",   v: v.mileage ? Number(String(v.mileage).replace(/[^0-9]/g, "")).toLocaleString("en-US") + " MI" : "not set" },
+    { k: "VIN",       v: v.vin ? v.vin.slice(-8) : "not set" },
     { k: "Title",     v: cap(v.title) },
     { k: "Accidents", v: cap(v.accident) },
     { k: "Owners",    v: cap(v.owners) },
     { k: "Records",   v: cap(v.records) },
     { k: "Asking",    v: money(v.price) },
-    { k: "Route",     v: routeName || "—" },
+    { k: "Route",     v: routeName || "not set" },
   ]
 
   const cur = STEPS[Math.min(step, 4)]
@@ -396,7 +396,7 @@ export default function IntakePage() {
               </button>
               {send === "error" && (
                 <p style={{ margin: "10px 0 0", fontSize: 15, color: "#F2C94C" }}>
-                  Could not send — DM @itspaddockgavin instead.
+                  Could not send. DM @itspaddockgavin instead.
                 </p>
               )}
               <p style={{ margin: "14px 0 0", fontSize: 16, lineHeight: 1.5, color: "#9BA5B3" }}>
@@ -415,7 +415,7 @@ export default function IntakePage() {
                   <div key={row.k} style={{ display: "flex", alignItems: "baseline", gap: 9, padding: "9px 0", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
                     <span style={{ ...labelSt, margin: 0, flex: "0 0 auto" }}>{row.k}</span>
                     <i style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.26)", transform: "translateY(-4px)" }} />
-                    <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".08em", color: row.v === "—" ? "#4B5563" : "#fff", flex: "0 1 auto", textAlign: "right" }}>{row.v}</span>
+                    <span style={{ fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".08em", color: row.v === "not set" ? "#4B5563" : "#fff", flex: "0 1 auto", textAlign: "right" }}>{row.v}</span>
                   </div>
                 ))}
               </div>
@@ -427,7 +427,7 @@ export default function IntakePage() {
         {step === 4 && (
           <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #00D2BE", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(26px,3.2vw,44px)" }}>
             <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.55, color: "#DDE3EB", maxWidth: "52ch" }}>
-              Your {[v.year, v.make, v.model].filter(Boolean).join(" ") || "car"} is in. Our auction concierge reviews every intake and will be in touch within 24 to 48 business hours — consignment cars are accepted on a case by case basis. If you want a second pair of eyes in the meantime, DM me and reference the car.
+              Your {[v.year, v.make, v.model].filter(Boolean).join(" ") || "car"} is in. Our auction concierge reviews every intake and will be in touch within 24 to 48 business hours, consignment cars are accepted on a case by case basis. If you want a second pair of eyes in the meantime, DM me and reference the car.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link

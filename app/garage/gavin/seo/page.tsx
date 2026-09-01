@@ -87,7 +87,7 @@ function extractOnPage(onPage: any) {
     missingTitle:    r.page_metrics?.pages_without_title ?? 0,
     missingDesc:     r.page_metrics?.pages_without_description ?? 0,
     missingH1:       r.page_metrics?.pages_without_h1 ?? 0,
-    crawlability:    r.crawl_status?.description ?? "—",
+    crawlability:    r.crawl_status?.description ?? "not set",
     onPageScore:     Math.round(r.on_page_score ?? 0),
   }
 }
@@ -100,7 +100,7 @@ function extractBacklinks(backlinks: any) {
     total:       r.backlinks ?? 0,
     referring:   r.referring_domains ?? 0,
     dofollow:    r.dofollow_backlinks ?? 0,
-    rank:        r.rank ?? "—",
+    rank:        r.rank ?? "not set",
   }
 }
 
@@ -194,7 +194,7 @@ export default function SeoDashboard() {
               Full site audit on demand
             </p>
             <p style={{ margin: 0, fontFamily: arch, fontSize: 16, color: MUTED, maxWidth: "40ch", lineHeight: 1.6 }}>
-              Hits DataForSEO directly — on-page scores, keyword rankings, backlinks, and Lighthouse Core Web Vitals for paddockgavin.com.
+              Hits DataForSEO directly: on-page scores, keyword rankings, backlinks, and Lighthouse Core Web Vitals for paddockgavin.com.
             </p>
             <button
               onClick={runAudit}
@@ -279,10 +279,10 @@ export default function SeoDashboard() {
                               : <Pill color={STEEL}>Not ranked</Pill>}
                           </td>
                           <td style={{ padding: "14px 20px", fontFamily: mono, fontSize: 11, color: TEAL, maxWidth: 260, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                            {r.url ? r.url.replace("https://", "") : "—"}
+                            {r.url ? r.url.replace("https://", "") : "not set"}
                           </td>
                           <td style={{ padding: "14px 20px", fontFamily: mono, fontSize: 12, color: MUTED }}>
-                            {r.totalResults ? r.totalResults.toLocaleString() : "—"}
+                            {r.totalResults ? r.totalResults.toLocaleString() : "not set"}
                           </td>
                         </tr>
                       ))}

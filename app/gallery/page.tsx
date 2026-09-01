@@ -84,7 +84,7 @@ const CHAPTERS = [
 
 const SEED: Record<string, string[]> = {
   "nobody-films": [
-    "Where the trunk release hides", "993 cabin — carbon and terracotta", "Fire bottle, strapped in",
+    "Where the trunk release hides", "993 cabin, carbon and terracotta", "Fire bottle, strapped in",
     "The latch, once you know", "Cup holders, all of them", "Charge port, driver side",
     "The switch nobody finds", "G-Wagen doors open at the barn",
   ],
@@ -93,7 +93,7 @@ const SEED: Record<string, string[]> = {
     "Ceramic on a wrap: don\u2019t", "Swirls under the light",
   ],
   "the-room": [
-    "Donuts with duPont, 8am", "Ferrari on the upper deck", "Off the transporter — 993",
+    "Donuts with duPont, 8am", "Ferrari on the upper deck", "Off the transporter, 993",
     "Ford GT in the studio", "Tires & Timepieces", "The deck on a full morning",
     "Ferrari in the lot", "The ramp, rearview",
   ],

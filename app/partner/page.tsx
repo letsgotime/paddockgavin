@@ -16,7 +16,7 @@ const stats = [
 const formats = [
   {
     title: "Product feature",
-    desc: "Your product in context — on the car, in the garage, at the lot. One specific detail, shown honestly.",
+    desc: "Your product in context, on the car, in the garage, at the lot. One specific detail, shown honestly.",
   },
   {
     title: "Detailing & coatings",
@@ -37,7 +37,7 @@ const formats = [
 ]
 
 const rules = [
-  "Paid, gifted and affiliate content is labelled on the piece, before you read it — FTC rules and the right way to do it.",
+  "Paid, gifted and affiliate content is labelled on the piece, before you read it · FTC rules and the right way to do it.",
   "A payment gets a fair look. It does not get a good review. If something is bad I say so or say nothing.",
   "No partnership is accepted that requires editorial approval or restricts what I can say.",
   "One brand per category at a time, so nothing competes with itself on the same page.",

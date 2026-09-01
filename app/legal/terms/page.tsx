@@ -42,7 +42,7 @@ const sections = [
         ["Finding the car, answering questions", "Me"],
         ["The price, the contract, the financing", "duPont REGISTRY"],
         ["Title, funds, delivery, warranty", "duPont REGISTRY"],
-        ["Anything that goes wrong with the sale", "duPont REGISTRY — take it to them"],
+        ["Anything that goes wrong with the sale", "duPont REGISTRY, take it to them"],
       ],
     },
   },
@@ -51,13 +51,13 @@ const sections = [
     heading: "What is mine, and where it lives",
     body: [
       "Separate from the day job, these are my own ventures. They are not duPont REGISTRY's, they do not run on their time, and they are governed by the terms of whichever platform they sit on.",
-      "Buy the book and Amazon handles the order, the payment and the return. Hire me for automation and the engagement runs through Paddock20 with its own contract. Follow a link from here to any of them and you have left this site — their privacy policy and their terms take over at the click.",
+      "Buy the book and Amazon handles the order, the payment and the return. Hire me for automation and the engagement runs through Paddock20 with its own contract. Follow a link from here to any of them and you have left this site, their privacy policy and their terms take over at the click.",
       "Consultation is advice, not a warranty. Cars, paint, coatings, watches and tools are all things that can be damaged by the person handling them. What I tell you is what I would do with my own. What you do with yours is on you.",
     ],
     table: {
       head: ["Mine", "Where it happens", "Whose terms apply"],
       rows: [
-        ["The Gloss Game — the book", "Amazon", "Amazon's"],
+        ["The Gloss Game · the book", "Amazon", "Amazon's"],
         ["Merchandise", "Etsy", "Etsy's"],
         ["AI and automation consulting", "paddock20.com", "Paddock20's"],
         ["Detailing consultation", "Arranged directly with me", "These terms"],
@@ -71,7 +71,7 @@ const sections = [
     num: "05",
     heading: "The marks",
     body: [
-      "PaddockGavin, Supercar IQ™, I Got Receipts™, Paddock20™, GavinBrooksHQ™ and the PG mark are my trade marks, in use in commerce and with registration in progress. The Scoreboard™ — the format, the status system and the way builds are displayed and scored — is mine as well.",
+      "PaddockGavin, Supercar IQ™, I Got Receipts™, Paddock20™, GavinBrooksHQ™ and the PG mark are my trade marks, in use in commerce and with registration in progress. The Scoreboard™, the format, the status system and the way builds are displayed and scored, is mine as well.",
       "The trade mark page lists all of it in full, with status. Using any of it to suggest I made, endorsed or partnered on something I did not is the one thing here that will get an unfriendly letter rather than a friendly one.",
     ],
   },
@@ -79,7 +79,7 @@ const sections = [
     num: "06",
     heading: "Partners, and telling you when I am paid",
     body: [
-      "I take brand partnerships and some links here earn a commission. When a post, a page or a clip is paid, gifted or affiliate-linked, it says so, on the piece itself, before you read it. That is the Federal Trade Commission's rule and it is also the deal — the recommendations are worth nothing to you if you cannot tell which ones were bought.",
+      "I take brand partnerships and some links here earn a commission. When a post, a page or a clip is paid, gifted or affiliate-linked, it says so, on the piece itself, before you read it. That is the Federal Trade Commission's rule and it is also the deal, the recommendations are worth nothing to you if you cannot tell which ones were bought.",
       "A payment gets someone a fair look. It does not get them a good review. If a product is bad I say so or I say nothing, and I will not run a partnership that requires otherwise.",
     ],
   },

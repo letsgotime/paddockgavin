@@ -232,7 +232,7 @@ export default function WhyAPaddockPage() {
               textTransform: "uppercase", color: "#FFFFFF",
             }}
           >
-            What a paddock is — and why it fits lot operations
+            What a paddock is, and why it fits lot operations
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
             It&rsquo;s the part of a racetrack most people never see. Behind pit lane, where the transporters park and the teams work.

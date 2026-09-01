@@ -10,10 +10,10 @@ const UPDATED = "August 2026"
 
 const marks = [
   { mark: "PaddockGavin™", covers: "The brand, this site, the channel, the PG mark", status: "Application in progress" },
-  { mark: "Supercar IQ™", covers: "The app — point a phone at a car and it tells you what it is", status: "Application in progress · in development" },
+  { mark: "Supercar IQ™", covers: "The app, point a phone at a car and it tells you what it is", status: "Application in progress · in development" },
   { mark: "I Got Receipts™", covers: "Format and phrase, in use across content", status: "Application in progress" },
-  { mark: "Paddock20™", covers: "The agency — software, automation, marketing", status: "Application in progress" },
-  { mark: "GavinBrooksHQ™", covers: "The operator practice — systems and consulting", status: "Application in progress" },
+  { mark: "Paddock20™", covers: "The agency, software, automation, marketing", status: "Application in progress" },
+  { mark: "GavinBrooksHQ™", covers: "The operator practice, systems and consulting", status: "Application in progress" },
   { mark: "The Gloss Game™", covers: "The book and the method in it", status: "Published · in use" },
   { mark: "Tires & Timepieces™", covers: "The car and watch show", status: "In use" },
   { mark: "The Scoreboard™", covers: "The format, the status system, and the way builds are displayed and scored", status: "Application in progress" },
@@ -30,7 +30,7 @@ const canDo = [
 const willGetLetter = [
   "Re-uploading photos or video as your own content.",
   "Removing, cropping or covering a watermark.",
-  "Any commercial use — ads, products, dealer listings, a marketplace post — without written permission.",
+  "Any commercial use, ads, products, dealer listings, a marketplace post, without written permission.",
   "Training a model on this library.",
   "Using the marks or the PG logo to suggest I made, endorsed or partnered on something I did not.",
   "Scraping the site wholesale.",
@@ -140,7 +140,7 @@ export default function TrademarksPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The Scoreboard</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            The Scoreboard is not a list of projects. It is a format: a timing-tower layout where every build carries one real datum — a launch date that counts itself down, where to buy it, or the year it was retired — scored by status and grouped by whether it ships, runs or is finished.
+            The Scoreboard is not a list of projects. It is a format: a timing-tower layout where every build carries one real datum, a launch date that counts itself down, where to buy it, or the year it was retired, scored by status and grouped by whether it ships, runs or is finished.
           </p>
           <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             The arrangement, the status vocabulary, the scoring logic and the way it plugs into live data are mine. The idea of listing your projects is not protectable and never claimed to be. This specific layout, these specific states and this scoring format are. Using them without permission is an infringement claim, not a conversation.
@@ -179,7 +179,7 @@ export default function TrademarksPage() {
             ))}
           </ul>
           <p style={{ margin: "20px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>
-            Most people asking whether they can use something are asking in good faith, and the answer is usually yes. DM @itspaddockgavin and ask — it takes a minute and it saves both of us the other kind of conversation.
+            Most people asking whether they can use something are asking in good faith, and the answer is usually yes. DM @itspaddockgavin and ask, it takes a minute and it saves both of us the other kind of conversation.
           </p>
         </section>
 
@@ -221,7 +221,7 @@ export default function TrademarksPage() {
               "Your name and how to reach you.",
               "A statement that you believe the use is unauthorised.",
               "A statement, under penalty of perjury, that the information is accurate and you are the owner or authorised to act for them.",
-              "Your signature — electronic is fine.",
+              "Your signature, electronic is fine.",
             ].map((item, i) => (
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,.05)", fontSize: 15, lineHeight: 1.55, color: "#C4CBD6" }}>
                 <span style={{ color: "#91918F", flexShrink: 0, marginTop: 2 }}>{i + 1}.</span>

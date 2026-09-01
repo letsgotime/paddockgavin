@@ -25,11 +25,11 @@ const audience = [
 
 const coverage = [
   "Manufacturer launches, first drives and press-fleet loans",
-  "Auctions and collector sales — consignment through to the block",
+  "Auctions and collector sales, consignment through to the block",
   "Concours, cars and coffee, club meets and regional shows",
   "Track days, test days and paddock access",
   "Detailing, restoration and preservation",
-  "The trade itself — how cars get where they are going",
+  "The trade itself, how cars get where they are going",
 ]
 
 const standards = [
@@ -47,7 +47,7 @@ const credentialChecklist = [
   { item: "Letter of assignment on publication letterhead", status: "Available on request, same day" },
   { item: "Business entity + W-9 / EIN", status: "Available on request" },
   { item: "Certificate of insurance", status: "Available on request" },
-  { item: "Prior credential history", status: "Building — regional shows first" },
+  { item: "Prior credential history", status: "Building, regional shows first" },
   { item: "Headshot and government ID", status: "Available on request" },
   { item: "Dated public archive", status: "paddockgavin.com" },
 ]
@@ -157,7 +157,7 @@ export default function PressPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>What gets covered</h2>
           </div>
           <p style={{ margin: "0 0 16px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            The beat is the part of car culture that happens before the cameras usually arrive — transport and logistics, condition and intake, the practical detail of living with these cars, and the rooms where people stand next to them.
+            The beat is the part of car culture that happens before the cameras usually arrive, transport and logistics, condition and intake, the practical detail of living with these cars, and the rooms where people stand next to them.
           </p>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {coverage.map((item, i) => (
@@ -231,7 +231,7 @@ export default function PressPage() {
             Logos, headshots, a one-page media kit and high-resolution stills are available for editorial use when covering PaddockGavin, Supercar IQ™, Tires &amp; Timepieces™ or The Gloss Game™. Ask and they are sent within the day.
           </p>
           <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Use of those assets is for coverage of us. It is not a licence to the wider library — that is on the{" "}
+            Use of those assets is for coverage of us. It is not a licence to the wider library, that is on the{" "}
             <Link href="/legal/trademarks" style={{ color: "#00D2BE", textDecoration: "none" }}>intellectual property page</Link>.
           </p>
         </section>

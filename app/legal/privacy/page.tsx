@@ -13,14 +13,14 @@ const sections = [
     num: "01",
     heading: "The short version",
     body: [
-      "I collect what you type into a form, and nothing else about you personally. I do not sell your information — not to anyone, not ever, at any price. No advertising trackers, no data brokers, no third-party ad pixels. You do not need an account, and there is nothing to log into. Leave a form blank and I have no idea who you are.",
+      "I collect what you type into a form, and nothing else about you personally. I do not sell your information, not to anyone, not ever, at any price. No advertising trackers, no data brokers, no third-party ad pixels. You do not need an account, and there is nothing to log into. Leave a form blank and I have no idea who you are.",
     ],
   },
   {
     num: "02",
     heading: "What a form collects",
     body: [
-      "The forms on this site — booking the floor, RSVPing to Creator Day, asking me to find a car, a partnership enquiry — ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
+      "The forms on this site, booking the floor, RSVPing to Creator Day, asking me to find a car, a partnership enquiry, ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
       "Enquiries reach me by email through Resend, a transactional mail provider. They pass the message through and do not use it for anything of their own. Nothing you send is added to a marketing list, because there is no marketing list.",
     ],
     table: {
@@ -61,17 +61,17 @@ const sections = [
     heading: "When you leave",
     body: [
       "Buy the book and you are on Amazon. Buy merchandise and you are on Etsy. Ask about automation and you are on Paddock20. Follow a social link and you are on that platform. Each has its own privacy policy and its own collection, and from the moment you click, theirs applies rather than mine.",
-      "Buy a car and duPont collects what a dealer has to — identification, financing details, title paperwork. That is their process on their licence, held under their policy, and I neither receive nor keep it.",
+      "Buy a car and duPont collects what a dealer has to, identification, financing details, title paperwork. That is their process on their licence, held under their policy, and I neither receive nor keep it.",
     ],
     table: {
       head: ["Where you land", "Whose policy"],
       rows: [
-        ["Amazon — The Gloss Game", "Amazon Privacy Notice"],
-        ["Etsy — merchandise", "Etsy Privacy Policy"],
-        ["paddock20.com — automation", "Paddock20's policy"],
+        ["Amazon · The Gloss Game", "Amazon Privacy Notice"],
+        ["Etsy · merchandise", "Etsy Privacy Policy"],
+        ["paddock20.com · automation", "Paddock20's policy"],
         ["supercariq.com", "Its own policy at launch"],
         ["Instagram, LinkedIn", "Meta's and LinkedIn's"],
-        ["duPont REGISTRY — a vehicle purchase", "duPont REGISTRY's policy"],
+        ["duPont REGISTRY · a vehicle purchase", "duPont REGISTRY's policy"],
       ],
     },
   },
@@ -86,7 +86,7 @@ const sections = [
     num: "07",
     heading: "Your say over it",
     body: [
-      "Ask me what I hold about you and I will tell you. Ask me to delete it and I will, unless I am required to keep it. Ask me to correct it and I will. There is no form for this and no wait — DM @itspaddockgavin and say what you want done.",
+      "Ask me what I hold about you and I will tell you. Ask me to delete it and I will, unless I am required to keep it. Ask me to correct it and I will. There is no form for this and no wait · DM @itspaddockgavin and say what you want done.",
       "Tennessee's Information Protection Act took effect on 1 July 2025 and applies to businesses above $25 million in revenue or handling 175,000 Tennessee residents' data. This site is far below both thresholds. The rights above are offered anyway, to everyone, wherever you live.",
     ],
   },
