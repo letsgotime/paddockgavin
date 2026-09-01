@@ -23,6 +23,12 @@ const EVENT_ID = "6ad3f289-8103-4c69-b10e-923790fb8a88"
 const TEASER: string | null = "/video/teaser.mp4"
 const SHOW_DAY = "2026-10-10"
 
+/* Text on a painted button follows the paint, not the house. The accent is
+   amber on our door and Jaramillo Red on the ranch's, and dark type reads on
+   one and vanishes on the other, so the token decides. Every other tone here
+   is light enough to carry dark type on both doors. */
+const onTone = (tone: string) => (tone === "var(--accent-strong)" ? "var(--on-accent)" : "#101010")
+
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 /* The display face is the brand's. Cinzel on the ranch's own domain,
    Archivo in our hub. Body copy stays Archivo in both: a serif running
@@ -472,7 +478,7 @@ export default function PistonPoweredRanchPage() {
                         )}
 
                         {a.cta && (
-                          <a href={a.cta.href} target={a.cta.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ alignSelf: "flex-start", marginTop: 4, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: a.tone, color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                          <a href={a.cta.href} target={a.cta.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ alignSelf: "flex-start", marginTop: 4, fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: a.tone, color: onTone(a.tone), padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                             {a.cta.label}
                           </a>
                         )}
@@ -480,7 +486,7 @@ export default function PistonPoweredRanchPage() {
                         {a.ctas && (
                           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 4 }}>
                             {a.ctas.map((c, ci) => (
-                              <a key={c.href} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: ci === 0 ? a.tone : "transparent", color: ci === 0 ? "#101010" : "#EDF1F6", border: ci === 0 ? `1px solid ${a.tone}` : "1px solid rgba(255,255,255,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                              <a key={c.href} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: ci === 0 ? a.tone : "transparent", color: ci === 0 ? onTone(a.tone) : "#EDF1F6", border: ci === 0 ? `1px solid ${a.tone}` : "1px solid rgba(255,255,255,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                                 {c.label}
                               </a>
                             ))}
@@ -572,7 +578,7 @@ export default function PistonPoweredRanchPage() {
           <div style={{ display: "flex", justifyContent: "center", paddingBottom: 20 }}>
             <RanchMark width={62} opacity={0.82} />
           </div>
-          <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" fill="var(--accent-strong)" source="event-page" />
+          <RsvpBlock eventId={EVENT_ID} accent="var(--accent)" fill="var(--accent-strong)" onFill="var(--on-accent)" source="event-page" />
         </div>
       </section>
       <SiteFooter />
