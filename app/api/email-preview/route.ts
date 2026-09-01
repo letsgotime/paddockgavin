@@ -13,65 +13,174 @@ export async function GET(req: NextRequest) {
   let html = ""
 
   /* The ranch set, rendered through the same modules that send, so the preview
-     is the real markup rather than a lookalike. ?id=ranch lists everything. */
+     is the real markup rather than a lookalike. ?id=ranch lists everything.
+
+     Every tile is a live iframe of the real template at 620 wide, scaled down.
+     That is heavier than a screenshot and worth it: a screenshot goes stale the
+     moment a template changes and nobody notices for a month. loading="lazy"
+     keeps the ones below the fold from rendering until they are wanted. */
   if (id === "ranch") {
-    const groups: { title: string; of: typeof CATALOGUE }[] = [
-      { title: "Cars", of: CATALOGUE.filter((c) => c.surface === "entry") },
-      { title: "Vendors", of: CATALOGUE.filter((c) => c.surface === "vendor") },
-      { title: "Sponsors", of: CATALOGUE.filter((c) => c.surface === "sponsor") },
-      { title: "Spectators", of: CATALOGUE.filter((c) => c.surface === "spectator") },
+    const SURFACES = [
+      { key: "team", title: "The team" },
+      { key: "entry", title: "Cars" },
+      { key: "vendor", title: "Vendors" },
+      { key: "sponsor", title: "Sponsors" },
+      { key: "spectator", title: "Spectators" },
     ]
-    const card = (c: (typeof CATALOGUE)[number]) => `
-      <figure style="margin:0">
-        <div style="position:relative;width:340px;height:430px;overflow:hidden;border:1px solid #DDD8CE;border-radius:10px;background:#EDE9E1;box-shadow:0 2px 10px rgba(0,0,0,.06)">
-          <iframe src="?id=ranch-${c.surface}-${c.stage}" scrolling="no" loading="lazy"
-            style="position:absolute;top:0;left:0;width:620px;height:790px;border:0;transform:scale(.548);transform-origin:0 0"></iframe>
-          <a href="?id=ranch-${c.surface}-${c.stage}" target="_blank"
-             style="position:absolute;inset:0;display:block" aria-label="Open ${c.label}"></a>
+
+    const tile = (href: string, label: string, meta: string, search: string) => `
+      <figure class="t" data-s="${search.toLowerCase().replace(/"/g, "")}">
+        <div class="shot">
+          <iframe src="${href}" scrolling="no" loading="lazy" title="${label}"></iframe>
+          <a class="hit" href="${href}" target="_blank" rel="noopener" aria-label="Open ${label}"></a>
         </div>
-        <figcaption style="padding:9px 2px 0">
-          <a href="?id=ranch-${c.surface}-${c.stage}" target="_blank" style="color:#14181D;text-decoration:none;font-weight:600;font-size:14.5px">${c.label}</a>
-          <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8A93A0;margin-top:2px">${c.surface} &middot; ${c.stage}</div>
+        <figcaption>
+          <a class="lbl" href="${href}" target="_blank" rel="noopener">${label}</a>
+          <div class="meta">${meta}</div>
+          <button class="cp" type="button" data-href="${href}">Copy link</button>
         </figcaption>
       </figure>`
+
+    const sections = SURFACES.map((s) => {
+      const tiles =
+        s.key === "team"
+          ? TEAM.map((person) => {
+              const slug = person.name.toLowerCase().split(" ")[0]
+              return tile(`?id=welcome-${slug}`, person.name, "welcome", `${person.name} welcome team onboarding`)
+            })
+          : CATALOGUE.filter((c) => c.surface === s.key).map((c) =>
+              tile(
+                `?id=ranch-${c.surface}-${c.stage}`,
+                c.label,
+                `${c.surface} &middot; ${c.stage}`,
+                `${c.label} ${c.surface} ${c.stage}`,
+              ),
+            )
+      return `<section class="grp" data-k="${s.key}">
+          <h2>${s.title}<span>${tiles.length}</span></h2>
+          <div class="grid">${tiles.join("")}</div>
+        </section>`
+    }).join("")
+
+    /* The welcome is one template written per person, so it is one message and
+       five previews. Saying 42 messages would be counting the same letter five
+       times. */
+    const messages = CATALOGUE.length + 1
+    const previews = CATALOGUE.length + TEAM.length
+
     return new NextResponse(
       `<!doctype html><html lang="en"><head><meta charset="utf-8">
-       <meta name="viewport" content="width=device-width,initial-scale=1">
-       <title>Ranch email set</title>
-       <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Libre+Franklin:wght@400;600;800&display=swap">
-       </head>
-       <body style="margin:0;background:#F7F6F3;color:#14181D;font-family:'Libre Franklin',-apple-system,Arial,sans-serif">
-       <div style="max-width:1240px;margin:0 auto;padding:44px 22px 90px">
-         <p style="font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#B3121A;margin:0;font-weight:600">The Piston Powered Ranch</p>
-         <h1 style="font-family:Cinzel,Georgia,serif;font-size:40px;margin:12px 0 8px;letter-spacing:.01em">The email set</h1>
-         <p style="color:#4A535E;margin:0 0 8px;max-width:66ch;font-size:16.5px">${CATALOGUE.length} messages. Every one renders through the same module that sends it, so this is the real markup rather than a mock. Click any of them to open it full size.</p>
-         <p style="color:#8A93A0;margin:0 0 34px;font-size:13.5px">Cinzel is loaded on this page but will not load in most inboxes, so the display line falls back to Georgia there. That fallback is what the design was drawn for.</p>
-         <section style="margin:0 0 42px">
-           <h2 style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#8A93A0;font-weight:600;margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid #DDD8CE">The team <span style="color:#C3BDB2">${TEAM.length}</span></h2>
-           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px">
-           ${TEAM.map((p) => {
-             const slug = p.name.toLowerCase().split(" ")[0]
-             return `<figure style="margin:0">
-               <div style="position:relative;width:340px;height:430px;overflow:hidden;border:1px solid #DDD8CE;border-radius:10px;background:#EDE9E1;box-shadow:0 2px 10px rgba(0,0,0,.06)">
-                 <iframe src="?id=welcome-${slug}" scrolling="no" loading="lazy" style="position:absolute;top:0;left:0;width:620px;height:790px;border:0;transform:scale(.548);transform-origin:0 0"></iframe>
-                 <a href="?id=welcome-${slug}" target="_blank" style="position:absolute;inset:0;display:block"></a>
-               </div>
-               <figcaption style="padding:9px 2px 0">
-                 <a href="?id=welcome-${slug}" target="_blank" style="color:#14181D;text-decoration:none;font-weight:600;font-size:14.5px">Welcome, ${p.name}</a>
-                 <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8A93A0;margin-top:2px">${p.seesMoney ? "sees cost" : "cost withheld"}</div>
-               </figcaption></figure>`
-           }).join("")}
-           </div></section>
-       ${groups
-           .map(
-             (g) => `<section style="margin:0 0 42px">
-             <h2 style="font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#8A93A0;font-weight:600;margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid #DDD8CE">${g.title} <span style="color:#C3BDB2">${g.of.length}</span></h2>
-             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px">${g.of.map(card).join("")}</div>
-           </section>`,
-           )
-           .join("")}
-       </div></body></html>`,
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>The ranch email set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Libre+Franklin:wght@400;500;600;800&display=swap">
+<style>
+  :root{--paper:#F7F6F3;--card:#FFF;--ink:#14181D;--body:#4A535E;--mute:#8A93A0;--line:#DDD8CE;--red:#B3121A}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Libre Franklin',-apple-system,BlinkMacSystemFont,Arial,sans-serif;font-size:16px;line-height:1.6}
+  .wrap{max-width:1280px;margin:0 auto;padding:44px 22px 90px}
+  .eyebrow{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin:0;font-weight:600}
+  h1{font-family:Cinzel,Georgia,serif;font-size:clamp(32px,5vw,44px);margin:12px 0 10px;letter-spacing:.01em;line-height:1.05}
+  .lede{color:var(--body);margin:0 0 6px;max-width:66ch;font-size:16.5px}
+  .fine{color:var(--mute);margin:0;font-size:13.5px;max-width:66ch}
+  .bar{position:sticky;top:0;z-index:5;background:rgba(247,246,243,.94);backdrop-filter:blur(10px);
+       margin:26px -22px 30px;padding:14px 22px;border-bottom:1px solid var(--line);
+       display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .bar button{font:600 13px/1 'Libre Franklin',Arial,sans-serif;border:1px solid var(--line);background:var(--card);
+       color:var(--body);border-radius:999px;padding:9px 15px;cursor:pointer}
+  .bar button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .bar input{flex:1 1 190px;min-width:150px;font:400 14px/1 'Libre Franklin',Arial,sans-serif;
+       border:1px solid var(--line);border-radius:999px;padding:10px 15px;background:var(--card);color:var(--ink)}
+  .grp{margin:0 0 44px}
+  .grp h2{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--mute);font-weight:600;
+       margin:0 0 16px;padding-bottom:9px;border-bottom:1px solid var(--line);display:flex;gap:9px;align-items:baseline}
+  .grp h2 span{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--mute);font-weight:400}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,340px);justify-content:center;gap:26px}
+  @media (max-width:420px){.grid{grid-template-columns:1fr}.t,.shot{width:100%!important}}
+  .t{margin:0;width:340px}
+  .shot{position:relative;width:340px;height:430px;overflow:hidden;border:1px solid var(--line);
+       border-radius:10px;background:#fff}
+  .shot iframe{position:absolute;top:0;left:0;width:620px;height:790px;border:0;transform:scale(.548);transform-origin:0 0}
+  .hit{position:absolute;inset:0;display:block}
+  figcaption{padding:10px 2px 0}
+  .lbl{color:var(--ink);text-decoration:none;font-weight:600;font-size:14.5px}
+  .lbl:hover{text-decoration:underline}
+  .meta{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--mute);margin-top:2px}
+  .cp{margin-top:7px;font:500 12px/1 'Libre Franklin',Arial,sans-serif;background:none;border:0;padding:0;
+      color:var(--red);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .none{color:var(--mute);font-size:15px;display:none}
+  .none.on{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">The Piston Powered Ranch</p>
+  <h1>The email set</h1>
+  <p class="lede">${messages} messages, in ${previews} previews: the welcome is written per person, so it appears ${TEAM.length} times. Every one renders through the same module that sends the real thing, so this is the actual markup rather than a picture of it. Click any tile to open it on its own.</p>
+  <p class="fine">Cinzel is loaded on this page and will not load in most inboxes, so the headings fall back to Georgia there. That is the design rather than a fault: the fallback is chosen, not accidental.</p>
+
+  <div class="bar">
+    <button type="button" data-f="all" aria-pressed="true">Everything</button>
+    <button type="button" data-f="team" aria-pressed="false">Team</button>
+    <button type="button" data-f="entry" aria-pressed="false">Cars</button>
+    <button type="button" data-f="vendor" aria-pressed="false">Vendors</button>
+    <button type="button" data-f="sponsor" aria-pressed="false">Sponsors</button>
+    <button type="button" data-f="spectator" aria-pressed="false">Spectators</button>
+    <input type="search" id="q" placeholder="Search the set" aria-label="Search the set">
+  </div>
+
+  ${sections}
+  <p class="none" id="none">Nothing matches that.</p>
+</div>
+<script>
+(function () {
+  var q = document.getElementById("q");
+  var none = document.getElementById("none");
+  var groups = [].slice.call(document.querySelectorAll(".grp"));
+  var btns = [].slice.call(document.querySelectorAll(".bar button"));
+  var filter = "all";
+
+  function apply() {
+    var text = (q.value || "").trim().toLowerCase();
+    var shown = 0;
+    groups.forEach(function (g) {
+      var any = 0;
+      [].slice.call(g.querySelectorAll(".t")).forEach(function (t) {
+        var ok = (filter === "all" || g.getAttribute("data-k") === filter) &&
+                 (!text || t.getAttribute("data-s").indexOf(text) > -1);
+        t.style.display = ok ? "" : "none";
+        if (ok) any++;
+      });
+      g.style.display = any ? "" : "none";
+      shown += any;
+    });
+    none.className = shown ? "none" : "none on";
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener("click", function () {
+      filter = b.getAttribute("data-f");
+      btns.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      apply();
+    });
+  });
+  q.addEventListener("input", apply);
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest(".cp");
+    if (!b) return;
+    var url = new URL(b.getAttribute("data-href"), location.href).href;
+    var done = function () { var was = b.textContent; b.textContent = "Copied"; setTimeout(function () { b.textContent = was; }, 1400); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done, done); return; }
+    var ta = document.createElement("textarea");
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (err) {}
+    document.body.removeChild(ta); done();
+  });
+})();
+</script>
+</body></html>`,
       { headers: { "Content-Type": "text/html; charset=utf-8" } },
     )
   }
