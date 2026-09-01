@@ -1,4 +1,5 @@
 import type { RanchEmail, Block } from "./ranch"
+import { TOOLS, TOOLS_ORIGIN, tool, toolHref } from "../tools"
 
 /**
  * The welcome email for the five people who run the day.
@@ -15,7 +16,6 @@ import type { RanchEmail, Block } from "./ranch"
  * screen disagree on the first thing a new person looks for.
  */
 
-const TOOLS = "https://piston-powered-ranch.vercel.app"
 
 export interface WelcomeVars {
   name: string
@@ -40,7 +40,7 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
       rows: [
         {
           label: "Sign in",
-          url: `${TOOLS}/console/`,
+          url: `${TOOLS_ORIGIN}/console/`,
           note: `Use ${v.signInEmail}. It is the address on the staff list, so it is the one that opens the doors. Another address will sign in and show you nothing.`,
         },
       ],
@@ -66,12 +66,12 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
       rows: [
         {
           label: "First: Chat",
-          url: `${TOOLS}/chat/`,
+          url: toolHref(tool("chat")!, "pistonpoweredranch"),
           note: "Say you are in. It is how we know you got here, and it is where the day to day happens. Photographs, video, voice notes and documents all attach, and everything you send is filed against your name.",
         },
         {
           label: "Second: Targets",
-          url: `${TOOLS}/targets/`,
+          url: toolHref(tool("targets")!, "pistonpoweredranch"),
           note: "Who we are chasing, and where each one stands. This is the work. If you only open one thing between now and October, open this.",
         },
       ],
@@ -87,19 +87,13 @@ export function welcomeEmail(v: WelcomeVars): RanchEmail & { subject: string; fr
     },
     {
       kind: "links",
-      rows: [
-        { label: "Journeys", url: `${TOOLS}/journeys/`, note: "The whole plan, every job, in order. Start here." },
-        { label: "The entries queue", url: `${TOOLS}/console/#/ops`, note: "Every car, vendor and sponsor that came through the form." },
-        { label: "The Board", url: `${TOOLS}/board/`, note: "Decisions waiting on a person." },
-        { label: "The Asks", url: `${TOOLS}/asks/`, note: "What we need from other people." },
-        { label: "Crew", url: `${TOOLS}/crew/`, note: "Volunteers, shifts and posts." },
-        { label: "Spectators", url: `${TOOLS}/rsvps/`, note: "Who is coming, and how many that really is." },
-        { label: "The Awards", url: `${TOOLS}/judging/`, note: "Classes, judges and ballots." },
-        { label: "Map", url: `${TOOLS}/map/`, note: "The property." },
-        { label: "Site plan", url: `${TOOLS}/site-plan/`, note: "Where everything sits on the day." },
-        { label: "Collateral", url: `${TOOLS}/collateral/`, note: "What to send people who ask." },
-        { label: "Brand kit", url: `${TOOLS}/brand/rancho/`, note: "Logos, colours and type. Use these rather than anything from a search." },
-      ],
+      /* The same list the rails read. A tool that moves, or gains a better
+         name, reaches this email without anybody remembering to edit it. */
+      rows: TOOLS.filter((x) => x.key !== "ledger").map((x) => ({
+        label: x.label,
+        url: toolHref(x, "pistonpoweredranch"),
+        note: x.note.charAt(0).toUpperCase() + x.note.slice(1) + ".",
+      })),
     },
 
     { kind: "rule" },

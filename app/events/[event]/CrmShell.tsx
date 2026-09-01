@@ -6,6 +6,7 @@ import { useState, type ReactNode } from "react"
 import { useCrm } from "@/lib/crm/useCrm"
 import { signIn, signOut, magicLink, requestReset, signInWithGoogle } from "@/lib/crm/client"
 import { PADDOCKGAVIN } from "@/lib/crm/brand"
+import { RAIL, tool, toolHref, type Tool } from "@/lib/tools"
 
 /**
  * The frame every CRM surface sits in.
@@ -22,32 +23,6 @@ import { PADDOCKGAVIN } from "@/lib/crm/brand"
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-
-type Surface = { label: string; seg: string; d: string; money?: boolean; tools?: string }
-
-/**
- * The tools deployment, which still holds most of the toolset.
- *
- * Eight of the ten rails below were pointing at CRM routes that do not exist
- * yet, so eight of ten menu items answered 404. A rail that lies is worse than
- * a rail with fewer things on it. Until a surface is ported, its entry goes to
- * the working one on the tools site and says so with an arrow, so the hop is
- * something you can see coming rather than a wall you hit.
- */
-const TOOLS = "https://piston-powered-ranch.vercel.app"
-
-const SURFACES: Surface[] = [
-  { label: "HQ", seg: "hq", d: "M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" },
-  { label: "The Ledger", seg: "ledger", d: "M4 5h16M4 12h16M4 19h10", tools: "/journeys/#ledger" },
-  { label: "Targets", seg: "targets", d: "M12 3v18 M3 12h18 M12 7a5 5 0 100 10 5 5 0 000-10z" },
-  { label: "Board", seg: "board", d: "M4 4h6v7H4z M14 4h6v11h-6z M4 15h6v5H4z M14 19h6", tools: "/board/" },
-  { label: "The Asks", seg: "asks", d: "M9 6h11 M9 12h11 M9 18h11 M4 6h.01 M4 12h.01 M4 18h.01", tools: "/asks/" },
-  { label: "Crew", seg: "crew", d: "M17 20v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2 M9.5 6.5a3 3 0 106 0 3 3 0 00-6 0", tools: "/crew/" },
-  { label: "The Awards", seg: "awards", d: "M8 4h8v5a4 4 0 01-8 0z M12 13v4 M9 21h6 M5 5h3 M16 5h3", tools: "/judging/" },
-  { label: "Grounds", seg: "grounds", d: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z M9 4v14 M15 6v14", tools: "/map/" },
-  { label: "Budget", seg: "budget", d: "M3 6h18v12H3z M3 10h18 M7 14h4", money: true, tools: "/console/planning/" },
-  { label: "Chat", seg: "chat", d: "M21 11.5a8.4 8.4 0 01-9 8.4 9.9 9.9 0 01-3.8-.7L3 21l1.9-4.9A8.3 8.3 0 013.6 11.5a8.4 8.4 0 019-8.4 8.4 8.4 0 018.4 8.4z", tools: "/chat/" }
-]
 
 export default function CrmShell({ slug, children }: { slug: string; children: ReactNode }) {
   const crm = useCrm(slug)
@@ -232,7 +207,11 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
     )
   }
 
-  const visible = SURFACES.filter((s) => !s.money || crm.money)
+  /* One list, in lib/tools.ts. A surface moves into the CRM by changing its
+     `where` there, and this rail follows without being edited. */
+  const visible = RAIL.map(tool)
+    .filter((t): t is Tool => Boolean(t))
+    .filter((t) => !t.money || crm.money)
   const initials = (crm.profile?.full_name || crm.me || "?")
     .trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase()
 
@@ -285,8 +264,9 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
 
         <nav style={{ flex: 1, overflowY: "auto", padding: "8px 0" }}>
           {visible.map((s) => {
-            const href = s.tools ? TOOLS + s.tools : `/events/${slug}/${s.seg}`
-            const here = !s.tools && (path === href || path?.startsWith(href + "/"))
+            const href = toolHref(s, slug)
+            const away = s.where !== "crm"
+            const here = !away && (path === href || path?.startsWith(href + "/"))
             const body = (
               <>
                 {here ? <span style={{ position: "absolute", left: 0, top: 8, bottom: 8, width: 3,
@@ -294,10 +274,10 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
                 <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor"
                      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
                      style={{ flex: "0 0 auto" }}>
-                  <path d={s.d} />
+                  <path d={s.icon} />
                 </svg>
                 <span className="lbl" style={{ font: `600 13px/1 ${ARCHIVO}` }}>{s.label}</span>
-                {s.tools ? (
+                {away ? (
                   <span className="lbl" aria-hidden="true"
                         style={{ font: `400 12px/1 ${MONO}`, color: "#6c7a8a", marginLeft: "auto", paddingRight: 14 }}>
                     &#8599;
@@ -313,13 +293,13 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
             }
             /* Not ported yet: a plain link off to the tools deployment, marked
                with an arrow so the hop is visible before it happens. */
-            return s.tools ? (
-              <a key={s.seg} href={href} title={`${s.label} (on the tools site)`}
+            return away ? (
+              <a key={s.key} href={href} title={`${s.label} (on the tools site)`}
                  onClick={() => setOpen(false)} style={style}>
                 {body}
               </a>
             ) : (
-              <Link key={s.seg} href={href} title={s.label} onClick={() => setOpen(false)} style={style}>
+              <Link key={s.key} href={href} title={s.label} onClick={() => setOpen(false)} style={style}>
                 {body}
               </Link>
             )

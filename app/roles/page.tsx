@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { db, whoAmI } from "@/lib/crm/client"
+import { focusFor, toolHref } from "@/lib/tools"
 
 /**
  * Who does what.
@@ -34,49 +35,6 @@ const MUTE = "#7C8898"
 const FAINT = "#5A6674"
 const RED_FILL = "#E5141A"
 const RED_TEXT = "#FF1A21"
-
-const TOOLS = "https://piston-powered-ranch.vercel.app"
-
-type Link = { label: string; href: string; note: string }
-
-/**
- * The order each role's rail actually renders in, so the sheet and the screen
- * agree on what comes first. Targets lives in the CRM now; everything else is
- * still on the tools domain.
- */
-const FOCUS: Record<string, Link[]> = {
-  Owner: [
-    { label: "Journeys", href: `${TOOLS}/journeys/`, note: "the whole plan" },
-    { label: "Entries queue", href: `${TOOLS}/console/#/ops`, note: "waiting on you" },
-    { label: "Targets", href: "/events/pistonpoweredranch/targets", note: "the chase" },
-    { label: "The Board", href: `${TOOLS}/board/`, note: "decisions" },
-    { label: "Planning", href: `${TOOLS}/console/planning/`, note: "jobs and dates" },
-    { label: "Chat", href: `${TOOLS}/chat/`, note: "the team" },
-  ],
-  "Property Owner": [
-    { label: "Journeys", href: `${TOOLS}/journeys/`, note: "the whole plan" },
-    { label: "Map", href: `${TOOLS}/map/`, note: "the property" },
-    { label: "Site plan", href: `${TOOLS}/site-plan/`, note: "where it all sits" },
-    { label: "Crew", href: `${TOOLS}/crew/`, note: "who is on the land" },
-    { label: "Spectators", href: `${TOOLS}/rsvps/`, note: "how many are coming" },
-    { label: "Chat", href: `${TOOLS}/chat/`, note: "the team" },
-  ],
-  "Brand Director": [
-    { label: "Targets", href: "/events/pistonpoweredranch/targets", note: "who we are chasing" },
-    { label: "Entries queue", href: `${TOOLS}/console/#/ops`, note: "vendors and sponsors" },
-    { label: "Collateral", href: `${TOOLS}/collateral/`, note: "what to send" },
-    { label: "Brand kit", href: `${TOOLS}/brand/rancho/`, note: "logos and type" },
-    { label: "The Asks", href: `${TOOLS}/asks/`, note: "what we need" },
-    { label: "Chat", href: `${TOOLS}/chat/`, note: "the team" },
-  ],
-  Member: [
-    { label: "Targets", href: "/events/pistonpoweredranch/targets", note: "start here" },
-    { label: "Crew", href: `${TOOLS}/crew/`, note: "volunteers and posts" },
-    { label: "The Board", href: `${TOOLS}/board/`, note: "decisions" },
-    { label: "The Asks", href: `${TOOLS}/asks/`, note: "what we need" },
-    { label: "Chat", href: `${TOOLS}/chat/`, note: "the team" },
-  ],
-}
 
 /** What each role carries, in the words the team uses for it. */
 const CARRIES: Record<string, string> = {
@@ -149,7 +107,7 @@ export default function RolesPage() {
           This one is for the five people running the day, so it wants a sign in first. There is no
           password: put your address in the email box and press the button that emails you a link.
         </p>
-        <a href={`${TOOLS}/console/`} style={{ ...pill, marginTop: 26 }}>
+        <a href="https://piston-powered-ranch.vercel.app/console/" style={{ ...pill, marginTop: 26 }}>
           Sign in
         </a>
         <p style={{ color: FAINT, fontSize: 14, marginTop: 18, maxWidth: "56ch" }}>
@@ -178,7 +136,7 @@ export default function RolesPage() {
       >
         {people.map((p) => {
           const mine = p.emails.includes(me)
-          const links = FOCUS[p.role] ?? FOCUS.Member
+          const links = focusFor(p.role)
           return (
             <article
               key={p.name}
@@ -243,8 +201,8 @@ export default function RolesPage() {
                 </p>
                 {links.map((l) => (
                   <a
-                    key={l.label}
-                    href={l.href}
+                    key={l.key}
+                    href={toolHref(l, "pistonpoweredranch")}
                     style={{
                       display: "flex",
                       alignItems: "baseline",
