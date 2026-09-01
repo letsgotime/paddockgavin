@@ -41,6 +41,16 @@ export default function Portal() {
   const load = useCallback(async (client: RanchDb) => {
     setBusy(true)
     try {
+      /* A link out of one of our emails carries the entry's own token, and
+         holding it is proof of reaching that inbox. That is the path that
+         works today: Neon Auth is not verifying addresses yet, so the email
+         match inside claim_mine cannot fire for anybody. Redeemed first, so
+         the lists below already include whatever it attached. */
+      const token = new URLSearchParams(location.search).get("t")
+      if (token) {
+        await client.rpc("claim_submission", { p_token: token })
+        history.replaceState(null, "", location.pathname)
+      }
       const c = (await client.rpc("claim_mine")) as Claim
       setClaim(c)
       if (c?.state === "ok") {
@@ -103,6 +113,11 @@ export default function Portal() {
             Nothing is attached to <strong style={{ color: PAPER }}>{claim.email}</strong> yet. If you entered
             a car or asked about a space, use the same address you used then and it will appear here.
           </P>
+          <Paste onToken={async (tok) => {
+            if (!db) return
+            await db.rpc("claim_submission", { p_token: tok })
+            await load(db)
+          }} />
           <Row>
             <Button href="/entry">Enter a car</Button>
             <Button href="/vendor" ghost>Vendor row</Button>
@@ -296,5 +311,40 @@ function SignIn({ db, onDone }: { db: RanchDb | null; onDone: () => void }) {
       </p>
       {msg && <p style={{ margin: "14px 0 0", color: PAPER, fontSize: 15, lineHeight: 1.55 }}>{msg}</p>}
     </>
+  )
+}
+
+/**
+ * For somebody who has the link from their email but landed here instead.
+ *
+ * Takes the whole address rather than asking a person to find the token
+ * inside it, because nobody should have to read a query string.
+ */
+function Paste({ onToken }: { onToken: (t: string) => Promise<void> }) {
+  const [value, setValue] = useState("")
+  const [busy, setBusy] = useState(false)
+  const [msg, setMsg] = useState<string | null>(null)
+
+  const submit = async () => {
+    const found = value.trim().match(/[?&]t=([A-Za-z0-9._-]{8,128})/) || value.trim().match(/^([A-Za-z0-9._-]{32,128})$/)
+    if (!found) { setMsg("That does not look like one of our links. Paste the whole address."); return }
+    setBusy(true); setMsg(null)
+    await onToken(found[1])
+    setBusy(false)
+    setMsg("If that link is still good, your entry is above now.")
+  }
+
+  return (
+    <div style={{ margin: "6px 0 18px" }}>
+      <label htmlFor="pt" style={{ display: "block", font: "600 13px/1.6 " + BODY, color: MUTED }}>
+        Have a link from one of our emails? Paste it here.
+      </label>
+      <input id="pt" value={value} onChange={(e) => setValue(e.target.value)}
+        style={{ width: "100%", boxSizing: "border-box", fontSize: 16, fontFamily: BODY, color: PAPER,
+                 background: "rgba(10,21,35,.86)", border: "1px solid " + LINE, borderRadius: 10,
+                 padding: "13px 14px", marginBottom: 10 }} />
+      <Button onClick={submit}>{busy ? "One moment" : "Find my entry"}</Button>
+      {msg && <p style={{ margin: "12px 0 0", color: PAPER, fontSize: 15, lineHeight: 1.55 }}>{msg}</p>}
+    </div>
   )
 }
