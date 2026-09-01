@@ -70,7 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
  * kit, and it passes AA for text at any size.
  */
 const RANCHO = {
-  "--accent": "#EF7A7D",        // 7.20:1
+  "--accent": "#FF1A21",        // Jaramillo Red lit for small text, 4.74:1 on the ink. Text only, never a fill
   "--accent-strong": "#E5141A", // Jaramillo Red, for fills and large display
   "--second": "#6E8FE8",        // 6.28:1
   "--second-strong": "#1424A1", // Jaramillo Blue
