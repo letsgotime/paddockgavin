@@ -15,6 +15,8 @@ export interface EventBrand {
   accent?: string
   /** The same hue lifted for small text. Text only, never a fill. */
   accentText?: string
+  /** Type that sits on an accent fill. White on a red door, dark on an amber one. */
+  onAccent?: string
   second?: string
   secondText?: string
   display?: string

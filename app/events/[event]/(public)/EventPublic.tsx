@@ -32,6 +32,9 @@ function brandVars(e: EventRow): React.CSSProperties {
     ["--second-strong" as string]: b.second || "#1424A1",
     ["--ink" as string]: b.ink || "#0A1523",
     ["--paper" as string]: b.paper || "#FAF8F4",
+    /* Type on a fill painted in the accent. White on the ranch's red, dark on
+       an amber door. One token answers both, which is why it is not a literal. */
+    ["--on-accent" as string]: b.onAccent || "#FFFFFF",
     ["--display" as string]: b.display || "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
     ["--body" as string]: b.body || "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
   }
@@ -75,7 +78,7 @@ function Cta({ c, slug, primary }: { c: EventCta; slug: string; primary?: boolea
         padding: "14px 22px",
         borderRadius: 11,
         display: "inline-block",
-        color: solid ? "#FFFFFF" : "var(--paper)",
+        color: solid ? "var(--on-accent)" : "var(--paper)",
         background: solid ? "var(--accent-strong)" : "transparent",
         border: solid ? "1px solid var(--accent-strong)" : "1px solid rgba(255,255,255,.34)",
       }}
@@ -281,7 +284,7 @@ export default function EventPublic({ event }: { event: EventRow }) {
 
       <section id="rsvp" style={{ scrollMarginTop: 96, padding: "clamp(48px,8vw,90px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <RsvpBlock eventId={event.id} accent="var(--accent)" fill="var(--accent-strong)" source="event-page" />
+          <RsvpBlock eventId={event.id} accent="var(--accent)" fill="var(--accent-strong)" onFill="var(--on-accent)" source="event-page" />
         </div>
       </section>
     </main>
