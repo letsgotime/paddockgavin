@@ -30,7 +30,7 @@ const RED = "#B3121A" // Jaramillo Red, darkened for text weight on paper: 7.1:1
 /* The photograph behind the sheet, and the colour to fall back to: its own
    average, so a blocked image leaves the right dark rather than white. */
 const GROUND_IMG = "https://pistonpoweredranch.com/images/email/ground.jpg"
-const GROUND_SOLID = "#242626"
+const GROUND_SOLID = "#59533F"
 
 const RED_FILL = "#E5141A" // the brand red itself, for rules and fills
 const INK = "#0A1523"
@@ -188,7 +188,7 @@ function renderBlock(b: Block): string {
 
 export function renderRanchEmail(e: RanchEmail): string {
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -197,7 +197,7 @@ export function renderRanchEmail(e: RanchEmail): string {
 <meta name="supported-color-schemes" content="light" />
 <title>The Piston Powered Ranch</title>
 <!--[if mso]>
-<xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+<xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
 <![endif]-->
 <style type="text/css">
   /* Gmail keeps media queries even when it strips other embedded rules, so the
@@ -226,7 +226,12 @@ export function renderRanchEmail(e: RanchEmail): string {
   a{color:${RED}}
 </style>
 </head>
-<body class="ground" style="margin:0;padding:0;background:${SURROUND};-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+<body class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="margin:0;padding:0;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+<!--[if gte mso 9]>
+<v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+  <v:fill type="frame" src="${GROUND_IMG}" color="${GROUND_SOLID}" />
+</v:background>
+<![endif]-->
 
 <div style="display:none;font-size:1px;color:${SURROUND};line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden">${esc(e.preheader)}${preheaderPad()}</div>
 
@@ -239,20 +244,19 @@ export function renderRanchEmail(e: RanchEmail): string {
   stays opaque: a translucent panel over a picture is exactly where letters
   stop being readable in sunlight.
 
-  Set on the cell for clients that honour it and again in VML for Outlook,
-  whose Word engine ignores css background images. Both sit on GROUND_SOLID,
-  the photograph's own average, so a client that loads neither still gets the
-  right dark rather than white.
--->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" background="${GROUND_IMG}" style="background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
-<tr><td align="center" style="padding:34px 12px">
+  Painted four ways, because clients disagree about backgrounds: css on the
+  body and on the cell, a background attribute on both for the clients that
+  read only that, and a VML block for Outlook, whose Word engine ignores css
+  background images entirely. All four sit on GROUND_SOLID, the photograph's
+  own average colour, so a client that paints none of them still gets the
+  right earth tone behind the sheet rather than a white box.
+
+  The photograph is one still frame from the ranch's own library, softened
+  just enough to read as ground rather than compete with the letter on top.
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
+<tr><td align="center" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="padding:44px 16px;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / cover no-repeat">
 
   <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-  <!--[if gte mso 9]>
-    <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
-      <v:fill type="frame" src="${GROUND_IMG}" color="${GROUND_SOLID}" />
-    </v:background>
-    <![endif]-->
     <table role="presentation" class="shell sheet" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:${PAPER};border:1px solid rgba(255,255,255,.22);border-radius:14px;box-shadow:0 22px 60px rgba(4,9,16,.55);overflow:hidden">
 
     <!-- The red rule. One brand gesture, at the top, and then restraint. -->
