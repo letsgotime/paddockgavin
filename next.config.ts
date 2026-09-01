@@ -23,9 +23,15 @@ const RANCH_HOST = [{ type: "host" as const, value: "(www\\.)?pistonpoweredranch
 
 /** Tool pages, and the directories they load their own assets from. */
 const TOOL_PATHS = [
+  /* Pages. */
   "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "rsvps",
   "chat", "console", "collateral", "clubs", "spectate", "status", "vote",
-  "diag", "reset", "team", "vendor", "media", "tools",
+  "diag", "reset",
+  /* Not pages: shared scripts the pages above import. ranch-db.js is the one
+     database client and rail.js the one navigation, and nineteen and fifteen
+     pages import them respectively, so these two forward until those pages do
+     not exist any more. */
+  "team", "vendor",
 ]
 
 /** The tools deployment's own functions. None of these names exist here. */
