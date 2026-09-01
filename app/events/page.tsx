@@ -280,7 +280,7 @@ export default function EventsPage() {
         {/* Hero */}
         <section style={{ position: "relative", minHeight: "clamp(400px,58vh,580px)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: CLIP_LG, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
           <Image data-kb="" src="/images/ranch/ppr-bins.jpg" alt="The grain bins and the ranch road at Rancho Jaramillo" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 8%,rgba(10,21,35,.4) 55%,rgba(10,21,35,.3) 100%)" }} />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 6%,rgba(10,21,35,.9) 38%,rgba(10,21,35,.62) 74%,rgba(10,21,35,.42) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
             <Tag>Car events &middot; Middle Tennessee</Tag>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
