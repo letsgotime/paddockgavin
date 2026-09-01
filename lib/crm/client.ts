@@ -146,19 +146,25 @@ export async function signIn(email: string, password: string): Promise<string | 
      [body.name] Invalid input, which surfaces as a wrong password. Nobody
      types a name on a sign in form, so it comes off the address. */
   const made = await c.auth.signUp({ email, password, name: nameFromEmail(email) })
-  if (made.error) {
+  if (made.error && /already exists|already registered|USER_ALREADY/i.test(made.error.message || "")) {
     /* This form signs in and signs up through the same button, so a wrong
        password for an account that exists comes back from the sign up leg as
        "User already exists. Use another email." That is the opposite of what
        the person should do: the address is right, the password is not. */
-    if (/already exists|already registered|user_already/i.test(made.error.message || "")) {
-      return "That password is not right for this address. Use the sign in link above, or reset it below."
-    }
-    return made.error.message || first.error.message || "Could not sign in."
+    return "That password does not match this account. Use the sign in link, or reset it below."
   }
-  if (!made.data?.session) {
-    const again = await c.auth.signInWithPassword({ email, password })
-    if (again.error) return "Account created. Press sign in once more."
+
+  /* Whatever sign up returned, try once more. It can create the account and
+     still fail to hand back a session, which used to end in an error message
+     beside a working account. This wait was in the two ranch copies and not in
+     this one, which is the drift that comes of writing it three times. */
+  await new Promise((r) => setTimeout(r, 600))
+  const again = await c.auth.signInWithPassword({ email, password })
+  if (again.error) {
+    return (
+      made.error?.message ||
+      "Could not sign in. Try once more, and if it repeats use the reset link."
+    )
   }
   return null
 }
