@@ -108,7 +108,7 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
           <button type="submit" disabled={busy} style={{ ...primary, background: accent, opacity: busy ? 0.6 : 1 }}>
             {busy ? "Signing in" : "Sign in"}
           </button>
-          {err ? <p style={{ ...lede, color: "#ef6d70", fontSize: 14 }}>{err}</p> : null}
+          {err ? <p style={{ ...lede, color: "#FF1A21", fontSize: 14 }}>{err}</p> : null}
         </form>
       </Frame>
     )
