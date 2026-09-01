@@ -38,7 +38,7 @@ const TOOLS = "https://piston-powered-ranch.vercel.app"
 
 const SURFACES: Surface[] = [
   { label: "HQ", seg: "hq", d: "M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" },
-  { label: "The Ledger", seg: "ledger", d: "M4 5h16M4 12h16M4 19h10", tools: "/ledger/" },
+  { label: "The Ledger", seg: "ledger", d: "M4 5h16M4 12h16M4 19h10", tools: "/journeys/#ledger" },
   { label: "Targets", seg: "targets", d: "M12 3v18 M3 12h18 M12 7a5 5 0 100 10 5 5 0 000-10z" },
   { label: "Board", seg: "board", d: "M4 4h6v7H4z M14 4h6v11h-6z M4 15h6v5H4z M14 19h6", tools: "/board/" },
   { label: "The Asks", seg: "asks", d: "M9 6h11 M9 12h11 M9 18h11 M4 6h.01 M4 12h.01 M4 18h.01", tools: "/asks/" },
