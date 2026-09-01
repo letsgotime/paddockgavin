@@ -47,7 +47,7 @@ const UPCOMING: EventRow[] = [
     stateLabel: "Confirmed",
     blurb:
       "Three hundred curated cars on a working ranch. Twelve acres of open pasture. Spectating is free. A share of every net dollar goes to Community Elementary School.",
-    img: "/images/ranch/ppr-hero.jpg",
+    img: "/images/ranch/ppr-gate.jpg",
     href: "/events/pistonpoweredranch",
     cta: "The event",
     tone: "#F2C94C",
@@ -120,7 +120,7 @@ const VENUES = [
     name: "Rancho Jaramillo",
     place: "Unionville, TN",
     spec: "408 acres with 12 in use",
-    img: "/images/ranch/ppr-dusk.jpg",
+    img: "/images/ranch/ppr-rail.jpg",
     href: "/events/pistonpoweredranch",
     live: true,
   },
@@ -279,7 +279,7 @@ export default function EventsPage() {
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(18px,3vw,30px)" }}>
         {/* Hero */}
         <section style={{ position: "relative", minHeight: "clamp(400px,58vh,580px)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: CLIP_LG, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-          <Image data-kb="" src="/images/ranch/ppr-hero.jpg" alt="Open pasture at Rancho Jaramillo before the field is set" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
+          <Image data-kb="" src="/images/ranch/ppr-bins.jpg" alt="The grain bins and the ranch road at Rancho Jaramillo" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 8%,rgba(10,21,35,.4) 55%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
             <Tag>Car events &middot; Middle Tennessee</Tag>

@@ -23,7 +23,7 @@ export default function Page() {
         "Twelve acres an hour south of Nashville, on a working ranch that opens for one Saturday.",
         "Title sponsorship, category exclusives, and supporting positions are available. Pricing is a conversation, not a rate card, because what a partner needs is rarely what a sheet lists.",
       ]}
-      img="/images/ranch/ppr-dusk.jpg"
+      img="/images/ranch/ppr-pasture.jpg"
       focal="center 58%"
       bandImg="/images/donuts-overflow.webp"
       bandFocal="center 55%"
