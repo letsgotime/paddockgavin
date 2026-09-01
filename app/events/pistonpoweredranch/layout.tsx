@@ -72,6 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const RANCHO = {
   "--accent": "#FF1A21",        // Jaramillo Red lit for small text, 4.74:1 on the ink. Text only, never a fill
   "--accent-strong": "#E5141A", // Jaramillo Red, for fills and large display
+  "--on-accent": "#FFFFFF",     // text on a Jaramillo Red fill, 4.73:1. Never dark type on red
   "--second": "#6E8FE8",        // 6.28:1
   "--second-strong": "#1424A1", // Jaramillo Blue
   "--ink": "#0A1523",
@@ -82,6 +83,7 @@ const RANCHO = {
 const PADDOCKGAVIN = {
   "--accent": "#F2C94C",        // 12.29:1, carries text and fills alike
   "--accent-strong": "#F2C94C",
+  "--on-accent": "#101010",     // dark type on amber, 12.29:1
   "--second": "#00D2BE",        // 10.18:1
   "--second-strong": "#00D2BE",
   "--ink": "#070D14",
