@@ -170,6 +170,39 @@ function nameFromEmail(email: string): string {
 }
 
 /**
+ * Google sign in.
+ *
+ * POST /sign-in/social answers with a URL carrying a one time token; sending
+ * the browser there starts the flow and Google returns to callbackURL. The
+ * fetch is credentialed because the endpoint sets state on the auth origin,
+ * which its CORS headers allow.
+ *
+ * Signing in with Google does not put anybody on the staff list. is_staff()
+ * still decides what they see, so an address that is not on the list signs in
+ * and finds nothing, exactly as it would with a password.
+ *
+ * Returns null when the browser is on its way, or something to show them.
+ */
+export async function signInWithGoogle(callbackURL: string): Promise<string | null> {
+  try {
+    const r = await fetch(`${AUTH_URL}/sign-in/social`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ provider: "google", callbackURL }),
+    })
+    if (r.status === 400) return "Google sign in is not switched on for this project."
+    if (!r.ok) return `Could not start Google sign in (${r.status}). Use the email link instead.`
+    const data = (await r.json()) as { url?: string }
+    if (!data.url) return "Google did not give us anywhere to send you. Use the email link instead."
+    window.location.href = data.url
+    return null
+  } catch {
+    return "Could not reach the sign in service. Check your connection."
+  }
+}
+
+/**
  * A reset link, for somebody who set a password and cannot remember it.
  *
  * Returns null on success, or something to show them. Success is deliberately

@@ -64,6 +64,18 @@ const SKIP_DIRS = new Set(["node_modules", ".next", ".git", "public", "out", "di
 const SKIP_FILES = new Set(["scripts/check-brand.mjs"])
 const EXT = /\.(tsx?|jsx?|mjs|cjs|css|scss|mdx|html|svg)$/
 
+/**
+ * Third party marks are not ours to recolour.
+ *
+ * Google's G is #4285F4, #34A853, #FBBC05 and #EA4335, and that last one is a
+ * red carrying 21% white, so this check would otherwise call it pink and stop
+ * the build. Their brand guidelines require those exact values, so the mark is
+ * exempt where all four appear together, which is a whole G and not somebody
+ * sneaking one pink through under cover.
+ */
+const GOOGLE_MARK = ["#4285F4", "#34A853", "#FBBC05", "#EA4335"]
+const isGoogleMark = (source) => GOOGLE_MARK.every((c) => source.toUpperCase().includes(c))
+
 const NAMED_PINKS =
   /\b(pink|hotpink|lightpink|deeppink|palevioletred|mediumvioletred|salmon|lightsalmon|darksalmon|lightcoral|coral|tomato|crimson|indianred|mistyrose|lavenderblush|rosybrown|orchid|violet)\b/i
 const TAILWIND_PINK =
@@ -159,7 +171,9 @@ for (const file of walk(ROOT)) {
   const rel = relative(ROOT, file).split(sep).join("/")
   if (SKIP_FILES.has(rel)) continue
   const ranch = RANCH_SURFACES.some((s) => (s.endsWith("/") ? rel.startsWith(s) : rel === s))
-  const lines = readFileSync(file, "utf8").split("\n")
+  const source = readFileSync(file, "utf8")
+  const exemptMark = isGoogleMark(source)
+  const lines = source.split("\n")
 
   lines.forEach((raw, i) => {
     const n = i + 1
@@ -177,6 +191,7 @@ for (const file of walk(ROOT)) {
     for (const c of found) {
       const d = describe(c.rgb)
       if (!isRedFamily(d)) continue
+      if (exemptMark && GOOGLE_MARK.includes(c.hex)) continue
 
       if (isPink(d)) {
         push(rel, n, line, `${c.raw} is pink (${Math.round(d.white * 100)}% white in a red). Reds on this site are ${JARAMILLO_RED}, or ${RANCH_RED_TEXT} for small text.`)
