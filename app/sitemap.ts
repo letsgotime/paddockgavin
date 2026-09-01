@@ -21,12 +21,14 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "/events",                  priority: 0.75, changeFrequency: "monthly" },
   { url: "/events/creator-day",      priority: 0.7,  changeFrequency: "monthly" },
   { url: "/encantoblossomorchard",   priority: 0.6,  changeFrequency: "monthly" },
-  // The Piston Powered Ranch, Oct 10 2026. The flagship event was missing from
-  // this list entirely, so the only way in was the crawl from /events.
-  { url: "/events/pistonpoweredranch",        priority: 0.95, changeFrequency: "daily"   },
-  { url: "/events/pistonpoweredranch/entry",  priority: 0.9,  changeFrequency: "weekly"  },
-  { url: "/events/pistonpoweredranch/vendor", priority: 0.8,  changeFrequency: "weekly"  },
-  { url: "/events/pistonpoweredranch/sponsor",priority: 0.8,  changeFrequency: "weekly"  },
+  // The Piston Powered Ranch, Oct 10 2026. Listed at its own domain, because
+  // that is where each of these pages now says it lives. A sitemap that
+  // advertises an address the page itself disowns is asking a crawler to
+  // pick, and it will not pick ours.
+  { url: "https://pistonpoweredranch.com",         priority: 0.95, changeFrequency: "daily"  },
+  { url: "https://pistonpoweredranch.com/entry",   priority: 0.9,  changeFrequency: "weekly" },
+  { url: "https://pistonpoweredranch.com/vendor",  priority: 0.8,  changeFrequency: "weekly" },
+  { url: "https://pistonpoweredranch.com/sponsor", priority: 0.8,  changeFrequency: "weekly" },
   { url: "/donuts",                  priority: 0.7,  changeFrequency: "monthly" },
   // Night shift / products
   { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
@@ -46,7 +48,8 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
   return STATIC.map(({ url, priority, changeFrequency }) => ({
-    url: `${BASE}${url}`,
+    /* Absolute entries name their own host; the rest hang off the producer. */
+    url: url.startsWith("http") ? url : `${BASE}${url}`,
     lastModified: now,
     changeFrequency,
     priority,

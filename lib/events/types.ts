@@ -123,6 +123,26 @@ export interface EventRow {
   content: EventContent
 }
 
+/**
+ * Where an event lives for the public.
+ *
+ * An event with its own domain is the thing people are given: it is on the
+ * collateral, the share card and the emails, and it is what they type. That
+ * domain is the canonical, and PaddockGavin is the producer standing behind
+ * it rather than the destination.
+ *
+ * The canonical, the Open Graph url, the structured data and the sitemap all
+ * have to name the same address or they argue with each other, so they all
+ * come through here.
+ */
+export function publicOrigin(e: { domain?: string | null }): string {
+  return e.domain ? `https://${e.domain}` : "https://paddockgavin.com"
+}
+
+export function publicUrl(e: { domain?: string | null; slug: string }): string {
+  return e.domain ? `https://${e.domain}` : `https://paddockgavin.com/events/${e.slug}`
+}
+
 /** Links in the content carry {slug} so one row can serve any event. */
 export function resolveHref(href: string, slug: string): string {
   return href.replace(/\{slug\}/g, slug)

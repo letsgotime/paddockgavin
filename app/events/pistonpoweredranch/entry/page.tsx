@@ -8,6 +8,10 @@ import { ApplyPage } from "../_apply"
    Redline run: the copy has not been back through the tool since it was
    written. */
 export const metadata: Metadata = {
+  /* Its own address, not the event page's. All three of these inherited
+     one canonical from the shared layout, so they told a crawler they
+     were the same page and only one of them could ever rank. */
+  alternates: { canonical: "https://pistonpoweredranch.com/entry" },
   title: "Enter a Car · The Piston Powered Ranch",
   description:
     "Three hundred places on the field, chosen from Nashville and from collections that travel. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo.",

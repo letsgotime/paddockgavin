@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { loadEvent, loadEventSlugs, loadRunOfShow, loadMapFeatures, loadPartners } from "@/lib/events/load"
+import { publicOrigin, publicUrl } from "@/lib/events/types"
 import EventPublic from "./EventPublic"
 
 /**
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ event: st
      than a dash, which is the house rule everywhere else too. */
   const title = [e.name, day].filter(Boolean).join(" · ")
   const description = e.tagline || `${e.name} at ${e.venue_name ?? ""}.`.trim()
-  const canonical = `https://paddockgavin.com/events/${e.slug}`
+  const canonical = publicUrl(e)
 
   /* The share card comes off the event row like everything else here, so a
      second event brings its own rather than inheriting the ranch's. Without
@@ -74,12 +75,12 @@ export default async function EventPublicPage({ params }: { params: Promise<{ ev
     name: e.name,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    url: `https://paddockgavin.com/events/${e.slug}`,
+    url: publicUrl(e),
   }
   if (e.tagline) jsonLd.description = e.tagline
   if (e.starts_at) jsonLd.startDate = e.starts_at
   if (e.ends_at) jsonLd.endDate = e.ends_at
-  if (e.content?.hero?.img) jsonLd.image = [`https://paddockgavin.com${e.content.hero.img}`]
+  if (e.content?.hero?.img) jsonLd.image = [`${publicOrigin(e)}${e.content.hero.img}`]
   if (e.venue_name) {
     jsonLd.location = {
       "@type": "Place",

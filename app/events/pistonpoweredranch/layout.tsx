@@ -13,9 +13,16 @@ const DESC =
   "Three hundred collector cars on twelve acres at Rancho Jaramillo, an hour south of Nashville. Saturday October 10, 2026. Admission is complimentary."
 const CARD = "https://paddockgavin.com/og/ppr-og-1200.jpg"
 /* The same event, shared from the ranch's own door, unfurls in the ranch's
-   own brand: the bull mark, Cinzel, Jaramillo Red on Ranch Ink. Canonical
-   and og:url still point at the hub, because that is the URL that outlives
-   the domain and holds the archive. Only the picture changes. */
+   own brand: the bull mark, Cinzel, Jaramillo Red on Ranch Ink.
+
+   Canonical and og:url used to point at the hub, on the reasoning that the
+   hub URL outlives the domain. That is now decided the other way round:
+   pistonpoweredranch.com is the public face of this event and PaddockGavin
+   is the producer standing behind it. The event domain is what goes on the
+   collateral, the share card and the emails, and it is what people type, so
+   it is the address that should accumulate the links rather than hand them
+   away. Each page below names itself; this layout no longer forces one
+   canonical onto all of them. */
 const RANCHO_CARD = "https://pistonpoweredranch.com/og/ppr-rancho-og-v2.jpg"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,18 +32,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
   title: TITLE,
   description: DESC,
-  alternates: { canonical: "https://paddockgavin.com/events/pistonpoweredranch" },
   openGraph: {
     title: TITLE,
     description: DESC,
-    url: "https://paddockgavin.com/events/pistonpoweredranch",
-    siteName: "PaddockGavin",
+    url: "https://pistonpoweredranch.com",
+    siteName: ranchDoor ? "The Piston Powered Ranch" : "PaddockGavin",
     type: "website",
     images: [
       {
         url: card,
         width: 1200,
-        height: 628,
+        height: 630,
         alt: "The Piston Powered Ranch at Rancho Jaramillo, Unionville Tennessee",
       },
     ],
