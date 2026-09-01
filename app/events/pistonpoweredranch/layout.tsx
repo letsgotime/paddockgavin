@@ -10,7 +10,7 @@ import type { Metadata } from "next"
    neither is truncated in a result, and both use a middot, never an em dash. */
 const TITLE = "The Piston Powered Ranch · Tennessee Car Show · Oct 10 2026"
 const DESC =
-  "Three hundred collector cars on twelve acres at Rancho Jaramillo, an hour south of Nashville. Saturday October 10, 2026. Admission is complimentary."
+  "Three hundred collector cars on fourteen curated acres at Rancho Jaramillo, an hour south of Nashville. Saturday October 10, 2026. Admission is free."
 const CARD = "https://paddockgavin.com/og/ppr-og-1200.jpg"
 /* The same event, shared from the ranch's own door, unfurls in the ranch's
    own brand: the bull mark, Cinzel, Jaramillo Red on Ranch Ink.
