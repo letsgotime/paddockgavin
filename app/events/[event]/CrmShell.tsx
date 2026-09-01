@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, type ReactNode } from "react"
 import { useCrm } from "@/lib/crm/useCrm"
-import { signIn, signOut } from "@/lib/crm/client"
+import { signIn, signOut, magicLink } from "@/lib/crm/client"
 import { PADDOCKGAVIN } from "@/lib/crm/brand"
 
 /**
@@ -46,6 +46,8 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
   const [pass, setPass] = useState("")
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState("")
+  const [linkBusy, setLinkBusy] = useState(false)
+  const [linkSaid, setLinkSaid] = useState("")
 
   /* The CRM is our product, so the chrome is Paddock Amber whichever event is
      loaded. The event's own colour appears once, as a dot on the rail, so you
@@ -84,8 +86,38 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
         </div>
         <h1 style={h1}>Staff sign in</h1>
         <p style={lede}>
-          This is the working side of the event. Use the address the invitation went to; if it is
-          your first time, pick a password and the account is made on the spot.
+          This is the working side of the event. Use the address the invitation went to. There is no
+          password to remember: put it in the box and press the button, and a link arrives that signs
+          you in.
+        </p>
+        <div style={{ display: "grid", gap: 11, maxWidth: 380, marginTop: 22 }}>
+          <label style={lbl} htmlFor="crmEmail">Email</label>
+          <input id="crmEmail" type="email" autoComplete="email" required value={email}
+                 onChange={(e) => setEmail(e.target.value)} style={input} />
+          <button
+            type="button"
+            disabled={linkBusy}
+            onClick={async () => {
+              const to = email.trim()
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+                setLinkSaid("Put your email in the box first.")
+                return
+              }
+              setLinkBusy(true)
+              setLinkSaid("")
+              const problem = await magicLink(to, window.location.href)
+              setLinkBusy(false)
+              setLinkSaid(problem ?? "Check your email. The link signs you straight in, and it works once.")
+            }}
+            style={{ ...primary, background: accent, opacity: linkBusy ? 0.6 : 1 }}
+          >
+            {linkBusy ? "Sending" : "Email me a sign in link"}
+          </button>
+          {linkSaid ? <p style={{ ...lede, fontSize: 14, margin: 0 }}>{linkSaid}</p> : null}
+        </div>
+
+        <p style={{ ...lede, fontSize: 14, marginTop: 26, marginBottom: 0, opacity: 0.8 }}>
+          Or use a password, if you set one.
         </p>
         <form
           onSubmit={async (e) => {
@@ -97,11 +129,8 @@ export default function CrmShell({ slug, children }: { slug: string; children: R
             if (problem) setErr(problem)
             else void crm.refresh()
           }}
-          style={{ display: "grid", gap: 11, maxWidth: 380, marginTop: 22 }}
+          style={{ display: "grid", gap: 11, maxWidth: 380, marginTop: 10 }}
         >
-          <label style={lbl} htmlFor="crmEmail">Email</label>
-          <input id="crmEmail" type="email" autoComplete="email" required value={email}
-                 onChange={(e) => setEmail(e.target.value)} style={input} />
           <label style={lbl} htmlFor="crmPass">Password</label>
           <input id="crmPass" type="password" autoComplete="current-password" required value={pass}
                  onChange={(e) => setPass(e.target.value)} style={input} />

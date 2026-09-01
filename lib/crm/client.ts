@@ -142,13 +142,44 @@ export async function signIn(email: string, password: string): Promise<string | 
   const first = await c.auth.signInWithPassword({ email, password })
   if (!first.error) return null
 
-  const made = await c.auth.signUp({ email, password })
+  /* Better Auth rejects a sign up with no name, and answers
+     [body.name] Invalid input, which surfaces as a wrong password. Nobody
+     types a name on a sign in form, so it comes off the address. */
+  const made = await c.auth.signUp({ email, password, name: nameFromEmail(email) })
   if (made.error) return made.error.message || first.error.message || "Could not sign in."
   if (!made.data?.session) {
     const again = await c.auth.signInWithPassword({ email, password })
     if (again.error) return "Account created. Press sign in once more."
   }
   return null
+}
+
+/** gavin@paddockgavin.com becomes Gavin. Enough to satisfy the field. */
+function nameFromEmail(email: string): string {
+  const local = (email.split("@")[0] || "Staff").replace(/[._-]+/g, " ").trim()
+  return local.charAt(0).toUpperCase() + local.slice(1) || "Staff"
+}
+
+/**
+ * The way the onboarding email tells people to get in.
+ *
+ * It says there is no password, so a screen that only offers a password box
+ * contradicts the invitation on the first thing anybody does. Returns null on
+ * success, or something to show them.
+ */
+export async function magicLink(email: string, callbackURL: string): Promise<string | null> {
+  try {
+    const r = await fetch(`${AUTH_URL}/sign-in/magic-link`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, callbackURL }),
+    })
+    if (r.status === 404) return "Sign in links are not switched on yet. Use a password for now."
+    if (!r.ok) return `Could not send the link (${r.status}). Try the password instead.`
+    return null
+  } catch {
+    return "Could not reach the sign in service. Check your connection."
+  }
 }
 
 export async function signOut(): Promise<void> {
