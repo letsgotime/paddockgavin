@@ -35,9 +35,12 @@ export function RsvpBlock({
    *  is a different requirement and therefore a different colour. Passing one
    *  value for both is what turned the button pink on the ranch. */
   fill?: string
+  /** Text on the button. White on the ranch red, dark on our amber. */
+  onFill?: string
   source?: string
 }) {
   const solid = fill || accent
+  const onSolid = onFill || "#04211d"
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [party, setParty] = useState("2")
@@ -156,6 +159,7 @@ export function RsvpBlock({
           style={{
             ...primary,
             background: solid,
+            color: onSolid,
             opacity: state === "sending" ? 0.6 : 1,
             justifySelf: "start",
           }}
