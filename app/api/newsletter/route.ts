@@ -73,7 +73,12 @@ export async function GET(req: NextRequest) {
   const banner = `<div style="font:600 13px/1.5 ui-monospace,Menlo,monospace;background:#0A1523;color:#EDF1F6;padding:14px 18px">
     PREVIEW ONLY, nothing sent &middot; would go to ${to.length} ${to.length === 1 ? "person" : "people"} &middot; subject: ${doc.subject}
   </div>`
-  return new NextResponse(banner + renderRanchEmail(doc), {
+  /* Inside the document, not in front of it. Prepending anything before the
+     doctype puts the parser in quirks mode and it foster-parents the head into
+     the body, which drops the outer table the sheet floats on. The preview then
+     shows something no recipient will ever get. */
+  const html = renderRanchEmail(doc).replace(/(<body[^>]*>)/i, `$1${banner}`)
+  return new NextResponse(html, {
     headers: { "Content-Type": "text/html; charset=utf-8" },
   })
 }
