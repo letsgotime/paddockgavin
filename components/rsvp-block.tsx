@@ -26,6 +26,7 @@ export function RsvpBlock({
   eventId,
   accent = "#F2C94C",
   fill,
+  onFill,
   source = "events",
 }: {
   eventId: string
