@@ -40,6 +40,13 @@
  *   because the same token is amber there). "Count me in" shipped in near
  *   black on red once. It will not again.
  *
+ * RULE 4, the share cards: pixels are checked as pixels.
+ *   The og:image is a JPEG, so no colour literal in the source could catch
+ *   the pale salmon it carried, and every iMessage preview shipped it. Every
+ *   file in public/og is decoded and scanned; a red-family pixel with more
+ *   than 20% white is pink, and more than 0.02% of them stops the build.
+ *   The old card measured 0.2%.
+ *
  * Runs before every build (`pnpm build`) and on demand (`pnpm check:brand`).
  * If it fires, the fix is the colour, never the rule.
  */
@@ -236,6 +243,57 @@ for (const file of walk(ROOT)) {
   })
 }
 
+/* RULE 4. Share cards, decoded with sharp and read pixel by pixel. */
+const IMAGE_DIRS = ["public/og"]
+const IMAGE_EXT = /\.(jpe?g|png|webp)$/i
+const INK = [10, 21, 35]
+const PINK_LIMIT = 0.0002 // 0.02% of pixels. Anti-aliasing on a dark card sits an order of magnitude under this.
+
+async function checkImages() {
+  let sharp
+  try {
+    sharp = (await import("sharp")).default
+  } catch {
+    console.warn("brand check: sharp is not installed here, so the share cards were not scanned")
+    return
+  }
+  for (const dir of IMAGE_DIRS) {
+    let names = []
+    try {
+      names = readdirSync(join(ROOT, dir))
+    } catch {
+      continue
+    }
+    for (const name of names) {
+      if (!IMAGE_EXT.test(name)) continue
+      const rel = `${dir}/${name}`
+      const { data, info } = await sharp(join(ROOT, dir, name))
+        .resize({ width: 600, withoutEnlargement: true })
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true })
+      const total = info.width * info.height
+      let pink = 0
+      for (let i = 0; i < data.length; i += 4) {
+        const a = data[i + 3] / 255
+        if (a < 0.05) continue
+        const rgb = [
+          data[i] * a + INK[0] * (1 - a),
+          data[i + 1] * a + INK[1] * (1 - a),
+          data[i + 2] * a + INK[2] * (1 - a),
+        ]
+        if (isPink(describe(rgb))) pink++
+      }
+      const share = pink / total
+      if (share > PINK_LIMIT && pink >= 20) {
+        push(rel, 0, `${info.width}x${info.height} scanned, ${pink} pink pixels`, `${(share * 100).toFixed(3)}% of this share card is pink (limit ${(PINK_LIMIT * 100).toFixed(2)}%). Re-cut it with the brand reds; iMessage and Facebook will show whatever is here.`)
+      }
+    }
+  }
+}
+
+await checkImages()
+
 if (problems.length) {
   console.error("\n\x1b[41m\x1b[97m BRAND CHECK FAILED: PINK \x1b[0m\n")
   console.error(`The reds on this site are ${JARAMILLO_RED} (anything) and ${RANCH_RED_TEXT} (small text on the ink). Nothing else red-family.\n`)
@@ -248,4 +306,4 @@ if (problems.length) {
   process.exit(1)
 }
 
-console.log(`brand check: no pink, no off-brand reds (${JARAMILLO_RED} paints, ${RANCH_RED_TEXT} writes)`)
+console.log(`brand check: no pink in the source or the share cards, no off-brand reds (${JARAMILLO_RED} paints, ${RANCH_RED_TEXT} writes)`)
