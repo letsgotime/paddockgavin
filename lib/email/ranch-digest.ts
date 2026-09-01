@@ -98,14 +98,15 @@ export function weeklyDigest(v: DigestVars): RanchEmail & { subject: string; fro
   })
   blocks.push({ kind: "button", label: "Everything about the day", href: TOOLS })
 
-  /* Three plates of the ground it happens on. Decorative, and deliberately so:
-     every fact above is already in words, so a blocked image costs nothing. */
+  /* Three plates of the ground it happens on, each captioned with what is
+     actually in the frame. Decorative, and deliberately so: every fact above
+     is already in words, so a blocked image costs nothing. */
   blocks.push({
     kind: "strip",
     shots: [
-      { src: `${IMG}/strip-gate.jpg`, alt: "The gate at Rancho Jaramillo" },
-      { src: `${IMG}/strip-barn.jpg`, alt: "The barn on the show field" },
-      { src: `${IMG}/strip-dusk.jpg`, alt: "The pasture at dusk" },
+      { src: `${IMG}/strip-barn.jpg`, alt: "In the barn" },
+      { src: `${IMG}/strip-cattle.jpg`, alt: "Cattle in the pasture" },
+      { src: `${IMG}/strip-bins.jpg`, alt: "The grain bins" },
     ],
   })
 
@@ -132,13 +133,18 @@ export function weeklyDigest(v: DigestVars): RanchEmail & { subject: string; fro
     preheader: `Where the tenth of October stands. ${news.heads} coming so far.`,
     eyebrow: "The week",
     heading: countdownLine(news.daysLeft),
-    /* An animated gif, because it is the only motion an inbox actually plays:
-       Gmail and Outlook strip css animation entirely, and Outlook's engine is
-       Word. Its first frame is a photograph that stands alone, which is what
-       Outlook desktop will show and all anybody gets if images are blocked. */
+    /* One photograph, and it holds still.
+
+       This was an animated gif, on the reasoning that a gif is the only motion
+       an inbox will actually play. That was true and it was still the wrong
+       call: it cycled twelve different frames, so the picture changed while
+       you read, it had to be quantised to sixty four colours to stay under
+       weight, which banded every photograph in it, and at 448KB it did not
+       reach every reader. A still jpeg of the gate arrives everywhere, looks
+       like the place, and stays where you put it. */
     image: {
-      src: `${IMG}/ranch-motion.gif`,
-      alt: `${event.venue_name ?? "The ranch"}, the week before the tenth of October`,
+      src: `${IMG}/ranch-gate.jpg`,
+      alt: `The gate at ${event.venue_name ?? "the ranch"}`,
     },
     blocks,
     signoff:
