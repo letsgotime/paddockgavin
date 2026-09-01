@@ -23,21 +23,21 @@ const SITE = "https://paddockgavin.com"
 
 export const metadata: Metadata = {
   title: {
-    default: "PaddockGavin — Two shifts. One paddock.",
-    template: "%s — PaddockGavin",
+    default: "PaddockGavin · Two shifts. One paddock.",
+    template: "%s · PaddockGavin",
   },
   description:
     "Gavin runs lot operations and events for duPont REGISTRY by day, and builds software by night. Nashville, Tennessee.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
-    title: "PaddockGavin — Two shifts. One paddock.",
+    title: "PaddockGavin · Two shifts. One paddock.",
     description: "Cars used to be the reward. Now they're the work. Nashville, Tennessee.",
     siteName: "PaddockGavin",
     locale: "en_US",
     type: "website",
     url: SITE,
-    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin — Two shifts. One paddock." }],
+    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin · Two shifts. One paddock." }],
   },
   twitter: {
     card: "summary_large_image",

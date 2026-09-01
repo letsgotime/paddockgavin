@@ -89,8 +89,16 @@ export default function OGImage() {
           </div>
 
           {/* Headline */}
+          {/* Satori is not a browser: any div with more than one child has to
+              say how it lays them out, and a bare <br /> between text and a
+              span is three children and no answer. That threw on every
+              request, which is why this card has been returning an empty body
+              with a 200 and every share of the site has had no image. Two
+              spans in a column, which is what it looked like anyway. */}
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontWeight: 900,
               fontSize: 68,
               letterSpacing: "-2px",
@@ -99,8 +107,7 @@ export default function OGImage() {
               maxWidth: 900,
             }}
           >
-            Two shifts.
-            <br />
+            <span>Two shifts.</span>
             <span style={{ color: "#F8B800" }}>One paddock.</span>
           </div>
 

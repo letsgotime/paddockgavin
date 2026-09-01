@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "PaddockGavin — Two shifts. One paddock.",
+  title: "PaddockGavin · Two shifts. One paddock.",
   description:
     "Gavin runs lot operations and events for duPont REGISTRY by day, and builds software by night. Nashville, Tennessee.",
   openGraph: {
-    title: "PaddockGavin — Two shifts. One paddock.",
+    title: "PaddockGavin · Two shifts. One paddock.",
     description: "Cars used to be the reward. Now they're the work.",
     url: "https://paddockgavin.com",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
