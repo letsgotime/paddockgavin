@@ -330,7 +330,7 @@ export default function EventPublic({
       {hero && (
         <section style={{ position: "relative", minHeight: "100svh", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden" }}>
           <Image className="evKen" src={hero.img} alt={hero.alt} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: hero.focal || "center 62%" }} />
-          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.96) 6%,rgba(10,21,35,.34) 62%,rgba(10,21,35,.22))" }} />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 4%,rgba(10,21,35,.92) 34%,rgba(10,21,35,.62) 72%,rgba(10,21,35,.4) 100%)" }} />
 
           {b.logo ? (
             <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 9, padding: "clamp(96px,14vh,140px) 20px 0", pointerEvents: "none" }}>
@@ -360,7 +360,10 @@ export default function EventPublic({
             </p>
             <h1 style={{ margin: 0, fontFamily: "var(--display)", fontWeight: 900, fontSize: "clamp(38px,8.5vw,86px)", lineHeight: 0.94, letterSpacing: "-.02em", color: "#FFFFFF", textWrap: "balance" }}>
               {hero.title}
-              {hero.titleAccent && (<><br /><span style={{ color: "var(--accent-strong)" }}>{hero.titleAccent}</span></>)}
+              {hero.titleAccent && (<><br />{/* --accent is the text cut of the hue, which is what
+                  brand.accentText exists for. --accent-strong is a fill and it
+                  measured 1.48:1 here, on a photograph. */}
+                <span style={{ color: "var(--accent)" }}>{hero.titleAccent}</span></>)}
             </h1>
             <p style={{ margin: 0, fontFamily: "var(--body)", fontWeight: 700, fontSize: "clamp(19px,2.6vw,26px)", lineHeight: 1.3, color: "#FFFFFF" }}>
               {hero.lead}
