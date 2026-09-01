@@ -146,7 +146,7 @@ const ACTS: Act[] = [
         tone: "var(--second)",
         items: ["Exotics", "Muscle", "Golf carts that turn heads, in two, four or six seats"],
       },
-      { head: "Not this time", tone: "#E5484D", items: ["Trucks", "SUVs"] },
+      { head: "Not this time", tone: "#E5141A", items: ["Trucks", "SUVs"] },
     ],
     cta: { label: "How entry works", href: "/events/pistonpoweredranch/entry" },
   },
