@@ -36,18 +36,22 @@ const nextConfig: NextConfig = {
   async rewrites() {
     const proxy = (source: string, destination: string) => ({ source, destination, has: RANCH_HOST })
     return {
-      beforeFiles: [
+      /* Before the filesystem, because /events/[event] would otherwise claim
+         /events/img and answer with "no such event" instead of a photograph. */
+      beforeFiles: [proxy("/events/img/:path*", `${TOOLS}/events/img/:path*`)],
+
+      /* After it, so anything this app actually serves wins. That matters for
+         /brand, where five files exist only here and the rest only there, and
+         it means porting a tool into the CRM takes the route over by itself. */
+      afterFiles: [
         ...TOOL_PATHS.flatMap((p) => [
           proxy(`/${p}`, `${TOOLS}/${p}/`),
           proxy(`/${p}/:path*`, `${TOOLS}/${p}/:path*`),
         ]),
         ...TOOL_APIS.map((a) => proxy(`/api/${a}`, `${TOOLS}/api/${a}`)),
-        /* Two prefixes that exist on both sides with different files, so only
-           the subpaths the tools own are forwarded. */
-        proxy("/brand/rancho/:path*", `${TOOLS}/brand/rancho/:path*`),
-        proxy("/brand/rancho", `${TOOLS}/brand/rancho/`),
-        proxy("/brand/files/:path*", `${TOOLS}/brand/files/:path*`),
-        proxy("/events/img/:path*", `${TOOLS}/events/img/:path*`),
+        proxy("/brand/:path*", `${TOOLS}/brand/:path*`),
+        proxy("/team-sw.js", `${TOOLS}/team-sw.js`),
+        proxy("/team.webmanifest", `${TOOLS}/team.webmanifest`),
         /* The singular reads better in a message and people type it. */
         proxy("/journey", `${TOOLS}/journeys/`),
       ],
