@@ -39,6 +39,22 @@ export interface EventBrand {
   tone?: string
 }
 
+/** Who puts the event on, for structured data. Distinct from content.producer,
+ *  which is the line of type under the lockup and is a string. */
+export interface EventOrganizer {
+  name: string
+  url?: string
+}
+
+/** What it costs to walk in. Absent means we are not claiming anything. */
+export interface EventAdmission {
+  free?: boolean
+  price?: string
+  currency?: string
+  /** Where a spectator says they are coming. */
+  url?: string
+}
+
 export interface EventCta {
   label: string
   href: string
@@ -90,6 +106,8 @@ export interface EventContent {
   sections?: string[]
   teaser?: EventTeaser
   /** The credit under the venue's mark. */
+  organizer?: EventOrganizer
+  admission?: EventAdmission
   producer?: string
   hero?: {
     img: string

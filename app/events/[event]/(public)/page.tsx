@@ -89,6 +89,28 @@ export default async function EventPublicPage({ params }: { params: Promise<{ ev
     }
   }
 
+  /* Who puts it on, and what it costs to walk in. Both come off the row, so an
+     event that charges says so and an event that has settled neither says
+     nothing rather than having a price invented for it. A free event has to
+     state that as an Offer of zero: "no offers" does not mean free to a
+     search engine, it means unknown. */
+  const org = e.content?.organizer
+  if (org?.name) {
+    jsonLd.organizer = { "@type": "Organization", name: org.name, ...(org.url ? { url: org.url } : {}) }
+  }
+
+  const adm = e.content?.admission
+  if (adm && (adm.free || adm.price)) {
+    jsonLd.offers = {
+      "@type": "Offer",
+      price: adm.free ? "0" : adm.price,
+      priceCurrency: adm.currency || "USD",
+      availability: "https://schema.org/InStock",
+      url: adm.url || publicUrl(e),
+      ...(e.starts_at ? { validFrom: e.starts_at } : {}),
+    }
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
