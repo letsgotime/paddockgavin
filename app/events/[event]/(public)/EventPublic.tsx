@@ -345,8 +345,8 @@ export default function EventPublic({
           ) : <span />}
 
           <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "clamp(24px,5vh,48px) clamp(20px,5vw,40px) clamp(52px,10vh,110px)", display: "grid", gap: 18 }}>
-            <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 12 }}>
-              <i aria-hidden="true" style={{ width: 28, height: 3, background: "var(--accent-strong)", flex: "0 0 auto", borderRadius: 2 }} />
+            <p style={{ margin: 0, display: "flex", alignItems: "flex-start", gap: 12 }}>
+              <i aria-hidden="true" style={{ width: 28, height: 3, marginTop: 7, background: "var(--accent-strong)", flex: "0 0 auto", borderRadius: 2 }} />
               <span style={{
                 fontFamily: MONO,
                 fontSize: "clamp(11px,1.3vw,12.5px)",

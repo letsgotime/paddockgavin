@@ -237,7 +237,7 @@ export function SiteNav({ active = "home" }: Props) {
                 style={{
                   fontFamily: "Archivo, Helvetica, sans-serif",
                   fontWeight: 800,
-                  fontSize: "clamp(19px,1.7vw,24px)",
+                  fontSize: ranch ? "clamp(13px,3.1vw,24px)" : "clamp(19px,1.7vw,24px)",
                   letterSpacing: "-.018em",
                   textTransform: "uppercase",
                 }}
