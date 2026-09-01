@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const ACCENT = "#EF7A7D" // small text on a dark ground, nothing else
+const ACCENT = "#FF1A21" // Jaramillo Red lit for small text on the ink, 4.74:1. Text only, never a fill
 
 /**
  * Where Stripe sends people after a successful payment.
