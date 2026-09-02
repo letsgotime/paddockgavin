@@ -70,6 +70,22 @@ const nextConfig: NextConfig = {
           proxy(`/${p}/:path*`, `${TOOLS}/${p}/:path*`),
         ]),
         ...TOOL_APIS.map((a) => proxy(`/api/${a}`, `${TOOLS}/api/${a}`)),
+
+        /* The sign in server itself.
+
+           Better Auth is self hosted in the tools repo at /api/auth, and its
+           AUTH_ORIGIN is pinned to https://pistonpoweredranch.com, which is
+           also where it issues and verifies tokens. So the moment this domain
+           is served by this app instead of that deployment, /api/auth stops
+           resolving and nobody can sign in.
+
+           A whole subtree rather than a single path, because Better Auth is
+           /sign-in/email, /sign-up/email, /magic-link, /email-otp/*, /callback/*,
+           /session, /token and /jwks. Routing only the first segment is exactly
+           the fault that made the tools deployment answer /api/auth/ok while
+           404ing every endpoint that mattered. */
+        proxy("/api/auth", `${TOOLS}/api/auth`),
+        proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`),
         proxy("/brand/:path*", `${TOOLS}/brand/:path*`),
         proxy("/team-sw.js", `${TOOLS}/team-sw.js`),
         proxy("/team.webmanifest", `${TOOLS}/team.webmanifest`),
