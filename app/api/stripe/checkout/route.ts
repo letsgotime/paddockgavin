@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { CATALOG, STRIPE_API, itemFor } from "@/lib/stripe/catalog"
+import { CATALOG, STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
 import { DONATION_MIN, DONATION_MAX } from "@/lib/shop/store"
 
 /**
@@ -154,6 +154,17 @@ export async function POST(req: Request) {
     }
 
     const item = itemFor(b.item)
+
+    /* Known, wired, and not yet priced. Distinct from an unknown key on
+       purpose: this is not a mistake by whoever called it, it is a thing we
+       have not put on sale, and the page says TBD rather than pretending the
+       request was malformed. */
+    if (item && !isOnSale(item)) {
+      return NextResponse.json(
+        { error: "price_not_set", item: item.key, detail: `${item.name} does not have a price yet.` },
+        { status: 409 },
+      )
+    }
     if (!item) {
       return NextResponse.json(
         { error: "Unknown item", allowed: Object.keys(CATALOG) },

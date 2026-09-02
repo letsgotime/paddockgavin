@@ -22,10 +22,23 @@ export const STRIPE_API = "https://api.stripe.com/v1"
 export interface CatalogItem {
   key: string
   name: string
-  productId: string
-  priceId: string
-  /** The starting amount in cents, as the price object holds it. */
-  cents: number
+  /** Empty until the object is created in Stripe. */
+  productId?: string
+  /**
+   * Empty until somebody sets a price.
+   *
+   * An item with no priceId is fully wired: it has a card, a checkout route
+   * that knows its key, and a button. It simply cannot charge, and it says TBD
+   * instead of a number. Filling this in is the whole of putting it on sale.
+   */
+  priceId?: string
+  /** The amount in cents, as the price object holds it. Absent means TBD. */
+  cents?: number
+}
+
+/** Priced and ready, as opposed to wired and waiting. */
+export function isOnSale(i: CatalogItem | undefined): boolean {
+  return Boolean(i && i.priceId && typeof i.cents === "number" && i.cents > 0)
 }
 
 export const CATALOG: Record<string, CatalogItem> = {
@@ -57,6 +70,26 @@ export const CATALOG: Record<string, CatalogItem> = {
     priceId: "price_1UAWzIRJpXHmje77AkoTNkVM",
     cents: 500000,
   },
+
+  /* Everything below is wired and unpriced.
+   *
+   * Each has a card in the store, a key the checkout route understands and a
+   * button that is inert until there is something to charge. None carries a
+   * number, because none has one: the VIP rooms have always been "pricing is a
+   * conversation" and no shirt or hat has a price or a payment link anywhere.
+   *
+   * Putting any of them on sale is two fields, priceId and cents, taken from
+   * the objects in Stripe. No component changes and no route changes. */
+
+  vipTerrace: { key: "vipTerrace", name: "The Terrace" },
+  vipOwnersTable: { key: "vipOwnersTable", name: "The Owner's Table" },
+
+  teeRanchGate: { key: "teeRanchGate", name: "Ranch Gate Tee" },
+  teePprOctober: { key: "teePprOctober", name: "October Tee" },
+  capRanch: { key: "capRanch", name: "Ranch Cap" },
+  truckerPg: { key: "truckerPg", name: "PG Trucker" },
+  mugRanch: { key: "mugRanch", name: "Ranch Mug" },
+  backpackRanch: { key: "backpackRanch", name: "Ranch Backpack" },
 }
 
 /**

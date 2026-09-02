@@ -1,4 +1,5 @@
 import { PRODUCTS, type Product } from "./catalogue"
+import { CATALOG, isOnSale } from "@/lib/stripe/catalog"
 
 /**
  * The public store: tickets, giving, and merchandise, in one list.
@@ -7,14 +8,19 @@ import { PRODUCTS, type Product } from "./catalogue"
  * number exists for it. Nothing here invents one.
  *
  *   buy    a real Stripe price, or an amount the buyer names themselves
- *   ask    a real thing with a real conversation behind it and no set figure
- *   soon   a real thing with nothing settled yet
+ *   ask    a real thing whose answer is a conversation, not a number
+ *   tbd    wired to checkout, waiting on a price
+ *
+ * Everything marked tbd already has a key the checkout route understands and a
+ * button on its card. Setting priceId and cents in lib/stripe/catalog.ts, from
+ * the objects in Stripe, is the whole of putting it on sale. No component and
+ * no route changes.
  *
  * Sponsorship is deliberately absent. Those tiers carry figures and they are
  * sponsor-facing, and sponsor-facing material does not print prices.
  */
 
-export type Availability = "buy" | "ask" | "soon"
+export type Availability = "buy" | "ask" | "tbd"
 
 export interface StoreItem {
   slug: string
@@ -56,7 +62,8 @@ const TICKETS: StoreItem[] = [
     group: "Tickets",
     blurb:
       "The hosted room, on the rail above the show field. Shaded tent, table service, ranch raised Angus, and the corral and photo areas.",
-    availability: "ask",
+    availability: "tbd",
+    checkoutKey: "vipTerrace",
     askHref: "/sponsor",
     askLabel: "Ask about the twenty seats",
   },
@@ -66,7 +73,8 @@ const TICKETS: StoreItem[] = [
     group: "Tickets",
     blurb:
       "Everything on The Terrace, and the part of the ranch the crowd never reaches. Twenty seats across both rooms.",
-    availability: "ask",
+    availability: "tbd",
+    checkoutKey: "vipOwnersTable",
     askHref: "/sponsor",
     askLabel: "Ask about the twenty seats",
   },
@@ -86,16 +94,32 @@ const GIVING: StoreItem[] = [
 ]
 
 /** Merchandise comes from the product catalogue, which holds no prices yet. */
+const MERCH_KEYS: Record<string, string> = {
+  "ranch-gate-tee": "teeRanchGate",
+  "ppr-october-tee": "teePprOctober",
+  "ranch-cap": "capRanch",
+  "pg-trucker": "truckerPg",
+  "ranch-mug": "mugRanch",
+  "ranch-backpack": "backpackRanch",
+}
+
+/**
+ * Merchandise, with its state read from the Stripe catalogue rather than
+ * written down here. A price appearing in Stripe turns the card on by itself.
+ */
 function merch(): StoreItem[] {
   return PRODUCTS.map((p: Product) => {
-    const priced = p.variants.find((v) => typeof v.cents === "number" && v.cents! > 0 && v.buyUrl)
+    const key = MERCH_KEYS[p.slug]
+    const entry = key ? CATALOG[key] : undefined
+    const onSale = isOnSale(entry)
     return {
       slug: p.slug,
       name: p.name,
       group: "Merchandise" as const,
       blurb: p.blurb,
-      availability: priced ? ("buy" as const) : ("soon" as const),
-      cents: priced?.cents ?? undefined,
+      availability: onSale ? ("buy" as const) : ("tbd" as const),
+      cents: onSale ? entry!.cents : undefined,
+      checkoutKey: key,
       image: p.image,
     }
   })

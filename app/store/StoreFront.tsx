@@ -84,18 +84,75 @@ function Card({ item }: { item: StoreItem }) {
   return (
     <article style={shell(tone)}>
       <Head item={item} tone={tone} />
+
+      {/* Priced: the amount, and a button that charges it. */}
+      {item.availability === "buy" && item.checkoutKey ? (
+        <Buy item={item} />
+      ) : null}
+
+      {/* Wired and waiting. The price reads TBD rather than a guess, and the
+          button is present but inert, so the card is the finished thing minus
+          one number. */}
+      {item.availability === "tbd" && (
+        <>
+          <p style={{ margin: "0 0 12px", color: PAPER, font: `700 17px/1 ${BODY}` }}>
+            TBD
+          </p>
+          <button type="button" disabled aria-disabled="true" style={{ ...btn(true), opacity: 0.45, cursor: "not-allowed" }}>
+            Not on sale yet
+          </button>
+          {item.askHref && (
+            <p style={{ margin: "12px 0 0" }}>
+              <a href={item.askHref} style={{ color: RED_TEXT, font: `700 14px/1.4 ${BODY}`, textDecoration: "none" }}>
+                {item.askLabel || "Ask about it"}
+              </a>
+            </p>
+          )}
+        </>
+      )}
+
       {item.availability === "ask" && item.askHref && (
         <a href={item.askHref} style={btn(false)}>{item.askLabel || "Ask"}</a>
       )}
-      {item.availability === "soon" && (
-        <p style={{ margin: 0, color: MUTED, fontSize: 14.5 }}>
-          Not priced yet. It goes on sale here the day it is.
-        </p>
-      )}
-      {item.availability === "buy" && item.cents ? (
-        <p style={{ margin: 0, color: PAPER, font: `700 17px/1 ${BODY}` }}>{money(item.cents)}</p>
-      ) : null}
     </article>
+  )
+}
+
+/** A priced item. The amount is shown, and the server charges it, not this. */
+function Buy({ item }: { item: StoreItem }) {
+  const [busy, setBusy] = useState(false)
+  const [problem, setProblem] = useState<string | null>(null)
+
+  const go = async () => {
+    setBusy(true)
+    setProblem(null)
+    try {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ item: item.checkoutKey }),
+      })
+      const data = await res.json().catch(() => null)
+      if (res.status === 409) setProblem("Not on sale yet.")
+      else if (res.status === 503) setProblem("Payments are not switched on yet.")
+      else if (!res.ok || !data?.url) setProblem(data?.detail || "We could not open the payment page.")
+      else { window.location.assign(data.url); return }
+    } catch {
+      setProblem("We could not reach the payment page. Check your connection.")
+    }
+    setBusy(false)
+  }
+
+  return (
+    <>
+      {item.cents ? (
+        <p style={{ margin: "0 0 12px", color: PAPER, font: `700 17px/1 ${BODY}` }}>{money(item.cents)}</p>
+      ) : null}
+      <button type="button" onClick={go} disabled={busy} style={{ ...btn(true), opacity: busy ? 0.65 : 1 }}>
+        {busy ? "One moment" : "Buy"}
+      </button>
+      {problem && <p style={{ margin: "12px 0 0", color: PAPER, fontSize: 15, lineHeight: 1.55 }}>{problem}</p>}
+    </>
   )
 }
 
@@ -103,7 +160,7 @@ function Head({ item, tone }: { item: StoreItem; tone: string }) {
   return (
     <>
       <p style={{ margin: "0 0 8px", font: `700 11px/1 ${MONO}`, letterSpacing: ".16em", textTransform: "uppercase", color: tone }}>
-        {item.availability === "buy" ? "Available" : item.availability === "ask" ? "By conversation" : "Not yet"}
+        {item.availability === "buy" ? "Available" : item.availability === "ask" ? "By conversation" : "Price TBD"}
       </p>
       <h3 style={{ margin: "0 0 6px", color: PAPER, font: `700 19px/1.3 ${BODY}` }}>{item.name}</h3>
       <p style={{ margin: "0 0 14px", color: MUTED, fontSize: 15.5, lineHeight: 1.6 }}>{item.blurb}</p>
