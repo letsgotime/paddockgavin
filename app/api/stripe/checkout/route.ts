@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { CATALOG, STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
+import { catalogFor, STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
 import { DONATION_MIN, DONATION_MAX } from "@/lib/shop/store"
 import { loadEvent } from "@/lib/events/load"
 
@@ -53,9 +53,16 @@ interface Body {
   eventSlug?: string
 }
 
-/** The event, or null. Never a slug we have not seen. */
+/**
+ * The event, or null. Never a slug we have not seen, and never a default.
+ *
+ * This used to fall back to pistonpoweredranch when the caller said nothing,
+ * which is the quiet version of the bug it is meant to prevent: a second
+ * event's payment, with the field simply left off, booked against the first.
+ * Every caller names its event.
+ */
 async function eventFor(slug: string | undefined) {
-  const s = (slug || "pistonpoweredranch").trim().toLowerCase()
+  const s = (slug || "").trim().toLowerCase()
   if (!/^[a-z0-9-]{2,64}$/.test(s)) return null
   return loadEvent(s)
 }
@@ -167,14 +174,24 @@ export async function POST(req: Request) {
           { status: 400 },
         )
       }
-      const ev = await eventFor(b.eventSlug)
-      if (!ev) {
+      const gev = await eventFor(b.eventSlug)
+      if (!gev) {
         return NextResponse.json({ error: "unknown_event", detail: "No such event." }, { status: 400 })
       }
-      return donate(req, cents, b, ev)
+      return donate(req, cents, b, gev)
     }
 
-    const item = itemFor(b.item)
+    /* The same verification giving gets. This path was left naming the ranch by
+       hand while the donation path was fixed, so every booth and every
+       sponsorship booked against pistonpoweredranch whatever event it was
+       actually for, and a second event's money would have landed in the first
+       event's ledger. */
+    const ev = await eventFor(b.eventSlug)
+    if (!ev) {
+      return NextResponse.json({ error: "unknown_event", detail: "No such event." }, { status: 400 })
+    }
+
+    const item = itemFor(ev.slug, b.item)
 
     /* Known, wired, and not yet priced. Distinct from an unknown key on
        purpose: this is not a mistake by whoever called it, it is a thing we
@@ -188,7 +205,7 @@ export async function POST(req: Request) {
     }
     if (!item) {
       return NextResponse.json(
-        { error: "Unknown item", allowed: Object.keys(CATALOG) },
+        { error: "Unknown item", allowed: Object.keys(catalogFor(ev.slug)) },
         { status: 400 },
       )
     }
@@ -210,28 +227,27 @@ export async function POST(req: Request) {
       /* The catalogue price, read on the server. The client never names an
          amount and could not if it wanted to. */
       line_items: [{ price: item.priceId, quantity: 1 }],
-      success_url: `${origin}/events/pistonpoweredranch/vendor/paid?s={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/events/pistonpoweredranch/vendor`,
+      success_url: `${origin}/events/${ev.slug}/vendor/paid?s={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/events/${ev.slug}/vendor`,
       customer_email: b.email || undefined,
       /* The webhook reads these to book the row against the right event and
          the right kind, which is how one Stripe account serves many events. */
       metadata: {
-        event: "piston-powered-ranch",
-        /* The ranch webhook looks the events row up by slug from this field.
-           It must match public.events.slug exactly, which is
-           "pistonpoweredranch" with no hyphens. The webhook's own fallback
-           spelled it with hyphens, which matches nothing, and the write is an
-           INSERT ... SELECT: no matching row means zero rows inserted and a
-           200 returned. Every payment would have looked booked and been
-           absent from the ledger. */
-        event_slug: "pistonpoweredranch",
+        /* Read back by the webhook, which looks the events row up by slug.
+           It must match public.events.slug exactly. The webhook's own fallback
+           once spelled it with hyphens, which matches nothing, and the write is
+           an INSERT ... SELECT: no matching row means zero rows inserted and a
+           200 returned, so every payment looked booked and was absent from the
+           ledger. It comes from a verified row now rather than from a literal. */
+        event: ev.slug,
+        event_slug: ev.slug,
         kind: item.key,
         product: item.productId,
         org: (b.org || "").slice(0, 120),
         note: (b.note || "").slice(0, 400),
       },
       payment_intent_data: {
-        metadata: { event: "piston-powered-ranch", kind: item.key },
+        metadata: { event: ev.slug, kind: item.key },
       },
     })
 

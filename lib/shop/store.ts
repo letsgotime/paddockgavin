@@ -1,5 +1,5 @@
 import { PRODUCTS, type Product } from "./catalogue"
-import { CATALOG, isOnSale } from "@/lib/stripe/catalog"
+import { catalogFor, isOnSale } from "@/lib/stripe/catalog"
 import type { EventRow } from "@/lib/events/types"
 
 /**
@@ -78,7 +78,11 @@ function tickets(e: EventRow): StoreItem[] {
       name: tier.name,
       group: "Tickets",
       blurb: tier.line,
-      availability: "tbd",
+      /* A room with no catalogue key has nothing to sell and nothing to sell
+         it with, so it asks rather than showing a button that cannot work.
+         That happens when a tier is renamed, which is a copy change nobody
+         would think to check against Stripe. */
+      availability: VIP_KEYS[tier.name] ? "tbd" : "ask",
       checkoutKey: VIP_KEYS[tier.name],
       askHref: `/events/${e.slug}/sponsor`,
       askLabel: "Ask about the seats",
@@ -121,10 +125,11 @@ const MERCH_KEYS: Record<string, string> = {
  * Merchandise, with its state read from the Stripe catalogue rather than
  * written down here. A price appearing in Stripe turns the card on by itself.
  */
-function merch(): StoreItem[] {
+function merch(e: EventRow): StoreItem[] {
+  const set = catalogFor(e.slug)
   return PRODUCTS.map((p: Product) => {
     const key = MERCH_KEYS[p.slug]
-    const entry = key ? CATALOG[key] : undefined
+    const entry = key ? set[key] : undefined
     const onSale = isOnSale(entry)
     return {
       slug: p.slug,
@@ -140,7 +145,7 @@ function merch(): StoreItem[] {
 }
 
 export function storeItems(e: EventRow): StoreItem[] {
-  return [...giving(e), ...tickets(e), ...merch()]
+  return [...giving(e), ...tickets(e), ...merch(e)]
 }
 
 export function money(cents: number): string {

@@ -1,5 +1,15 @@
 /**
- * The Stripe catalogue, as it exists in the sandbox account.
+ * The Stripe catalogue, one set of objects per event.
+ *
+ * Stripe objects belong to the event they were made for. The ranch's carry
+ * metadata.event = piston-powered-ranch and its prices are its own, so the next
+ * event gets its own products and prices rather than borrowing these. That is
+ * a deliberate decision: sharing one price object across events would put two
+ * events' money under one product in reporting, and a second event would be
+ * charging a figure somebody set for the first.
+ *
+ * Keyed by events.slug. An event with no entry here has nothing to sell yet,
+ * which is the correct state for an event nobody has seeded objects for.
  *
  * These ids are real objects in acct_1UAWrtRJpXHmje77, the PaddockGavin
  * sandbox, seeded 31 August 2026. The earlier set lived in the Paddock20
@@ -41,7 +51,9 @@ export function isOnSale(i: CatalogItem | undefined): boolean {
   return Boolean(i && i.priceId && typeof i.cents === "number" && i.cents > 0)
 }
 
-export const CATALOG: Record<string, CatalogItem> = {
+
+export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
+  pistonpoweredranch: {
   vendorBooth: {
     key: "vendorBooth",
     name: "Vendor Booth Setup",
@@ -90,6 +102,7 @@ export const CATALOG: Record<string, CatalogItem> = {
   truckerPg: { key: "truckerPg", name: "PG Trucker" },
   mugRanch: { key: "mugRanch", name: "Ranch Mug" },
   backpackRanch: { key: "backpackRanch", name: "Ranch Backpack" },
+  },
 }
 
 /**
@@ -124,10 +137,36 @@ export const POWER_OPTIONS = [
   "Cooking or refrigeration, tell us the load",
 ]
 
-export function itemFor(key: string): CatalogItem | undefined {
-  return CATALOG[key]
+/** One event's objects, or an empty set. Never another event's. */
+export function catalogFor(eventSlug: string): Record<string, CatalogItem> {
+  return CATALOGS[eventSlug] || {}
+}
+
+export function itemFor(eventSlug: string, key: string): CatalogItem | undefined {
+  return catalogFor(eventSlug)[key]
 }
 
 export function money(cents: number): string {
   return "$" + (cents / 100).toFixed(2).replace(/\.00$/, "")
+}
+
+/**
+ * Half a price is a price nobody sees.
+ *
+ * Putting something on sale is two fields, and setting one is the easy mistake:
+ * a priceId with no cents, or cents with no priceId, leaves the card reading
+ * TBD forever with nothing anywhere saying why. Somebody would swear they had
+ * put the hats on sale and the store would quietly disagree. This throws on
+ * import instead, so it is a failed build rather than a silent shop.
+ */
+for (const [slug, set] of Object.entries(CATALOGS))
+  for (const i of Object.values(set)) {
+  const hasPrice = Boolean(i.priceId)
+  const hasCents = typeof i.cents === "number" && i.cents > 0
+  if (hasPrice !== hasCents) {
+    throw new Error(
+      `Stripe catalogue: ${slug}."${i.key}" has ${hasPrice ? "a priceId but no cents" : "cents but no priceId"}. ` +
+        "Set both, from the objects in Stripe, or neither.",
+    )
+  }
 }

@@ -48,6 +48,11 @@ export function BoothPicker() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           item: "vendorBooth",
+          /* Named, not defaulted. The route used to fall back to this event
+             when nobody said, which is how a second event's booth money ends
+             up in the first event's ledger. This page is the ranch's own, so
+             it can say so. */
+          eventSlug: "pistonpoweredranch",
           email: email.trim(),
           org: org.trim(),
           note: `${picked.size} footprint. Power: ${power}`,
