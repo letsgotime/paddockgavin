@@ -27,7 +27,11 @@ const EVENT_HOSTS: Record<string, string> = {
  * filing system leaking onto somebody else's address. The page is the same
  * one either way; only the address bar is shorter.
  */
-const SHORT_PATHS = new Set(["/entry", "/vendor", "/sponsor", "/targets"])
+/* Every event gets these at its own door. The store and the portal are not
+   ranch pages that happen to be reachable elsewhere: they belong to whichever
+   event the host resolves to, which is what makes a second event a row rather
+   than a second codebase. */
+const SHORT_PATHS = new Set(["/entry", "/vendor", "/sponsor", "/targets", "/store", "/portal"])
 
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") || "").toLowerCase().split(":")[0]

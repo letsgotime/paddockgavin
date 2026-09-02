@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { DONATION_MIN, DONATION_MAX, DONATION_SUGGESTED, money, type StoreItem } from "@/lib/shop/store"
+import type { EventRow } from "@/lib/events/types"
 
 /**
  * The store, in three honest states.
@@ -23,7 +24,7 @@ const DISPLAY = "Cinzel, Georgia, serif"
 const BODY = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 
-export default function StoreFront({ items }: { items: StoreItem[] }) {
+export default function StoreFront({ event, items }: { event: EventRow; items: StoreItem[] }) {
   const groups: StoreItem["group"][] = ["Giving", "Tickets", "Merchandise"]
   return (
     <main
@@ -44,7 +45,9 @@ export default function StoreFront({ items }: { items: StoreItem[] }) {
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
         <div style={{ height: 3, width: 48, background: RED_FILL, borderRadius: 2 }} />
         <p style={{ margin: "18px 0 6px", font: `700 11px/1 ${MONO}`, letterSpacing: ".2em", textTransform: "uppercase", color: RED_TEXT }}>
-          October 10, 2026
+          {event.starts_at
+            ? new Date(event.starts_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "America/Chicago" })
+            : event.name}
         </p>
         <h1 style={{ margin: "0 0 12px", fontFamily: DISPLAY, fontWeight: 700, color: PAPER, fontSize: "clamp(30px,7vw,44px)", lineHeight: 1.06 }}>
           The store
@@ -62,7 +65,7 @@ export default function StoreFront({ items }: { items: StoreItem[] }) {
               <h2 style={{ margin: "0 0 12px", fontFamily: DISPLAY, fontWeight: 700, color: PAPER, fontSize: 22 }}>{g}</h2>
               <div style={{ display: "grid", gap: 12 }}>
                 {inGroup.map((i) =>
-                  i.openAmount ? <Give key={i.slug} item={i} /> : <Card key={i.slug} item={i} />,
+                  i.openAmount ? <Give key={i.slug} item={i} event={event} /> : <Card key={i.slug} item={i} event={event} />,
                 )}
               </div>
             </section>
@@ -79,7 +82,7 @@ export default function StoreFront({ items }: { items: StoreItem[] }) {
 
 /* ------------------------------------------------------------------ a card */
 
-function Card({ item }: { item: StoreItem }) {
+function Card({ item, event }: { item: StoreItem; event: EventRow }) {
   const tone = item.availability === "buy" ? GREEN : item.availability === "ask" ? "#F2C94C" : MUTED
   return (
     <article style={shell(tone)}>
@@ -87,7 +90,7 @@ function Card({ item }: { item: StoreItem }) {
 
       {/* Priced: the amount, and a button that charges it. */}
       {item.availability === "buy" && item.checkoutKey ? (
-        <Buy item={item} />
+        <Buy item={item} event={event} />
       ) : null}
 
       {/* Wired and waiting. The price reads TBD rather than a guess, and the
@@ -119,7 +122,7 @@ function Card({ item }: { item: StoreItem }) {
 }
 
 /** A priced item. The amount is shown, and the server charges it, not this. */
-function Buy({ item }: { item: StoreItem }) {
+function Buy({ item, event }: { item: StoreItem; event: EventRow }) {
   const [busy, setBusy] = useState(false)
   const [problem, setProblem] = useState<string | null>(null)
 
@@ -130,7 +133,7 @@ function Buy({ item }: { item: StoreItem }) {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ item: item.checkoutKey }),
+        body: JSON.stringify({ item: item.checkoutKey, eventSlug: event.slug }),
       })
       const data = await res.json().catch(() => null)
       if (res.status === 409) setProblem("Not on sale yet.")
@@ -170,7 +173,7 @@ function Head({ item, tone }: { item: StoreItem; tone: string }) {
 
 /* ------------------------------------------------------------------ giving */
 
-function Give({ item }: { item: StoreItem }) {
+function Give({ item, event }: { item: StoreItem; event: EventRow }) {
   const [cents, setCents] = useState<number>(DONATION_SUGGESTED[1])
   const [custom, setCustom] = useState("")
   const [busy, setBusy] = useState(false)
@@ -193,7 +196,7 @@ function Give({ item }: { item: StoreItem }) {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ item: "donation", amountCents: amount }),
+        body: JSON.stringify({ item: "donation", amountCents: amount, eventSlug: event.slug }),
       })
       const data = await res.json().catch(() => null)
       if (res.status === 503) {

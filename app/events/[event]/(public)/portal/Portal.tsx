@@ -30,7 +30,7 @@ interface Entry { id: number; kind: string; subject: string | null; status: stri
 interface Account { id: string; kind: string; company: string; status: string; stage: string }
 type Claim = { state: string; email?: string; entries: number; accounts: number }
 
-export default function Portal() {
+export default function Portal({ eventSlug, eventName }: { eventSlug: string; eventName: string }) {
   const [db, setDb] = useState<RanchDb | null>(null)
   const [claim, setClaim] = useState<Claim | null>(null)
   const [entries, setEntries] = useState<Entry[]>([])
@@ -105,7 +105,7 @@ export default function Portal() {
         </P>
         <Row>
           <Button onClick={boot}>Try again</Button>
-          <Button href="/" ghost>The event</Button>
+          <Button href={`/events/${eventSlug}`} ghost>The event</Button>
         </Row>
       </Frame>
     )
@@ -148,10 +148,10 @@ export default function Portal() {
             await load(db)
           }} />
           <Row>
-            <Button href="/entry">Enter a car</Button>
-            <Button href="/vendor" ghost>Vendor row</Button>
-            <Button href="/sponsor" ghost>Sponsor the day</Button>
-            <Button href="/store" ghost>The store</Button>
+            <Button href={`/events/${eventSlug}/entry`}>Enter a car</Button>
+            <Button href={`/events/${eventSlug}/vendor`} ghost>Vendor row</Button>
+            <Button href={`/events/${eventSlug}/sponsor`} ghost>Sponsor the day</Button>
+            <Button href={`/events/${eventSlug}/store`} ghost>The store</Button>
           </Row>
         </>
       )}
@@ -166,7 +166,7 @@ export default function Portal() {
                 <Strong>{s.head}</Strong>
                 <P small>{s.line}</P>
                 {e.status_token && (
-                  <a href={`/events/pistonpoweredranch/entry-status?t=${e.status_token}`} rel="noreferrer"
+                  <a href={`/events/${eventSlug}/entry-status?t=${e.status_token}`} rel="noreferrer"
                      style={{ color: RED_TEXT, font: `700 14px/1.4 ${BODY}`, textDecoration: "none" }}>
                     Keep this link
                   </a>
@@ -195,7 +195,7 @@ export default function Portal() {
 
       <div style={{ marginTop: 30 }}>
         <Row>
-          <Button href="/store" ghost>The store</Button>
+          <Button href={`/events/${eventSlug}/store`} ghost>The store</Button>
         </Row>
       </div>
 

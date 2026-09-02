@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { CATALOG, STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
 import { DONATION_MIN, DONATION_MAX } from "@/lib/shop/store"
+import { loadEvent } from "@/lib/events/load"
 
 /**
  * Creates a Stripe Checkout Session against the real catalogue objects.
@@ -41,6 +42,22 @@ interface Body {
    * type. Every other item ignores this field completely.
    */
   amountCents?: number
+  /**
+   * Which event the money is for.
+   *
+   * Checked against the events table rather than trusted, because it is
+   * written into Stripe metadata and the webhook books the payment against
+   * whatever it says. A slug that matches no row is refused here rather than
+   * producing a payment that is real in Stripe and absent from the ledger.
+   */
+  eventSlug?: string
+}
+
+/** The event, or null. Never a slug we have not seen. */
+async function eventFor(slug: string | undefined) {
+  const s = (slug || "pistonpoweredranch").trim().toLowerCase()
+  if (!/^[a-z0-9-]{2,64}$/.test(s)) return null
+  return loadEvent(s)
 }
 
 /** Stripe takes application/x-www-form-urlencoded, nested keys included. */
@@ -75,7 +92,7 @@ function flatten(obj: Record<string, unknown>, prefix = ""): [string, string][] 
  * The beneficiary is named on the line item on purpose. It is what the whole
  * day is for, and it is the last thing somebody reads before they pay.
  */
-async function donate(req: Request, cents: number, b: Body) {
+async function donate(req: Request, cents: number, b: Body, ev: { slug: string; name: string; charity: string | null }) {
   const key = process.env.STRIPE_SECRET_KEY
   if (!key) {
     return NextResponse.json(
@@ -93,23 +110,23 @@ async function donate(req: Request, cents: number, b: Body) {
         price_data: {
           currency: "usd",
           unit_amount: cents,
-          product_data: { name: "Donation to Community Elementary School" },
+          product_data: { name: `Donation to ${ev.charity || ev.name}` },
         },
       },
     ],
-    success_url: `${origin}/store/thank-you?s={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/store`,
+    success_url: `${origin}/events/${ev.slug}/store/thank-you?s={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/events/${ev.slug}/store`,
     customer_email: b.email || undefined,
     submit_type: "donate",
     metadata: {
-      event: "piston-powered-ranch",
-      event_slug: "pistonpoweredranch",
+      event: ev.slug,
+      event_slug: ev.slug,
       kind: "donation",
-      beneficiary: "Community Elementary School",
+      beneficiary: ev.charity || "",
       note: (b.note || "").slice(0, 400),
     },
     payment_intent_data: {
-      metadata: { event: "piston-powered-ranch", kind: "donation" },
+      metadata: { event: ev.slug, kind: "donation" },
     },
   })
 
@@ -150,7 +167,11 @@ export async function POST(req: Request) {
           { status: 400 },
         )
       }
-      return donate(req, cents, b)
+      const ev = await eventFor(b.eventSlug)
+      if (!ev) {
+        return NextResponse.json({ error: "unknown_event", detail: "No such event." }, { status: 400 })
+      }
+      return donate(req, cents, b, ev)
     }
 
     const item = itemFor(b.item)

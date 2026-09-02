@@ -1,5 +1,6 @@
 import { PRODUCTS, type Product } from "./catalogue"
 import { CATALOG, isOnSale } from "@/lib/stripe/catalog"
+import type { EventRow } from "@/lib/events/types"
 
 /**
  * The public store: tickets, giving, and merchandise, in one list.
@@ -45,55 +46,68 @@ export const DONATION_MIN = 500
 export const DONATION_MAX = 1_000_000
 export const DONATION_SUGGESTED = [2500, 5000, 10000, 25000]
 
-const TICKETS: StoreItem[] = [
-  {
-    slug: "spectate",
-    name: "Spectator admission",
-    group: "Tickets",
-    blurb:
-      "Free, for everybody. Gates at nine, field clear by three. Tell us you are coming so we know how much shade to put up.",
-    availability: "ask",
-    askHref: "/spectate",
-    askLabel: "Tell us you are coming",
-  },
-  {
-    slug: "vip-terrace",
-    name: "The Terrace",
-    group: "Tickets",
-    blurb:
-      "The hosted room, on the rail above the show field. Shaded tent, table service, ranch raised Angus, and the corral and photo areas.",
-    availability: "tbd",
-    checkoutKey: "vipTerrace",
-    askHref: "/sponsor",
-    askLabel: "Ask about the twenty seats",
-  },
-  {
-    slug: "vip-owners-table",
-    name: "The Owner's Table",
-    group: "Tickets",
-    blurb:
-      "Everything on The Terrace, and the part of the ranch the crowd never reaches. Twenty seats across both rooms.",
-    availability: "tbd",
-    checkoutKey: "vipOwnersTable",
-    askHref: "/sponsor",
-    askLabel: "Ask about the twenty seats",
-  },
-]
+/**
+ * Tickets and giving, built from the event row.
+ *
+ * Nothing here is the ranch by name. The beneficiary comes from the charity
+ * column, the VIP rooms come from the vip act in content, and an event with
+ * neither simply shows neither. That is what makes the next event a row.
+ */
+function tickets(e: EventRow): StoreItem[] {
+  const out: StoreItem[] = [
+    {
+      slug: "spectate",
+      name: "Spectator admission",
+      group: "Tickets",
+      blurb:
+        e.content?.admission?.free
+          ? "Free, for everybody. Tell us you are coming so we know how much to put on."
+          : "Tell us you are coming.",
+      availability: "ask",
+      askHref: e.content?.admission?.url || "/spectate",
+      askLabel: "Tell us you are coming",
+    },
+  ]
 
-const GIVING: StoreItem[] = [
-  {
-    slug: "donation",
-    name: "Give to Community Elementary School",
-    group: "Giving",
-    blurb:
-      "The day exists for the school. Give what you like, whether or not you come, and it goes to them.",
-    availability: "buy",
-    openAmount: true,
-    checkoutKey: "donation",
-  },
-]
+  /* The VIP rooms, as the event already describes them. Their names and lines
+     are the ones on the public page, so the store cannot drift from it. */
+  const vip = (e.content?.acts || []).find((a) => a.id === "vip")
+  for (const tier of vip?.tiers || []) {
+    out.push({
+      slug: `vip-${tier.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
+      name: tier.name,
+      group: "Tickets",
+      blurb: tier.line,
+      availability: "tbd",
+      checkoutKey: VIP_KEYS[tier.name],
+      askHref: `/events/${e.slug}/sponsor`,
+      askLabel: "Ask about the seats",
+    })
+  }
+  return out
+}
 
-/** Merchandise comes from the product catalogue, which holds no prices yet. */
+/** Which catalogue entry a room maps to, until they carry their own ids. */
+const VIP_KEYS: Record<string, string> = {
+  "The Terrace": "vipTerrace",
+  "The Owner's Table": "vipOwnersTable",
+}
+
+function giving(e: EventRow): StoreItem[] {
+  if (!e.charity) return []
+  return [
+    {
+      slug: "donation",
+      name: `Give to ${e.charity}`,
+      group: "Giving",
+      blurb: `The day exists for ${e.charity}. Give what you like, whether or not you come, and it goes to them.`,
+      availability: "buy",
+      openAmount: true,
+      checkoutKey: "donation",
+    },
+  ]
+}
+
 const MERCH_KEYS: Record<string, string> = {
   "ranch-gate-tee": "teeRanchGate",
   "ppr-october-tee": "teePprOctober",
@@ -125,8 +139,8 @@ function merch(): StoreItem[] {
   })
 }
 
-export function storeItems(): StoreItem[] {
-  return [...TICKETS, ...GIVING, ...merch()]
+export function storeItems(e: EventRow): StoreItem[] {
+  return [...giving(e), ...tickets(e), ...merch()]
 }
 
 export function money(cents: number): string {
