@@ -36,7 +36,12 @@ export interface Tool {
 export const TOOLS_ORIGIN = "https://piston-powered-ranch.vercel.app"
 
 export const TOOLS: Tool[] = [
-  { key: "hq", label: "HQ", note: "where the day stands", where: "crm", path: "hq",
+  /* HQ is the console. It used to be a route in this app that rendered eight
+     hardcoded cards naming the tools, each badged "still on the ranch domain",
+     none of them a link: the front door of a port that stopped. The name is
+     worth keeping and the console is what works, so the label stays and the
+     destination is the real thing. */
+  { key: "hq", label: "HQ", note: "where the day stands", where: "tools", path: "/console/",
     icon: "M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" },
 
   { key: "journeys", label: "Journeys", note: "the whole plan", where: "tools", path: "/journeys/",

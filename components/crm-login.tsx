@@ -50,7 +50,14 @@ export function CrmLogin({ event = "pistonpoweredranch" }: { event?: string }) {
   // from "Sign in" to a signed in badge on every page load.
   if (state === "checking") return null
 
-  const href = `/events/${event}/hq`
+  /* The console, not /events/<slug>/hq. That route was a placeholder: eight
+     hardcoded cards describing tools, none of them a link, with a badge on
+     each reading "still on the ranch domain". It was the front of a port that
+     never finished, and it was where the Staff pill sent the team.
+
+     HQ is the name and the look we are keeping. The console is the thing that
+     works. Sending people to the console under that name is the whole fix. */
+  const href = "/console"
   const signedIn = state === "in"
 
   return (
