@@ -32,6 +32,12 @@ const TOOL_PATHS = [
      pages import them respectively, so these two forward until those pages do
      not exist any more. */
   "team", "vendor",
+  /* Share cards belonging to the tools. Local files win, so this only catches
+     the ones that live over there: asks-og is a photograph of a horse, and a
+     horse's muzzle is pink, which trips this app's share card check. The card
+     is fine and the check is right; the file simply belongs in the repo whose
+     page it belongs to. */
+  "og",
 ]
 
 /** The tools deployment's own functions. None of these names exist here. */
@@ -94,9 +100,26 @@ const nextConfig: NextConfig = {
         source: "/opengraph-image",
         headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
       },
+      /* Shared scripts the tools import, which arrive through the proxy. The
+         page rule below hands out stale-while-revalidate for an hour and was
+         catching these too, so a browser could run an hour old copy of the one
+         database and auth client. That is not a stale page, it is a fix that
+         silently never arrives. They revalidate now. */
+      {
+        source: "/vendor/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
+      {
+        source: "/team/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
+      {
+        source: "/team-sw.js",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
       // Pages — short cache, revalidate in background
       {
-        source: "/((?!_next/static|_next/image|favicon.ico).*)",
+        source: "/((?!_next/static|_next/image|favicon.ico|vendor/|team/|team-sw).*)",
         headers: [
           { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=3600" },
           { key: "X-Content-Type-Options", value: "nosniff" },
