@@ -28,13 +28,15 @@ const TONE: Record<string, string> = { wait: "#F2C94C", yes: "#00D2BE", hold: "#
 
 interface Entry { id: number; kind: string; subject: string | null; status: string; submitted_at: string; status_token: string | null }
 interface Account { id: string; kind: string; company: string; status: string; stage: string }
-type Claim = { state: string; email?: string; entries: number; accounts: number }
+interface Rsvp { id: string; event_slug: string; event_name: string; party_size: number; subscribed: boolean; rsvped_at: string }
+type Claim = { state: string; email?: string; entries: number; accounts: number; rsvps: number }
 
 export default function Portal({ eventSlug, eventName }: { eventSlug: string; eventName: string }) {
   const [db, setDb] = useState<RanchDb | null>(null)
   const [claim, setClaim] = useState<Claim | null>(null)
   const [entries, setEntries] = useState<Entry[]>([])
   const [accounts, setAccounts] = useState<Account[]>([])
+  const [rsvps, setRsvps] = useState<Rsvp[]>([])
   const [busy, setBusy] = useState(true)
   const [note, setNote] = useState<string | null>(null)
 
@@ -54,12 +56,18 @@ export default function Portal({ eventSlug, eventName }: { eventSlug: string; ev
       const c = (await client.rpc("claim_mine")) as Claim
       setClaim(c)
       if (c?.state === "ok") {
-        const [e, a] = await Promise.all([client.rpc("my_entries"), client.rpc("my_accounts")])
+        const [e, a, r] = await Promise.all([
+          client.rpc("my_entries"),
+          client.rpc("my_accounts"),
+          client.rpc("my_rsvps"),
+        ])
         setEntries((e as Entry[]) || [])
         setAccounts((a as Account[]) || [])
+        setRsvps((r as Rsvp[]) || [])
       } else {
         setEntries([])
         setAccounts([])
+        setRsvps([])
       }
     } catch {
       setNote("We could not reach your account just now. Try again in a moment.")
@@ -129,7 +137,7 @@ export default function Portal({ eventSlug, eventName }: { eventSlug: string; ev
     )
   }
 
-  const nothing = entries.length === 0 && accounts.length === 0
+  const nothing = entries.length === 0 && accounts.length === 0 && rsvps.length === 0
 
   return (
     <Frame>
@@ -139,8 +147,9 @@ export default function Portal({ eventSlug, eventName }: { eventSlug: string; ev
       {nothing && (
         <>
           <P>
-            Nothing is attached to <strong style={{ color: PAPER }}>{claim.email}</strong> yet. If you entered
-            a car or asked about a space, use the same address you used then and it will appear here.
+            Nothing is attached to <strong style={{ color: PAPER }}>{claim.email}</strong> yet. If you told us
+            you are coming, entered a car, or asked about a space, use the same address you used then and
+            it will appear here.
           </P>
           <Paste onToken={async (tok) => {
             if (!db) return
@@ -154,6 +163,14 @@ export default function Portal({ eventSlug, eventName }: { eventSlug: string; ev
             <Button href={`/events/${eventSlug}/store`} ghost>The store</Button>
           </Row>
         </>
+      )}
+
+      {rsvps.length > 0 && (
+        <Section title={rsvps.length === 1 ? "You are coming" : "You are coming to"}>
+          {rsvps.map((r) => (
+            <RsvpCard key={r.id} rsvp={r} db={db} onSaved={() => db && load(db)} />
+          ))}
+        </Section>
       )}
 
       {entries.length > 0 && (
@@ -385,5 +402,77 @@ function Paste({ onToken }: { onToken: (t: string) => Promise<void> }) {
       <Button onClick={submit}>{busy ? "One moment" : "Find my entry"}</Button>
       {msg && <p style={{ margin: "12px 0 0", color: PAPER, fontSize: 15, lineHeight: 1.55 }}>{msg}</p>}
     </div>
+  )
+}
+
+/**
+ * An RSVP, and the two things somebody actually wants to change about one:
+ * how many of them are coming, and whether we write to them.
+ *
+ * Both are saved through set_rsvp, which scopes the update to the caller's own
+ * row in Postgres, so an id belonging to somebody else edits nothing. The count
+ * is what the cooking and the parking are planned against, so it is clamped
+ * server side rather than trusted.
+ */
+function RsvpCard({ rsvp, db, onSaved }: { rsvp: Rsvp; db: RanchDb | null; onSaved: () => void }) {
+  const [size, setSize] = useState(rsvp.party_size)
+  const [subscribed, setSubscribed] = useState(rsvp.subscribed)
+  const [busy, setBusy] = useState(false)
+  const [said, setSaid] = useState<string | null>(null)
+
+  const dirty = size !== rsvp.party_size || subscribed !== rsvp.subscribed
+
+  const save = async () => {
+    if (!db) return
+    setBusy(true)
+    setSaid(null)
+    const ok = await db.rpc("set_rsvp", { p_id: rsvp.id, p_party_size: size, p_subscribed: subscribed })
+    setBusy(false)
+    if (ok) { setSaid("Saved."); onSaved() }
+    else setSaid("We could not save that. Try again in a moment.")
+  }
+
+  return (
+    <Card accent="#00D2BE">
+      <Label>{rsvp.event_name}</Label>
+      <Strong>{size === 1 ? "One of you" : `${size} of you`}</Strong>
+      <P small>
+        Nothing to print and nothing to book. Spectating is free, so bring whoever you meant to bring.
+      </P>
+
+      <label htmlFor={`n-${rsvp.id}`} style={{ display: "block", font: `600 13px/1.6 ${BODY}`, color: MUTED }}>
+        How many of you
+      </label>
+      <input
+        id={`n-${rsvp.id}`}
+        type="number"
+        min={1}
+        max={40}
+        value={size}
+        onChange={(ev) => setSize(Math.max(1, Math.min(40, Number(ev.target.value) || 1)))}
+        style={{
+          width: 110, boxSizing: "border-box", fontSize: 16, fontFamily: BODY, color: PAPER,
+          background: "rgba(10,21,35,.86)", border: `1px solid ${LINE}`, borderRadius: 10,
+          padding: "12px 14px", margin: "0 0 14px",
+        }}
+      />
+
+      <label style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer", marginBottom: 14 }}>
+        <input
+          type="checkbox"
+          checked={subscribed}
+          onChange={(ev) => setSubscribed(ev.target.checked)}
+          style={{ width: 20, height: 20, marginTop: 2, accentColor: RED_FILL }}
+        />
+        <span style={{ color: MUTED, fontSize: 15, lineHeight: 1.55 }}>
+          Write to me once a week until the day. One short note, and then nothing.
+        </span>
+      </label>
+
+      {dirty && (
+        <Button onClick={save}>{busy ? "Saving" : "Save"}</Button>
+      )}
+      {said && <p style={{ margin: "12px 0 0", color: PAPER, fontSize: 15 }}>{said}</p>}
+    </Card>
   )
 }
