@@ -297,9 +297,12 @@ function SignIn({ db, onDone }: { db: RanchDb | null; onDone: () => void }) {
         <label htmlFor="pp" style={{ display: "block", font: `600 13px/1.6 ${BODY}`, color: MUTED }}>Password</label>
         <input id="pp" style={field} type="password" autoComplete="current-password" required minLength={8}
                value={password} onChange={(e) => setPassword(e.target.value)} />
+        {/* Google is out for now. It reached the auth service and got a valid
+            redirect back, then went nowhere, and a door that looks open and is
+            not is worse than one that is plainly shut. The password and the
+            emailed link both work. */}
         <Row>
           <Button type="submit">{busy ? "One moment" : "Sign in"}</Button>
-          <Button ghost onClick={() => run(() => db!.signInWithGoogle(location.href))}>Use Google</Button>
         </Row>
       </form>
       <p style={{ margin: "16px 0 0" }}>
