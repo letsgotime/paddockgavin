@@ -18,7 +18,13 @@ export interface RanchDb {
   magicLink: (email: string, callbackURL?: string) => Promise<string | null>
   signInWithGoogle: (callbackURL?: string) => Promise<string | null>
   signOut: () => Promise<void>
+  sendEmailCode: (email: string) => Promise<string | null>
+  verifyEmailCode: (email: string, otp: string) => Promise<string | null>
+  NEEDS_VERIFICATION?: string
 }
+
+/** What signIn returns when the address has never been confirmed. */
+export const NEEDS_VERIFICATION = "needs-verification"
 
 let loading: Promise<RanchDb> | null = null
 

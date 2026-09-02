@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
-import { ranchDb, type RanchDb } from "./RanchDb"
+import { ranchDb, NEEDS_VERIFICATION, type RanchDb } from "./RanchDb"
 import { statusCopy } from "@/lib/events/entry-status"
 
 /**
@@ -318,14 +318,40 @@ function SignIn({ db, onDone }: { db: RanchDb | null; onDone: () => void }) {
   const [msg, setMsg] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
+  const [needsCode, setNeedsCode] = useState(false)
+  const [code, setCode] = useState("")
+
   const run = async (fn: () => Promise<string | null>, ok?: string) => {
     if (!db) return
     setBusy(true); setMsg(null)
     const problem = await fn()
     setBusy(false)
+    /* Not a wrong password: the account exists and this address has never been
+       confirmed, which blocks sign in entirely on this project. Ask for the
+       code rather than printing the sentinel at somebody. */
+    if (problem === NEEDS_VERIFICATION) {
+      setNeedsCode(true)
+      setMsg("This address has not been confirmed. We have sent a six digit code to it.")
+      await db.sendEmailCode(email)
+      return
+    }
     if (problem) setMsg(problem)
     else if (ok) setMsg(ok)
     else onDone()
+  }
+
+  const confirm = async () => {
+    if (!db) return
+    setBusy(true); setMsg(null)
+    const problem = await db.verifyEmailCode(email, code)
+    if (problem) { setBusy(false); setMsg(problem); return }
+    /* Confirming usually hands back a session, because auto sign in after
+       verification is on. Try the password once more regardless, so nobody is
+       left with a confirmed address and a locked door. */
+    const second = await db.signIn(email, password)
+    setBusy(false)
+    if (second && second !== NEEDS_VERIFICATION) { setMsg(second); return }
+    onDone()
   }
 
   /* 16px floor on every field: anything smaller and iOS zooms the page on
@@ -358,6 +384,23 @@ function SignIn({ db, onDone }: { db: RanchDb | null; onDone: () => void }) {
           <Button type="submit">{busy ? "One moment" : "Sign in"}</Button>
         </Row>
       </form>
+
+      {needsCode && (
+        <div style={{ marginTop: 18, paddingTop: 16, borderTop: `1px solid ${LINE}` }}>
+          <label htmlFor="potp" style={{ display: "block", font: `600 13px/1.6 ${BODY}`, color: MUTED }}>
+            Code from your email
+          </label>
+          <input id="potp" inputMode="numeric" autoComplete="one-time-code" maxLength={8}
+            value={code} onChange={(e) => setCode(e.target.value)}
+            style={{ ...field, letterSpacing: ".3em", fontFamily: MONO }} />
+          <Row>
+            <Button onClick={confirm}>{busy ? "Checking" : "Confirm and sign in"}</Button>
+            <Button ghost onClick={() => run(() => db!.sendEmailCode(email), "New code sent.")}>
+              Send a new code
+            </Button>
+          </Row>
+        </div>
+      )}
       <p style={{ margin: "16px 0 0" }}>
         <button onClick={() => run(() => db!.magicLink(email, location.href), "Check your email for the link.")}
           style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
