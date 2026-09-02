@@ -40,7 +40,16 @@ const TOOL_APIS = ["upload", "upload-session", "media", "planning", "config"]
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    const proxy = (source: string, destination: string) => ({ source, destination, has: RANCH_HOST })
+    /* Every proxied fetch carries via=proxy. The tools deployment redirects
+       anything arriving without it back to this domain, so the raw
+       piston-powered-ranch.vercel.app address stops being somewhere a person
+       can browse, while these server side fetches still get through. It marks
+       our own traffic; it is not a secret and it is not access control. */
+    const proxy = (source: string, destination: string) => ({
+      source,
+      destination: destination + (destination.includes("?") ? "&" : "?") + "via=proxy",
+      has: RANCH_HOST,
+    })
     return {
       /* Before the filesystem, because /events/[event] would otherwise claim
          /events/img and answer with "no such event" instead of a photograph. */
