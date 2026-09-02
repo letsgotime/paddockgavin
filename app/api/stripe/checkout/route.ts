@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { CATALOG, STRIPE_API, itemFor } from "@/lib/stripe/catalog"
+import { DONATION_MIN, DONATION_MAX } from "@/lib/shop/store"
 
 /**
  * Creates a Stripe Checkout Session against the real catalogue objects.
@@ -24,12 +25,22 @@ import { CATALOG, STRIPE_API, itemFor } from "@/lib/stripe/catalog"
 export const runtime = "nodejs"
 
 interface Body {
-  /** A key in CATALOG. Not an amount, deliberately. */
+  /** A key in CATALOG, or "donation". Not an amount, deliberately. */
   item: string
   email?: string
   org?: string
   /** Free text, carried into metadata so the desk sees it with the payment. */
   note?: string
+  /**
+   * Cents, and only ever read for a donation.
+   *
+   * This is the one thing a buyer is entitled to name, because the amount of a
+   * gift is the giver's to decide. It is still not trusted: it must be a whole
+   * number of cents inside the published limits, and anything else is refused
+   * rather than clamped quietly, so nobody is charged a figure they did not
+   * type. Every other item ignores this field completely.
+   */
+  amountCents?: number
 }
 
 /** Stripe takes application/x-www-form-urlencoded, nested keys included. */
@@ -52,9 +63,96 @@ function flatten(obj: Record<string, unknown>, prefix = ""): [string, string][] 
   return out
 }
 
+/**
+ * A Checkout Session for a gift, built from an amount rather than a price id.
+ *
+ * There is no donation object in the account, and inventing one is not mine to
+ * do, so the session carries price_data with the amount the giver typed and a
+ * product named for where the money goes. When somebody creates a real
+ * Donation product, its id drops into product_data's place and nothing else
+ * here changes.
+ *
+ * The beneficiary is named on the line item on purpose. It is what the whole
+ * day is for, and it is the last thing somebody reads before they pay.
+ */
+async function donate(req: Request, cents: number, b: Body) {
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!key) {
+    return NextResponse.json(
+      { error: "not_configured", detail: "STRIPE_SECRET_KEY is not set on this deployment." },
+      { status: 503 },
+    )
+  }
+
+  const origin = new URL(req.url).origin
+  const payload = flatten({
+    mode: "payment",
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "usd",
+          unit_amount: cents,
+          product_data: { name: "Donation to Community Elementary School" },
+        },
+      },
+    ],
+    success_url: `${origin}/store/thank-you?s={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/store`,
+    customer_email: b.email || undefined,
+    submit_type: "donate",
+    metadata: {
+      event: "piston-powered-ranch",
+      event_slug: "pistonpoweredranch",
+      kind: "donation",
+      beneficiary: "Community Elementary School",
+      note: (b.note || "").slice(0, 400),
+    },
+    payment_intent_data: {
+      metadata: { event: "piston-powered-ranch", kind: "donation" },
+    },
+  })
+
+  const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams(payload).toString(),
+  })
+
+  const json = await res.json()
+  if (!res.ok) {
+    return NextResponse.json(
+      { error: "stripe", detail: json?.error?.message || "Stripe refused the session." },
+      { status: 502 },
+    )
+  }
+  return NextResponse.json({ url: json.url })
+}
+
 export async function POST(req: Request) {
   try {
     const b: Body = await req.json()
+
+    /* Giving, where the giver sets the figure. Handled before the catalogue
+       lookup because there is no catalogue object for it: a donation is not a
+       product with a price, it is whatever somebody decided to give. */
+    if (b.item === "donation") {
+      const cents = Number(b.amountCents)
+      if (!Number.isInteger(cents) || cents < DONATION_MIN || cents > DONATION_MAX) {
+        return NextResponse.json(
+          {
+            error: "bad_amount",
+            detail: `A donation must be a whole number of cents between ${DONATION_MIN} and ${DONATION_MAX}.`,
+          },
+          { status: 400 },
+        )
+      }
+      return donate(req, cents, b)
+    }
+
     const item = itemFor(b.item)
     if (!item) {
       return NextResponse.json(

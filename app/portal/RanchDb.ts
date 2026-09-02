@@ -22,10 +22,34 @@ export interface RanchDb {
 
 let loading: Promise<RanchDb> | null = null
 
+/** Long enough for a bad connection, short enough not to look frozen. */
+const LOAD_TIMEOUT_MS = 12_000
+
+/**
+ * The client, or a rejection. Never a promise that hangs.
+ *
+ * This is a script fetched from the network at runtime, so it can be slow, it
+ * can 404 after a bad deploy, and on a phone at the back of the field it can
+ * simply never arrive. Without a deadline the page waits on it forever and
+ * shows "one moment" until somebody gives up, which is the worst way to fail:
+ * indistinguishable from working, and it never resolves.
+ *
+ * A failed load is not cached, so a retry is a real retry rather than the same
+ * rejection handed back.
+ */
 export function ranchDb(): Promise<RanchDb> {
   if (!loading) {
     const url = "/vendor/ranch-db.js"
-    loading = new Function("u", "return import(u)")(url) as Promise<RanchDb>
+    const load = new Function("u", "return import(u)")(url) as Promise<RanchDb>
+    loading = Promise.race([
+      load,
+      new Promise<RanchDb>((_, reject) =>
+        setTimeout(() => reject(new Error("sign in took too long to load")), LOAD_TIMEOUT_MS),
+      ),
+    ]).catch((e) => {
+      loading = null
+      throw e
+    })
   }
   return loading
 }

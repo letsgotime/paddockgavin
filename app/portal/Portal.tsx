@@ -68,7 +68,11 @@ export default function Portal() {
     }
   }, [])
 
-  useEffect(() => {
+  const [dead, setDead] = useState(false)
+
+  const boot = useCallback(() => {
+    setDead(false)
+    setBusy(true)
     let alive = true
     ranchDb()
       .then((client) => {
@@ -76,11 +80,36 @@ export default function Portal() {
         setDb(client)
         return load(client)
       })
-      .catch(() => alive && (setBusy(false), setNote("Sign in is unavailable on this page just now.")))
+      .catch(() => {
+        if (!alive) return
+        setBusy(false)
+        setDead(true)
+      })
     return () => { alive = false }
   }, [load])
 
-  if (busy && !claim) return <Frame><P>One moment.</P></Frame>
+  useEffect(() => boot(), [boot])
+
+  if (busy && !claim && !dead) return <Frame><P>One moment.</P></Frame>
+
+  /* The sign in client is fetched over the network, so it can fail to arrive.
+     Say so and offer the way back, rather than sitting on "one moment" or
+     showing an empty sign in form that cannot possibly work. */
+  if (dead) {
+    return (
+      <Frame>
+        <Head kicker="Not loading" title="We cannot reach sign in" />
+        <P>
+          This needs one file from our server and it did not arrive. It is usually a connection,
+          and it is usually gone by the second try.
+        </P>
+        <Row>
+          <Button onClick={boot}>Try again</Button>
+          <Button href="/" ghost>The event</Button>
+        </Row>
+      </Frame>
+    )
+  }
 
   if (!claim || claim.state === "signed-out") {
     return <Frame><SignIn db={db} onDone={() => db && load(db)} /></Frame>
@@ -122,6 +151,7 @@ export default function Portal() {
             <Button href="/entry">Enter a car</Button>
             <Button href="/vendor" ghost>Vendor row</Button>
             <Button href="/sponsor" ghost>Sponsor the day</Button>
+            <Button href="/store" ghost>The store</Button>
           </Row>
         </>
       )}
@@ -163,7 +193,13 @@ export default function Portal() {
         </Section>
       )}
 
-      <div style={{ marginTop: 34, paddingTop: 18, borderTop: `1px solid ${LINE}` }}>
+      <div style={{ marginTop: 30 }}>
+        <Row>
+          <Button href="/store" ghost>The store</Button>
+        </Row>
+      </div>
+
+      <div style={{ marginTop: 24, paddingTop: 18, borderTop: `1px solid ${LINE}` }}>
         <button onClick={async () => { await db?.signOut(); location.reload() }}
           style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
                    color: MUTED, font: `600 14px/1.4 ${BODY}` }}>
