@@ -87,6 +87,11 @@ const nextConfig: NextConfig = {
         proxy("/api/auth", `${TOOLS}/api/auth`),
         proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`),
         proxy("/brand/:path*", `${TOOLS}/brand/:path*`),
+        /* The tools' own photography. Five of them open on a picture from
+           /img/, and on this domain every one of those was a 404, so rsvps,
+           crew, judging, chat and vote all loaded onto a blank ground. The
+           directory was never forwarded; only the pages were. */
+        proxy("/img/:path*", `${TOOLS}/img/:path*`),
         proxy("/team-sw.js", `${TOOLS}/team-sw.js`),
         proxy("/team.webmanifest", `${TOOLS}/team.webmanifest`),
         /* The singular reads better in a message and people type it. */
