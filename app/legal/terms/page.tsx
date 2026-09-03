@@ -33,7 +33,7 @@ const sections = [
     heading: "Cars, and where a sale begins and ends",
     body: [
       "I am not a licensed dealer and I do not sell cars. What I have is access, and a job that puts me around inventory all day.",
-      "If you want a car, PaddockGavin sources it as a concierge broker and wholesaler, and the sale itself is completed through a licensed dealer. Every part of the transaction begins and ends with that dealer: the paperwork, the financing, the title, the funds, the delivery, all on their licence and under their terms. How I am paid is between me and the dealer.",
+      "If you want a car, PaddockGavin sources it as a concierge broker and wholesaler, and the sale itself is completed through a licensed dealer. Every part of the transaction begins and ends with that dealer: the paperwork, the financing, the title, the funds, the delivery, all on their licence and under their terms. A broker fee, if any, is set per sale and disclosed to you in writing before you sign the broker agreement. Beyond that, how I am paid is between me and the dealer.",
       "Nothing on this site is an offer to sell a vehicle, a price quote, or a promise that a particular car is available. Cars move. An offer only exists once the selling dealer puts it in writing.",
     ],
     table: {

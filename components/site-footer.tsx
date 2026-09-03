@@ -507,7 +507,7 @@ export function SiteFooter() {
         >
           {/* Disclosures */}
           <p style={{ margin: "0 0 8px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
-            PaddockGavin sources vehicles as a concierge broker, retail or wholesale, and shops with a dealer&rsquo;s licence, so every auction is open.
+            PaddockGavin sources vehicles as a concierge broker, retail or wholesale, and shops with a dealer&rsquo;s licence, so every auction is open. A broker fee, if any, is set per sale and disclosed before you sign the broker agreement.
           </p>
           <p style={{ margin: "0 0 16px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
             Some links earn a commission. Paid, gifted and affiliate content is always disclosed on the piece itself. Photography and video made on dealer lots appears with permission.
