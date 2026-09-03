@@ -33,7 +33,7 @@ const sections = [
     heading: "Cars, and where a sale begins and ends",
     body: [
       "I am not a licensed dealer and I do not sell cars. What I have is access, and a job that puts me around inventory all day.",
-      "If you want a car, the sale runs through the selling dealer. Every part of the transaction begins and ends with them: the paperwork, the financing, the title, the funds, the delivery. All of it on their dealer licence, under their terms. I am paid as an employee. There is no broker fee to you.",
+      "If you want a car, PaddockGavin sources it as a concierge broker and wholesaler, and the sale itself is completed through a licensed dealer. Every part of the transaction begins and ends with that dealer: the paperwork, the financing, the title, the funds, the delivery, all on their licence and under their terms. How I am paid is between me and the dealer.",
       "Nothing on this site is an offer to sell a vehicle, a price quote, or a promise that a particular car is available. Cars move. An offer only exists once the selling dealer puts it in writing.",
     ],
     table: {
@@ -94,7 +94,7 @@ const sections = [
     num: "08",
     heading: "Events, and being on somebody else's property",
     body: [
-      "Creator Day and anything else on that floor takes place at a dealership facility, under their rules and their insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
+      "Creator Day and anything else on that floor takes place at the host venue, under its rules and its insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
     ],
   },
   {

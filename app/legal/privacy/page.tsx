@@ -101,7 +101,7 @@ const sections = [
     num: "09",
     heading: "Being filmed at an event",
     body: [
-      "Creator Day and the rest happen on a dealership floor, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
+      "Creator Day and the rest happen at a host venue, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
     ],
   },
   {
