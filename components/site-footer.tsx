@@ -40,9 +40,9 @@ export function SiteFooter() {
 
   return (
     <footer
-      className="pg-e1" style={{
+      style={{
         position: "relative",
-        background: "linear-gradient(180deg,rgba(10,21,35,.55),rgba(10,21,35,.9))",
+        background: "linear-gradient(180deg,rgba(10,21,35,.82),rgba(10,21,35,.97))",
         borderTop: "1px solid rgba(255,255,255,.12)",
         padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0"
       }}
