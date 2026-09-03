@@ -13,18 +13,18 @@ const sections = [
     num: "01",
     heading: "Who you are dealing with",
     body: [
-      "PaddockGavin is Gavin Brooks, of Nashville, Tennessee. Everything published here is published by me personally. By day I am the Lot Operations and Events Manager at duPont REGISTRY in Lebanon, Tennessee. That is an employment relationship, not a partnership, and this website is mine, not theirs.",
-      "Some of what you see here happens on duPont REGISTRY's floor, with duPont REGISTRY's cars. Some of it is entirely my own. Each section says which, because blurring the two would be unfair to them and dishonest to you.",
+      "PaddockGavin is Gavin Brooks, of Nashville, Tennessee. Everything published here is published by me personally. By day I run lot operations and events in Lebanon, Tennessee. That is employment, not a partnership, and this website is mine, not my employer's.",
+      "Some of what you see here happens on a dealership's floor, with the dealership's cars. Some of it is entirely my own. Each section says which, because blurring the two would be unfair to them and dishonest to you.",
     ],
   },
   {
     num: "02",
     heading: "The content, and permission to be here",
     body: [
-      "Photographs and video captured at duPont REGISTRY are made and published with my employer's permission, in my capacity as their employee. That permission runs to me. It does not run to you.",
+      "Photographs and video captured on a dealership's floor are made and published with the dealership's permission. That permission runs to me. It does not run to you.",
       "Everything on this site is protected by copyright: the photographs, the video, the writing, the captions, the layout, the code and the design system. You may look at it, link to it, and share a link. You may not copy it, repost it, re-upload it, feed it to a model, or use it in anything commercial without written permission.",
       "The watermark is not decoration. Where a mark appears on an image or a clip, it is copyright management information under 17 U.S.C. § 1202. Removing it, cropping it out or altering it to hide where the file came from is its own violation, separate from the copying. It carries statutory damages of $2,500 to $25,000 per instance, with no requirement that the work be registered first. If you find one of my files with the mark taken off, so will I.",
-      "I enforce this. Takedowns go out, and where the use is commercial or the mark has been removed, it does not stop at a takedown. duPont REGISTRY holds and enforces its own rights in its own property, separately and at its own discretion; nothing here speaks for them.",
+      "I enforce this. Takedowns go out, and where the use is commercial or the mark has been removed, it does not stop at a takedown. The dealership holds and enforces its own rights in its own property, separately and at its own discretion; nothing here speaks for them.",
       "Think a use might be fine? Ask first. DM @itspaddockgavin. Most reasonable requests get a yes.",
     ],
   },
@@ -33,16 +33,16 @@ const sections = [
     heading: "Cars, and where a sale begins and ends",
     body: [
       "I am not a licensed dealer and I do not sell cars. What I have is access, and a job that puts me around inventory all day.",
-      "If you want a car, I pass you to the sales team at duPont REGISTRY. Every part of the transaction begins and ends with them: the paperwork, the financing, the title, the funds, the delivery. All of it on their dealer licence, under their terms. I am paid by duPont REGISTRY as their employee. There is no broker fee to you.",
-      "Nothing on this site is an offer to sell a vehicle, a price quote, or a promise that a particular car is available. Cars move. An offer only exists once duPont REGISTRY puts it in writing.",
+      "If you want a car, the sale runs through the selling dealer. Every part of the transaction begins and ends with them: the paperwork, the financing, the title, the funds, the delivery. All of it on their dealer licence, under their terms. I am paid as an employee. There is no broker fee to you.",
+      "Nothing on this site is an offer to sell a vehicle, a price quote, or a promise that a particular car is available. Cars move. An offer only exists once the selling dealer puts it in writing.",
     ],
     table: {
       head: ["What", "Who"],
       rows: [
         ["Finding the car, answering questions", "Me"],
-        ["The price, the contract, the financing", "duPont REGISTRY"],
-        ["Title, funds, delivery, warranty", "duPont REGISTRY"],
-        ["Anything that goes wrong with the sale", "duPont REGISTRY, take it to them"],
+        ["The price, the contract, the financing", "The selling dealer"],
+        ["Title, funds, delivery, warranty", "The selling dealer"],
+        ["Anything that goes wrong with the sale", "The selling dealer, take it to them"],
       ],
     },
   },
@@ -50,7 +50,7 @@ const sections = [
     num: "04",
     heading: "What is mine, and where it lives",
     body: [
-      "Separate from the day job, these are my own ventures. They are not duPont REGISTRY's, they do not run on their time, and they are governed by the terms of whichever platform they sit on.",
+      "Separate from the day job, these are my own ventures. They are not my employer's, they do not run on their time, and they are governed by the terms of whichever platform they sit on.",
       "Buy the book and Amazon handles the order, the payment and the return. Hire me for automation and the engagement runs through Paddock20 with its own contract. Follow a link from here to any of them and you have left this site, their privacy policy and their terms take over at the click.",
       "Consultation is advice, not a warranty. Cars, paint, coatings, watches and tools are all things that can be damaged by the person handling them. What I tell you is what I would do with my own. What you do with yours is on you.",
     ],
@@ -94,7 +94,7 @@ const sections = [
     num: "08",
     heading: "Events, and being on somebody else's property",
     body: [
-      "Donuts with duPont REGISTRY, Creator Day and anything else on that floor takes place at a duPont REGISTRY facility, under their rules and their insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
+      "Creator Day and anything else on that floor takes place at a dealership facility, under their rules and their insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
     ],
   },
   {

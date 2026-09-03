@@ -12,7 +12,7 @@ type Status = "idle" | "sending" | "sent" | "error"
 const KINDS = [
   {
     key: "club",
-    eyebrow: "Donuts with duPont",
+    eyebrow: "Collector morning",
     title: "Book your club",
     tone: "#F2C94C",
     blurb: "Bring the whole club to a Donuts morning and park together. Tell me the headcount.",
@@ -21,7 +21,7 @@ const KINDS = [
   },
   {
     key: "vendor",
-    eyebrow: "Donuts with duPont",
+    eyebrow: "Collector morning",
     title: "Reserve your vendor location",
     tone: "#F2C94C",
     blurb: "$250 gets a vendor spot, $100 gets VIP parking \u2014 both inside the building. Five and ten of them, and half the proceeds go to a rotating charity every quarter.",
@@ -33,7 +33,7 @@ const KINDS = [
     eyebrow: "The floor",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "We allow select private events on duPont REGISTRY\u2019s floor. Inquire with Gavin for more details.",
+    blurb: "Select private events on the showroom floor in Lebanon. Inquire with Gavin for details.",
     hint: "The occasion, the date, the headcount",
     img: "/images/donuts-floor-sq.webp",
   },
@@ -42,7 +42,7 @@ const KINDS = [
     eyebrow: "Buy, trade or sell",
     title: "Your next vehicle",
     tone: "#00D2BE",
-    blurb: "I have a direct line to the duPont REGISTRY sales team, and all broker fees are paid by duPont.",
+    blurb: "I source retail or wholesale with a dealer\u2019s licence, so every auction is open.",
     hint: "The car, the budget, buying or selling",
     img: "/images/f458-front-sq.webp",
   },
@@ -131,7 +131,7 @@ export default function BookPage() {
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; duPont REGISTRY, Lebanon TN</span>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Lebanon, TN</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
               Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>

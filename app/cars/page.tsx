@@ -81,7 +81,7 @@ export default function CarsPage() {
             </div>
           </div>
         </div>
-        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Mine. Nothing on this page belongs to <span style={{ textTransform: "none" }}>duPont</span> REGISTRY</p>
+        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Mine. Nothing on this page belongs to anyone else</p>
       </section>
 
       {/* Register table */}
@@ -131,7 +131,7 @@ export default function CarsPage() {
               <span style={{ display: "block", fontFamily: arch, fontWeight: 800, fontSize: "clamp(29px,2.5vw,39px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>Looking for one</span>
               <span style={{ display: "block", fontFamily: arch, fontWeight: 400, fontSize: "clamp(28px,2.4vw,37px)", lineHeight: 1.14, letterSpacing: "-.02em", color: "#F2C94C" }}>like these?</span>
             </h2>
-            <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "52ch" }}>We source through duPont REGISTRY. Tell me the spec and the budget &mdash; 78 found so far, most of them before they were listed.</p>
+            <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "52ch" }}>Concierge sourcing, retail or wholesale, with a dealer&rsquo;s licence. Tell me the spec and the budget. 78 found so far, most of them before they were listed.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>Send me a spec</Link>

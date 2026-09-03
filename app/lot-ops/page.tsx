@@ -55,17 +55,17 @@ export default function LotOpsPage() {
 
         {/* Hero */}
         <section style={{ position: "relative", minHeight: "clamp(400px,56vh,560px)", border: "1px solid rgba(255,255,255,.14)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-          <Image src="/images/ferrari-upperdeck.webp" alt="Coming off the transporter at duPont REGISTRY" fill style={{ objectFit: "cover", objectPosition: "center 55%" }} priority />
+          <Image src="/images/ferrari-upperdeck.webp" alt="Coming off the transporter" fill style={{ objectFit: "cover", objectPosition: "center 55%" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,42px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; duPont REGISTRY, Lebanon TN</span>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; Lebanon, TN</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,66px)", lineHeight: 1.02, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
               The gate opens<br /><span style={{ color: "#F2C94C" }}>at eight</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#EDF1F6", maxWidth: "54ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place. I run duPont REGISTRY&rsquo;s lot operations, and this is what that looks like.
+              The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place. I run the lot operations, and this is what that looks like.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
@@ -80,10 +80,10 @@ export default function LotOpsPage() {
 
         {/* Lot board */}
         <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "flex", flexDirection: "column", gap: 14 }}>
-          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>duPont REGISTRY&rsquo;s lot &mdash; I run its mornings</span>
+          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>The lot in Lebanon. I run its mornings</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
             {[
-              { k: "The floor", v: "70,000 sq ft, duPont\u2019s", tone: "#00D2BE" },
+              { k: "The floor", v: "70,000 sq ft", tone: "#00D2BE" },
               { k: "Gate",      v: "8:00 am",                     tone: "#00D2BE" },
               { k: "Right now", v: lotNow || "\u2014",            tone: "#F2C94C" },
               { k: "Outbound",  v: "Verified first",              tone: "#00D2BE" },
@@ -140,7 +140,7 @@ export default function LotOpsPage() {
             Four of us run <span style={{ color: "#F2C94C" }}>the warehouse</span>
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "60ch" }}>
-            Me and three lot ops techs, on duPont REGISTRY&rsquo;s warehouse floor. It never stops, it never looks the same two days running, and the cars passing through are some of the most sought-after in the world.
+            Me and three lot ops techs, on a 70,000 square foot warehouse floor. It never stops, it never looks the same two days running, and the cars passing through are some of the most sought-after in the world.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>In it with us, every day</span>

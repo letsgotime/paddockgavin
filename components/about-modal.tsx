@@ -42,7 +42,7 @@ const AboutContent = () => (
       >
         <p>
           Agentic engineering studio out of Nashville. Built the ops tool running
-          $125M+/month through the duPont REGISTRY lot — active retainer, production
+          $125M+/month through an exotic dealership lot — active retainer, production
           software, not a prototype. The tool handles what would otherwise fall through.
         </p>
         <p>

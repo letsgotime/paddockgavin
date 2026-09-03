@@ -3,7 +3,7 @@
 const DAY: string[] = [
   "Gates open at 8. I&apos;m usually there before the cars.",
   "Every delivery gets unloaded, inspected, photographed, logged. Nothing hits the floor unchecked.",
-  "Lot Ops &amp; Events Manager at duPont REGISTRY Lebanon. The calendar, the keys, and the handoffs run through me.",
+  "Lot Ops &amp; Events Manager in Lebanon. The calendar, the keys, and the handoffs run through me.",
   "A building full of exotics teaches you quickly that details are the whole job.",
   "Event days start before sunrise and end after the last guest clears the rope.",
   "The lot taught me that reputation lives in the small stuff — a returned call, a clean bay, a car that&apos;s ready.",
@@ -65,7 +65,7 @@ export function HomeShiftsCard() {
             }}
           >
             On the lot.<br />
-            <span style={{ color: "#F2C94C" }}>duPont REGISTRY.</span>
+            <span style={{ color: "#F2C94C" }}>Lebanon, Tennessee.</span>
           </h3>
         </div>
 

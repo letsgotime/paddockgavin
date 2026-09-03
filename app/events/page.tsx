@@ -75,13 +75,13 @@ const UPCOMING: EventRow[] = [
 const PAST = [
   {
     key: "donuts",
-    title: "Donuts with duPont",
+    title: "Donuts",
     stateLabel: "Final edition, August 2026",
     blurb:
-      "Monthly collector morning on the duPont REGISTRY floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
+      "Monthly collector morning on the showroom floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
     img: "/images/donuts-overflow.webp",
-    href: "/donuts",
-    cta: "The archive",
+    href: "/gallery",
+    cta: "The photos",
   },
   {
     key: "creator",
@@ -106,7 +106,7 @@ const PAST = [
 ]
 
 const GALLERY = [
-  { src: "/images/donuts-floor.webp", alt: "The duPont REGISTRY floor on a Donuts morning" },
+  { src: "/images/donuts-floor.webp", alt: "The floor on a Donuts morning" },
   { src: "/images/918-p1.webp", alt: "A Porsche 918 beside a McLaren P1" },
   { src: "/images/donuts-z06.webp", alt: "A Corvette Z06 pulled onto the floor" },
   { src: "/images/cullinan-doors.webp", alt: "Rolls-Royce Cullinan with the doors open" },

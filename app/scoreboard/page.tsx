@@ -205,7 +205,7 @@ export default function ScoreboardPage() {
                 maxWidth: "58ch",
               }}
             >
-              Twenty-six years of technology moved to evenings. Everything here is mine, built on my own time. None of it is duPont REGISTRY&rsquo;s, and none of it runs on their hours.
+              Twenty-six years of technology moved to evenings. Everything here is mine, built on my own time. None of it runs on anyone else&rsquo;s hours.
             </p>
           </div>
 
@@ -672,7 +672,7 @@ export default function ScoreboardPage() {
                 maxWidth: "54ch",
               }}
             >
-              Eight to six I run lot operations and events for duPont REGISTRY in Lebanon. That work, and their floor, lives on its own pages.
+              Eight to six I run lot operations and events in Lebanon. That work lives on its own pages.
             </p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>

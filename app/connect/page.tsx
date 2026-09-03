@@ -52,18 +52,9 @@ const GROUPS = [
     tone: "#F2C94C",
     links: [
       {
-        key: "donuts",
-        title: "Donuts with duPont",
-        note: "Free, monthly, 8\u201311am in Lebanon TN",
-        href: "/donuts",
-        target: "_self",
-        tone: "#F2C94C",
-        datum: "Free",
-      },
-      {
         key: "floor",
         title: "Book the floor",
-        note: "duPont REGISTRY\u2019s showroom, and I run the events on it",
+        note: "The showroom floor in Lebanon, and I run the events on it",
         href: "/events",
         target: "_self",
         tone: "#4BA3DE",
@@ -113,7 +104,7 @@ const GROUPS = [
       {
         key: "find",
         title: "Find me a car",
-        note: "Sourced through duPont REGISTRY. The fee to you is zero",
+        note: "Concierge sourcing, retail or wholesale, with a dealer\u2019s licence",
         href: "/intake",
         target: "_self",
         tone: "#F2C94C",
@@ -188,7 +179,7 @@ export default function ConnectPage() {
       "BEGIN:VCARD", "VERSION:3.0",
       "N:Brooks;Gavin;;;", "FN:Gavin Brooks",
       "NICKNAME:PaddockGavin",
-      "ORG:duPont REGISTRY", "TITLE:Lot Operations and Events Manager",
+      "ORG:PaddockGavin", "TITLE:Concierge broker and vehicle sourcer",
       "ADR;TYPE=WORK:;;;Nashville;TN;;USA",
       "URL:https://paddockgavin.com",
       `X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/${HANDLE}`,
@@ -302,7 +293,7 @@ export default function ConnectPage() {
               fontSize: "clamp(16px,4vw,18px)", lineHeight: 1.58, color: "#C4CBD6",
             }}
           >
-            Lot Operations and Events Manager at duPont REGISTRY by day. Software and a book by night. Everything I answer comes from one inbox.
+            Lot operations and events by day, and I source cars for people. Software and a book by night. Everything I answer comes from one inbox.
           </p>
           {/* Readouts */}
           <div

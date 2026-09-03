@@ -217,7 +217,7 @@ export default function PressPage() {
             ))}
           </ul>
           <p style={{ margin: "20px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>
-            Vehicles photographed at duPont REGISTRY appear with my employer&apos;s permission, in my capacity as their Lot Operations and Events Manager. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant rather than left for someone to discover.
+            Vehicles photographed on dealer lots appear with the dealer&apos;s permission. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant rather than left for someone to discover.
           </p>
         </section>
 

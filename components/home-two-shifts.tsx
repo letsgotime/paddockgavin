@@ -50,17 +50,17 @@ export function HomeTwoShifts() {
             Day · 08:00 &rarr; 18:00
           </span>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.05, letterSpacing: "-.025em", textTransform: "uppercase", color: "#FFFFFF" }}>
-            Lot operations at duPont REGISTRY, Nashville
+            Lot operations, Lebanon, Tennessee
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#C4CBD6" }}>
             Every exotic and luxury car on the Lebanon lot goes through inspection, photography, writeup, and staging before it reaches a buyer. The gate opens at eight. Nothing leaves until it clears.
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#8B93A7" }}>
-            Lot Operations and Events Manager, duPont REGISTRY — the largest exotic car marketplace in the country. The gate, the calendar, and the camera all run through the same person.
+            Lot Operations and Events Manager. The gate, the calendar, and the camera all run through the same person.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingTop: 4 }}>
-            <Link href="/donuts" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
-              Donuts with duPont
+            <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+              Find me a car
             </Link>
             <Link href="/events" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
               Private events

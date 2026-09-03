@@ -22,9 +22,9 @@ async function dfs(path: string, body: unknown) {
 export async function GET() {
   const target = "paddockgavin.com"
   const keywords = [
-    "dupont registry lot operations",
+    "exotic car broker nashville",
     "exotic car lot operations Nashville",
-    "dupont registry Lebanon Tennessee",
+    "sell my exotic car",
     "exotic car content creator Tennessee",
     "lot operations manager Nashville",
     "supercar photography Nashville",

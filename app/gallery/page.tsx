@@ -79,7 +79,7 @@ const CHAPTERS = [
     label: "The room",
     tone: "#4BA3DE",
     minmax: "min(360px,100%)",
-    blurb: "Donuts with duPont, Tires & Timepieces, and whatever rolled onto the deck that morning. The floor is duPont REGISTRY\u2019s, in Lebanon, and I run the events on it.",
+    blurb: "Donuts, Tires & Timepieces, and whatever rolled onto the deck that morning. The floor is in Lebanon, and I run the events on it.",
   },
 ]
 
@@ -94,7 +94,7 @@ const SEED: Record<string, string[]> = {
     "Ceramic on a wrap: don\u2019t", "Swirls under the light",
   ],
   "the-room": [
-    "Donuts with duPont, 8am", "Ferrari on the upper deck", "Off the transporter, 993",
+    "Donuts, 8am", "Ferrari on the upper deck", "Off the transporter, 993",
     "Ford GT in the studio", "Tires & Timepieces", "The deck on a full morning",
     "Ferrari in the lot", "The ramp, rearview",
   ],
@@ -368,7 +368,7 @@ export default function GalleryPage() {
               <span style={{ color: "#F2C94C" }}>in whatever light was there</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "56ch" }}>
-              Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of the metal belongs to duPont REGISTRY &mdash; I run their lot, so I&rsquo;m the one standing next to it.
+              Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of the metal belongs to the lot I run, so I&rsquo;m the one standing next to it.
             </p>
           </div>
           <div

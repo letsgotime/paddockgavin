@@ -195,7 +195,7 @@ export default function CreatorDayPage() {
               fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#C4CBD6", maxWidth: "60ch",
             }}
           >
-            duPont REGISTRY sets up four to five installations with cars, and creators of every kind are invited. Shoot it, film it, paint it &mdash; make whatever the light gives you.
+            Four to five installations are set up with cars, and creators of every kind are invited. Shoot it, film it, paint it &mdash; make whatever the light gives you.
           </p>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
             <a
@@ -272,13 +272,13 @@ export default function CreatorDayPage() {
               {
                 dots: ["#00D2BE", "#00D2BE", null],
                 title: "Post your best",
-                body: "Submit the work you\u2019re proudest of and tag it. duPont votes on the entries.",
+                body: "Submit the work you\u2019re proudest of and tag it. The entries are voted on.",
                 border: "1px solid rgba(255,255,255,.10)",
               },
               {
                 dots: ["#F2C94C", "#F2C94C", "#F2C94C"],
                 title: "Winner takes the bag",
-                body: "A creator bundle from a leading brand, plus a full day to create with a duPont car of your choice.",
+                body: "A creator bundle from a leading brand, plus a full day to create with a car of your choice.",
                 border: "1px solid rgba(242,201,76,.3)",
               },
             ].map((card, i) => (

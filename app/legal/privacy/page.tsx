@@ -61,7 +61,7 @@ const sections = [
     heading: "When you leave",
     body: [
       "Buy the book and you are on Amazon. Buy merchandise and you are on Etsy. Ask about automation and you are on Paddock20. Follow a social link and you are on that platform. Each has its own privacy policy and its own collection, and from the moment you click, theirs applies rather than mine.",
-      "Buy a car and duPont collects what a dealer has to, identification, financing details, title paperwork. That is their process on their licence, held under their policy, and I neither receive nor keep it.",
+      "Buy a car and the selling dealer collects what a dealer has to, identification, financing details, title paperwork. That is their process on their licence, held under their policy, and I neither receive nor keep it.",
     ],
     table: {
       head: ["Where you land", "Whose policy"],
@@ -71,7 +71,7 @@ const sections = [
         ["paddock20.com · automation", "Paddock20's policy"],
         ["supercariq.com", "Its own policy at launch"],
         ["Instagram, LinkedIn", "Meta's and LinkedIn's"],
-        ["duPont REGISTRY · a vehicle purchase", "duPont REGISTRY's policy"],
+        ["The selling dealer · a vehicle purchase", "the dealer's policy"],
       ],
     },
   },
@@ -101,7 +101,7 @@ const sections = [
     num: "09",
     heading: "Being filmed at an event",
     body: [
-      "Donuts with duPont REGISTRY, Creator Day and the rest happen on duPont REGISTRY's floor, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
+      "Creator Day and the rest happen on a dealership floor, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
     ],
   },
   {

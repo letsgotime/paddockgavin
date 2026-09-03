@@ -15,10 +15,10 @@ export function HomeStory() {
       <div className="pg-two-col" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(32px,5vw,64px)", alignItems: "start" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(18px,1.9vw,22px)", lineHeight: 1.65, color: "#C4CBD6" }}>
-            Gavin Brooks. Lot Operations and Events Manager at duPont REGISTRY, Lebanon, Tennessee — the largest exotic and luxury car marketplace in the country. Every car on the lot has been through his hands before it reaches a buyer.
+            Gavin Brooks. Lot Operations and Events Manager in Lebanon, Tennessee. Every car on the lot has been through his hands before it reaches a buyer.
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.65, color: "#8B93A7" }}>
-            Former national sales leader. D1 athlete. Twenty-six years in technology before the lot. Now the camera comes to work too — original footage from duPont REGISTRY events, lot walkarounds, and the cars that move through Lebanon, Tennessee.
+            Former national sales leader. D1 athlete. Twenty-six years in technology before the lot. Now the camera comes to work too — original footage from events, lot walkarounds, and the cars that move through Lebanon, Tennessee.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", paddingTop: 8 }}>
             <Link href="/why-a-paddock" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
@@ -34,7 +34,7 @@ export function HomeStory() {
           <Image src="/images/gavin-gwagen.webp" alt="Gavin on the lot" fill style={{ objectFit: "cover" }} loading="lazy" />
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "28px 18px 16px", background: "linear-gradient(to top,rgba(10,21,35,.92),transparent)" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#8B93A7" }}>
-              Lot Operations · duPont REGISTRY
+              Lot Operations · Lebanon, Tennessee
             </span>
           </div>
         </div>
