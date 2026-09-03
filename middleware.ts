@@ -33,6 +33,11 @@ const EVENT_HOSTS: Record<string, string> = {
    than a second codebase. */
 const SHORT_PATHS = new Set([
   "/entry", "/vendor", "/sponsor", "/targets", "/store", "/portal",
+  /* Under /vendor, because the tools proxy claims /vendor/:path* for its
+     shared scripts and would otherwise answer these with a 404. Both are
+     links people share: one is printed in every stall enquiry email and the
+     other is where Stripe sends a paid vendor. */
+  "/vendor/booth", "/vendor/paid", "/sponsor/paid",
   /* The field. One letter from /entry and a different job: that one is the
      form asking to come, this one is the answer about who is. Both are short
      paths because both are links somebody sends to somebody else. */

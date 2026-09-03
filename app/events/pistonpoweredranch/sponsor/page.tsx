@@ -29,7 +29,7 @@ export default function Page() {
       focal="center 58%"
       bandImg="/images/donuts-overflow.webp"
       bandFocal="center 55%"
-      closeImg="/images/ranch/ppr-walk.jpg"
+      closeImg="/images/ranch/g-bales.webp"
       tone="#F2C94C"
       asksHead="Positions"
       asks={[

@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export function SiteFooter() {
   const [shift, setShift] = useState<"day" | "night">("day")
-  const [clock, setClock] = useState("\u2014")
+  const [clock, setClock] = useState("")
 
   useEffect(() => {
     const tick = () => {
@@ -69,7 +69,7 @@ export function SiteFooter() {
                 color: "#EDF1F6",
               }}
             >
-              {shiftLabel} &middot; {clock} Nashville
+              {shiftLabel} &middot; {clock ? `${clock} ` : ""}Nashville
             </span>
           </span>
           <i

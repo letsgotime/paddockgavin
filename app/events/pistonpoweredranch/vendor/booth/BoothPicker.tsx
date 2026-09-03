@@ -169,7 +169,7 @@ export function BoothPicker() {
       ) : (
         <div>
           <a
-            href="#apply"
+            href={`/events/pistonpoweredranch/vendor?size=${encodeURIComponent(picked.size)}#apply`}
             style={{
               display: "inline-block",
               font: `900 15px/1 ${ARCHIVO}`,
@@ -191,8 +191,11 @@ export function BoothPicker() {
 
       {state === "closed" && (
         <p style={{ ...note, color: "#EDF1F6" }}>
-          Booth payment is not switched on yet. Use the form below and we will hold the space, then
-          send you a link the moment it opens.
+          Booth payment is not switched on yet.{" "}
+          <a href={`/events/pistonpoweredranch/vendor?size=${encodeURIComponent(picked.size)}#apply`} style={{ color: "#EDF1F6" }}>
+            Tell us what you need
+          </a>{" "}
+          and we will hold the space, then send you a link the moment it opens.
         </p>
       )}
       {state === "error" && <p style={{ ...note, color: "#FF1A21" }}>{why}</p>}

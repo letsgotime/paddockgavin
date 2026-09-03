@@ -145,6 +145,11 @@ export default async function Layout({ children }: { children: React.ReactNode }
             margin-top: 14px;
             background: var(--accent-strong);
           }
+          /* Pages without a tall hero start under the lockup above, not
+             through it. The lockup bottoms out at about 280px. */
+          [data-brand="rancho"] main.pgClear {
+            padding-top: clamp(292px, 36vh, 340px) !important;
+          }
         `}</style>
       ) : null}
       <div data-brand={ranchDoor ? "rancho" : "paddockgavin"}

@@ -120,11 +120,14 @@ function entryT(stage: Stage, v: Vars): Rendered | null {
         signoff: "Reply if anything about the car changes, including if you need to pull out. Knowing early costs us nothing. Knowing on the day costs a space somebody else wanted.",
       }
 
-    case "approved":
+    case "approved": {
+      /* Bay, gate and grouping are set once the field is drawn. Before that
+         the email says so; it never prints a gap to a real person. */
+      const placed = Boolean(v.bay && v.gate)
       return {
         from: FROM.entry,
-        subject: `You are in. Bay ${v.bay || gap}, gates at ${v.gate || gap}`,
-        preheader: "Your bay, your gate time, and the morning run.",
+        subject: placed ? `You are in. Bay ${v.bay}, gates at ${v.gate}` : "You are in. Your car is on the field for 10 October",
+        preheader: placed ? "Your bay, your gate time, and the morning run." : "Your place is held. Bay and gate time follow.",
         eyebrow: "Entry accepted",
         heading: "Your car is in the field",
         blocks: [
@@ -132,18 +135,23 @@ function entryT(stage: Stage, v: Vars): Rendered | null {
           {
             kind: "facts",
             rows: [
-              { label: "Your bay", value: v.bay || gap },
-              { label: "Gates open", value: v.gate || gap },
-              { label: "Grouped with", value: v.make || gap },
+              ...(v.bay ? [{ label: "Your bay", value: v.bay }] : []),
+              ...(v.gate ? [{ label: "Gates open", value: v.gate }] : []),
+              ...(v.make ? [{ label: "Grouped with", value: v.make }] : []),
+              { label: "When", value: "Saturday 10 October 2026" },
               { label: "Where", value: "Rancho Jaramillo, Unionville, Tennessee" },
             ],
           },
+          ...(placed
+            ? []
+            : ([{ kind: "p", text: "Your bay, your gate time and the make you are grouped with follow in a second email once the field is drawn, in the last week of September." }] as Block[])),
           { kind: "p", text: "Come in at the entrant gate and a marshal will walk you to your bay. Cars are grouped by make, so you will be parked with your own." },
           { kind: "p", text: "One hundred cars stage at Nash Creamery from 7:30am and roll to the ranch together at 8:30am. If you want a place in that run, reply and say so. It fills." },
           { kind: "quiet", text: "Spectators from 9am. We finish at 3pm. Food is beef raised on this ground, dry aged and cooked here." },
         ],
         signoff: "If your plans change, reply and tell us. A bay held for a car that does not arrive is a gap in a field of 300.",
       }
+    }
 
     case "waitlisted":
       return {
@@ -251,12 +259,14 @@ function vendorT(stage: Stage, v: Vars): Rendered | null {
             kind: "facts",
             rows: [
               { label: "Stall", value: what },
-              { label: "Load in", value: v.loadIn || gap },
+              ...(v.loadIn ? [{ label: "Load in", value: v.loadIn }] : []),
               { label: "Trading", value: "9am to 3pm" },
               { label: "Where", value: "Rancho Jaramillo, Unionville, Tennessee" },
             ],
           },
-          { kind: "p", text: "We will send the site plan with your pitch marked in the last week of September, once the field is set and we know where the cars sit." },
+          { kind: "p", text: v.loadIn
+              ? "We will send the site plan with your pitch marked in the last week of September, once the field is set and we know where the cars sit."
+              : "Your load in window comes with the site plan, with your pitch marked, in the last week of September, once the field is set and we know where the cars sit." },
           { kind: "p", text: "Two things we need from you before then: proof of liability insurance, and your final power draw if you asked for power. Reply with both when you have them." },
         ],
         signoff: "Anything about the pitch itself goes to Bekah Stallard, who reads replies to this address.",
@@ -371,12 +381,14 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
           {
             kind: "facts",
             rows: [
-              { label: "Artwork due", value: v.assetsDue || gap },
+              ...(v.assetsDue ? [{ label: "Artwork due", value: v.assetsDue }] : []),
               { label: "Event", value: "Saturday 10 October 2026" },
               { label: "Where", value: "Rancho Jaramillo, Unionville, Tennessee" },
             ],
           },
-          { kind: "p", text: "We need your logo as vector, on a transparent background, plus the exact wording of your name as you want it to appear. Printed material closes on the artwork date above and cannot be reopened." },
+          { kind: "p", text: v.assetsDue
+              ? "We need your logo as vector, on a transparent background, plus the exact wording of your name as you want it to appear. Printed material closes on the artwork date above and cannot be reopened."
+              : "We need your logo as vector, on a transparent background, plus the exact wording of your name as you want it to appear. Bekah will confirm the artwork date with you; printed material cannot be reopened after it." },
         ],
         signoff: "Send artwork by replying to this email. It reaches the person who lays out the boards.",
       }

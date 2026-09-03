@@ -25,7 +25,7 @@ export default function Page() {
   return (
     <>
       <SiteNav />
-      <main style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
+      <main className="pgClear" style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
         <section style={{ maxWidth: 640, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
           <p
             style={{

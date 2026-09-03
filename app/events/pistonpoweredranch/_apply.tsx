@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -14,6 +14,53 @@ const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
 const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
+
+/* The public face. Links in what the person keeps (the status link, the
+   booth page) are written against this rather than against whichever door
+   they happened to come in by, so a link from paddockgavin.com and a link
+   from pistonpoweredranch.com are the same link. */
+const RANCH = "https://pistonpoweredranch.com"
+
+/* The same widget the team tools use. The key is public by design; the
+   secret that checks it lives on the server. */
+const TURNSTILE_SITEKEY = "0x4AAAAAAEkdaaU0WCZzdgGE"
+
+/* Mirrors public.vendor_categories, which the anonymous form cannot read.
+   If that table changes, change this. */
+const VENDOR_CATEGORIES = [
+  "Automotive lifestyle & apparel",
+  "Collector sneakers",
+  "Detailing & care products",
+  "Timepieces & fine jewelry",
+  "Artisan & ranch goods",
+  "Local food & beverage (non-competing with the BBQ)",
+  "Real estate & luxury lifestyle services",
+  "Car clubs & registries (non-selling)",
+]
+/* The four footprints the booth page sells or quotes, plus the two honest
+   answers a vendor gives before they have measured anything. */
+const FOOTPRINTS = ["10 by 10", "10 by 20", "20 by 20", "40 by 40", "Food truck or trailer", "Not sure yet"]
+const POWER = [
+  "None, we run on batteries or nothing",
+  "Light draw, under 1kW, lights and a card reader",
+  "Cooking or refrigeration, tell us the load",
+]
+const SPONSOR_LEVELS = ["Title", "Category exclusive", "Supporting", "In kind", "Not sure yet"]
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/* submissions.type is constrained to vehicle, vendor or sponsor. The form
+   kinds are named for the page they sit on, so they have to be mapped. */
+const DB_TYPE: Record<string, string> = {
+  entry: "vehicle",
+  "sponsor-application": "sponsor",
+  "vendor-application": "vendor",
+}
+const DESK: Record<string, string> = {
+  entry: "entries@pistonpoweredranch.com",
+  "sponsor-application": "sponsors@pistonpoweredranch.com",
+  "vendor-application": "vendors@pistonpoweredranch.com",
+}
 
 export type ApplyProps = {
   kicker: string
@@ -35,6 +82,15 @@ export type ApplyProps = {
 }
 
 type Status = "idle" | "sending" | "sent" | "error"
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string
+      reset: (id?: string) => void
+    }
+  }
+}
 
 export function ApplyPage(p: ApplyProps) {
   useEffect(() => {
@@ -71,6 +127,7 @@ export function ApplyPage(p: ApplyProps) {
         @media (hover:hover){.pgTile:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.82)}}
         .pgGo{transition:transform .3s cubic-bezier(.16,.84,.32,1)}
         @media (hover:hover){.pgGo:hover{transform:translateY(-2px)}}
+        .pgSel option{color:#0A1523}
         @media (prefers-reduced-motion:reduce){
           [data-r],[data-r].in{opacity:1!important;transform:none!important;transition:none!important}
           .pgKen{animation:none!important}
@@ -79,10 +136,13 @@ export function ApplyPage(p: ApplyProps) {
       `}</style>
 
       <main style={{ background: "#0A1523" }}>
-        <section style={{ position: "relative", minHeight: "88svh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
+        {/* Sized so the headline is on the first screen of a phone. At 88svh
+            the hero was 714px tall on an iPhone and the headline sat on the
+            bottom edge under the mark and the photograph. */}
+        <section style={{ position: "relative", minHeight: "clamp(560px,78svh,800px)", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
           <Image className="pgKen" src={p.img} alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: p.focal || "center 55%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 8%,rgba(10,21,35,.4) 58%,rgba(10,21,35,.6) 100%)" }} />
-          <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(44px,9vh,96px)", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,8vh,96px)", display: "flex", flexDirection: "column", gap: 16 }}>
             <span data-r="" style={{ fontFamily: MONO, fontSize: "clamp(10.5px,1.3vw,12px)", letterSpacing: ".26em", textTransform: "uppercase", color: p.tone }}>
               {p.kicker} &middot; October 10, 2026
             </span>
@@ -184,73 +244,211 @@ export function ApplyPage(p: ApplyProps) {
   )
 }
 
+type Fields = {
+  name: string
+  org: string
+  reach: string
+  phone: string
+  message: string
+  category: string
+  footprint: string
+  power: string
+  website: string
+  level: string
+  /* The honeypot. Hidden from people, filled in by scripts. */
+  fax: string
+}
+
+const EMPTY: Fields = { name: "", org: "", reach: "", phone: "", message: "", category: "", footprint: "", power: POWER[0], website: "", level: "", fax: "" }
+
+/* 48 hex characters. The status page and the portal both read this back, and
+   both check for at least 32 hex characters, so the shape is not negotiable. */
+function mintToken(): string {
+  const bytes = new Uint8Array(24)
+  crypto.getRandomValues(bytes)
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("")
+}
+
 function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps["form"]> }) {
-  const [f, setF] = useState({ name: "", org: "", reach: "", phone: "", message: "" })
+  const surface = form.kind === "entry" ? "entry" : form.kind === "vendor-application" ? "vendor" : "sponsor"
+  const [f, setF] = useState<Fields>(EMPTY)
   const [status, setStatus] = useState<Status>("idle")
   const [why, setWhy] = useState("")
+  const [token, setToken] = useState("")
+  const [copied, setCopied] = useState(false)
+  const [ts, setTs] = useState("")
+  const [tsState, setTsState] = useState<"loading" | "ready" | "solved" | "failed">("loading")
+  const tsRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLInputElement>(null)
 
-  const up = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const up = (k: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setF((x) => ({ ...x, [k]: e.target.value }))
 
+  /* The booth page sends the larger footprints here with ?size=, because a
+     quote is a conversation rather than a checkout. Land it in the field. */
+  useEffect(() => {
+    try {
+      const s = new URLSearchParams(location.search).get("size")
+      if (!s) return
+      setF((x) => (FOOTPRINTS.includes(s) ? { ...x, footprint: s } : { ...x, message: x.message || `Footprint: ${s}` }))
+    } catch {
+      /* no query string to read */
+    }
+  }, [])
+
+  /* The human check. Rendered explicitly so the token lands in state rather
+     than in a hidden field a script could set. If the widget cannot load at
+     all the form still sends, and the server decides what to do with a
+     submission that carries no token. */
+  useEffect(() => {
+    let gone = false
+    const render = () => {
+      if (gone || !tsRef.current || !window.turnstile) return
+      try {
+        window.turnstile.render(tsRef.current, {
+          sitekey: TURNSTILE_SITEKEY,
+          theme: "dark",
+          size: "flexible",
+          action: `apply-${surface}`,
+          callback: (t: string) => {
+            setTs(t)
+            setTsState("solved")
+          },
+          "expired-callback": () => {
+            setTs("")
+            setTsState("ready")
+          },
+          "error-callback": () => {
+            setTs("")
+            setTsState("failed")
+          },
+        })
+        setTsState((s) => (s === "solved" ? s : "ready"))
+      } catch {
+        setTsState("failed")
+      }
+    }
+    if (window.turnstile) render()
+    else {
+      const s = document.createElement("script")
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+      s.async = true
+      s.onload = render
+      s.onerror = () => setTsState("failed")
+      document.head.appendChild(s)
+    }
+    return () => {
+      gone = true
+    }
+  }, [surface])
+
   const send = async () => {
-    if (!f.name.trim() || status === "sending") return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.reach.trim())) {
+    if (status === "sending") return
+    setWhy("")
+    if (!f.name.trim()) {
+      setStatus("error")
+      setWhy("We need your name.")
+      nameRef.current?.focus()
+      return
+    }
+    const reach = f.reach.trim()
+    if (!EMAIL.test(reach)) {
       setStatus("error")
       setWhy("We need an email address. A phone number alone means we cannot send you a decision.")
       return
     }
+    if (surface === "vendor" && !f.category) {
+      setStatus("error")
+      setWhy("Pick the category closest to what you sell.")
+      return
+    }
+    if (tsState === "ready" && !ts) {
+      setStatus("error")
+      setWhy("Tick the box above the button first.")
+      return
+    }
     setStatus("sending")
 
-    /* Two paths, deliberately independent.
-       The CRM write is the one we want, but the anonymous Data API session it
-       needs does not exist: Neon Auth on this project offers email and password
-       only, with no anonymous method, and paddockgavin.com is not yet a trusted
-       origin. So the write is attempted and its failure is logged rather than
-       shown, because the email below still reaches a person. The moment a
-       server side credential exists this becomes the primary path again. */
-    const reach = f.reach.trim()
-    const payload = { kind: form.kind, ...f }
+    const name = f.name.trim()
+    const org = f.org.trim()
+    const message = f.message.trim()
+    const statusToken = mintToken()
 
-    /* submissions.type is constrained to vehicle, vendor or sponsor. The form
-       kinds are named for the page they sit on, so they have to be mapped
-       rather than passed straight through. */
-    const DB_TYPE: Record<string, string> = {
-      entry: "vehicle",
-      "sponsor-application": "sponsor",
-      "vendor-application": "vendor",
-    }
+    /* One row, in the shape HQ already reads. The review sheet looks for
+       business, category, offering, space_needed, power and website on a
+       vendor, and company, sponsorship_level, goals and website on a
+       sponsor. org is kept as well because the roster and the journeys page
+       read it, and vehicle because the field roster does. */
+    const common = { org, message, reach, page: "piston-powered-ranch" }
+    const details =
+      surface === "vendor"
+        ? { ...common, business: org, category: f.category, offering: message, space_needed: f.footprint, power: f.power, website: f.website.trim() }
+        : surface === "sponsor"
+          ? { ...common, company: org, sponsorship_level: f.level, goals: message, website: f.website.trim() }
+          : { ...common, vehicle: org }
 
+    /* Recorded first, then mailed. If the mail fails the entry is still on
+       record and answerable by hand; if the record fails the desk email still
+       carries everything, including the token. */
+    let recorded = false
     try {
       const client = db()
       if (client) {
-        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
         const saved = await client.from("submissions").insert([
           {
             type: DB_TYPE[form.kind] ?? "vehicle",
-            applicant_name: f.name.trim(),
-            email: isEmail ? reach.toLowerCase() : "",
-            phone: f.phone.trim() || (isEmail ? null : reach),
+            applicant_name: name,
+            email: reach.toLowerCase(),
+            phone: f.phone.trim() || null,
             status: "pending",
-            details: { org: f.org.trim(), message: f.message.trim(), reach, page: "piston-powered-ranch" },
+            status_token: statusToken,
+            details,
           },
         ])
-        if (saved?.error) console.warn("[apply] not recorded in the CRM:", saved.error.message)
+        recorded = !saved?.error
+        if (saved?.error) console.warn("[apply] not recorded:", saved.error.message)
       }
     } catch (err) {
-      console.warn("[apply] not recorded in the CRM:", err)
+      console.warn("[apply] not recorded:", err)
     }
 
-    /* This is what decides what the visitor is told, because this is the path
-       that reaches a human today. */
     try {
       const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          kind: form.kind,
+          name,
+          org,
+          reach,
+          phone: f.phone.trim(),
+          message,
+          details,
+          statusToken,
+          recorded,
+          turnstileToken: ts,
+          fax: f.fax,
+        }),
       })
-      setStatus(res.ok ? "sent" : "error")
+      if (res.ok) {
+        setToken(statusToken)
+        setStatus("sent")
+        return
+      }
+      const j = (await res.json().catch(() => ({}))) as { error?: string; detail?: string }
+      setStatus("error")
+      setWhy(j.detail || `That did not send. Try again, or write to ${DESK[form.kind]}.`)
+      if (j.error === "verification") {
+        setTs("")
+        try {
+          window.turnstile?.reset()
+        } catch {
+          /* the widget will re-render on its own */
+        }
+      }
     } catch {
       setStatus("error")
+      setWhy(`That did not send. Check your connection, or write to ${DESK[form.kind]}.`)
     }
   }
 
@@ -265,6 +463,34 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
+  }
+  const label: React.CSSProperties = { fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#8b95a3" }
+  const field = (l: string, el: React.ReactNode) => (
+    <label style={{ display: "grid", gap: 6 }}>
+      <span style={label}>{l}</span>
+      {el}
+    </label>
+  )
+  const select = (k: keyof Fields, opts: string[], blank?: string) => (
+    <select className="pgSel" style={{ ...input, appearance: "auto" }} value={f[k]} onChange={up(k)}>
+      {blank !== undefined && <option value="">{blank}</option>}
+      {opts.map((o) => (
+        <option key={o} value={o}>
+          {o}
+        </option>
+      ))}
+    </select>
+  )
+
+  const statusUrl = token ? `${RANCH}/status/?t=${token}` : ""
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(statusUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2200)
+    } catch {
+      /* the field below is selectable */
+    }
   }
 
   return (
@@ -289,21 +515,66 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         </div>
         <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
           {status === "sent" ? (
-            <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 17, lineHeight: 1.5, color: "#00D2BE" }}>
-              Received. We answer every one of these, and you will hear from us at what you left.
-            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 17, lineHeight: 1.5, color: "#00D2BE" }}>
+                Received. A confirmation is on its way to {f.reach.trim()}, and you will hear from us either way.
+              </p>
+              {statusUrl && (
+                <div style={{ display: "grid", gap: 6 }}>
+                  <span style={label}>Your status link, no sign in needed</span>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                    <input readOnly value={statusUrl} onFocus={(e) => e.currentTarget.select()} style={{ ...input, flex: "1 1 240px", fontSize: 14 }} />
+                    <button type="button" onClick={copy} className="pgGo" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 13, letterSpacing: ".05em", textTransform: "uppercase", background: "transparent", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "12px 18px", cursor: "pointer", clipPath: CLIP_SM }}>
+                      {copied ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                  <span style={{ fontFamily: ARCHIVO, fontSize: 13.5, color: "#8b95a3" }}>The same link is in the confirmation email.</span>
+                </div>
+              )}
+              {surface === "vendor" && (
+                <a className="pgGo" href="/events/pistonpoweredranch/vendor/booth" style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                  Reserve the standard space now
+                </a>
+              )}
+            </div>
           ) : (
             <>
-              <input style={input} placeholder="Your name" value={f.name} onChange={up("name")} />
-              <input style={input} placeholder={form.orgLabel} value={f.org} onChange={up("org")} />
+              <input ref={nameRef} style={input} placeholder="Your name" autoComplete="name" value={f.name} onChange={up("name")} />
+              <input style={input} placeholder={form.orgLabel} autoComplete="organization" value={f.org} onChange={up("org")} />
               <input style={input} type="email" inputMode="email" autoComplete="email"
                 placeholder="Email, so we can write back" value={f.reach} onChange={up("reach")} />
               <input style={input} type="tel" inputMode="tel" autoComplete="tel"
                 placeholder="Phone, optional" value={f.phone} onChange={up("phone")} />
+
+              {surface === "vendor" && (
+                <>
+                  {field("What you sell, closest category", select("category", VENDOR_CATEGORIES, "Pick one"))}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 10 }}>
+                    {field("Footprint", select("footprint", FOOTPRINTS, "Not sure yet"))}
+                    {field("Power", select("power", POWER))}
+                  </div>
+                  <input style={input} type="url" inputMode="url" placeholder="Website or Instagram, optional" value={f.website} onChange={up("website")} />
+                </>
+              )}
+              {surface === "sponsor" && (
+                <>
+                  {field("Position you have in mind", select("level", SPONSOR_LEVELS, "Not sure yet"))}
+                  <input style={input} type="url" inputMode="url" placeholder="Website, optional" value={f.website} onChange={up("website")} />
+                </>
+              )}
+
               <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />
+
+              {/* Not for people. Off screen, out of the tab order, and any
+                  value in it means a script filled the form. */}
+              <input name="fax" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.fax} onChange={up("fax")}
+                style={{ position: "absolute", left: -9999, width: 1, height: 1, opacity: 0 }} />
+
+              <div ref={tsRef} style={{ minHeight: tsState === "failed" ? 0 : 65 }} />
+
               {status === "error" && (
-                <span style={{ fontFamily: ARCHIVO, fontSize: 14, color: "#F2994A" }}>
-                  {why || "That did not send. Try again, or write to entries@pistonpoweredranch.com."}
+                <span role="alert" style={{ fontFamily: ARCHIVO, fontSize: 14, color: "#F2994A" }}>
+                  {why || `That did not send. Try again, or write to ${DESK[form.kind]}.`}
                 </span>
               )}
               <button

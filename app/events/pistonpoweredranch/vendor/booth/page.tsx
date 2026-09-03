@@ -1,14 +1,17 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { ranchShare } from "@/lib/events/ranch-share"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { BoothPicker } from "./BoothPicker"
 
 export const metadata: Metadata = {
-  title: "Reserve a booth · The Piston Powered Ranch",
-  description:
-    "Vendor booth space at The Piston Powered Ranch, Saturday 10 October 2026 at Rancho Jaramillo in Unionville, Tennessee.",
-  alternates: { canonical: "https://paddockgavin.com/events/pistonpoweredranch/vendor/booth" },
+  ...ranchShare({
+    path: "/vendor/booth",
+    title: "Reserve a booth · The Piston Powered Ranch",
+    description:
+      "Vendor booth space at The Piston Powered Ranch, Saturday 10 October 2026 at Rancho Jaramillo in Unionville, Tennessee.",
+  }),
   robots: { index: false, follow: false },
 }
 
@@ -20,7 +23,10 @@ export default function Page() {
   return (
     <>
       <SiteNav />
-      <main style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
+      {/* pgClear: on the ranch door the mark and its tagline sit over the top
+          of every page, and at 96px of padding the Your booth label printed
+          straight through them. The layout adds the room. */}
+      <main className="pgClear" style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
         <section style={{ maxWidth: 780, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
           <Link
             href="/events/pistonpoweredranch/vendor"

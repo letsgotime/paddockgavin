@@ -131,8 +131,11 @@ const nextConfig: NextConfig = {
          catching these too, so a browser could run an hour old copy of the one
          database and auth client. That is not a stale page, it is a fix that
          silently never arrives. They revalidate now. */
+      /* Only the scripts. /vendor itself and /vendor/booth are pages, and
+         with :path* this rule caught them too, so the booth page carried two
+         Cache-Control values and none of the security headers below. */
       {
-        source: "/vendor/:path*",
+        source: "/vendor/:file(.*\\.js)",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
       },
       {
@@ -155,7 +158,7 @@ const nextConfig: NextConfig = {
       },
       // Pages — short cache, revalidate in background
       {
-        source: "/((?!_next/static|_next/image|favicon.ico|vendor/|team/|team-sw|img/).*)",
+        source: "/((?!_next/static|_next/image|favicon.ico|vendor/.*\\.js|team/|team-sw|img/).*)",
         headers: [
           { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=3600" },
           { key: "X-Content-Type-Options", value: "nosniff" },
