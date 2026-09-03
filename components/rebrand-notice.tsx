@@ -89,7 +89,7 @@ export function RebrandNotice() {
       `}</style>
 
       <div
-        className="pgRebrand"
+        className="pgRebrand pg-e1"
         data-leaving={leaving}
         style={{
           pointerEvents: "auto",
@@ -98,10 +98,7 @@ export function RebrandNotice() {
           padding: "13px 15px 13px 17px",
           borderRadius: 14,
           background: "rgba(13,24,38,.93)",
-          border: "1px solid rgba(255,255,255,.14)",
-          boxShadow: "0 14px 38px rgba(0,0,0,.42)",
-          backdropFilter: "blur(18px) saturate(150%)",
-          WebkitBackdropFilter: "blur(18px) saturate(150%)",
+          boxShadow: "0 14px 38px rgba(0,0,0,.42)"
         }}
       >
         <div className="pgRebrandRow" style={{ display: "flex", flex: "1 1 auto", minWidth: 0 }}>

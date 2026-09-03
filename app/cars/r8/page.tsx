@@ -22,7 +22,7 @@ export default function R8Page() {
         <Image src="/images/f458-wide.webp" alt="The R8 V10 at speed" fill style={{ objectFit: "cover" }} priority />
         <div style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(0deg,rgba(10,21,35,.94) 0%,rgba(10,21,35,.55) 42%,rgba(10,21,35,.08) 78%)" }} />
         <div style={{ position: "relative", zIndex: 2, padding: "clamp(20px,5vw,40px)", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
-          <p style={{ margin: "0 0 14px", display: "inline-flex", alignItems: "center", gap: 12, fontFamily: mono, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", background: "rgba(10,21,35,.82)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)", padding: "9px 16px 9px 14px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)" }}>
+          <p className="pg-e0" style={{ margin: "0 0 14px", display: "inline-flex", alignItems: "center", gap: 12, fontFamily: mono, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", background: "rgba(10,21,35,.82)", padding: "9px 16px 9px 14px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)" }}>
             <i aria-hidden="true" style={{ width: 26, height: 3, background: "#00D2BE", flex: "0 0 auto" }} />
             2014 Audi R8 &middot; V10 &middot; The first supercar
           </p>

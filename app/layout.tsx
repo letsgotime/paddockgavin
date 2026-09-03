@@ -4,6 +4,7 @@ import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { RebrandNotice } from "@/components/rebrand-notice"
+import { SiteBackdrop } from "@/components/page-backdrop"
 import "./globals.css"
 
 const _archivo = Archivo({
@@ -122,6 +123,7 @@ export default function RootLayout({
           <div style={{ flex: 1, background: "#005185" }} />
           <div style={{ flex: 1, background: "#848482" }} />
         </div>
+        <SiteBackdrop />
         <ScrollProgress />
         <RebrandNotice />
         {children}

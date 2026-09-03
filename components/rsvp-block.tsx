@@ -96,7 +96,7 @@ export function RsvpBlock({
 
   if (state === "done") {
     return (
-      <div style={wrap}>
+      <div className="pg-e1" style={wrap}>
         <div style={{ ...kicker, color: accent }}>You are counted</div>
         <p style={{ ...lede, marginTop: 10 }}>
           Thank you, {name.trim().split(" ")[0] || "friend"}. Nothing else to do: entry is free and
@@ -107,7 +107,7 @@ export function RsvpBlock({
   }
 
   return (
-    <div style={wrap}>
+    <div className="pg-e1" style={wrap}>
       <style>{`
         .rsvpPair{grid-template-columns:1fr 1fr}
         @media (max-width:520px){.rsvpPair{grid-template-columns:1fr}}
@@ -179,9 +179,6 @@ const wrap: React.CSSProperties = {
   padding: "24px 26px",
   borderRadius: 18,
   background: "rgba(17,27,40,.58)",
-  border: "1px solid rgba(255,255,255,.12)",
-  backdropFilter: "blur(20px) saturate(1.5)",
-  WebkitBackdropFilter: "blur(20px) saturate(1.5)",
   fontFamily: ARCHIVO,
 }
 const kicker: React.CSSProperties = {

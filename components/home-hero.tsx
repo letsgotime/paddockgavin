@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image from "next/image"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 type Shift = "day" | "night"
 
@@ -136,39 +136,7 @@ export function HomeHero() {
 
   return (
     <>
-      {/* Fixed full-bleed background */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: "none",
-          overflow: "hidden",
-          background: "#0A1523",
-        }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image
-            src="/images/donuts-floor.webp"
-            alt=""
-            fill
-            style={{ objectFit: "cover" }}
-            priority
-          />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              shift === "day"
-                ? "linear-gradient(160deg,rgba(14,26,42,.88),rgba(14,26,42,.72))"
-                : "linear-gradient(160deg,rgba(10,21,35,.92),rgba(10,21,35,.78))",
-            transition: "background 1.4s ease",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/donuts-floor.webp" />
 
       {/* Telemetry sub-bar (fixed, under nav) */}
       <div
@@ -182,23 +150,17 @@ export function HomeHero() {
         }}
       >
         <div
-          style={{
+          className="pg-e1" style={{
             maxWidth: 1180,
             margin: "0 auto",
             position: "relative",
-            background:
-              "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018))",
-            backdropFilter: "blur(26px) saturate(170%)",
-            WebkitBackdropFilter: "blur(26px) saturate(170%)",
-            border: "1px solid rgba(255,255,255,.12)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.16)",
             clipPath:
               "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
             padding: "11px clamp(14px,2.4vw,22px)",
             display: "flex",
             alignItems: "center",
             gap: "clamp(10px,2vw,20px)",
-            overflow: "hidden",
+            overflow: "hidden"
           }}
         >
           {/* Shift indicator — always visible on left */}

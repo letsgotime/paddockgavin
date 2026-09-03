@@ -311,7 +311,7 @@ export default function EventPublic({
           the tap that belongs to the menu behind it. */}
       {shortDay && (
         <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
-          <div style={{ maxWidth: 1180, margin: "0 auto", display: "flex", alignItems: "center", gap: 12, padding: "9px 16px", borderRadius: 12, border: "1px solid rgba(255,255,255,.14)", background: "linear-gradient(180deg,rgba(12,24,38,.94),rgba(10,21,35,.9))", backdropFilter: "blur(10px)" }}>
+          <div className="pg-e0" style={{ maxWidth: 1180, margin: "0 auto", display: "flex", alignItems: "center", gap: 12, padding: "9px 16px", borderRadius: 12, background: "linear-gradient(180deg,rgba(12,24,38,.94),rgba(10,21,35,.9))" }}>
             <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-strong)", flex: "0 0 auto" }} />
             <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
               {shortDay}

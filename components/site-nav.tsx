@@ -185,23 +185,12 @@ export function SiteNav({ active = "home" }: Props) {
   return (
     <>
       {/* Fixed nav bar */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 80 }}>
-        {/* Garage-door livery bar */}
-        <div aria-hidden="true" style={{ display: "flex", height: 5 }}>
-          <i style={{ flex: 1, background: "#F2C94C" }} />
-          <i style={{ flex: 1, background: "#00D2BE" }} />
-          <i style={{ flex: 1, background: "#005185" }} />
-          <i style={{ flex: 1, background: "#848482" }} />
-        </div>
-
+      <div style={{ position: "fixed", top: 5, left: 0, right: 0, zIndex: 80 }}>
         {/* Nav strip */}
         <div
-          style={{
+          className="pg-e1" style={{
             background: "linear-gradient(180deg,rgba(14,26,42,.92),rgba(14,26,42,.76))",
-            backdropFilter: "blur(28px) saturate(180%)",
-            WebkitBackdropFilter: "blur(28px) saturate(180%)",
-            borderBottom: "1px solid rgba(255,255,255,.10)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.10)",
+            borderBottom: "1px solid rgba(255,255,255,.10)"
           }}
         >
           <div
@@ -261,18 +250,14 @@ export function SiteNav({ active = "home" }: Props) {
             {/* Shift pill */}
             <span
               title="Nashville local time"
-              style={{
+              className="pg-e0" style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 9,
                 flex: "0 0 auto",
-                background: "rgba(255,255,255,.055)",
-                border: "1px solid rgba(255,255,255,.14)",
-                backdropFilter: "blur(14px)",
-                WebkitBackdropFilter: "blur(14px)",
                 padding: "7px 13px",
                 clipPath:
-                  "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
+                  "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)"
               }}
             >
               <i
@@ -320,7 +305,7 @@ export function SiteNav({ active = "home" }: Props) {
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              style={{
+              className="pg-e0" style={{
                 flex: "0 0 auto",
                 height: 44,
                 minWidth: 44,
@@ -329,14 +314,10 @@ export function SiteNav({ active = "home" }: Props) {
                 gap: 10,
                 padding: "0 15px",
                 cursor: "pointer",
-                background: "rgba(255,255,255,.055)",
-                border: "1px solid rgba(255,255,255,.18)",
-                backdropFilter: "blur(14px)",
-                WebkitBackdropFilter: "blur(14px)",
                 clipPath:
                   "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
                 transition: "border-color .18s,background .18s",
-                color: "#EDF1F6",
+                color: "#EDF1F6"
               }}
             >
               <span
@@ -374,15 +355,13 @@ export function SiteNav({ active = "home" }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          style={{
+          className="pg-e1" style={{
             position: "fixed",
             inset: 0,
             zIndex: 150,
             overflowY: "auto",
             background: "linear-gradient(160deg,rgba(10,21,35,.95),rgba(10,21,35,.98))",
-            backdropFilter: "blur(40px) saturate(170%)",
-            WebkitBackdropFilter: "blur(40px) saturate(170%)",
-            animation: "pgNavIn .34s cubic-bezier(.16,1,.3,1) both",
+            animation: "pgNavIn .34s cubic-bezier(.16,1,.3,1) both"
           }}
         >
           <style>{`@keyframes pgNavIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}`}</style>
@@ -398,17 +377,6 @@ export function SiteNav({ active = "home" }: Props) {
                 "radial-gradient(900px 620px at 84% 4%,rgba(0,210,190,.16),transparent 60%),radial-gradient(800px 600px at 6% 90%,rgba(242,201,76,.10),transparent 62%)",
             }}
           />
-
-          {/* Top livery bar */}
-          <div
-            aria-hidden="true"
-            style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", height: 5 }}
-          >
-            <i style={{ flex: 1, background: "#F2C94C" }} />
-            <i style={{ flex: 1, background: "#00D2BE" }} />
-            <i style={{ flex: 1, background: "#005185" }} />
-            <i style={{ flex: 1, background: "#848482" }} />
-          </div>
 
           <div
             style={{

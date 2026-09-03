@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -120,13 +121,7 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      {/* Fixed background */}
-      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.2 }}>
-          <Image src="/images/donuts-floor.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.14),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
-      </div>
+      <PageBackdrop src="/images/donuts-floor.webp" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
@@ -148,7 +143,7 @@ export default function BookPage() {
         </section>
 
         {/* Board */}
-        <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
+        <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
           {[
             { k: "Next Donuts",   v: nextDonuts, tone: "#00D2BE" },
             { k: "Creator Day",   v: creatorIn,  tone: "#F2C94C" },
@@ -171,7 +166,7 @@ export default function BookPage() {
                 key={k.key}
                 type="button"
                 onClick={() => { setPicked(k.key); setStatus("idle"); document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" }) }}
-                style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", backdropFilter: "blur(20px) saturate(155%)", WebkitBackdropFilter: "blur(20px) saturate(155%)", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
+                className="pg-e1" style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
               >
                 <div style={{ position: "absolute", inset: 0, zIndex: -1 }}>
                   <Image src={k.img} alt="" fill style={{ objectFit: "cover", opacity: 0.36 }} />
@@ -192,7 +187,7 @@ export default function BookPage() {
         {/* The form */}
         <section
           id="form"
-          style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", scrollMarginTop: 120, display: "flex", flexDirection: "column", gap: 14 }}
+          className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", scrollMarginTop: 120, display: "flex", flexDirection: "column", gap: 14 }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Booking</span>

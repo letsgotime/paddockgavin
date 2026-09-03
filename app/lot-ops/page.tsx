@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -48,13 +49,7 @@ export default function LotOpsPage() {
     <>
       <SiteNav active="lotops" />
 
-      {/* Fixed background */}
-      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.18 }}>
-          <Image src="/images/gavin-gwagen.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
-      </div>
+      <PageBackdrop src="/images/gavin-gwagen.webp" opacity={0.18} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
@@ -76,7 +71,7 @@ export default function LotOpsPage() {
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 Watch the mornings
               </a>
-              <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", backdropFilter: "blur(8px)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+              <Link href="/intake" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 The full intake
               </Link>
             </div>
@@ -84,7 +79,7 @@ export default function LotOpsPage() {
         </section>
 
         {/* Lot board */}
-        <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "flex", flexDirection: "column", gap: 14 }}>
+        <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "flex", flexDirection: "column", gap: 14 }}>
           <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>duPont REGISTRY&rsquo;s lot &mdash; I run its mornings</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
             {[
@@ -102,7 +97,7 @@ export default function LotOpsPage() {
         </section>
 
         {/* The sequence — animated step tabs */}
-        <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(255,255,255,.11)", borderLeft: "3px solid #00D2BE", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
+        <section className="pg-e1" style={{ borderLeft: "3px solid #00D2BE", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#00D2BE", padding: "6px 16px" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Everything inbound</span>
@@ -133,7 +128,7 @@ export default function LotOpsPage() {
         </section>
 
         {/* The crew */}
-        <section style={{ background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.28)", borderLeft: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
+        <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>The crew</span>
@@ -161,7 +156,7 @@ export default function LotOpsPage() {
         </section>
 
         {/* Outbound CTA */}
-        <section style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
+        <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
             <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>Nothing moves until we&rsquo;re sure</h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "56ch" }}>Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.</p>

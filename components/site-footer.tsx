@@ -40,14 +40,11 @@ export function SiteFooter() {
 
   return (
     <footer
-      style={{
+      className="pg-e1" style={{
         position: "relative",
         background: "linear-gradient(180deg,rgba(10,21,35,.55),rgba(10,21,35,.9))",
-        backdropFilter: "blur(26px) saturate(160%)",
-        WebkitBackdropFilter: "blur(26px) saturate(160%)",
         borderTop: "1px solid rgba(255,255,255,.12)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)",
-        padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0",
+        padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0"
       }}
     >
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>

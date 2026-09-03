@@ -216,17 +216,12 @@ export function HomeWall() {
         {feature && (
           <div
             data-reveal
-            style={{
+            className="pg-e1" style={{
               flex: "5 1 300px",
               minWidth: 0,
               position: "relative",
-              background: "linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.015))",
-              backdropFilter: "blur(24px) saturate(160%)",
-              WebkitBackdropFilter: "blur(24px) saturate(160%)",
-              border: "1px solid rgba(255,255,255,.12)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
-              overflow: "hidden",
+              overflow: "hidden"
             }}
           >
             <button
@@ -265,7 +260,7 @@ export function HomeWall() {
               {feature.isVideo && (
                 <span
                   aria-hidden="true"
-                  style={{
+                  className="pg-e0" style={{
                     position: "absolute",
                     left: "50%",
                     top: "42%",
@@ -277,9 +272,7 @@ export function HomeWall() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "rgba(10,21,35,.26)",
-                    backdropFilter: "blur(6px)",
-                    WebkitBackdropFilter: "blur(6px)",
+                    background: "rgba(10,21,35,.26)"
                   }}
                 >
                   <i
@@ -350,17 +343,12 @@ export function HomeWall() {
           {/* Story card */}
           <div
             data-reveal
-            style={{
-              background: "linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.015))",
-              backdropFilter: "blur(24px) saturate(160%)",
-              WebkitBackdropFilter: "blur(24px) saturate(160%)",
-              border: "1px solid rgba(255,255,255,.12)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
+            className="pg-e1" style={{
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
               padding: "clamp(20px,3vw,32px)",
               display: "flex",
               flexDirection: "column",
-              gap: 16,
+              gap: 16
             }}
           >
             <span
@@ -419,17 +407,12 @@ export function HomeWall() {
           {/* Readouts strip */}
           <div
             data-reveal
-            style={{
-              background: "linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.012))",
-              backdropFilter: "blur(20px) saturate(150%)",
-              WebkitBackdropFilter: "blur(20px) saturate(150%)",
-              border: "1px solid rgba(255,255,255,.10)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)",
+            className="pg-e1" style={{
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
               padding: "clamp(16px,2.4vw,22px)",
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit,minmax(min(120px,45%),1fr))",
-              gap: 14,
+              gap: 14
             }}
           >
             {readouts.map((r) => (
@@ -479,22 +462,17 @@ export function HomeWall() {
               type="button"
               data-reveal
               onClick={() => open(items, j + 1)}
-              style={{
+              className="pg-e0" style={{
                 position: "relative",
                 display: "block",
                 padding: 0,
-                border: "1px solid rgba(255,255,255,.11)",
                 cursor: "pointer",
-                background: "rgba(21,37,56,.5)",
-                backdropFilter: "blur(18px) saturate(150%)",
-                WebkitBackdropFilter: "blur(18px) saturate(150%)",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
                 overflow: "hidden",
                 flex: c.wide ? "3 1 min(320px,90%)" : "2 1 min(220px,44%)",
                 minWidth: 0,
                 textAlign: "left",
                 aspectRatio: c.wide ? "3/2" : "4/5",
-                clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
+                clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)"
               }}
             >
               {c.src && (
@@ -537,7 +515,7 @@ export function HomeWall() {
               {c.isVideo && (
                 <span
                   aria-hidden="true"
-                  style={{
+                  className="pg-e0" style={{
                     position: "absolute",
                     right: 11,
                     top: 11,
@@ -548,9 +526,7 @@ export function HomeWall() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "rgba(10,21,35,.3)",
-                    backdropFilter: "blur(5px)",
-                    WebkitBackdropFilter: "blur(5px)",
+                    background: "rgba(10,21,35,.3)"
                   }}
                 >
                   <i
@@ -622,17 +598,15 @@ export function HomeWall() {
           aria-modal="true"
           aria-label="Photo lightbox"
           onClick={() => setLb(null)}
-          style={{
+          className="pg-e1" style={{
             position: "fixed",
             inset: 0,
             zIndex: 200,
             background: "rgba(10,21,35,.96)",
-            backdropFilter: "blur(20px)",
-            WebkitBackdropFilter: "blur(20px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: 20,
+            padding: 20
           }}
         >
           <button

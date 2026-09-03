@@ -63,7 +63,7 @@ export default function CarsPage() {
         </div>
         <div style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none", background: "linear-gradient(103deg,rgba(10,21,35,.92) 0%,rgba(10,21,35,.62) 44%,rgba(10,21,35,.06) 82%)" }} />
         <div style={{ position: "relative", zIndex: 3, flex: "1 1 auto", display: "flex", alignItems: "flex-end", padding: "clamp(20px,4vw,60px)" }}>
-          <div style={{ width: "min(560px,100%)", background: "rgba(20,34,53,.56)", backdropFilter: "blur(26px) saturate(1.5)", WebkitBackdropFilter: "blur(26px) saturate(1.5)", border: "1px solid rgba(255,255,255,.14)", borderTop: "1px solid rgba(255,255,255,.26)", borderLeft: "2px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", boxShadow: "0 34px 90px -24px rgba(0,0,0,.8)", padding: "clamp(24px,2.6vw,40px)" }}>
+          <div className="pg-e1" style={{ width: "min(560px,100%)", background: "rgba(20,34,53,.56)", borderTop: "1px solid rgba(255,255,255,.26)", borderLeft: "2px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", boxShadow: "0 34px 90px -24px rgba(0,0,0,.8)", padding: "clamp(24px,2.6vw,40px)" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 14, margin: "0 0 22px" }}>
               <span style={{ fontFamily: arch, fontWeight: 700, fontSize: "clamp(15px,1.05vw,19px)", letterSpacing: ".16em", textTransform: "uppercase", color: "#EDF1F6", flex: "0 0 auto" }}>The register</span>
               <i style={{ flex: "1 1 auto", height: 5, background: "repeating-linear-gradient(90deg,rgba(255,255,255,.26) 0 1px,transparent 1px 6px)" }} />
@@ -81,7 +81,7 @@ export default function CarsPage() {
             </div>
           </div>
         </div>
-        <p style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", backdropFilter: "blur(10px)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Mine. Nothing on this page belongs to <span style={{ textTransform: "none" }}>duPont</span> REGISTRY</p>
+        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Mine. Nothing on this page belongs to <span style={{ textTransform: "none" }}>duPont</span> REGISTRY</p>
       </section>
 
       {/* Register table */}

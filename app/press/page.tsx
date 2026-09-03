@@ -238,14 +238,10 @@ export default function PressPage() {
 
         {/* CTA */}
         <div
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(22px) saturate(155%)",
-            WebkitBackdropFilter: "blur(22px) saturate(155%)",
-            border: "1px solid rgba(255,255,255,.11)",
+          className="pg-e1" style={{
             borderLeft: "3px solid #00D2BE",
             padding: "clamp(24px,3vw,40px)",
-            marginBottom: 40,
+            marginBottom: 40
           }}
         >
           <p style={{ margin: "0 0 6px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#91918F" }}>

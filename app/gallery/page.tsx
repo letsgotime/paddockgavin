@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -273,34 +274,21 @@ export default function GalleryPage() {
     <>
       <SiteNav active="gallery" />
 
-      {/* Fixed background */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523",
-        }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/donuts-inside.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 720px at 84% -6%,rgba(0,210,190,.15),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.40),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.84),rgba(10,21,35,.95))",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/donuts-inside.webp" />
 
       {/* Filter bar (fixed sub-bar) */}
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)" }}>
         <div
-          style={{
-            maxWidth: 1240, margin: "0 auto", position: "relative",
-            background: "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018))",
-            backdropFilter: "blur(26px) saturate(170%)", WebkitBackdropFilter: "blur(26px) saturate(170%)",
-            border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.16)",
+          className="pg-e1" style={{
+            maxWidth: 1240,
+ margin: "0 auto",
+ position: "relative",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)",
-            padding: "9px clamp(12px,2vw,18px)", display: "flex", alignItems: "center", gap: 8, overflowX: "auto",
+            padding: "9px clamp(12px,2vw,18px)",
+ display: "flex",
+ alignItems: "center",
+ gap: 8,
+ overflowX: "auto"
           }}
         >
           <span
@@ -384,14 +372,14 @@ export default function GalleryPage() {
             </p>
           </div>
           <div
-            style={{
-              flex: "3 1 220px", minWidth: 0,
-              background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-              backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)",
-              border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
+            className="pg-e1" style={{
+              flex: "3 1 220px",
+ minWidth: 0,
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
               padding: "clamp(18px,2.4vw,24px)",
-              display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(110px,45%),1fr))", gap: 14,
+              display: "grid",
+ gridTemplateColumns: "repeat(auto-fit,minmax(min(110px,45%),1fr))",
+ gap: 14
             }}
           >
             {readouts.map((r) => (
@@ -413,7 +401,7 @@ export default function GalleryPage() {
                   key={item.key}
                   type="button"
                   onClick={() => openLightbox(gridItems, idx)}
-                  style={{ position:"relative", display:"block", padding:0, border:"1px solid rgba(255,255,255,.11)", cursor:"pointer", background:"rgba(21,37,56,.5)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)", boxShadow:"inset 0 1px 0 rgba(255,255,255,.13)", overflow:"hidden", width:"100%", textAlign:"left", aspectRatio:"1", clipPath:"polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", transition:"border-color .2s" }}
+                  className="pg-e0" style={{ position:"relative", display:"block", padding:0, cursor:"pointer", overflow:"hidden", width:"100%", textAlign:"left", aspectRatio:"1", clipPath:"polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", transition:"border-color .2s" }}
                 >
                   {item.src && <Image src={item.src} alt={item.caption} fill loading="lazy" sizes="(max-width:768px) 50vw,25vw" style={{ objectFit:"cover" }} />}
                   <span style={{ position:"absolute", left:0, right:0, bottom:0, padding:"28px 10px 9px", pointerEvents:"none", background:"linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,0))", display:"block" }}>
@@ -466,14 +454,17 @@ export default function GalleryPage() {
                     key={item.key}
                     type="button"
                     onClick={() => openLightbox(pool, idx)}
-                    style={{
-                      position: "relative", display: "block", padding: 0,
-                      border: "1px solid rgba(255,255,255,.11)", cursor: "pointer",
-                      background: "rgba(21,37,56,.5)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", overflow: "hidden", width: "100%", textAlign: "left",
+                    className="pg-e0" style={{
+                      position: "relative",
+ display: "block",
+ padding: 0,
+ cursor: "pointer",
+ overflow: "hidden",
+ width: "100%",
+ textAlign: "left",
                       aspectRatio: item.aspect,
                       clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
-                      transition: "border-color .2s",
+                      transition: "border-color .2s"
                     }}
                   >
                     {item.src && (
@@ -510,13 +501,13 @@ export default function GalleryPage() {
 
         {/* IG CTA */}
         <section
-          style={{
-            display: "flex", flexWrap: "wrap", gap: "clamp(14px,2.4vw,22px)", alignItems: "center",
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)",
-            border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
+          className="pg-e1" style={{
+            display: "flex",
+ flexWrap: "wrap",
+ gap: "clamp(14px,2.4vw,22px)",
+ alignItems: "center",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
-            padding: "clamp(22px,3.2vw,34px)",
+            padding: "clamp(22px,3.2vw,34px)"
           }}
         >
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
@@ -549,7 +540,7 @@ export default function GalleryPage() {
       {/* Lightbox */}
       {lb && (
         <div
-          style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(10,21,35,.93)", backdropFilter: "blur(26px) saturate(140%)", WebkitBackdropFilter: "blur(26px) saturate(140%)", display: "flex", flexDirection: "column", padding: "clamp(12px,3vw,32px)", gap: 12 }}
+          className="pg-e1" style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(10,21,35,.93)", display: "flex", flexDirection: "column", padding: "clamp(12px,3vw,32px)", gap: 12 }}
           role="dialog"
           aria-modal="true"
           aria-label="Photo lightbox"

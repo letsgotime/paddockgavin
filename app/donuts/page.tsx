@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -72,13 +73,7 @@ export default function DonutsPage() {
     <>
       <SiteNav active="donuts" />
 
-      {/* Fixed background */}
-      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/donuts-lot.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.15),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.95))" }} />
-      </div>
+      <PageBackdrop src="/images/donuts-lot.webp" />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1180, margin: "0 auto", padding: "clamp(14px,2.4vw,22px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
@@ -101,7 +96,7 @@ export default function DonutsPage() {
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 The next date drops here
               </a>
-              <Link href="/events" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", backdropFilter: "blur(8px)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
+              <Link href="/events" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 All events
               </Link>
             </div>
@@ -109,7 +104,7 @@ export default function DonutsPage() {
         </section>
 
         {/* Details board */}
-        <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
+        <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
           {[
             { k: "When",      v: "8\u201311 am",            tone: "#00D2BE" },
             { k: "Where",     v: "duPont REGISTRY, Lebanon", tone: "#00D2BE" },
@@ -150,7 +145,7 @@ export default function DonutsPage() {
         </section>
 
         {/* Vendors & VIP */}
-        <section id="vendors" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.1),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.3)", borderLeft: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
+        <section id="vendors" className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.1),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.3)", borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Vendors &amp; VIP</span>
@@ -191,7 +186,7 @@ export default function DonutsPage() {
         </section>
 
         {/* Group CTA */}
-        <section style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
+        <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
             <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>Bringing a club out?</h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "54ch" }}>Tell me how many are coming and I&rsquo;ll make sure there&rsquo;s room to park together.</p>

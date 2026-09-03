@@ -104,18 +104,15 @@ export function ApplyPage(p: ApplyProps) {
             <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
               <div
                 data-r=""
-                style={{
+                className="pg-e1" style={{
                   background: "rgba(10,21,35,.82)",
-                  backdropFilter: "blur(26px) saturate(165%)",
-                  WebkitBackdropFilter: "blur(26px) saturate(165%)",
-                  border: "1px solid rgba(255,255,255,.13)",
                   borderTop: `3px solid ${p.tone}`,
                   boxShadow: "0 30px 90px rgba(0,0,0,.5)",
                   clipPath: CLIP,
                   padding: "clamp(22px,4vw,44px)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: 16,
+                  gap: 16
                 }}
               >
                 {p.body.map((b, i) => (

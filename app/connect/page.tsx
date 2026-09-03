@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -222,23 +223,7 @@ export default function ConnectPage() {
     <>
       <SiteNav active="connect" />
 
-      {/* Fixed background */}
-      <div
-        aria-hidden="true"
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.24 }}>
-          <Image src="/images/donuts-lot.webp" alt="" fill style={{ objectFit: "cover" }} />
-        </div>
-        <div
-          style={{
-            position: "absolute", inset: 0, transition: "background 1.4s ease",
-            background: shift === "day"
-              ? "radial-gradient(900px 640px at 82% -8%,rgba(242,201,76,.17),transparent 60%),radial-gradient(900px 660px at 4% 34%,rgba(0,81,133,.38),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.82),rgba(10,21,35,.94))"
-              : "radial-gradient(900px 640px at 84% -6%,rgba(0,210,190,.19),transparent 60%),radial-gradient(900px 660px at 4% 32%,rgba(0,81,133,.46),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/donuts-lot.webp" opacity={0.24} />
 
       <main
         style={{
@@ -249,15 +234,12 @@ export default function ConnectPage() {
       >
         {/* Profile card */}
         <header
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.016))",
-            backdropFilter: "blur(26px) saturate(165%)",
-            WebkitBackdropFilter: "blur(26px) saturate(165%)",
-            border: "1px solid rgba(255,255,255,.12)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.15)",
+          className="pg-e1" style={{
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(20px,3.2vw,30px)",
-            display: "flex", flexDirection: "column", gap: 18,
+            display: "flex",
+ flexDirection: "column",
+ gap: 18
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "clamp(14px,3vw,20px)", flexWrap: "wrap" }}>
@@ -358,17 +340,21 @@ export default function ConnectPage() {
             href="https://ig.me/m/itspaddockgavin"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              flex: "1 1 200px", display: "inline-flex", alignItems: "center",
-              justifyContent: "center", minHeight: 56,
-              fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15,
-              letterSpacing: ".06em", textTransform: "uppercase",
-              background: "rgba(255,255,255,.05)", color: "#EDF1F6",
-              border: "1px solid rgba(255,255,255,.24)",
-              backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
+            className="pg-e1" style={{
+              flex: "1 1 200px",
+ display: "inline-flex",
+ alignItems: "center",
+              justifyContent: "center",
+ minHeight: 56,
+              fontFamily: "Archivo, Helvetica, sans-serif",
+ fontWeight: 700,
+ fontSize: 15,
+              letterSpacing: ".06em",
+ textTransform: "uppercase",
+ color: "#EDF1F6",
               padding: "16px 24px",
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
-              textDecoration: "none",
+              textDecoration: "none"
             }}
           >
             DM @itspaddockgavin
@@ -395,17 +381,16 @@ export default function ConnectPage() {
                 href={l.href}
                 target={l.target}
                 rel={l.target === "_blank" ? "noopener noreferrer" : undefined}
-                style={{
-                  display: "flex", alignItems: "center", gap: 14, minHeight: 64, textDecoration: "none",
-                  background: "linear-gradient(150deg,rgba(255,255,255,.062),rgba(255,255,255,.014))",
-                  backdropFilter: "blur(20px) saturate(155%)",
-                  WebkitBackdropFilter: "blur(20px) saturate(155%)",
-                  border: "1px solid rgba(255,255,255,.11)",
+                className="pg-e1" style={{
+                  display: "flex",
+ alignItems: "center",
+ gap: 14,
+ minHeight: 64,
+ textDecoration: "none",
                   borderLeft: `3px solid ${l.tone}`,
-                  boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
                   clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
                   padding: "15px clamp(16px,3vw,22px)",
-                  transition: "background .2s",
+                  transition: "background .2s"
                 }}
               >
                 <span style={{ flex: "1 1 auto", minWidth: 0, display: "flex", flexDirection: "column", gap: 5 }}>
@@ -436,15 +421,14 @@ export default function ConnectPage() {
 
         {/* Fastest lane */}
         <footer
-          style={{
+          className="pg-e1" style={{
             background: "linear-gradient(150deg,rgba(0,81,133,.88),rgba(0,81,133,.62))",
-            backdropFilter: "blur(22px) saturate(150%)",
-            WebkitBackdropFilter: "blur(22px) saturate(150%)",
             border: "1px solid #0A6BAA",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(20px,3.2vw,30px)",
-            display: "flex", flexDirection: "column", gap: 14,
+            display: "flex",
+ flexDirection: "column",
+ gap: 14
           }}
         >
           <span

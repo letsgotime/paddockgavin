@@ -32,10 +32,12 @@ function Card({ tone, value, unit, label, sub, fill, ring }: {
   tone: string; value: string; unit?: string; label: string; sub?: string; fill?: number; ring?: boolean
 }) {
   return (
-    <div style={{
-      position: "relative", overflow: "hidden", padding: "20px 22px 18px", clipPath: CLIP,
-      background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
-      border: "1px solid rgba(255,255,255,.12)", borderTop: `3px solid ${tone}`,
+    <div className="pg-e0" style={{
+      position: "relative",
+ overflow: "hidden",
+ padding: "20px 22px 18px",
+ clipPath: CLIP,
+ borderTop: `3px solid ${tone}`
     }}>
       {ring ? <span aria-hidden="true" className="pgRing" style={{ borderColor: `${tone}28` }} /> : null}
       <div style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 38, lineHeight: 1, letterSpacing: "-.03em", color: "#fff", fontVariantNumeric: "tabular-nums" }}>
@@ -131,10 +133,10 @@ export default function VisitOps() {
         />
       </div>
 
-      <div style={{
-        padding: "20px 22px", clipPath: CLIP,
-        background: "rgba(21,37,56,.34)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
-        border: "1px solid rgba(255,255,255,.12)", borderTop: "3px solid #00D2BE",
+      <div className="pg-e0" style={{
+        padding: "20px 22px",
+ clipPath: CLIP,
+ borderTop: "3px solid #00D2BE"
       }}>
         <div className="pgFind">
           <div style={{ minWidth: 0 }}>
