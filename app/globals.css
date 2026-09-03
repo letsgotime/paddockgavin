@@ -332,6 +332,192 @@
   overflow: hidden;
 }
 
+/* ── TYPE SCALE — phone first. The phone sizes are the base; the clamps
+   grow into tablets and desktops. Headings are mixed case at 700 unless a
+   component says otherwise; uppercase is for eyebrows and buttons. ── */
+:root {
+  --t-body:    16px;
+  --t-small:   14px;
+  --t-eyebrow: 11px;
+  --t-lead:    clamp(17px, 1.9vw, 21px);
+  --t-h3:      clamp(20px, 2.6vw, 28px);
+  --t-h2:      clamp(26px, 5.2vw, 48px);
+  --t-h1:      clamp(34px, 8vw, 64px);
+  --t-display: clamp(40px, 9vw, 96px);
+  --t-menu:    17px;
+}
+
+/* The home hero's telemetry sub-bar is a desktop conceit. On a phone it
+   cost 50px of every screen for a clock and a percentage. */
+@media (max-width: 640px) {
+  .pg-telemetry { display: none !important; }
+  .pg-telemetry-spacer { height: 0 !important; }
+}
+
+/* ── PREMIUM GLASS — depth-graded elevations, ported from the command
+   center (acc-command-center 8613d5a) and retinted to this palette.
+   Three elevations so depth reads as real distance: e0 recedes, e1 rests,
+   e2 commands. No new hues: only blur depth, bevel and shadow change between
+   tiers. The notch (clip-path) stays on the element; the bevels follow it. ── */
+:root {
+  --pg-glass-fill: linear-gradient(150deg, rgba(255,255,255,.065), rgba(255,255,255,.013));
+  --pg-glass-fill-sunken: rgba(21, 37, 56, .5);
+  --pg-hairline: rgba(255,255,255,.11);
+  --pg-hairline-strong: rgba(255,255,255,.18);
+  --pg-hairline-soft: rgba(255,255,255,.06);
+  --pg-ring: 242, 201, 76;            /* TrackDay Yellow, as channels for rgba() */
+
+  /* Motion tokens: one easing and duration vocabulary for the whole site. */
+  --ease-settle: cubic-bezier(.2,.7,.2,1);
+  --ease-press:  cubic-bezier(.3,0,.6,1);
+  --ease-glide:  cubic-bezier(.4,0,.1,1);
+  --dur-instant: 120ms;
+  --dur-quick:   200ms;
+  --dur-move:    340ms;
+  --dur-slide:   480ms;
+  --dur-settle:  700ms;
+}
+
+/* e1: resting glass, the workhorse surface. Dual inner bevel (light top,
+   grounded bottom) so flat glass reads as material; a soft drop so it floats
+   off the backdrop instead of sitting on it. e2 shares this base. */
+.pg-e1,
+.pg-e2 {
+  position: relative;
+  background: var(--pg-glass-fill);
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  border: 1px solid var(--pg-hairline);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,.14),
+    inset 0 -1px 0 0 rgba(0,0,0,.35),
+    0 24px 60px -28px rgba(0,0,0,.85);
+}
+/* the satin catch of light along the top edge */
+.pg-e1::before,
+.pg-e2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding-top: 1px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.18), transparent 18%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* e2: the one surface per screen that commands. Deepest blur, a yellow ring
+   glow, and a specular hairline that is brightest at the top edge and falls
+   off down the sides: a machined highlight, not a flat line. */
+.pg-e2 {
+  backdrop-filter: blur(30px) saturate(140%);
+  -webkit-backdrop-filter: blur(30px) saturate(140%);
+  border-color: rgba(var(--pg-ring), .42);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255,255,255,.16),
+    inset 0 -1px 0 0 rgba(0,0,0,.35),
+    0 0 0 1px rgba(var(--pg-ring), .18),
+    0 0 44px -8px rgba(var(--pg-ring), .38),
+    0 30px 80px -26px rgba(0,0,0,.92);
+}
+.pg-e2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.6), rgba(255,255,255,.06) 42%, transparent 78%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* e0: receding glass for tiles, chips and nested cells that sit behind the
+   resting surface. Thinner blur, darker fill, quiet shadow, no highlight. */
+.pg-e0 {
+  position: relative;
+  background: var(--pg-glass-fill-sunken);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--pg-hairline-soft);
+  box-shadow: 0 8px 24px -20px rgba(0,0,0,.7);
+}
+
+/* Interactive glass lifts a hair on hover. Reduced motion collapses it. */
+a.pg-e0, a.pg-e1, button.pg-e0, button.pg-e1 {
+  transition: transform var(--dur-quick) var(--ease-settle), border-color var(--dur-quick), background var(--dur-quick);
+}
+a.pg-e0:hover, a.pg-e1:hover, button.pg-e0:hover, button.pg-e1:hover {
+  transform: translateY(-1px);
+  border-color: var(--pg-hairline-strong);
+}
+
+/* ── BACKDROP — one fixed layer for every page. The photograph comes from the
+   page through --pg-backdrop (see components/page-backdrop.tsx); the wash,
+   the film grain and the vignette are the same everywhere so pages feel like
+   rooms in one building. Sits at z -1 inside the body's stacking context so
+   nothing on a page has to know about it. ── */
+body { isolation: isolate; }
+.pg-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--deep);
+}
+.pg-backdrop-img {
+  position: absolute;
+  inset: 0;
+  background-image: var(--pg-backdrop, url("/images/donuts-floor.webp"));
+  background-size: cover;
+  background-position: var(--pg-backdrop-pos, center);
+  opacity: var(--pg-backdrop-opacity, .22);
+  transform: scale(1.02);
+}
+.pg-backdrop-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 720px at 82% -6%, rgba(242,201,76,.14), transparent 60%),
+    radial-gradient(1000px 700px at 4% 30%, rgba(0,81,133,.42), transparent 62%),
+    linear-gradient(180deg, rgba(10,21,35,.86), rgba(10,21,35,.95));
+}
+/* ~4.5% SVG film grain: breaks the banding in the navy wash so the backdrop
+   reads photographic, not rendered. */
+.pg-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+.pg-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(120% 120% at 50% 40%, transparent 55%, rgba(5,7,10,.55) 100%);
+}
+
+/* Reduced-motion guard: every animation has a non-animated equivalent.
+   Durations collapse to near zero rather than none so end events still fire. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ── PHONE RHYTHM — below 640px ── */
 @media (max-width: 640px) {
   .pg-stage { padding: 36px 18px; }
