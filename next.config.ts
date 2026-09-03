@@ -138,9 +138,19 @@ const nextConfig: NextConfig = {
         source: "/team-sw.js",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
       },
+      /* The tools' photography, proxied from the other deployment. Before
+         /img/ was forwarded, every one of these was a 404, and a browser that
+         fetched one then kept the 404 under the page rule's hour of
+         stale-while-revalidate: the file was fixed on the server and the phone
+         still showed a broken picture. Same rule as /vendor, so a miss can
+         never be pinned. */
+      {
+        source: "/img/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
       // Pages — short cache, revalidate in background
       {
-        source: "/((?!_next/static|_next/image|favicon.ico|vendor/|team/|team-sw).*)",
+        source: "/((?!_next/static|_next/image|favicon.ico|vendor/|team/|team-sw|img/).*)",
         headers: [
           { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=3600" },
           { key: "X-Content-Type-Options", value: "nosniff" },
