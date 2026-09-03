@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
-const BLURB = "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. Lot operations and events by day, software by night."
+const BLURB = "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. 78 cars found for other people, most of them before they were listed."
 
 export const metadata: Metadata = {
-  title: "PaddockGavin · Two shifts. One paddock.",
+  title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
   description: BLURB,
   openGraph: {
-    title: "PaddockGavin · Two shifts. One paddock.",
-    description: "Cars used to be the reward. Now they're the work.",
+    title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
+    description: "I find cars for people. Retail or wholesale, every auction open, 78 found so far.",
     url: "https://paddockgavin.com",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
   },
@@ -20,7 +20,7 @@ import { HomeHero } from "@/components/home-hero"
 import { HomeWall } from "@/components/home-wall"
 import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
-import { Section, ProductRows, PhotoBreak, AlsoHere } from "@/components/home-sections"
+import { Section, ProductRows, PhotoBreak, AlsoHere, LinkRow } from "@/components/home-sections"
 
 function Stage({ children, sec }: { children: React.ReactNode; sec: string }) {
   return <div data-sec={sec} className="pg-stage">{children}</div>
@@ -42,6 +42,11 @@ export default function HomePage() {
           <p style={{ margin: 0 }}>
             If you want to sell your exotic car, start the intake and I&rsquo;ll take it from there. I have found 78 cars for other people. Concierge broker and vehicle sourcer, retail or wholesale. We shop with a dealer&rsquo;s licence, so every auction is open.
           </p>
+          <LinkRow items={[
+            { href: "/sell-my-exotic-car", label: "Sell my exotic car", note: "Retail or wholesale" },
+            { href: "/exotic-car-broker", label: "Find me a car", note: "Every auction open" },
+            { href: "/exotic-car-consignment", label: "Consignment", note: "The retail lane" },
+          ]} />
         </Section>
       </Stage>
 

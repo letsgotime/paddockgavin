@@ -29,10 +29,10 @@ export function HomeHero() {
               Nashville, Tennessee
             </p>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.02, letterSpacing: "-.025em", color: "#FFFFFF", textWrap: "balance" as never }}>
-              I find cars for people, and I build the software that runs the lot.
+              I find cars for people.
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.55, color: "#C4CBD6", maxWidth: "52ch" }}>
-              Gavin Brooks. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer&rsquo;s licence so every auction is open. Lot operations and events by day, software by night.
+              Gavin Brooks, Nashville. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer&rsquo;s licence so every auction is open. Seventy-eight found for other people so far, most of them before they were listed.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px", paddingTop: 6 }}>
               <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>

@@ -224,6 +224,11 @@ export default function IntakePage() {
           </>
         )}
 
+        {step === 0 && (
+          <p style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15, color: "#B4B6B2" }}>
+            Rather text than type? <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>DM @itspaddockgavin</a> and skip the form.
+          </p>
+        )}
         {/* ── STEP 0: The car ───────────────────────────────── */}
         {step === 0 && (
           <div style={{ background: "#0A1523", border: "1px solid rgba(255,255,255,.14)", borderLeft: "2px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,2.6vw,36px)" }}>

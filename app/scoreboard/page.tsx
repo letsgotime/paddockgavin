@@ -694,25 +694,7 @@ export default function ScoreboardPage() {
             >
               Book the floor
             </Link>
-            <Link
-              href="/"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 700,
-                fontSize: 15,
-                letterSpacing: ".04em",
-                textTransform: "uppercase",
-                color: "#FFFFFF",
-                border: "1px solid rgba(255,255,255,.4)",
-                padding: "15px 26px",
-                clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)",
-                textDecoration: "none",
-              }}
-            >
-              Both shifts
-            </Link>
+            <Link href="/exotic-car-broker" className="pg-textlink">Find me a car</Link>
           </div>
         </section>
       </main>

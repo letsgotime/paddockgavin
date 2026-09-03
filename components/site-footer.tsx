@@ -178,322 +178,70 @@ export function SiteFooter() {
             </a>
           </div>
 
-          {/* Events nav */}
-          <nav aria-label="On the calendar" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <p
-              style={{
-                margin: "0 0 10px",
-                display: "flex",
-                alignItems: "center",
-                gap: 9,
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 12,
-                letterSpacing: ".18em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#EDF1F6", display: "block" }} />
-              On the calendar
+          <nav aria-label="Sourcing" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <p style={{ margin: "0 0 10px", display: "flex", alignItems: "center", gap: 9, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F2C94C", flexShrink: 0 }} />
+              Sourcing
             </p>
             {[
-              { href: "/events/pistonpoweredranch",         label: "The Piston Powered Ranch" },
-              { href: "/events/pistonpoweredranch/entry",   label: "Enter a car" },
-              { href: "/events/pistonpoweredranch/sponsor", label: "Become a sponsor" },
-              { href: "/events/pistonpoweredranch/vendor",  label: "Take a stall" },
-              { href: "/encantoblossomorchard",             label: "Encanto Blossom Orchard" },
-              { href: "/events",                            label: "Every event" },
+              { href: "/sell-my-exotic-car", label: "Sell my exotic car" },
+              { href: "/exotic-car-broker", label: "Find me a car" },
+              { href: "/exotic-car-consignment", label: "Consignment" },
+              { href: "/intake", label: "Start the intake" },
             ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                style={{
-                  padding: "7px 0",
-                  fontFamily: "Archivo, Helvetica, sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14.5,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: "#DDE3EB",
-                  textDecoration: "none",
-                }}
-              >
+              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
           </nav>
 
-          {/* Day shift nav */}
-          <nav aria-label="Day shift" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <p
-              style={{
-                margin: "0 0 10px",
-                display: "flex",
-                alignItems: "center",
-                gap: 9,
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 12,
-                letterSpacing: ".18em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#F2C94C", display: "block" }} />
-              Day shift
+          <nav aria-label="The lot" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <p style={{ margin: "0 0 10px", display: "flex", alignItems: "center", gap: 9, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#00D2BE", flexShrink: 0 }} />
+              The lot
             </p>
             {[
-              { href: "/vlog",      label: "The Vlog" },
-              { href: "/gallery",   label: "The gallery" },
-              { href: "/lot-ops",   label: "Lot ops in action" },
-              { href: "/book",      label: "Book it" },
-              { href: "/intake",    label: "Find me a car" },
+              { href: "/lot-ops", label: "Lot Ops in Action" },
+              { href: "/events", label: "Events" },
+              { href: "/events/pistonpoweredranch", label: "The Piston Powered Ranch" },
+              { href: "/gallery", label: "The gallery" },
             ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                style={{
-                  padding: "7px 0",
-                  fontFamily: "Archivo, Helvetica, sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14.5,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: "#DDE3EB",
-                  textDecoration: "none",
-                }}
-              >
+              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
           </nav>
 
-          {/* Night shift nav */}
-          <nav aria-label="Night shift" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <p
-              style={{
-                margin: "0 0 10px",
-                display: "flex",
-                alignItems: "center",
-                gap: 9,
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 12,
-                letterSpacing: ".18em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
-              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#00D2BE", display: "block" }} />
-              Night shift
-            </p>
-            {[
-              { href: "/scoreboard",          label: "The scoreboard",  ext: false },
-              { href: "/supercar-iq",         label: "Supercar IQ",     ext: false },
-              { href: "/gloss-game",          label: "The Gloss Game",  ext: false },
-              { href: "/affiliates",          label: "Affiliates & Partners", ext: false },
-              { href: "https://paddock20.com",label: "Paddock20",       ext: true  },
-            ].map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                target={l.ext ? "_blank" : undefined}
-                rel={l.ext ? "noopener noreferrer" : undefined}
-                style={{
-                  padding: "7px 0",
-                  fontFamily: "Archivo, Helvetica, sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14.5,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: "#DDE3EB",
-                  textDecoration: "none",
-                }}
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Elsewhere nav */}
           <nav aria-label="Elsewhere" style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            <p
-              style={{
-                margin: "0 0 10px",
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 12,
-                letterSpacing: ".18em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
+            <p style={{ margin: "0 0 10px", display: "flex", alignItems: "center", gap: 9, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>
+              <i aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#B4B6B2", flexShrink: 0 }} />
               Elsewhere
             </p>
             {[
-              { href: "/why-a-paddock",             label: "Why a paddock",     ext: false },
-              { href: "/cars",                      label: "The garage",        ext: false },
-              { href: "/cars/e92",                  label: "The E92 build",     ext: false },
-              { href: "/cars/r8",                   label: "The R8",            ext: false },
-              { href: "/shop",                      label: "The shop",          ext: false },
-              { href: "/juice-box",                 label: "The Juice Box",     ext: false },
-              { href: "/connect",                   label: "Every link",        ext: false },
-              { href: "https://gavinbrookshq.com",  label: "gavinbrookshq.com", ext: true  },
+              { href: "/cars", label: "The Garage" },
+              { href: "/scoreboard", label: "The scoreboard" },
+              { href: "/why-a-paddock", label: "Why a Paddock" },
+              { href: "https://paddock20.com", label: "Paddock20" },
+              { href: "/connect", label: "Every link" },
+              { href: "/press", label: "Press" },
             ].map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                target={l.ext ? "_blank" : undefined}
-                rel={l.ext ? "noopener noreferrer" : undefined}
-                style={{
-                  padding: "7px 0",
-                  fontFamily: "Archivo, Helvetica, sans-serif",
-                  fontWeight: 600,
-                  fontSize: 14.5,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: "#DDE3EB",
-                  textDecoration: "none",
-                }}
-              >
+              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
 
-        {/* Partnership + Press blocks */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))",
-            gap: 16,
-            marginBottom: "clamp(28px,3.5vw,44px)",
-          }}
-        >
-          {/* Brand partnership pitch */}
-          <div
-            style={{
-              background: "linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.01))",
-              border: "1px solid rgba(255,255,255,.1)",
-              borderTop: `3px solid ${accent}`,
-              padding: "clamp(18px,2.5vw,28px)",
-            }}
-          >
-            <p
-              style={{
-                margin: "0 0 6px",
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 11,
-                letterSpacing: ".2em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
-              Brand partnerships
-            </p>
-            <p style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "clamp(16px,1.8vw,20px)", color: "#FFFFFF", lineHeight: 1.2 }}>
-              Put it in front of{" "}
-              <span style={{ color: accent }}>people who buy cars</span>
-            </p>
-            <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.55, color: "#B4B6B2" }}>
-              ~1,000,000 views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
-            </p>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
-              {[["~1M", "views/mo"], ["~7,900", "followers"], ["Owners &\ncollectors", "audience"]].map(([k, v]) => (
-                <div key={k} style={{ background: "rgba(255,255,255,.07)", padding: "8px 12px" }}>
-                  <p style={{ margin: "0 0 2px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 15, fontWeight: 700, color: accent, whiteSpace: "pre-line" }}>{k}</p>
-                  <p style={{ margin: 0, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>{v}</p>
-                </div>
-              ))}
-            </div>
-            <a
-              href="/partner"
-              style={{
-                display: "inline-block",
-                marginTop: 4,
-                padding: "10px 22px",
-                background: accent,
-                color: accent === "#F2C94C" ? "#101010" : "#00302B",
-                fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 800,
-                fontSize: 12.5,
-                letterSpacing: ".12em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-              }}
-            >
-              Start a partnership
-            </a>
-            <p style={{ margin: "10px 0 0", fontSize: 12.5, color: "#91918F" }}>
-              or{" "}
-              <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE", textDecoration: "none" }}>
-                DM @itspaddockgavin
-              </a>
-            </p>
+        {/* The one next step, on every page */}
+        <div className="pg-e2" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)", padding: "clamp(20px,3vw,30px)", marginBottom: "clamp(28px,3.5vw,44px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 28px" }}>
+          <div style={{ flex: "1 1 320px", minWidth: 0 }}>
+            <p style={{ margin: "0 0 6px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#F2C94C" }}>Looking for a car, or selling one?</p>
+            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#FFFFFF" }}>Tell me the car. I am the one reading it.</p>
           </div>
-
-          {/* Press block */}
-          <div
-            style={{
-              background: "linear-gradient(150deg,rgba(255,255,255,.055),rgba(255,255,255,.01))",
-              border: "1px solid rgba(255,255,255,.1)",
-              borderTop: "3px solid #00D2BE",
-              padding: "clamp(18px,2.5vw,28px)",
-            }}
-          >
-            <p
-              style={{
-                margin: "0 0 6px",
-                fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                fontSize: 11,
-                letterSpacing: ".2em",
-                textTransform: "uppercase",
-                color: "#91918F",
-              }}
-            >
-              Press &amp; media
-            </p>
-            <p style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "clamp(16px,1.8vw,20px)", color: "#FFFFFF", lineHeight: 1.2 }}>
-              Credentialing us{" "}
-              <span style={{ color: "#00D2BE" }}>for your event</span>
-            </p>
-            <p style={{ margin: "0 0 16px", fontSize: 14, lineHeight: 1.55, color: "#B4B6B2" }}>
-              Independent automotive publication, original photography and video only. Masthead, audience figures, editorial standards and prior credentials are all on the press page.
-            </p>
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
-              {["Masthead", "Audience figures", "Editorial standards", "Prior credentials"].map((k) => (
-                <span
-                  key={k}
-                  style={{
-                    padding: "5px 10px",
-                    background: "rgba(0,210,190,.1)",
-                    border: "1px solid rgba(0,210,190,.25)",
-                    fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
-                    fontSize: 10.5,
-                    letterSpacing: ".12em",
-                    textTransform: "uppercase",
-                    color: "#00D2BE",
-                  }}
-                >
-                  {k}
-                </span>
-              ))}
-            </div>
-            <a
-              href="/press"
-              style={{
-                display: "inline-block",
-                padding: "10px 22px",
-                border: "1px solid #00D2BE",
-                color: "#00D2BE",
-                fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 800,
-                fontSize: 12.5,
-                letterSpacing: ".12em",
-                textTransform: "uppercase",
-                textDecoration: "none",
-              }}
-            >
-              The press page
-            </a>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px" }}>
+            <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Start the intake</Link>
+            <Link href="/partner" className="pg-textlink">Brands</Link>
+            <Link href="/press" className="pg-textlink">Press</Link>
           </div>
         </div>
 

@@ -527,12 +527,7 @@ export default function GalleryPage() {
             >
               Follow on Instagram
             </a>
-            <a
-              href="/connect"
-              style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.28)", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", transition: "border-color .18s" }}
-            >
-              Every link
-            </a>
+            <a href="/connect" className="pg-textlink">Every link</a>
           </div>
         </section>
       </main>

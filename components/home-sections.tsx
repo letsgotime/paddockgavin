@@ -78,15 +78,10 @@ export function PhotoBreak({ src, pos = "center 40%", caption, credit = "Paddock
   )
 }
 
-/** The pages that are not sections. */
-export function AlsoHere() {
-  const items = [
-    { href: "/cars", label: "The Garage", note: "29 cars over 30+ years" },
-    { href: "/why-a-paddock", label: "Why a Paddock", note: "The word" },
-    { href: "/connect", label: "Every link", note: "One page" },
-  ]
+/** A row of small link cards. */
+export function LinkRow({ items, label = "Related" }: { items: { href: string; label: string; note: string }[]; label?: string }) {
   return (
-    <nav aria-label="Also here" className="pg-also">
+    <nav aria-label={label} className="pg-also">
       {items.map((it) => (
         <Link key={it.href} href={it.href} className="pg-e0" style={{ display: "flex", flexDirection: "column", gap: 4, padding: "14px 16px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
           <span style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 16, color: "#EDF1F6" }}>{it.label}</span>
@@ -95,4 +90,13 @@ export function AlsoHere() {
       ))}
     </nav>
   )
+}
+
+/** The pages that are not sections. */
+export function AlsoHere() {
+  return <LinkRow label="Also here" items={[
+    { href: "/cars", label: "The Garage", note: "29 cars over 30+ years" },
+    { href: "/why-a-paddock", label: "Why a Paddock", note: "The word" },
+    { href: "/connect", label: "Every link", note: "One page" },
+  ]} />
 }

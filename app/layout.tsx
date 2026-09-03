@@ -24,21 +24,21 @@ const SITE = "https://paddockgavin.com"
 
 export const metadata: Metadata = {
   title: {
-    default: "PaddockGavin · Two shifts. One paddock.",
+    default: "Exotic car broker and sourcing, Nashville · PaddockGavin",
     template: "%s · PaddockGavin",
   },
   description:
-    "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. Lot operations and events by day, software by night.",
+    "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. 78 cars found for other people, most of them before they were listed.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
-    title: "PaddockGavin · Two shifts. One paddock.",
-    description: "Cars used to be the reward. Now they're the work. Nashville, Tennessee.",
+    title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
+    description: "I find cars for people. Retail or wholesale, every auction open, 78 found so far. Nashville, Tennessee.",
     siteName: "PaddockGavin",
     locale: "en_US",
     type: "website",
     url: SITE,
-    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin · Two shifts. One paddock." }],
+    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin · I find cars for people." }],
   },
   twitter: {
     card: "summary_large_image",
@@ -70,11 +70,29 @@ export const metadata: Metadata = {
       },
       {
         "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": `${SITE}/#business`,
+        name: "PaddockGavin",
+        description: "Concierge broker and vehicle sourcer for exotic and collector cars. Retail or wholesale, shopping with a dealer's licence so every auction is open.",
+        url: SITE,
+        image: `${SITE}/opengraph-image`,
+        founder: { "@id": `${SITE}/#person` },
+        address: { "@type": "PostalAddress", addressLocality: "Nashville", addressRegion: "TN", addressCountry: "US" },
+        areaServed: { "@type": "City", name: "Nashville", containedInPlace: { "@type": "State", name: "Tennessee" } },
+        makesOffer: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Exotic car brokering and sourcing", url: `${SITE}/exotic-car-broker` } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Selling an exotic car, retail or wholesale", url: `${SITE}/sell-my-exotic-car` } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Exotic car consignment", url: `${SITE}/exotic-car-consignment` } },
+        ],
+        sameAs: ["https://www.instagram.com/itspaddockgavin/", "https://www.youtube.com/@paddockgavin", "https://www.tiktok.com/@paddockgavin"],
+      },
+      {
+        "@context": "https://schema.org",
         "@type": "WebSite",
         "@id": `${SITE}/#website`,
         url: SITE,
         name: "PaddockGavin",
-        description: "Concierge broker and vehicle sourcer. Software by night. Nashville, Tennessee.",
+        description: "Concierge broker and vehicle sourcer, Nashville, Tennessee.",
         author: { "@id": `${SITE}/#person` },
         potentialAction: {
           "@type": "SearchAction",

@@ -107,8 +107,8 @@ export default function OGImage() {
               maxWidth: 900,
             }}
           >
-            <span>Two shifts.</span>
-            <span style={{ color: "#F8B800" }}>One paddock.</span>
+            <span>I find cars</span>
+            <span style={{ color: "#F8B800" }}>for people.</span>
           </div>
 
           <div
@@ -121,7 +121,7 @@ export default function OGImage() {
               letterSpacing: "0.02em",
             }}
           >
-            Lot ops and events by day. Software by night. Nashville, Tennessee.
+            Concierge broker and vehicle sourcer. Retail or wholesale. Nashville, Tennessee.
           </div>
         </div>
 

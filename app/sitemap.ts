@@ -8,7 +8,10 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "/why-a-paddock",           priority: 0.8,  changeFrequency: "yearly"  },
   { url: "/connect",                 priority: 0.7,  changeFrequency: "monthly" },
   { url: "/book",                    priority: 0.7,  changeFrequency: "monthly" },
-  { url: "/intake",                  priority: 0.75, changeFrequency: "monthly" },
+  { url: "/intake",                  priority: 0.9,  changeFrequency: "monthly" },
+  { url: "/sell-my-exotic-car",      priority: 0.95, changeFrequency: "monthly" },
+  { url: "/exotic-car-broker",       priority: 0.95, changeFrequency: "monthly" },
+  { url: "/exotic-car-consignment",  priority: 0.9,  changeFrequency: "monthly" },
   // Cars
   { url: "/cars",                    priority: 0.9,  changeFrequency: "monthly" },
   { url: "/cars/r8",                 priority: 0.85, changeFrequency: "monthly" },
@@ -28,7 +31,6 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "https://pistonpoweredranch.com/entry",   priority: 0.9,  changeFrequency: "weekly" },
   { url: "https://pistonpoweredranch.com/vendor",  priority: 0.8,  changeFrequency: "weekly" },
   { url: "https://pistonpoweredranch.com/sponsor", priority: 0.8,  changeFrequency: "weekly" },
-  { url: "/donuts",                  priority: 0.7,  changeFrequency: "monthly" },
   // Night shift / products
   { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
   { url: "/juice-box",               priority: 0.8,  changeFrequency: "monthly" },
