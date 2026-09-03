@@ -13,7 +13,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join } from "node:path"
 
-const ROOTS = ["app", "lib"]
+const ROOTS = ["app", "lib", "components"]
 const EXT = /\.(ts|tsx|js|mjs|css)$/
 const SKIP = new Set(["node_modules", ".next", ".git", "public"])
 const DASH = /[–—]/

@@ -50,7 +50,7 @@ export const DesignSidebar = () => {
               Brooks
             </h1>
             <p className="eyebrow mt-3" style={{ color: "var(--steel)" }}>
-              Nashville, TN — Paddock20™
+              Nashville, TN · Paddock20™
             </p>
           </div>
 

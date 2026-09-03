@@ -200,7 +200,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
         {project.streamVideoId && (
           <CfStreamPlayer
             videoId={project.streamVideoId}
-            caption={`${project.title} — video`}
+            caption={`${project.title}, video`}
           />
         )}
 
@@ -235,7 +235,7 @@ export function ProjectDetail({ project }: { project: ProjectData }) {
             <figure key={index} style={{ margin: 0, position: "relative" }}>
               <CfImage
                 src={src}
-                alt={`${project.title} — frame ${index + 1}`}
+                alt={`${project.title}, frame ${index + 1}`}
                 variant="wall"
                 className="w-full"
                 style={{ display: "block", aspectRatio: "16/9", objectFit: "cover" }}
