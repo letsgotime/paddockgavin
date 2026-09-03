@@ -111,7 +111,14 @@ export function ApplyPage(p: ApplyProps) {
       { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
     )
     els.forEach((e) => io.observe(e))
-    return () => io.disconnect()
+    /* Whatever the observer does, nothing stays invisible. A form that never
+       appears because a callback never fired is worse than a fade that
+       happens off screen. */
+    const fallback = window.setTimeout(() => els.forEach((e) => e.classList.add("in")), 1600)
+    return () => {
+      io.disconnect()
+      window.clearTimeout(fallback)
+    }
   }, [])
 
   return (
