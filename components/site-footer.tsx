@@ -201,7 +201,6 @@ export function SiteFooter() {
               { href: "/events/pistonpoweredranch/entry",   label: "Enter a car" },
               { href: "/events/pistonpoweredranch/sponsor", label: "Become a sponsor" },
               { href: "/events/pistonpoweredranch/vendor",  label: "Take a stall" },
-              { href: "/events/creator-day",                label: "Creator Day" },
               { href: "/encantoblossomorchard",             label: "Encanto Blossom Orchard" },
               { href: "/events",                            label: "Every event" },
             ].map((l) => (

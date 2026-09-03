@@ -11,24 +11,6 @@ type Status = "idle" | "sending" | "sent" | "error"
 
 const KINDS = [
   {
-    key: "club",
-    eyebrow: "Collector morning",
-    title: "Book your club",
-    tone: "#F2C94C",
-    blurb: "Bring the whole club to a Donuts morning and park together. Tell me the headcount.",
-    hint: "How many cars, which club, which month",
-    img: "/images/donuts-overflow-sq.webp",
-  },
-  {
-    key: "vendor",
-    eyebrow: "Collector morning",
-    title: "Reserve your vendor location",
-    tone: "#F2C94C",
-    blurb: "$250 gets a vendor spot, $100 gets VIP parking \u2014 both inside the building. Five and ten of them, and half the proceeds go to a rotating charity every quarter.",
-    hint: "What you sell, inside or VIP, which month",
-    img: "/images/donuts-inside-sq.webp",
-  },
-  {
     key: "private",
     eyebrow: "The floor",
     title: "A private event",
@@ -57,23 +39,6 @@ const KINDS = [
   },
 ]
 
-function lastSaturdayOf(year: number, month: number): Date {
-  const d = new Date(year, month + 1, 0)
-  d.setDate(d.getDate() - ((d.getDay() + 1) % 7))
-  return d
-}
-function nextDonutsDate(): Date {
-  const now = new Date()
-  let d = lastSaturdayOf(now.getFullYear(), now.getMonth())
-  const cutoff = new Date(d); cutoff.setHours(11, 0, 0, 0)
-  if (now > cutoff) d = lastSaturdayOf(now.getFullYear(), now.getMonth() + 1)
-  return d
-}
-
-function creatorCountdown() {
-  const d = Math.ceil((Date.parse("2026-09-19T12:00:00") - Date.now()) / 86400000)
-  return d > 1 ? `in ${d} days` : d === 1 ? "tomorrow" : d === 0 ? "today" : "done"
-}
 
 export default function BookPage() {
   const [picked, setPicked] = useState("club")
@@ -114,8 +79,6 @@ export default function BookPage() {
     outline: "none",
   }
 
-  const nextDonuts = "Sat " + nextDonutsDate().toLocaleDateString("en-US", { month: "short", day: "numeric" })
-  const creatorIn = creatorCountdown()
 
   return (
     <>
@@ -133,28 +96,13 @@ export default function BookPage() {
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Lebanon, TN</span>
             </span>
-            <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
               Pick the one that fits, give me the shape of it, and I&rsquo;ll come back with the details. Every one of these lands with me.
             </p>
           </div>
-        </section>
-
-        {/* Board */}
-        <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
-          {[
-            { k: "Next Donuts",   v: nextDonuts, tone: "#00D2BE" },
-            { k: "Creator Day",   v: creatorIn,  tone: "#F2C94C" },
-            { k: "Vendor spots",  v: "5 in \u00b7 10 VIP", tone: "#EDF1F6" },
-            { k: "To charity",    v: "50% quarterly",      tone: "#00D2BE" },
-          ].map(row => (
-            <span key={row.k} style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>{row.k}</span>
-              <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 15, letterSpacing: ".08em", textTransform: "uppercase", color: row.tone, fontVariantNumeric: "tabular-nums" }}>{row.v}</span>
-            </span>
-          ))}
         </section>
 
         {/* Booking lanes */}

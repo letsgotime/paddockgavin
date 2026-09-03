@@ -262,8 +262,8 @@ export default function ConnectPage() {
               </span>
               <h1
                 style={{
-                  margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-                  fontSize: "clamp(30px,7vw,46px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase",
+                  margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+                  fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em",
                 }}
               >
                 <span style={{ color: "#F2C94C" }}>Paddock</span>

@@ -184,11 +184,10 @@ export default function ScoreboardPage() {
               style={{
                 margin: "0 0 16px",
                 fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(34px,6.2vw,68px)",
-                lineHeight: 1,
-                letterSpacing: "-.03em",
-                textTransform: "uppercase",
+                fontWeight: 800,
+                fontSize: "var(--t-h1)",
+                lineHeight: 1.05,
+                letterSpacing: "-.025em",
                 color: "#FFFFFF",
               }}
             >
@@ -291,8 +290,9 @@ export default function ScoreboardPage() {
             })}
           </div>
 
-          {/* Column headers — hide on narrow */}
+          {/* Column headers, hidden on narrow screens where the rows wrap */}
           <div
+            className="pg-hide-xs"
             style={{
               display: "grid",
               gridTemplateColumns: "52px minmax(0,3fr) minmax(0,4fr) 132px 128px",
@@ -652,11 +652,10 @@ export default function ScoreboardPage() {
               style={{
                 margin: "0 0 12px",
                 fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(24px,3.2vw,36px)",
-                lineHeight: 1.02,
-                letterSpacing: "-.022em",
-                textTransform: "uppercase",
+                fontWeight: 800,
+                fontSize: "var(--t-h2)",
+                lineHeight: 1.05,
+                letterSpacing: "-.025em",
                 color: "#FFFFFF",
               }}
             >

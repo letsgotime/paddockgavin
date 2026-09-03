@@ -28,7 +28,7 @@ export default function EncantoPage() {
                 In scoping &middot; Shelbyville, TN
               </span>
             </span>
-            <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(30px,5.2vw,56px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Encanto Blossom
               <br />
               <span style={{ color: "#F2C94C" }}>Orchard</span>

@@ -127,11 +127,10 @@ export default function WhyAPaddockPage() {
               style={{
                 margin: 0,
                 fontFamily: "Archivo, Helvetica, sans-serif",
-                fontWeight: 900,
-                fontSize: "clamp(36px,6.4vw,70px)",
-                lineHeight: 1,
-                letterSpacing: "-.028em",
-                textTransform: "uppercase",
+                fontWeight: 800,
+                fontSize: "var(--t-h1)",
+                lineHeight: 1.05,
+                letterSpacing: "-.025em",
                 color: "#FFFFFF",
               }}
             >
@@ -209,9 +208,8 @@ export default function WhyAPaddockPage() {
           </span>
           <h2
             style={{
-              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-              fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
-              textTransform: "uppercase", color: "#FFFFFF",
+              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+              fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
             What a paddock is, and why it fits lot operations
@@ -221,6 +219,9 @@ export default function WhyAPaddockPage() {
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
             Nobody in a paddock is showing off. Everybody has something apart, and everybody is happy to tell you why. You learn more standing around one for an afternoon than you do reading for a year.
+          </p>
+          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
+            Where I came to it from: a national sales leader, a D1 athlete, and twenty-six years in technology before the lot.
           </p>
         </section>
 
@@ -280,9 +281,8 @@ export default function WhyAPaddockPage() {
           </span>
           <h2
             style={{
-              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-              fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
-              textTransform: "uppercase", color: "#FFFFFF",
+              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+              fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
             Personal garage maintenance in Lebanon, Tennessee
@@ -360,9 +360,8 @@ export default function WhyAPaddockPage() {
             </span>
             <h2
               style={{
-                margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-                fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
-                textTransform: "uppercase", color: "#FFFFFF",
+                margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+                fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
               }}
             >
               Lot operations, Lebanon, Tennessee
@@ -410,9 +409,8 @@ export default function WhyAPaddockPage() {
           />
           <h2
             style={{
-              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-              fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
-              textTransform: "uppercase", color: "#FFFFFF",
+              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+              fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
             What exotic car ownership actually means
@@ -484,9 +482,8 @@ export default function WhyAPaddockPage() {
           </span>
           <h2
             style={{
-              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900,
-              fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em",
-              textTransform: "uppercase", color: "#FFFFFF",
+              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
+              fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
             From technology leadership to exotic car lot operations

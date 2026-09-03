@@ -61,7 +61,7 @@ export default function LotOpsPage() {
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; Lebanon, TN</span>
             </span>
-            <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,66px)", lineHeight: 1.02, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               The gate opens<br /><span style={{ color: "#F2C94C" }}>at eight</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#EDF1F6", maxWidth: "54ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
@@ -136,7 +136,7 @@ export default function LotOpsPage() {
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>It never stops</span>
           </div>
-          <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(26px,3.8vw,42px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "22ch" }}>
+          <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch" }}>
             Four of us run <span style={{ color: "#F2C94C" }}>the warehouse</span>
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "60ch" }}>
@@ -158,7 +158,7 @@ export default function LotOpsPage() {
         {/* Outbound CTA */}
         <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
-            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>Nothing moves until we&rsquo;re sure</h2>
+            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>Nothing moves until we&rsquo;re sure</h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "56ch" }}>Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.</p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>

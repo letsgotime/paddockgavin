@@ -83,7 +83,7 @@ export default function JuiceBoxPage() {
         {/* Masthead */}
         <section style={{ padding: "clamp(50px,7vw,78px) 0 clamp(40px,6vw,60px)", borderBottom: "1px solid #27384F" }}>
           <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The official index &middot; from The Gloss Game™</p>
-          <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(38px,6.6vw,68px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch" }}>
+          <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "16ch" }}>
             The GoTime<br /><span style={{ color: "#F2C94C" }}>Juice Box™</span>
           </h1>
           <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote &mdash; the ones that keep earning their slot. Roughly $55K went through this garage finding them, on twenty-nine of his own cars plus clients&rsquo; and friends&rsquo;. This is what stayed within reach.</p>
@@ -119,7 +119,7 @@ export default function JuiceBoxPage() {
               <div style={{ position: "relative", marginTop: -70, height: 70, background: "linear-gradient(180deg,rgba(10,21,35,0),#0A1523)", pointerEvents: "none" }} />
               <div style={{ border: "1px solid rgba(0,210,190,.35)", background: "linear-gradient(150deg,rgba(0,210,190,.08),rgba(0,210,190,0))", clipPath: "polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)", padding: "clamp(24px,4vw,40px)" }}>
                 <p style={{ margin: "0 0 14px", fontFamily: mono, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>7 more zones behind this line</p>
-                <h2 style={{ margin: "0 0 10px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(24px,3.6vw,36px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "22ch" }}>That was zone one. The rest goes where your email does</h2>
+                <h2 style={{ margin: "0 0 10px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch" }}>That was zone one. The rest goes where your email does</h2>
                 <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: "56ch" }}>One email, the whole index as a PDF &mdash; every zone, every link checked, the paid ones marked &mdash; and this page unlocks with it.</p>
                 <form onSubmit={submit} style={{ maxWidth: 560 }}>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
@@ -174,7 +174,7 @@ export default function JuiceBoxPage() {
         <section style={{ padding: "clamp(48px,7vw,80px) 0" }}>
           <div style={{ border: "1px solid #0A6BAA", background: "linear-gradient(150deg,rgba(0,81,133,.94),rgba(0,81,133,.55))", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(26px,4.4vw,48px)", display: "flex", flexWrap: "wrap", gap: "clamp(24px,4vw,44px)", alignItems: "center" }}>
             <div style={{ flex: "1 1 min(320px,100%)" }}>
-              <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>The index is chapter ten</h2>
+              <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>The index is chapter ten</h2>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The order that makes these products work is the other eleven chapters. Ninety-six pages, and the back half is the workbook.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", marginTop: 24 }}>
                 <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the book &middot; $19.99</a>

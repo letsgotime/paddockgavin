@@ -94,7 +94,7 @@ const sections = [
     num: "08",
     heading: "Events, and being on somebody else's property",
     body: [
-      "Creator Day and anything else on that floor takes place at the host venue, under its rules and its insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
+      "Every event takes place at the host venue, under its rules and its insurance. Attending means agreeing to those rules and to the site's photography policy. Drive sensibly in the lot. What happens to your car on the way there and back is between you and your insurer.",
     ],
   },
   {

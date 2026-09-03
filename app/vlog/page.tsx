@@ -22,7 +22,7 @@ export default function VlogPage() {
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px) clamp(40px,6vw,64px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 26px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The vlog</span></span>
-          <h1 style={{ margin: "0 0 20px", fontWeight: 900, fontSize: "clamp(38px,6vw,74px)", lineHeight: 1.02, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "16ch", fontFamily: arch }}>
+          <h1 style={{ margin: "0 0 20px", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "16ch", fontFamily: arch }}>
             <span style={{ display: "block" }}>The lot, on video.</span>
             <span style={{ display: "block", color: "#F2C94C" }}>Vertical, like it was shot.</span>
           </h1>
@@ -68,7 +68,7 @@ export default function VlogPage() {
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", background: "#005185", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(24px,4vw,34px)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ flex: "1 1 320px" }}>
-            <h2 style={{ margin: "0 0 8px", fontWeight: 900, fontSize: "clamp(24px,2.6vw,34px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", fontFamily: arch }}>See something worth filming?</h2>
+            <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>See something worth filming?</h2>
             <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#CFE4F4", maxWidth: "48ch" }}>DM me. If it is on the lot on a Saturday, there is a fair chance I am standing next to it.</p>
           </div>
           <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>DM @itspaddockgavin</a>

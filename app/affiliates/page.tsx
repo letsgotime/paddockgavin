@@ -112,7 +112,7 @@ export default function AffiliatesPage() {
           <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".26em", textTransform: "uppercase", color: "#00D2BE", margin: "0 0 20px" }}>
             Affiliates &amp; Partners &middot; codes &middot; the people
           </p>
-          <h1 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(46px,11vw,124px)", lineHeight: .86, letterSpacing: "-.045em", textTransform: "uppercase", color: "#fff", margin: "0 0 24px" }}>
+          <h1 style={{ fontFamily: disp, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: .86, letterSpacing: "-.025em", color: "#fff", margin: "0 0 24px" }}>
             Credit<br />where<br />it is due
           </h1>
           <p style={{ fontFamily: serif, fontSize: "clamp(20px,2.6vw,29px)", lineHeight: 1.4, fontWeight: 300, fontStyle: "italic", color: "#EDF1F6", margin: "0 0 30px", maxWidth: "28ch" }}>
@@ -140,7 +140,7 @@ export default function AffiliatesPage() {
 
           <div style={{ display: "grid", gap: "clamp(24px,4.4vw,64px)", marginBottom: "clamp(20px,3vw,36px)" }}>
             <div>
-              <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
+              <h2 style={{ fontFamily: disp, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#fff", margin: "0 0 20px" }}>
                 What I actually reach for
               </h2>
               <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#D4DAE2", margin: 0, maxWidth: "64ch" }}>
@@ -193,7 +193,7 @@ export default function AffiliatesPage() {
             <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>The other shift</span>
             <span style={{ flex: "1 1 auto", height: 1, background: "rgba(255,255,255,.13)" }} />
           </div>
-          <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
+          <h2 style={{ fontFamily: disp, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#fff", margin: "0 0 20px" }}>
             Not car care
           </h2>
           <p style={{ fontFamily: disp, fontSize: 16, lineHeight: 1.64, color: "#D4DAE2", margin: "0 0 clamp(18px,2.6vw,32px)", maxWidth: "64ch" }}>
@@ -234,7 +234,7 @@ export default function AffiliatesPage() {
             <span style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>The crew</span>
             <span style={{ flex: "1 1 auto", height: 1, background: "rgba(255,255,255,.13)" }} />
           </div>
-          <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 20px" }}>
+          <h2 style={{ fontFamily: disp, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#fff", margin: "0 0 20px" }}>
             The people who made it look like this
           </h2>
           <p style={{ fontFamily: serif, fontSize: "clamp(18px,2vw,20px)", lineHeight: 1.7, color: "#D4DAE2", margin: "0 0 8px", maxWidth: "64ch" }}>
@@ -267,7 +267,7 @@ export default function AffiliatesPage() {
         {/* ── Reach-out card ── */}
         <section style={{ padding: "0 clamp(18px,5vw,64px) clamp(70px,10vw,120px)" }}>
           <div style={{ background: "linear-gradient(150deg,rgba(0,81,133,.94),rgba(0,81,133,.55))", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 26px),calc(100% - 26px) 100%,0 100%)", padding: "clamp(26px,4.4vw,50px)" }}>
-            <h2 style={{ fontFamily: disp, fontWeight: 900, fontSize: "clamp(25px,4.2vw,44px)", lineHeight: 1, letterSpacing: "-.034em", textTransform: "uppercase", color: "#fff", margin: "0 0 18px" }}>
+            <h2 style={{ fontFamily: disp, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#fff", margin: "0 0 18px" }}>
               If your work is here and your name isn&apos;t
             </h2>
             <p style={{ fontFamily: serif, fontSize: 17.5, lineHeight: 1.65, color: "#DCE8F2", margin: "0 0 18px", maxWidth: "58ch" }}>

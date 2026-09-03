@@ -73,7 +73,7 @@ export default function PressPage() {
           <p style={{ margin: "0 0 18px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".22em", textTransform: "uppercase", color: "#91918F" }}>
             Press &amp; Media
           </p>
-          <h1 style={{ margin: "0 0 18px", fontWeight: 900, fontSize: "clamp(32px,5vw,56px)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
+          <h1 style={{ margin: "0 0 18px", fontWeight: 800, fontSize: "var(--t-h1)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
             Independent publication.{" "}
             <span style={{ color: "#00D2BE" }}>Everything you need to credential us.</span>
           </h1>
@@ -92,7 +92,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>01</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>The masthead</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>The masthead</h2>
           </div>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14.5 }}>
@@ -123,7 +123,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>02</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Audience</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Audience</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             Verifiable on request, with platform-native screenshots and a downloadable one-page kit.
@@ -154,7 +154,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>03</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>What gets covered</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>What gets covered</h2>
           </div>
           <p style={{ margin: "0 0 16px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             The beat is the part of car culture that happens before the cameras usually arrive, transport and logistics, condition and intake, the practical detail of living with these cars, and the rooms where people stand next to them.
@@ -173,7 +173,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>04</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Requesting a credential from us</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Requesting a credential from us</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             Bringing us to your event, or offering a vehicle loan? DM @itspaddockgavin with the date, the location and what access is on offer. Assignment letters on publication letterhead, a W-9, certificates of insurance and prior credential history are all available on request, same day.
@@ -206,7 +206,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>05</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Editorial standards</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Editorial standards</h2>
           </div>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {standards.map((item, i) => (
@@ -225,7 +225,7 @@ export default function PressPage() {
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".2em", color: "#F2C94C", flexShrink: 0 }}>06</span>
-            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "clamp(18px,2vw,24px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>Assets for publication</h2>
+            <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Assets for publication</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             Logos, headshots, a one-page media kit and high-resolution stills are available for editorial use when covering PaddockGavin, Supercar IQ™, Tires &amp; Timepieces™ or The Gloss Game™. Ask and they are sent within the day.

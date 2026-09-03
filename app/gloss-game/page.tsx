@@ -66,7 +66,7 @@ export default function GlossGamePage() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(28px,5vw,60px)", alignItems: "center" }}>
               <div style={{ flex: "1.2 1 min(480px,100%)", minWidth: "min(440px,100%)" }}>
                 <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The car detailing book &middot; by Gavin Brooks</p>
-                <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(38px,6.6vw,68px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "17ch" }}>
+                <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "17ch" }}>
                   Most swirl marks<br /><span style={{ color: "#F2C94C" }}>come from the wash.</span>
                 </h1>
                 <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the road. The mitt, the bucket, the towel that did the wheels first. The Gloss Game is the order that stops it &mdash; what to buy, what touches the paint, and in what sequence, so the shine you build on Saturday is still there on Friday.</p>
@@ -99,7 +99,7 @@ export default function GlossGamePage() {
           <section style={{ padding: "clamp(48px,7vw,80px) 0", borderBottom: "1px solid #27384F" }}>
             <div style={{ maxWidth: 760 }}>
               <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>The reason you&rsquo;re on this page</p>
-              <h2 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(28px,4.4vw,42px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>The shelf is full.<br /><span style={{ color: "#F2C94C" }}>The shine still fades.</span></h2>
+              <h2 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>The shelf is full.<br /><span style={{ color: "#F2C94C" }}>The shine still fades.</span></h2>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>You know the moment. Sunday went to the whole car, and by Friday the hood looks like nobody was there. The swirls came back two washes after the correction. The bottle that promised depth left streaks you can read in the garage light.</p>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>So you bought a better soap. Then a plusher towel. Then a coating. The line in the door caught the sun anyway.</p>
               <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>The products were never the problem. The order was &mdash; which bucket, which mitt, what touches the paint after the wheels. The Gloss Game is that order, written down so you can run it.</p>
@@ -110,7 +110,7 @@ export default function GlossGamePage() {
           <section style={{ padding: "clamp(48px,7vw,80px) 0", borderBottom: "1px solid #27384F" }}>
             <div style={{ maxWidth: 760 }}>
               <p style={{ margin: "0 0 18px", fontFamily: mono, fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>What the book teaches</p>
-              <h2 style={{ margin: "0 0 26px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(28px,4.4vw,42px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>How to detail a car, in order</h2>
+              <h2 style={{ margin: "0 0 26px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>How to detail a car, in order</h2>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, margin: "0 0 30px" }}>
                 {["Rubber","Barrels","Faces"].map((w,i) => (
                   <span key={w}>
@@ -186,7 +186,7 @@ export default function GlossGamePage() {
           <section style={{ padding: "clamp(48px,7vw,80px) 0" }}>
             <div style={{ border: "1px solid #0A6BAA", background: "linear-gradient(150deg,rgba(0,81,133,.94),rgba(0,81,133,.55))", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(26px,4.4vw,48px)", display: "flex", flexWrap: "wrap", gap: "clamp(24px,4vw,44px)", alignItems: "center" }}>
               <div style={{ flex: "1 1 min(320px,100%)" }}>
-                <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 900, fontSize: "clamp(26px,4vw,40px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>Chapter ten is free</h2>
+                <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>Chapter ten is free</h2>
                 <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The full product index &mdash; every zone, every link checked, the paid ones marked &mdash; free with your email. The reasoning behind each product is in the other eleven chapters.</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
                   <Link href="/juice-box" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the index &rarr;</Link>

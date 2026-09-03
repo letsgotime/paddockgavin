@@ -84,16 +84,6 @@ const PAST = [
     cta: "The photos",
   },
   {
-    key: "creator",
-    title: "Creator Day",
-    stateLabel: "Ran September 2026",
-    blurb:
-      "Installations built for cameras. Creators of every kind invited to shoot, film, paint and post. The winner took the bundle and a full day with a car.",
-    img: "/images/cullinan-speedway.webp",
-    href: "/events/creator-day",
-    cta: "The page",
-  },
-  {
     key: "private",
     title: "Private client evenings",
     stateLabel: "Ongoing, by request",
@@ -181,7 +171,7 @@ function Eyebrow({ children, color = "#00D2BE" }: { children: React.ReactNode; c
 function SectionHead({ title, right }: { title: string; right: React.ReactNode }) {
   return (
     <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16, flexWrap: "wrap", borderBottom: "1px solid rgba(255,255,255,.14)", paddingBottom: 10 }}>
-      <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3vw,32px)", letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>{title}</h2>
+      <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>{title}</h2>
       {right}
     </div>
   )
@@ -279,7 +269,7 @@ export default function EventsPage() {
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 6%,rgba(10,21,35,.9) 38%,rgba(10,21,35,.62) 74%,rgba(10,21,35,.42) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
             <Tag>Car events &middot; Middle Tennessee</Tag>
-            <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Every field
               <br />
               <span style={{ color: "#F2C94C" }}>we open</span>
@@ -334,7 +324,7 @@ export default function EventsPage() {
                       {e.venue} &middot; {e.place}
                     </Eyebrow>
                   </div>
-                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.4vw,38px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>{e.title}</h3>
+                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>{e.title}</h3>
                   <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "62ch" }}>{e.blurb}</p>
                   <dl style={{ margin: "2px 0 0", display: "flex", gap: "clamp(16px,3vw,32px)", flexWrap: "wrap" }}>
                     {[
@@ -369,7 +359,7 @@ export default function EventsPage() {
                 <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(160deg,rgba(14,26,42,.96),rgba(14,26,42,.88))" }} />
                 <div style={{ padding: "clamp(18px,2.4vw,24px)", display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
                   <Eyebrow color="#848482">{e.stateLabel}</Eyebrow>
-                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(19px,2.2vw,23px)", lineHeight: 1.08, letterSpacing: "-.018em", textTransform: "uppercase", color: "#FFFFFF" }}>{e.title}</h3>
+                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>{e.title}</h3>
                   <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C9D1DB" }}>{e.blurb}</p>
                   <div style={{ marginTop: "auto", paddingTop: 12 }}>
                     <Link href={e.href} style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none", borderBottom: "1px solid rgba(0,210,190,.45)", paddingBottom: 2 }}>
@@ -423,7 +413,7 @@ export default function EventsPage() {
         <section id="property" className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
           <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
             <Tag>Have ground</Tag>
-            <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.4vw,36px)", lineHeight: 1.03, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Bring us a property
             </h2>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "50ch" }}>

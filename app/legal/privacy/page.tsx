@@ -20,7 +20,7 @@ const sections = [
     num: "02",
     heading: "What a form collects",
     body: [
-      "The forms on this site, booking the floor, RSVPing to Creator Day, asking me to find a car, a partnership enquiry, ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
+      "The forms on this site, booking the floor, asking me to find a car, a partnership enquiry, ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
       "Enquiries reach me by email through Resend, a transactional mail provider. They pass the message through and do not use it for anything of their own. Nothing you send is added to a marketing list, because there is no marketing list.",
     ],
     table: {
@@ -101,7 +101,7 @@ const sections = [
     num: "09",
     heading: "Being filmed at an event",
     body: [
-      "Creator Day and the rest happen at a host venue, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
+      "Events happen at a host venue, and they are photographed. Being there means you may appear in a frame. Your car may appear too. If you would rather not, find me at the event or DM @itspaddockgavin with enough detail to identify the shot, and it comes down.",
     ],
   },
   {

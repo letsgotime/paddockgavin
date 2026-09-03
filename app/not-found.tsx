@@ -21,7 +21,7 @@ export default function NotFound() {
             Off the map
           </p>
 
-          <h1 style={{ margin: "0 0 14px", fontWeight: 900, fontSize: "clamp(30px,5vw,44px)", lineHeight: 1.04, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>
+          <h1 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
             <span style={{ display: "block" }}>Wrong turn.</span>
             <span style={{ display: "block", color: "#F2C94C" }}>Nothing parked here.</span>
           </h1>

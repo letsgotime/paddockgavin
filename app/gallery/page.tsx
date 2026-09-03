@@ -361,7 +361,7 @@ export default function GalleryPage() {
               </span>
             </span>
             <h1
-              style={{ margin: "0 0 16px", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 900, fontSize: "clamp(34px,6.4vw,72px)", lineHeight: 1, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", textWrap: "pretty" as never }}
+              style={{ margin: "0 0 16px", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", textWrap: "pretty" as never }}
             >
               Shot between jobs,
               <br />
@@ -434,7 +434,7 @@ export default function GalleryPage() {
                   {String(ci + 1).padStart(2, "0")}
                 </span>
                 <h2
-                  style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.4vw,40px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", flex: "0 1 auto" }}
+                  style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", flex: "0 1 auto" }}
                 >
                   {ch.label}
                 </h2>
@@ -511,7 +511,7 @@ export default function GalleryPage() {
           }}
         >
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
-            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 900, fontSize: "clamp(24px,3.2vw,36px)", lineHeight: 1.02, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>
+            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo,Helvetica,sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               New frames land on Instagram first
             </h2>
             <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "52ch" }}>

@@ -24,7 +24,7 @@ const formats = [
   },
   {
     title: "Event sponsorship",
-    desc: "Creator Day and Tires & Timepieces™. Floor presence and content from the event.",
+    desc: "Tires & Timepieces™ and the shows I run. Floor presence and content from the event.",
   },
   {
     title: "Affiliate programme",
@@ -65,7 +65,7 @@ export default function PartnerPage() {
           <p style={{ margin: "0 0 18px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".22em", textTransform: "uppercase", color: "#91918F" }}>
             Brand Partnerships
           </p>
-          <h1 style={{ margin: "0 0 18px", fontWeight: 900, fontSize: "clamp(32px,5.5vw,62px)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
+          <h1 style={{ margin: "0 0 18px", fontWeight: 800, fontSize: "var(--t-h1)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
             Put it in front of{" "}
             <span style={{ color: "#F2C94C" }}>people who buy cars</span>
           </h1>
@@ -125,7 +125,7 @@ export default function PartnerPage() {
 
         {/* Partnership formats */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
-          <h2 style={{ margin: "0 0 28px", fontWeight: 800, fontSize: "clamp(20px,2.5vw,28px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>
+          <h2 style={{ margin: "0 0 28px", fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>
             What we do together
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
@@ -148,7 +148,7 @@ export default function PartnerPage() {
 
         {/* The rules */}
         <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
-          <h2 style={{ margin: "0 0 20px", fontWeight: 800, fontSize: "clamp(20px,2.5vw,28px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>
+          <h2 style={{ margin: "0 0 20px", fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>
             The rules of the partnership
           </h2>
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
@@ -163,7 +163,7 @@ export default function PartnerPage() {
 
         {/* Enquiry CTA */}
         <section style={{ marginBottom: 40 }}>
-          <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "clamp(20px,2.5vw,28px)", letterSpacing: "-.015em", color: "#FFFFFF" }}>
+          <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>
             Start a partnership
           </h2>
           <p style={{ margin: "0 0 28px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 560 }}>
