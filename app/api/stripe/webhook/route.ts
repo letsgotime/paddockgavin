@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server"
 import crypto from "node:crypto"
+import { crm } from "@/lib/crm/pool"
+import { STRIPE_API, money } from "@/lib/stripe/catalog"
+import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "@/lib/email/ranch"
+import { ranchTemplate } from "@/lib/email/ranch-templates"
 
 /**
  * Stripe webhook.
@@ -16,6 +20,11 @@ import crypto from "node:crypto"
  *
  * Unverified requests are refused. An endpoint that books payments on anyone's
  * say so is worse than no endpoint, and this URL is guessable.
+ *
+ * A verified payment is written to public.payments in the CRM, once, keyed on
+ * the Stripe object id so a redelivery cannot book it twice. The first booking
+ * also sends the receipt to the payer and a note to the desk. HQ reads the
+ * ledger; the person on the desk decides what goes on the vendor row.
  */
 
 export const runtime = "nodejs"
@@ -23,6 +32,10 @@ export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 
 const TOLERANCE_SECONDS = 300
+const RANCH = "https://pistonpoweredranch.com"
+const NOREPLY = "The Piston Powered Ranch <noreply@pistonpoweredranch.com>"
+
+type Ledger = "vendor_setup" | "sponsorship" | "revenue_share" | "vip" | "other"
 
 function verify(raw: string, header: string | null, secret: string): boolean {
   if (!header) return false
@@ -46,6 +59,46 @@ function verify(raw: string, header: string | null, secret: string): boolean {
   if (a.length !== b.length) return false
   /* Constant time, so the comparison cannot be used to guess the signature. */
   return crypto.timingSafeEqual(a, b)
+}
+
+/** The ledger line, from what the session was told when it was made. */
+function ledgerOf(meta: Record<string, string>): Ledger {
+  const l = meta.ledger
+  if (l === "vendor_setup" || l === "sponsorship" || l === "revenue_share" || l === "vip" || l === "other") return l
+  const k = meta.kind || ""
+  if (k === "vendorBooth") return "vendor_setup"
+  if (/supporting|Title|sponsor/i.test(k)) return "sponsorship"
+  if (/^vip/.test(k)) return "vip"
+  return "other"
+}
+
+/* A payment made through a payment link carries the link's metadata on the
+   session. If it did not, the link itself still has it. */
+async function linkMetadata(linkId: string): Promise<Record<string, string>> {
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!key) return {}
+  try {
+    const r = await fetch(`${STRIPE_API}/payment_links/${linkId}`, { headers: { Authorization: `Bearer ${key}` } })
+    const j = (await r.json()) as { metadata?: Record<string, string> }
+    return j.metadata || {}
+  } catch {
+    return {}
+  }
+}
+
+async function mail(payload: Record<string, unknown>): Promise<boolean> {
+  const key = process.env.RESEND_API_KEY
+  if (!key) return false
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+    return r.ok
+  } catch {
+    return false
+  }
 }
 
 export async function POST(req: Request) {
@@ -72,29 +125,89 @@ export async function POST(req: Request) {
   }
 
   const obj = evt.data?.object ?? {}
-  const meta = (obj.metadata as Record<string, string>) || {}
+  let meta = (obj.metadata as Record<string, string>) || {}
 
   switch (evt.type) {
     case "checkout.session.completed":
     case "invoice.paid": {
-      /* Logged rather than written, deliberately. The payments table lives in
-         the CRM database, which this deployment does not hold a connection to:
-         DATABASE_URL here points at morning-silence, and the CRM is
-         wispy-wave. Writing it needs that connection string, which is a
-         decision rather than something to guess at. Until then this is a
-         durable record in the Vercel logs with everything needed to reconcile,
-         and Stripe keeps its own. */
-      console.log("[stripe/webhook] paid", {
-        type: evt.type,
-        id: obj.id,
-        amount: obj.amount_total ?? obj.amount_paid,
-        currency: obj.currency,
-        email: obj.customer_email ?? obj.customer_details,
-        event: meta.event,
-        kind: meta.kind,
-        org: meta.org,
-        livemode: obj.livemode,
-      })
+      if (!meta.kind && typeof obj.payment_link === "string") meta = { ...(await linkMetadata(obj.payment_link)), ...meta }
+
+      const id = String(obj.id || "")
+      const amount = Number(obj.amount_total ?? obj.amount_paid ?? 0)
+      const currency = String(obj.currency || "usd").toLowerCase()
+      const details = (obj.customer_details as { email?: string; name?: string } | undefined) || {}
+      const email = (typeof obj.customer_email === "string" && obj.customer_email) || details.email || null
+      const payer = details.name || null
+      const livemode = obj.livemode === true
+      const ledger = ledgerOf(meta)
+      const slug = meta.event_slug || meta.event || ""
+
+      console.log("[stripe/webhook] paid", { type: evt.type, id, amount, currency, email, event: slug, kind: meta.kind, ledger, org: meta.org, livemode })
+
+      /* Book it, once. */
+      let booked = false
+      const db = crm()
+      if (db && id) {
+        try {
+          const ev = slug ? await db.query<{ id: string }>(`select id from public.events where slug = $1 limit 1`, [slug]) : { rows: [] }
+          const eventId = ev.rows[0]?.id ?? null
+          const ins = await db.query(
+            `insert into public.payments (event_id, kind, stripe_object, amount_cents, currency, status, payer_email, livemode)
+             values ($1, $2, $3, $4, $5, 'paid', $6, $7)
+             on conflict (stripe_object) do nothing
+             returning id`,
+            [eventId, ledger, id, amount, currency, email, livemode],
+          )
+          booked = (ins.rowCount ?? 0) > 0
+          if (!eventId) console.error("[stripe/webhook] no events row for slug, booked without event_id", { slug, id })
+        } catch (err) {
+          console.error("[stripe/webhook] could not book the payment", err)
+        }
+      } else if (!db) {
+        console.error("[stripe/webhook] CRM_DATABASE_URL is not set; payment logged only", { id })
+      }
+
+      /* The receipt, and a line to the desk. Only on the first booking, so a
+         redelivered event does not send a second receipt. */
+      if (booked && (ledger === "vendor_setup" || ledger === "sponsorship")) {
+        const surface = ledger === "vendor_setup" ? "vendor" : "sponsor"
+        const desk = surface === "vendor" ? "vendors@pistonpoweredranch.com" : "sponsors@pistonpoweredranch.com"
+        const covers = meta.covers || meta.note || (surface === "vendor" ? "Vendor booth" : "Sponsorship")
+        const paidOn = new Date().toLocaleDateString("en-US", { timeZone: "America/Chicago", day: "numeric", month: "long", year: "numeric" })
+        const amountText = money(amount) + (currency !== "usd" ? ` ${currency.toUpperCase()}` : "")
+        const receiptNo = id.replace(/^cs_(test|live)_/, "").slice(-10).toUpperCase()
+
+        if (email) {
+          const t = ranchTemplate(surface, "receipt", { name: payer || undefined, org: meta.org || undefined, receiptNo, amount: amountText, method: "Card, via Stripe", paidOn, covers })
+          if (t) {
+            const blocks: Block[] = livemode ? t.blocks : [{ kind: "quiet", text: "Test mode: no money moved. This receipt is a rehearsal." }, ...t.blocks]
+            const doc: RanchEmail = { ...t, blocks }
+            await mail({ from: t.from, to: [email], reply_to: desk, subject: t.subject, html: renderRanchEmail(doc), text: renderRanchText(doc) })
+          }
+        }
+
+        const note: RanchEmail = {
+          preheader: `${amountText} from ${meta.org || payer || email || "a payer"}`,
+          eyebrow: livemode ? "Payment received" : "Test payment",
+          heading: `${amountText} paid`,
+          blocks: [
+            {
+              kind: "facts",
+              rows: [
+                { label: "From", value: meta.org || payer || email || "unknown" },
+                ...(email ? [{ label: "Email", value: email }] : []),
+                { label: "For", value: covers },
+                { label: "Amount", value: amountText },
+                { label: "Stripe", value: id },
+                ...(meta.note ? [{ label: "Note", value: meta.note }] : []),
+              ],
+            },
+            { kind: "button", label: "Open in HQ", href: `${RANCH}/console/#/ops` },
+            { kind: "quiet", text: surface === "vendor" ? "Booked in the ledger. Add them to the vendor row from HQ when the pitch is placed." : "Booked in the ledger. Artwork and placement run from HQ." },
+          ],
+        }
+        await mail({ from: NOREPLY, to: [desk], subject: `${livemode ? "Paid" : "Test payment"}: ${meta.org || payer || email || id}, ${amountText}`, html: renderRanchEmail(note), text: renderRanchText(note) })
+      }
       break
     }
     case "payment_intent.payment_failed": {

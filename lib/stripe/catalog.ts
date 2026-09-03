@@ -11,20 +11,16 @@
  * Keyed by events.slug. An event with no entry here has nothing to sell yet,
  * which is the correct state for an event nobody has seeded objects for.
  *
- * These ids are real objects in acct_1UAWrtRJpXHmje77, the PaddockGavin
- * sandbox, seeded 31 August 2026. The earlier set lived in the Paddock20
- * sandbox and does not exist in this account.
- *
- * They are not placeholders and they are not guesses. Every one carries
- * metadata.event = piston-powered-ranch, so when the next event runs under the
- * same account its objects filter apart from these cleanly.
+ * Test and live. The productId and priceId below are real objects in
+ * acct_1UAWrtRJpXHmje77, the PaddockGavin sandbox, seeded 31 August 2026, and
+ * they only exist in test mode. Every priced item also carries a lookupKey,
+ * which is the price's stable name in any mode: scripts/stripe-seed.mjs creates
+ * the same products and prices under the live key with these keys, and the
+ * checkout route asks Stripe for the price by lookupKey at request time. So
+ * going live is a key swap and one seed run, with no edit here.
  *
  * Every price here is the STARTING tier. Footprint scaling and negotiated
- * amounts use ad hoc price_data on the Checkout Session with the product id
- * kept, so reporting stays grouped under the same product.
- *
- * When live keys are activated this catalogue is recreated live with one
- * script and the ids move into env. Nothing here is hardcoded into a component.
+ * amounts are invoiced from the desk with ad hoc prices, see /api/invoice.
  */
 
 export const STRIPE_API = "https://api.stripe.com/v1"
@@ -32,6 +28,16 @@ export const STRIPE_API = "https://api.stripe.com/v1"
 export interface CatalogItem {
   key: string
   name: string
+  /** What a receipt says the money covered. */
+  covers: string
+  /**
+   * Who may buy it through the public checkout route.
+   * public: the store and the booth page. desk: invoiced by staff after a
+   * conversation, never reachable from the public internet with a price.
+   */
+  audience: "public" | "desk"
+  /** payments.kind, which is constrained in the database. */
+  ledger: "vendor_setup" | "sponsorship" | "vip" | "other"
   /** Empty until the object is created in Stripe. */
   productId?: string
   /**
@@ -42,6 +48,8 @@ export interface CatalogItem {
    * instead of a number. Filling this in is the whole of putting it on sale.
    */
   priceId?: string
+  /** The price's stable name across Stripe modes. */
+  lookupKey?: string
   /** The amount in cents, as the price object holds it. Absent means TBD. */
   cents?: number
 }
@@ -51,35 +59,50 @@ export function isOnSale(i: CatalogItem | undefined): boolean {
   return Boolean(i && i.priceId && typeof i.cents === "number" && i.cents > 0)
 }
 
-
 export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
   pistonpoweredranch: {
   vendorBooth: {
     key: "vendorBooth",
     name: "Vendor Booth Setup",
+    covers: "Vendor booth, 10 by 10, The Piston Powered Ranch, 10 October 2026",
+    audience: "public",
+    ledger: "vendor_setup",
     productId: "prod_VAskeBHu2wx7Oj",
     priceId: "price_1UAWzGRJpXHmje77uDzxNMAg",
+    lookupKey: "ppr-2026-vendor-booth-10x10",
     cents: 25000,
   },
   supporting: {
     key: "supporting",
     name: "Supporting Sponsorship",
+    covers: "Supporting sponsorship, The Piston Powered Ranch, 10 October 2026",
+    audience: "desk",
+    ledger: "sponsorship",
     productId: "prod_VAskNMROtPmvuq",
     priceId: "price_1UAWzGRJpXHmje770wv7jUj9",
+    lookupKey: "ppr-2026-sponsor-supporting",
     cents: 50000,
   },
   secondaryTitle: {
     key: "secondaryTitle",
     name: "Secondary Title Sponsorship",
+    covers: "Secondary title sponsorship, The Piston Powered Ranch, 10 October 2026",
+    audience: "desk",
+    ledger: "sponsorship",
     productId: "prod_VAskun9aDAKszv",
     priceId: "price_1UAWzHRJpXHmje779GTCTJYp",
+    lookupKey: "ppr-2026-sponsor-secondary-title",
     cents: 250000,
   },
   premierTitle: {
     key: "premierTitle",
     name: "Premier Title Sponsorship",
+    covers: "Premier title sponsorship, The Piston Powered Ranch, 10 October 2026",
+    audience: "desk",
+    ledger: "sponsorship",
     productId: "prod_VAskygpO23zwTW",
     priceId: "price_1UAWzIRJpXHmje77AkoTNkVM",
+    lookupKey: "ppr-2026-sponsor-premier-title",
     cents: 500000,
   },
 
@@ -90,18 +113,19 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
    * number, because none has one: the VIP rooms have always been "pricing is a
    * conversation" and no shirt or hat has a price or a payment link anywhere.
    *
-   * Putting any of them on sale is two fields, priceId and cents, taken from
-   * the objects in Stripe. No component changes and no route changes. */
+   * Putting any of them on sale is priceId and cents from the objects in
+   * Stripe, plus a lookupKey so live mode finds it. No component changes and
+   * no route changes. */
 
-  vipTerrace: { key: "vipTerrace", name: "The Terrace" },
-  vipOwnersTable: { key: "vipOwnersTable", name: "The Owner's Table" },
+  vipTerrace: { key: "vipTerrace", name: "The Terrace", covers: "The Terrace, 10 October 2026", audience: "public", ledger: "vip" },
+  vipOwnersTable: { key: "vipOwnersTable", name: "The Owner's Table", covers: "The Owner's Table, 10 October 2026", audience: "public", ledger: "vip" },
 
-  teeRanchGate: { key: "teeRanchGate", name: "Ranch Gate Tee" },
-  teePprOctober: { key: "teePprOctober", name: "October Tee" },
-  capRanch: { key: "capRanch", name: "Ranch Cap" },
-  truckerPg: { key: "truckerPg", name: "PG Trucker" },
-  mugRanch: { key: "mugRanch", name: "Ranch Mug" },
-  backpackRanch: { key: "backpackRanch", name: "Ranch Backpack" },
+  teeRanchGate: { key: "teeRanchGate", name: "Ranch Gate Tee", covers: "Ranch Gate Tee", audience: "public", ledger: "other" },
+  teePprOctober: { key: "teePprOctober", name: "October Tee", covers: "October Tee", audience: "public", ledger: "other" },
+  capRanch: { key: "capRanch", name: "Ranch Cap", covers: "Ranch Cap", audience: "public", ledger: "other" },
+  truckerPg: { key: "truckerPg", name: "PG Trucker", covers: "PG Trucker", audience: "public", ledger: "other" },
+  mugRanch: { key: "mugRanch", name: "Ranch Mug", covers: "Ranch Mug", audience: "public", ledger: "other" },
+  backpackRanch: { key: "backpackRanch", name: "Ranch Backpack", covers: "Ranch Backpack", audience: "public", ledger: "other" },
   },
 }
 
@@ -111,9 +135,8 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
  * Only the 10x10 has a price, because only the 10x10 has one in Stripe. The
  * larger footprints are real options that are quoted, and a quote is not a
  * number I can invent: a vendor who pays a figure I made up has a receipt for
- * it. So they route to the enquiry form instead of to Checkout, which is what
- * "footprint scaling uses ad hoc price_data" means in practice until somebody
- * sets the scale.
+ * it. So they route to the enquiry form with the size filled in, and the desk
+ * invoices the agreed figure from there.
  */
 export interface Footprint {
   size: string
@@ -168,5 +191,8 @@ for (const [slug, set] of Object.entries(CATALOGS))
       `Stripe catalogue: ${slug}."${i.key}" has ${hasPrice ? "a priceId but no cents" : "cents but no priceId"}. ` +
         "Set both, from the objects in Stripe, or neither.",
     )
+  }
+  if (hasPrice && !i.lookupKey) {
+    throw new Error(`Stripe catalogue: ${slug}."${i.key}" is priced but has no lookupKey, so it cannot be found in live mode.`)
   }
 }
