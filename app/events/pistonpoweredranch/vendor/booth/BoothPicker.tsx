@@ -1,16 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { FOOTPRINTS, POWER_OPTIONS, money, type Footprint } from "@/lib/stripe/catalog"
+import { FOOTPRINTS, POWER_OPTIONS, PREMIUM_PLACEMENT, money, type Footprint } from "@/lib/stripe/catalog"
 
 /**
  * The booth picker.
  *
- * One footprint has a price in Stripe, so one footprint can be paid for here.
- * The other three are quoted, and a quote is not a number to invent: a vendor
- * who pays a figure nobody set has a receipt for it. Those route to the enquiry
- * form instead, which is what "footprint scaling uses ad hoc price_data" means
- * in practice until somebody sets the scale.
+ * Four footprints, each with the figure set on 3 September, and premium
+ * placement on top of any of them. A footprint whose price does not exist in
+ * the current Stripe mode yet answers "not open yet" from the route, and the
+ * enquiry form takes it with the size filled in.
  *
  * The route answers 503 when Stripe is not configured on the deployment. That
  * is rendered as "not open yet" rather than as a failure, because it is not the
@@ -29,10 +28,12 @@ export function BoothPicker() {
   const [power, setPower] = useState(POWER_OPTIONS[0])
   const [email, setEmail] = useState("")
   const [org, setOrg] = useState("")
+  const [premium, setPremium] = useState(false)
   const [state, setState] = useState<State>("idle")
   const [why, setWhy] = useState("")
 
   const payable = typeof picked.cents === "number"
+  const total = (picked.cents || 0) + (premium ? PREMIUM_PLACEMENT.cents : 0)
 
   async function go() {
     if (!payable || state === "starting") return
@@ -47,7 +48,8 @@ export function BoothPicker() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          item: "vendorBooth",
+          item: picked.item,
+          addons: premium ? [PREMIUM_PLACEMENT.item] : [],
           /* Named, not defaulted. The route used to fall back to this event
              when nobody said, which is how a second event's booth money ends
              up in the first event's ledger. This page is the ranch's own, so
@@ -55,7 +57,7 @@ export function BoothPicker() {
           eventSlug: "pistonpoweredranch",
           email: email.trim(),
           org: org.trim(),
-          note: `${picked.size} footprint. Power: ${power}`,
+          note: `${picked.size} footprint${premium ? ", premium placement" : ""}. Power: ${power}`,
         }),
       })
       const j = await r.json()
@@ -114,6 +116,13 @@ export function BoothPicker() {
         })}
       </div>
 
+      <label style={{ display: "flex", gap: 10, alignItems: "center", cursor: "pointer" }}>
+        <input type="checkbox" checked={premium} onChange={(e) => setPremium(e.target.checked)} style={{ width: 18, height: 18 }} />
+        <span style={{ font: `600 15px/1.3 ${ARCHIVO}`, color: "#EDF1F6" }}>
+          {PREMIUM_PLACEMENT.label}, +{money(PREMIUM_PLACEMENT.cents)}
+        </span>
+      </label>
+
       <label style={{ display: "grid", gap: 6 }}>
         <span style={lbl}>Power</span>
         <select value={power} onChange={(e) => setPower(e.target.value)} style={input}>
@@ -160,7 +169,7 @@ export function BoothPicker() {
               opacity: state === "starting" ? 0.65 : 1,
             }}
           >
-            {state === "starting" ? "Opening Stripe" : `Reserve the ${picked.size} for ${money(picked.cents!)}`}
+            {state === "starting" ? "Opening Stripe" : `Reserve the ${picked.size} for ${money(total)}`}
           </button>
           <p style={{ ...note, marginTop: 11 }}>
             Card details are handled by Stripe on their own page. They never touch this site.
@@ -183,8 +192,8 @@ export function BoothPicker() {
             Ask for a {picked.size} quote
           </a>
           <p style={{ ...note, marginTop: 11 }}>
-            Footprints above the standard space are priced on what you are building, so this one goes
-            to Bekah rather than to a checkout.
+            This footprint is not open for payment yet. Tell us what you need and Bekah will hold the
+            space and send the link.
           </p>
         </div>
       )}

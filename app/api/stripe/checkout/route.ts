@@ -56,6 +56,8 @@ interface Body {
    * producing a payment that is real in Stripe and absent from the ledger.
    */
   eventSlug?: string
+  /** Catalogue keys added on top, such as premium placement. Public items only. */
+  addons?: string[]
 }
 
 async function eventFor(slug: string | undefined) {
@@ -185,13 +187,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "not_open", detail: price.error }, { status: 503 })
     }
 
+    /* Add-ons, held to the same rules as the item they ride on. */
+    const addonKeys = Array.isArray(b.addons) ? b.addons.filter((k): k is string => typeof k === "string").slice(0, 4) : []
+    const lines: { price: string; quantity: number }[] = [{ price: price.id, quantity: 1 }]
+    const covers: string[] = [item.covers]
+    for (const k of addonKeys) {
+      const a = itemFor(ev.slug, k)
+      if (!a || a.audience !== "public" || !isOnSale(a)) return NextResponse.json({ error: "unknown_item" }, { status: 400 })
+      const ap = await priceIdFor(a, key)
+      if ("error" in ap) return NextResponse.json({ error: "not_open", detail: ap.error }, { status: 503 })
+      lines.push({ price: ap.id, quantity: 1 })
+      covers.push(a.covers)
+    }
+
     const origin = new URL(req.url).origin
     const booth = item.ledger === "vendor_setup"
     const payload = flatten({
       mode: "payment",
       /* The catalogue price, read from Stripe by name. The client never names
          an amount and could not if it wanted to. */
-      line_items: [{ price: price.id, quantity: 1 }],
+      line_items: lines,
       success_url: booth
         ? `${origin}/events/${ev.slug}/vendor/paid?s={CHECKOUT_SESSION_ID}`
         : `${origin}/events/${ev.slug}/store/thank-you?s={CHECKOUT_SESSION_ID}`,
@@ -205,7 +220,8 @@ export async function POST(req: Request) {
         event_slug: ev.slug,
         kind: item.key,
         ledger: item.ledger,
-        covers: item.covers,
+        covers: covers.join("; ").slice(0, 480),
+        addons: addonKeys.join(","),
         org: (b.org || "").slice(0, 120),
         note: (b.note || "").slice(0, 400),
       },
@@ -223,7 +239,7 @@ export async function POST(req: Request) {
       headers: {
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/x-www-form-urlencoded",
-        "Idempotency-Key": `ppr-${item.key}-${who}-${Math.floor(Date.now() / 60000)}`,
+        "Idempotency-Key": `ppr-${item.key}${addonKeys.length ? "+" + addonKeys.join("+") : ""}-${who}-${Math.floor(Date.now() / 60000)}`,
       },
       body: new URLSearchParams(payload).toString(),
     })

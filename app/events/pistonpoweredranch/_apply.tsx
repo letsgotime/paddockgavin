@@ -45,7 +45,7 @@ const POWER = [
   "Light draw, under 1kW, lights and a card reader",
   "Cooking or refrigeration, tell us the load",
 ]
-const SPONSOR_LEVELS = ["Title", "Category exclusive", "Supporting", "In kind", "Not sure yet"]
+const SPONSOR_LEVELS = ["Presenting Sponsor", "Title Sponsor", "Secondary Sponsor", "Supporting Sponsor", "Community Partner", "Not sure yet"]
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 

@@ -54,16 +54,22 @@ export interface CatalogItem {
   cents?: number
 }
 
-/** Priced and ready, as opposed to wired and waiting. */
+/** Priced and ready, as opposed to wired and waiting. A lookupKey with cents
+    is priced too: the object may not exist in this Stripe mode yet, and the
+    checkout route says so when it does not. */
 export function isOnSale(i: CatalogItem | undefined): boolean {
-  return Boolean(i && i.priceId && typeof i.cents === "number" && i.cents > 0)
+  return Boolean(i && (i.priceId || i.lookupKey) && typeof i.cents === "number" && i.cents > 0)
 }
 
 export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
   pistonpoweredranch: {
+  /* The booth ladder, set 3 September 2026: $250 for the 10 by 10, $350 for
+     the 10 by 20, $500 for the 20 by 20, $650 past that, and premium
+     placement at $150 on top. Only the 10 by 10 exists in the sandbox; the
+     rest are made by scripts/stripe-seed.mjs under whichever key runs it. */
   vendorBooth: {
     key: "vendorBooth",
-    name: "Vendor Booth Setup",
+    name: "Vendor Booth, 10 by 10",
     covers: "Vendor booth, 10 by 10, The Piston Powered Ranch, 10 October 2026",
     audience: "public",
     ledger: "vendor_setup",
@@ -72,10 +78,46 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     lookupKey: "ppr-2026-vendor-booth-10x10",
     cents: 25000,
   },
+  vendorBooth10x20: {
+    key: "vendorBooth10x20",
+    name: "Vendor Booth, 10 by 20",
+    covers: "Vendor booth, 10 by 20, The Piston Powered Ranch, 10 October 2026",
+    audience: "public",
+    ledger: "vendor_setup",
+    lookupKey: "ppr-2026-vendor-booth-10x20",
+    cents: 35000,
+  },
+  vendorBooth20x20: {
+    key: "vendorBooth20x20",
+    name: "Vendor Booth, 20 by 20",
+    covers: "Vendor booth, 20 by 20, The Piston Powered Ranch, 10 October 2026",
+    audience: "public",
+    ledger: "vendor_setup",
+    lookupKey: "ppr-2026-vendor-booth-20x20",
+    cents: 50000,
+  },
+  vendorBooth40x40: {
+    key: "vendorBooth40x40",
+    name: "Vendor Booth, 40 by 40",
+    covers: "Vendor booth, 40 by 40, The Piston Powered Ranch, 10 October 2026",
+    audience: "public",
+    ledger: "vendor_setup",
+    lookupKey: "ppr-2026-vendor-booth-40x40",
+    cents: 65000,
+  },
+  vendorPremiumPlacement: {
+    key: "vendorPremiumPlacement",
+    name: "Premium placement",
+    covers: "Premium placement on vendor row",
+    audience: "public",
+    ledger: "vendor_setup",
+    lookupKey: "ppr-2026-vendor-premium-placement",
+    cents: 15000,
+  },
   supporting: {
     key: "supporting",
-    name: "Supporting Sponsorship",
-    covers: "Supporting sponsorship, The Piston Powered Ranch, 10 October 2026",
+    name: "Supporting Sponsor",
+    covers: "Supporting Sponsor, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
     productId: "prod_VAskNMROtPmvuq",
@@ -85,8 +127,8 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
   },
   secondaryTitle: {
     key: "secondaryTitle",
-    name: "Secondary Title Sponsorship",
-    covers: "Secondary title sponsorship, The Piston Powered Ranch, 10 October 2026",
+    name: "Secondary Sponsor",
+    covers: "Secondary Sponsor, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
     productId: "prod_VAskun9aDAKszv",
@@ -96,8 +138,8 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
   },
   premierTitle: {
     key: "premierTitle",
-    name: "Premier Title Sponsorship",
-    covers: "Premier title sponsorship, The Piston Powered Ranch, 10 October 2026",
+    name: "Title Sponsor",
+    covers: "Title Sponsor, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
     productId: "prod_VAskygpO23zwTW",
@@ -130,28 +172,29 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
 }
 
 /**
- * Booth footprints.
- *
- * Only the 10x10 has a price, because only the 10x10 has one in Stripe. The
- * larger footprints are real options that are quoted, and a quote is not a
- * number I can invent: a vendor who pays a figure I made up has a receipt for
- * it. So they route to the enquiry form with the size filled in, and the desk
- * invoices the agreed figure from there.
+ * Booth footprints. Each one is a catalogue item, so each one is paid for
+ * on the booth page. A footprint with no price in the current Stripe mode
+ * is "not open yet" there, and the enquiry form takes it instead.
  */
 export interface Footprint {
   size: string
   sqft: number
+  /** The catalogue key that carries the price. */
+  item: string
   /** Present only when a real price exists. Absent means quote. */
   cents?: number
   note: string
 }
 
 export const FOOTPRINTS: Footprint[] = [
-  { size: "10 by 10", sqft: 100, cents: 25000, note: "One table, one canopy, the standard row space." },
-  { size: "10 by 20", sqft: 200, note: "Two frontages, or a trailer parked behind the counter." },
-  { size: "20 by 20", sqft: 400, note: "A build rather than a stall. Seating, or a working display." },
-  { size: "40 by 40", sqft: 1600, note: "An activation. Vehicles inside the footprint, room to gather." },
+  { size: "10 by 10", sqft: 100, item: "vendorBooth", cents: 25000, note: "One table, one canopy, the standard row space." },
+  { size: "10 by 20", sqft: 200, item: "vendorBooth10x20", cents: 35000, note: "Two frontages, or a trailer parked behind the counter." },
+  { size: "20 by 20", sqft: 400, item: "vendorBooth20x20", cents: 50000, note: "A build rather than a stall. Seating, or a working display." },
+  { size: "40 by 40", sqft: 1600, item: "vendorBooth40x40", cents: 65000, note: "An activation. Vehicles inside the footprint, room to gather." },
 ]
+
+/** The add-on, on top of any footprint. */
+export const PREMIUM_PLACEMENT = { item: "vendorPremiumPlacement", cents: 15000, label: "Premium placement" }
 
 /** Generator power is a separate ask because the ranch has no mains in the row. */
 export const POWER_OPTIONS = [
@@ -184,15 +227,15 @@ export function money(cents: number): string {
  */
 for (const [slug, set] of Object.entries(CATALOGS))
   for (const i of Object.values(set)) {
-  const hasPrice = Boolean(i.priceId)
+  const hasPrice = Boolean(i.priceId || i.lookupKey)
   const hasCents = typeof i.cents === "number" && i.cents > 0
   if (hasPrice !== hasCents) {
     throw new Error(
-      `Stripe catalogue: ${slug}."${i.key}" has ${hasPrice ? "a priceId but no cents" : "cents but no priceId"}. ` +
-        "Set both, from the objects in Stripe, or neither.",
+      `Stripe catalogue: ${slug}."${i.key}" has ${hasPrice ? "a price but no cents" : "cents but no priceId or lookupKey"}. ` +
+        "Set both, or neither.",
     )
   }
-  if (hasPrice && !i.lookupKey) {
-    throw new Error(`Stripe catalogue: ${slug}."${i.key}" is priced but has no lookupKey, so it cannot be found in live mode.`)
+  if (i.priceId && !i.lookupKey) {
+    throw new Error(`Stripe catalogue: ${slug}."${i.key}" has a sandbox priceId but no lookupKey, so it cannot be found in live mode.`)
   }
 }

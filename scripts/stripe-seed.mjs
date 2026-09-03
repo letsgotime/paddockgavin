@@ -18,10 +18,14 @@ const MODE = KEY.startsWith("sk_live_") ? "live" : "test"
 const EVENT = "pistonpoweredranch"
 
 const ITEMS = [
-  { lookupKey: "ppr-2026-vendor-booth-10x10", name: "Vendor Booth Setup", cents: 25000, kind: "vendorBooth" },
-  { lookupKey: "ppr-2026-sponsor-supporting", name: "Supporting Sponsorship", cents: 50000, kind: "supporting" },
-  { lookupKey: "ppr-2026-sponsor-secondary-title", name: "Secondary Title Sponsorship", cents: 250000, kind: "secondaryTitle" },
-  { lookupKey: "ppr-2026-sponsor-premier-title", name: "Premier Title Sponsorship", cents: 500000, kind: "premierTitle" },
+  { lookupKey: "ppr-2026-vendor-booth-10x10", name: "Vendor Booth, 10 by 10", cents: 25000, kind: "vendorBooth" },
+  { lookupKey: "ppr-2026-vendor-booth-10x20", name: "Vendor Booth, 10 by 20", cents: 35000, kind: "vendorBooth10x20" },
+  { lookupKey: "ppr-2026-vendor-booth-20x20", name: "Vendor Booth, 20 by 20", cents: 50000, kind: "vendorBooth20x20" },
+  { lookupKey: "ppr-2026-vendor-booth-40x40", name: "Vendor Booth, 40 by 40", cents: 65000, kind: "vendorBooth40x40" },
+  { lookupKey: "ppr-2026-vendor-premium-placement", name: "Premium placement", cents: 15000, kind: "vendorPremiumPlacement" },
+  { lookupKey: "ppr-2026-sponsor-supporting", name: "Supporting Sponsor", cents: 50000, kind: "supporting" },
+  { lookupKey: "ppr-2026-sponsor-secondary-title", name: "Secondary Sponsor", cents: 250000, kind: "secondaryTitle" },
+  { lookupKey: "ppr-2026-sponsor-premier-title", name: "Title Sponsor", cents: 500000, kind: "premierTitle" },
 ]
 
 async function stripe(path, body) {
