@@ -69,7 +69,7 @@ export default function GlossGamePage() {
                 <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "17ch" }}>
                   Most swirl marks<br /><span style={{ color: "#F2C94C" }}>come from the wash.</span>
                 </h1>
-                <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the road. The mitt, the bucket, the towel that did the wheels first. The Gloss Game is the order that stops it &mdash; what to buy, what touches the paint, and in what sequence, so the shine you build on Saturday is still there on Friday.</p>
+                <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the road. The mitt, the bucket, the towel that did the wheels first. The Gloss Game is the order that stops it: what to buy, what touches the paint, and in what sequence, so the shine you build on Saturday is still there on Friday.</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", marginTop: 30, padding: "20px 24px", background: "#152538", border: "1px solid #27384F", borderLeft: "4px solid #F2C94C" }}>
                   {[["Paperback","$19.99"],["Inside","12 chapters \u00b7 96 pages"],["Edition","First \u00b7 August 2025"],["Ships","Prime \u00b7 in stock"]].map(([k,v]) => (
                     <div key={String(k)} style={{ fontFamily: mono, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "#B4B6B2" }}>{k}<b style={{ display: "block", color: "#FFFFFF", fontFamily: arch, fontSize: 19, fontWeight: 900, letterSpacing: "-.01em", marginTop: 3 }}>{v}</b></div>
@@ -102,7 +102,7 @@ export default function GlossGamePage() {
               <h2 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>The shelf is full.<br /><span style={{ color: "#F2C94C" }}>The shine still fades.</span></h2>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>You know the moment. Sunday went to the whole car, and by Friday the hood looks like nobody was there. The swirls came back two washes after the correction. The bottle that promised depth left streaks you can read in the garage light.</p>
               <p style={{ margin: "0 0 18px", fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>So you bought a better soap. Then a plusher towel. Then a coating. The line in the door caught the sun anyway.</p>
-              <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>The products were never the problem. The order was &mdash; which bucket, which mitt, what touches the paint after the wheels. The Gloss Game is that order, written down so you can run it.</p>
+              <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB" }}>The products were never the problem. The order was: which bucket, which mitt, what touches the paint after the wheels. The Gloss Game is that order, written down so you can run it.</p>
             </div>
           </section>
 
@@ -121,11 +121,11 @@ export default function GlossGamePage() {
                 <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#152538", border: "1px solid #F2C94C", padding: "11px 18px" }}><b style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: arch, fontWeight: 900, fontSize: 16, color: "#F2C94C", textTransform: "uppercase" }}>Paint</b></span>
               </div>
               {[
-                ["Why do swirl marks come back after every wash?","Because the wash is where they start. Chapters two and three code the whole thing \u2014 buckets, mitts, towels by panel \u2014 so nothing dirty touches clean paint twice."],
+                ["Why do swirl marks come back after every wash?","Because the wash is where they start. Chapters two and three code the whole thing, buckets, mitts, towels by panel, so nothing dirty touches clean paint twice."],
                 ["What order do you detail a car in?","Wheels first, paint last. Chapter four runs the wheel protocol to the Q-tip on the valve stems, and the loop above is the spine of the whole book."],
-                ["Do you need a machine to get the gloss back?","Sometimes. Chapter five \u2014 prep, correct, protect \u2014 is how to tell, before you spend a weekend or a dime you didn\u2019t need to."],
-                ["How do you detail a car interior?","By touchpoint, not by scent. Chapter six works the cabin the way hands do \u2014 vents, stitching, the places fingers land \u2014 so it stays clean between Saturdays."],
-                ["How do you organize detailing supplies?","On hooks and shelves, bagged and labeled, one reach away \u2014 time saved looking is time on the paint. Chapter two is the setup."],
+                ["Do you need a machine to get the gloss back?","Sometimes. Chapter five, prep, correct, protect, is how to tell, before you spend a weekend or a dime you didn\u2019t need to."],
+                ["How do you detail a car interior?","By touchpoint, not by scent. Chapter six works the cabin the way hands do, vents, stitching, the places fingers land, so it stays clean between Saturdays."],
+                ["How do you organize detailing supplies?","On hooks and shelves, bagged and labeled, one reach away. Time saved looking is time on the paint. Chapter two is the setup."],
               ].map(([q,a]) => (
                 <div key={String(q)} style={{ margin: "0 0 24px" }}>
                   <h3 style={{ margin: "0 0 8px", fontFamily: arch, fontWeight: 800, fontSize: 19, color: "#FFFFFF" }}>{q}</h3>
@@ -187,7 +187,7 @@ export default function GlossGamePage() {
             <div style={{ border: "1px solid #0A6BAA", background: "linear-gradient(150deg,rgba(0,81,133,.94),rgba(0,81,133,.55))", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(26px,4.4vw,48px)", display: "flex", flexWrap: "wrap", gap: "clamp(24px,4vw,44px)", alignItems: "center" }}>
               <div style={{ flex: "1 1 min(320px,100%)" }}>
                 <h2 style={{ margin: "0 0 12px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>Chapter ten is free</h2>
-                <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The full product index &mdash; every zone, every link checked, the paid ones marked &mdash; free with your email. The reasoning behind each product is in the other eleven chapters.</p>
+                <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.64, color: "#DCE8F2", maxWidth: "50ch" }}>The full product index, every zone, every link checked, the paid ones marked, free with your email. The reasoning behind each product is in the other eleven chapters.</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
                   <Link href="/juice-box" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".03em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Get the index &rarr;</Link>
                   <a href={AMAZON_URL} target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".17em", textTransform: "uppercase", color: "#7FE8DC", textDecoration: "none" }}>Full book &middot; $19.99 &rarr;</a>

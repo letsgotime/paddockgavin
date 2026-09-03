@@ -55,7 +55,7 @@ export default function JuiceBoxPage() {
     try {
       const r = await fetch("/api/juicebox", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email }) })
       if (r.ok) {
-        setStatus("done"); setMsg("Check your inbox \u2014 the PDF is on its way.")
+        setStatus("done"); setMsg("Check your inbox. The PDF is on its way.")
         try { localStorage.setItem("jbIndexUnlocked", "1") } catch {}
         setUnlocked(true)
       } else { throw new Error() }
@@ -86,7 +86,7 @@ export default function JuiceBoxPage() {
           <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "16ch" }}>
             The GoTime<br /><span style={{ color: "#F2C94C" }}>Juice Box™</span>
           </h1>
-          <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote &mdash; the ones that keep earning their slot. Roughly $55K went through this garage finding them, on twenty-nine of his own cars plus clients&rsquo; and friends&rsquo;. This is what stayed within reach.</p>
+          <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote, the ones that keep earning their slot. Roughly $55K went through this garage finding them, on twenty-nine of his own cars plus clients&rsquo; and friends&rsquo;. This is what stayed within reach.</p>
           <div style={{ marginTop: 26, maxWidth: "62ch" }}>
             <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, letterSpacing: ".02em", color: "#B4B6B2", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0 }}>
               <b style={{ color: "#EDF1F6", fontWeight: 400 }}>A dot means the link pays a commission.</b> Nothing was added because it pays, and nothing was left off because it doesn&rsquo;t. The book was written before any of the links existed.
@@ -120,7 +120,7 @@ export default function JuiceBoxPage() {
               <div style={{ border: "1px solid rgba(0,210,190,.35)", background: "linear-gradient(150deg,rgba(0,210,190,.08),rgba(0,210,190,0))", clipPath: "polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)", padding: "clamp(24px,4vw,40px)" }}>
                 <p style={{ margin: "0 0 14px", fontFamily: mono, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "#00D2BE" }}>7 more zones behind this line</p>
                 <h2 style={{ margin: "0 0 10px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch" }}>That was zone one. The rest goes where your email does</h2>
-                <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: "56ch" }}>One email, the whole index as a PDF &mdash; every zone, every link checked, the paid ones marked &mdash; and this page unlocks with it.</p>
+                <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: "56ch" }}>One email, the whole index as a PDF, every zone, every link checked, the paid ones marked, and this page unlocks with it.</p>
                 <form onSubmit={submit} style={{ maxWidth: 560 }}>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                     <input
@@ -140,7 +140,7 @@ export default function JuiceBoxPage() {
           )}
 
           <p style={{ fontFamily: mono, fontSize: 11.5, letterSpacing: ".06em", color: "#B4B6B2", margin: "16px 0 0", display: "flex", alignItems: "baseline", gap: 9 }}>
-            <span style={{ color: "#00D2BE", fontSize: 10 }}>&#9679;</span> Paid link &mdash; buying through it sends a commission Gavin&rsquo;s way, at no cost to you.
+            <span style={{ color: "#00D2BE", fontSize: 10 }}>&#9679;</span> Paid link: buying through it sends a commission Gavin&rsquo;s way, at no cost to you.
           </p>
           <p style={{ margin: "14px 0 0", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
             The reasoning behind each product is in the book. <Link href="/gloss-game" style={{ fontWeight: 600, color: "#00D2BE", textDecoration: "none" }}>See the whole system &rarr;</Link>

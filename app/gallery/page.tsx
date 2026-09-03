@@ -266,7 +266,7 @@ export default function GalleryPage() {
 
   const readouts = [
     { label: "Pillars", value: "3", tone: "#00D2BE" },
-    { label: "Frames", value: loaded ? String(items.length) : "\u2014", tone: "#F2C94C" },
+    { label: "Frames", value: loaded ? String(items.length) : "\u2026", tone: "#F2C94C" },
     { label: "Followers", value: profile?.followersCount ? fmt(profile.followersCount) : "@itspaddockgavin", tone: "#4BA3DE" },
   ]
 

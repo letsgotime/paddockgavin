@@ -131,7 +131,7 @@ const GROUPS = [
       {
         key: "hq",
         title: "gavinbrookshq.com",
-        note: "The operator side \u2014 metrics, systems, r\u00e9sum\u00e9",
+        note: "The operator side: metrics, systems, r\u00e9sum\u00e9",
         href: "https://gavinbrookshq.com",
         target: "_blank",
         tone: "#848482",
@@ -140,7 +140,7 @@ const GROUPS = [
       {
         key: "li",
         title: "LinkedIn",
-        note: "Gavin Brooks \u2014 the leadership side",
+        note: "Gavin Brooks, the leadership side",
         href: "https://www.linkedin.com/in/gavinbrooksleader",
         target: "_blank",
         tone: "#4BA3DE",
@@ -152,7 +152,7 @@ const GROUPS = [
 
 export default function ConnectPage() {
   const [shift, setShift] = useState<Shift>("day")
-  const [clock, setClock] = useState("\u2014")
+  const [clock, setClock] = useState("")
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
@@ -443,7 +443,7 @@ export default function ConnectPage() {
             DM @itspaddockgavin
           </a>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 16, lineHeight: 1.55, color: "#CFE4F4" }}>
-            DMs get seen between jobs, and a person answers &mdash; usually me. Forms on the events pages land the same day.
+            DMs get seen between jobs, and a person answers, usually me. Forms on the events pages land the same day.
           </p>
         </footer>
       </main>

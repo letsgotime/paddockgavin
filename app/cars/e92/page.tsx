@@ -52,7 +52,7 @@ export default function E92Page() {
           <div>
             <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Day one</span></span>
             <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>What the sun hides</h2>
-            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>The inspection lamp went over every panel before anything else did. Twenty-five hours of correction, conditioning and shine followed &mdash; my own count, not a shop estimate.</p>
+            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>The inspection lamp went over every panel before anything else did. Twenty-five hours of correction, conditioning and shine followed, my own count, not a shop estimate.</p>
           </div>
           <figure style={{ margin: 0, border: "1px solid #27384F", background: "#0A1523" }}>
             <Image src="/images/downpipe.webp" alt="Paint inspection" width={560} height={374} style={{ width: "100%", height: "auto", display: "block" }} />
@@ -71,7 +71,7 @@ export default function E92Page() {
           <div>
             <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The correction</span></span>
             <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>Panel by panel</h2>
-            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Cut, refine, jewel. Alpine White does not forgive shortcuts &mdash; it just files them under a different light and shows you later.</p>
+            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Cut, refine, jewel. Alpine White does not forgive shortcuts. It just files them under a different light and shows you later.</p>
           </div>
         </div>
       </section>

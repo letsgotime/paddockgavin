@@ -26,7 +26,7 @@ export default function VlogPage() {
             <span style={{ display: "block" }}>The lot, on video.</span>
             <span style={{ display: "block", color: "#F2C94C" }}>Vertical, like it was shot.</span>
           </h1>
-          <p style={{ margin: "0 0 30px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "56ch" }}>Everything here starts as a phone video &mdash; trunk releases, hood latches, what came off the transporter this morning. The clips land on Instagram first. This page is the shelf they end up on.</p>
+          <p style={{ margin: "0 0 30px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "56ch" }}>Everything here starts as a phone video: trunk releases, hood latches, what came off the transporter this morning. The clips land on Instagram first. This page is the shelf they end up on.</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", margin: "0 0 40px" }}>
             <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Watch on Instagram</a>
             <span style={{ fontFamily: mono, fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", color: "#B4B6B2" }}>@itspaddockgavin</span>

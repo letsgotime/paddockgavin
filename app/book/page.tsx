@@ -33,7 +33,7 @@ const KINDS = [
     eyebrow: "Anything else",
     title: "Something different",
     tone: "#B4B6B2",
-    blurb: "Reach out on IG or LinkedIn, or put it in the form \u2014 it all lands with me.",
+    blurb: "Reach out on IG or LinkedIn, or put it in the form. It all lands with me.",
     hint: "Whatever it is",
     img: "/images/gavin-gwagen-sq.webp",
   },
@@ -168,10 +168,10 @@ export default function BookPage() {
               onClick={submit}
               style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", border: 0, padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)" }}
             >
-              {status === "sent" ? "Sent \u2014 I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
+              {status === "sent" ? "Sent. I\u2019ll answer" : status === "sending" ? "Sending\u2026" : "Send it to Gavin"}
             </button>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#CFE4F4" }}>
-              {status === "error" ? "Could not send from here \u2014 DM @itspaddockgavin instead" : status === "sent" ? "Landed with me" : "DM @itspaddockgavin for a faster response"}
+              {status === "error" ? "Could not send from here. DM @itspaddockgavin instead" : status === "sent" ? "Landed with me" : "DM @itspaddockgavin for a faster response"}
             </span>
           </div>
         </section>

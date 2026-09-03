@@ -68,7 +68,7 @@ const BUILDS = [
     what: "Founded 2021. A good company, and a side hustle. Folded into PaddockGavin.",
 
     status: "retired" as const,
-    datum: "2021 \u2013 2026",
+    datum: "2021 to 2026",
     group: "past" as Group,
   },
 ]
@@ -471,7 +471,7 @@ export default function ScoreboardPage() {
                 color: "#91918F",
               }}
             >
-              Reserved &mdash; next build
+              Reserved, next build
             </span>
             <i
               aria-hidden="true"

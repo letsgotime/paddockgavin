@@ -162,7 +162,7 @@ export default function PressPage() {
           <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
             {coverage.map((item, i) => (
               <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "9px 0", borderBottom: "1px solid rgba(255,255,255,.05)", fontSize: 15, lineHeight: 1.55, color: "#C4CBD6" }}>
-                <span style={{ color: "#00D2BE", flexShrink: 0, marginTop: 2 }}>&#8212;</span>
+                <span style={{ color: "#00D2BE", flexShrink: 0, marginTop: 2 }}>&#8226;</span>
                 {item}
               </li>
             ))}

@@ -16,7 +16,9 @@ import { join } from "node:path"
 const ROOTS = ["app", "lib", "components"]
 const EXT = /\.(ts|tsx|js|mjs|css)$/
 const SKIP = new Set(["node_modules", ".next", ".git", "public"])
-const DASH = /[–—]/
+/* The characters, their JavaScript escapes, and their HTML entities. The
+   escapes are how forty five of them got past the first version. */
+const DASH = /[–—]|\\u201[34]|&(?:m|n)dash;|&#821[12];/
 
 /** Blank out comment spans so only copy is left to judge. */
 function withoutComments(src) {

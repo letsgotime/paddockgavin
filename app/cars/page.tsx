@@ -46,7 +46,7 @@ const CARS = [
 const TOTAL = 29
 const filled = CARS.length
 const current = CARS.filter(c => c.meta === "Still here").length
-const range = `${CARS[0].name.split(" ")[0]}\u2013${CARS[CARS.length-1].name.split(" ")[0]}`
+const range = `${CARS[0].name.split(" ")[0]} to ${CARS[CARS.length-1].name.split(" ")[0]}`
 
 const mono = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 const arch = "Archivo,Helvetica,Arial,sans-serif"

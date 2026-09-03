@@ -37,7 +37,7 @@ export default function LotOpsPage() {
     const update = () => {
       const h = centralHour()
       const open = h >= 8 && h < 18
-      setLotNow(open ? "Gate\u2019s open" : h < 8 ? "Opens at 8" : "Closed \u2014 back at 8")
+      setLotNow(open ? "Gate\u2019s open" : h < 8 ? "Opens at 8" : "Closed, back at 8")
     }
     update()
     const tick = setInterval(update, 30000)
@@ -85,7 +85,7 @@ export default function LotOpsPage() {
             {[
               { k: "The floor", v: "70,000 sq ft", tone: "#00D2BE" },
               { k: "Gate",      v: "8:00 am",                     tone: "#00D2BE" },
-              { k: "Right now", v: lotNow || "\u2014",            tone: "#F2C94C" },
+              { k: "Right now", v: lotNow || "\u2026",            tone: "#F2C94C" },
               { k: "Outbound",  v: "Verified first",              tone: "#00D2BE" },
             ].map(row => (
               <span key={row.k} style={{ display: "flex", flexDirection: "column", gap: 7 }}>
@@ -123,7 +123,7 @@ export default function LotOpsPage() {
             {STEPS[step].line}
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 16, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "58ch" }}>
-            Five words is the whole of it. The step-by-step lives on its own page &mdash; <Link href="/intake" style={{ color: "#00D2BE" }}>the intake</Link>.
+            Five words is the whole of it. The step-by-step lives on its own page: <Link href="/intake" style={{ color: "#00D2BE" }}>the intake</Link>.
           </p>
         </section>
 
