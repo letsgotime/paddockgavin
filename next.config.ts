@@ -146,6 +146,19 @@ const nextConfig: NextConfig = {
         source: "/team-sw.js",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
       },
+      /* The tool pages themselves. The page rule below hands out an hour of
+         stale-while-revalidate, which is right for a landing page and wrong
+         for a tool that just shipped a fix: HQ kept serving the previous
+         build for up to an hour after the deploy that fixed it. Sixty
+         seconds at the edge, then a real revalidation. */
+      {
+        source: "/(journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=60, must-revalidate" }],
+      },
+      {
+        source: "/(journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=60, must-revalidate" }],
+      },
       /* The tools' photography, proxied from the other deployment. Before
          /img/ was forwarded, every one of these was a 404, and a browser that
          fetched one then kept the 404 under the page rule's hour of
@@ -158,7 +171,7 @@ const nextConfig: NextConfig = {
       },
       // Pages — short cache, revalidate in background
       {
-        source: "/((?!_next/static|_next/image|favicon.ico|vendor/.*\\.js|team/|team-sw|img/).*)",
+        source: "/((?!_next/static|_next/image|favicon.ico|vendor/.*\\.js|team/|team-sw|img/|(?:journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)(?:/|$)).*)",
         headers: [
           { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=3600" },
           { key: "X-Content-Type-Options", value: "nosniff" },
