@@ -31,7 +31,13 @@ const EVENT_HOSTS: Record<string, string> = {
    ranch pages that happen to be reachable elsewhere: they belong to whichever
    event the host resolves to, which is what makes a second event a row rather
    than a second codebase. */
-const SHORT_PATHS = new Set(["/entry", "/vendor", "/sponsor", "/targets", "/store", "/portal"])
+const SHORT_PATHS = new Set([
+  "/entry", "/vendor", "/sponsor", "/targets", "/store", "/portal",
+  /* The field. One letter from /entry and a different job: that one is the
+     form asking to come, this one is the answer about who is. Both are short
+     paths because both are links somebody sends to somebody else. */
+  "/entries",
+])
 
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") || "").toLowerCase().split(":")[0]
