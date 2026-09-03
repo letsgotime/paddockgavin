@@ -138,8 +138,9 @@ export function HomeHero() {
     <>
       <PageBackdrop src="/images/donuts-floor.webp" />
 
-      {/* Telemetry sub-bar (fixed, under nav) */}
+      {/* Telemetry sub-bar (fixed, under nav; hidden on phones) */}
       <div
+        className="pg-telemetry"
         style={{
           position: "fixed",
           top: 75,
@@ -319,7 +320,7 @@ export function HomeHero() {
         </div>
       </div>
       {/* Spacer for sub-bar — also marks top section */}
-      <div data-sec="intro" aria-hidden="true" style={{ height: 50 }} />
+      <div data-sec="intro" aria-hidden="true" className="pg-telemetry-spacer" style={{ height: 50 }} />
     </>
   )
 }
