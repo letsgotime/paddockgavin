@@ -4,6 +4,7 @@ import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { RebrandNotice } from "@/components/rebrand-notice"
+import { SiteBackdrop } from "@/components/page-backdrop"
 import "./globals.css"
 
 const _archivo = Archivo({
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s · PaddockGavin",
   },
   description:
-    "Gavin runs lot operations and events for duPont REGISTRY by day, and builds software by night. Nashville, Tennessee.",
+    "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. Lot operations and events by day, software by night.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     creator: "@PaddockGavin",
     images: [`${SITE}/opengraph-image`],
   },
-  keywords: ["lot operations Nashville", "duPont REGISTRY", "exotic car content creator Tennessee", "duPont REGISTRY Lebanon Tennessee", "paddock gavin", "automotive software Nashville", "luxury car lot operations", "exotic car events Nashville"],
+  keywords: ["exotic car broker Nashville", "sell my exotic car", "exotic car sourcing Tennessee", "exotic car content creator Tennessee", "paddock gavin", "automotive software Nashville", "luxury car lot operations", "exotic car events Nashville"],
   robots: { index: true, follow: true },
   manifest: "/manifest.webmanifest",
   other: {
@@ -57,8 +58,7 @@ export const metadata: Metadata = {
         name: "Gavin Brooks",
         url: SITE,
         image: `${SITE}/images/gavin-on-lot.jpg`,
-        jobTitle: "Lot Operations and Events Manager",
-        worksFor: { "@type": "Organization", name: "duPont REGISTRY", url: "https://www.dupontregistry.com" },
+        jobTitle: "Concierge broker and vehicle sourcer",
         address: { "@type": "PostalAddress", addressLocality: "Nashville", addressRegion: "TN", addressCountry: "US" },
         sameAs: [
           "https://www.instagram.com/itspaddockgavin/",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
         "@id": `${SITE}/#website`,
         url: SITE,
         name: "PaddockGavin",
-        description: "Lot ops and events by day. Software by night. Nashville, Tennessee.",
+        description: "Concierge broker and vehicle sourcer. Software by night. Nashville, Tennessee.",
         author: { "@id": `${SITE}/#person` },
         potentialAction: {
           "@type": "SearchAction",
@@ -122,6 +122,7 @@ export default function RootLayout({
           <div style={{ flex: 1, background: "#005185" }} />
           <div style={{ flex: 1, background: "#848482" }} />
         </div>
+        <SiteBackdrop />
         <ScrollProgress />
         <RebrandNotice />
         {children}

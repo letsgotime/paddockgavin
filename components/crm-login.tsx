@@ -64,7 +64,7 @@ export function CrmLogin({ event = "pistonpoweredranch" }: { event?: string }) {
     <Link
       href={href}
       aria-label={signedIn ? "Open HQ" : "Staff sign in"}
-      style={{
+      className="pg-e1" style={{
         position: "fixed",
         top: "calc(14px + env(safe-area-inset-top))",
         right: 16,
@@ -79,10 +79,7 @@ export function CrmLogin({ event = "pistonpoweredranch" }: { event?: string }) {
         color: "#EDF1F6",
         font: "700 12px/1 Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
         letterSpacing: ".01em",
-        background: "rgba(11,18,27,.62)",
-        border: "1px solid rgba(255,255,255,.18)",
-        backdropFilter: "blur(18px) saturate(1.5)",
-        WebkitBackdropFilter: "blur(18px) saturate(1.5)",
+        background: "rgba(11,18,27,.62)"
       }}
     >
       {signedIn ? "HQ" : "Staff"}

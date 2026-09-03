@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -74,13 +75,13 @@ const UPCOMING: EventRow[] = [
 const PAST = [
   {
     key: "donuts",
-    title: "Donuts with duPont",
+    title: "Donuts",
     stateLabel: "Final edition, August 2026",
     blurb:
-      "Monthly collector morning on the duPont REGISTRY floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
+      "Monthly collector morning on the showroom floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
     img: "/images/donuts-overflow.webp",
-    href: "/donuts",
-    cta: "The archive",
+    href: "/gallery",
+    cta: "The photos",
   },
   {
     key: "creator",
@@ -105,7 +106,7 @@ const PAST = [
 ]
 
 const GALLERY = [
-  { src: "/images/donuts-floor.webp", alt: "The duPont REGISTRY floor on a Donuts morning" },
+  { src: "/images/donuts-floor.webp", alt: "The floor on a Donuts morning" },
   { src: "/images/918-p1.webp", alt: "A Porsche 918 beside a McLaren P1" },
   { src: "/images/donuts-z06.webp", alt: "A Corvette Z06 pulled onto the floor" },
   { src: "/images/cullinan-doors.webp", alt: "Rolls-Royce Cullinan with the doors open" },
@@ -251,16 +252,11 @@ export default function EventsPage() {
         }
       `}</style>
 
-      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/ranch/ppr-field.jpg" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.13),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.96))" }} />
-      </div>
+      <PageBackdrop src="/images/ranch/ppr-field.jpg" />
 
       {/* Ticker */}
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)" }}>
-        <div style={{ maxWidth: 1180, margin: "0 auto", background: "linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.018))", backdropFilter: "blur(26px) saturate(170%)", WebkitBackdropFilter: "blur(26px) saturate(170%)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.16)", clipPath: CLIP, padding: "11px clamp(14px,2.4vw,22px)", display: "flex", alignItems: "center", gap: "clamp(10px,2vw,18px)", overflow: "hidden" }}>
+        <div className="pg-e1" style={{ maxWidth: 1180, margin: "0 auto", clipPath: CLIP, padding: "11px clamp(14px,2.4vw,22px)", display: "flex", alignItems: "center", gap: "clamp(10px,2vw,18px)", overflow: "hidden" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
             <i aria-hidden="true" style={{ width: 9, height: 9, borderRadius: "50%", background: "#F2C94C", animation: "pgPulse 2.2s ease-in-out infinite", display: "block" }} />
             <span style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap" }}>Next on the field</span>
@@ -295,7 +291,7 @@ export default function EventsPage() {
               <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 The Piston Powered Ranch
               </Link>
-              <a href="#property" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", backdropFilter: "blur(8px)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+              <a href="#property" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Bring us a property
               </a>
             </div>
@@ -424,7 +420,7 @@ export default function EventsPage() {
         </section>
 
         {/* Bring us a property */}
-        <section id="property" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", backdropFilter: "blur(24px) saturate(160%)", WebkitBackdropFilter: "blur(24px) saturate(160%)", border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
+        <section id="property" className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
           <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
             <Tag>Have ground</Tag>
             <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(24px,3.4vw,36px)", lineHeight: 1.03, letterSpacing: "-.022em", textTransform: "uppercase", color: "#FFFFFF" }}>

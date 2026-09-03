@@ -10,7 +10,7 @@ const stats = [
   { k: "~1,000,000", v: "Views / month" },
   { k: "~7,900", v: "Instagram followers" },
   { k: "Owners &\ncollectors", v: "Primary audience" },
-  { k: "Lebanon, TN", v: "duPont REGISTRY floor" },
+  { k: "Lebanon, TN", v: "The showroom floor" },
 ]
 
 const formats = [
@@ -24,7 +24,7 @@ const formats = [
   },
   {
     title: "Event sponsorship",
-    desc: "Donuts with duPont, Creator Day and Tires & Timepieces™. Floor presence and content from the event.",
+    desc: "Creator Day and Tires & Timepieces™. Floor presence and content from the event.",
   },
   {
     title: "Affiliate programme",

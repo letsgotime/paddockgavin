@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -11,7 +12,7 @@ type Status = "idle" | "sending" | "sent" | "error"
 const KINDS = [
   {
     key: "club",
-    eyebrow: "Donuts with duPont",
+    eyebrow: "Collector morning",
     title: "Book your club",
     tone: "#F2C94C",
     blurb: "Bring the whole club to a Donuts morning and park together. Tell me the headcount.",
@@ -20,7 +21,7 @@ const KINDS = [
   },
   {
     key: "vendor",
-    eyebrow: "Donuts with duPont",
+    eyebrow: "Collector morning",
     title: "Reserve your vendor location",
     tone: "#F2C94C",
     blurb: "$250 gets a vendor spot, $100 gets VIP parking \u2014 both inside the building. Five and ten of them, and half the proceeds go to a rotating charity every quarter.",
@@ -32,7 +33,7 @@ const KINDS = [
     eyebrow: "The floor",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "We allow select private events on duPont REGISTRY\u2019s floor. Inquire with Gavin for more details.",
+    blurb: "Select private events on the showroom floor in Lebanon. Inquire with Gavin for details.",
     hint: "The occasion, the date, the headcount",
     img: "/images/donuts-floor-sq.webp",
   },
@@ -41,7 +42,7 @@ const KINDS = [
     eyebrow: "Buy, trade or sell",
     title: "Your next vehicle",
     tone: "#00D2BE",
-    blurb: "I have a direct line to the duPont REGISTRY sales team, and all broker fees are paid by duPont.",
+    blurb: "I source retail or wholesale with a dealer\u2019s licence, so every auction is open.",
     hint: "The car, the budget, buying or selling",
     img: "/images/f458-front-sq.webp",
   },
@@ -120,13 +121,7 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      {/* Fixed background */}
-      <div aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.2 }}>
-          <Image src="/images/donuts-floor.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.14),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))" }} />
-      </div>
+      <PageBackdrop src="/images/donuts-floor.webp" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
@@ -136,7 +131,7 @@ export default function BookPage() {
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; duPont REGISTRY, Lebanon TN</span>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Lebanon, TN</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(34px,6vw,64px)", lineHeight: 1, letterSpacing: "-.028em", textTransform: "uppercase", color: "#FFFFFF" }}>
               Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>
@@ -148,7 +143,7 @@ export default function BookPage() {
         </section>
 
         {/* Board */}
-        <section style={{ background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))", backdropFilter: "blur(22px) saturate(155%)", WebkitBackdropFilter: "blur(22px) saturate(155%)", border: "1px solid rgba(255,255,255,.11)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
+        <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(16px,2.4vw,22px)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
           {[
             { k: "Next Donuts",   v: nextDonuts, tone: "#00D2BE" },
             { k: "Creator Day",   v: creatorIn,  tone: "#F2C94C" },
@@ -171,7 +166,7 @@ export default function BookPage() {
                 key={k.key}
                 type="button"
                 onClick={() => { setPicked(k.key); setStatus("idle"); document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" }) }}
-                style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", backdropFilter: "blur(20px) saturate(155%)", WebkitBackdropFilter: "blur(20px) saturate(155%)", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
+                className="pg-e1" style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
               >
                 <div style={{ position: "absolute", inset: 0, zIndex: -1 }}>
                   <Image src={k.img} alt="" fill style={{ objectFit: "cover", opacity: 0.36 }} />
@@ -192,7 +187,7 @@ export default function BookPage() {
         {/* The form */}
         <section
           id="form"
-          style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", border: "1px solid #0A6BAA", boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", scrollMarginTop: 120, display: "flex", flexDirection: "column", gap: 14 }}
+          className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", scrollMarginTop: 120, display: "flex", flexDirection: "column", gap: 14 }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Booking</span>

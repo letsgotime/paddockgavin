@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -59,21 +60,7 @@ export default function WhyAPaddockPage() {
 
       <SiteNav active="why" />
 
-      {/* Fixed background */}
-      <div
-        aria-hidden="true"
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.16 }}>
-          <Image src="/images/gavin-gwagen.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 720px at 82% -6%,rgba(0,210,190,.1),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.9),rgba(10,21,35,.97))",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/gavin-gwagen.webp" opacity={0.16} />
 
       <main
         ref={mainRef}
@@ -169,21 +156,16 @@ export default function WhyAPaddockPage() {
         {/* 01 — The word */}
         <section
           data-reveal
-          style={{
+          className="pg-e1" style={{
             position: "relative",
             isolation: "isolate",
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(24px) saturate(160%)",
-            WebkitBackdropFilter: "blur(24px) saturate(160%)",
-            border: "1px solid rgba(255,255,255,.11)",
             borderLeft: "3px solid #00D2BE",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
             display: "flex",
             flexDirection: "column",
             gap: 16,
-            overflow: "hidden",
+            overflow: "hidden"
           }}
         >
           <span
@@ -245,21 +227,16 @@ export default function WhyAPaddockPage() {
         {/* 02 — The garage */}
         <section
           data-reveal
-          style={{
+          className="pg-e1" style={{
             position: "relative",
             isolation: "isolate",
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(24px) saturate(160%)",
-            WebkitBackdropFilter: "blur(24px) saturate(160%)",
-            border: "1px solid rgba(255,255,255,.11)",
             borderLeft: "3px solid #F2C94C",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
             display: "flex",
             flexDirection: "column",
             gap: 16,
-            overflow: "hidden",
+            overflow: "hidden"
           }}
         >
           <span
@@ -343,7 +320,7 @@ export default function WhyAPaddockPage() {
         >
           <Image
             src="/images/ferrari-upperdeck.webp"
-            alt="Off the transporter at duPont REGISTRY"
+            alt="Off the transporter"
             fill
             loading="lazy"
             style={{ objectFit: "cover", objectPosition: "center 55%" }}
@@ -388,7 +365,7 @@ export default function WhyAPaddockPage() {
                 textTransform: "uppercase", color: "#FFFFFF",
               }}
             >
-              Lot operations at duPont REGISTRY Lebanon, Tennessee
+              Lot operations, Lebanon, Tennessee
             </h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
               The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place.
@@ -403,20 +380,17 @@ export default function WhyAPaddockPage() {
         {/* 04 — What a car is (blue panel) */}
         <section
           data-reveal
-          style={{
+          className="pg-e1" style={{
             position: "relative",
             overflow: "hidden",
             isolation: "isolate",
             background: "linear-gradient(150deg,rgba(0,81,133,.92),rgba(0,81,133,.68))",
-            backdropFilter: "blur(22px) saturate(150%)",
-            WebkitBackdropFilter: "blur(22px) saturate(150%)",
             border: "1px solid #0A6BAA",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
             display: "flex",
             flexDirection: "column",
-            gap: 16,
+            gap: 16
           }}
         >
           <Image
@@ -457,21 +431,16 @@ export default function WhyAPaddockPage() {
         {/* 05 — The flip */}
         <section
           data-reveal
-          style={{
+          className="pg-e1" style={{
             position: "relative",
             isolation: "isolate",
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(24px) saturate(160%)",
-            WebkitBackdropFilter: "blur(24px) saturate(160%)",
-            border: "1px solid rgba(255,255,255,.11)",
             borderLeft: "3px solid #00D2BE",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
             display: "flex",
             flexDirection: "column",
             gap: 16,
-            overflow: "hidden",
+            overflow: "hidden"
           }}
         >
           <span

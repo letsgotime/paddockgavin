@@ -1,55 +1,28 @@
-import Link from "next/link"
+import { Section } from "@/components/home-sections"
 
+const ARCHIVO = "Archivo, Helvetica, sans-serif"
+const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+
+/** The audience numbers, under the audience heading. The car numbers live in the proof strip. */
 export function HomeMediaKit() {
   return (
-    <section
-      data-screen-label="For brands"
-      id="mediakit"
-      style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,5vw,64px)" }}
-    >
-      {/* Eyebrow */}
-      <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".22em", textTransform: "uppercase", color: "#F2C94C" }}>
-        For brands
-      </span>
-
-      {/* Headline */}
-      <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(44px,8vw,96px)", lineHeight: .97, letterSpacing: "-.03em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "14ch" }}>
-        The audience,{" "}<span style={{ color: "#F2C94C" }}>in numbers.</span>
-      </h2>
-
-      {/* Body */}
-      <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(18px,1.9vw,22px)", lineHeight: 1.65, color: "#C4CBD6", maxWidth: "52ch" }}>
-        Vertical, phone-first, captions on. Most of it watched with the sound off. If you want your product in front of people who live in a garage, write me.
+    <Section id="mediakit" eyebrow="For brands" tone="#F2C94C" title="An audience that owns the cars you make things for" cta={{ href: "#contact", label: "Pitch a brand deal" }} link={{ href: "/connect", label: "Every link" }}>
+      <p style={{ margin: 0 }}>
+        About 1,000,000 views a month and around 7,900 followers, an audience of owners and collectors, watching vertical video with the sound off and the captions on. If you make products, tools or coatings, run events, or have an affiliate program, write me.
       </p>
-
-      {/* Stats — big, open */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "clamp(24px,4vw,48px)", borderTop: "1px solid rgba(255,255,255,.1)", paddingTop: "clamp(28px,4vw,48px)" }}>
+      <dl className="pg-proof" style={{ margin: "6px 0 0" }}>
         {[
-          { label: "Cars owned",       value: "29",         color: "#F2C94C" },
-          { label: "Found for others", value: "78",         color: "#00D2BE" },
-          { label: "Events run",       value: "200+",       color: "#8B93A7" },
-          { label: "Based",            value: "Nashville",  color: "#57C7F5" },
-        ].map((r) => (
-          <div key={r.label} style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 0 }}>
-            <span className="pg-stat-value" style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: "clamp(36px,6vw,72px)", lineHeight: 1, letterSpacing: "-.04em", color: r.color, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {r.value}
-            </span>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#8B93A7" }}>
-              {r.label}
-            </span>
+          { v: "~1M",   k: "views a month" },
+          { v: "~7,900", k: "followers" },
+          { v: "Owners", k: "and collectors" },
+          { v: "200+",  k: "events run" },
+        ].map((s) => (
+          <div key={s.k} className="pg-e0" style={{ padding: "14px 16px 12px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)" }}>
+            <dt style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1, letterSpacing: "-.03em", color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{s.v}</dt>
+            <dd style={{ margin: "6px 0 0", fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".16em", textTransform: "uppercase", color: "#B4B6B2" }}>{s.k}</dd>
           </div>
         ))}
-      </div>
-
-      {/* CTAs */}
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <a href="#contact" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
-          Pitch a brand deal
-        </a>
-        <Link href="/connect" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.22)", padding: "14px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
-          Every link
-        </Link>
-      </div>
-    </section>
+      </dl>
+    </Section>
   )
 }

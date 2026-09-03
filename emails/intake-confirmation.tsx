@@ -119,7 +119,7 @@ export default function IntakeConfirmation({
               Request received, {firstName}.
             </Heading>
             <Text style={{ margin: "0 0 16px", fontFamily: arch, fontSize: 16.5, lineHeight: 1.65, color: BODY }}>
-              I&apos;ve got your spec. I work the duPont REGISTRY lot every day, so
+              I&apos;ve got your spec. I work an exotic car lot every day, so
               I see what&apos;s actually here before it goes online, and I know
               the sellers worth talking to.
             </Text>
@@ -169,7 +169,7 @@ export default function IntakeConfirmation({
               What happens now
             </Text>
             {[
-              { n: "01", c: GOLD, text: "I review your spec against current inventory at duPont REGISTRY, Nashville and national." },
+              { n: "01", c: GOLD, text: "I review your spec against current inventory, Nashville and national, and the auctions." },
               { n: "02", c: GOLD,   text: "If there&apos;s a match or a lead, I reach back out directly. No middleman, no handoff." },
               { n: "03", c: TEAL,   text: "If the right car isn&apos;t there yet, I&apos;ll tell you that too. No invented urgency." },
             ].map(({ n, c, text }) => (

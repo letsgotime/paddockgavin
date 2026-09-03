@@ -101,11 +101,16 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      // Static assets — long cache
-      {
-        source: "/_next/static/(.*)",
-        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
-      },
+      /* Static assets, long cache. Production only: the dev server's chunk
+         names are stable, so a year of "immutable" pins the first CSS and JS
+         a browser ever saw and every edit after it hydrates against stale
+         code. That is the fault behind "the menu did not change" locally. */
+      ...(process.env.NODE_ENV === "production"
+        ? [{
+            source: "/_next/static/(.*)",
+            headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+          }]
+        : []),
       // Images
       {
         source: "/images/(.*)",

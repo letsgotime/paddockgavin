@@ -24,8 +24,8 @@ export const PROJECTS = [
       { label: "Status", value: "Active" },
     ],
     caption: "The lot at sunrise, cars queued before the doors open",
-    linkText: "dupontregistry.com",
-    linkUrl: "https://www.dupontregistry.com",
+    linkText: "Lot Ops in Action",
+    linkUrl: "/lot-ops",
     overview: {
       title: "The operation",
       content:

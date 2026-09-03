@@ -40,14 +40,11 @@ export function SiteFooter() {
 
   return (
     <footer
-      style={{
+      className="pg-e1" style={{
         position: "relative",
         background: "linear-gradient(180deg,rgba(10,21,35,.55),rgba(10,21,35,.9))",
-        backdropFilter: "blur(26px) saturate(160%)",
-        WebkitBackdropFilter: "blur(26px) saturate(160%)",
         borderTop: "1px solid rgba(255,255,255,.12)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)",
-        padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0",
+        padding: "clamp(30px,4.4vw,58px) clamp(14px,4vw,40px) 0"
       }}
     >
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -148,7 +145,7 @@ export function SiteFooter() {
               Gavin Brooks &middot; Nashville, Tennessee
             </p>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15.5, lineHeight: 1.55, color: "#B4B6B2" }}>
-              Lot Operations and Events Manager, duPont REGISTRY
+              Lot operations, events and vehicle sourcing
             </p>
             <a
               href="https://instagram.com/itspaddockgavin"
@@ -249,10 +246,8 @@ export function SiteFooter() {
               { href: "/vlog",      label: "The Vlog" },
               { href: "/gallery",   label: "The gallery" },
               { href: "/lot-ops",   label: "Lot ops in action" },
-              { href: "/donuts",    label: "Donuts with duPont" },
               { href: "/book",      label: "Book it" },
               { href: "/intake",    label: "Find me a car" },
-              { href: "https://www.dupontregistry.com", label: "Buy from duPont" },
             ].map((l) => (
               <Link
                 key={l.href}
@@ -512,10 +507,10 @@ export function SiteFooter() {
         >
           {/* Disclosures */}
           <p style={{ margin: "0 0 8px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
-            Cars are sourced and consigned through duPont REGISTRY, Lebanon, Tennessee, on their dealer licence. Gavin Brooks is their employee and is not a licensed dealer. There is no broker fee to you.
+            PaddockGavin sources vehicles as a concierge broker, retail or wholesale, and shops with a dealer&rsquo;s licence, so every auction is open.
           </p>
           <p style={{ margin: "0 0 16px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
-            Some links earn a commission. Paid, gifted and affiliate content is always disclosed on the piece itself. Photography and video made at duPont REGISTRY appears with their permission.
+            Some links earn a commission. Paid, gifted and affiliate content is always disclosed on the piece itself. Photography and video made on dealer lots appears with permission.
           </p>
           <p style={{ margin: "0 0 16px", fontSize: 12.5, lineHeight: 1.6, color: "#91918F" }}>
             PaddockGavin™, Supercar IQ™, I Got Receipts™, Paddock20™, GavinBrooksHQ™ and The Scoreboard™ are trade marks of Gavin Brooks, in use with registration in progress.{" "}

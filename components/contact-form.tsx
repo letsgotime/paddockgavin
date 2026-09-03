@@ -109,7 +109,7 @@ export function ContactForm() {
           What are you working on?
         </h2>
         <p style={{ color: "var(--steel)", fontSize: 14 }}>
-          Lot ops, software, detailing questions — anything works.
+          Lot ops, software, detailing questions, anything works.
         </p>
       </div>
 

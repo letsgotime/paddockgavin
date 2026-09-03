@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -115,11 +116,6 @@ const S: Record<string, React.CSSProperties> = {
     flexWrap: "wrap" as const,
     alignItems: "center",
     gap: "clamp(10px,1.6vw,20px)",
-    background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-    backdropFilter: "blur(22px) saturate(155%)",
-    WebkitBackdropFilter: "blur(22px) saturate(155%)",
-    border: "1px solid rgba(255,255,255,.11)",
-    boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)",
     clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
     padding: "clamp(14px,2vw,18px) clamp(16px,2vw,22px)",
   },
@@ -142,20 +138,7 @@ export default function ScoreboardPage() {
       <SiteNav active="scoreboard" />
 
       {/* Fixed dark photo background — matches design doc */}
-      <div
-        aria-hidden="true"
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.18 }}>
-          <Image src="/images/918-p1.webp" alt="" fill style={{ objectFit: "cover" }} priority />
-        </div>
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 740px at 86% -6%,rgba(0,210,190,.20),transparent 60%),radial-gradient(1000px 700px at 2% 34%,rgba(0,81,133,.44),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.88),rgba(10,21,35,.96))",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/918-p1.webp" opacity={0.18} />
 
       <main
         style={{
@@ -222,25 +205,20 @@ export default function ScoreboardPage() {
                 maxWidth: "58ch",
               }}
             >
-              Twenty-six years of technology moved to evenings. Everything here is mine, built on my own time. None of it is duPont REGISTRY&rsquo;s, and none of it runs on their hours.
+              Twenty-six years of technology moved to evenings. Everything here is mine, built on my own time. None of it runs on anyone else&rsquo;s hours.
             </p>
           </div>
 
           {/* Stats card */}
           <div
-            style={{
+            className="pg-e1" style={{
               flex: "3 1 230px",
               minWidth: 0,
-              background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-              backdropFilter: "blur(22px) saturate(155%)",
-              WebkitBackdropFilter: "blur(22px) saturate(155%)",
-              border: "1px solid rgba(255,255,255,.11)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
               clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
               padding: "clamp(18px,2.4vw,24px)",
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit,minmax(min(110px,45%),1fr))",
-              gap: 14,
+              gap: 14
             }}
           >
             {READOUTS.map(r => (
@@ -284,7 +262,7 @@ export default function ScoreboardPage() {
                   key={g.key}
                   type="button"
                   onClick={() => setFilter(g.key as Group)}
-                  style={{
+                  className="pg-e0" style={{
                     cursor: "pointer",
                     fontFamily: "Archivo, Helvetica, sans-serif",
                     fontWeight: 700,
@@ -295,10 +273,8 @@ export default function ScoreboardPage() {
                     border: `1px solid ${active ? "#00D2BE" : "rgba(255,255,255,.18)"}`,
                     background: active ? "rgba(0,210,190,.14)" : "rgba(255,255,255,.04)",
                     color: active ? "#00D2BE" : "#B4B6B2",
-                    backdropFilter: "blur(14px)",
-                    WebkitBackdropFilter: "blur(14px)",
                     clipPath: "polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)",
-                    transition: "background .18s,border-color .18s,color .18s",
+                    transition: "background .18s,border-color .18s,color .18s"
                   }}
                 >
                   {g.label}{" "}
@@ -351,8 +327,7 @@ export default function ScoreboardPage() {
             return (
               <div
                 key={b.key}
-                style={{
-                  ...S.card,
+                className="pg-e1" style={{ ...S.card,
                   borderLeft: `3px solid ${t.tone}`,
                 }}
               >
@@ -528,17 +503,12 @@ export default function ScoreboardPage() {
 
         {/* The stack */}
         <section
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(22px) saturate(155%)",
-            WebkitBackdropFilter: "blur(22px) saturate(155%)",
-            border: "1px solid rgba(255,255,255,.11)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
+          className="pg-e1" style={{
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
             display: "flex",
             flexDirection: "column",
-            gap: 18,
+            gap: 18
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
@@ -653,18 +623,15 @@ export default function ScoreboardPage() {
 
         {/* Day shift CTA */}
         <section
-          style={{
+          className="pg-e1" style={{
             display: "flex",
             flexWrap: "wrap",
             gap: "clamp(14px,2.4vw,22px)",
             alignItems: "center",
             background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))",
-            backdropFilter: "blur(22px) saturate(150%)",
-            WebkitBackdropFilter: "blur(22px) saturate(150%)",
             border: "1px solid #0A6BAA",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
-            padding: "clamp(22px,3.2vw,34px)",
+            padding: "clamp(22px,3.2vw,34px)"
           }}
         >
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
@@ -705,7 +672,7 @@ export default function ScoreboardPage() {
                 maxWidth: "54ch",
               }}
             >
-              Eight to six I run lot operations and events for duPont REGISTRY in Lebanon. That work, and their floor, lives on its own pages.
+              Eight to six I run lot operations and events in Lebanon. That work lives on its own pages.
             </p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>

@@ -11,13 +11,13 @@ const STEPS = [
   { label: "The car",     datum: "Step 01", head: "Tell me what",     sub: "you have.",         blurb: "Start with the VIN and our decoder pulls the rest. No VIN to hand? Type what you know."                                                                                              },
   { label: "Condition",   datum: "Step 02", head: "How it has",        sub: "been kept.",        blurb: "Straight answers here are worth money. A car with a known story sells faster than a perfect one with gaps."                                                                           },
   { label: "The route",   datum: "Step 03", head: "Where it",          sub: "should sell.",      blurb: "Four inventories, four different buyers. Pick one, or leave it to the concierge."                                                                                                    },
-  { label: "You",         datum: "Step 04", head: "Where do I",        sub: "reach you?",        blurb: "This goes to the duPont REGISTRY auction concierge. They come back within 24 to 48 business hours with a number and the inventory it belongs in."                                     },
+  { label: "You",         datum: "Step 04", head: "Where do I",        sub: "reach you?",        blurb: "This comes straight to me. I come back with a number and the lane the car belongs in, retail or wholesale."                                     },
   { label: "Sent",        datum: "",        head: "Got it.",           sub: "I will come back to you.", blurb: "" },
 ]
 
 const ROUTES = [
   { id: "wholesale", name: "WHOLESALE",      speed: "Fastest",      blurb: "Dealer to dealer, run through Manheim Nashville on Wednesdays. A clean number and the car is gone. No tyre kickers, no weekend viewings." },
-  { id: "drlive",    name: "dR LIVE AUCTION",speed: "No reserve",   blurb: "A no reserve live auction at live.dupontregistry.com. Select vehicles are taken on through dR LIVE Consignment to run in it."           },
+  { id: "drlive",    name: "LIVE AUCTION",   speed: "No reserve",   blurb: "A no reserve live auction. We shop with a dealer\u2019s licence, so every auction is open to us."           },
   { id: "retail",    name: "dR RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it, takes longer, and usually pays the most."  },
   { id: "unsure",    name: "NOT SURE YET",   speed: "Ask me",       blurb: "Tell us the car and what matters most, speed or price, and the concierge will point you at the right inventory."                        },
 ]
@@ -359,7 +359,7 @@ export default function IntakePage() {
             </div>
 
             <p style={{ margin: "clamp(18px,2.2vw,26px) 0 0", fontSize: 17, lineHeight: 1.6, color: "#9BA5B3", maxWidth: "56ch" }}>
-              Not sure which? Leave it blank. Every car sells through duPont REGISTRY either way, and the concierge will tell you which inventory it belongs in.
+              Not sure which? Leave it blank. I will tell you which lane the car belongs in, retail or wholesale.
             </p>
           </>
         )}

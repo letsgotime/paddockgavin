@@ -217,7 +217,7 @@ export default function PressPage() {
             ))}
           </ul>
           <p style={{ margin: "20px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>
-            Vehicles photographed at duPont REGISTRY appear with my employer&apos;s permission, in my capacity as their Lot Operations and Events Manager. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant rather than left for someone to discover.
+            Vehicles photographed on dealer lots appear with the dealer&apos;s permission. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant rather than left for someone to discover.
           </p>
         </section>
 
@@ -238,14 +238,10 @@ export default function PressPage() {
 
         {/* CTA */}
         <div
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(22px) saturate(155%)",
-            WebkitBackdropFilter: "blur(22px) saturate(155%)",
-            border: "1px solid rgba(255,255,255,.11)",
+          className="pg-e1" style={{
             borderLeft: "3px solid #00D2BE",
             padding: "clamp(24px,3vw,40px)",
-            marginBottom: 40,
+            marginBottom: 40
           }}
         >
           <p style={{ margin: "0 0 6px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#91918F" }}>

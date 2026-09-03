@@ -157,7 +157,7 @@ export default function TrademarksPage() {
             Every photograph, every clip, every caption, every word of copy, the design system, the colour palette, the component library and the code that runs this site are original work and mine, protected by copyright from the moment they were made.
           </p>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Photographs and video made at duPont REGISTRY are published with my employer&apos;s permission, in my capacity as their Lot Operations and Events Manager. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant.
+            Photographs and video made on dealer lots are published with the dealer&apos;s permission. Their inventory and facility are theirs. That relationship is disclosed everywhere it is relevant.
           </p>
           <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             Watermarks are copyright management information. Under 17 U.S.C. § 1202, removing or altering them to disguise where a file came from is a violation in its own right, on top of the copying. It carries statutory damages of $2,500 to $25,000 per instance, and unlike ordinary infringement damages it does not require the work to have been registered first. Cropping the mark out is not a workaround. It is a second claim.

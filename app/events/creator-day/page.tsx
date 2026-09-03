@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { PageBackdrop } from "@/components/page-backdrop"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -81,21 +82,7 @@ export default function CreatorDayPage() {
         @keyframes pgKb{from{transform:scale(1) translateY(0)}to{transform:scale(1.09) translateY(-1.6%)}}
       `}</style>
 
-      {/* Fixed background */}
-      <div
-        aria-hidden="true"
-        style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden", background: "#0A1523" }}
-      >
-        <div style={{ position: "absolute", inset: 0, opacity: 0.22 }}>
-          <Image src="/images/cullinan-speedway.webp" alt="" fill style={{ objectFit: "cover" }} />
-        </div>
-        <div
-          style={{
-            position: "absolute", inset: 0,
-            background: "radial-gradient(1100px 720px at 82% -6%,rgba(242,201,76,.15),transparent 60%),radial-gradient(1000px 700px at 4% 30%,rgba(0,81,133,.42),transparent 62%),linear-gradient(180deg,rgba(10,21,35,.86),rgba(10,21,35,.95))",
-          }}
-        />
-      </div>
+      <PageBackdrop src="/images/cullinan-speedway.webp" />
 
       <main
         style={{
@@ -191,16 +178,14 @@ export default function CreatorDayPage() {
 
         {/* The invite */}
         <section
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.015))",
-            backdropFilter: "blur(24px) saturate(160%)",
-            WebkitBackdropFilter: "blur(24px) saturate(160%)",
-            border: "1px solid rgba(255,255,255,.12)",
+          className="pg-e1" style={{
             borderLeft: "3px solid #F2C94C",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(20px,3vw,30px)",
-            display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)",
+            display: "flex",
+ flexWrap: "wrap",
+ alignItems: "center",
+ gap: "clamp(16px,2.6vw,28px)"
           }}
         >
           <p
@@ -210,7 +195,7 @@ export default function CreatorDayPage() {
               fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#C4CBD6", maxWidth: "60ch",
             }}
           >
-            duPont REGISTRY sets up four to five installations with cars, and creators of every kind are invited. Shoot it, film it, paint it &mdash; make whatever the light gives you.
+            Four to five installations are set up with cars, and creators of every kind are invited. Shoot it, film it, paint it &mdash; make whatever the light gives you.
           </p>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
             <a
@@ -246,15 +231,12 @@ export default function CreatorDayPage() {
 
         {/* How the day runs */}
         <section
-          style={{
-            background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-            backdropFilter: "blur(22px) saturate(155%)",
-            WebkitBackdropFilter: "blur(22px) saturate(155%)",
-            border: "1px solid rgba(255,255,255,.11)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.13)",
+          className="pg-e1" style={{
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             padding: "clamp(22px,3.2vw,34px)",
-            display: "flex", flexDirection: "column", gap: 20,
+            display: "flex",
+ flexDirection: "column",
+ gap: 20
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
@@ -290,13 +272,13 @@ export default function CreatorDayPage() {
               {
                 dots: ["#00D2BE", "#00D2BE", null],
                 title: "Post your best",
-                body: "Submit the work you\u2019re proudest of and tag it. duPont votes on the entries.",
+                body: "Submit the work you\u2019re proudest of and tag it. The entries are voted on.",
                 border: "1px solid rgba(255,255,255,.10)",
               },
               {
                 dots: ["#F2C94C", "#F2C94C", "#F2C94C"],
                 title: "Winner takes the bag",
-                body: "A creator bundle from a leading brand, plus a full day to create with a duPont car of your choice.",
+                body: "A creator bundle from a leading brand, plus a full day to create with a car of your choice.",
                 border: "1px solid rgba(242,201,76,.3)",
               },
             ].map((card, i) => (
@@ -368,18 +350,15 @@ export default function CreatorDayPage() {
         {/* RSVP form */}
         <section
           id="rsvp"
-          style={{
+          className="pg-e1" style={{
             position: "relative",
             background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))",
-            backdropFilter: "blur(22px) saturate(150%)",
-            WebkitBackdropFilter: "blur(22px) saturate(150%)",
             border: "1px solid #0A6BAA",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,.2)",
             clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
             overflow: "hidden",
             isolation: "isolate",
             padding: "clamp(22px,3.2vw,34px)",
-            scrollMarginTop: 120,
+            scrollMarginTop: 120
           }}
         >
           <Image
