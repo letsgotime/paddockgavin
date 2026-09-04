@@ -75,9 +75,13 @@
     <div class="panel" id="panel"><div class="lock">Checking who you are.</div></div>
     <div class="hint" id="hint" style="display: none"></div>
 
-    <script src="/vendor/leaflet.js"></script>
     <script type="module">
       import { db as makeDb, EVENT_ID, isStaff } from "/vendor/ranch-db.js?v=2026-09-03a";
+      /* The vendored Leaflet is an ES module, so a plain script tag throws on
+         its first export and leaves L undefined. The map page imports it, and
+         so does this. */
+      import * as LeafletMod from "/vendor/leaflet.js";
+      var L = LeafletMod.default || LeafletMod;
 
       /**
        * Trace the plan.
