@@ -32,7 +32,9 @@ export async function generateMetadata({ params }: { params: Promise<{ event: st
     : ""
   /* Under 60 characters so a result does not truncate it, and a middot rather
      than a dash, which is the house rule everywhere else too. */
-  const title = [e.name, day].filter(Boolean).join(" · ")
+  /* A row may carry its own search title under content.seo; otherwise
+     name · day, which is what every event gets for free. */
+  const title = e.content?.seo?.title || [e.name, day].filter(Boolean).join(" · ")
   const description = e.tagline || `${e.name} at ${e.venue_name ?? ""}.`.trim()
   const canonical = publicUrl(e)
 

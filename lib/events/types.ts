@@ -109,6 +109,7 @@ export interface EventContent {
   organizer?: EventOrganizer
   admission?: EventAdmission
   producer?: string
+  seo?: { title?: string; description?: string }
   hero?: {
     img: string
     alt: string
