@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Journeys · The Piston Powered Ranch</title>
+    <meta name="description" content="The live visitor journey command surface for PaddockGavin Events." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0d1620" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/rj-icon-32.png" />
+    <style>
+      :root {
+        --bg: #0a111a; --glass: rgba(16, 26, 38, 0.62); --sheetbg: rgba(15, 24, 35, 0.97);
+        --gline: rgba(255, 255, 255, 0.12); --gline2: rgba(255, 255, 255, 0.2);
+        --ink: #fff; --dim: #dbe2ea; --mute: #a9b4c2; --faint: #7f8a99;
+        --amber: #f8b800; --teal: #00d2be; --crit: #FF1A21;
+        --crit-fill: #E5141A;
+        --e0: 0 2px 12px rgba(0, 0, 0, 0.25); --e1: 0 10px 34px rgba(0, 0, 0, 0.38);
+        --e2: 0 24px 70px rgba(0, 0, 0, 0.62); --ease: cubic-bezier(0.16, 0.84, 0.32, 1);
+        --pad: 16px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; color: var(--ink); background: var(--bg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        font-size: 15.5px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+        -webkit-text-size-adjust: 100%;
+        padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right);
+      }
+      body.locked { overflow: hidden; }
+      :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 8px; }
+      .ground { position: fixed; inset: 0; z-index: 0; }
+      .ground .ly { position: absolute; inset: 0; background: url(/events/img/hero.jpg) center 34% / cover no-repeat; transform: scale(1.04); }
+      .ground .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 17, 26, 0.72), rgba(10, 17, 26, 0.6) 40%, rgba(10, 17, 26, 0.86)); }
+      .rule { height: 4px; position: relative; z-index: 60; background: linear-gradient(90deg, var(--amber) 0 25%, var(--teal) 25% 50%, #005185 50% 75%, var(--faint) 75% 100%); }
+      /* .wrap spans the viewport so image bands can go full bleed without a
+         100vw negative margin, which overflows by the scrollbar width. The
+         reading column lives in .col. */
+      .wrap { position: relative; z-index: 1; padding: 20px 0 calc(56px + env(safe-area-inset-bottom)); }
+      .col { max-width: 1160px; margin: 0 auto; padding: 0 var(--pad); }
+      .display { font-family: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      /* Floating glass: the lift comes from the rim highlight and the shadow,
+         not from thinning the panel out. Keeping the fill substantive is what
+         holds text contrast steady over a photograph that changes underneath. */
+      .glass {
+        background: linear-gradient(157deg, rgba(30, 45, 62, 0.66), rgba(11, 19, 29, 0.64));
+        -webkit-backdrop-filter: blur(26px) saturate(1.5); backdrop-filter: blur(26px) saturate(1.5);
+        border: 1px solid var(--gline); border-radius: 18px;
+        box-shadow: var(--e1), inset 0 1px 0 rgba(255, 255, 255, 0.15),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      }
+      .lane { transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+      @media (hover: hover) {
+        .lane:hover { transform: translateY(-3px);
+          box-shadow: var(--e2), inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.3); }
+      }
+      /* header: rounded card on phones, stadium pill once it fits on one line */
+      .head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; }
+      .head img { height: 28px; width: auto; flex-shrink: 0; }
+      h1 { margin: 0; font-size: clamp(21px, 5.6vw, 34px); letter-spacing: -0.02em; line-height: 1.02; }
+      h1 .a { color: var(--amber); }
+      .mode {
+        margin-left: auto; display: flex; align-items: center; gap: 7px; font-size: 10.5px;
+        font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--mute);
+        border: 1px solid var(--gline); padding: 6px 11px; border-radius: 999px; white-space: nowrap;
+      }
+      .mode .d { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); flex-shrink: 0; }
+      .mode.staff { color: var(--teal); border-color: rgba(0, 210, 190, 0.45); }
+      .mode.staff .d { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+      .mode .lbl { display: none; }
+      .sub { color: var(--dim); font-size: 14px; margin: 14px 2px 0; max-width: 68ch; }
+      .lanes { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 18px; align-items: start; }
+      .lane { padding: 14px var(--pad) 16px; }
+      .lane .who { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+      .lane h2 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+      .bad { color: var(--crit); }
+      .ms { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline;
+        padding: 9px 0; border-bottom: 1px solid var(--gline); }
+      .ms:last-of-type { border-bottom: 0; }
+      .ms .dt { font-family: ui-monospace, Menlo, monospace; font-size: 11.5px; color: var(--mute); white-space: nowrap; }
+      .ms .dt.late { color: var(--crit); font-weight: 700; }
+      .ms .dt.soon { color: var(--amber); font-weight: 700; }
+      .ms .ttl { font-size: 13.5px; color: var(--ink); font-weight: 700; }
+      .ms .ttl small { display: block; font-weight: 400; color: var(--mute); font-size: 12.5px; line-height: 1.45; margin-top: 2px; }
+      .ms .own { font-size: 11px; font-family: ui-monospace, Menlo, monospace; color: var(--mute); white-space: nowrap; }
+      .lanehead { font-size: 10.5px; letter-spacing: .15em; text-transform: uppercase; font-weight: 800;
+        color: var(--amber); margin: 14px 0 4px; }
+      .lanehead:first-child { margin-top: 0; }
+      .badge { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+        padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+      .b-spec { color: #04211d; background: var(--teal); }
+      .b-car { color: #151000; background: var(--amber); }
+      .b-biz { color: #eaf4ff; background: #2a6d9c; }
+      .b-staff { color: #1a0b08; background: #e0954a; }
+      .kpi { font-size: 12.5px; color: var(--mute); min-height: 18px; margin: 5px 0 12px; }
+      .kpi b { color: var(--teal); font-variant-numeric: tabular-nums; }
+      .flow { display: flex; flex-direction: column; }
+      .node {
+        text-align: left; width: 100%; font: inherit; color: var(--dim); cursor: pointer;
+        min-height: 56px; padding: 11px 42px 11px 14px; border-radius: 12px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.035));
+        border: 1px solid var(--gline); font-size: 13px; position: relative;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), var(--e0);
+        transition: transform 0.18s var(--ease), border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      }
+      .node b { color: var(--ink); display: block; font-size: 13.5px; line-height: 1.35; }
+      .node .n { position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+        color: var(--mute); font-size: 17px; line-height: 1; transition: color 0.2s, transform 0.2s; }
+      .node .pill { position: absolute; right: 36px; top: -7px; font-size: 10px; font-weight: 800;
+        color: #04211d; background: var(--teal); border-radius: 999px; padding: 2px 8px;
+        display: none; font-variant-numeric: tabular-nums; box-shadow: var(--e0); }
+      .node .pill.on { display: inline-block; }
+      .arrow { align-self: center; height: 14px; width: 2px; background: var(--faint); opacity: 0.5; margin: 2px 0; }
+      @media (hover: hover) {
+        .node:hover { transform: translateY(-2px); border-color: rgba(248, 184, 0, 0.55);
+          background: linear-gradient(160deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.06));
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), var(--e1); }
+        .node:hover .n { color: var(--amber); transform: translateY(-50%) translateX(2px); }
+      }
+      .node:active { transform: scale(0.99); border-color: rgba(248, 184, 0, 0.55); }
+      /* modal */
+      .scrim { position: fixed; inset: 0; z-index: 80; background: rgba(4, 8, 13, 0.72);
+        -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+        opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
+      .scrim.on { opacity: 1; pointer-events: auto; }
+      .sheet {
+        position: fixed; z-index: 90; left: 50%; bottom: 0; transform: translate(-50%, 104%);
+        width: 100%; max-width: 560px; max-height: 88vh; max-height: 88dvh; overflow: auto;
+        overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+        border-radius: 22px 22px 0 0; padding: 18px 20px calc(24px + env(safe-area-inset-bottom));
+        background: var(--sheetbg);
+        -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+        border: 1px solid var(--gline2); border-bottom: 0; box-shadow: var(--e2);
+        /* closed: inert and untouchable, so it can never eat clicks on the grid */
+        visibility: hidden; pointer-events: none;
+        transition: transform 0.42s var(--ease), visibility 0s linear 0.42s;
+      }
+      .sheet.on { transform: translate(-50%, 0); visibility: visible; pointer-events: auto;
+        transition: transform 0.42s var(--ease), visibility 0s linear 0s; }
+      .sheet .grab { width: 44px; height: 4px; border-radius: 999px; background: var(--gline2); margin: 0 auto 14px; }
+      .sheet .eyebrow2 { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800; color: var(--teal); }
+      .sheet h3 { margin: 4px 44px 0 0; font-size: 20px; font-family: "Arial Black", Helvetica, sans-serif; letter-spacing: -0.01em; }
+      .sheet .body { margin-top: 8px; color: var(--dim); font-size: 13.5px; }
+      .sheet .body p { margin: 0 0 10px; }
+      .sheet .close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%;
+        border: 1px solid var(--gline2); background: rgba(255, 255, 255, 0.07); color: var(--dim);
+        font: inherit; font-size: 17px; line-height: 1; cursor: pointer; }
+      .stat-line { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0;
+        border-bottom: 1px solid var(--gline); font-size: 13.5px; }
+      .stat-line:last-of-type { border-bottom: 0; }
+      .stat-line .l { color: var(--mute); }
+      .stat-line .v { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+      .stat-line .v.t { color: var(--teal); }
+      .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      .acts a, .acts button {
+        font: inherit; font-size: 12.5px; font-weight: 700; text-decoration: none; cursor: pointer;
+        color: var(--ink); background: rgba(255, 255, 255, 0.07); border: 1px solid var(--gline2);
+        border-radius: 999px; padding: 11px 17px; min-height: 42px; display: inline-flex; align-items: center;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .acts a:hover, .acts button:hover { border-color: var(--amber); background: rgba(255, 255, 255, 0.11); }
+      .acts a.primary { background: var(--amber); border-color: var(--amber); color: #151000; }
+      .acts a.primary:hover { background: #ffc61a; }
+      .lock { margin-top: 14px; padding: 11px 14px; border-radius: 10px; font-size: 13px; color: var(--mute);
+        background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--gline2); }
+      .lock a { color: var(--amber); }
+      .foot { margin-top: 22px; font-size: 12px; color: var(--mute); }
+      /* full bleed act dividers */
+      .band { position: relative; width: 100%; margin: 26px 0; overflow: hidden;
+        min-height: 190px; display: grid; place-items: center; isolation: isolate; }
+      .band .bimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+      .band .bveil { position: absolute; inset: 0; z-index: -1;
+        background: linear-gradient(180deg, rgba(10,17,26,0.9), rgba(10,17,26,0.55) 45%, rgba(10,17,26,0.92)); }
+      .band .btxt { text-align: center; padding: 34px var(--pad); max-width: 760px; }
+      .band .beye { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase;
+        font-weight: 800; color: var(--amber); }
+      .band h2 { margin: 8px 0 0; font-size: clamp(22px, 4.6vw, 36px); letter-spacing: -0.02em; line-height: 1.05; }
+      .band p { margin: 8px 0 0; color: var(--dim); font-size: 13.5px; }
+      /* workbench */
+      .wb { margin-top: 16px; border-top: 1px solid var(--gline2); padding-top: 14px; }
+      .wb .wbhead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+      .wb .wbeye { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800; color: var(--amber); }
+      .wb .sv { margin-left: auto; font-size: 11px; color: var(--mute); display: flex; align-items: center; gap: 6px; }
+      .wb .sv .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
+      .wb .sv.dirty .dot { background: var(--amber); }
+      .wb .sv.saving .dot { background: var(--amber); animation: pulse 1s infinite; }
+      .wb .sv.saved .dot { background: var(--teal); }
+      .wb .sv.error { color: var(--crit); } .wb .sv.error .dot { background: var(--crit-fill); }
+      @keyframes pulse { 50% { opacity: 0.3; } }
+      .wbadd { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+      .wbadd button { font: inherit; font-size: 11.5px; font-weight: 700; cursor: pointer; color: var(--dim);
+        background: rgba(255,255,255,0.06); border: 1px dashed var(--gline2); border-radius: 999px;
+        padding: 8px 13px; min-height: 38px; }
+      .wbadd button:hover { border-color: var(--amber); color: var(--ink); }
+      .wbitem { border: 1px solid var(--gline); border-radius: 12px; padding: 11px 12px; margin-bottom: 9px;
+        background: rgba(255,255,255,0.04); }
+      .wbitem .top { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+      .wbitem .tag { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+        padding: 3px 8px; border-radius: 999px; background: rgba(255,255,255,0.09); color: var(--mute); }
+      .wbitem .tag.note { color: #bfe6ff; } .wbitem .tag.deliverable { color: #ffd98a; }
+      .wbitem .tag.option { color: #9df0e4; }
+      .wbitem .who { margin-left: auto; font-size: 10.5px; color: var(--faint); }
+      .wbitem input.t, .wbitem textarea {
+        width: 100%; font: inherit; color: var(--ink); background: rgba(0,0,0,0.28);
+        border: 1px solid var(--gline); border-radius: 9px; padding: 9px 11px; resize: vertical;
+      }
+      .wbitem input.t { font-weight: 700; font-size: 13.5px; margin-bottom: 6px; }
+      .wbitem textarea { font-size: 13px; line-height: 1.55; min-height: 62px; }
+      .wbitem input.t:focus, .wbitem textarea:focus { border-color: rgba(248,184,0,0.55); outline: none; }
+      .wbitem .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 8px; }
+      .st { display: flex; gap: 4px; }
+      .st button { font: inherit; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em;
+        text-transform: uppercase; cursor: pointer; color: var(--mute); background: transparent;
+        border: 1px solid var(--gline); border-radius: 999px; padding: 6px 10px; min-height: 34px; }
+      .st button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #04211d; }
+      .st button.done[aria-pressed="true"] { background: var(--teal); }
+      .del { margin-left: auto; font: inherit; font-size: 11px; cursor: pointer; color: var(--faint);
+        background: none; border: 0; padding: 6px; }
+      .del:hover { color: var(--crit); }
+      .opts { display: grid; gap: 7px; }
+      .opt { display: grid; grid-template-columns: auto 1fr; gap: 9px; align-items: start;
+        border: 1px solid var(--gline); border-radius: 10px; padding: 9px 10px; background: rgba(0,0,0,0.18); }
+      .opt.won { border-color: var(--teal); background: rgba(0,210,190,0.09); }
+      .opt .pick { font: inherit; font-family: "Arial Black", Arial, sans-serif; font-size: 13px; cursor: pointer;
+        width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--gline2);
+        background: rgba(255,255,255,0.06); color: var(--dim); }
+      .opt.won .pick { background: var(--teal); border-color: var(--teal); color: #04211d; }
+      .opt textarea { min-height: 46px; }
+      .feed { max-height: 300px; overflow: auto; }
+      .feed .ev { display: flex; gap: 9px; padding: 8px 0; border-bottom: 1px solid var(--gline); font-size: 12.5px; }
+      .feed .ev:last-child { border-bottom: 0; }
+      .feed .ev .a { color: var(--teal); font-weight: 700; white-space: nowrap; }
+      .feed .ev .d { color: var(--dim); flex: 1; }
+      .feed .ev .t { color: var(--faint); white-space: nowrap; font-size: 11px; }
+      .wbnote { font-size: 12px; color: var(--mute); padding: 10px 12px; border-radius: 10px;
+        background: rgba(255,255,255,0.04); border: 1px dashed var(--gline2); }
+      .films { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+      .film { display: flex; flex-direction: column; gap: 2px; text-decoration: none;
+        border: 1px solid var(--gline2); border-radius: 9px; padding: 7px 10px; max-width: 190px;
+        background: rgba(0,0,0,0.25); overflow: hidden; }
+      .film .fn { font-size: 11.5px; color: var(--dim); white-space: nowrap; overflow: hidden;
+        text-overflow: ellipsis; }
+      .film .fs { font-size: 10px; color: var(--faint); }
+      .film:hover { border-color: var(--amber); }
+      .film img { width: 100%; height: 84px; object-fit: cover; border-radius: 6px; margin-top: 4px; }
+      .film.photo { max-width: 150px; }
+      .att { font: inherit; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em;
+        text-transform: uppercase; cursor: pointer; color: var(--mute);
+        border: 1px solid var(--gline); border-radius: 999px; padding: 8px 12px;
+        min-height: 34px; display: inline-flex; align-items: center; }
+      .att:hover { border-color: var(--amber); color: var(--ink); }
+      /* tablet */
+      @media (min-width: 640px) {
+        :root { --pad: 18px; }
+        .wrap { padding-top: 28px; }
+        .lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .mode .lbl { display: inline; }
+        .sheet { width: min(94vw, 560px); }
+      }
+      /* laptop and up */
+      @media (min-width: 1024px) {
+        .head { border-radius: 999px; padding: 14px 22px; }
+        .head img { height: 34px; }
+        .wrap { padding-top: 34px; }
+        .lanes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .lane { padding: 18px 20px 20px; }
+        .sub { font-size: 15px; }
+        .sheet { bottom: auto; top: 50%; border-radius: 24px; border-bottom: 1px solid var(--gline2);
+          padding: 24px 26px 26px;
+          transform: translate(-50%, -46%) scale(0.97); opacity: 0;
+          transition: transform 0.35s var(--ease), opacity 0.28s var(--ease), visibility 0s linear 0.35s; }
+        .sheet.on { transform: translate(-50%, -50%) scale(1); opacity: 1;
+          transition: transform 0.35s var(--ease), opacity 0.28s var(--ease), visibility 0s linear 0s; }
+        .sheet .grab { display: none; }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .lane { animation: rise 0.5s var(--ease) both; animation-delay: calc(var(--i, 0) * 55ms); }
+        @keyframes rise { from { opacity: 0.001; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .node:hover, .node:active { transform: none; }
+        .sheet, .scrim { transition: none; }
+      }
+    
+      .jGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+        background:#070d14;padding:24px}
+      .jGateCard{max-width:440px;text-align:center}
+      .jGateEye{margin:0 0 14px;font:600 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;
+        text-transform:uppercase;color:var(--amber,#F2C94C)}
+      .jGate h2{margin:0;font:900 clamp(26px,5vw,38px)/1.05 Archivo,system-ui,sans-serif;
+        letter-spacing:-.03em;color:#fff}
+      .jGate p{margin:12px 0 0;font:400 16px/1.6 Archivo,system-ui,sans-serif;color:#a9b4c2}
+      .jGateBtn{display:inline-block;margin-top:22px;font:900 14.5px/1 Archivo,system-ui,sans-serif;
+        color:#151000;background:var(--amber,#F2C94C);border-radius:11px;padding:14px 26px;text-decoration:none}
+      body.jLocked{overflow:hidden}
+</style>
+    <link rel="manifest" href="/team.webmanifest" />
+  <meta name="theme-color" content="#0A1523" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Ranch Team" />
+  <link rel="apple-touch-icon" href="/brand/rj-icon-192.png" />
+</head>
+  <body>
+    <div class="jGate" id="jGate" role="status" aria-live="polite">
+      <div class="jGateCard">
+        <p class="jGateEye">The Piston Powered Ranch</p>
+        <h2 id="jGateH">Checking your session</h2>
+        <p id="jGateP">One moment.</p>
+        <a class="jGateBtn" id="jGateBtn" href="/console/" hidden>Sign in</a>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <div class="ground" aria-hidden="true"><div class="ly"></div><div class="veil"></div></div>
+    <div class="wrap">
+      <div class="col">
+        <div class="head glass">
+          <img src="/brand/pg-mark.png" alt="PaddockGavin" />
+          <h1 class="display"><span class="a">Journeys</span></h1>
+          <span class="mode" id="mode"><span class="d"></span><span id="modeTxt">Public</span><span class="lbl">&nbsp;view</span></span><span class="lbl" id="fresh" style="opacity:.62;margin-left:10px">updated&nbsp;<span id="freshAt">&middot;&middot;</span></span>
+        </div>
+        <p class="sub">
+          <b>This is the whole event on one page.</b> It is laid out as journeys, because that is
+          how the day actually reaches people: a spectator, a show car, a vendor and a sponsor each
+          travel a different path to the tenth of October, and every one of those paths is a row
+          here. Under them sit the dated plan, the money, the decisions nobody has made yet, and
+          the name against each.
+        </p>
+        <section class="jNow" id="jNow" aria-label="Live now">
+          <div class="jNowGrid" id="jNowGrid"><span class="jNowWait">Reading the live numbers</span></div>
+        </section>
+        <nav class="jDocs" aria-label="Working surfaces">
+          <span class="jDocsLabel">Where the work is entered</span>
+          <a href="#" data-panel="deskQueue">Entries queue</a>
+          <a href="#" data-panel="deskRsvps">RSVP list</a>
+          <a href="/console/#/submit">Submit an entry</a>
+          <a href="/console/#/event">Event info</a>
+          <a href="/console/planning/#budget">Budget</a>
+          <a href="/console/planning/#scope">Scope of work</a>
+          <a href="/console/#/legal">Documents and legal</a>
+        </nav>
+        <style>
+          .jNow{margin:22px 0 0}
+          .jNowGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;
+            background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.10);border-radius:13px;overflow:hidden}
+          .jNowGrid > div{background:#0d1620;padding:14px 15px}
+          .jNowGrid b{display:block;font:900 25px/1.05 Archivo,system-ui,sans-serif;letter-spacing:-.03em;
+            color:#fff;font-variant-numeric:tabular-nums}
+          .jNowGrid span{display:block;margin-top:3px;font:600 9.5px/1 ui-monospace,Menlo,monospace;
+            letter-spacing:.13em;text-transform:uppercase;color:#7f8a99}
+          .jNowGrid .warn b{color:var(--amber,#F2C94C)}
+          .jNowWait{padding:14px 15px;font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;
+            text-transform:uppercase;color:#6d7a87}
+          .qRow{display:grid;grid-template-columns:1fr auto;gap:10px;padding:9px 0;
+            border-bottom:1px solid rgba(255,255,255,.09)}
+          .qRow:last-child{border-bottom:0}
+          .qRow .n{font:600 14px/1.3 Archivo,system-ui,sans-serif;color:#EDF1F6}
+          .qRow .n small{display:block;font:400 12px/1.4 Archivo,system-ui,sans-serif;color:#8b95a3;margin-top:2px}
+          .qRow .s{font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;
+            align-self:center;padding:4px 8px;border-radius:5px;white-space:nowrap}
+          .s-pending{background:rgba(242,201,76,.16);color:#F2C94C}
+          .s-approved{background:rgba(0,210,190,.16);color:#00D2BE}
+          .s-waitlisted{background:rgba(255,255,255,.10);color:#a9b4c2}
+          .s-declined{background:rgba(229, 20, 26,.14);color:#FF1A21}
+          .jDocs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 0}
+          .jDocsLabel{font:600 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;
+            text-transform:uppercase;color:#6d7a87;width:100%;margin-bottom:2px}
+          .jDocs a{font:600 13px/1 Archivo,system-ui,sans-serif;color:#c3ccd6;text-decoration:none;
+            padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.15)}
+          .jDocs a:hover{color:#fff;border-color:var(--amber,#F2C94C)}
+        </style>
+        <p class="sub">
+          <b>How to use it.</b> Every box is a step in somebody's journey. Tap one and you get its
+          live numbers, the links that act on it, and a workbench: a shared notepad for that step
+          that saves as you type, so the thinking sits next to the figures rather than in someone's
+          messages. A number on a box means something is waiting. Nothing here is a copy of
+          anything, so if you change it, it is changed for everyone.
+        </p>
+        <p class="sub">
+          Signed in at the console you see live data and can edit. Signed out you see the shape of
+          the plan without the money. Your own work sits at the top of the Team rail on the left.
+        </p>
+      </div>
+      <div id="stage"></div>
+      <div class="col">
+        <p class="foot">
+          Numbers refresh every 45 seconds while this tab is open. Rows and totals come straight
+          from the console database; nothing here is simulated.
+        </p>
+      </div>
+    </div>
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle" aria-hidden="true" tabindex="-1" inert>
+      <div class="grab" aria-hidden="true"></div>
+      <button class="close" id="close" aria-label="Close">×</button>
+      <div class="eyebrow2" id="shEyebrow"></div>
+      <h3 id="shTitle"></h3>
+      <div class="body" id="shBody"></div>
+    </div>
+    <script type="module">
+      import { db as makeDb, DATA_API, EVENT_ID } from "/vendor/ranch-db.js?v=2026-09-02f";
+      import { upload as blobUpload } from "/vendor/vercel-blob-client.js";
+      var db = null;
+      try {
+        db = makeDb();
+      } catch (e) {}
+      var esc = function (s) {
+        return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      };
+      var ORIGIN = location.origin;
+      var staff = false;
+      var gateSettled = false;
+      function liftGate(ok) {
+        if (gateSettled) return;
+        gateSettled = true;
+        var g = document.getElementById("jGate");
+        if (!g) return;
+        if (ok) {
+          g.remove();
+          document.body.classList.remove("jLocked");
+          return;
+        }
+        document.getElementById("jGateH").textContent = "Staff only";
+        document.getElementById("jGateP").textContent =
+          "Sign in on this device, then come back. Journeys carries names, addresses and money, so it is not public.";
+        var b = document.getElementById("jGateBtn");
+        b.hidden = false;
+        b.focus();
+      }
+      /* If the session check never returns, the page must still say something.
+         A spinner that spins forever is worse than a locked door. */
+      setTimeout(function () { liftGate(false); }, 9000);
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.classList.add("jLocked");
+      });
+      
+      var LIVE = { stats: null, subs: null, accounts: null, payments: null, decisions: null,
+                   spectators: null, clubs: null, features: null, wb: null, feed: null,
+                   milestones: null, budget: null, roster: null };
+
+      /* ---------- the map model: every node declares its own panel ---------- */
+      var LANES = [
+        { who: "Spectator", badge: ["b-spec", "Largest crowd"], kpi: function () {
+            return LIVE.stats ? "<b>" + LIVE.stats.party_headcount + "</b> expected from <b>" + LIVE.stats.spectator_rsvps + "</b> RSVPs" : "";
+          },
+          nodes: [
+            { t: "Lands on /show", d: "Countdown, reels, live telemetry.", panel: "show" },
+            { t: "RSVPs with email", d: "Joins the update list.", panel: "rsvp", pill: function () { return LIVE.stats && LIVE.stats.spectator_rsvps; } },
+            { t: "Gets updates until show day", d: "Parking, schedule, changes.", panel: "updates" },
+          ] },
+        { who: "Vehicle owner / broker", badge: ["b-car", "The field"], kpi: function () {
+            if (LIVE.subs) { var v = LIVE.subs.filter(function (x) { return x.type === "vehicle"; }); return "<b>" + v.length + "</b> submitted · <b>" + v.filter(function (x) { return x.status === "pending"; }).length + "</b> awaiting review"; }
+            return LIVE.stats ? "<b>" + LIVE.stats.vehicle_submissions + "</b> cars submitted" : "";
+          },
+          nodes: [
+            { t: "Submits through Paddock Experience", d: "Up to 50 photos, video, voice.", panel: "submit", pill: function () { return LIVE.subs && LIVE.subs.filter(function (x) { return x.type === "vehicle" && x.status === "pending"; }).length; } },
+            { t: "Holds a private status link", d: "No login, no phone calls.", panel: "status" },
+            { t: "Decision lands", d: "Approved, waitlisted, or declined.", panel: "decision" },
+          ] },
+        { who: "Car club rep", badge: ["b-car", "Brings rows"], kpi: function () {
+            return LIVE.clubs ? "<b>" + LIVE.clubs.length + "</b> blocks · <b>" + LIVE.clubs.filter(function (x) { return x.status === "pending"; }).length + "</b> pending" : LIVE.stats ? "<b>" + LIVE.stats.club_blocks + "</b> club blocks" : "";
+          },
+          nodes: [
+            { t: "Applies for a block", d: "Roster rows, club banner placement.", panel: "clubs", pill: function () { return LIVE.clubs && LIVE.clubs.filter(function (x) { return x.status === "pending"; }).length; } },
+            { t: "Block approved", d: "Roster becomes individual passes.", panel: "clubapprove" },
+          ] },
+        { who: "Vendor", badge: ["b-biz", "Pays to be there"], kpi: function () {
+            if (LIVE.accounts) { var v = LIVE.accounts.filter(function (x) { return x.type === "vendor"; }); return "<b>" + v.length + "</b> vendor accounts"; }
+            return "";
+          },
+          nodes: [
+            { t: "Applies for a booth", d: "Offering, space, power, insurance.", panel: "vendorapply" },
+            { t: "Pays the $250 deposit", d: "Card, through Stripe.", panel: "deposit" },
+            { t: "Books into the ledger", d: "Webhook writes the payment row.", panel: "ledger", pill: function () { return LIVE.payments && LIVE.payments.filter(function (x) { return x.status === "paid"; }).length; } },
+          ] },
+        { who: "Sponsor", badge: ["b-biz", "Buys the title"], kpi: function () {
+            if (LIVE.accounts) { var v = LIVE.accounts.filter(function (x) { return x.type === "sponsor"; }); return "<b>" + v.length + "</b> sponsor accounts"; }
+            return "";
+          },
+          nodes: [
+            { t: "Applies, sees no public price", d: "Numbers live in the proposal only.", panel: "sponsorapply" },
+            { t: "Conversation, tracked", d: "Every touch on the account timeline.", panel: "sponsortrack" },
+            { t: "Commits and activates", d: "Invoice or checkout, then signage.", panel: "sponsorclose" },
+          ] },
+        { who: "Staff", badge: ["b-staff", "Runs all of it"], kpi: function () {
+            return LIVE.decisions ? "<b>" + LIVE.decisions.filter(function (x) { return x.status === "open"; }).length + "</b> decisions open" : "";
+          },
+          nodes: [
+            { t: "Console: Ops and Decision Desk", d: "Saves as you type.", panel: "console", pill: function () { return LIVE.decisions && LIVE.decisions.filter(function (x) { return x.status === "open"; }).length; } },
+            { t: "One sheet per submission", d: "Approve, decline, copy the notice.", panel: "review" },
+            { t: "Pipeline and Ledger", d: "Money and lanes, live.", panel: "pipeline" },
+            { t: "Grounds and site plan", d: "Zones, gate, crowd line, print sheet.", panel: "grounds", pill: function () { return LIVE.features && LIVE.features.filter(function (x) { return x.kind === "zone"; }).length; } },
+            { t: "Chat, on the record", d: "Threads attached to the thing being discussed.", panel: "chat" },
+            { t: "Awards and the panel", d: "Ten awards, judges, and a vote that needs no account.", panel: "awards", pill: function () {
+                return LIVE.awards ? LIVE.awards.filter(function (a) { return a.state === "draft"; }).length : null;
+              } },
+            { t: "Crew, posted and timed", d: "Every post, who is on it, who is short.", panel: "crew", pill: function () {
+                if (!LIVE.shifts || !LIVE.assigns) return null;
+                var by = {};
+                LIVE.assigns.forEach(function (a) { if (a.status !== "declined") by[a.shift_id] = (by[a.shift_id] || 0) + 1; });
+                return LIVE.shifts.reduce(function (n, s2) { return n + Math.max(0, s2.needed - (by[s2.id] || 0)); }, 0);
+              } },
+            { t: "Targets, by category", d: "Every category the day needs, and who we are chasing.", panel: "targets", pill: function () {
+                if (!LIVE.categories || !LIVE.candidates) return null;
+                var hit = {};
+                LIVE.candidates.forEach(function (c) { hit[c.category_id] = 1; });
+                return LIVE.categories.filter(function (c) { return !hit[c.id]; }).length;
+              } },
+            { t: "Every change, logged", d: "Who touched what, and when.", panel: "changes", pill: function () { return LIVE.feed && LIVE.feed.length; } },
+          ] },
+        /* The desk. Everything the console holds that exists nowhere else,
+           as a lane rather than as a link, so Journeys is the whole document
+           and not an index that sends you somewhere else to read the rest. */
+        { who: "The desk", badge: ["b-staff", "Where work is entered"], kpi: function () {
+            if (!LIVE.subs) return "";
+            var pend = LIVE.subs.filter(function (x) { return x.status === "pending"; }).length;
+            return "<b>" + LIVE.subs.length + "</b> submitted \u00b7 <b>" + pend + "</b> waiting on a decision";
+          },
+          nodes: [
+            { t: "The entries queue", d: "Every car, vendor and sponsor that came through the form.", panel: "deskQueue",
+              pill: function () { return LIVE.subs ? LIVE.subs.filter(function (x) { return x.status === "pending"; }).length : null; } },
+            { t: "Enter one by hand", d: "For the people who call instead of filling the form.", panel: "deskSubmit" },
+            { t: "The event record", d: "Date, hours, place. Every page reads these.", panel: "deskEvent" },
+            { t: "Budget", d: "What it costs, against what is coming in.", panel: "deskBudget",
+              pill: function () { return LIVE.budget ? LIVE.budget.length : null; } },
+            { t: "Scope of work", d: "What we deliver, and what the ranch provides.", panel: "deskScope" },
+            { t: "Documents and legal", d: "Insurance, permits, terms, the signed versions.", panel: "deskLegal" },
+          ] },
+      ];
+
+      /* ---------- panels: live stats + actions per node ---------- */
+      function msList(set) {
+        var t = ranchToday();
+        return set.map(function (m) {
+          var cls = !m.due ? "" : m.due < t ? " late" : m.due <= addDays(t, 7) ? " soon" : "";
+          return '<div class="ms"><span class="dt' + cls + '">' + (m.due ? esc(m.due.slice(5)) : "no date") + "</span>" +
+            '<span class="ttl">' + esc(m.title) + (m.detail ? "<small>" + esc(m.detail) + "</small>" : "") + "</span>" +
+            '<span class="own">' + esc(m.owner || "") + "</span></div>";
+        }).join("");
+      }
+      function addDays(iso, n) {
+        var d = new Date(iso + "T12:00:00Z");
+        d.setUTCDate(d.getUTCDate() + n);
+        return d.toISOString().slice(0, 10);
+      }
+      function money(c) { return "$" + ((c || 0) / 100).toFixed(2); }
+      function copyBtn(label, text) {
+        return '<button data-copy="' + esc(text) + '">' + esc(label) + "</button>";
+      }
+      var PANELS = {
+        show: function () {
+          return { e: "Entry point", t: "The /show landing", body:
+            stat("Live countdown", "ticking") + stat("Reel slots filled", "drop files in show/reels") +
+            (LIVE.stats ? stat("RSVPs so far", LIVE.stats.spectator_rsvps, true) : "") +
+            acts('<a class="primary" href="https://paddockgavin.com/events/pistonpoweredranch" target="_blank" rel="noopener">Open the event page</a>' +
+              copyBtn("Copy the public link", "https://paddockgavin.com/events/pistonpoweredranch")) };
+        },
+        rsvp: function () {
+          var extra = "";
+          if (staff && LIVE.spectators) {
+            extra = LIVE.spectators.slice(0, 5).map(function (r) {
+              return stat(esc(r.name) + (r.source ? " · " + esc(r.source) : ""), r.party_size + (r.party_size === 1 ? " guest" : " guests"));
+            }).join("");
+          }
+          return { e: "Spectators", t: "RSVP and update list", body:
+            (LIVE.stats ? stat("RSVPs", LIVE.stats.spectator_rsvps, true) + stat("Expected heads", LIVE.stats.party_headcount, true) : "") + extra +
+            (staff ? "" : lock()) +
+            acts('<a class="primary" href="/spectate/">Open /spectate</a>' + copyBtn("Copy RSVP link", ORIGIN + "/spectate/")) };
+        },
+        updates: function () {
+          return { e: "Spectators", t: "The update list", body:
+            "<p>Every RSVP email is an update-list subscriber. Sends go out through Resend from paddockgavin.com once the key is in Vercel; until then this is the export point.</p>" +
+            (staff && LIVE.spectators ? stat("Addresses on the list", LIVE.spectators.length, true) : "") +
+            (staff ? "" : lock()) + acts(copyBtn("Copy RSVP link", ORIGIN + "/spectate/")) };
+        },
+        submit: function () {
+          var v = LIVE.subs ? LIVE.subs.filter(function (x) { return x.type === "vehicle"; }) : null;
+          return { e: "Paddock Experience", t: "Vehicle submissions", body:
+            (v ? stat("Total submitted", v.length, true) + stat("Pending review", v.filter(function (x) { return x.status === "pending"; }).length, true) +
+                 stat("Approved", v.filter(function (x) { return x.status === "approved"; }).length, true)
+               : LIVE.stats ? stat("Cars submitted", LIVE.stats.vehicle_submissions, true) : "") +
+            (staff ? "" : lock()) +
+            acts('<a class="primary" href="/console/#/submit">Open submit</a>' + (staff ? '<a href="/console/#/ops">Review the queue</a>' : "") + copyBtn("Copy submit link", ORIGIN + "/#submit")) };
+        },
+        status: function () {
+          return { e: "Paddock Experience", t: "Private status links", body:
+            "<p>Every submission carries a tokened link shown once at submit. Staff can re-copy any entrant's link from their sheet in the console.</p>" +
+            acts('<a class="primary" href="/status/">Open /status</a>' + copyBtn("Copy status page", ORIGIN + "/status/")) };
+        },
+        decision: function () {
+          var v = LIVE.subs ? LIVE.subs.filter(function (x) { return x.type === "vehicle"; }) : null;
+          return { e: "Paddock Experience", t: "Decisions", body:
+            (v ? stat("Approved", v.filter(function (x) { return x.status === "approved"; }).length, true) +
+                 stat("Waitlisted", v.filter(function (x) { return x.status === "waitlisted"; }).length) +
+                 stat("Declined", v.filter(function (x) { return x.status === "declined"; }).length) : lock()) +
+            "<p style='margin-top:10px'>Approve or decline in the submission sheet; ready-to-send notices are one tap there.</p>" +
+            (staff ? acts('<a class="primary" href="/console/#/ops">Open the entries queue</a>') : "") };
+        },
+        clubs: function () {
+          var extra = "";
+          if (staff && LIVE.clubs) {
+            extra = LIVE.clubs.slice(0, 5).map(function (c) {
+              return stat(esc(c.club_name), c.vehicle_count + " cars · " + esc(c.status));
+            }).join("");
+          }
+          return { e: "Car clubs", t: "Club blocks", body:
+            (LIVE.clubs ? stat("Blocks applied", LIVE.clubs.length, true) + stat("Pending", LIVE.clubs.filter(function (x) { return x.status === "pending"; }).length, true) :
+              LIVE.stats ? stat("Club blocks", LIVE.stats.club_blocks, true) : "") + extra +
+            (staff ? "" : lock()) +
+            acts('<a class="primary" href="/clubs/">Open /clubs</a>' + copyBtn("Copy club link", ORIGIN + "/clubs/")) };
+        },
+        clubapprove: function () {
+          return { e: "Car clubs", t: "Block approval", body:
+            "<p>Approving a block spawns an individual submission per roster car, so every car still carries its own pass and status link. Approval lives in the console pipeline.</p>" +
+            (staff ? acts('<a class="primary" href="/targets/">Open Targets</a>') : lock()) };
+        },
+        vendorapply: function () {
+          var v = LIVE.accounts ? LIVE.accounts.filter(function (x) { return x.type === "vendor"; }) : null;
+          return { e: "Vendors", t: "Vendor applications", body:
+            (v ? stat("Vendor categories", v.length, true) + stat("Applied", v.filter(function (x) { return x.status === "applied"; }).length) + stat("Approved", v.filter(function (x) { return x.status === "approved"; }).length, true) + pipeline(v) : lock()) +
+            acts('<a class="primary" href="https://pistonpoweredranch.com/vendor#apply" target="_blank" rel="noopener">The vendor form</a>') };
+        },
+        deposit: function () {
+          return { e: "Vendors · money", t: "The $250 deposit", body:
+            stat("Amount", "$250, standard 10x10 base tier. Larger footprints are invoiced from HQ") + stat("Where", "The booth page, Stripe Checkout") +
+            "<p style='margin-top:10px'>The 10 by 10 is paid on the booth page and booked by the webhook the moment it clears. Larger footprints get an invoice link from the review sheet in HQ.</p>" +
+            acts('<a class="primary" href="https://pistonpoweredranch.com/vendor/booth" target="_blank" rel="noopener">The booth page</a>') };
+        },
+        /* ---------- the desk ---------- */
+        deskQueue: function () {
+          var s = LIVE.subs;
+          var by = function (st) { return s.filter(function (x) { return x.status === st; }).length; };
+          return { e: "The desk", t: "The entries queue", body:
+            (s
+              ? stat("Submitted", s.length, true) + stat("Waiting on a decision", by("pending"), true) +
+                stat("Approved", by("approved"), true) + stat("Waitlisted", by("waitlisted"), true) +
+                stat("Declined", by("declined"), true) +
+                "<p style='margin-top:10px'>Cars, vendors and sponsors arrive here together. Approving a car is what issues its pass.</p>" +
+                (s.length
+                  ? '<div style="margin-top:12px">' +
+                    s.slice()
+                      .sort(function (a, b) { return String(b.created_at || "").localeCompare(String(a.created_at || "")); })
+                      .slice(0, 12)
+                      .map(function (r) {
+                        var st = r.status || "pending";
+                        return '<div class="qRow"><span class="n">' + esc(r.applicant_name || "Someone") +
+                          "<small>" + esc(r.type || "") +
+                          (r.details && r.details.org ? " \u00b7 " + esc(String(r.details.org).slice(0, 46)) : "") +
+                          "</small></span><span class=\"s s-" + esc(st) + '">' + esc(st) + "</span></div>";
+                      }).join("") +
+                    (s.length > 12 ? '<p style="margin-top:10px;color:#8b95a3">Showing the 12 most recent of ' + s.length + ".</p>" : "") +
+                    "</div>"
+                  : '<p style="margin-top:12px;color:#8b95a3">Nothing has come in yet. The forms are live and the field is empty, which is what it should look like before the announcement.</p>')
+              : lock()) +
+            (staff ? acts('<a class="primary" href="/console/#/ops">Open the queue</a>') : "") };
+        },
+        deskRsvps: function () {
+          var s = LIVE.spectators;
+          var heads = s ? s.reduce(function (a, r) { return a + (r.party_size || 1); }, 0) : 0;
+          return { e: "The desk", t: "RSVP list", body:
+            (s
+              ? stat("RSVPs", s.length, true) + stat("People expected", heads, true) +
+                (s.length
+                  ? '<div style="margin-top:12px">' +
+                    s.map(function (r) {
+                      return '<div class="qRow"><span class="n">' + esc(r.name || "Someone") +
+                        "<small>" + esc(r.email || "no address") +
+                        (r.source ? " \u00b7 " + esc(String(r.source).slice(0, 40)) : "") +
+                        "</small></span><span class=\"s s-approved\">" +
+                        (r.party_size || 1) + (r.party_size === 1 ? " seat" : " seats") + "</span></div>";
+                    }).join("") + "</div>"
+                  : '<p style="margin-top:12px;color:#8b95a3">Nobody yet. The form is live and the list is empty, which is what it should look like before the announcement.</p>')
+              : lock()) +
+            (staff ? acts('<a class="primary" href="/rsvps/">Open the full list</a>') : "") };
+        },
+        deskSubmit: function () {
+          return { e: "The desk", t: "Enter one by hand", body:
+            "<p>The public form is the front door, and some people will phone instead. This puts the same row in the same table, so nothing arrives by a route the queue cannot see.</p>" +
+            "<p style='margin-top:10px'>Vehicle, vendor and sponsor all start here. The form changes shape to match.</p>" +
+            (staff ? acts('<a class="primary" href="/console/#/submit">Open the form</a>') : lock()) };
+        },
+        deskEvent: function () {
+          return { e: "The desk", t: "The event record", body:
+            stat("When", "Saturday 10 October 2026") + stat("Hours", "9am to 3pm") +
+            stat("Where", "Rancho Jaramillo, Unionville") + stat("Entry", "Free to show and to watch") +
+            "<p style='margin-top:10px'>These are the facts every page and every email reads. Change them here and they change everywhere at once.</p>" +
+            (staff ? acts('<a class="primary" href="/console/#/event">Open the record</a>') : "") };
+        },
+        deskBudget: function () {
+          var paid = LIVE.payments ? LIVE.payments.filter(function (x) { return x.status === "paid"; }) : null;
+          return { e: "The desk \u00b7 money", t: "Budget", body:
+            (LIVE.budget ? stat("Lines", LIVE.budget.length, true) : "") +
+            (paid ? stat("Collected", money(paid.reduce(function (a, b) { return a + (b.amount_cents || 0); }, 0)), true) : "") +
+            (!LIVE.budget && !paid ? lock() : "") +
+            "<p style='margin-top:10px'>Quotes replace estimates as they land. The money columns are held to Oscar, Gavin and Bekah.</p>" +
+            (staff ? acts('<a class="primary" href="/console/planning/#budget">Open the budget</a>') : "") };
+        },
+        deskScope: function () {
+          return { e: "The desk", t: "Scope of work", body:
+            "<p>What PaddockGavin delivers to Rancho Jaramillo, and what the ranch provides. As agreed, in writing.</p>" +
+            "<p style='margin-top:10px'>Check here before promising anything to anybody. Changes are proposed in chat, then written here.</p>" +
+            (staff ? acts('<a class="primary" href="/console/planning/#scope">Open the scope</a>') : lock()) };
+        },
+        deskLegal: function () {
+          return { e: "The desk", t: "Documents and legal", body:
+            "<p>Insurance, permits, vendor terms, sponsor agreements, and the DD Form 2535 if the helicopter lands.</p>" +
+            "<p style='margin-top:10px'>Upload the signed version and retire the draft. One folder per category, current on top.</p>" +
+            (staff ? acts('<a class="primary" href="/console/#/legal">Open documents</a>') : lock()) };
+        },
+        ledger: function () {
+          var paid = LIVE.payments ? LIVE.payments.filter(function (x) { return x.status === "paid"; }) : null;
+          return { e: "Vendors · money", t: "Payments ledger", body:
+            (paid ? stat("Payments recorded", LIVE.payments.length, true) + stat("Paid", paid.length, true) +
+                    stat("Collected", money(paid.reduce(function (a, b) { return a + (b.amount_cents || 0); }, 0)), true) : lock()) +
+            (staff ? acts('<a class="primary" href="/console/planning/#budget">Open the Budget</a>') : "") };
+        },
+        sponsorapply: function () {
+          /* the working board for the asks lives on its own page now */
+          var v = LIVE.accounts ? LIVE.accounts.filter(function (x) { return x.type === "sponsor"; }) : null;
+          return { e: "Sponsors", t: "Sponsor interest", body:
+            (v ? stat("Sponsor categories", v.length, true) + pipeline(v) : lock()) +
+            "<p style='margin-top:10px'>Tier numbers stay out of every public page. The proposal one-pager carries them.</p>" +
+            acts('<a class="primary" href="/asks/">Open the working board</a>' +
+              copyBtn("Copy collateral link", ORIGIN + "/rancho")) };
+        },
+        sponsortrack: function () {
+          return { e: "Sponsors", t: "Tracked conversations", body:
+            "<p>Every call and email lands on the account timeline in the console pipeline: open the account, type the note, Enter saves it.</p>" +
+            (staff ? acts('<a class="primary" href="/targets/">Open Targets</a>') : lock()) };
+        },
+        sponsorclose: function () {
+          return { e: "Sponsors", t: "Commit and activate", body:
+            stat("Title tiers", "handshake, invoiced from the CRM") + stat("Supporting", "pays by checkout link") +
+            "<p style='margin-top:10px'>Reminder: the secondary title defaults to category-exclusive and non-dealer while the 111 Motorcars exclusivity stands.</p>" };
+        },
+        awards: function () {
+          var body = "";
+          if (LIVE.awards) {
+            var byKind = {};
+            LIVE.awards.forEach(function (a) { byKind[a.kind] = (byKind[a.kind] || 0) + 1; });
+            body = stat("Awards on the sheet", LIVE.awards.length, true) +
+              stat("Judged by the panel", byKind.judged || 0, true) +
+              stat("Host picks", byKind.host || 0, true) +
+              stat("Voted by the crowd", byKind.popular || 0, true) +
+              stat("Still in draft", LIVE.awards.filter(function (a) { return a.state === "draft"; }).length, true) +
+              stat("Judges invited", (LIVE.judges || []).length, true);
+          } else { body = lock(); }
+          return { e: "Show", t: "Awards and the panel", body: body +
+            "<p style='margin-top:10px'>First counts three, second two, third one, which is simple enough to explain from a stage. People's Choice runs on phones with no sign in, so it is a crowd prize and not a judged one. Awards stay in draft until somebody opens them.</p>" +
+            acts('<a class="primary" href="/judging/" target="_blank" rel="noopener">Open judging</a>' +
+              '<a href="/vote/" target="_blank" rel="noopener">The vote page</a>' +
+              copyBtn("Copy the vote link", ORIGIN + "/vote/")) };
+        },
+        crew: function () {
+          var body = "";
+          if (LIVE.shifts && LIVE.assigns) {
+            var by = {};
+            LIVE.assigns.forEach(function (a) { if (a.status !== "declined") by[a.shift_id] = (by[a.shift_id] || 0) + 1; });
+            var need = LIVE.shifts.reduce(function (n, s2) { return n + s2.needed; }, 0);
+            var got = LIVE.shifts.reduce(function (n, s2) { return n + Math.min(s2.needed, by[s2.id] || 0); }, 0);
+            var short = LIVE.shifts.filter(function (s2) { return (by[s2.id] || 0) < s2.needed; });
+            body = stat("Posts", LIVE.shifts.length, true) +
+              stat("People needed", need, true) + stat("Filled", got, true) +
+              stat("Still open", need - got, true) +
+              stat("Signed up", (LIVE.volunteers || []).length, true) +
+              short.slice(0, 6).map(function (s2) {
+                return stat(esc(s2.role) + " · " + esc(s2.post), ((by[s2.id] || 0) + "/" + s2.needed));
+              }).join("");
+          } else { body = lock(); }
+          return { e: "Volunteers", t: "Crew, posted and timed", body: body +
+            "<p style='margin-top:10px'>Posts run from half six to five. A volunteer signs in and sees their own hours, their spot and the brief, then confirms or says they cannot. The sign up form on that page is public, so the link is the recruiting tool.</p>" +
+            acts('<a class="primary" href="/crew/" target="_blank" rel="noopener">Open the crew page</a>' +
+              copyBtn("Copy the sign up link", ORIGIN + "/crew/")) };
+        },
+        chat: function () {
+          return { e: "Staff", t: "Chat, on the record", body:
+            stat("Where it lives", "every staff page, bottom right") +
+            stat("Attached to", "categories, prospects, decisions, budget lines") +
+            stat("Carries", "50 photos, 5 min video, 5 min voice, any document") +
+            stat("Installs", "add to home screen, unread count on the icon") +
+            "<p style='margin-top:10px'>Not a general room. A thread hangs off the record it is about, so the conversation and the decision end up in the same place. Cost threads stay with the three who can see cost.</p>" +
+            acts('<a class="primary" href="/chat/" target="_blank" rel="noopener">Open chat</a>') };
+        },
+        targets: function () {
+          /* The pill counts empty categories on purpose. A full list is not the
+             useful number here; the gap is. */
+          var body = "";
+          if (LIVE.categories && LIVE.candidates) {
+            var hit = {};
+            LIVE.candidates.forEach(function (c) { hit[c.category_id] = 1; });
+            var empty = LIVE.categories.filter(function (c) { return !hit[c.id]; });
+            var doms = {};
+            empty.forEach(function (c) { (doms[c.domain] = doms[c.domain] || []).push(c.name); });
+            body = stat("Categories", LIVE.categories.length, true) +
+              stat("With a name against them", LIVE.categories.length - empty.length, true) +
+              stat("Nobody yet", empty.length, true) +
+              Object.keys(doms).sort().map(function (d) {
+                return stat(esc(d.replace(/_/g, " ")), esc(doms[d].slice(0, 4).join(", ")) +
+                  (doms[d].length > 4 ? " and " + (doms[d].length - 4) + " more" : ""));
+              }).join("");
+          } else { body = lock(); }
+          return { e: "Staff", t: "Targets, by category", body: body +
+            "<p style='margin-top:10px'>Anyone on the team can add a category. It writes to the shared list, so it shows up for everybody, not just the person who thought of it.</p>" +
+            acts('<a class="primary" href="/targets/" target="_blank" rel="noopener">Open targets</a>') };
+        },
+        console: function () {
+          var open = LIVE.decisions ? LIVE.decisions.filter(function (x) { return x.status === "open"; }) : null;
+          var extra = staff && open ? open.slice(0, 5).map(function (d) { return stat(esc(d.label), "open"); }).join("") : "";
+          return { e: "Staff", t: "Console and Decision Desk", body:
+            (open ? stat("Decisions open", open.length, true) : lock()) + extra +
+            acts('<a class="primary" href="/console/">Open console</a>') };
+        },
+        review: function () {
+          var pend = LIVE.subs ? LIVE.subs.filter(function (x) { return x.status === "pending"; }) : null;
+          return { e: "Staff", t: "The review queue", body:
+            (pend ? stat("Awaiting a decision", pend.length, true) : lock()) +
+            "<p style='margin-top:10px'>Each sheet carries approve, decline, the status link, and a ready-to-send notice.</p>" +
+            (staff ? acts('<a class="primary" href="/console/#/ops">Open the entries queue</a>') : "") };
+        },
+        pipeline: function () {
+          return { e: "Staff", t: "Pipeline and Ledger", body:
+            (LIVE.accounts ? stat("Accounts in lanes", LIVE.accounts.length, true) : lock()) +
+            (LIVE.payments ? stat("Ledger rows", LIVE.payments.length, true) : "") +
+            (staff ? acts('<a class="primary" href="/targets/">Open Targets</a>') : "") };
+        },
+        timenext: function () {
+          var soon = msSoon(7), late = msLate();
+          return { e: "The plan", t: "Due in the next seven days", body:
+            (late.length ? '<p class="note bad"><b>' + late.length + " past due.</b> Those are listed first.</p>" : "") +
+            (LIVE.milestones
+              ? (soon.length ? msList(soon) : '<p class="note">Nothing falls due in the next seven days.</p>')
+              : lock()) +
+            acts('<a class="primary" href="#" data-panel="timeline">See the whole plan</a>') };
+        },
+        timeline: function () {
+          var LANES_M = [["permits", "Permits and insurance"], ["partners", "Partners"],
+                         ["money", "Money"], ["site", "The site"], ["marketing", "Marketing"], ["people", "People"]];
+          var m = LIVE.milestones;
+          return { e: "The plan", t: "Every milestone", body:
+            (m
+              ? "<p>Back planned from show day. Dates are proposals until you and Oscar confirm them.</p>" +
+                LANES_M.map(function (L) {
+                  var set = m.filter(function (x) { return x.lane === L[0]; })
+                    .sort(function (a, b) { return String(a.due).localeCompare(String(b.due)); });
+                  if (!set.length) return "";
+                  return '<div class="lanehead">' + esc(L[1]) + "</div>" + msList(set);
+                }).join("")
+              : lock()) };
+        },
+        budget: function () {
+          var b = LIVE.budget, un = unpriced();
+          return { e: "The money", t: "Cost lines", body:
+            (b
+              ? stat("Costed", money0(costed()), true) +
+                stat("Lines with a quote", b.length - un.length) +
+                stat("Lines with no quote", un.length) +
+                (un.length
+                  ? '<div class="lanehead">Still unpriced</div>' +
+                    un.map(function (x) { return stat(esc(x.label), "no quote"); }).join("") +
+                    '<p class="note">Those are excluded from the total, so the figure above is better than reality, not worse.</p>'
+                  : "")
+              : lock()) +
+            acts('<a class="primary" href="/console/planning/" target="_blank" rel="noopener">Open the ledger</a>') };
+        },
+        decisions: function () {
+          var d = LIVE.decisions, m = LIVE.milestones || [];
+          var open = d ? d.filter(function (x) { return x.status === "open"; }) : null;
+          return { e: "The operation", t: "Open decisions", body:
+            (open
+              ? open.map(function (x) {
+                  var held = m.filter(function (ms) { return String(ms.decision_id) === String(x.id); });
+                  return '<div class="ms"><span class="dt">#' + x.id + '</span>' +
+                    '<span class="ttl">' + esc(x.label) +
+                    (x.notes ? "<small>" + esc(x.notes) + "</small>" : "") +
+                    (held.length ? "<small class=\"bad\">Holding up: " +
+                      held.map(function (h) { return esc(h.title); }).join(", ") + "</small>" : "") +
+                    "</span><span class=\"own\"></span></div>";
+                }).join("")
+              : lock()) };
+        },
+        roles: function () {
+          var r = LIVE.roster;
+          return { e: "The operation", t: "The roster", body:
+            (r
+              ? r.map(function (x) {
+                  return stat(esc(x.name) + (x.section ? " &middot; " + esc(x.section) : ""), esc(x.role || ""));
+                }).join("") +
+                '<p class="note">Pit Crew is carried as a single line because not one volunteer is named yet.</p>'
+              : lock()) };
+        },
+        byowner: function () {
+          var m = LIVE.milestones;
+          if (!m) return { e: "The operation", t: "Work by owner", body: lock() };
+          var owners = {};
+          m.forEach(function (x) { (owners[x.owner || "unassigned"] = owners[x.owner || "unassigned"] || []).push(x); });
+          return { e: "The operation", t: "Work by owner", body:
+            Object.keys(owners).sort().map(function (o) {
+              var set = owners[o].filter(function (x) { return x.status !== "done"; })
+                .sort(function (a, b) { return String(a.due).localeCompare(String(b.due)); });
+              if (!set.length) return "";
+              var late = set.filter(function (x) { return x.due && x.due < ranchToday(); }).length;
+              return '<div class="lanehead">' + esc(o) + " &middot; " + set.length + " open" +
+                (late ? ", <span class='bad'>" + late + " past due</span>" : "") + "</div>" + msList(set);
+            }).join("") };
+        },
+        board: function () {
+          var a = LIVE.accounts;
+          if (!a) return { e: "The operation", t: "The pipeline", body: lock() };
+          var order = [["committed", "Committed"], ["warm", "Warm"], ["named", "Named, not asked"], ["open", "No name yet"]];
+          return { e: "The operation", t: "Every category, by stage", body:
+            order.map(function (st) {
+              var set = a.filter(function (x) { return (x.pipeline_stage || "open") === st[0]; });
+              if (!set.length) return "";
+              return '<div class="lanehead">' + st[1] + " &middot; " + set.length + "</div>" +
+                set.map(function (x) {
+                  return stat(esc(x.category || "(no category)"), esc(x.company || "&mdash;"));
+                }).join("");
+            }).join("") +
+            acts('<a class="primary" href="/board/" target="_blank" rel="noopener">Edit on the board</a>') };
+        },
+        grounds: function () {
+          var f = LIVE.features;
+          var zones = f ? f.filter(function (x) { return x.kind === "zone"; }) : null;
+          var acres = zones ? zones.reduce(function (a, z) { return a + zoneAcres(z); }, 0) : 0;
+          var settled = zones ? zones.filter(function (z) { return z.status !== "draft"; }).length : 0;
+          return { e: "Staff", t: "Grounds and site plan", body:
+            "<p>One layout feeds both surfaces. Edit a zone in the database and the map and the print sheet both move; nothing is re-exported by hand.</p>" +
+            (zones
+              ? stat("Zones laid out", zones.length, true) + stat("Acres in use", acres.toFixed(1), true) +
+                stat("Points of interest", f.filter(function (x) { return x.kind === "poi"; }).length, true) +
+                stat("Signed off by the venue", settled + " of " + zones.length)
+              : "") +
+            acts('<a class="primary" href="/map/">Open the map</a>' +
+              '<a href="/site-plan/">Print the site plan</a>' +
+              copyBtn("Copy site plan link", ORIGIN + "/site-plan/")) };
+        },
+        changes: function () {
+          var f = LIVE.feed;
+          var body;
+          if (!staff) body = lock();
+          else if (WB_MISSING) body = '<div class="wbnote">The activity table was created a moment ago and the ' +
+            'data API has not picked it up yet. It starts filling in as soon as that cache refreshes.</div>';
+          else if (!f || !f.length) body = "<p>Nothing has been written into the workbench yet. Every note, option, " +
+            "status change and upload lands here the moment someone makes it.</p>";
+          else {
+            var verb = { created: "added", edited: "edited", chose: "chose", status: "moved",
+                         uploaded: "attached to", deleted: "deleted" };
+            body = '<div class="feed">' + f.slice(0, 60).map(function (e) {
+              return '<div class="ev"><span class="a">' + esc(who(e.actor)) + "</span>" +
+                '<span class="d">' + esc(verb[e.action] || e.action) + " " + esc(e.detail || "an item") +
+                (e.panel ? ' <span style="color:var(--faint)">in ' + esc(e.panel) + "</span>" : "") + "</span>" +
+                '<span class="t">' + ago(e.at) + "</span></div>";
+            }).join("") + "</div>";
+          }
+          return { e: "Staff", t: "Every change, logged", body:
+            "<p>The workbench writes its own history. This is logged in the database by a trigger, not by the " +
+            "page, so a change cannot happen without showing up here.</p>" + body };
+        },
+      };
+      function pipeline(rows) {
+        var order = [["committed", "Committed"], ["warm", "Warm"], ["named", "Named, not asked"], ["open", "Open"]];
+        var out = "";
+        order.forEach(function (st) {
+          var g = rows.filter(function (x) { return x.pipeline_stage === st[0]; });
+          if (!g.length) return;
+          out += '<p style="margin:10px 0 4px"><b>' + st[1] + "</b> &middot; " + g.length +
+            "</p><p style=\"color:var(--mute);font-size:13px;line-height:1.7;margin:0\">" +
+            g.map(function (x) { return esc(x.category || x.company); }).join(" &middot; ") + "</p>";
+        });
+        return out;
+      }
+      function zoneAcres(z) {
+        var ring = z.geometry && z.geometry.coords;
+        if (!ring || z.geometry.type !== "polygon" || ring.length < 3) return 0;
+        var lat0 = ring.reduce(function (a, p) { return a + p[0]; }, 0) / ring.length;
+        var k = Math.cos((lat0 * Math.PI) / 180), s = 0;
+        var pts = ring.map(function (p) { return [p[1] * 111320 * k, p[0] * 110540]; });
+        for (var i = 0; i < pts.length; i++) {
+          var a = pts[i], b = pts[(i + 1) % pts.length];
+          s += a[0] * b[1] - b[0] * a[1];
+        }
+        return Math.abs(s) / 2 / 4046.86;
+      }
+      /* ---------- workbench: shared, autosaving, logged ----------
+         Save contract, learned the hard way on this codebase:
+         (a) flush on panel close, never rely on the debounce alone,
+         (b) serialise per row so two responses cannot land out of order,
+         (c) ask for the id back and treat zero rows as a FAILURE, because an
+             RLS refusal returns success-with-no-rows and the UI would
+             otherwise cheerfully report "Saved" over data that never landed. */
+      var WB_MISSING = false; // Data API schema cache has not picked the table up yet
+      var Saver = (function () {
+        var chain = {}, timer = {}, pending = {}, watchers = [];
+        function emit(state, msg) { watchers.forEach(function (f) { f(state, msg); }); }
+        function flush(id) {
+          var patch = pending[id];
+          if (!patch) return Promise.resolve();
+          delete pending[id];
+          chain[id] = (chain[id] || Promise.resolve())
+            .then(function () {
+              emit("saving");
+              return db.from("workbench_items").update(patch).eq("id", id).select("id");
+            })
+            .then(function (r) {
+              if (r && r.error) throw new Error(r.error.message);
+              if (!r || !r.data || !r.data.length) {
+                throw new Error("nothing came back, which is what a permission refusal looks like");
+              }
+              emit("saved");
+            })
+            .catch(function (e) { emit("error", e.message || String(e)); });
+          return chain[id];
+        }
+        return {
+          queue: function (id, patch, delay) {
+            pending[id] = Object.assign(pending[id] || {}, patch);
+            clearTimeout(timer[id]);
+            emit("dirty");
+            timer[id] = setTimeout(function () { flush(id); }, delay == null ? 650 : delay);
+          },
+          flushAll: function () {
+            var ids = Object.keys(pending);
+            ids.forEach(function (id) { clearTimeout(timer[id]); });
+            return Promise.all(ids.map(flush));
+          },
+          dirty: function () { return Object.keys(pending).length > 0; },
+          watch: function (f) { watchers.push(f); },
+        };
+      })();
+
+      /* Attachments live in the private blob store, same as entrant media, so
+         nothing is readable from a guessable URL. Reads come back as signed
+         ten minute links through /api/media. */
+      var MEDIA_KIND = { image: "photo", video: "video", audio: "voice" };
+      function kindOf(file) {
+        return MEDIA_KIND[String(file.type).split("/")[0]] || "doc";
+      }
+      async function bearer() {
+        try {
+          var s = await db.auth.getSession();
+          return (s && s.data && s.data.session && (s.data.session.access_token || s.data.session.accessToken)) || "";
+        } catch (e) { return ""; }
+      }
+      async function attach(itemId, files) {
+        var tok = await bearer();
+        if (!tok) return svState("error", "sign in again to attach files");
+        var item = (LIVE.wb || []).filter(function (x) { return x.id === itemId; })[0];
+        if (!item) return;
+        var added = [];
+        for (var i = 0; i < files.length; i++) {
+          var f = files[i], k = kindOf(f);
+          svState("saving");
+          try {
+            var res = await blobUpload("workbench/" + itemId + "/" + k + "/" + f.name, f, {
+              access: "public", // the STORE is private; this flag is the client API's, not the store's
+              handleUploadUrl: "/api/upload",
+              clientPayload: JSON.stringify({ scope: "workbench", kind: k, itemId: itemId, token: tok }),
+            });
+            added.push({ pathname: res.pathname, name: f.name, type: f.type, size: f.size, kind: k });
+          } catch (err) {
+            return svState("error", (err && err.message) || "upload refused");
+          }
+        }
+        var media = (item.media || []).concat(added);
+        var r = await db.from("workbench_items").update({ media: media }).eq("id", itemId).select("id");
+        if (r && r.error) return svState("error", r.error.message);
+        if (!r || !r.data || !r.data.length) return svState("error", "the file uploaded but the record did not save");
+        svState("saved");
+        await loadWorkbench();
+        if (openKey) paintPanel(openKey);
+      }
+      async function signMedia(paths) {
+        var tok = await bearer();
+        if (!tok || !paths.length) return {};
+        try {
+          var r = await fetch("/api/media", {
+            method: "POST",
+            headers: { "content-type": "application/json", authorization: "Bearer " + tok },
+            body: JSON.stringify({ pathnames: paths }),
+          });
+          if (!r.ok) return {};
+          var j = await r.json();
+          var map = {};
+          (j.urls || []).forEach(function (u) { if (u.url) map[u.pathname] = u.url; });
+          return map;
+        } catch (e) { return {}; }
+      }
+      async function paintMedia() {
+        var els = [].slice.call(sheet.querySelectorAll("[data-media]"));
+        var paths = els.map(function (el) { return el.getAttribute("data-media"); });
+        if (!paths.length) return;
+        var map = await signMedia(paths);
+        els.forEach(function (el) {
+          var u = map[el.getAttribute("data-media")];
+          if (!u) return;
+          el.setAttribute("href", u);
+          if (el.getAttribute("data-kind") === "photo") {
+            el.innerHTML = '<img src="' + u + '" alt="" />';
+          }
+        });
+      }
+
+      function ago(iso) {
+        var s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+        if (s < 60) return "just now";
+        if (s < 3600) return Math.floor(s / 60) + "m ago";
+        if (s < 86400) return Math.floor(s / 3600) + "h ago";
+        return Math.floor(s / 86400) + "d ago";
+      }
+      /* Display names come from staff_allowlist, so a new colleague reads as
+         their own name the moment they are added, with no edit here. Falls
+         back to the address local part before the names land. */
+      var NAMES = {};
+      function who(email) {
+        if (!email) return "someone";
+        var k = String(email).toLowerCase();
+        return NAMES[k] || k.split("@")[0];
+      }
+      async function loadNames() {
+        try {
+          var r = await db.from("staff_allowlist").select("email,name");
+          if (r.error || !r.data) return;
+          r.data.forEach(function (x) {
+            if (x.name) NAMES[String(x.email).toLowerCase()] = x.name;
+          });
+        } catch (e) {}
+      }
+      function itemsFor(panel) {
+        return (LIVE.wb || []).filter(function (x) { return x.panel === panel; })
+          .sort(function (a, b) { return a.sort - b.sort || a.created_at.localeCompare(b.created_at); });
+      }
+
+      function bytes(n) {
+        if (!n) return "";
+        return n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+      }
+      function mediaHtml(r) {
+        var m = r.media || [];
+        if (!m.length) return "";
+        return '<div class="films">' + m.map(function (f) {
+          return '<a class="film ' + esc(f.kind || "doc") + '" data-media="' + esc(f.pathname) +
+            '" data-kind="' + esc(f.kind || "doc") + '" target="_blank" rel="noopener" title="' + esc(f.name) + '">' +
+            '<span class="fn">' + esc(f.name) + "</span>" +
+            '<span class="fs">' + esc(bytes(f.size)) + "</span></a>";
+        }).join("") + "</div>";
+      }
+      function attachHtml(id) {
+        return '<label class="att">Attach' +
+          '<input type="file" multiple data-attach="' + id + '" hidden ' +
+          'accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.zip" /></label>';
+      }
+
+      function wbHtml(panel) {
+        if (!staff) return "";
+        if (WB_MISSING) {
+          return '<div class="wb"><div class="wbhead"><span class="wbeye">Workbench</span></div>' +
+            '<div class="wbnote">The workbench tables were created a moment ago and the data API has not ' +
+            'picked them up yet. Neon refreshes that cache on its own schedule, usually inside an hour. ' +
+            'Nothing is lost; this panel starts working when it lands.</div></div>';
+        }
+        var rows = itemsFor(panel);
+        var h = '<div class="wb" data-wb="' + esc(panel) + '"><div class="wbhead">' +
+          '<span class="wbeye">Workbench</span>' +
+          '<span class="sv" data-sv><span class="dot"></span><span class="txt">Up to date</span></span></div>' +
+          '<div class="wbadd">' +
+          '<button type="button" data-add="note" data-panel="' + esc(panel) + '">+ Note</button>' +
+          '<button type="button" data-add="option" data-panel="' + esc(panel) + '">+ A / B / C options</button>' +
+          '<button type="button" data-add="deliverable" data-panel="' + esc(panel) + '">+ Deliverable</button>' +
+          "</div>";
+
+        var groups = {}, plain = [];
+        rows.forEach(function (r) {
+          if (r.kind === "option" && r.option_group) {
+            (groups[r.option_group] = groups[r.option_group] || []).push(r);
+          } else plain.push(r);
+        });
+
+        Object.keys(groups).forEach(function (g) {
+          var set = groups[g].sort(function (a, b) { return (a.option_key || "").localeCompare(b.option_key || ""); });
+          var head = set[0];
+          h += '<div class="wbitem"><div class="top"><span class="tag option">Options</span>' +
+            '<span class="who">' + (head.updated_by ? esc(who(head.updated_by)) + " · " + ago(head.updated_at) : "new") + "</span></div>" +
+            '<input class="t" data-f="title" data-id="' + head.id + '" value="' + esc(head.title || "") +
+            '" placeholder="What is being decided" aria-label="Option set name" />' +
+            '<div class="opts">' +
+            set.map(function (o) {
+              return '<div class="opt' + (o.chosen ? " won" : "") + '">' +
+                '<button class="pick" type="button" data-choose="' + o.id + '" data-group="' + esc(g) +
+                '" aria-pressed="' + (o.chosen ? "true" : "false") +
+                '" aria-label="Choose option ' + esc(o.option_key) + '">' + esc(o.option_key) + "</button>" +
+                '<textarea data-f="body" data-id="' + o.id + '" placeholder="Option ' + esc(o.option_key) +
+                '" aria-label="Option ' + esc(o.option_key) + ' detail">' + esc(o.body || "") + "</textarea></div>";
+            }).join("") +
+            "</div>" + mediaHtml(head) +
+            '<div class="row">' + attachHtml(head.id) +
+            '<button class="del" type="button" data-delgroup="' + esc(g) +
+            '" data-panel="' + esc(panel) + '">Remove this set</button></div></div>';
+        });
+
+        plain.forEach(function (r) {
+          h += '<div class="wbitem"><div class="top">' +
+            '<span class="tag ' + esc(r.kind) + '">' + (r.kind === "deliverable" ? "Deliverable" : "Note") + "</span>" +
+            '<span class="who">' + (r.updated_by ? esc(who(r.updated_by)) + " · " + ago(r.updated_at) : "new") + "</span></div>" +
+            '<input class="t" data-f="title" data-id="' + r.id + '" value="' + esc(r.title || "") +
+            '" placeholder="' + (r.kind === "deliverable" ? "What has to exist" : "Heading") + '" aria-label="Title" />' +
+            '<textarea data-f="body" data-id="' + r.id + '" placeholder="Type here. It saves as you go." aria-label="Detail">' +
+            esc(r.body || "") + "</textarea>" +
+            mediaHtml(r) +
+            '<div class="row">' +
+            (r.kind === "deliverable"
+              ? '<div class="st" role="group" aria-label="Status">' +
+                ["open", "doing", "done", "parked"].map(function (s) {
+                  return '<button type="button" class="' + s + '" data-status="' + s + '" data-id="' + r.id +
+                    '" aria-pressed="' + (r.status === s ? "true" : "false") + '">' + s + "</button>";
+                }).join("") + "</div>"
+              : "") +
+            attachHtml(r.id) +
+            '<button class="del" type="button" data-del="' + r.id + '">Delete</button>' +
+            "</div></div>";
+        });
+        return h + "</div>";
+      }
+
+      function stat(l, v, t) { return '<div class="stat-line"><span class="l">' + l + '</span><span class="v' + (t ? " t" : "") + '">' + v + "</span></div>"; }
+      function acts(inner) { return '<div class="acts">' + inner + "</div>"; }
+      function lock() { return '<div class="lock">Live admin numbers unlock automatically when you are signed in at the <a href="/console/">console</a> on this device.</div>'; }
+
+      /* ---------- render lanes ---------- */
+      /* The three acts of a show day, each introduced by a full bleed band.
+         The image is structural: it announces whose turn it is, so the page
+         reads as a story rather than a wall of cards. */
+      /* ---------- the operation: the plan, the money, the decisions, the people ---------- */
+      /* Show day is Central, so "today" has to be Central too or the plan
+         goes red an evening early for anyone east of it. */
+      function ranchToday() {
+        return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago",
+          year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+      }
+      function money0(c) { return "$" + Math.round((c || 0) / 100).toLocaleString("en-US"); }
+      function msOpen() { return (LIVE.milestones || []).filter(function (m) { return m.status !== "done"; }); }
+      function msLate() {
+        var t = ranchToday();
+        return msOpen().filter(function (m) { return m.due && m.due < t; });
+      }
+      function msSoon(n) {
+        var t = ranchToday(), lim = new Date(t + "T12:00:00Z");
+        lim.setUTCDate(lim.getUTCDate() + (n || 7));
+        var end = lim.toISOString().slice(0, 10);
+        return msOpen().filter(function (m) { return m.due && m.due <= end; })
+          .sort(function (a, b) { return String(a.due).localeCompare(String(b.due)); });
+      }
+      function costed() {
+        return (LIVE.budget || []).filter(function (b) { return Number(b.rate_cents) > 0; })
+          .reduce(function (a, b) { return a + Number(b.rate_cents) * Number(b.qty || 0); }, 0);
+      }
+      function unpriced() {
+        return (LIVE.budget || []).filter(function (b) { return !Number(b.rate_cents); });
+      }
+
+      LANES.push(
+        { who: "The plan", badge: ["b-staff", "Dated"], kpi: function () {
+            if (!LIVE.milestones) return "";
+            var late = msLate().length;
+            return "<b>" + msOpen().length + "</b> still open" +
+              (late ? " &middot; <b class='bad'>" + late + "</b> past due" : "");
+          },
+          nodes: [
+            { t: "Due in the next seven days", d: "What actually has to move this week.", panel: "timenext",
+              pill: function () { return LIVE.milestones && msSoon(7).length; } },
+            { t: "The whole plan", d: "Every milestone, back planned from show day.", panel: "timeline" },
+          ] },
+        { who: "The money", badge: ["b-biz", "Budget"], kpi: function () {
+            if (!LIVE.budget) return "";
+            return "<b>" + money0(costed()) + "</b> costed &middot; <b class='bad'>" + unpriced().length + "</b> with no quote";
+          },
+          nodes: [
+            { t: "Cost lines", d: "What is quoted, and what still is not.", panel: "budget",
+              pill: function () { return LIVE.budget && unpriced().length; } },
+            { t: "Payments ledger", d: "Money actually received.", panel: "ledger" },
+          ] },
+        { who: "Open decisions", badge: ["b-car", "Unresolved"], kpi: function () {
+            return LIVE.decisions ? "<b>" + LIVE.decisions.filter(function (d) { return d.status === "open"; }).length +
+              "</b> waiting on somebody" : "";
+          },
+          nodes: [
+            { t: "What is unresolved", d: "And which milestone each one is holding up.", panel: "decisions" },
+          ] },
+        { who: "Who does what", badge: ["b-spec", "Roles"], kpi: function () {
+            return LIVE.roster ? "<b>" + LIVE.roster.length + "</b> on the roster" : "";
+          },
+          nodes: [
+            { t: "The roster", d: "Leadership and the volunteer corps.", panel: "roles" },
+            { t: "Work by owner", d: "Every milestone, grouped by who carries it.", panel: "byowner" },
+          ] },
+        { who: "The pipeline", badge: ["b-biz", "Vendors and sponsors"], kpi: function () {
+            if (!LIVE.accounts) return "";
+            var c = LIVE.accounts.filter(function (a) { return a.pipeline_stage === "committed"; }).length;
+            return "<b>" + LIVE.accounts.length + "</b> categories &middot; <b>" + c + "</b> committed";
+          },
+          nodes: [
+            { t: "Every category, by stage", d: "The whole board, read only here.", panel: "board" },
+          ] }
+      );
+
+      var ACTS = [
+        { lanes: [0, 1, 2] },
+        { lanes: [3, 4], band: { img: "/events/img/ranch.jpg", eye: "Act two",
+            h: "The people who pay for it",
+            p: "Vendors and sponsors carry the day. Their lane is where the money and the promises live." } },
+        { lanes: [5], band: { img: "/events/img/walk.jpg", eye: "Act three",
+            h: "The people who run it",
+            p: "Every decision, every deliverable, every change to this document, logged as it happens." } },
+        { lanes: [6, 7, 8, 9, 10], band: { img: "/events/img/dusk.jpg", eye: "Act four",
+            h: "The plan behind it",
+            p: "The dated plan, the money, the decisions nobody has made yet, and who carries each one." } },
+      ];
+
+      function laneHtml(l, li) {
+        return (
+          '<section class="lane glass" style="--i:' + li + '">' +
+          '<div class="who"><h2>' + esc(l.who) + '</h2><span class="badge ' + l.badge[0] + '">' + esc(l.badge[1]) + "</span></div>" +
+          '<div class="kpi" data-kpi="' + li + '">' + (l.kpi() || "&nbsp;") + "</div>" +
+          '<div class="flow">' +
+          l.nodes.map(function (n, ni) {
+            return (
+              (ni ? '<div class="arrow" aria-hidden="true"></div>' : "") +
+              '<button class="node" type="button" data-panel="' + n.panel + '" aria-label="' + esc(n.t + ". " + n.d) + '">' +
+              '<span class="pill" data-pill="' + n.panel + '" aria-hidden="true"></span>' +
+              "<b>" + esc(n.t) + "</b>" + esc(n.d) +
+              '<span class="n" aria-hidden="true">›</span></button>'
+            );
+          }).join("") +
+          "</div></section>"
+        );
+      }
+      function render() {
+        document.getElementById("stage").innerHTML = ACTS.map(function (act) {
+          var band = act.band
+            ? '<div class="band"><img class="bimg" src="' + act.band.img + '" alt="" aria-hidden="true" />' +
+              '<div class="bveil" aria-hidden="true"></div><div class="btxt">' +
+              '<div class="beye">' + esc(act.band.eye) + "</div>" +
+              '<h2 class="display">' + esc(act.band.h) + "</h2>" +
+              "<p>" + esc(act.band.p) + "</p></div></div>"
+            : "";
+          return band + '<div class="col"><div class="lanes">' +
+            act.lanes.map(function (i) { return laneHtml(LANES[i], i); }).join("") +
+            "</div></div>";
+        }).join("");
+        refreshPills();
+      }
+      function refreshPills() {
+        LANES.forEach(function (l, li) {
+          var k = document.querySelector('[data-kpi="' + li + '"]');
+          k && (k.innerHTML = l.kpi() || "&nbsp;");
+          l.nodes.forEach(function (n) {
+            if (!n.pill) return;
+            var el = document.querySelector('[data-pill="' + n.panel + '"]');
+            if (!el) return;
+            var v = Number(n.pill());
+            // A zero badge is noise: only surface a count there is something to act on.
+            var show = isFinite(v) && v > 0;
+            el.textContent = show ? v : "";
+            el.classList.toggle("on", show);
+            var btn = el.closest(".node");
+            btn && btn.setAttribute("aria-label", n.t + ". " + n.d + (show ? " " + v + " waiting." : ""));
+          });
+        });
+      }
+
+      /* ---------- modal ---------- */
+      var sheet = document.getElementById("sheet"), scrim = document.getElementById("scrim");
+      var lastFocus = null, openKey = null;
+      /* The live home. Everything the console's Telemetry showed, on the page
+         people actually open, reading the same LIVE object the lanes read so it
+         can never disagree with the row beneath it. */
+      function paintNow() {
+        var el = document.getElementById("jNowGrid");
+        if (!el) return;
+        var cells = [];
+        var days = (function () {
+          var t0 = ranchToday(), g = new Date("2026-10-10T00:00:00-05:00");
+          return Math.max(0, Math.ceil((g - new Date(t0 + "T00:00:00-05:00")) / 86400000));
+        })();
+        cells.push(["warn", days, "Days to gates"]);
+
+        if (LIVE.subs) {
+          var pend = LIVE.subs.filter(function (x) { return x.status === "pending"; }).length;
+          cells.push(["", LIVE.subs.length, "Submitted"]);
+          cells.push([pend ? "warn" : "", pend, "Waiting on you"]);
+          cells.push(["", LIVE.subs.filter(function (x) { return x.type === "vehicle" && x.status === "approved"; }).length, "Cars approved"]);
+        }
+        if (LIVE.stats) {
+          cells.push(["", LIVE.stats.spectator_rsvps || 0, "RSVPs"]);
+          cells.push(["", LIVE.stats.party_headcount || 0, "People expected"]);
+        }
+        if (LIVE.decisions) {
+          var open = LIVE.decisions.filter(function (d) { return d.status !== "decided"; }).length;
+          cells.push([open ? "warn" : "", open, "Open decisions"]);
+        }
+        if (LIVE.payments) {
+          var paid = LIVE.payments.filter(function (x) { return x.status === "paid"; });
+          cells.push(["", money(paid.reduce(function (a, b) { return a + (b.amount_cents || 0); }, 0)), "Collected"]);
+        }
+        el.innerHTML = cells.map(function (c) {
+          return '<div class="' + c[0] + '"><b>' + c[1] + "</b><span>" + c[2] + "</span></div>";
+        }).join("");
+      }
+
+      function paintPanel(key) {
+        var p = PANELS[key] && PANELS[key]();
+        if (!p) return null;
+        document.getElementById("shEyebrow").textContent = p.e;
+        document.getElementById("shTitle").textContent = p.t;
+        // Every panel except the log itself carries its own workbench, so the
+        // work for a step is written down next to the numbers for that step.
+        document.getElementById("shBody").innerHTML = p.body + (key === "changes" ? "" : wbHtml(key));
+        paintMedia(); // swap blob paths for signed, short lived URLs
+        return p;
+      }
+      function openPanel(key, trigger) {
+        var p = paintPanel(key);
+        if (!p) return;
+        openKey = key;
+        lastFocus = trigger || document.activeElement;
+        sheet.classList.add("on"); scrim.classList.add("on");
+        sheet.setAttribute("aria-hidden", "false");
+        // inert, not CSS, is what actually keeps the closed dialog out of the
+        // tab order and out of hit testing: it cannot be left half-applied by
+        // an interrupted transition the way visibility can.
+        sheet.removeAttribute("inert");
+        document.body.classList.add("locked");
+        (sheet.querySelector(".acts a, .acts button") || sheet).focus();
+        syncHash(key);
+      }
+      /**
+       * A panel you can send somebody.
+       *
+       * Panels only ever opened by clicking a node, so there was no way to
+       * link to one: "open Journeys, then find the ledger tile" is not a URL.
+       * The key now rides in the hash, which makes every panel its own address
+       * without the page needing a router.
+       */
+      function syncHash(key) {
+        var want = key ? "#" + key : "";
+        if (location.hash === want) return;
+        try {
+          history.replaceState(null, "", location.pathname + location.search + want);
+        } catch (e) {
+          /* file:// and other odd origins refuse replaceState. Not worth failing over. */
+        }
+      }
+      function panelFromHash() {
+        return (location.hash || "").replace(/^#\/?/, "") || null;
+      }
+      function openFromHash() {
+        var k = panelFromHash();
+        if (k && k !== openKey) openPanel(k);
+        else if (!k && openKey) closePanel();
+      }
+      window.addEventListener("hashchange", openFromHash);
+
+      function closePanel() {
+        if (!sheet.classList.contains("on")) return;
+        Saver.flushAll().then(function () { loadWorkbench(); }); // (a) flush on close
+        openKey = null;
+        syncHash(null);
+        sheet.classList.remove("on"); scrim.classList.remove("on");
+        sheet.setAttribute("aria-hidden", "true");
+        sheet.setAttribute("inert", "");
+        document.body.classList.remove("locked");
+        if (lastFocus && lastFocus.isConnected) lastFocus.focus();
+        lastFocus = null;
+      }
+      /* workbench writes */
+      function svState(state, msg) {
+        var el = sheet.querySelector("[data-sv]");
+        if (!el) return;
+        el.className = "sv " + state;
+        var t = { dirty: "Unsaved", saving: "Saving", saved: "Saved", error: "Not saved: " + (msg || "") };
+        el.querySelector(".txt").textContent = t[state] || "Up to date";
+      }
+      Saver.watch(svState);
+
+      function newItem(panel, kind) {
+        var base = { event_id: EVENT_ID, panel: panel, kind: kind,
+          sort: itemsFor(panel).length * 10 + 10 };
+        var rows = kind === "option"
+          ? ["A", "B", "C"].map(function (k, i) {
+              return Object.assign({}, base, { option_group: "g" + Date.now(), option_key: k, sort: base.sort + i });
+            })
+          : [base];
+        return db.from("workbench_items").insert(rows).select("id").then(function (r) {
+          if (r && r.error) throw new Error(r.error.message);
+          if (!r || !r.data || !r.data.length) throw new Error("the insert came back empty, which is a permission refusal");
+          return loadWorkbench();
+        }).catch(function (err) { svState("error", err.message); });
+      }
+      function removeIds(ids) {
+        return db.from("workbench_items").delete().in("id", ids).select("id").then(function (r) {
+          if (r && r.error) throw new Error(r.error.message);
+          return loadWorkbench();
+        }).catch(function (err) { svState("error", err.message); });
+      }
+
+      document.addEventListener("change", function (e) {
+        var at = e.target.getAttribute && e.target.getAttribute("data-attach");
+        if (at && e.target.files && e.target.files.length) {
+          var files = e.target.files;
+          e.target.value = "";
+          attach(at, files);
+        }
+      });
+
+      document.addEventListener("input", function (e) {
+        var f = e.target.getAttribute && e.target.getAttribute("data-f");
+        if (!f) return;
+        var id = e.target.getAttribute("data-id");
+        var patch = {}; patch[f] = e.target.value;
+        Saver.queue(id, patch);
+      });
+
+      document.addEventListener("click", function (e) {
+        var add = e.target.closest("[data-add]");
+        if (add) return newItem(add.getAttribute("data-panel"), add.getAttribute("data-add"));
+
+        var st = e.target.closest("[data-status]");
+        if (st) {
+          var sid = st.getAttribute("data-id"), sv = st.getAttribute("data-status");
+          st.parentNode.querySelectorAll("button").forEach(function (b) {
+            b.setAttribute("aria-pressed", b === st ? "true" : "false");
+          });
+          Saver.queue(sid, { status: sv }, 0);
+          return;
+        }
+
+        var ch = e.target.closest("[data-choose]");
+        if (ch) {
+          var pick = ch.getAttribute("data-choose"), grp = ch.getAttribute("data-group");
+          var set = (LIVE.wb || []).filter(function (x) { return x.option_group === grp; });
+          set.forEach(function (o) {
+            var won = o.id === pick;
+            o.chosen = won;
+            Saver.queue(o.id, { chosen: won }, 0);
+          });
+          ch.closest(".opts").querySelectorAll(".opt").forEach(function (el) {
+            var b = el.querySelector(".pick");
+            var won = b === ch;
+            el.classList.toggle("won", won);
+            b.setAttribute("aria-pressed", won ? "true" : "false");
+          });
+          return;
+        }
+
+        var d1 = e.target.closest("[data-del]");
+        if (d1) return removeIds([d1.getAttribute("data-del")]);
+        var dg = e.target.closest("[data-delgroup]");
+        if (dg) {
+          var g = dg.getAttribute("data-delgroup");
+          return removeIds((LIVE.wb || []).filter(function (x) { return x.option_group === g; }).map(function (x) { return x.id; }));
+        }
+
+        var n = e.target.closest(".node, [data-panel]:not([data-add]):not([data-remove])");
+        if (n) {
+          if (n.tagName === "A") e.preventDefault();
+          return openPanel(n.getAttribute("data-panel"), n);
+        }
+        if (e.target.closest("#close") || e.target === scrim) return closePanel();
+        var c = e.target.closest("[data-copy]");
+        if (c && navigator.clipboard) {
+          var old = c.textContent;
+          navigator.clipboard.writeText(c.getAttribute("data-copy")).then(function () {
+            c.textContent = "Copied";
+            setTimeout(function () { c.textContent = old; }, 1500);
+          }, function () {});
+        }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") return closePanel();
+        if (e.key !== "Tab" || !sheet.classList.contains("on")) return;
+        var f = [].slice.call(sheet.querySelectorAll("a[href], button")).filter(function (el) { return el.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      });
+
+      /* ---------- live data ---------- */
+      async function loadPublic() {
+        if (!db) return;
+        var pr = await Promise.allSettled([
+          db.rpc("public_stats", {}),
+          db.from("map_features").select("kind,status,geometry").eq("event_id", EVENT_ID),
+        ]);
+        if (pr[0].status === "fulfilled") {
+          var r = pr[0].value;
+          var row = r && r.data && (Array.isArray(r.data) ? r.data[0] : r.data);
+          if (row) LIVE.stats = row;
+          paintNow();
+        }
+        if (pr[1].status === "fulfilled") {
+          var mf = pr[1].value;
+          mf.error || (LIVE.features = mf.data);
+        }
+      }
+      
+      /* Staff is decided by public.staff_allowlist, never by a list in this
+         file. Replaying the session token against is_staff() means the display
+         gate and the row-level policy read the same table. Note the raw fetch:
+         db.rpc("is_staff") returns false for a genuine staff session because
+         the client wrapper does not attach the token to that call. */
+      async function isStaff(db) {
+        try {
+          var s = await db.auth.getSession();
+          var tok = s && s.data && s.data.session && s.data.session.access_token;
+          if (!tok) return false;
+          var r = await fetch(DATA_API + "/rpc/is_staff", {
+            method: "POST",
+            headers: { Authorization: "Bearer " + tok, "Content-Type": "application/json" },
+            body: "{}",
+          });
+          if (!r.ok) return false;
+          return (await r.text()).trim() === "true";
+        } catch (e) { return false; }
+      }
+      async function loadStaff() {
+        if (!db) return;
+        // Display gate only: RLS enforces the real boundary server-side.
+        // Anonymous sessions carry the authenticated role, so detection must
+        // key off the signed-in email, not query errors.
+        /* One round trip, not one per tick. Once a session is staff it stays
+           staff; while it is not we keep asking, so signing in takes effect on
+           the next tick rather than on a reload. */
+        if (!staff) {
+          try { staff = await isStaff(db); } catch (e) { staff = false; }
+          /* Lift or lock. This page carries names, addresses and money, so it
+             is staff only. The gate never hangs: it resolves to one of two
+             states here, and a watchdog below resolves it even if this line is
+             never reached. */
+          liftGate(staff);
+        }
+        if (!staff) return;
+        /* Seventeen queries used to run one after another inside a single try.
+           Two faults in that: at 142ms a round trip it cost three seconds of
+           waterfall before a number appeared, and one failing table silently
+           took every query below it with it, leaving most of the dashboard
+           blank with nothing said.
+
+           allSettled fixes both. One round trip instead of seventeen, and a
+           table that fails takes only itself down. */
+        var Q = [
+          ["names", loadNames()],
+          ["subs", db.from("submissions").select("applicant_name,type,status,email,phone,details,created_at").order("created_at", { ascending: false })],
+          ["accounts", db.from("accounts").select("type,status,company,category,pipeline_stage,note").order("sort")],
+          ["payments", db.from("payments").select("status,amount_cents")],
+          /* id and notes as well, so a decision can name the milestone it holds up */
+          ["decisions", db.from("open_decisions").select("id,label,status,notes").order("sort_order")],
+          ["milestones", db.from("milestones").select("*").order("due")],
+          ["budget", db.from("budget_items").select("*").order("sort_order")],
+          ["roster", db.from("staff_roster").select("*").order("id")],
+          ["awards", db.from("awards").select("id,name,kind,state,sort").order("sort")],
+          ["judges", db.from("judges").select("id,name,status")],
+          ["shifts", db.from("volunteer_shifts").select("id,role,post,needed,starts_at").order("starts_at")],
+          ["assigns", db.from("volunteer_assignments").select("shift_id,volunteer_id,status")],
+          ["volunteers", db.from("volunteers").select("id,name,status")],
+          ["categories", db.from("categories").select("id,name,domain,sort").order("sort")],
+          ["candidates", db.from("account_candidates").select("id,category_id,status")],
+          ["spectators", db.from("spectators").select("name,email,party_size,source,created_at").order("created_at", { ascending: false }).limit(25)],
+          ["clubSubs", db.from("club_submissions").select("status,vehicle_count,club_id")],
+          ["clubNames", db.from("clubs").select("id,club_name")],
+        ];
+        var settled = await Promise.allSettled(Q.map(function (q) { return q[1]; }));
+        var got = {};
+        var failed = [];
+        settled.forEach(function (s, i) {
+          var key = Q[i][0];
+          if (s.status !== "fulfilled") { failed.push(key); return; }
+          var r = s.value;
+          if (r && r.error) { failed.push(key); return; }
+          got[key] = r && r.data;
+        });
+        if (failed.length) console.warn("[ledger] tables that did not load:", failed.join(", "));
+
+        got.subs && (LIVE.subs = got.subs);
+        got.accounts && (LIVE.accounts = got.accounts);
+        got.payments && (LIVE.payments = got.payments);
+        got.decisions && (LIVE.decisions = got.decisions);
+        got.milestones && (LIVE.milestones = got.milestones);
+        got.budget && (LIVE.budget = got.budget);
+        got.roster && (LIVE.roster = got.roster);
+        got.awards && (LIVE.awards = got.awards);
+        got.judges && (LIVE.judges = got.judges);
+        got.shifts && (LIVE.shifts = got.shifts);
+        got.assigns && (LIVE.assigns = got.assigns);
+        got.volunteers && (LIVE.volunteers = got.volunteers);
+        paintNow();
+        got.categories && (LIVE.categories = got.categories);
+        got.candidates && (LIVE.candidates = got.candidates.filter(function (x) { return x.category_id != null; }));
+        got.spectators && (LIVE.spectators = got.spectators);
+        /* The club join happens here rather than in a second round trip: both
+           tables were fetched above, so this is memory work, not network. */
+        if (got.clubSubs) {
+          var names = {};
+          (got.clubNames || []).forEach(function (c) { names[c.id] = c.club_name; });
+          LIVE.clubs = got.clubSubs.map(function (x) {
+            return { status: x.status, vehicle_count: x.vehicle_count, club_name: names[x.club_id] || "Club" };
+          });
+        }
+        var m = document.getElementById("mode");
+        m.classList.add("staff");
+        document.getElementById("modeTxt").textContent = "Staff · live";
+      }
+      /* ---------- workbench sync ---------- */
+      function typingInSheet() {
+        var a = document.activeElement;
+        return !!(a && sheet.contains(a) && (a.tagName === "TEXTAREA" || a.tagName === "INPUT"));
+      }
+      async function loadWorkbench() {
+        if (!db || !staff) return;
+        /* Both requests leave together. The feed is not needed to decide whether
+           the items loaded, so awaiting it second costs nothing. */
+        var WB_FEED = db.from("workbench_activity").select("*").eq("event_id", EVENT_ID)
+          .order("at", { ascending: false }).limit(60);
+        try {
+          var w = await db.from("workbench_items").select("*").eq("event_id", EVENT_ID).order("sort");
+          if (w.error) {
+            // A brand new table is invisible to the data API until its schema
+            // cache refreshes. Say so plainly rather than rendering an empty
+            // workbench that looks like data loss.
+            if (/schema cache/i.test(w.error.message)) { WB_MISSING = true; return; }
+            throw new Error(w.error.message);
+          }
+          WB_MISSING = false;
+          LIVE.wb = w.data || [];
+        } catch (e) { return; }
+        try {
+          var a = await WB_FEED;
+          a.error || (LIVE.feed = a.data || []);
+        } catch (e) {}
+        // Repaint only when it cannot steal a caret or overwrite an unsaved edit.
+        if (openKey && sheet.classList.contains("on") && !typingInSheet() && !Saver.dirty()) {
+          paintPanel(openKey);
+        }
+        refreshPills();
+      }
+      async function tick() {
+        // Public and staff share nothing, so they go together. The workbench
+        // waits only because it needs to know whether this session is staff.
+        await Promise.allSettled([loadPublic(), loadStaff()]);
+        await loadWorkbench();
+        refreshPills();
+        var s = document.getElementById("freshAt");
+        if (s) s.textContent = new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+      }
+      // Never lose an edit to a closing tab.
+      window.addEventListener("beforeunload", function (e) {
+        if (!Saver.dirty()) return;
+        Saver.flushAll();
+        e.preventDefault();
+        e.returnValue = "";
+      });
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) Saver.flushAll();
+      });
+      render();
+      /* Panels paint from loaded data, so a link is honoured after the first
+         tick rather than on DOMContentLoaded, when there is nothing to show. */
+      tick().then(openFromHash, openFromHash);
+      // The workbench is shared, so it polls faster than the headline numbers:
+      // this is near-live, not true realtime. The data API has no push channel.
+      setInterval(function () { document.hidden || loadWorkbench(); }, 8e3);
+      setInterval(function () { document.hidden || tick(); }, 45e3);
+    </script>
+      <script type="module" src="/chat/dock.js"></script>
+    <script type="module" src="/team/rail.js"></script>
+<script>
+  /* Registered at the origin so one install covers the whole Team rail rather
+     than one icon per surface. Failure is silent on purpose: an install is a
+     convenience and must never stop the page working. */
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/team-sw.js", { scope: "/" }).catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>

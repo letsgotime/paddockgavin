@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Collateral · The Piston Powered Ranch</title>
+    <meta
+      name="description"
+      content="Download kit for The Piston Powered Ranch at Rancho Jaramillo, October 10 2026."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0d1620" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <style>
+      :root {
+        --glass:rgba(16,26,38,0.58); --gline:rgba(255,255,255,0.1);
+        --e1:0 10px 34px rgba(0,0,0,0.38); --e2:0 24px 70px rgba(0,0,0,0.5);
+        --bg: #0d1620;
+        --surface: #121d2a;
+        --surface-2: #16222f;
+        --ink: #fff;
+        --ink-dim: #c4cbd6;
+        --ink-mute: #8b95a3;
+        --accent: #f8b800;
+        --accent-2: #00d2be;
+        --line: #27384f;
+        --line-soft: #1c2a3d;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .ground { position: fixed; inset: 0; z-index: 0; }
+      .ground .ly {
+        position: absolute; inset: 0;
+        background: url(/events/img/hero.jpg) center 32% / cover no-repeat;
+      }
+      .ground .veil {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(13, 22, 32, 0.68), rgba(13, 22, 32, 0.6) 40%, rgba(13, 22, 32, 0.8));
+      }
+      .wrap { position: relative; z-index: 1; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+        padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right);
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .rule {
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--accent) 0 25%,
+          var(--accent-2) 25% 50%,
+          #005185 50% 75%,
+          #8b95a3 75% 100%
+        );
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 34px 20px 64px;
+      }
+      .eyebrow {
+        font-size: 11.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      h1 {
+        font-size: clamp(28px, 6.4vw, 46px);
+        line-height: 1.06;
+        margin: 10px 0 0;
+        letter-spacing: -0.02em;
+      }
+      h1 .accent {
+        color: var(--accent);
+      }
+      .lede {
+        color: var(--ink-dim);
+        font-size: 17px;
+        margin: 14px 0 0;
+        max-width: 60ch;
+      }
+      .facts {
+        margin: 18px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .fact {
+        font-size: 12.5px;
+        color: var(--ink-dim);
+        background: var(--surface);
+        border: 1px solid var(--line-soft);
+        border-radius: 999px;
+        padding: 5px 12px;
+      }
+      .howto {
+        margin-top: 26px;
+        background: var(--glass);
+        -webkit-backdrop-filter: blur(18px) saturate(1.35);
+        backdrop-filter: blur(18px) saturate(1.35);
+        box-shadow: var(--e1);
+        border: 1px solid var(--gline);
+        border-radius: 16px;
+        padding: 18px 20px;
+      }
+      .howto h2 {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin: 0 0 12px;
+      }
+      .fmt {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      }
+      .fmt div {
+        font-size: 14px;
+        color: var(--ink-dim);
+      }
+      .fmt b {
+        color: var(--ink);
+        display: block;
+        font-size: 14.5px;
+      }
+      .pill {
+        display: inline-block;
+        font-size: 10.5px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 999px;
+        margin-bottom: 4px;
+      }
+      .pill.screen {
+        background: rgba(0, 210, 190, 0.14);
+        color: var(--accent-2);
+        border: 1px solid rgba(0, 210, 190, 0.3);
+      }
+      .pill.print {
+        background: rgba(248, 184, 0, 0.14);
+        color: var(--accent);
+        border: 1px solid rgba(248, 184, 0, 0.32);
+      }
+      .pill.image {
+        background: rgba(139, 149, 163, 0.16);
+        color: var(--ink-dim);
+        border: 1px solid rgba(139, 149, 163, 0.3);
+      }
+      .fedex {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        background: rgba(248, 184, 0, 0.07);
+        border: 1px solid rgba(248, 184, 0, 0.24);
+        color: var(--ink-dim);
+        font-size: 13.5px;
+      }
+      .fedex b {
+        color: var(--accent);
+      }
+      .controls {
+        position: sticky;
+        top: 10px;
+        z-index: 20;
+        margin-top: 30px;
+        padding: 12px 0;
+        background: rgba(13, 20, 30, 0.6);
+        -webkit-backdrop-filter: blur(20px) saturate(1.4);
+        backdrop-filter: blur(20px) saturate(1.4);
+        border: 1px solid var(--gline);
+        border-radius: 22px;
+        box-shadow: var(--e1);
+        padding-left: 12px;
+        padding-right: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .chip {
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--ink-dim);
+        background: var(--surface);
+        border: 1px solid var(--line-soft);
+        border-radius: 999px;
+        padding: 7px 14px;
+        cursor: pointer;
+      }
+      .chip.on {
+        background: var(--accent);
+        color: #151000;
+        border-color: var(--accent);
+      }
+      .search {
+        flex: 1 1 180px;
+        min-width: 160px;
+        margin-left: auto;
+      }
+      .search input {
+        width: 100%;
+        font: inherit;
+        font-size: 14px;
+        color: var(--ink);
+        background: var(--surface);
+        border: 1px solid var(--line-soft);
+        border-radius: 999px;
+        padding: 8px 16px;
+      }
+      .search input::placeholder {
+        color: var(--ink-mute);
+      }
+      .group {
+        margin-top: 34px;
+      }
+      .group h2 {
+        font-size: 11.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin: 0 0 14px;
+        font-weight: 600;
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      }
+      .card {
+        background: var(--glass);
+        -webkit-backdrop-filter: blur(18px) saturate(1.35);
+        backdrop-filter: blur(18px) saturate(1.35);
+        box-shadow: var(--e1);
+        border: 1px solid var(--gline);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .thumb {
+        padding: 0;
+        border: 0;
+        background: #0a121b;
+        cursor: zoom-in;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .thumb img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 8.5/11;
+        object-fit: cover;
+        object-position: top;
+      }
+      .thumb.sq img {
+        aspect-ratio: 1/1;
+        object-position: center;
+      }
+      .thumb.tall img {
+        aspect-ratio: 9/13;
+        object-position: center top;
+      }
+      .body {
+        padding: 14px 16px 16px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .body h3 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.25;
+      }
+      .body p {
+        margin: 6px 0 12px;
+        color: var(--ink-mute);
+        font-size: 13.5px;
+        flex: 1;
+      }
+      .btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      a.dl {
+        display: inline-flex;
+        flex-direction: column;
+        text-decoration: none;
+        border-radius: 10px;
+        padding: 7px 11px;
+        border: 1px solid var(--line);
+        background: var(--surface-2);
+        min-width: 78px;
+      }
+      a.dl .k {
+        font-size: 12.5px;
+        font-weight: 650;
+        color: var(--ink);
+      }
+      a.dl .s {
+        font-size: 10.5px;
+        color: var(--ink-mute);
+      }
+      a.dl.screen {
+        border-color: rgba(0, 210, 190, 0.38);
+      }
+      a.dl.screen .k {
+        color: var(--accent-2);
+      }
+      a.dl.print {
+        border-color: rgba(248, 184, 0, 0.4);
+      }
+      a.dl.print .k {
+        color: var(--accent);
+      }
+      a.dl.page {
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+      a.dl.page .k {
+        color: #151000;
+      }
+      a.dl.page .s {
+        color: rgba(21, 16, 0, 0.78);
+      }
+      a.dl:hover {
+        transform: translateY(-1px);
+      }
+      .copy {
+        margin-top: 10px;
+        align-self: flex-start;
+        font: inherit;
+        font-size: 12px;
+        color: var(--ink-mute);
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .copy.done {
+        color: var(--accent-2);
+        text-decoration: none;
+      }
+      .empty {
+        margin-top: 28px;
+        color: var(--ink-mute);
+      }
+      footer.pfoot{margin-top:52px;padding-top:26px;border-top:1px solid var(--line-soft);color:var(--ink-mute);font-size:13px}
+      .pf-top{display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;margin-bottom:22px}
+      .pf-brand{max-width:250px}
+      .pf-brand img{height:34px;width:auto;margin-bottom:10px}
+      .pf-brand p{margin:0;color:var(--ink-mute);line-height:1.6}
+      .pf-label{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-mute);opacity:.7;margin:0 0 6px;font-weight:700}
+      .pf-col a{display:flex;align-items:center;min-height:32px;color:var(--ink-dim);text-decoration:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+      .pf-col a.lc{text-transform:none;letter-spacing:0}
+      .pf-col a:hover{color:var(--ink)}
+      .pf-bottom{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--line-soft)}
+      .pf-live{display:flex;align-items:center;gap:7px}
+      .pfdot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 6px var(--accent-2)}
+      .pf-fine{margin:14px 0 0;opacity:.75;font-size:11.5px;line-height:1.7;max-width:560px}
+      dialog.lb {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        width: min(94vw, 760px);
+        max-width: none;
+      }
+      dialog.lb::backdrop {
+        background: rgba(5, 9, 14, 0.86);
+      }
+      dialog.lb img {
+        border-radius: 12px;
+        width: 100%;
+      }
+      dialog.lb button {
+        margin: 10px auto 0;
+        display: block;
+        font: inherit;
+        font-size: 13px;
+        color: var(--ink-dim);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 18px;
+        cursor: pointer;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        a.dl:hover {
+          transform: none;
+        }
+      }
+      @media (max-height: 520px) {
+        .hero { min-height: 120vh; min-height: unset; padding-top: 70px; }
+        h1 { font-size: clamp(30px, 7vw, 44px); }
+        .count .cunit .v, .cunit .v { font-size: 22px; }
+        section { padding-top: 44px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="rule"></div>
+    <div class="ground" aria-hidden="true"><div class="ly"></div><div class="veil"></div></div>
+    <div class="wrap">
+      <img
+        src="/brand/pg-mark.png"
+        alt="PaddockGavin"
+        style="height: 44px; width: auto; margin-bottom: 14px"
+      />
+      <div class="eyebrow"><span class="dot"></span>Event Collateral</div>
+      <h1>The Piston<br /><span class="accent">Powered Ranch</span></h1>
+      <p class="lede">
+        Every flyer, teaser and graphic for the event, ready to send or print.
+        37
+        files, no login, nothing expires.
+      </p>
+      <div class="facts">
+        <span class="fact">Rancho Jaramillo · Unionville, TN</span>
+        <span class="fact">Saturday, October 10 2026</span>
+        <span class="fact">9:00 AM to 3:00 PM</span>
+        <span class="fact">Benefiting Community Elementary School</span>
+      </div>
+
+      <div class="howto">
+        <h2>Which file do I want?</h2>
+        <div class="fmt">
+          <div>
+            <span class="pill screen">PDF</span><b>Text or email it</b>Standard 8.5 × 11. Opens on
+            any phone, keeps the text sharp and selectable.
+          </div>
+          <div>
+            <span class="pill print">Print PDF</span><b>Take it to FedEx</b>Full bleed at 8.75 ×
+            11.25, so there is no white border once it is trimmed.
+          </div>
+          <div>
+            <span class="pill image">PNG</span><b>Drop it in a chat</b>A picture of the page.
+            Previews inline in iMessage and posts straight to social.
+          </div>
+        </div>
+        <p class="fedex">
+          <b>At the FedEx Office counter:</b> hand them the <b>Print PDF</b> files, ask for a trim
+          to 8.5 × 11, and tell them <b>not to scale or "fit to page"</b>. Fit-to-page shrinks the
+          art and leaves the white edge the bleed exists to avoid.
+        </p>
+      </div>
+
+      <div class="controls">
+        <button class="chip on" data-f="all">Everything</button><button class="chip" data-f="ranch">For the ranch</button><button class="chip" data-f="sponsors">Sponsors</button><button class="chip" data-f="vendors">Vendors</button><button class="chip" data-f="community">Car community</button><button class="chip" data-f="volunteers">Volunteers</button>
+        <div class="search">
+          <input
+            id="q"
+            type="search"
+            placeholder="Search collateral…"
+            aria-label="Search collateral"
+          />
+        </div>
+      </div>
+
+      <div id="results">
+        <section class="group" data-group="Brand">
+          <h2>Brand</h2>
+          <div class="grid">
+            <article class="card" data-aud="community" data-name="pg logo the paddockgavin mark on a transparent background. drops onto anything."><button class="thumb sq" data-full="/collateral/files/PPR_Logo_PG_transparent.png" aria-label="Preview PG Logo"><img src="/collateral/files/PPR_Logo_PG_transparent.png" alt="" decoding="async" /></button><div class="body"><h3>PG Logo</h3><p>The PaddockGavin mark on a transparent background. Drops onto anything.</p><div class="btns"><a class="dl image" href="/collateral/files/PPR_Logo_PG_transparent.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">65 KB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Logo_PG_transparent.png">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="event qr goes to pistonpoweredranch.com. error correction h, so it still reads off a printed sheet, in the sun, at an angle. take the svg to print."><button class="thumb sq" data-full="/collateral/files/PPR_QR_PistonPoweredRanch.png" aria-label="Preview Event QR"><img src="/collateral/files/PPR_QR_PistonPoweredRanch.png" alt="" decoding="async" /></button><div class="body"><h3>Event QR</h3><p>Goes to pistonpoweredranch.com. Error correction H, so it still reads off a printed sheet, in the sun, at an angle. Take the SVG to print.</p><div class="btns"><a class="dl image" href="/collateral/files/PPR_QR_PistonPoweredRanch.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1 KB</span></a><a class="dl print" href="/collateral/files/PPR_QR_PistonPoweredRanch.svg" download title="Vector, scales to a banner"><span class="k">SVG</span><span class="s">2 KB</span></a></div><button class="copy" data-file="/collateral/files/PPR_QR_PistonPoweredRanch.png">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="event qr, for dark stock the same code on a white tile, for placing on ranch ink. not a white qr: inverted codes fail on plenty of scanners, and this one would not decode at all."><button class="thumb sq" data-full="/collateral/files/PPR_QR_PistonPoweredRanch_OnInk.png" aria-label="Preview Event QR, for dark stock"><img src="/collateral/files/PPR_QR_PistonPoweredRanch_OnInk.png" alt="" decoding="async" /></button><div class="body"><h3>Event QR, for dark stock</h3><p>The same code on a white tile, for placing on Ranch Ink. Not a white QR: inverted codes fail on plenty of scanners, and this one would not decode at all.</p><div class="btns"><a class="dl image" href="/collateral/files/PPR_QR_PistonPoweredRanch_OnInk.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">10 KB</span></a></div><button class="copy" data-file="/collateral/files/PPR_QR_PistonPoweredRanch_OnInk.png">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="For the ranch">
+          <h2>For the ranch</h2>
+          <div class="grid">
+            <article class="card" data-aud="ranch" data-name="venue proposal the full proposal for rancho jaramillo: terms, revenue share and what the day asks of the venue."><button class="thumb " data-full="/collateral/files/PPR_Proposal_RanchoJaramillo.png" aria-label="Preview Venue Proposal"><img src="/collateral/thumbs/PPR_Proposal_RanchoJaramillo.jpg" alt="" decoding="async" /></button><div class="body"><h3>Venue Proposal</h3><p>The full proposal for Rancho Jaramillo: terms, revenue share and what the day asks of the venue.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_Proposal_RanchoJaramillo.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">423 KB</span></a><a class="dl print" href="/collateral/files/PPR_Proposal_RanchoJaramillo_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">424 KB</span></a><a class="dl image" href="/collateral/files/PPR_Proposal_RanchoJaramillo.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Proposal_RanchoJaramillo.pdf">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="Sponsorship">
+          <h2>Sponsorship</h2>
+          <div class="grid">
+            <article class="card" data-aud="sponsors" data-name="sponsorship one-pager every tier and what each one includes. the general ask."><button class="thumb " data-full="/collateral/files/PPR_OnePager_Sponsors.png" aria-label="Preview Sponsorship One-Pager"><img src="/collateral/thumbs/PPR_OnePager_Sponsors.jpg" alt="" decoding="async" /></button><div class="body"><h3>Sponsorship One-Pager</h3><p>Every tier and what each one includes. The general ask.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_OnePager_Sponsors.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">426 KB</span></a><a class="dl print" href="/collateral/files/PPR_OnePager_Sponsors_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">427 KB</span></a><a class="dl image" href="/collateral/files/PPR_OnePager_Sponsors.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_OnePager_Sponsors.pdf">Copy link</button></div></article>
+            <article class="card" data-aud="sponsors" data-name="sponsorship teaser two-page short form. send this first, lead with the one-pager after."><button class="thumb " data-full="/collateral/files/PPR_Teaser_Sponsors_p1.png" aria-label="Preview Sponsorship Teaser"><img src="/collateral/thumbs/PPR_Teaser_Sponsors_p1.jpg" alt="" decoding="async" /></button><div class="body"><h3>Sponsorship Teaser</h3><p>Two-page short form. Send this first, lead with the one-pager after.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_Teaser_Sponsors.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">1.6 MB</span></a><a class="dl print" href="/collateral/files/PPR_Teaser_Sponsors_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">1.6 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_Sponsors_p1.png" download title="Page 1 as an image"><span class="k">PNG P1</span><span class="s">1.7 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_Sponsors_p2.png" download title="Page 2 as an image"><span class="k">PNG P2</span><span class="s">1.6 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Teaser_Sponsors.pdf">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="Vendors">
+          <h2>Vendors</h2>
+          <div class="grid">
+            <article class="card" data-aud="vendors" data-name="vendor one-pager booth rates, what's included, and how to apply."><button class="thumb " data-full="/collateral/files/PPR_OnePager_Vendors.png" aria-label="Preview Vendor One-Pager"><img src="/collateral/thumbs/PPR_OnePager_Vendors.jpg" alt="" decoding="async" /></button><div class="body"><h3>Vendor One-Pager</h3><p>Booth rates, what's included, and how to apply.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_OnePager_Vendors.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">434 KB</span></a><a class="dl print" href="/collateral/files/PPR_OnePager_Vendors_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">434 KB</span></a><a class="dl image" href="/collateral/files/PPR_OnePager_Vendors.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_OnePager_Vendors.pdf">Copy link</button></div></article>
+            <article class="card" data-aud="vendors" data-name="vendor teaser short form for group chats and vendor pages."><button class="thumb " data-full="/collateral/files/PPR_Teaser_Vendors_p1.png" aria-label="Preview Vendor Teaser"><img src="/collateral/thumbs/PPR_Teaser_Vendors_p1.jpg" alt="" decoding="async" /></button><div class="body"><h3>Vendor Teaser</h3><p>Short form for group chats and vendor pages.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_Teaser_Vendors.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">1.6 MB</span></a><a class="dl print" href="/collateral/files/PPR_Teaser_Vendors_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">1.6 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_Vendors_p1.png" download title="Page 1 as an image"><span class="k">PNG P1</span><span class="s">1.7 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_Vendors_p2.png" download title="Page 2 as an image"><span class="k">PNG P2</span><span class="s">1.6 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Teaser_Vendors.pdf">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="Car community">
+          <h2>Car community</h2>
+          <div class="grid">
+            <article class="card" data-aud="community" data-name="car community one-pager for clubs and enthusiast groups. what the day is and who it's for."><button class="thumb " data-full="/collateral/files/PPR_OnePager_CarCommunity.png" aria-label="Preview Car Community One-Pager"><img src="/collateral/thumbs/PPR_OnePager_CarCommunity.jpg" alt="" decoding="async" /></button><div class="body"><h3>Car Community One-Pager</h3><p>For clubs and enthusiast groups. What the day is and who it's for.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_OnePager_CarCommunity.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">424 KB</span></a><a class="dl print" href="/collateral/files/PPR_OnePager_CarCommunity_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">424 KB</span></a><a class="dl image" href="/collateral/files/PPR_OnePager_CarCommunity.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_OnePager_CarCommunity.pdf">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="car community teaser built to be forwarded. the one that travels."><button class="thumb " data-full="/collateral/files/PPR_Teaser_CarCommunity_p1.png" aria-label="Preview Car Community Teaser"><img src="/collateral/thumbs/PPR_Teaser_CarCommunity_p1.jpg" alt="" decoding="async" /></button><div class="body"><h3>Car Community Teaser</h3><p>Built to be forwarded. The one that travels.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_Teaser_CarCommunity.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">1.6 MB</span></a><a class="dl print" href="/collateral/files/PPR_Teaser_CarCommunity_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">1.6 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_CarCommunity_p1.png" download title="Page 1 as an image"><span class="k">PNG P1</span><span class="s">1.7 MB</span></a><a class="dl image" href="/collateral/files/PPR_Teaser_CarCommunity_p2.png" download title="Page 2 as an image"><span class="k">PNG P2</span><span class="s">1.6 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Teaser_CarCommunity.pdf">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="open call the call for entries. submissions are by approval."><button class="thumb " data-full="/collateral/files/PPR_OnePager_OpenCall.png" aria-label="Preview Open Call"><img src="/collateral/thumbs/PPR_OnePager_OpenCall.jpg" alt="" decoding="async" /></button><div class="body"><h3>Open Call</h3><p>The call for entries. Submissions are by approval.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_OnePager_OpenCall.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">396 KB</span></a><a class="dl print" href="/collateral/files/PPR_OnePager_OpenCall_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">396 KB</span></a><a class="dl image" href="/collateral/files/PPR_OnePager_OpenCall.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_OnePager_OpenCall.pdf">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="Team">
+          <h2>Team</h2>
+          <div class="grid">
+            <article class="card" data-aud="volunteers" data-name="volunteers roles, hours and the ask, for recruiting day-of help."><button class="thumb " data-full="/collateral/files/PPR_OnePager_Volunteers.png" aria-label="Preview Volunteers"><img src="/collateral/thumbs/PPR_OnePager_Volunteers.jpg" alt="" decoding="async" /></button><div class="body"><h3>Volunteers</h3><p>Roles, hours and the ask, for recruiting day-of help.</p><div class="btns"><a class="dl screen" href="/collateral/files/PPR_OnePager_Volunteers.pdf" download title="Text or email this"><span class="k">PDF</span><span class="s">422 KB</span></a><a class="dl print" href="/collateral/files/PPR_OnePager_Volunteers_PRINT.pdf" download title="Take to FedEx Office"><span class="k">Print PDF</span><span class="s">422 KB</span></a><a class="dl image" href="/collateral/files/PPR_OnePager_Volunteers.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.2 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_OnePager_Volunteers.pdf">Copy link</button></div></article>
+          </div>
+        </section>
+        <section class="group" data-group="Social">
+          <h2>Social</h2>
+          <div class="grid">
+            <article class="card" data-aud="community" data-name="social square 1080 × 1080. feed posts."><button class="thumb sq" data-full="/collateral/files/PPR_Social_Square_1080x1080.png" aria-label="Preview Social Square"><img src="/collateral/thumbs/PPR_Social_Square_1080x1080.jpg" alt="" decoding="async" /></button><div class="body"><h3>Social Square</h3><p>1080 × 1080. Feed posts.</p><div class="btns"><a class="dl image" href="/collateral/files/PPR_Social_Square_1080x1080.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.3 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Social_Square_1080x1080.png">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="social story 1080 × 1920. stories and reels."><button class="thumb tall" data-full="/collateral/files/PPR_Social_Story_1080x1920.png" aria-label="Preview Social Story"><img src="/collateral/thumbs/PPR_Social_Story_1080x1920.jpg" alt="" decoding="async" /></button><div class="body"><h3>Social Story</h3><p>1080 × 1920. Stories and Reels.</p><div class="btns"><a class="dl image" href="/collateral/files/PPR_Social_Story_1080x1920.png" download title="Image, drops into any chat"><span class="k">PNG</span><span class="s">1.7 MB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Social_Story_1080x1920.png">Copy link</button></div></article>
+            <article class="card" data-aud="community" data-name="caption pack written captions for instagram, facebook and stories. copy, paste, post."><div class="body"><h3>Caption Pack</h3><p>Written captions for Instagram, Facebook and stories. Copy, paste, post.</p><div class="btns"><a class="dl page" href="captions.html"><span class="k">Open the captions</span><span class="s">Copy per platform</span></a><a class="dl image" href="/collateral/files/PPR_Social_Captions.md" download title="Plain text, opens anywhere"><span class="k">Captions</span><span class="s">3 KB</span></a></div><button class="copy" data-file="/collateral/files/PPR_Social_Captions.md">Copy link</button></div></article>
+          </div>
+        </section></div>
+      <p class="empty" id="empty" hidden>
+        Nothing matches that. Try a different word or tap Everything.
+      </p>
+
+      <footer class="pfoot">
+        <div class="pf-top">
+          <div class="pf-brand">
+            <img src="/brand/pg-mark.png" alt="PaddockGavin" />
+            <p>A private-collector car show at Rancho Jaramillo. One curated field of cars under fall color. Unionville, TN.</p>
+          </div>
+          <div class="pf-col">
+            <p class="pf-label">Event</p>
+            <a href="/console/">Console home</a>
+            <a href="/collateral/">Collateral kit</a>
+            <a href="/collateral/captions.html">Caption pack</a>
+          </div>
+          <div class="pf-col">
+            <p class="pf-label">Community</p>
+            <a href="https://www.instagram.com/itspaddockgavin/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.youtube.com/@paddockgavin" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a href="https://www.tiktok.com/@paddockgavin" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.facebook.com/GoTimeMotorsports/" target="_blank" rel="noopener noreferrer">Facebook</a>
+          </div>
+          <div class="pf-col">
+            <p class="pf-label">Contact</p>
+            <a href="mailto:gavin@paddock20.com" class="lc">gavin@paddock20.com</a>
+            <a href="mailto:bekah@paddock20.com" class="lc">bekah@paddock20.com</a>
+          </div>
+        </div>
+        <div class="pf-bottom">
+          <span>© 2026 PaddockGavin. All rights reserved.</span>
+          <span class="pf-live"><span class="pfdot"></span>Submissions open</span>
+        </div>
+        <p class="pf-fine">
+          The Piston Powered Ranch is a PaddockGavin production, part of the Paddock20 family.
+          Assets on this page are for promoting this event. Questions, or a file that will not
+          open, reply to the thread that sent you this link.
+        </p>
+      </footer>
+    </div>
+
+    <dialog class="lb" id="lb">
+      <img id="lbimg" alt="" />
+      <button id="lbclose" autofocus>Close</button>
+    </dialog>
+
+    <script>
+      (function () {
+        var chips = [].slice.call(document.querySelectorAll(".chip"));
+        var cards = [].slice.call(document.querySelectorAll(".card"));
+        var q = document.getElementById("q");
+        var empty = document.getElementById("empty");
+        var filter = "all";
+
+        function apply() {
+          var term = (q.value || "").trim().toLowerCase();
+          var shown = 0;
+          cards.forEach(function (c) {
+            var okAud = filter === "all" || c.dataset.aud === filter;
+            var okTerm = !term || c.dataset.name.indexOf(term) !== -1;
+            var on = okAud && okTerm;
+            c.hidden = !on;
+            if (on) shown++;
+          });
+          [].forEach.call(document.querySelectorAll(".group"), function (g) {
+            g.hidden = !g.querySelector(".card:not([hidden])");
+          });
+          empty.hidden = shown !== 0;
+        }
+        chips.forEach(function (b) {
+          b.addEventListener("click", function () {
+            chips.forEach(function (x) {
+              x.classList.remove("on");
+            });
+            b.classList.add("on");
+            filter = b.dataset.f;
+            apply();
+          });
+        });
+        q.addEventListener("input", apply);
+
+        var lb = document.getElementById("lb"),
+          lbimg = document.getElementById("lbimg");
+        document.addEventListener("click", function (e) {
+          var t = e.target.closest(".thumb[data-full]");
+          if (t && lb.showModal) {
+            lbimg.src = t.dataset.full;
+            lb.showModal();
+            return;
+          }
+          if (e.target.id === "lbclose") lb.close();
+          var cp = e.target.closest(".copy");
+          if (cp) {
+            var url = new URL(cp.dataset.file, location.href).href;
+            var done = function () {
+              cp.textContent = "Link copied";
+              cp.classList.add("done");
+              setTimeout(function () {
+                cp.textContent = "Copy link";
+                cp.classList.remove("done");
+              }, 1800);
+            };
+            if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () {});
+          }
+        });
+        lb.addEventListener("click", function (e) {
+          if (e.target === lb) lb.close();
+        });
+      })();
+    </script>
+  </body>
+</html>

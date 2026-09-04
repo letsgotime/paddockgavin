@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Site Plan · The Piston Powered Ranch</title>
+    <meta name="robots" content="noindex" />
+    <meta name="description" content="Printable 8.5 by 11 site plan for The Piston Powered Ranch, generated live from the event layout." />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/rj-icon-32.png" />
+    <style>
+      @page { size: 8.5in 11in; margin: 0; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: #8c8c8c; }
+      body { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color: #14181d; }
+      .sheet { width: 8.5in; height: 11in; margin: 0 auto; background: #faf8f4;
+        padding: 0.5in 0.55in 0.42in; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+      .rule { height: 5px; margin: -0.5in -0.55in 0.22in;
+        background: linear-gradient(90deg, #d99400 0 25%, #00776e 25% 50%, #2d6f9e 50% 75%, #5b6672 75% 100%); }
+      header { display: flex; justify-content: space-between; align-items: flex-start;
+        border-bottom: 1.5px solid #14181d; padding-bottom: 9px; gap: 16px; }
+      .eyebrow { font-size: 8pt; letter-spacing: .19em; text-transform: uppercase; font-weight: 800; color: #8a6a00; }
+      h1 { font-family: "Arial Black", Arial, sans-serif; font-size: 22pt; line-height: .94;
+        letter-spacing: -.02em; margin: 3px 0 0; }
+      h1 span { color: #a8801a; }
+      .meta { text-align: right; font-size: 8.5pt; line-height: 1.5; color: #3b424b; }
+      .meta b { display: block; font-size: 10pt; color: #14181d; }
+      .planwrap { margin-top: 12px; border: 1.5px solid #14181d; position: relative; }
+      .planwrap svg { display: block; width: 100%; height: 4.55in; }
+      .stamp { position: absolute; right: 9px; top: 9px; font-size: 7.5pt; font-weight: 800;
+        letter-spacing: .16em; text-transform: uppercase; background: #14181d; color: #faf8f4; padding: 4px 9px; z-index: 2; }
+      .cols { display: flex; gap: .26in; margin-top: 10px; flex: 1; }
+      .left { flex: 1.55; } .right { flex: 1; }
+      h2 { font-size: 8pt; letter-spacing: .17em; text-transform: uppercase; margin: 0 0 6px; color: #5b6672; font-weight: 800; }
+      table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+      td { padding: 3px 0; border-bottom: .75px solid #ddd8cf; vertical-align: baseline; }
+      td.n { font-family: "Arial Black", Arial, sans-serif; width: 26px; }
+      td.nm { font-weight: 700; }
+      td.ac { text-align: right; color: #3b424b; white-space: nowrap; padding-right: 9px; }
+      td.co { text-align: right; width: 96px; color: #8a6a00; font-size: 7.5pt;
+        font-family: ui-monospace, Menlo, monospace; white-space: nowrap; }
+      .facts { font-size: 8.5pt; line-height: 1.5; margin-top: 7px; }
+      .facts b { font-weight: 800; }
+      .inset { border: 1.25px solid #14181d; margin-bottom: 7px; background: #eee9df; }
+      .inset svg { display: block; height: 2.35in; width: auto; margin: 0 auto; }
+      .cap { font-size: 7.5pt; color: #5b6672; line-height: 1.45; }
+      ul { margin: 0; padding-left: 0; list-style: none; font-size: 8pt; line-height: 1.45; }
+      ul li { margin-bottom: 2px; }
+      ul li b { display: inline-block; width: 13px; }
+      ul li span { color: #8a6a00; font-family: ui-monospace, Menlo, monospace; font-size: 7.5pt; }
+      footer { margin-top: 10px; border-top: 1.5px solid #14181d; padding-top: 7px;
+        display: flex; justify-content: space-between; font-size: 7.5pt; letter-spacing: .13em;
+        text-transform: uppercase; font-weight: 800; color: #5b6672; }
+      .live { position: fixed; left: 12px; bottom: 12px; z-index: 5; font-size: 11px; font-weight: 700;
+        letter-spacing: .1em; text-transform: uppercase; background: #14181d; color: #faf8f4;
+        padding: 7px 12px; border-radius: 999px; opacity: .9; }
+      @media screen { body { padding: 18px 0; } .sheet { box-shadow: 0 10px 40px rgba(0,0,0,.45); } }
+      @media print { body { background: #fff; padding: 0; } .sheet { box-shadow: none; margin: 0; } .live { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <div class="rule"></div>
+      <header>
+        <div>
+          <div class="eyebrow">Official site plan &middot; <span id="stat">draft</span></div>
+          <h1>The Piston<br />Powered <span>Ranch</span></h1>
+        </div>
+        <div class="meta">
+          <b>Saturday, October 10, 2026</b>9:00 AM to 3:00 PM<br />
+          Rancho Jaramillo &middot; Unionville, TN<br />
+          Cars turn in off Highway 41-A
+        </div>
+      </header>
+
+      <div class="planwrap"><span class="stamp" id="stamp">Layout in draft</span><div id="plan"></div></div>
+
+      <div class="cols">
+        <div class="left">
+          <h2>Corner index</h2>
+          <table><tbody id="idx"></tbody></table>
+          <div class="facts" id="facts"></div>
+        </div>
+        <div class="right">
+          <h2>The whole property</h2>
+          <div class="inset" id="inset"></div>
+          <p class="cap">Parcel 002 025 01600, Bedford County. Amber block marks the event footprint.</p>
+          <h2 style="margin-top: 11px">On site &amp; coordinates</h2>
+          <ul id="pois"></ul>
+        </div>
+      </div>
+
+      <footer>
+        <span>PaddockGavin Events</span>
+        <span>179 Enon Church Rd &middot; Unionville TN 37180</span>
+        <span>paddockgavin.com</span>
+      </footer>
+    </div>
+
+    <span class="live" id="live">Reading the layout…</span>
+
+    <script type="module">
+      import { db as makeDb, EVENT_ID } from "/vendor/ranch-db.js?v=2026-09-02f";
+      import { PARCEL, ROADS, CREEKS } from "/map/geo.js";
+
+      var LETTERS = "abcdefgh";
+      var CAT = {
+        show: "#d99400", vendor: "#00776e", vip: "#2d6f9e", parking: "#5b6672",
+        ops: "#FF1A21", entry: "#a8801a", charity: "#8a6a00", food: "#00776e", facility: "#5b6672",
+      };
+      /* Same fallback the map carries, so the sheet prints even if the API is slow. */
+      var FALLBACK = [
+        { slug: "show-field", kind: "zone", name: "Show Field", category: "show", status: "draft", geometry: { type: "polygon", coords: [[35.6475,-86.5815],[35.6475,-86.5789],[35.6464,-86.5789],[35.6464,-86.5815]] } },
+        { slug: "vendor-row", kind: "zone", name: "Vendor Row", category: "vendor", status: "draft", geometry: { type: "polygon", coords: [[35.6463,-86.5815],[35.6463,-86.5793],[35.6461,-86.5793],[35.6461,-86.5815]] } },
+        { slug: "vip-terrace", kind: "zone", name: "VIP Terrace", category: "vip", status: "draft", geometry: { type: "polygon", coords: [[35.6464,-86.5792],[35.6464,-86.5786],[35.646,-86.5786],[35.646,-86.5792]] } },
+        { slug: "spectator-parking", kind: "zone", name: "Spectator Parking", category: "parking", status: "draft", geometry: { type: "polygon", coords: [[35.6459,-86.5815],[35.6459,-86.5785],[35.6455,-86.5785],[35.6455,-86.5815]] } },
+        { slug: "helo-lz", kind: "zone", name: "Helicopter LZ", category: "ops", status: "draft", geometry: { type: "polygon", coords: [[35.64901,-86.58],[35.64901,-86.5795],[35.6486,-86.5795],[35.6486,-86.58]] } },
+        { slug: "charity-corner", kind: "poi", name: "Community Elementary Corner", category: "charity", status: "draft", geometry: { type: "point", coords: [35.64622,-86.5808] } },
+        { slug: "food-row", kind: "poi", name: "Food", category: "food", status: "draft", geometry: { type: "point", coords: [35.64622,-86.5813] } },
+        { slug: "restrooms", kind: "poi", name: "Restrooms", category: "facility", status: "draft", geometry: { type: "point", coords: [35.64595,-86.581] } },
+        { slug: "first-aid", kind: "poi", name: "First Aid", category: "facility", status: "draft", geometry: { type: "point", coords: [35.64622,-86.5798] } },
+        { slug: "entry-drive", kind: "route", name: "Entry Drive", category: "entry", status: "draft", geometry: { type: "path", coords: [[35.63751,-86.59323],[35.63712,-86.58854],[35.63752,-86.58022],[35.64202,-86.57998],[35.6437,-86.57984],[35.64512,-86.58143],[35.64673,-86.58207]] } },
+      ];
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+      function Proj(S, W, N, E, w) {
+        this.S = S; this.W = W; this.N = N; this.E = E;
+        this.mw = (E - W) * 111320 * Math.cos(((N + S) / 2) * Math.PI / 180);
+        this.mh = (N - S) * 110540;
+        this.w = w; this.h = w * this.mh / this.mw; this.mpu = this.mw / w;
+      }
+      Proj.prototype.x = function (l) { return (l - this.W) / (this.E - this.W) * this.w; };
+      Proj.prototype.y = function (l) { return (this.N - l) / (this.N - this.S) * this.h; };
+      Proj.prototype.path = function (pts, close) {
+        var self = this;
+        return pts.map(function (p, i) { return (i ? "L " : "M ") + self.x(p[1]).toFixed(1) + "," + self.y(p[0]).toFixed(1); }).join(" ") + (close ? " Z" : "");
+      };
+      Proj.prototype.clip = function (pts, pad) {
+        pad = pad == null ? 0.002 : pad;
+        var out = [], run = [], self = this;
+        pts.forEach(function (p) {
+          if (p[0] >= self.S - pad && p[0] <= self.N + pad && p[1] >= self.W - pad && p[1] <= self.E + pad) run.push(p);
+          else { if (run.length > 1) out.push(run); run = []; }
+        });
+        if (run.length > 1) out.push(run);
+        return out;
+      };
+      function acres(ring) {
+        var lat0 = ring.reduce(function (a, p) { return a + p[0]; }, 0) / ring.length;
+        var k = Math.cos(lat0 * Math.PI / 180), s = 0;
+        var pts = ring.map(function (p) { return [p[1] * 111320 * k, p[0] * 110540]; });
+        for (var i = 0; i < pts.length; i++) {
+          var a = pts[i], b = pts[(i + 1) % pts.length];
+          s += a[0] * b[1] - b[0] * a[1];
+        }
+        return Math.abs(s) / 2 / 4046.86;
+      }
+      function ctr(f) {
+        var c = f.geometry.coords;
+        if (f.geometry.type === "point") return c;
+        var la = 0, lo = 0;
+        c.forEach(function (p) { la += p[0]; lo += p[1]; });
+        return [la / c.length, lo / c.length];
+      }
+      function roads(p, sc) {
+        var out = "";
+        [["service", 3, 1.6], ["lane", 4, 2.2], ["main", 6, 3.4], ["primary", 8, 4.6]].forEach(function (r) {
+          (ROADS[r[0]] || []).forEach(function (seg) {
+            p.clip(seg).forEach(function (c) {
+              var d = p.path(c);
+              out += '<path d="' + d + '" fill="none" stroke="#d8d2c6" stroke-width="' + (r[1] * sc).toFixed(1) + '" stroke-linecap="round"/>';
+              out += '<path d="' + d + '" fill="none" stroke="#fff" stroke-width="' + (r[2] * sc).toFixed(1) + '" stroke-linecap="round"/>';
+            });
+          });
+        });
+        return out;
+      }
+      function creeksOf(p, sc) {
+        var out = "";
+        (CREEKS || []).forEach(function (seg) {
+          p.clip(seg, 0.001).forEach(function (c) {
+            out += '<path d="' + p.path(c) + '" fill="none" stroke="#7fa8c9" stroke-width="' + (2.6 * sc).toFixed(1) + '" stroke-linecap="round" opacity="0.85"/>';
+          });
+        });
+        return out;
+      }
+
+      function render(features) {
+        var zones = features.filter(function (f) { return f.kind === "zone" && f.status !== "hidden"; });
+        var pois = features.filter(function (f) { return f.kind === "poi" && f.status !== "hidden" && f.slug !== "ranch-gate"; });
+        var drive = features.find(function (f) { return f.kind === "route"; });
+
+        var p = new Proj(35.6452, -86.5845, 35.6496, -86.5765, 1364);
+        var g = '<rect width="' + p.w.toFixed(0) + '" height="' + p.h.toFixed(0) + '" fill="#eee9df"/>';
+        g += '<path d="' + p.path(PARCEL, true) + '" fill="#e3e9d8"/>';
+        var lat, lng, x, y;
+        for (lat = 35.645; lat <= p.N; lat = Math.round((lat + 0.001) * 1e5) / 1e5) {
+          y = p.y(lat);
+          if (y > 0 && y < p.h) {
+            g += '<line x1="0" y1="' + y.toFixed(1) + '" x2="' + p.w.toFixed(0) + '" y2="' + y.toFixed(1) + '" stroke="#c4bcab" stroke-width="0.7" stroke-dasharray="3 5"/>';
+            g += '<text x="5" y="' + (y - 3).toFixed(1) + '" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#8b8371">' + lat.toFixed(4) + "</text>";
+          }
+        }
+        for (lng = -86.584; lng <= p.E; lng = Math.round((lng + 0.002) * 1e5) / 1e5) {
+          x = p.x(lng);
+          if (x > 0 && x < p.w) {
+            g += '<line x1="' + x.toFixed(1) + '" y1="0" x2="' + x.toFixed(1) + '" y2="' + p.h.toFixed(0) + '" stroke="#c4bcab" stroke-width="0.7" stroke-dasharray="3 5"/>';
+            g += '<text x="' + (x + 3).toFixed(1) + '" y="' + (p.h - 5).toFixed(0) + '" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#8b8371">' + lng.toFixed(4) + "</text>";
+          }
+        }
+        g += creeksOf(p, 1) + roads(p, 1);
+        g += '<path d="' + p.path(PARCEL, true) + '" fill="none" stroke="#c9a227" stroke-width="3" stroke-linejoin="round"/>';
+        if (drive) {
+          p.clip(drive.geometry.coords).forEach(function (c) {
+            g += '<path d="' + p.path(c) + '" fill="none" stroke="#a8801a" stroke-width="3" stroke-dasharray="9 7" stroke-linecap="round"/>';
+          });
+        }
+        zones.forEach(function (z) {
+          var col = CAT[z.category] || "#5b6672";
+          g += '<path d="' + p.path(z.geometry.coords, true) + '" fill="' + col + '" fill-opacity="0.13" stroke="' + col + '" stroke-width="2" stroke-dasharray="8 5"/>';
+        });
+        var lz = zones.find(function (z) { return z.category === "ops"; });
+        if (lz) {
+          var lc = ctr(lz);
+          g += '<circle cx="' + p.x(lc[1]).toFixed(1) + '" cy="' + p.y(lc[0]).toFixed(1) + '" r="' + (45.72 / p.mpu).toFixed(1) +
+            '" fill="none" stroke="#FF1A21" stroke-width="1.6" stroke-dasharray="6 6" opacity="0.75"/>';
+          g += '<text x="' + p.x(lc[1]).toFixed(1) + '" y="' + (p.y(lc[0]) - 45.72 / p.mpu - 8).toFixed(1) +
+            '" font-family="Arial" font-size="13" font-weight="bold" fill="#FF1A21" text-anchor="middle">150 FT CROWD LINE</text>';
+        }
+        g += '<text font-family="Arial" font-size="15" font-weight="bold" letter-spacing="3" fill="#7a6a3a" transform="translate(' +
+          (p.x(-86.5822) - 6).toFixed(1) + "," + p.y(35.647).toFixed(1) + ') rotate(-90)">RANCH ROAD</text>';
+        g += '<text font-family="Arial" font-size="15" font-weight="bold" letter-spacing="3" fill="#5b87a8" transform="translate(' +
+          (p.x(-86.5779) + 4).toFixed(1) + "," + p.y(35.647).toFixed(1) + ') rotate(78)">CREEK</text>';
+        g += '<text x="' + p.x(-86.5843).toFixed(1) + '" y="' + p.y(35.6455).toFixed(1) +
+          '" font-family="Arial" font-size="13" font-weight="bold" letter-spacing="2" fill="#a8801a">&#8592; TO HWY 41-A GATE &#183; 1.5 MI</text>';
+        pois.forEach(function (f, i) {
+          var c = f.geometry.coords;
+          g += '<circle cx="' + p.x(c[1]).toFixed(1) + '" cy="' + p.y(c[0]).toFixed(1) + '" r="9" fill="#fff" stroke="#14181d" stroke-width="2"/>';
+          g += '<text x="' + p.x(c[1]).toFixed(1) + '" y="' + (p.y(c[0]) + 4).toFixed(1) +
+            '" font-family="Arial" font-size="11" font-weight="bold" fill="#14181d" text-anchor="middle">' + LETTERS[i] + "</text>";
+        });
+        zones.forEach(function (z, i) {
+          var c = ctr(z), col = CAT[z.category] || "#5b6672";
+          g += '<circle cx="' + p.x(c[1]).toFixed(1) + '" cy="' + p.y(c[0]).toFixed(1) + '" r="17" fill="#14181d" stroke="' + col + '" stroke-width="3"/>';
+          g += '<text x="' + p.x(c[1]).toFixed(1) + '" y="' + (p.y(c[0]) + 6).toFixed(1) +
+            '" font-family="Arial Black,Arial" font-size="16" fill="#fff" text-anchor="middle">' + String(i + 1).padStart(2, "0") + "</text>";
+        });
+        g += '<g transform="translate(' + (p.w - 30).toFixed(0) + ',26)"><path d="M 0,-16 L 7,12 L 0,6 L -7,12 Z" fill="#14181d"/>' +
+          '<text x="0" y="27" font-family="Arial" font-size="13" font-weight="bold" fill="#14181d" text-anchor="middle">N</text></g>';
+        var sb = 100 / p.mpu;
+        g += '<g transform="translate(24,' + (p.h - 26).toFixed(0) + ')"><line x1="0" y1="0" x2="' + sb.toFixed(1) + '" y2="0" stroke="#14181d" stroke-width="3"/>' +
+          '<line x1="0" y1="-6" x2="0" y2="6" stroke="#14181d" stroke-width="3"/><line x1="' + sb.toFixed(1) + '" y1="-6" x2="' + sb.toFixed(1) +
+          '" y2="6" stroke="#14181d" stroke-width="3"/><text x="' + (sb / 2).toFixed(1) +
+          '" y="-11" font-family="Arial" font-size="13" font-weight="bold" fill="#14181d" text-anchor="middle">100 m / 328 ft</text></g>';
+        document.getElementById("plan").innerHTML =
+          '<svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 ' + p.w.toFixed(0) + " " + p.h.toFixed(0) + '" xmlns="http://www.w3.org/2000/svg">' + g + "</svg>";
+
+        var la = PARCEL.map(function (q) { return q[0]; }), lo = PARCEL.map(function (q) { return q[1]; });
+        var I = new Proj(Math.min.apply(null, la) - 8e-4, Math.min.apply(null, lo) - 8e-4,
+          Math.max.apply(null, la) + 8e-4, Math.max.apply(null, lo) + 8e-4, 460);
+        var ig = '<rect width="' + I.w.toFixed(0) + '" height="' + I.h.toFixed(0) + '" fill="#eee9df"/>' +
+          '<path d="' + I.path(PARCEL, true) + '" fill="#e3e9d8" stroke="#c9a227" stroke-width="2.4" stroke-linejoin="round"/>' +
+          creeksOf(I, 0.6) + roads(I, 0.6) +
+          '<path d="' + I.path([[35.6452,-86.5828],[35.6496,-86.5828],[35.6496,-86.5778],[35.6452,-86.5778]], true) +
+          '" fill="#d99400" fill-opacity="0.35" stroke="#a8801a" stroke-width="2"/>';
+        document.getElementById("inset").innerHTML =
+          '<svg viewBox="0 0 ' + I.w.toFixed(0) + " " + I.h.toFixed(0) + '" xmlns="http://www.w3.org/2000/svg">' + ig + "</svg>";
+
+        var total = 0;
+        document.getElementById("idx").innerHTML = zones.map(function (z, i) {
+          var a = acres(z.geometry.coords); total += a;
+          var c = ctr(z), col = CAT[z.category] || "#5b6672";
+          var size = z.detail && z.detail.acres ? z.detail.acres : a.toFixed(1) + " acres";
+          return '<tr><td class="n" style="color:' + col + '">' + String(i + 1).padStart(2, "0") + "</td>" +
+            '<td class="nm">' + esc(z.name) + "</td>" +
+            '<td class="ac">' + esc(size) + "</td>" +
+            '<td class="co">' + c[0].toFixed(4) + ", " + c[1].toFixed(4) + "</td></tr>";
+        }).join("");
+
+        document.getElementById("facts").innerHTML =
+          "<b>" + total.toFixed(1) + " acres in use</b> of a 408 acre working ranch, in the field east of the ranch " +
+          "road running to the creek. Three hundred curated cars, free for spectators, benefiting Community " +
+          "Elementary School. Gate, crowd line and row layout are provisional until the venue sign off.";
+
+        document.getElementById("pois").innerHTML = pois.map(function (f, i) {
+          var c = f.geometry.coords;
+          return "<li><b>" + LETTERS[i] + "</b> " + esc(f.name) + " <span>" + c[0].toFixed(4) + ", " + c[1].toFixed(4) + "</span></li>";
+        }).join("") + '<li><b>&#9679;</b> Ranch Gate, off Hwy 41-A <span>35.6375, -86.5932</span></li>';
+
+        var allDraft = zones.every(function (z) { return z.status === "draft"; });
+        document.getElementById("stamp").textContent = allDraft ? "Layout in draft" : "Layout confirmed in part";
+        document.getElementById("stat").textContent = allDraft ? "draft" : "in revision";
+      }
+
+      /* Print safe: draw the built-in layout first so Cmd+P always has a sheet,
+         then upgrade the moment live data lands. */
+      render(FALLBACK);
+      document.getElementById("live").textContent = "Built-in layout";
+
+      try {
+        var db = makeDb();
+        var r = await db.from("map_features").select("*").eq("event_id", EVENT_ID).order("sort");
+        if (r && r.data && r.data.length) {
+          render(r.data);
+          var el = document.getElementById("live");
+          el.textContent = "Live from the event layout";
+          setTimeout(function () { el.style.display = "none"; }, 2600);
+        } else {
+          document.getElementById("live").textContent = "Built-in layout, live data unavailable";
+        }
+      } catch (e) {
+        document.getElementById("live").textContent = "Built-in layout, live data unavailable";
+      }
+    </script>
+      <script type="module" src="/team/rail.js"></script>
+</body>
+</html>

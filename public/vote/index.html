@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>People's Choice · The Piston Powered Ranch</title>
+    <meta name="description" content="Pick the car of the day. One vote, no sign in." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#070d14" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/rj-icon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/rj-icon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;900&display=swap" />
+    <style>
+      :root {
+        --bg: #070d14; --ink: #fff; --dim: #dbe2ea; --mute: #a9b4c2; --faint: #7f8a99;
+        --amber: #f8b800; --teal: #00d2be; --crit: #FF1A21;
+        --crit-fill: #E5141A;
+        --glass: rgba(17, 27, 40, 0.6); --gline: rgba(255, 255, 255, 0.12);
+        --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body { background: var(--bg); color: var(--dim);
+        font-family: Archivo, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+        font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+      /* the Rancho Jaramillo gate against the sky. */
+      .ground { position: fixed; inset: 0; z-index: 0; overflow: hidden; background-color: var(--bg); }
+      /* A real element, not a CSS background: the preload scanner finds
+         it in the markup and picks one width, where a background image
+         waits for the stylesheet and a preload link fetched the wrong
+         file alongside it. */
+      .ground .shot { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; display: block; }
+
+      .ground i { position: absolute; display: block; border-radius: 50%; filter: blur(80px); }
+      .ground i:nth-child(1) { width: 90vw; height: 90vw; left: -25vw; top: -35vw; background: radial-gradient(circle, #f8b800, transparent 68%); opacity: .14; }
+      .ground i:nth-child(2) { width: 96vw; height: 96vw; right: -32vw; bottom: -34vw; background: radial-gradient(circle, #00d2be, transparent 70%); opacity: .14; }
+      .ground u { position: absolute; inset: 0; display: block;
+        background: linear-gradient(180deg, rgba(7,13,20,.74), rgba(7,13,20,.56) 34%, rgba(7,13,20,.9)); }
+      .rule { position: relative; z-index: 3; height: 4px;
+        background: linear-gradient(90deg, var(--amber) 0 25%, var(--teal) 25% 50%, #005185 50% 75%, var(--faint) 75% 100%); }
+      .wrap { position: relative; z-index: 2; max-width: 560px; margin: 0 auto;
+        padding: 24px 16px calc(40px + env(safe-area-inset-bottom)); }
+      .glass { background: var(--glass); border: 1px solid var(--gline); border-radius: 20px;
+        box-shadow: 0 12px 36px rgba(0,0,0,.44);
+        -webkit-backdrop-filter: blur(20px) saturate(1.5); backdrop-filter: blur(20px) saturate(1.5); }
+      .hero { padding: 22px; text-align: center; }
+      .hero img { height: 40px; }
+      .eyebrow { margin-top: 12px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em;
+        text-transform: uppercase; color: var(--amber); font-weight: 600; }
+      h1 { margin: 8px 0 0; font-weight: 900; font-size: clamp(30px, 9vw, 42px); line-height: 1;
+        letter-spacing: -.035em; color: var(--ink); }
+      h1 span { color: var(--amber); }
+      .stand { margin: 11px 0 0; font-size: 16px; color: var(--dim); }
+      .find { margin-top: 14px; }
+      .find input { width: 100%; font: inherit; font-size: 17px; color: var(--ink);
+        background: rgba(0,0,0,.34); border: 1px solid var(--gline); border-radius: 13px; padding: 13px 15px; }
+      .find input:focus { outline: none; border-color: var(--amber); }
+      .cars { display: grid; gap: 9px; margin-top: 13px; }
+      .car { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;
+        padding: 15px 17px; cursor: pointer; border: 1px solid var(--gline); border-radius: 16px;
+        background: rgba(17,27,40,.5); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+      .car:active { transform: scale(.99); }
+      .car b { display: block; font-size: 17px; font-weight: 900; color: var(--ink); letter-spacing: -.018em; }
+      .car span { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-top: 2px; }
+      .car .pick { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+        color: var(--teal); border: 1px solid rgba(0,210,190,.4); border-radius: 999px; padding: 7px 13px; white-space: nowrap; }
+      .car.on { border-color: var(--teal); background: rgba(0,210,190,.1); }
+      .done { padding: 30px 24px; text-align: center; }
+      .done .tick { width: 62px; height: 62px; border-radius: 50%; background: var(--teal); color: #04211d;
+        display: flex; align-items: center; justify-content: center; font-size: 31px; font-weight: 900; margin: 0 auto 15px; }
+      .done b { display: block; font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: -.02em; }
+      .done p { margin: 9px 0 0; font-size: 15.5px; color: var(--mute); }
+      .done .car { margin-top: 16px; cursor: default; text-align: left; }
+      .shut { padding: 26px 24px; text-align: center; font-size: 16px; }
+      .shut b { display: block; font-size: 21px; font-weight: 900; color: var(--ink); margin-bottom: 8px; letter-spacing: -.02em; }
+      .foot { margin-top: 14px; padding: 15px 19px; font-size: 13.5px; color: var(--mute); text-align: center; }
+      .foot a { color: var(--amber); }
+      .err { margin-top: 12px; padding: 13px 17px; border-radius: 13px; font-size: 14.5px;
+        background: rgba(229, 20, 26,.12); border: 1px solid rgba(229, 20, 26,.4); color: #FF1A21; }
+    </style>
+  </head>
+  <body>
+    <div class="ground" aria-hidden="true"><img class="shot" alt="" fetchpriority="high" decoding="async" src="/img/vote-1600.webp?v=2026-09-02" srcset="/img/vote-900.webp?v=2026-09-02 900w, /img/vote-1600.webp?v=2026-09-02 1600w" sizes="100vw" /><i></i><i></i><u></u></div>
+    <div class="rule"></div>
+    <div class="wrap">
+      <div class="glass hero">
+        <img src="/brand/pg-mark.png" alt="PaddockGavin" />
+        <div class="eyebrow">The Piston Powered Ranch &middot; People's Choice</div>
+        <h1>The one you would <span>take home</span></h1>
+        <p class="stand" id="stand">Three hundred cars on the field. You get a single vote.</p>
+      </div>
+      <div id="stage"></div>
+      <div class="glass foot">
+        Rancho Jaramillo, Unionville TN. Every dollar raised today goes to Community Elementary School.
+      </div>
+    </div>
+
+    <script type="module">
+      import { db as makeDb, DATA_API } from "/vendor/ranch-db.js?v=2026-09-02f";
+
+      var db = null, award = null, FIELD = [], voted = null, key = null;
+
+      try {
+        db = makeDb();
+      } catch (e) {}
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+      /* One vote per device, and that is exactly as strong as it sounds. A
+         person with two phones has two votes, and clearing site data buys
+         another. That is the accepted trade for not making spectators sign in,
+         and it is why People's Choice is a crowd prize rather than a judged
+         one. The unique index on (award_id, voter_key) is what actually stops
+         the common case, which is somebody tapping twice. */
+      function voterKey() {
+        var k = null;
+        try { k = localStorage.getItem("pprVoteKey"); } catch (e) {}
+        if (!k) {
+          var buf = new Uint8Array(16);
+          crypto.getRandomValues(buf);
+          k = Array.from(buf).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+          try { localStorage.setItem("pprVoteKey", k); } catch (e) {}
+        }
+        return k;
+      }
+      function carName(s) { return s.label || ("Car " + (s.car_number || s.id)); }
+      function carSub(s) {
+        return [s.car_number ? "Car " + s.car_number : null, s.colour || s.color]
+          .filter(Boolean).join("  ·  ");
+      }
+      function remember(entry) {
+        try { localStorage.setItem("pprVoted", entry); } catch (e) {}
+        voted = entry;
+      }
+
+      function render(err) {
+        var stage = document.getElementById("stage");
+        if (!award) {
+          document.getElementById("stand").textContent = "Not open yet.";
+          stage.innerHTML = '<div class="glass shut"><b>Not open yet</b>' +
+            "Voting opens on the day, Saturday the tenth of October. " +
+            "Scan the code by the charity table when you are here.</div>";
+          return;
+        }
+        if (award.state !== "open") {
+          document.getElementById("stand").textContent = "The sheets are closed.";
+          stage.innerHTML = '<div class="glass shut"><b>The sheets are closed</b>' +
+            "The winner is read at half past one, in front of the cars.</div>";
+          return;
+        }
+        if (voted) {
+          var c = FIELD.filter(function (x) { return String(x.id) === String(voted); })[0];
+          document.getElementById("stand").textContent = "Your vote is in.";
+          stage.innerHTML = '<div class="glass done"><span class="tick">&#10003;</span>' +
+            "<b>That is your vote</b><p>A single vote each, so yours is in. The winner is read at half past one, " +
+            "in front of the cars.</p>" +
+            (c ? '<div class="car"><span><b>' + esc(carName(c)) + "</b>" +
+              (carSub(c) ? "<span>" + esc(carSub(c)) + "</span>" : "") + "</span></div>" : "") +
+            "</div>";
+          return;
+        }
+        if (!FIELD.length) {
+          document.getElementById("stand").textContent = "The field is still being set.";
+          stage.innerHTML = '<div class="glass shut"><b>The field is still filling</b>' +
+            "Cars appear here as they are placed. Give it a few minutes.</div>";
+          return;
+        }
+        document.getElementById("stand").textContent =
+          FIELD.length + " cars on the field. You get a single vote.";
+        stage.innerHTML =
+          (err ? '<div class="err">' + esc(err) + "</div>" : "") +
+          '<div class="find"><input id="q" type="search" placeholder="Find a car by make, model or number" autocomplete="off" /></div>' +
+          '<div class="cars" id="cars"></div>';
+        paintCars();
+        var q = document.getElementById("q");
+        q.addEventListener("input", paintCars);
+      }
+
+      function paintCars() {
+        var el = document.getElementById("cars");
+        if (!el) return;
+        var qEl = document.getElementById("q");
+        var q = (qEl ? qEl.value : "").toLowerCase().trim();
+        var set = FIELD.filter(function (c) {
+          return !q || (carName(c) + " " + carSub(c)).toLowerCase().indexOf(q) > -1;
+        });
+        el.innerHTML = set.length
+          ? set.map(function (c) {
+              return '<div class="car" data-vote="' + esc(c.id) + '"><span><b>' + esc(carName(c)) + "</b>" +
+                (carSub(c) ? "<span>" + esc(carSub(c)) + "</span>" : "") + "</span>" +
+                '<span class="pick">Vote</span></div>';
+            }).join("")
+          : "<p style='text-align:center;color:var(--mute);font-size:15px'>Nothing matches that.</p>";
+      }
+
+      async function load() {
+        if (!db) return;
+        key = voterKey();
+        try { voted = localStorage.getItem("pprVoted"); } catch (e) {}
+        var a = await db.from("awards").select("*").eq("kind", "popular").order("sort");
+        award = a.error ? null : (a.data || [])[0] || null;
+        if (award && award.state === "open") {
+          /* show_field, not submissions. The table carries the entrant's name,
+             email and phone; a spectator needs a car and a number. The view is
+             the boundary, and it is the only thing anonymous can read. */
+          var f = await db.from("show_field").select("*");
+          FIELD = f.error ? [] : f.data || [];
+        }
+        render();
+      }
+
+      document.addEventListener("click", async function (e) {
+        var v = e.target.closest("[data-vote]");
+        if (!v || voted || !award) return;
+        var entry = v.getAttribute("data-vote");
+        v.classList.add("on");
+        v.querySelector(".pick").textContent = "Sending";
+        var r = await db.from("popular_votes")
+          .insert([{ award_id: award.id, entry_id: entry, voter_key: key }]);
+        if (r && r.error) {
+          /* A duplicate means this device already voted, which is not an error
+             worth shouting about. Anything else is. */
+          if (/duplicate|unique/i.test(r.error.message)) { remember(entry); return render(); }
+          return render("That did not send: " + r.error.message);
+        }
+        remember(entry);
+        render();
+      });
+
+      load();
+    </script>
+  </body>
+</html>

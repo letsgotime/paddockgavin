@@ -1,101 +1,65 @@
 import type { NextConfig } from "next"
 
 /**
- * The team tools, served from the event's own domain.
+ * The team tools, on this deployment.
  *
- * The tools deployment and this one each kept their own session, because the
- * auth client persists it in localStorage and localStorage is per origin. Two
- * origins, two sessions, and a team signing in twice to use one product.
+ * They were static pages on a second Vercel project, proxied onto
+ * pistonpoweredranch.com by a list of rewrites so the team had one origin and
+ * one session. On 3 September 2026 the pages and their assets moved into
+ * public/ here, so the domain serves them itself and the proxy shrinks to the
+ * handful of functions not yet ported: the uploads, the media signer, the
+ * planning document, the public config, and the sign in server. Each of
+ * those comes across in turn; when the list below is empty the second
+ * deployment can be retired.
  *
- * These rewrites put the tools on pistonpoweredranch.com, so there is one
- * origin and therefore one session. Nothing moves between deployments and no
- * page is rewritten: the tools keep running where they run, and this domain
- * stops being a second place to sign in.
- *
- * The list is explicit rather than a wildcard because the two sites disagree
- * about several prefixes. /brand and /og exist on both with different files,
- * and blanket forwarding either one would break the landing page. /show and
- * /events would bounce back here and loop. Everything below was checked
- * against both sides first.
+ * public/ has no directory index, so /console has to be told it means
+ * /console/index.html. Only on the event's own host, as before: on
+ * paddockgavin.com these paths were never pages.
  */
 const TOOLS = "https://piston-powered-ranch.vercel.app"
 const RANCH_HOST = [{ type: "host" as const, value: "(www\\.)?pistonpoweredranch\\.com" }]
 
-/** Tool pages, and the directories they load their own assets from. */
-const TOOL_PATHS = [
-  /* Pages. */
+/** Tool pages under public/, each a directory with an index.html. */
+const TOOL_PAGES = [
   "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "rsvps",
   "chat", "console", "collateral", "clubs", "spectate", "status", "vote",
-  "diag", "reset",
-  /* Not pages: shared scripts the pages above import. ranch-db.js is the one
-     database client and rail.js the one navigation, and nineteen and fifteen
-     pages import them respectively, so these two forward until those pages do
-     not exist any more. */
-  "team", "vendor",
-  /* Share cards belonging to the tools. Local files win, so this only catches
-     the ones that live over there: asks-og is a photograph of a horse, and a
-     horse's muzzle is pink, which trips this app's share card check. The card
-     is fine and the check is right; the file simply belongs in the repo whose
-     page it belongs to. */
-  "og",
+  "diag", "reset", "brand",
 ]
 
-/** The tools deployment's own functions. None of these names exist here. */
+/** The tools deployment's functions, still served over there until each is ported. */
 const TOOL_APIS = ["upload", "upload-session", "media", "planning", "config"]
 
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    /* Every proxied fetch carries via=proxy. The tools deployment redirects
-       anything arriving without it back to this domain, so the raw
-       piston-powered-ranch.vercel.app address stops being somewhere a person
-       can browse, while these server side fetches still get through. It marks
-       our own traffic; it is not a secret and it is not access control. */
+    /* Every proxied fetch carries via=proxy. It marks our own traffic; it is
+       not a secret and it is not access control. */
     const proxy = (source: string, destination: string) => ({
       source,
       destination: destination + (destination.includes("?") ? "&" : "?") + "via=proxy",
       has: RANCH_HOST,
     })
+    /* A tool root, and any page beneath it that is not a file. The lookahead
+       keeps assets out of it: /collateral/files/x.pdf has a dot and is served
+       as itself, /console/planning has none and means its index.html. */
+    const page = (p: string) => [
+      { source: `/${p}`, destination: `/${p}/index.html`, has: RANCH_HOST },
+      { source: `/${p}/:rest((?!.*\\.).*)`, destination: `/${p}/:rest/index.html`, has: RANCH_HOST },
+    ]
     return {
-      /* Before the filesystem, because /events/[event] would otherwise claim
-         /events/img and answer with "no such event" instead of a photograph. */
-      beforeFiles: [proxy("/events/img/:path*", `${TOOLS}/events/img/:path*`)],
-
-      /* After it, so anything this app actually serves wins. That matters for
-         /brand, where five files exist only here and the rest only there, and
-         it means porting a tool into the CRM takes the route over by itself. */
       afterFiles: [
-        ...TOOL_PATHS.flatMap((p) => [
-          proxy(`/${p}`, `${TOOLS}/${p}/`),
-          proxy(`/${p}/:path*`, `${TOOLS}/${p}/:path*`),
-        ]),
+        ...TOOL_PAGES.flatMap(page),
+        /* The singular reads better in a message and people type it. */
+        { source: "/journey", destination: "/journeys/index.html", has: RANCH_HOST },
+
         ...TOOL_APIS.map((a) => proxy(`/api/${a}`, `${TOOLS}/api/${a}`)),
 
-        /* The sign in server itself.
-
-           Better Auth is self hosted in the tools repo at /api/auth, and its
-           AUTH_ORIGIN is pinned to https://pistonpoweredranch.com, which is
-           also where it issues and verifies tokens. So the moment this domain
-           is served by this app instead of that deployment, /api/auth stops
-           resolving and nobody can sign in.
-
-           A whole subtree rather than a single path, because Better Auth is
-           /sign-in/email, /sign-up/email, /magic-link, /email-otp/*, /callback/*,
-           /session, /token and /jwks. Routing only the first segment is exactly
-           the fault that made the tools deployment answer /api/auth/ok while
-           404ing every endpoint that mattered. */
+        /* The sign in server, until it is ported. A whole subtree, because
+           Better Auth is /sign-in/email, /token, /jwks and thirty others, and
+           routing only the first segment is exactly the fault that once
+           answered /api/auth/ok while 404ing every endpoint that mattered. */
         proxy("/api/auth", `${TOOLS}/api/auth`),
         proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`),
-        proxy("/brand/:path*", `${TOOLS}/brand/:path*`),
-        /* The tools' own photography. Five of them open on a picture from
-           /img/, and on this domain every one of those was a 404, so rsvps,
-           crew, judging, chat and vote all loaded onto a blank ground. The
-           directory was never forwarded; only the pages were. */
-        proxy("/img/:path*", `${TOOLS}/img/:path*`),
-        proxy("/team-sw.js", `${TOOLS}/team-sw.js`),
-        proxy("/team.webmanifest", `${TOOLS}/team.webmanifest`),
-        /* The singular reads better in a message and people type it. */
-        proxy("/journey", `${TOOLS}/journeys/`),
       ],
     }
   },
@@ -145,6 +109,11 @@ const nextConfig: NextConfig = {
       {
         source: "/team-sw.js",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
+      /* Print files on the collateral sheet: an hour, then a real check. */
+      {
+        source: "/collateral/files/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=3600, must-revalidate" }],
       },
       /* The tool pages themselves. The page rule below hands out an hour of
          stale-while-revalidate, which is right for a landing page and wrong
