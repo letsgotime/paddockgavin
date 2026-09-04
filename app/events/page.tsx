@@ -268,7 +268,7 @@ export default function EventsPage() {
           <Image data-kb="" src="/images/ranch/ppr-bins.jpg" alt="The grain bins and the ranch road at Rancho Jaramillo" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 6%,rgba(10,21,35,.9) 38%,rgba(10,21,35,.62) 74%,rgba(10,21,35,.42) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
-            <Tag>Car events &middot; Middle Tennessee</Tag>
+            <Tag>Car shows &middot; Middle Tennessee</Tag>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Every field
               <br />
