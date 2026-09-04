@@ -22,9 +22,14 @@ const DASH = /[–—]|\\u201[34]|&(?:m|n)dash;|&#821[12];/
 
 /** Blank out comment spans so only copy is left to judge. */
 function withoutComments(src) {
+  /* Blanked, but newline for newline: replacing a block comment with plain
+     spaces collapsed it onto one line, and every line number after it in the
+     file was then wrong. The first report this produced pointed at three
+     comment lines that contained nothing. */
+  const blank = (m) => m.replace(/[^\n]/g, " ")
   let out = src
-    .replace(/\{\/\*[\s\S]*?\*\/\}/g, (m) => " ".repeat(m.length))
-    .replace(/\/\*[\s\S]*?\*\//g, (m) => " ".repeat(m.length))
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, blank)
+    .replace(/\/\*[\s\S]*?\*\//g, blank)
   return out
     .split("\n")
     .map((line) => {

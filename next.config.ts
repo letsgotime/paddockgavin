@@ -5,19 +5,38 @@ import type { NextConfig } from "next"
  *
  * They were static pages on a second Vercel project, proxied onto
  * pistonpoweredranch.com by a list of rewrites so the team had one origin and
- * one session. On 3 September 2026 the pages and their assets moved into
- * public/ here, so the domain serves them itself and the proxy shrinks to the
- * handful of functions not yet ported: the uploads, the media signer, the
- * planning document, the public config, and the sign in server. Each of
- * those comes across in turn; when the list below is empty the second
- * deployment can be retired.
+ * one session. On 3 September 2026 everything moved here: the pages and their
+ * assets into public/, and the five functions and the sign in server into
+ * app/api/. Nothing is proxied any more, so the second deployment holds
+ * nothing this domain needs.
  *
  * public/ has no directory index, so /console has to be told it means
  * /console/index.html. Only on the event's own host, as before: on
  * paddockgavin.com these paths were never pages.
  */
-const TOOLS = "https://piston-powered-ranch.vercel.app"
 const RANCH_HOST = [{ type: "host" as const, value: "(www\\.)?pistonpoweredranch\\.com" }]
+
+/**
+ * The two endpoints that need a secret this project may not hold yet.
+ *
+ * The code for all five functions and the sign in server is here, but a route
+ * that cannot reach its database or its blob store is worse than a proxy to
+ * the deployment that can. So each takes over only when its secret exists,
+ * and until then the old deployment keeps answering it. Nothing about this is
+ * a fallback at request time: it is decided once, at build, and the build log
+ * says which way it went.
+ *
+ * Sign in needs RANCH_DATABASE_URL and BETTER_AUTH_SECRET, and the secret has
+ * to be the SAME value the other project uses: the signing key in
+ * neon_auth.jwks is encrypted with it. Uploads and the media signer need
+ * BLOB_READ_WRITE_TOKEN for the private store.
+ */
+const TOOLS = "https://piston-powered-ranch.vercel.app"
+const CAN_AUTH = Boolean(
+  (process.env.RANCH_DATABASE_URL || process.env.PISTON_RANCH_DATABASE_URL || process.env.DATABASE_URL) &&
+    process.env.BETTER_AUTH_SECRET,
+)
+const CAN_BLOB = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
 
 /** Tool pages under public/, each a directory with an index.html. */
 const TOOL_PAGES = [
@@ -26,19 +45,10 @@ const TOOL_PAGES = [
   "diag", "reset", "brand",
 ]
 
-/** The tools deployment's functions, still served over there until each is ported. */
-const TOOL_APIS = ["upload", "upload-session", "media", "planning", "config"]
 
 
 const nextConfig: NextConfig = {
   async rewrites() {
-    /* Every proxied fetch carries via=proxy. It marks our own traffic; it is
-       not a secret and it is not access control. */
-    const proxy = (source: string, destination: string) => ({
-      source,
-      destination: destination + (destination.includes("?") ? "&" : "?") + "via=proxy",
-      has: RANCH_HOST,
-    })
     /* A tool root, and any page beneath it that is not a file. The lookahead
        keeps assets out of it: /collateral/files/x.pdf has a dot and is served
        as itself, /console/planning has none and means its index.html. */
@@ -46,20 +56,34 @@ const nextConfig: NextConfig = {
       { source: `/${p}`, destination: `/${p}/index.html`, has: RANCH_HOST },
       { source: `/${p}/:rest((?!.*\\.).*)`, destination: `/${p}/:rest/index.html`, has: RANCH_HOST },
     ]
+    /* A proxied fetch carries via=proxy. It marks our own traffic; it is not
+       a secret and it is not access control. */
+    const proxy = (source: string, destination: string) => ({
+      source,
+      destination: destination + (destination.includes("?") ? "&" : "?") + "via=proxy",
+      has: RANCH_HOST,
+    })
+
+    /* beforeFiles, because a rewrite has to beat the route handler of the
+       same name; afterFiles would never be reached. */
+    const stillOverThere = [
+      ...(CAN_AUTH ? [] : [proxy("/api/auth", `${TOOLS}/api/auth`), proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`)]),
+      ...(CAN_BLOB ? [] : [proxy("/api/upload", `${TOOLS}/api/upload`), proxy("/api/media", `${TOOLS}/api/media`)]),
+    ]
+    if (stillOverThere.length) {
+      console.log(
+        `[ranch] still proxied to the tools deployment: ${[...(CAN_AUTH ? [] : ["auth"]), ...(CAN_BLOB ? [] : ["upload", "media"])].join(", ")}`,
+      )
+    } else {
+      console.log("[ranch] every ranch endpoint is served by this deployment")
+    }
+
     return {
+      beforeFiles: stillOverThere,
       afterFiles: [
         ...TOOL_PAGES.flatMap(page),
         /* The singular reads better in a message and people type it. */
         { source: "/journey", destination: "/journeys/index.html", has: RANCH_HOST },
-
-        ...TOOL_APIS.map((a) => proxy(`/api/${a}`, `${TOOLS}/api/${a}`)),
-
-        /* The sign in server, until it is ported. A whole subtree, because
-           Better Auth is /sign-in/email, /token, /jwks and thirty others, and
-           routing only the first segment is exactly the fault that once
-           answered /api/auth/ok while 404ing every endpoint that mattered. */
-        proxy("/api/auth", `${TOOLS}/api/auth`),
-        proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`),
       ],
     }
   },
