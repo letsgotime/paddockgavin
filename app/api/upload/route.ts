@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client"
 import { bearerFrom, emailFromToken, isStaff } from "@/lib/ranch/neon"
-import { verifySession, sessionSecret } from "@/lib/ranch/upload-session"
+import { verifySession, sessionSecret, gateEnforced } from "@/lib/ranch/upload-session"
 
 /**
  * Mints short-lived, scoped upload tokens for the public Submit form.
@@ -168,8 +168,10 @@ export async function POST(req: Request) {
         }
 
         /* Bot gate. Enforced only once TURNSTILE_SECRET exists, so this ships
-           inert and turns on with configuration rather than a code change. */
-        if (process.env.TURNSTILE_SECRET) {
+           inert and turns on with configuration rather than a code change.
+           The same function the session exchange calls, so the two can never
+           tell the browser different things. */
+        if (gateEnforced()) {
           const session = verifySession(payload.session, sessionSecret())
           if (!session) throw new Error("Verification required. Refresh the form and try again")
           if (session.d !== String(payload.draftId || "")) {

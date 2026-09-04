@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { randomUUID } from "node:crypto"
-import { SESSION_TTL_MS, signSession, sessionSecret } from "@/lib/ranch/upload-session"
+import { SESSION_TTL_MS, signSession, sessionSecret, gateEnforced } from "@/lib/ranch/upload-session"
 
 /**
  * Exchanges one Turnstile token for a short-lived, signed upload session.
@@ -23,7 +23,7 @@ const SUBMISSION_TYPES = new Set(["vehicle", "vendor", "sponsor"])
 
 export async function POST(req: Request) {
   const secret = process.env.TURNSTILE_SECRET || ""
-  if (!secret) {
+  if (!gateEnforced()) {
     /* Not configured: uploads remain open. Loud on the server, explicit to
        the client. */
     console.warn("[turnstile] TURNSTILE_SECRET unset, upload gate NOT enforced")
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
 
   const clientIp = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim()
 
-  let result: { success?: boolean; action?: string; hostname?: string }
+  let result: { success?: boolean; action?: string; hostname?: string; "error-codes"?: string[] }
   try {
     const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
@@ -77,6 +77,15 @@ export async function POST(req: Request) {
     result = await r.json()
   } catch {
     return NextResponse.json({ error: "Verification failed" }, { status: 403 })
+  }
+
+  /* A secret Cloudflare rejects is our fault, not the visitor's, and refusing
+     everybody is the worse failure: Turnstile filters bots, it does not
+     authorise anyone. Say so loudly in the log and let the person past. Every
+     other failure is a real one and is refused. */
+  if (!result.success && (result["error-codes"] || []).includes("invalid-input-secret")) {
+    console.error("[turnstile] TURNSTILE_SECRET is not a key Cloudflare accepts; the gate is open until it is fixed")
+    return NextResponse.json({ enforced: false, session: null })
   }
 
   if (!result.success || result.action !== "submit-media" || !expectedHostnames.has(String(result.hostname))) {

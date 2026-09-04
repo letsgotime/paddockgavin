@@ -236,6 +236,13 @@ async function human(token: string | undefined, ip: string | null, action: strin
       body: body.toString(),
     })
     const j = (await res.json()) as { success?: boolean; action?: string; "error-codes"?: string[] }
+    /* A secret Cloudflare rejects is our fault. Refusing every genuine vendor,
+       sponsor and entrant because a key is wrong is far worse than letting a
+       bot through, and the honeypot still stands either way. */
+    if (!j.success && (j["error-codes"] || []).includes("invalid-input-secret")) {
+      console.error("[apply] TURNSTILE_SECRET is not a key Cloudflare accepts; the check is open until it is fixed")
+      return { ok: true }
+    }
     if (!j.success) return { ok: false, why: (j["error-codes"] || []).join(",") || "failed" }
     if (j.action && j.action !== action) return { ok: false, why: "wrong-action" }
     return { ok: true }

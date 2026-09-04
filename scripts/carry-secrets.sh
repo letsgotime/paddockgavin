@@ -16,7 +16,9 @@
 #                          failure this estate lost a day to on 3 September.
 #   BLOB_READ_WRITE_TOKEN  the private media store the uploads write to and the
 #                          signer reads from. Same store, same files.
-#   TURNSTILE_SECRET       the server half of the human check.
+#
+# What it does NOT move: TURNSTILE_SECRET. The value over there is not a key
+# Cloudflare accepts, and setting it here would close the door on everybody.
 #
 # It also sets TURNSTILE_HOSTNAMES, which is not a secret: it is the list of
 # hostnames Cloudflare is allowed to have solved the challenge on.
@@ -28,7 +30,13 @@ set -euo pipefail
 
 HUB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TOOLS_DIR="${TOOLS_DIR:-$HOME/Desktop/piston-powered-ranch}"
-CARRY=(RANCH_DATABASE_URL BETTER_AUTH_SECRET BLOB_READ_WRITE_TOKEN TURNSTILE_SECRET)
+# TURNSTILE_SECRET is deliberately NOT in this list. The value on the old
+# project is eleven characters, does not begin with 0x, and Cloudflare answers
+# invalid-input-secret when it is used. Carrying it would switch the human
+# check on with a key that always fails, which refuses every genuine vendor,
+# sponsor and entrant. Get the real secret from the Cloudflare dashboard,
+# beside the site key 0x4AAAAAAEkdaaU0WCZzdgGE, and add it by hand.
+CARRY=(RANCH_DATABASE_URL BETTER_AUTH_SECRET BLOB_READ_WRITE_TOKEN)
 HOSTNAMES="pistonpoweredranch.com,www.pistonpoweredranch.com,paddockgavin.com,www.paddockgavin.com"
 
 command -v vercel >/dev/null || { echo "The Vercel CLI is not installed. npm i -g vercel"; exit 1; }
