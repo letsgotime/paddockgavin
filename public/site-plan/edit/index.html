@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Trace the plan · The Piston Powered Ranch</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/rj-icon-32.png" />
+    <link rel="stylesheet" href="/vendor/leaflet.css" />
+    <style>
+      :root {
+        --ink: #0a1523; --paper: #edf1f6; --dim: #a9b4c2; --faint: #8b95a3;
+        --line: rgba(255, 255, 255, 0.14);
+        --accent: #ff1a21; --fill: #e5141a; --teal: #00d2be; --amber: #f2c94c;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        --sans: Archivo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; background: var(--ink); color: var(--paper); font-family: var(--sans); }
+      #map { position: absolute; inset: 0; background: #0a111a; }
+      .leaflet-container { background: #0a111a; font-family: var(--sans); }
+
+      .panel {
+        position: absolute; z-index: 500; top: 12px; left: 12px; width: min(340px, calc(100vw - 24px));
+        max-height: calc(100vh - 24px); overflow: auto; -webkit-overflow-scrolling: touch;
+        background: rgba(10, 21, 35, 0.92); border: 1px solid var(--line); border-radius: 14px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); padding: 14px;
+      }
+      @supports (backdrop-filter: blur(18px)) { .panel { backdrop-filter: blur(18px) saturate(1.3); } }
+      .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+      h1 { margin: 8px 0 4px; font-size: 21px; font-weight: 900; letter-spacing: -.02em; }
+      .lede { margin: 0 0 12px; font-size: 13.5px; line-height: 1.5; color: var(--dim); }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .list { display: flex; flex-direction: column; gap: 6px; margin: 12px 0 0; }
+      .f {
+        display: grid; grid-template-columns: 12px 1fr auto; gap: 9px; align-items: center;
+        padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03); cursor: pointer; text-align: left; color: inherit; font: inherit;
+      }
+      .f.on { border-color: var(--accent); background: rgba(229, 20, 26, .12); }
+      .f .sw { width: 12px; height: 12px; border-radius: 3px; }
+      .f .nm { font-size: 14px; font-weight: 700; letter-spacing: -.01em; }
+      .f .sub { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-top: 2px; letter-spacing: .06em; text-transform: uppercase; }
+      .f .st { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+      .f .st.confirmed { color: var(--teal); }
+      .f .st.hidden { color: var(--amber); }
+      button.b {
+        font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .03em;
+        color: var(--paper); background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+        border-radius: 9px; padding: 10px 13px; cursor: pointer; min-height: 40px;
+      }
+      button.b.go { background: var(--fill); border-color: var(--fill); color: #fff; }
+      button.b:disabled { opacity: .5; cursor: default; }
+      .note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--faint); }
+      .note.warn { color: var(--amber); }
+      .note.bad { color: var(--accent); }
+      .note.good { color: var(--teal); }
+      .lock { padding: 16px; font-size: 14.5px; line-height: 1.55; color: var(--dim); }
+      .lock a { color: var(--teal); }
+      .hint {
+        position: absolute; z-index: 500; left: 50%; transform: translateX(-50%); bottom: 14px;
+        background: rgba(10, 21, 35, 0.92); border: 1px solid var(--line); border-radius: 999px;
+        padding: 9px 16px; font-size: 13px; color: var(--paper); box-shadow: 0 14px 40px rgba(0, 0, 0, .45);
+        max-width: calc(100vw - 28px); text-align: center;
+      }
+      .vtx { border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .6); }
+      @media (max-width: 640px) {
+        .panel { top: auto; bottom: 0; left: 0; width: 100vw; max-height: 52vh; border-radius: 16px 16px 0 0; padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+        .hint { bottom: auto; top: 12px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="panel" id="panel"><div class="lock">Checking who you are.</div></div>
+    <div class="hint" id="hint" style="display: none"></div>
+
+    <script src="/vendor/leaflet.js"></script>
+    <script type="module">
+      import { db as makeDb, EVENT_ID, isStaff } from "/vendor/ranch-db.js?v=2026-09-03a";
+
+      /**
+       * Trace the plan.
+       *
+       * The layout in map_features was seeded with coordinates somebody typed
+       * from a satellite view, and Gavin's answer to it was that the site plan
+       * is not accurate. This is the tool that fixes that without a drawing
+       * having to become a specification first: open the aerial, drag the
+       * corners of each zone onto the ground they actually occupy, drop the
+       * points where they actually stand, and save. The printed sheet and the
+       * public map read the same rows, so both are right the moment this is.
+       *
+       * It writes only geometry and status. Names, blurbs and categories are
+       * editorial and belong in HQ.
+       *
+       * Staff only, and enforced twice: is_staff() gates the page, and the row
+       * policy gates the write, so a browser that gets past the first still
+       * cannot save.
+       */
+
+      var db = null;
+      try { db = makeDb(); } catch (e) {}
+
+      var COLOR = {
+        show: "#f2c94c", vendor: "#4ba3de", vip: "#00d2be", parking: "#8b95a3",
+        ops: "#e5141a", entry: "#f2994a", charity: "#00d2be", food: "#f2c94c", facility: "#a9b4c2",
+      };
+      var panel = document.getElementById("panel");
+      var hintEl = document.getElementById("hint");
+      var map, rows = [], layers = {}, selected = null, dirty = {};
+
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+      function hint(t) {
+        if (!t) { hintEl.style.display = "none"; return; }
+        hintEl.textContent = t;
+        hintEl.style.display = "";
+      }
+      function colorOf(f) { return COLOR[f.category] || "#a9b4c2"; }
+      function geomOf(f) { return (f.geometry && f.geometry.type) ? f.geometry : { type: "point", coords: [35.6464, -86.5805] }; }
+
+      /* ---------------------------------------------------------------- map */
+
+      function draw() {
+        Object.keys(layers).forEach(function (id) {
+          layers[id].forEach(function (l) { map.removeLayer(l); });
+        });
+        layers = {};
+        rows.forEach(function (f) {
+          var g = geomOf(f), c = colorOf(f), on = selected === f.id, made = [];
+          var faded = f.status === "hidden" ? 0.34 : 0.62;
+
+          if (g.type === "polygon" || g.type === "path") {
+            var closed = g.type === "polygon";
+            var shape = closed
+              ? L.polygon(g.coords, { color: c, weight: on ? 3 : 2, opacity: on ? 1 : faded, fillOpacity: on ? 0.22 : 0.1 })
+              : L.polyline(g.coords, { color: c, weight: on ? 5 : 3, opacity: on ? 1 : faded });
+            shape.addTo(map);
+            shape.on("click", function () { select(f.id); });
+            made.push(shape);
+
+            if (on) {
+              /* One handle per corner. Dragging a handle rewrites that corner
+                 and nothing else, which is what makes this a trace rather
+                 than a redraw. */
+              g.coords.forEach(function (pt, i) {
+                var h = L.marker(pt, {
+                  draggable: true,
+                  icon: L.divIcon({
+                    className: "",
+                    html: '<div class="vtx" style="width:14px;height:14px;background:' + c + '"></div>',
+                    iconSize: [14, 14], iconAnchor: [7, 7],
+                  }),
+                }).addTo(map);
+                h.on("drag", function (e) {
+                  var ll = e.target.getLatLng();
+                  g.coords[i] = [round(ll.lat), round(ll.lng)];
+                  shape.setLatLngs(g.coords);
+                });
+                h.on("dragend", function () { touch(f); });
+                /* A corner in the wrong place is common; a corner too many is
+                   commoner. Two taps removes one, while three is the fewest a
+                   shape can have. */
+                h.on("dblclick", function (e) {
+                  L.DomEvent.stop(e);
+                  if (g.coords.length <= 3) { say("A shape needs at least three corners.", "warn"); return; }
+                  g.coords.splice(i, 1);
+                  touch(f);
+                  draw();
+                });
+                made.push(h);
+              });
+              /* Midpoints, so a corner can be added where one is missing. */
+              g.coords.forEach(function (pt, i) {
+                var next = g.coords[(i + 1) % g.coords.length];
+                if (!closed && i === g.coords.length - 1) return;
+                var mid = [(pt[0] + next[0]) / 2, (pt[1] + next[1]) / 2];
+                var h = L.marker(mid, {
+                  icon: L.divIcon({
+                    className: "",
+                    html: '<div class="vtx" style="width:10px;height:10px;background:rgba(255,255,255,.55)"></div>',
+                    iconSize: [10, 10], iconAnchor: [5, 5],
+                  }),
+                }).addTo(map);
+                h.on("click", function () {
+                  g.coords.splice(i + 1, 0, [round(mid[0]), round(mid[1])]);
+                  touch(f);
+                  draw();
+                });
+                made.push(h);
+              });
+            }
+          } else {
+            var m = L.marker(g.coords, {
+              draggable: on,
+              icon: L.divIcon({
+                className: "",
+                html: '<div class="vtx" style="width:' + (on ? 18 : 13) + "px;height:" + (on ? 18 : 13) + "px;background:" + c + ';opacity:' + (f.status === "hidden" ? 0.5 : 1) + '"></div>',
+                iconSize: on ? [18, 18] : [13, 13], iconAnchor: on ? [9, 9] : [6.5, 6.5],
+              }),
+            }).addTo(map);
+            m.on("click", function () { select(f.id); });
+            m.on("dragend", function (e) {
+              var ll = e.target.getLatLng();
+              g.coords = [round(ll.lat), round(ll.lng)];
+              touch(f);
+            });
+            made.push(m);
+          }
+          layers[f.id] = made;
+        });
+      }
+
+      /* Five decimal places is about a metre. More is false precision from a
+         finger on a phone. */
+      function round(n) { return Math.round(n * 1e5) / 1e5; }
+
+      function touch(f) {
+        dirty[f.id] = true;
+        render();
+      }
+
+      function select(id) {
+        selected = selected === id ? null : id;
+        draw();
+        render();
+        var f = rows.find(function (x) { return x.id === selected; });
+        hint(f ? (geomOf(f).type === "point" ? "Drag the dot onto the spot." : "Drag a corner to move it, tap a small dot to add one, double tap a corner to remove it.") : "");
+      }
+
+      function fit() {
+        var pts = [];
+        rows.forEach(function (f) {
+          var g = geomOf(f);
+          if (g.type === "point") pts.push(g.coords);
+          else g.coords.forEach(function (p) { pts.push(p); });
+        });
+        if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.18));
+      }
+
+      /* -------------------------------------------------------------- panel */
+
+      var msg = null;
+      function say(text, tone) {
+        msg = text ? { text: text, tone: tone || "" } : null;
+        render();
+      }
+
+      function render() {
+        var changed = Object.keys(dirty).length;
+        panel.innerHTML =
+          '<span class="eyebrow">The layout</span>' +
+          "<h1>Trace the plan</h1>" +
+          '<p class="lede">Pick a zone, drag it onto the ground it actually occupies, then save. The printed sheet and the public map read these same rows.</p>' +
+          '<div class="row">' +
+          '<button class="b go" id="save"' + (changed ? "" : " disabled") + ">" + (changed ? "Save " + changed + " change" + (changed === 1 ? "" : "s") : "Saved") + "</button>" +
+          '<button class="b" id="reload">Start over</button>' +
+          '<button class="b" id="fit">Fit</button>' +
+          "</div>" +
+          (msg ? '<p class="note ' + msg.tone + '">' + esc(msg.text) + "</p>" : "") +
+          '<div class="list">' +
+          rows
+            .map(function (f) {
+              var g = geomOf(f);
+              var shape = g.type === "point" ? "point" : g.type === "path" ? g.coords.length + " point route" : g.coords.length + " corners";
+              return (
+                '<button class="f' + (selected === f.id ? " on" : "") + '" data-id="' + f.id + '">' +
+                '<span class="sw" style="background:' + colorOf(f) + '"></span>' +
+                '<span><span class="nm">' + esc(f.name) + (dirty[f.id] ? " *" : "") + "</span>" +
+                '<span class="sub">' + esc(shape) + "</span></span>" +
+                '<span class="st ' + esc(f.status) + '">' + esc(f.status) + "</span>" +
+                "</button>"
+              );
+            })
+            .join("") +
+          "</div>" +
+          '<p class="note">A star means unsaved. Status is set in HQ; hidden rows, the landing zone included, never reach a public page.</p>';
+
+        panel.querySelectorAll("[data-id]").forEach(function (b) {
+          b.addEventListener("click", function () { select(b.getAttribute("data-id")); });
+        });
+        panel.querySelector("#fit").addEventListener("click", fit);
+        panel.querySelector("#reload").addEventListener("click", function () { load(true); });
+        var s = panel.querySelector("#save");
+        if (s && changed) s.addEventListener("click", save);
+      }
+
+      /* --------------------------------------------------------------- data */
+
+      async function load(discard) {
+        var r = await db.from("map_features").select("*").eq("event_id", EVENT_ID).order("sort");
+        if (r.error) {
+          panel.innerHTML = '<div class="lock">Could not read the layout: ' + esc(r.error.message) + "</div>";
+          return;
+        }
+        rows = r.data || [];
+        if (discard) { dirty = {}; say("Back to what is saved."); }
+        draw();
+        render();
+        fit();
+      }
+
+      async function save() {
+        var ids = Object.keys(dirty);
+        say("Saving " + ids.length + " change" + (ids.length === 1 ? "" : "s") + ".");
+        var failed = [];
+        for (var i = 0; i < ids.length; i++) {
+          var f = rows.find(function (x) { return x.id === ids[i]; });
+          if (!f) continue;
+          var w = await db.from("map_features").update({ geometry: f.geometry, updated_at: new Date().toISOString() }).eq("id", f.id).select("id");
+          if (w.error || !w.data || !w.data.length) failed.push(f.name + (w.error ? ": " + w.error.message : ""));
+          else delete dirty[f.id];
+        }
+        if (failed.length) say("Not saved: " + failed.join("; "), "bad");
+        else say("Saved. The sheet and the map have it.", "good");
+        render();
+      }
+
+      /* --------------------------------------------------------------- boot */
+
+      (async function () {
+        if (!db) {
+          panel.innerHTML = '<div class="lock">The database client did not load. Reload the page.</div>';
+          return;
+        }
+        var staff = false;
+        try { staff = await isStaff(); } catch (e) {}
+        if (!staff) {
+          panel.innerHTML =
+            '<div class="lock">Staff only. <a href="/console/">Sign in</a> and it opens here.<br /><br />' +
+            'This is where the layout is traced onto the aerial. The plan everyone else reads is at <a href="/site-plan/">the site plan</a>.</div>';
+          return;
+        }
+
+        map = L.map("map", { zoomControl: false, attributionControl: false, maxZoom: 20 }).setView([35.6464, -86.5805], 16);
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 20 }).addTo(map);
+        L.control.zoom({ position: "topright" }).addTo(map);
+        /* Deselect by tapping the ground, which is what a finger expects. */
+        map.on("click", function () { if (selected) select(selected); });
+        await load();
+        hint("Pick a zone in the list, then drag it onto the ground.");
+      })();
+    </script>
+    <script type="module" src="/team/rail.js"></script>
+  </body>
+</html>
