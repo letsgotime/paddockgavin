@@ -107,13 +107,15 @@
         show: "#d99400", vendor: "#00776e", vip: "#2d6f9e", parking: "#5b6672",
         ops: "#FF1A21", entry: "#a8801a", charity: "#8a6a00", food: "#00776e", facility: "#5b6672",
       };
-      /* Same fallback the map carries, so the sheet prints even if the API is slow. */
+      /* Same fallback the map carries, so the sheet prints even if the API
+         is slow, and like the map it leaves out anything the database marks
+         hidden. The landing zone is staff only and does not belong in the
+         source of a public page. */
       var FALLBACK = [
         { slug: "show-field", kind: "zone", name: "Show Field", category: "show", status: "draft", geometry: { type: "polygon", coords: [[35.6475,-86.5815],[35.6475,-86.5789],[35.6464,-86.5789],[35.6464,-86.5815]] } },
         { slug: "vendor-row", kind: "zone", name: "Vendor Row", category: "vendor", status: "draft", geometry: { type: "polygon", coords: [[35.6463,-86.5815],[35.6463,-86.5793],[35.6461,-86.5793],[35.6461,-86.5815]] } },
         { slug: "vip-terrace", kind: "zone", name: "VIP Terrace", category: "vip", status: "draft", geometry: { type: "polygon", coords: [[35.6464,-86.5792],[35.6464,-86.5786],[35.646,-86.5786],[35.646,-86.5792]] } },
         { slug: "spectator-parking", kind: "zone", name: "Spectator Parking", category: "parking", status: "draft", geometry: { type: "polygon", coords: [[35.6459,-86.5815],[35.6459,-86.5785],[35.6455,-86.5785],[35.6455,-86.5815]] } },
-        { slug: "helo-lz", kind: "zone", name: "Helicopter LZ", category: "ops", status: "draft", geometry: { type: "polygon", coords: [[35.64901,-86.58],[35.64901,-86.5795],[35.6486,-86.5795],[35.6486,-86.58]] } },
         { slug: "charity-corner", kind: "poi", name: "Community Elementary Corner", category: "charity", status: "draft", geometry: { type: "point", coords: [35.64622,-86.5808] } },
         { slug: "food-row", kind: "poi", name: "Food", category: "food", status: "draft", geometry: { type: "point", coords: [35.64622,-86.5813] } },
         { slug: "restrooms", kind: "poi", name: "Restrooms", category: "facility", status: "draft", geometry: { type: "point", coords: [35.64595,-86.581] } },

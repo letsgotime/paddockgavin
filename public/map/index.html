@@ -1106,14 +1106,21 @@
         facility: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M12 3v18" /></svg>',
         firstaid: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6Z" /></svg>',
       };
-      /* Fallback rows, identical to the seeded map_features data, so the
-         program renders even while the Data API cache is behind. */
+      /* Fallback rows, so the program renders even while the Data API cache
+         is behind.
+
+         Not identical to the seeded data any more, deliberately: anything the
+         database marks hidden is left out. The landing zone was in this list
+         with its coordinates and its rotor wash note, in the source of a page
+         anybody can open, while the row policy and the public loader both
+         went to the trouble of withholding it. A fallback that carries what
+         the policy hides is not a fallback, it is a leak. The renderer below
+         still checks status, so the zone draws for staff from live data. */
       var DEFAULT_FEATURES = [
         { slug: "show-field", kind: "zone", name: "Show Field", category: "show", status: "draft", blurb: "300 curated cars staged in rows on the pasture east of the ranch road, running toward the creek. Row map lands with the final layout.", detail: { hours: "Staging from 8:00 AM, gates 9:00 AM", acres: "7.1 acres" }, geometry: { type: "polygon", coords: [[35.6475, -86.5815], [35.6475, -86.5789], [35.6464, -86.5789], [35.6464, -86.5815]] }, sort: 10 },
         { slug: "vendor-row", kind: "zone", name: "Vendor Row", category: "vendor", status: "draft", blurb: "Curated vendors and partners along the south edge of the show field, first thing guests walk past.", detail: { acres: "1.1 acres", label_at: [35.6462, -86.5813] }, geometry: { type: "polygon", coords: [[35.6463, -86.5815], [35.6463, -86.5793], [35.6461, -86.5793], [35.6461, -86.5815]] }, sort: 20 },
         { slug: "vip-terrace", kind: "zone", name: "VIP Terrace", category: "vip", status: "draft", blurb: "VIP hospitality on the creek side with the sightline back across the show field. Guided ranch tour meets here.", detail: { hours: "Tour time to be announced", acres: "0.6 acres" }, geometry: { type: "polygon", coords: [[35.6464, -86.5792], [35.6464, -86.5786], [35.646, -86.5786], [35.646, -86.5792]] }, sort: 30 },
         { slug: "spectator-parking", kind: "zone", name: "Spectator Parking", category: "parking", status: "draft", blurb: "Free spectator parking on the pasture south of the show field. Follow the marshals up the ranch road.", detail: { acres: "3.0 acres" }, geometry: { type: "polygon", coords: [[35.6459, -86.5815], [35.6459, -86.5785], [35.6455, -86.5785], [35.6455, -86.5815]] }, sort: 40 },
-        { slug: "helo-lz", kind: "zone", name: "Helicopter LZ", category: "ops", status: "draft", blurb: "Landing zone held at 150 by 150 feet, mowed and firm, sited 400 feet north of the show field so rotor wash carries away from the cars. Roped crowd line at 150 feet. Aircraft not confirmed.", detail: { acres: "150 by 150 ft" }, geometry: { type: "polygon", coords: [[35.64901, -86.58], [35.64901, -86.5795], [35.6486, -86.5795], [35.6486, -86.58]] }, sort: 50 },
         { slug: "ranch-gate", kind: "poi", name: "Ranch Gate", category: "entry", status: "draft", blurb: "Cars turn in here off Highway 41-A, then follow the ranch road to the field. Gates open 9:00 AM sharp.", detail: { hours: "9:00 AM to 3:00 PM" }, geometry: { type: "point", coords: [35.63751, -86.59323] }, sort: 60 },
         { slug: "charity-corner", kind: "poi", name: "Community Elementary Corner", category: "charity", status: "draft", blurb: "The reason we run it. Meet the school, see where the money goes.", detail: null, geometry: { type: "point", coords: [35.64622, -86.5808] }, sort: 70 },
         { slug: "food-row", kind: "poi", name: "Food", category: "food", status: "draft", blurb: "Food and drink at the head of Vendor Row. Lineup firms up as we get closer.", detail: null, geometry: { type: "point", coords: [35.64622, -86.5813] }, sort: 80 },
@@ -1360,8 +1367,14 @@
             '" stroke="#f8b800" stroke-width="2.5" fill="none" vector-effect="non-scaling-stroke"/>' +
             '<circle cx="' + gx(b2[1]).toFixed(1) + '" cy="' + gy(b2[0]).toFixed(1) + '" r="6" fill="none" stroke="#f8b800" stroke-width="2" vector-effect="non-scaling-stroke"/>';
         }
-        /* helicopter crowd line, 150 feet from the landing zone per the LZ brief */
-        var lz = FIELD.features.find(function (f) { return f.slug === "helo-lz" && f.status !== "hidden"; });
+        /* Helicopter crowd line, 150 feet from the landing zone per the LZ
+           brief. The status test that used to be here meant nobody ever saw
+           it: the row is marked hidden precisely so the public cannot have
+           it, so testing for "not hidden" hid it from staff as well. The row
+           arriving at all is the permission: map_features_public_read
+           withholds hidden rows from anonymous readers, so a caller holding
+           this row is staff. */
+        var lz = FIELD.features.find(function (f) { return f.slug === "helo-lz"; });
         if (lz) {
           var lc = FIELD.centroid(lz);
           var mPerUnit = ((GEO.E - GEO.W) * 111320 * Math.cos((GEO.N * Math.PI) / 180)) / VW;
