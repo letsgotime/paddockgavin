@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { upload } from "@vercel/blob/client"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
@@ -48,6 +49,68 @@ const POWER = [
 const SPONSOR_LEVELS = ["Presenting Sponsor", "Title Sponsor", "Secondary Sponsor", "Supporting Sponsor", "Community Partner", "Not sure yet"]
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/**
+ * Photographs, and what the desk needs to judge a car.
+ *
+ * Five is the floor because a car cannot be approved or declined from one
+ * angle, and the person deciding is looking at a field of three hundred. Fifty
+ * is the ceiling the private store and the review sheet were built for. Video
+ * is capped at five minutes each, measured in the browser before a byte is
+ * sent, because a phone will happily hand over an hour.
+ *
+ * The same numbers are enforced on the server in app/api/upload/route.ts by
+ * size and type; duration is the one thing only the browser can measure.
+ */
+const MIN_PHOTOS = 5
+const MAX_PHOTOS = 50
+const MAX_VIDEOS = 3
+const MAX_VIDEO_SEC = 300
+/** A logo, for a vendor or a sponsor. One file, and the vector formats count. */
+const MAX_LOGOS = 3
+
+type Shot = { kind: string; url: string; pathname: string; name: string; size: number; type: string; seconds?: number }
+type Manifest = { photo: Shot[]; video: Shot[]; voice: Shot[]; doc: Shot[] }
+const EMPTY_MEDIA: Manifest = { photo: [], video: [], voice: [], doc: [] }
+
+/**
+ * One id per draft, kept for the tab's lifetime.
+ *
+ * Every file this person uploads is namespaced under it, and the server checks
+ * the path against it before it will mint a token, so one submitter's files
+ * cannot be written into anybody else's folder. Shape matches what that route
+ * accepts: 8 to 64 characters of letters, digits, dash or underscore.
+ */
+function draftId(): string {
+  const key = "ppr_draft_id"
+  const made = "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10)
+  try {
+    const held = sessionStorage.getItem(key)
+    if (held) return held
+    sessionStorage.setItem(key, made)
+  } catch {
+    /* private mode, or storage refused. The generated one still works. */
+  }
+  return made
+}
+
+/** How long a clip runs, before it is uploaded. 0 when the browser cannot say. */
+function seconds(file: File): Promise<number> {
+  return new Promise((resolve) => {
+    const el = document.createElement(file.type.startsWith("audio") ? "audio" : "video")
+    const url = URL.createObjectURL(file)
+    const done = (d: number) => {
+      URL.revokeObjectURL(url)
+      resolve(d)
+    }
+    el.preload = "metadata"
+    el.onloadedmetadata = () => done(Number.isFinite(el.duration) ? el.duration : 0)
+    el.onerror = () => done(0)
+    el.src = url
+  })
+}
+
+const mb = (n: number) => (n / (1024 * 1024)).toFixed(n < 10 * 1024 * 1024 ? 1 : 0) + " MB"
 
 /* submissions.type is constrained to vehicle, vendor or sponsor. The form
    kinds are named for the page they sit on, so they have to be mapped. */
@@ -283,6 +346,11 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
   const [why, setWhy] = useState("")
   const [token, setToken] = useState("")
   const [copied, setCopied] = useState(false)
+  const [media, setMedia] = useState<Manifest>(EMPTY_MEDIA)
+  const [busy, setBusy] = useState("")
+  const [mediaNote, setMediaNote] = useState("")
+  const draft = useRef<string>("")
+  const sessionRef = useRef<{ value: string | null; until: number } | null>(null)
   const [ts, setTs] = useState("")
   const [tsState, setTsState] = useState<"loading" | "ready" | "solved" | "failed">("loading")
   const tsRef = useRef<HTMLDivElement>(null)
@@ -349,6 +417,83 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     }
   }, [surface])
 
+  /* One human check buys a window of uploads rather than one file. A car
+     entry is fifty photographs and a video: verifying each would fail on the
+     second with a duplicate token, which is the exact fault that made the
+     console refuse everything it was handed. */
+  async function uploadSession(): Promise<string | null> {
+    const held = sessionRef.current
+    if (held && held.until > Date.now()) return held.value
+    if (!draft.current) draft.current = draftId()
+    const res = await fetch("/api/upload-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: ts || null, draftId: draft.current, submissionType: DB_TYPE[form.kind] ?? "vehicle" }),
+    })
+    const j = (await res.json().catch(() => ({}))) as { enforced?: boolean; session?: string; expiresIn?: number; error?: string }
+    if (!res.ok) throw new Error(j.error || "The human check did not pass. Tick the box and try again.")
+    if (!j.enforced) {
+      sessionRef.current = { value: null, until: Date.now() + 25 * 60 * 1000 }
+      return null
+    }
+    sessionRef.current = { value: j.session ?? null, until: Date.now() + (j.expiresIn ?? 0) - 60000 }
+    return sessionRef.current.value
+  }
+
+  async function addFiles(kind: "photo" | "video" | "doc", chosen: FileList | null) {
+    const files = Array.from(chosen || [])
+    if (!files.length) return
+    setMediaNote("")
+    const cap = kind === "photo" ? MAX_PHOTOS : kind === "video" ? MAX_VIDEOS : MAX_LOGOS
+    const room = cap - media[kind].length
+    if (room <= 0) {
+      setMediaNote(`That is the limit: ${cap}.`)
+      return
+    }
+    const take = files.slice(0, room)
+    const skipped = files.length - take.length
+
+    if (!draft.current) draft.current = draftId()
+    const submissionType = DB_TYPE[form.kind] ?? "vehicle"
+
+    for (let i = 0; i < take.length; i++) {
+      const file = take[i]
+      setBusy(`${kind === "photo" ? "Photograph" : kind === "video" ? "Video" : "File"} ${i + 1} of ${take.length}`)
+      try {
+        let length: number | undefined
+        if (kind === "video") {
+          length = await seconds(file)
+          if (length > MAX_VIDEO_SEC + 2) {
+            setMediaNote(`${file.name} runs ${Math.round(length / 60)} minutes. Five is the limit, so trim it and try again.`)
+            continue
+          }
+        }
+        const session = await uploadSession()
+        const safe = String(file.name || "file").replace(/[^\w.\-]+/g, "_").slice(-80)
+        const path = `submissions/${submissionType}/${draft.current}/${kind}/${safe}`
+        const done = await upload(path, file, {
+          access: "private",
+          handleUploadUrl: "/api/upload",
+          multipart: file.size > 20 * 1024 * 1024,
+          clientPayload: JSON.stringify({ kind, submissionType, draftId: draft.current, session }),
+          onUploadProgress: (p) => setBusy(`${kind === "photo" ? "Photograph" : "Video"} ${i + 1} of ${take.length}, ${Math.round(p.percentage)}%`),
+        })
+        const shot: Shot = { kind, url: done.url, pathname: done.pathname, name: file.name, size: file.size, type: file.type || "", ...(length ? { seconds: Math.round(length) } : {}) }
+        if (kind === "photo") LOCAL.set(done.pathname, file)
+        setMedia((m) => ({ ...m, [kind]: [...m[kind], shot] }))
+      } catch (err) {
+        const why = err instanceof Error ? err.message : "That file did not go up."
+        setMediaNote(`${file.name}: ${why}`)
+        break
+      }
+    }
+    setBusy("")
+    if (skipped > 0) setMediaNote(`Added what fits. ${skipped} more than the limit of ${cap} were left out.`)
+  }
+
+  const drop = (kind: keyof Manifest, path: string) =>
+    setMedia((m) => ({ ...m, [kind]: m[kind].filter((s) => s.pathname !== path) }))
+
   const send = async () => {
     if (status === "sending") return
     setWhy("")
@@ -362,6 +507,20 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     if (!EMAIL.test(reach)) {
       setStatus("error")
       setWhy("We need an email address. A phone number alone means we cannot send you a decision.")
+      return
+    }
+    if (surface === "entry" && media.photo.length < MIN_PHOTOS) {
+      setStatus("error")
+      setWhy(
+        media.photo.length === 0
+          ? `Add ${MIN_PHOTOS} photographs of the car. It cannot be judged without them.`
+          : `${media.photo.length} of ${MIN_PHOTOS} photographs so far. ${MIN_PHOTOS - media.photo.length} more and it can go.`,
+      )
+      return
+    }
+    if (busy) {
+      setStatus("error")
+      setWhy("One moment, a file is still going up.")
       return
     }
     if (surface === "vendor" && !f.category) {
@@ -386,7 +545,12 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
        vendor, and company, sponsorship_level, goals and website on a
        sponsor. org is kept as well because the roster and the journeys page
        read it, and vehicle because the field roster does. */
-    const common = { org, message, reach, page: "piston-powered-ranch" }
+    /* The manifest HQ's review sheet already reads: details.media, with the
+       four buckets, each file named by its path in the private store. The
+       sheet signs those paths through /api/media, so a staff address sees the
+       photographs and a URL on its own shows nobody anything. */
+    const anyMedia = media.photo.length + media.video.length + media.doc.length > 0
+    const common = { org, message, reach, page: "piston-powered-ranch", ...(anyMedia ? { media } : {}) }
     const details =
       surface === "vendor"
         ? { ...common, business: org, category: f.category, offering: message, space_needed: f.footprint, power: f.power, website: f.website.trim() }
@@ -572,6 +736,20 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
 
               <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />
 
+              {surface === "entry" ? (
+                <Media
+                  tone={tone}
+                  busy={busy}
+                  note={mediaNote}
+                  photos={media.photo}
+                  videos={media.video}
+                  onAdd={addFiles}
+                  onDrop={drop}
+                />
+              ) : (
+                <Logos tone={tone} busy={busy} note={mediaNote} files={media.doc} onAdd={addFiles} onDrop={drop} />
+              )}
+
               {/* Not for people. Off screen, out of the tab order, and any
                   value in it means a script filled the form. */}
               <input name="fax" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.fax} onChange={up("fax")}
@@ -599,3 +777,182 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     </section>
   )
 }
+
+/**
+ * Photographs and video, on the public entry form.
+ *
+ * The count is the loudest thing here on purpose. Five is a requirement, and a
+ * requirement a person only meets after being refused is a bad form, so it
+ * says where they are the whole time rather than at the end.
+ *
+ * Thumbnails are the local file, not the uploaded one: the store is private
+ * and reading it back needs a staff token, so the browser shows what it just
+ * sent from its own memory. That also means a thumbnail appearing is proof
+ * the file left the phone, which is the thing somebody wants to see.
+ */
+function Media({
+  tone,
+  busy,
+  note,
+  photos,
+  videos,
+  onAdd,
+  onDrop,
+}: {
+  tone: string
+  busy: string
+  note: string
+  photos: Shot[]
+  videos: Shot[]
+  onAdd: (kind: "photo" | "video" | "doc", files: FileList | null) => void
+  onDrop: (kind: keyof Manifest, path: string) => void
+}) {
+  const photoRef = useRef<HTMLInputElement>(null)
+  const videoRef = useRef<HTMLInputElement>(null)
+  const short = Math.max(0, MIN_PHOTOS - photos.length)
+  const met = short === 0
+
+  return (
+    <div style={{ display: "grid", gap: 12, border: "1px solid rgba(255,255,255,.14)", borderLeft: `3px solid ${met ? "#00D2BE" : tone}`, background: "rgba(10,21,35,.42)", padding: "16px 16px 18px", clipPath: CLIP_SM }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+        <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: met ? "#00D2BE" : tone }}>
+          Photographs, {MIN_PHOTOS} at least
+        </span>
+        <span style={{ fontFamily: MONO, fontSize: 12, color: met ? "#00D2BE" : "#C4CCD6", fontVariantNumeric: "tabular-nums" }}>
+          {photos.length} of {MAX_PHOTOS}
+          {met ? ", enough" : `, ${short} to go`}
+        </span>
+      </div>
+
+      <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#A9B4C2" }}>
+        Exterior from both sides, the front, the interior, and the engine. As it sits today, not at its best year.
+      </p>
+
+      {photos.length > 0 && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(84px,1fr))", gap: 8 }}>
+          {photos.map((s) => (
+            <figure key={s.pathname} style={{ position: "relative", margin: 0, aspectRatio: "1", overflow: "hidden", borderRadius: 8, background: "rgba(255,255,255,.05)" }}>
+              <Thumb shot={s} />
+              <button
+                type="button"
+                aria-label={`Remove ${s.name}`}
+                onClick={() => onDrop("photo", s.pathname)}
+                style={{ position: "absolute", top: 4, right: 4, width: 26, height: 26, borderRadius: 13, border: "none", background: "rgba(10,21,35,.82)", color: "#EDF1F6", fontSize: 15, lineHeight: 1, cursor: "pointer" }}
+              >
+                &times;
+              </button>
+            </figure>
+          ))}
+        </div>
+      )}
+
+      {videos.length > 0 && (
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 6 }}>
+          {videos.map((s) => (
+            <li key={s.pathname} style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: ARCHIVO, fontSize: 14, color: "#C4CCD6" }}>
+              <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
+              <span style={{ fontFamily: MONO, fontSize: 12, color: "#8b95a3" }}>
+                {s.seconds ? `${Math.floor(s.seconds / 60)}:${String(s.seconds % 60).padStart(2, "0")}` : mb(s.size)}
+              </span>
+              <button type="button" aria-label={`Remove ${s.name}`} onClick={() => onDrop("video", s.pathname)} style={{ border: "none", background: "none", color: "#8b95a3", fontSize: 17, cursor: "pointer", padding: 4 }}>
+                &times;
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <input ref={photoRef} type="file" accept="image/*" multiple hidden onChange={(e) => { onAdd("photo", e.target.files); e.target.value = "" }} />
+        <input ref={videoRef} type="file" accept="video/*" hidden onChange={(e) => { onAdd("video", e.target.files); e.target.value = "" }} />
+        <button type="button" disabled={Boolean(busy)} onClick={() => photoRef.current?.click()} className="pgGo"
+          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: met ? "transparent" : tone, color: met ? "#EDF1F6" : "#101010", border: met ? "1px solid rgba(255,255,255,.3)" : "none", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1, clipPath: CLIP_SM }}>
+          {photos.length ? "Add more photographs" : "Add photographs"}
+        </button>
+        <button type="button" disabled={Boolean(busy) || videos.length >= MAX_VIDEOS} onClick={() => videoRef.current?.click()}
+          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: "transparent", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "13px 20px", cursor: busy || videos.length >= MAX_VIDEOS ? "default" : "pointer", opacity: busy || videos.length >= MAX_VIDEOS ? 0.5 : 1, clipPath: CLIP_SM }}>
+          Add video
+        </button>
+      </div>
+
+      <span aria-live="polite" style={{ fontFamily: ARCHIVO, fontSize: 13.5, color: note ? "#F2994A" : "#8b95a3", minHeight: 19 }}>
+        {note || busy || `Up to ${MAX_PHOTOS} photographs, and video up to five minutes each.`}
+      </span>
+    </div>
+  )
+}
+
+/** The lighter version, for a vendor or a sponsor: a logo, or a stall picture. */
+function Logos({
+  tone,
+  busy,
+  note,
+  files,
+  onAdd,
+  onDrop,
+}: {
+  tone: string
+  busy: string
+  note: string
+  files: Shot[]
+  onAdd: (kind: "photo" | "video" | "doc", files: FileList | null) => void
+  onDrop: (kind: keyof Manifest, path: string) => void
+}) {
+  const ref = useRef<HTMLInputElement>(null)
+  return (
+    <div style={{ display: "grid", gap: 10, border: "1px solid rgba(255,255,255,.14)", borderLeft: `3px solid ${tone}`, background: "rgba(10,21,35,.42)", padding: "14px 16px 16px", clipPath: CLIP_SM }}>
+      <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: tone }}>
+        Your logo, optional
+      </span>
+      <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#A9B4C2" }}>
+        Vector if you have it, on a transparent background. SVG, EPS, AI or PDF. A photograph of the stall works too.
+      </p>
+      {files.length > 0 && (
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 6 }}>
+          {files.map((s) => (
+            <li key={s.pathname} style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: ARCHIVO, fontSize: 14, color: "#C4CCD6" }}>
+              <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.name}</span>
+              <span style={{ fontFamily: MONO, fontSize: 12, color: "#8b95a3" }}>{mb(s.size)}</span>
+              <button type="button" aria-label={`Remove ${s.name}`} onClick={() => onDrop("doc", s.pathname)} style={{ border: "none", background: "none", color: "#8b95a3", fontSize: 17, cursor: "pointer", padding: 4 }}>
+                &times;
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <input ref={ref} type="file" accept=".svg,.eps,.ai,.pdf,image/*,application/pdf,image/svg+xml,application/postscript,application/illustrator" hidden
+          onChange={(e) => { onAdd("doc", e.target.files); e.target.value = "" }} />
+        <button type="button" disabled={Boolean(busy) || files.length >= MAX_LOGOS} onClick={() => ref.current?.click()}
+          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: "transparent", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.3)", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy || files.length >= MAX_LOGOS ? 0.5 : 1, clipPath: CLIP_SM }}>
+          {files.length ? "Add another" : "Add a file"}
+        </button>
+        <span aria-live="polite" style={{ fontFamily: ARCHIVO, fontSize: 13.5, color: note ? "#F2994A" : "#8b95a3" }}>{note || busy}</span>
+      </div>
+    </div>
+  )
+}
+
+/** The local file, drawn from memory. The store it went to is private. */
+function Thumb({ shot }: { shot: Shot }) {
+  const [src, setSrc] = useState("")
+  useEffect(() => {
+    const held = LOCAL.get(shot.pathname)
+    if (!held) return
+    const url = URL.createObjectURL(held)
+    setSrc(url)
+    return () => URL.revokeObjectURL(url)
+  }, [shot.pathname])
+  if (!src) {
+    return (
+      <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: MONO, fontSize: 10, color: "#8b95a3", textAlign: "center", padding: 6 }}>
+        Sent
+      </span>
+    )
+  }
+  /* eslint-disable-next-line @next/next/no-img-element */
+  return <img src={src} alt={shot.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+}
+
+/** What the browser still holds, so a thumbnail costs no network at all. */
+const LOCAL = new Map<string, File>()
