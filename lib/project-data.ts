@@ -21,7 +21,7 @@ export const PROJECTS = [
       { label: "Base", value: "Nashville, TN" },
       { label: "Mode", value: "Day · Night · Event" },
       { label: "Throughput", value: "$125M+/mo" },
-      { label: "Status", value: "Active" },
+      { label: "Status", value: "Shipped" },
     ],
     caption: "The lot at sunrise, cars queued before the doors open",
     linkText: "Lot Ops in Action",

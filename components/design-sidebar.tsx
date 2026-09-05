@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { AboutModal } from "./about-modal"
 
 const CREDENTIALS = [
-  { stat: "$125M+/mo", label: "Lot Assistant™ · Active retainer" },
+  { stat: "$125M+/mo", label: "Lot Assistant™ · Production platform" },
   { stat: "78 cars", label: "Brokered · Buyer fee $0" },
   { stat: "$1.2B+", label: "Revenue driven · Career" },
   { stat: "$64M+", label: "Tires & Timepieces™ · Display assets" },
