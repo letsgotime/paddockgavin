@@ -78,6 +78,7 @@ export function SiteFooter() {
           />
           <a
             href="#top"
+            className="pg-tap"
             style={{
               fontFamily: "Archivo, Helvetica, sans-serif",
               fontWeight: 700,
@@ -151,6 +152,7 @@ export function SiteFooter() {
               href="https://instagram.com/itspaddockgavin"
               target="_blank"
               rel="noopener noreferrer"
+              className="pg-tap"
               style={{
                 marginTop: 4,
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
@@ -166,6 +168,7 @@ export function SiteFooter() {
               href="https://www.linkedin.com/in/gavinbrooksleader"
               target="_blank"
               rel="noopener noreferrer"
+              className="pg-tap"
               style={{
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                 fontSize: 13,
@@ -189,7 +192,7 @@ export function SiteFooter() {
               { href: "/exotic-car-consignment", label: "Consignment" },
               { href: "/intake", label: "Start the intake" },
             ].map((l) => (
-              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
+              <Link key={l.href} href={l.href} className="pg-tap" style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
@@ -206,7 +209,7 @@ export function SiteFooter() {
               { href: "/events/pistonpoweredranch", label: "The Piston Powered Ranch" },
               { href: "/gallery", label: "The gallery" },
             ].map((l) => (
-              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
+              <Link key={l.href} href={l.href} className="pg-tap" style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
@@ -225,7 +228,7 @@ export function SiteFooter() {
               { href: "/connect", label: "Every link" },
               { href: "/press", label: "Press" },
             ].map((l) => (
-              <Link key={l.href} href={l.href} style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
+              <Link key={l.href} href={l.href} className="pg-tap" style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
               </Link>
             ))}
@@ -287,6 +290,7 @@ export function SiteFooter() {
               <a
                 key={l.href}
                 href={l.href}
+                className="pg-tap"
                 style={{
                   fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                   fontSize: 12,
@@ -303,6 +307,7 @@ export function SiteFooter() {
               href="https://ig.me/m/itspaddockgavin"
               target="_blank"
               rel="noopener noreferrer"
+              className="pg-tap"
               style={{
                 fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace",
                 fontSize: 12,

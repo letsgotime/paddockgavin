@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Terms",
@@ -119,12 +120,13 @@ export default function TermsPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0A1523",
+        background: "transparent",
         color: "#B4B6B2",
         fontFamily: "Archivo,'Helvetica Neue',Helvetica,Arial,sans-serif",
         WebkitFontSmoothing: "antialiased",
       }}
     >
+      <PageBackdrop src="/images/f458-dash.webp" pos="center 50%" opacity={0.2} />
       {/* Hero */}
       <header
         style={{
@@ -176,7 +178,7 @@ export default function TermsPage() {
       </header>
 
       {/* Sections */}
-      <div style={{ maxWidth: 820, margin: "0 auto", padding: "clamp(32px,4vw,64px) clamp(20px,5vw,80px)" }}>
+      <div className="pg-e1" style={{ maxWidth: 820, margin: "clamp(20px,3vw,36px) auto", padding: "clamp(28px,4vw,56px) clamp(20px,5vw,64px)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)" }}>
         {sections.map((s) => (
           <section
             key={s.num}

@@ -1,5 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Brand Partnerships",
@@ -10,7 +12,14 @@ const stats = [
   { k: "~1,000,000", v: "Views / month" },
   { k: "~7,900", v: "Instagram followers" },
   { k: "Owners &\ncollectors", v: "Primary audience" },
-  { k: "Lebanon, TN", v: "The showroom floor" },
+  { k: "200+", v: "Events run" },
+]
+
+const WORK = [
+  { src: "/images/f458-side.webp",        alt: "Ferrari 458 Italia side profile",   pos: "center 35%", label: "Ferrari 458" },
+  { src: "/images/ford-gt-studio.webp",   alt: "Ford GT in the studio",             pos: "center 40%", label: "Ford GT" },
+  { src: "/images/g993-cabin.webp",       alt: "Gunther Werks 993 interior",        pos: "center 50%", label: "Gunther Werks 993" },
+  { src: "/images/918-pipes.webp",        alt: "Porsche 918 Spyder exhaust",        pos: "center 50%", label: "918 Spyder" },
 ]
 
 const formats = [
@@ -48,12 +57,13 @@ export default function PartnerPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0A1523",
+        background: "transparent",
         color: "#B4B6B2",
         fontFamily: "Archivo,'Helvetica Neue',Helvetica,Arial,sans-serif",
         WebkitFontSmoothing: "antialiased",
       }}
     >
+      <PageBackdrop src="/images/creator-hero.jpg" pos="center 62%" opacity={0.2} />
       {/* Hero */}
       <header
         style={{
@@ -75,12 +85,11 @@ export default function PartnerPage() {
 
           {/* Stat row */}
           <div
+            className="pg-e1"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))",
               gap: 1,
-              background: "rgba(255,255,255,.08)",
-              border: "1px solid rgba(255,255,255,.1)",
             }}
           >
             {stats.map((s, i) => (
@@ -132,9 +141,8 @@ export default function PartnerPage() {
             {formats.map((f, i) => (
               <div
                 key={i}
+                className="pg-e0"
                 style={{
-                  background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-                  border: "1px solid rgba(255,255,255,.1)",
                   borderTop: "3px solid #F2C94C",
                   padding: "clamp(20px,2.5vw,28px)",
                 }}
@@ -143,6 +151,30 @@ export default function PartnerPage() {
                 <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>{f.desc}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Proof — every frame here is mine, shot on the job */}
+        <section style={{ marginBottom: "clamp(40px,5vw,64px)", paddingBottom: "clamp(40px,5vw,64px)", borderBottom: "1px solid rgba(255,255,255,.07)" }}>
+          <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>
+            What the work looks like
+          </h2>
+          <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 560 }}>
+            Original photography and video only. No stock, no repost, no borrowed footage. Every frame below was shot on the job.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 8, marginBottom: 22 }}>
+            {WORK.map((w) => (
+              <figure key={w.src} className="pg-e0" style={{ margin: 0, position: "relative", aspectRatio: "4 / 5", overflow: "hidden", background: "rgba(21,37,56,.4)" }}>
+                <Image src={w.src} alt={w.alt} fill sizes="(max-width: 640px) 45vw, 220px" style={{ objectFit: "cover", objectPosition: w.pos }} />
+                <figcaption style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "26px 10px 8px", background: "linear-gradient(to top,rgba(10,21,35,.94),transparent)", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.9)" }}>
+                  {w.label}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px" }}>
+            <Link href="/gallery" className="pg-textlink">The full gallery</Link>
+            <Link href="/press" className="pg-textlink">Editorial standards</Link>
           </div>
         </section>
 
@@ -170,9 +202,8 @@ export default function PartnerPage() {
             Tell me who you are, what the product or program is, and what you are trying to do. I will tell you whether there is a fit.
           </p>
           <div
+            className="pg-e2"
             style={{
-              background: "linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.013))",
-              border: "1px solid rgba(255,255,255,.11)",
               borderLeft: "3px solid #F2C94C",
               padding: "clamp(24px,3vw,40px)",
             }}

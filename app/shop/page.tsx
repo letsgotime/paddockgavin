@@ -3,6 +3,7 @@ import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PRODUCTS, BRANDS, priceRange, anyBuyable } from "@/lib/shop/catalogue"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "The Shop · PaddockGavin",
@@ -25,6 +26,7 @@ export default function Page() {
   return (
     <>
       <SiteNav />
+      <PageBackdrop src="/images/donuts-tall.webp" pos="center 35%" opacity={0.2} />
       <main style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
         <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
           <p

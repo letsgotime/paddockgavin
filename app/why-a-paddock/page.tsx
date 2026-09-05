@@ -60,7 +60,7 @@ export default function WhyAPaddockPage() {
 
       <SiteNav active="why" />
 
-      <PageBackdrop src="/images/gavin-gwagen.webp" opacity={0.16} />
+      <PageBackdrop src="/images/cage-rig.webp" opacity={0.16} />
 
       <main
         ref={mainRef}

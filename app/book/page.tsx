@@ -15,7 +15,7 @@ const KINDS = [
     eyebrow: "The floor",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "Select private events on the showroom floor in Lebanon. Inquire with Gavin for details.",
+    blurb: "Collector events in Middle Tennessee. Working ranches, orchards, showroom floors. Tell me the occasion and I will tell you where it fits.",
     hint: "The occasion, the date, the headcount",
     img: "/images/donuts-floor-sq.webp",
   },
@@ -84,7 +84,7 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      <PageBackdrop src="/images/donuts-floor.webp" opacity={0.2} />
+      <PageBackdrop src="/images/donuts-square.webp" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 

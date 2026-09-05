@@ -83,7 +83,7 @@ export function LinkRow({ items, label = "Related" }: { items: { href: string; l
   return (
     <nav aria-label={label} className="pg-also">
       {items.map((it) => (
-        <Link key={it.href} href={it.href} className="pg-e0" style={{ display: "flex", flexDirection: "column", gap: 4, padding: "14px 16px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+        <Link key={it.href} href={it.href} className="pg-e0" style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, minHeight: 44, padding: "14px 16px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
           <span style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 16, color: "#EDF1F6" }}>{it.label}</span>
           <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: "#B4B6B2" }}>{it.note}</span>
         </Link>
