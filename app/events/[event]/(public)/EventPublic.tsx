@@ -385,14 +385,34 @@ export default function EventPublic({
           row reads as part of it rather than as a second header. */}
       {hero && (
         <nav aria-label="Take part" style={{ borderTop: "1px solid rgba(255,255,255,.12)" }}>
-          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "18px clamp(16px,5vw,40px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
-            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)", marginRight: 6 }}>Take part</span>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "16px clamp(16px,5vw,40px) 18px", display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", alignItems: "center" }}>
+            <span style={{ gridColumn: "1 / -1", fontFamily: MONO, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)" }}>Take part</span>
             {[
               { href: `/events/${event.slug}/entry`, label: "Enter a car" },
               { href: `/events/${event.slug}/vendor`, label: "Take a stall" },
               { href: `/events/${event.slug}/sponsor`, label: "Sponsor the day" },
             ].map((c, i) => (
-              <Cta key={c.label} c={c} slug={event.slug} primary={i === 0} />
+              <a
+                key={c.label}
+                href={c.href}
+                style={{
+                  fontFamily: "var(--body)",
+                  fontWeight: 700,
+                  fontSize: 15,
+                  letterSpacing: ".04em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  textAlign: "center",
+                  padding: "14px 18px",
+                  borderRadius: 11,
+                  display: "block",
+                  color: i === 0 ? "var(--on-accent)" : "var(--paper)",
+                  background: i === 0 ? "var(--accent-strong)" : "transparent",
+                  border: i === 0 ? "1px solid var(--accent-strong)" : "1px solid rgba(255,255,255,.34)",
+                }}
+              >
+                {c.label}
+              </a>
             ))}
           </div>
         </nav>
