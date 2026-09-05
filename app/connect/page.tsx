@@ -54,7 +54,7 @@ const GROUPS = [
       {
         key: "floor",
         title: "Book the floor",
-        note: "The showroom floor in Lebanon, and I run the events on it",
+        note: "Collector events in Middle Tennessee, and I run them",
         href: "/events",
         target: "_self",
         tone: "#4BA3DE",

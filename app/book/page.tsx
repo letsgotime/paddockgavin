@@ -15,7 +15,7 @@ const KINDS = [
     eyebrow: "The floor",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "Select private events on the showroom floor in Lebanon. Inquire with Gavin for details.",
+    blurb: "Collector events in Middle Tennessee. Working ranches, orchards, showroom floors. Tell me the occasion and I will tell you where it fits.",
     hint: "The occasion, the date, the headcount",
     img: "/images/donuts-floor-sq.webp",
   },

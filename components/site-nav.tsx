@@ -147,7 +147,7 @@ export function SiteNav({ active = "home" }: Props) {
             }}
           >
             {/* Logo */}
-            <Link href="/" style={{ flex: "0 0 auto", display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none", whiteSpace: "nowrap" }}>
+            <Link href="/" className="pg-tap" style={{ flex: "0 0 auto", display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none", whiteSpace: "nowrap" }}>
               <Image
                 src={ranch ? "/brand/rj-mark-ondark.png" : "/images/mark-on-dark-96.png"}
                 alt={ranch ? "Rancho Jaramillo" : "PG mark"}
