@@ -4,6 +4,7 @@ import { useState, useCallback } from "react"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 type Step = 0 | 1 | 2 | 3 | 4   // 0 Car · 1 Condition · 2 Route · 3 You · 4 Done
 
@@ -179,6 +180,7 @@ export default function IntakePage() {
   return (
     <>
       <SiteNav active="intake" />
+      <PageBackdrop src="/images/ferrari-red.webp" pos="center 45%" opacity={0.2} />
 
       <main
         style={{

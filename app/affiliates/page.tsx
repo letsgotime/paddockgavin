@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Affiliates & Partners",
@@ -105,6 +106,7 @@ export default function AffiliatesPage() {
   return (
     <>
       <SiteNav />
+      <PageBackdrop src="/images/aston-wheel.webp" pos="center 45%" opacity={0.2} />
       <main style={{ background: "#0A1523", color: "#D4DAE2", overflowX: "hidden" }}>
 
         {/* ── Hero ── */}

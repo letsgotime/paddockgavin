@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Encanto Blossom Orchard",
@@ -18,6 +19,7 @@ export default function EncantoPage() {
   return (
     <>
       <SiteNav active="events" />
+      <PageBackdrop src="/images/cullinan-speedway.webp" pos="center 40%" opacity={0.2} />
       <main style={{ position: "relative", zIndex: 1, maxWidth: 1180, margin: "0 auto", padding: "clamp(90px,12vw,140px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: 22 }}>
         <section style={{ position: "relative", minHeight: "clamp(320px,46vh,460px)", border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP_LG, overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
           <Image src="/images/carrera-traffic.jpg" alt="Orchard country outside Shelbyville, Tennessee" fill style={{ objectFit: "cover" }} priority />

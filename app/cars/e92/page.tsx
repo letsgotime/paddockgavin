@@ -3,6 +3,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "The E92",
@@ -16,6 +17,7 @@ export default function E92Page() {
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
       <SiteNav active="cars" />
+      <PageBackdrop src="/images/downpipe.webp" pos="center 50%" opacity={0.2} />
 
       {/* Hero */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: "66svh" }}>

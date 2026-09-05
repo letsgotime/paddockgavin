@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 const CARS = [
   { n:"01", name:"1991 Honda Accord EX",          meta:"Black on tan",               note:"Dad\u2019s car. Saturday wax jobs came before anything else.", c:"#0B0D10", t:"#C8A878" },
@@ -55,6 +56,7 @@ export default function CarsPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
       <SiteNav active="cars" />
+      <PageBackdrop src="/images/g993-ramp.webp" pos="center 45%" opacity={0.2} />
 
       {/* Hero */}
       <section style={{ position: "relative", overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column", minHeight: "62svh" }}>

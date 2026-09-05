@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Press",
@@ -57,12 +58,13 @@ export default function PressPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0A1523",
+        background: "transparent",
         color: "#B4B6B2",
         fontFamily: "Archivo,'Helvetica Neue',Helvetica,Arial,sans-serif",
         WebkitFontSmoothing: "antialiased",
       }}
     >
+      <PageBackdrop src="/images/creator-booth.jpg" pos="center 45%" opacity={0.2} />
       <header
         style={{
           borderBottom: "1px solid rgba(255,255,255,.1)",

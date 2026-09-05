@@ -84,7 +84,7 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      <PageBackdrop src="/images/donuts-floor.webp" opacity={0.2} />
+      <PageBackdrop src="/images/donuts-square.webp" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
