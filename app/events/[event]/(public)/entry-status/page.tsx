@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { loadEvent } from "@/lib/events/load"
 import { loadEntryByToken, statusCopy } from "@/lib/events/entry"
+import { AddMedia } from "./AddMedia"
 
 /**
  * Where an entrant finds out what happened to their car.
@@ -123,6 +124,13 @@ export default async function EntryStatusPage({
         <p style={{ margin: "20px 0 0", fontSize: 15.5, lineHeight: 1.6, color: "#9FAAB8", borderLeft: `3px solid ${accent}`, paddingLeft: 16 }}>
           {entry.message}
         </p>
+      )}
+
+      {/* A car is judged from its photographs, so the page that holds the
+          entry is also where more of them can be added, right up until the
+          field is set. Appends only, nothing on the entry is ever erased. */}
+      {entry.type === "vehicle" && entry.status !== "declined" && t && (
+        <AddMedia token={t} photoCt={entry.photoCt} videoCt={entry.videoCt} />
       )}
 
       <p style={{ margin: "30px 0 0", fontSize: 15, lineHeight: 1.6, color: "#7E8B99" }}>
