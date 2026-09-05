@@ -378,6 +378,26 @@ export default function EventPublic({
         </section>
       )}
 
+      {/* The three doors. The hero asks the free question, come and watch;
+          this row asks the three that make the day: a car, a stall, a
+          partner. They were one link each in the footer, on a page that
+          asked for the RSVP four times. Same buttons the hero uses, so the
+          row reads as part of it rather than as a second header. */}
+      {hero && (
+        <nav aria-label="Take part" style={{ borderTop: "1px solid rgba(255,255,255,.12)" }}>
+          <div style={{ maxWidth: 1180, margin: "0 auto", padding: "18px clamp(16px,5vw,40px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10 }}>
+            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)", marginRight: 6 }}>Take part</span>
+            {[
+              { href: `/events/${event.slug}/entry`, label: "Enter a car" },
+              { href: `/events/${event.slug}/vendor`, label: "Take a stall" },
+              { href: `/events/${event.slug}/sponsor`, label: "Sponsor the day" },
+            ].map((c, i) => (
+              <Cta key={c.label} c={c} slug={event.slug} primary={i === 0} />
+            ))}
+          </div>
+        </nav>
+      )}
+
       {facts.length > 0 && (
         <div style={{ borderTop: "1px solid rgba(255,255,255,.12)", borderBottom: "1px solid rgba(255,255,255,.12)" }}>
           <ul style={{ listStyle: "none", margin: "0 auto", padding: "18px clamp(16px,5vw,40px)", maxWidth: 1180, display: "flex", flexWrap: "wrap", gap: "10px 26px" }}>
