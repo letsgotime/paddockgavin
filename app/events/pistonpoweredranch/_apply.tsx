@@ -350,6 +350,11 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
   const [busy, setBusy] = useState("")
   const [mediaNote, setMediaNote] = useState("")
   const draft = useRef<string>("")
+  /* Whether a file is in flight, as a ref rather than as the text on
+     screen. A progress event from a finished file can arrive after the loop
+     has ended and overwrite the text, which once left the form convinced a
+     photograph was still going up when all five were done. */
+  const uploading = useRef(false)
   const sessionRef = useRef<{ value: string | null; until: number } | null>(null)
   const [ts, setTs] = useState("")
   const [tsState, setTsState] = useState<"loading" | "ready" | "solved" | "failed">("loading")
@@ -452,6 +457,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     }
     const take = files.slice(0, room)
     const skipped = files.length - take.length
+    uploading.current = true
 
     if (!draft.current) draft.current = draftId()
     const submissionType = DB_TYPE[form.kind] ?? "vehicle"
@@ -471,13 +477,17 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         const session = await uploadSession()
         const safe = String(file.name || "file").replace(/[^\w.\-]+/g, "_").slice(-80)
         const path = `submissions/${submissionType}/${draft.current}/${kind}/${safe}`
+        let settled = false
         const done = await upload(path, file, {
           access: "private",
           handleUploadUrl: "/api/upload",
           multipart: file.size > 20 * 1024 * 1024,
           clientPayload: JSON.stringify({ kind, submissionType, draftId: draft.current, session }),
-          onUploadProgress: (p) => setBusy(`${kind === "photo" ? "Photograph" : "Video"} ${i + 1} of ${take.length}, ${Math.round(p.percentage)}%`),
+          onUploadProgress: (p) => {
+            if (!settled) setBusy(`${kind === "photo" ? "Photograph" : "Video"} ${i + 1} of ${take.length}, ${Math.round(p.percentage)}%`)
+          },
         })
+        settled = true
         const shot: Shot = { kind, url: done.url, pathname: done.pathname, name: file.name, size: file.size, type: file.type || "", ...(length ? { seconds: Math.round(length) } : {}) }
         if (kind === "photo") LOCAL.set(done.pathname, file)
         setMedia((m) => ({ ...m, [kind]: [...m[kind], shot] }))
@@ -487,6 +497,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         break
       }
     }
+    uploading.current = false
     setBusy("")
     if (skipped > 0) setMediaNote(`Added what fits. ${skipped} more than the limit of ${cap} were left out.`)
   }
@@ -518,7 +529,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
       )
       return
     }
-    if (busy) {
+    if (uploading.current) {
       setStatus("error")
       setWhy("One moment, a file is still going up.")
       return
