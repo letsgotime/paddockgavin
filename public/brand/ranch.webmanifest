@@ -1,0 +1,16 @@
+{
+  "name": "The Piston Powered Ranch",
+  "short_name": "Ranch",
+  "description": "Three hundred collector cars on fourteen curated acres at Rancho Jaramillo, Unionville, Tennessee. Saturday 10 October 2026.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A1523",
+  "theme_color": "#0A1523",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/brand/rj-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/rj-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/rj-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/brand/rj-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

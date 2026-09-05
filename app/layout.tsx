@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
+import { headers } from "next/headers"
 import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ScrollProgress } from "@/components/scroll-progress"
@@ -22,7 +23,48 @@ const _archivoblack = Archivo_Black({
 
 const SITE = "https://paddockgavin.com"
 
-export const metadata: Metadata = {
+/**
+ * The icon follows the door.
+ *
+ * pistonpoweredranch.com is Rancho Jaramillo's address and its tab carries the
+ * bull, not the PaddockGavin mark. The middleware marks a request that arrived
+ * on that host, the brand tokens already follow it, and now the icon set and
+ * the web manifest do too. Both sets are static files in public/, so nothing
+ * is drawn per request and the PaddockGavin door is byte for byte what it was.
+ */
+const PG_ICONS: Metadata["icons"] = {
+  icon: [
+    { url: "/icon-dark-32x32.png", sizes: "32x32", type: "image/png" },
+    { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    { url: "/icon.svg", type: "image/svg+xml" },
+  ],
+  apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  shortcut: "/favicon.ico",
+}
+const RANCH_ICONS: Metadata["icons"] = {
+  icon: [
+    { url: "/brand/rj-icon-32.png", sizes: "32x32", type: "image/png" },
+    { url: "/brand/rj-icon-64.png", sizes: "64x64", type: "image/png" },
+    { url: "/brand/rj-icon-192.png", sizes: "192x192", type: "image/png" },
+    { url: "/brand/rj-icon-512.png", sizes: "512x512", type: "image/png" },
+  ],
+  apple: [{ url: "/brand/rj-icon-180.png", sizes: "180x180", type: "image/png" }],
+  shortcut: "/brand/rj-icon-32.png",
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const h = await headers()
+  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
+  return {
+    ...BASE,
+    icons: ranch ? RANCH_ICONS : PG_ICONS,
+    manifest: ranch ? "/brand/ranch.webmanifest" : "/manifest.webmanifest",
+    appleWebApp: { ...(BASE.appleWebApp as object), title: ranch ? "Piston Powered Ranch" : "PaddockGavin" },
+  }
+}
+
+const BASE: Metadata = {
   title: {
     default: "Exotic car broker and sourcing, Nashville · PaddockGavin",
     template: "%s · PaddockGavin",
