@@ -84,9 +84,12 @@ printf '%s' "$HOSTNAMES" | vercel env add TURNSTILE_HOSTNAMES production >/dev/n
 echo "  TURNSTILE_HOSTNAMES: set to $HOSTNAMES"
 
 echo
-echo "$moved of ${#CARRY[@]} carried. They take effect on the next deploy:"
+echo "$moved of ${#CARRY[@]} carried. They take effect on the next production build."
 echo
-echo "    vercel --prod"
+echo "Do NOT run 'vercel --prod' here: that ships whatever branch this clone is"
+echo "on, straight past the release branch. Instead, in vercel.com open the"
+echo "paddockgavin project, Deployments, the top Production row, the three dots,"
+echo "Redeploy, and leave 'Use existing build cache' unticked."
 echo
 echo "Then the build log should read:"
 echo "    [ranch] every ranch endpoint is served by this deployment"
