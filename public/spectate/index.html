@@ -150,6 +150,13 @@
                 <option value="10">9 to 10 people</option>
               </select>
             </div>
+            <div style="display:grid;gap:10px;margin:14px 0 4px;padding:12px 14px;border:1px solid rgba(255,255,255,.14);border-left:3px solid var(--amber, #F2C94C);border-radius:10px">
+              <span style="font-family:var(--mono, ui-monospace, monospace);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85">How we may reach you</span>
+              <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.4"><input id="cEvent" type="checkbox" checked style="width:19px;height:19px;margin-top:2px;flex:0 0 auto" /><span>Emails about this event<br /><small style="opacity:.75">The count, the parking, and the reminders down to the day.</small></span></label>
+              <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.4"><input id="cSms" type="checkbox" style="width:19px;height:19px;margin-top:2px;flex:0 0 auto" /><span>Text messages about the day<br /><small style="opacity:.75">Only for this event. Reply STOP at any time.</small></span></label>
+              <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.4"><input id="cNews" type="checkbox" style="width:19px;height:19px;margin-top:2px;flex:0 0 auto" /><span>News of future PaddockGavin events<br /><small style="opacity:.75">A few times a year. Unsubscribe in one tap.</small></span></label>
+            </div>
+            <input name="fax" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
             <span class="err" id="err"></span>
             <button id="go" type="submit">RSVP to spectate</button>
           </form>
@@ -200,21 +207,37 @@
         if (!name) return fail("Add your name so we know who to expect.");
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))
           return fail("That email does not look complete.");
-        if (!db) return fail("Could not reach the RSVP list. Try again in a minute.");
         go.disabled = true;
         go.textContent = "Adding you…";
         var source = null;
         try {
           source = new URLSearchParams(location.search).get("utm_source");
         } catch (e2) {}
-        var r = await db.from("spectators").insert({
-          event_id: EVENT_ID,
-          name: name,
-          email: email,
-          party_size: Math.min(20, Math.max(1, party)),
-          source: source,
-        });
-        if (r.error) return fail("Could not save your RSVP. Try again in a minute.");
+        /* Recorded on the server. The browser used to write the row itself on
+           an anonymous token that no longer exists, and every RSVP failed. */
+        var r;
+        try {
+          var res = await fetch("/api/rsvp", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              party: Math.min(20, Math.max(1, party)),
+              source: source,
+              fax: (form.querySelector('[name="fax"]') || {}).value || "",
+              consent: {
+                event_email: document.getElementById("cEvent").checked,
+                sms: document.getElementById("cSms").checked,
+                pg_events: document.getElementById("cNews").checked,
+              },
+            }),
+          });
+          r = await res.json().catch(function () { return {}; });
+          if (!res.ok) return fail(r.detail || "Could not save your RSVP. Try again in a minute.");
+        } catch (e3) {
+          return fail("Could not reach the RSVP list. Check your connection and try again.");
+        }
         document.getElementById("formWrap").style.display = "none";
         document.getElementById("done").style.display = "block";
       });

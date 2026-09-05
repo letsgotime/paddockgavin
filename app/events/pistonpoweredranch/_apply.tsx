@@ -6,7 +6,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
-import { db } from "@/lib/crm/client"
 
 /* Copy ran through RAIL Redline, WARM / WEB PAGE / US, zero tells, with an
    explicit instruction not to introduce facts absent from the draft. */
@@ -345,7 +344,11 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
   const [status, setStatus] = useState<Status>("idle")
   const [why, setWhy] = useState("")
   const [token, setToken] = useState("")
+  const [recorded, setRecorded] = useState(false)
   const [copied, setCopied] = useState(false)
+  /* The three consents. Event emails are required for an accepted car, so
+     that one starts on and says why; the other two are the person's call. */
+  const [consent, setConsent] = useState({ sms: false, event_email: true, pg_events: false })
   const [media, setMedia] = useState<Manifest>(EMPTY_MEDIA)
   const [busy, setBusy] = useState("")
   const [mediaNote, setMediaNote] = useState("")
@@ -570,31 +573,9 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
           ? { ...common, company: org, sponsorship_level: f.level, goals: message, website: f.website.trim() }
           : { ...common, vehicle: org }
 
-    /* Recorded first, then mailed. If the mail fails the entry is still on
-       record and answerable by hand; if the record fails the desk email still
-       carries everything, including the token. */
-    let recorded = false
-    try {
-      const client = db()
-      if (client) {
-        const saved = await client.from("submissions").insert([
-          {
-            type: DB_TYPE[form.kind] ?? "vehicle",
-            applicant_name: name,
-            email: reach.toLowerCase(),
-            phone: f.phone.trim() || null,
-            status: "pending",
-            status_token: statusToken,
-            details,
-          },
-        ])
-        recorded = !saved?.error
-        if (saved?.error) console.warn("[apply] not recorded:", saved.error.message)
-      }
-    } catch (err) {
-      console.warn("[apply] not recorded:", err)
-    }
-
+    /* Recorded on the server, then mailed, in one request. The browser used
+       to write the row itself on an anonymous token that no longer exists,
+       and the write failed silently for every entrant. */
     try {
       const res = await fetch("/api/apply", {
         method: "POST",
@@ -608,13 +589,15 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
           message,
           details,
           statusToken,
-          recorded,
+          consent,
           turnstileToken: ts,
           fax: f.fax,
         }),
       })
       if (res.ok) {
-        setToken(statusToken)
+        const j = (await res.json().catch(() => ({}))) as { recorded?: boolean; statusToken?: string | null }
+        setRecorded(j.recorded === true)
+        setToken(j.recorded && j.statusToken ? j.statusToken : "")
         setStatus("sent")
         return
       }
@@ -702,6 +685,21 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
               <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 17, lineHeight: 1.5, color: "#00D2BE" }}>
                 Received. A confirmation is on its way to {f.reach.trim()}, and you will hear from us either way.
               </p>
+              {!recorded && (
+                <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.55, color: "#C4CCD6" }}>
+                  The desk has everything you sent by email and will enter it by hand. Your status link follows in a reply.
+                </p>
+              )}
+              {surface === "entry" && recorded && token && (
+                <a className="pgGo" href={`/events/pistonpoweredranch/portal?t=${token}`} style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                  Create your account
+                </a>
+              )}
+              {surface === "entry" && recorded && (
+                <span style={{ fontFamily: ARCHIVO, fontSize: 13.5, lineHeight: 1.5, color: "#8b95a3" }}>
+                  An account keeps your entry, your photographs and every email about the day in one place. It takes one minute and you can add photographs there later.
+                </span>
+              )}
               {statusUrl && (
                 <div style={{ display: "grid", gap: 6 }}>
                   <span style={label}>Your status link, no sign in needed</span>
@@ -766,6 +764,10 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                   value in it means a script filled the form. */}
               <input name="fax" tabIndex={-1} autoComplete="off" aria-hidden="true" value={f.fax} onChange={up("fax")}
                 style={{ position: "absolute", left: -9999, width: 1, height: 1, opacity: 0 }} />
+
+              {surface === "entry" && (
+                <Consents tone={tone} value={consent} onChange={setConsent} />
+              )}
 
               <div ref={tsRef} style={{ minHeight: tsState === "failed" ? 0 : 65 }} />
 
@@ -968,3 +970,37 @@ function Thumb({ shot }: { shot: Shot }) {
 
 /** What the browser still holds, so a thumbnail costs no network at all. */
 const LOCAL = new Map<string, File>()
+
+/**
+ * The three consents, asked once, on the form.
+ *
+ * Event emails are how an accepted car learns its bay and its gate time, so
+ * that one is required for an accepted car and is presented as such rather
+ * than as a choice that is quietly pre-ticked. Texts and news of other events
+ * are the person's call and start off.
+ */
+function Consents({ tone, value, onChange }: { tone: string; value: { sms: boolean; event_email: boolean; pg_events: boolean }; onChange: (v: { sms: boolean; event_email: boolean; pg_events: boolean }) => void }) {
+  const row = (key: "sms" | "event_email" | "pg_events", label: string, note: string, locked?: boolean) => (
+    <label style={{ display: "flex", gap: 12, alignItems: "flex-start", cursor: locked ? "default" : "pointer" }}>
+      <input
+        type="checkbox"
+        checked={value[key]}
+        disabled={locked}
+        onChange={(e) => onChange({ ...value, [key]: e.target.checked })}
+        style={{ width: 20, height: 20, marginTop: 2, flex: "0 0 auto", accentColor: tone }}
+      />
+      <span style={{ display: "grid", gap: 2 }}>
+        <span style={{ fontFamily: ARCHIVO, fontSize: 15, lineHeight: 1.4, color: "#EDF1F6" }}>{label}</span>
+        <span style={{ fontFamily: ARCHIVO, fontSize: 13.5, lineHeight: 1.45, color: "#8b95a3" }}>{note}</span>
+      </span>
+    </label>
+  )
+  return (
+    <div style={{ display: "grid", gap: 12, border: "1px solid rgba(255,255,255,.14)", borderLeft: `3px solid ${tone}`, background: "rgba(10,21,35,.42)", padding: "14px 16px 16px", clipPath: CLIP_SM }}>
+      <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: tone }}>How we may reach you</span>
+      {row("event_email", "Emails about this event and your entry", "Required if your car is accepted: it is how you get your bay and your gate time.", true)}
+      {row("sms", "Text messages about your entry and the day", "Only for this event. Reply STOP at any time.")}
+      {row("pg_events", "News of future PaddockGavin events", "A few times a year. Unsubscribe in one tap.")}
+    </div>
+  )
+}

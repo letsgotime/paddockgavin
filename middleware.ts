@@ -60,6 +60,13 @@ export function middleware(req: NextRequest) {
   // The bare domain is the event's landing page.
   if (url.pathname === "/") {
     url.pathname = `/events/${slug}`
+  } else if (path === "/status") {
+    /* The status link in every confirmation email. It used to open a tool
+       page that asked the database for the row on a token the public no
+       longer has, and answered "could not check right now" to everyone.
+       This page reads the row on the server and needs nothing from the
+       visitor but the link. */
+    url.pathname = `/events/${slug}/entry-status`
   } else if (SHORT_PATHS.has(path)) {
     url.pathname = `/events/${slug}${path}`
   }

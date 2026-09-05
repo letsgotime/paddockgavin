@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server"
 import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "@/lib/email/ranch"
+import { ranchDb, consentFrom } from "@/lib/ranch/ranch-db"
 
 /**
  * Confirmations for the three Piston Powered Ranch intake forms.
  *
- * The submission is written to public.submissions by the browser before this is
- * called. That order is deliberate: if this route fails the entry is still on
- * record and answerable by hand, where a write that depended on the mail
- * succeeding would lose it outright.
+ * The submission is written to public.submissions here, on the server, and
+ * then the two emails go. It used to be written by the browser through the
+ * Data API on an anonymous token from Neon's hosted auth. That endpoint went
+ * away with the move to self hosted auth, the write failed silently for every
+ * entrant from then on, and a real car entry on 5 September existed only as
+ * two emails. The record comes first now, and the confirmation only carries a
+ * status link when there is a record for it to open.
  *
  * Two messages go out. One to the person who applied, carrying the status link
  * that used to be shown once on screen and nowhere else, and one to the desk
@@ -49,8 +53,10 @@ interface Body {
   details?: Record<string, string>
   /** Minted in the browser and written on the row. The email carries it. */
   statusToken?: string
-  /** Whether the browser's write to public.submissions succeeded. */
+  /** Kept for older pages that still say whether they wrote the row. Ignored. */
   recorded?: boolean
+  /** The three consents. See lib/ranch/ranch-db.ts. */
+  consent?: unknown
   turnstileToken?: string
   /** The honeypot. Anything in it and the form was filled by a script. */
   fax?: string
@@ -121,6 +127,12 @@ function applicantDoc(kind: Kind, name: string, org: string, token: string, d: R
           text: "You will hear either way. If your car is in, that email carries your gate time, your bay and the make you are grouped with.",
         },
         ...statusBlocks(token),
+        ...(TOKEN.test(token)
+          ? ([
+              { kind: "button", label: "Create your account", href: `${RANCH}/portal?t=${token}` },
+              { kind: "quiet", text: "An account keeps your entry, your photographs and every email about the day in one place, and it is where you can add photographs later. The link above attaches this entry to it." },
+            ] as Block[])
+          : []),
         FACTS,
         { kind: "quiet", text: "Nothing is owed and nothing is due." },
       ],
@@ -216,7 +228,7 @@ function deskDoc(kind: Kind, b: Body, name: string, org: string, reach: string, 
         kind: "quiet",
         text: recorded
           ? "Saved to submissions. Decide it in HQ and the answer goes out from there."
-          : "Not saved to submissions: the browser's write failed, so this email is the only record. Enter it by hand.",
+          : "Not recorded: the database could not be reached from the form, so this email is the only record. Enter it by hand.",
       },
     ],
   }
@@ -282,16 +294,56 @@ export async function POST(req: Request) {
       )
     }
 
+    // Only a contact that parses as an address can be written to.
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
+
+    /* The record. What the browser sent is checked before it is kept: the
+       details object is bounded, and every file in it must sit under this
+       submission's own folder in the private store. */
+    const type = b.kind === "entry" ? "vehicle" : b.kind === "vendor-application" ? "vendor" : "sponsor"
+    const details: Record<string, unknown> = { ...(b.details && typeof b.details === "object" ? b.details : {}) }
+    details.consent = consentFrom(b.consent)
+    const media = details.media as { photo?: unknown[]; video?: unknown[]; doc?: unknown[] } | undefined
+    if (media && typeof media === "object") {
+      for (const bucket of ["photo", "video", "voice", "doc"] as const) {
+        const list = Array.isArray((media as Record<string, unknown>)[bucket]) ? ((media as Record<string, unknown[]>)[bucket]) : []
+        ;(media as Record<string, unknown>)[bucket] = list
+          .filter((f): f is Record<string, unknown> => Boolean(f && typeof f === "object"))
+          .filter((f) => typeof f.pathname === "string" && (f.pathname as string).startsWith(`submissions/${type}/`) && !(f.pathname as string).includes(".."))
+          .slice(0, 60)
+      }
+    }
+    if (JSON.stringify(details).length > 120_000) return NextResponse.json({ error: "too_large" }, { status: 413 })
+
+    let recorded = false
+    let id: number | null = null
+    let token = TOKEN.test((b.statusToken ?? "").trim()) ? (b.statusToken as string).trim() : ""
+    const db = ranchDb()
+    if (db) {
+      try {
+        const r = await db.query<{ id: string; status_token: string }>(
+          `insert into public.submissions (type, applicant_name, email, phone, status, status_token, details)
+           values ($1, $2, $3, $4, 'pending',
+                   coalesce(nullif($5, ''), replace(gen_random_uuid()::text, '-', '') || replace(gen_random_uuid()::text, '-', '')),
+                   $6::jsonb)
+           returning id::text, status_token`,
+          [type, name, isEmail ? reach.toLowerCase() : "", (b.phone ?? "").trim() || null, token, JSON.stringify(details)],
+        )
+        id = Number(r.rows[0]?.id) || null
+        token = r.rows[0]?.status_token || token
+        recorded = Boolean(id)
+      } catch (err) {
+        console.error("[apply] the record failed", err)
+      }
+    } else {
+      console.error("[apply] RANCH_DATABASE_URL is not set; the record cannot be written from here")
+    }
+
     const key = process.env.RESEND_API_KEY
     if (!key) {
       console.log("[apply] No RESEND_API_KEY, would confirm:", { kind: b.kind, name, reach })
-      return NextResponse.json({ ok: true, mailed: false })
+      return NextResponse.json({ ok: true, recorded, id, statusToken: recorded ? token : null, mailed: false })
     }
-
-    // Only a contact that parses as an address can be written to.
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(reach)
-    const token = (b.statusToken ?? "").trim()
-    const recorded = b.recorded === true
 
     const send = (payload: Record<string, unknown>) =>
       fetch("https://api.resend.com/emails", {
@@ -334,7 +386,7 @@ export async function POST(req: Request) {
     const failed = results.filter((r) => r.status === "rejected" || !r.value.ok).length
     if (failed) console.error("[apply] %d of %d messages failed", failed, results.length)
 
-    return NextResponse.json({ ok: true, mailed: results.length - failed })
+    return NextResponse.json({ ok: true, recorded, id, statusToken: recorded ? token : null, mailed: results.length - failed })
   } catch (err) {
     console.error("[apply]", err)
     return NextResponse.json({ error: "Server error" }, { status: 500 })
