@@ -528,11 +528,12 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
       setWhy("Pick the category closest to what you sell.")
       return
     }
-    if (tsState === "ready" && !ts) {
-      setStatus("error")
-      setWhy("Tick the box above the button first.")
-      return
-    }
+    /* No client side gate on the human check. The widget can draw and still
+       never produce a token, which is what happened in a browser that would
+       not paint its box, and a person was refused for it while the server
+       was not even enforcing the check. The server decides: when it is
+       enforcing and the token is missing it answers "verification", and that
+       is the one moment the person is asked to tick the box. */
     setStatus("sending")
 
     const name = f.name.trim()
