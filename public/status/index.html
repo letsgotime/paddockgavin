@@ -57,6 +57,23 @@
       #ask input { width: 100%; font: inherit; font-size: 15px; color: var(--ink); background: rgba(255, 255, 255, 0.06);
         border: 1px solid var(--gline); border-radius: 12px; padding: 12px 15px; margin-top: 14px; }
       .err { color: var(--crit); font-size: 13.5px; margin-top: 10px; display: none; }
+      #media { display: none; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--gline); }
+      .mhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+      .mcount { font-size: 12px; letter-spacing: 0.08em; color: var(--mute); font-weight: 700; }
+      .mcount.ok { color: var(--teal); }
+      .mrow { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+      .mrow button { font: inherit; font-size: 13.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+        color: #101010; background: var(--teal); border: 0; border-radius: 12px; padding: 12px 18px; cursor: pointer; }
+      .mrow button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--gline); }
+      .mrow button[disabled] { opacity: 0.55; cursor: default; }
+      #mList { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+      #mList .mi { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--dim);
+        background: rgba(255, 255, 255, 0.05); border: 1px solid var(--gline); border-radius: 10px; padding: 9px 12px; }
+      #mList .mi span.nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #mList .mi span.pct { color: var(--mute); white-space: nowrap; }
+      #mList .mi.done span.pct { color: var(--teal); }
+      #mTs { margin-top: 12px; }
+      #mTs:empty { margin-top: 0; }
       @media (max-height: 520px) {
         .hero { min-height: 120vh; min-height: unset; padding-top: 70px; }
         h1 { font-size: clamp(30px, 7vw, 44px); }
@@ -81,6 +98,26 @@
             <div class="st" id="s3">Decision</div>
           </div>
           <div class="verdict" id="verdict" style="display: none"></div>
+          <div id="media">
+            <div class="mhead">
+              <span class="eyebrow" style="color: var(--amber)">Photographs</span>
+              <span class="mcount" id="mCount"></span>
+            </div>
+            <p class="who" id="mLede">
+              Photographs travel with your entry to the selection team, and you can add them
+              any time from this page. Up to fifty, straight off your phone, and video up to
+              five minutes a clip.
+            </p>
+            <div class="mrow">
+              <button type="button" id="mAddPhoto">Add photographs</button>
+              <button type="button" id="mAddVideo" class="ghost">Add video</button>
+            </div>
+            <div id="mList"></div>
+            <div id="mTs"></div>
+            <span class="err" id="mNote" role="status"></span>
+            <input id="mPhotoIn" type="file" accept="image/*" multiple hidden />
+            <input id="mVideoIn" type="file" accept="video/*" multiple hidden />
+          </div>
           <div id="ask">
             <p class="who">
               Paste the status link you were given when you submitted, or the code at the end of
@@ -100,6 +137,7 @@
     </main>
     <script type="module">
       import { db as makeDb } from "/vendor/ranch-db.js?v=2026-09-02f";
+      import { upload as blobUpload } from "/vendor/vercel-blob-client.js";
       var db = null;
       try {
         db = makeDb();
@@ -175,6 +213,215 @@
             v.innerHTML =
               "Not selected for this field. The curation runs tight and it is never personal. There will be more PaddockGavin events.";
           }
+        }
+        if (row.submission_type === "vehicle" && row.status !== "declined") mediaInit(tok, row.submission_type);
+      }
+
+      /* ---- Add photographs to this entry ----
+         The status token is the key: uploads go to the private store through
+         the same route and path rules the entry form uses, and each finished
+         file is appended to the entry by add_submission_media. Appends only.
+         Nothing can be removed or replaced from here, and the entry itself
+         never moves. */
+      var SITEKEY = "0x4AAAAAAEkdaaU0WCZzdgGE";
+      var M = { tok: null, type: "vehicle", counts: null, session: null, widget: null, tsToken: "" };
+      function draftId() {
+        var k = "ppr_draft_id",
+          gen = "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+        try {
+          var v = sessionStorage.getItem(k);
+          if (!v) sessionStorage.setItem(k, (v = gen));
+          return v;
+        } catch (e) {
+          return gen;
+        }
+      }
+      function mnote(msg) {
+        var el = document.getElementById("mNote");
+        el.textContent = msg || "";
+        el.style.display = msg ? "block" : "none";
+      }
+      function paintCounts() {
+        var el = document.getElementById("mCount");
+        if (!M.counts) return void (el.textContent = "");
+        el.textContent = M.counts.photo + " of 50" + (M.counts.video ? ", " + M.counts.video + " video" : "");
+        el.className = "mcount" + (M.counts.photo >= 5 ? " ok" : "");
+      }
+      function renderTs() {
+        if (!SITEKEY || M.widget !== null) return;
+        var mount = document.getElementById("mTs");
+        var draw = function () {
+          if (!window.turnstile || M.widget !== null) return;
+          try {
+            M.widget = window.turnstile.render(mount, {
+              sitekey: SITEKEY,
+              theme: "dark",
+              size: "flexible",
+              action: "submit-media",
+              callback: function (t) {
+                M.tsToken = t;
+              },
+              "expired-callback": function () {
+                M.tsToken = "";
+              },
+              "error-callback": function () {
+                M.tsToken = "";
+              },
+            });
+          } catch (e) {}
+        };
+        if (window.turnstile) draw();
+        else {
+          var s = document.createElement("script");
+          s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+          s.async = true;
+          s.onload = draw;
+          document.head.appendChild(s);
+        }
+      }
+      async function ensureSession() {
+        if (M.session && M.session.until > Date.now()) return M.session.value;
+        var res = await fetch("/api/upload-session", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ token: M.tsToken || null, draftId: draftId(), submissionType: M.type }),
+        });
+        var j = await res.json().catch(function () {
+          return {};
+        });
+        if (!res.ok) throw new Error(j.error || "The human check did not pass. Tick the box below and try again.");
+        if (!j.enforced) {
+          M.session = { value: null, until: Date.now() + 25 * 60 * 1000 };
+          return null;
+        }
+        M.session = { value: j.session || null, until: Date.now() + (j.expiresIn || 0) - 60000 };
+        if (window.turnstile && M.widget !== null) {
+          M.tsToken = "";
+          try {
+            window.turnstile.reset(M.widget);
+          } catch (e) {}
+        }
+        return M.session.value;
+      }
+      function fmtSecs(s) {
+        var m = Math.floor(s / 60),
+          r = Math.round(s % 60);
+        return m + ":" + (r < 10 ? "0" : "") + r;
+      }
+      function clipSeconds(file) {
+        return new Promise(function (resolve) {
+          var el = document.createElement("video"),
+            url = URL.createObjectURL(file);
+          var done = function (d) {
+            URL.revokeObjectURL(url);
+            resolve(d);
+          };
+          el.preload = "metadata";
+          el.onloadedmetadata = function () {
+            done(isFinite(el.duration) ? el.duration : 0);
+          };
+          el.onerror = function () {
+            done(0);
+          };
+          el.src = url;
+        });
+      }
+      async function saveShot(shot) {
+        if (!db) throw new Error("Could not reach the list. Refresh and try again.");
+        var r = await db.rpc("add_submission_media", { p_token: M.tok, p_items: [shot] });
+        var row = r && r.data && r.data[0];
+        if ((r && r.error) || !row) throw new Error("The file went up but did not save to your entry. Add it again.");
+        M.counts = { photo: row.photo_ct, video: row.video_ct };
+        paintCounts();
+        if (row.added === 0)
+          throw new Error(row.dropped > 0 ? "That one is already on your entry, or past the limit." : "That file did not save.");
+      }
+      async function addFiles(kind, chosen) {
+        var files = Array.prototype.slice.call(chosen || []);
+        if (!files.length) return;
+        mnote("");
+        var list = document.getElementById("mList");
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          var row = document.createElement("div");
+          row.className = "mi";
+          row.innerHTML = '<span class="nm"></span><span class="pct">0%</span>';
+          row.querySelector(".nm").textContent = file.name;
+          list.appendChild(row);
+          var pct = row.querySelector(".pct");
+          try {
+            var seconds = 0;
+            if (kind === "video") {
+              seconds = await clipSeconds(file);
+              if (seconds > 302) {
+                row.remove();
+                mnote(file.name + " runs long. Five minutes is the limit for one clip, so trim it and try again.");
+                continue;
+              }
+            }
+            var session = await ensureSession();
+            var safe = String(file.name || "file")
+              .replace(/[^\w.\-]+/g, "_")
+              .slice(-80);
+            var path = "submissions/" + M.type + "/" + draftId() + "/" + kind + "/" + safe;
+            var done = await blobUpload(path, file, {
+              access: "private",
+              handleUploadUrl: "/api/upload",
+              multipart: file.size > 20 * 1024 * 1024,
+              clientPayload: JSON.stringify({ kind: kind, submissionType: M.type, draftId: draftId(), session: session }),
+              onUploadProgress: function (p) {
+                pct.textContent = Math.round(p.percentage || 0) + "%";
+              },
+            });
+            var shot = { kind: kind, url: done.url, pathname: done.pathname, name: file.name, size: file.size, type: file.type || "" };
+            if (kind === "video" && seconds) shot.seconds = Math.round(seconds);
+            await saveShot(shot);
+            row.classList.add("done");
+            pct.textContent = kind === "video" ? "Saved, " + fmtSecs(seconds) : "Saved";
+          } catch (err) {
+            row.remove();
+            mnote(file.name + ": " + ((err && err.message) || "did not go up. Try it again."));
+          }
+        }
+      }
+      async function mediaInit(tok, type) {
+        M.tok = tok;
+        M.type = type;
+        document.getElementById("media").style.display = "block";
+        renderTs();
+        document.getElementById("mAddPhoto").onclick = function () {
+          if (M.counts && M.counts.photo >= 50) return mnote("Fifty photographs is the ceiling, and you are there.");
+          document.getElementById("mPhotoIn").click();
+        };
+        document.getElementById("mAddVideo").onclick = function () {
+          if (M.counts && M.counts.video >= 3) return mnote("Three clips is the ceiling, and you are there.");
+          document.getElementById("mVideoIn").click();
+        };
+        document.getElementById("mPhotoIn").addEventListener("change", function () {
+          addFiles("photo", this.files);
+          this.value = "";
+        });
+        document.getElementById("mVideoIn").addEventListener("change", function () {
+          addFiles("video", this.files);
+          this.value = "";
+        });
+        try {
+          var r = await db.rpc("add_submission_media", { p_token: tok, p_items: [] });
+          var row = r && r.data && r.data[0];
+          if (row) {
+            M.counts = { photo: row.photo_ct, video: row.video_ct };
+            paintCounts();
+          }
+        } catch (e) {}
+        if (M.counts && M.counts.photo < 5) {
+          document.getElementById("mLede").textContent =
+            M.counts.photo === 0
+              ? "Your entry has no photographs yet, and the selection team judges from them. Add at least five: exterior from both sides, the front, the interior, and the engine."
+              : "Your entry has " +
+                M.counts.photo +
+                " photograph" +
+                (M.counts.photo === 1 ? "" : "s") +
+                " so far, and five is the floor for review. Add the rest here.";
         }
       }
       var tok = null;
