@@ -13,7 +13,7 @@
 export const PROJECTS = [
   {
     id: "lot-ops",
-    title: "DRX Lot Assistant™",
+    title: "Lot Assistant™",
     tag: "Live Operations · Software",
     year: "2024",
     services: ["Lot Operations", "Software"],

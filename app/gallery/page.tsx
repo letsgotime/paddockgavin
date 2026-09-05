@@ -55,7 +55,9 @@ const TAG_MAP: Record<string, string> = {
   detail: "nobody-films", interior: "nobody-films",
   whatidputonit: "what-id-put-on-it", glossgame: "what-id-put-on-it", theglossgame: "what-id-put-on-it",
   detailing: "what-id-put-on-it", paintcorrection: "what-id-put-on-it", ceramic: "what-id-put-on-it",
-  theroom: "the-room", donutswithdupont: "the-room", tiresandtimepieces: "the-room",
+  theroom: "the-room", monthlyshowcase: "the-room", tiresandtimepieces: "the-room",
+  // legacy inbound slug, kept so existing links keep resolving
+  donutswithdupont: "the-room",
   tirestimepieces: "the-room", carsandcoffee: "the-room", showroom: "the-room", event: "the-room",
 }
 
