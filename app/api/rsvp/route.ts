@@ -88,11 +88,19 @@ export async function POST(req: Request) {
     const t = ranchTemplate("spectator", "received", { name, party: String(party) })
     if (t) {
       const doc = { ...t, unsubscribe: unsub ? `${RANCH}/unsubscribe?u=${unsub}` : t.unsubscribe }
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from: t.from, to: [email], reply_to: "hello@pistonpoweredranch.com", subject: t.subject, html: renderRanchEmail(doc), text: renderRanchText(doc) }),
-      }).catch((err) => console.error("[rsvp] mail failed", err))
+      /* Awaited. A send started and not waited for is a send the function
+         may be frozen under before it completes, and the first RSVP through
+         here was counted in the database and never emailed. */
+      try {
+        const sent = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+          body: JSON.stringify({ from: t.from, to: [email], reply_to: "hello@pistonpoweredranch.com", subject: t.subject, html: renderRanchEmail(doc), text: renderRanchText(doc) }),
+        })
+        if (!sent.ok) console.error("[rsvp] resend refused", sent.status)
+      } catch (err) {
+        console.error("[rsvp] mail failed", err)
+      }
     }
   }
 
