@@ -42,8 +42,8 @@ const AboutContent = () => (
       >
         <p>
           Agentic engineering studio out of Nashville. Built the ops tool running
-          $125M+/month through an exotic dealership lot: active retainer, production
-          software, not a prototype. The tool handles what would otherwise fall through.
+          $125M+/month through an exotic dealership lot: production software,
+          not a prototype. The tool handles what would otherwise fall through.
         </p>
         <p>
           Also: SupercarIQ, a tool that identifies any supercar from a photo and returns
