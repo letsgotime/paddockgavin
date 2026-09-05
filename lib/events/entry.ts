@@ -33,6 +33,9 @@ export interface EntryStatus {
   status: string
   submittedAt: string
   updatedAt: string | null
+  /** Photographs and clips already with the entry, counted from details.media. */
+  photoCt: number
+  videoCt: number
 }
 
 const TOKEN = /^[A-Za-z0-9._-]{8,128}$/
@@ -52,6 +55,7 @@ export async function loadEntryByToken(token: string): Promise<EntryStatus | nul
     if (!rows.length) return null
     const r = rows[0]
     const d = (r.details || {}) as Record<string, string>
+    const media = ((r.details || {}).media || {}) as { photo?: unknown[]; video?: unknown[] }
     return {
       id: r.id,
       type: r.type,
@@ -61,6 +65,8 @@ export async function loadEntryByToken(token: string): Promise<EntryStatus | nul
       status: r.status || "pending",
       submittedAt: r.created_at,
       updatedAt: r.updated_at,
+      photoCt: Array.isArray(media.photo) ? media.photo.length : 0,
+      videoCt: Array.isArray(media.video) ? media.video.length : 0,
     }
   } catch {
     return null
