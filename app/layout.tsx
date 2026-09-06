@@ -90,12 +90,12 @@ const BASE: Metadata = {
     template: "%s · PaddockGavin",
   },
   description:
-    "Closer to the cars. If you have only seen them through a screen, the days out are where you stand next to one, hear it pull on a mobile dyno, or take a lap of your own. Nashville, Tennessee.",
+    "Most people only see these cars on a screen. The days get you closer: a dream car within reach, a dyno pull you can feel, a lap of the track. Nashville.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
     title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
-    description: "Closer to the cars. Standing next to one, hearing it on a mobile dyno, taking a lap of your own. Nashville, Tennessee.",
+    description: "Most people only see these cars on a screen. The days get you closer. Nashville, Tennessee.",
     siteName: "PaddockGavin",
     locale: "en_US",
     type: "website",
