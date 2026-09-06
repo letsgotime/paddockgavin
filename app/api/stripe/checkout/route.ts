@@ -181,7 +181,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "not_configured", detail: "STRIPE_SECRET_KEY is not set on this deployment." }, { status: 503 })
     }
 
-    const price = await priceIdFor(item, key)
+    const price = await priceIdFor(item, key, ev.slug)
     if ("error" in price) {
       console.error("[stripe/checkout]", price.error)
       return NextResponse.json({ error: "not_open", detail: price.error }, { status: 503 })
@@ -194,7 +194,7 @@ export async function POST(req: Request) {
     for (const k of addonKeys) {
       const a = itemFor(ev.slug, k)
       if (!a || a.audience !== "public" || !isOnSale(a)) return NextResponse.json({ error: "unknown_item" }, { status: 400 })
-      const ap = await priceIdFor(a, key)
+      const ap = await priceIdFor(a, key, ev.slug)
       if ("error" in ap) return NextResponse.json({ error: "not_open", detail: ap.error }, { status: 503 })
       lines.push({ price: ap.id, quantity: 1 })
       covers.push(a.covers)
