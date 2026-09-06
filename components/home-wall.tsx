@@ -119,7 +119,7 @@ export function HomeWall() {
 
         <div className="pg-wall">
           {feature && (
-            <button type="button" onClick={() => setLb({ index: 0 })} className="pg-e1 pg-wall-feature" style={{ padding: 0, cursor: "pointer", overflow: "hidden", textAlign: "left", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)" }}>
+            <button type="button" onClick={() => setLb({ index: 0 })} className="pg-wall-feature" style={{ padding: 0, cursor: "pointer", overflow: "hidden", textAlign: "left", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)" }}>
               {feature.src && <Image src={feature.src} alt={feature.caption} fill sizes="(max-width: 800px) 100vw, 50vw" style={{ objectFit: "cover" }} />}
               <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.92) 4%,rgba(10,21,35,.08) 50%)" }} />
               <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "clamp(16px,2.6vw,24px)", fontFamily: ARCHIVO, fontWeight: 700, fontSize: "var(--t-h3)", lineHeight: 1.15, letterSpacing: "-.015em", color: "#FFFFFF", textWrap: "pretty" as never }}>
@@ -128,7 +128,7 @@ export function HomeWall() {
             </button>
           )}
           {grid.map((c, j) => (
-            <button key={c.key} type="button" onClick={() => setLb({ index: j + 1 })} className="pg-e0 pg-wall-tile" style={{ padding: 0, cursor: "pointer", overflow: "hidden", textAlign: "left", clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)" }}>
+            <button key={c.key} type="button" onClick={() => setLb({ index: j + 1 })} className="pg-wall-tile" style={{ padding: 0, cursor: "pointer", overflow: "hidden", textAlign: "left", clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)" }}>
               {c.src && <Image src={c.src} alt={c.caption} fill loading="lazy" sizes="(max-width: 800px) 50vw, 25vw" style={{ objectFit: "cover" }} />}
               <span style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "34px 12px 11px", pointerEvents: "none", background: "linear-gradient(to top,rgba(10,21,35,.94) 10%,rgba(10,21,35,0))", fontFamily: ARCHIVO, fontWeight: 600, fontSize: 13, lineHeight: 1.35, color: "#FFFFFF" }}>
                 {c.caption}

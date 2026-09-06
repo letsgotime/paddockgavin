@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { db, whoAmI } from "@/lib/crm/client"
 import { focusFor, toolHref } from "@/lib/tools"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 /**
  * Who does what.
@@ -286,9 +287,10 @@ export default function RolesPage() {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <main style={{ background: INK, minHeight: "100vh", fontFamily: ARCHIVO }}>
+    <main style={{ background: "transparent", minHeight: "100vh", fontFamily: ARCHIVO }}>
+      <PageBackdrop src="/images/f458-seats.webp" pos="center 50%" opacity={0.14} />
       <div style={{ height: 3, background: RED_FILL }} />
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "42px clamp(14px,4vw,20px) 100px" }}>{children}</div>
+      <div className="pg-e1" style={{ maxWidth: 1120, margin: "clamp(18px,3vw,32px) auto", padding: "clamp(26px,4vw,42px) clamp(16px,4vw,28px)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%)" }}>{children}</div>
     </main>
   )
 }
