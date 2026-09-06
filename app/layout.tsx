@@ -173,10 +173,16 @@ const BASE: Metadata = {
   },
 }
 
-export const viewport: Viewport = {
-  themeColor: "#0A0E1A",
-  width: "device-width",
-  initialScale: 1,
+/* The theme colour is the browser chrome around the page on a phone, and it
+   follows the door: the ranch's ink on pistonpoweredranch.com, ours here. */
+export async function generateViewport(): Promise<Viewport> {
+  const h = await headers()
+  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
+  return {
+    themeColor: ranch ? "#0A1523" : "#0A0E1A",
+    width: "device-width",
+    initialScale: 1,
+  }
 }
 
 export default function RootLayout({
