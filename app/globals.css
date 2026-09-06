@@ -550,6 +550,28 @@ body { isolation: isolate; }
 .pg-also { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 640px) { .pg-also { grid-template-columns: 1fr; } }
 
+/* ── TAP TARGETS — Apple's 44pt minimum ──
+   Measured on a 393px iPhone viewport: 31 of 55 targets on the homepage were
+   between 21 and 38px tall. These were not stray inline links, they were the
+   nav, the footer and every secondary link. Two techniques, because the fix
+   must not move the design:
+
+   .pg-textlink keeps its 26px underlined look and gains an invisible 44px
+   hit area centred on it, so the thumb target grows and the layout does not.
+   .pg-tap is for links whose box can simply be taller: footer navigation,
+   the social lines, back to top, the wordmark. */
+.pg-textlink { position: relative; display: inline-block; }
+.pg-textlink::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
+}
+.pg-tap { min-height: 44px; display: inline-flex; align-items: center; }
+.pg-also > a { min-height: 44px; }
+
 /* ── LEGACY ALIASES ── */
 .notch-btn  { cursor: pointer; }
 .notch-panel { position: relative; }

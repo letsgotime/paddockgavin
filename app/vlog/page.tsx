@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "The Vlog",
@@ -17,6 +18,7 @@ export default function VlogPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
       <SiteNav active="vlog" />
+      <PageBackdrop src="/images/gavin-bar.webp" pos="center 40%" opacity={0.2} />
 
       {/* Hero */}
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px) clamp(40px,6vw,64px)" }}>

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 const arch = "Archivo,Helvetica,Arial,sans-serif"
 const mono = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
@@ -38,6 +39,7 @@ export default function SupercarIQPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
       <SiteNav active="scoreboard" />
+      <PageBackdrop src="/images/cullinan-doors.webp" pos="center 45%" opacity={0.2} />
 
       {/* Hero */}
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px) clamp(40px,6vw,70px)" }}>

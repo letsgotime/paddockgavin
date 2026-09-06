@@ -65,7 +65,7 @@ export function SourcingPage(p: SourcingPageProps) {
         <Section id="how" eyebrow="How it works" tone="#F2C94C" title="Three steps, and I am on every one of them">
           <ol style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
             {p.steps.map((s, i) => (
-              <li key={s.title} className="pg-e0" style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 12, padding: "16px 18px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%)" }}>
+              <li key={s.title} style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 12, padding: "4px 0 18px 16px", borderLeft: "2px solid rgba(242,201,76,.5)" }}>
                 <span style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1, color: "#F2C94C" }}>{String(i + 1).padStart(2, "0")}</span>
                 <span>
                   <span style={{ display: "block", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 17, color: "#FFFFFF", marginBottom: 4 }}>{s.title}</span>
@@ -85,9 +85,9 @@ export function SourcingPage(p: SourcingPageProps) {
 
       <div className="pg-stage">
         <Section id="faq" eyebrow="Before you write" tone="#F2C94C" title="The questions people type on the way in">
-          <dl style={{ margin: 0, display: "grid", gap: 10 }}>
-            {p.faqs.map((f) => (
-              <div key={f.q} className="pg-e1" style={{ padding: "16px 18px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%)" }}>
+          <dl className="pg-e1" style={{ margin: 0, display: "grid", padding: "4px 20px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)" }}>
+            {p.faqs.map((f, i) => (
+              <div key={f.q} style={{ padding: "18px 0", borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,.09)" }}>
                 <dt style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 17, color: "#FFFFFF", marginBottom: 6 }}>{f.q}</dt>
                 <dd style={{ margin: 0, fontSize: 16, lineHeight: 1.55, color: "#C4CBD6" }}>{f.a}</dd>
               </div>
@@ -99,7 +99,7 @@ export function SourcingPage(p: SourcingPageProps) {
       <div className="pg-stage" style={{ paddingTop: 0 }}>
         <nav aria-label="Related" className="pg-also">
           {p.related.map((it) => (
-            <Link key={it.href} href={it.href} className="pg-e0" style={{ display: "flex", flexDirection: "column", gap: 4, padding: "14px 16px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)", textDecoration: "none" }}>
+            <Link key={it.href} href={it.href} style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, minHeight: 44, padding: "14px 2px", borderTop: "1px solid rgba(255,255,255,.12)", textDecoration: "none" }}>
               <span style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 16, color: "#EDF1F6" }}>{it.label}</span>
               <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".14em", textTransform: "uppercase", color: "#B4B6B2" }}>{it.note}</span>
             </Link>

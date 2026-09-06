@@ -261,7 +261,7 @@ export default function ScoreboardPage() {
                   key={g.key}
                   type="button"
                   onClick={() => setFilter(g.key as Group)}
-                  className="pg-e0" style={{
+                  style={{
                     cursor: "pointer",
                     fontFamily: "Archivo, Helvetica, sans-serif",
                     fontWeight: 700,
@@ -671,7 +671,7 @@ export default function ScoreboardPage() {
                 maxWidth: "54ch",
               }}
             >
-              Eight to six I run lot operations and events in Lebanon. That work lives on its own pages.
+              Eight to six is lot operations and events. That work lives on its own pages.
             </p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>

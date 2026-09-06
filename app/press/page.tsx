@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Press",
-  description: "PaddockGavin is an independent automotive publication covering exotic and collector cars from inside the operation that moves them.",
+  description: "PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them, not from a desk outside it.",
 }
 
 const UPDATED = "August 2026"
@@ -33,11 +34,11 @@ const coverage = [
 ]
 
 const standards = [
-  "Paid, gifted and affiliate content is disclosed on the piece, before you read it, per FTC guidance.",
-  "A loan, a meal or event access does not buy a favourable review, and no partnership is accepted that asks for one.",
-  "Corrections are published rather than quietly edited.",
+  "If a piece is paid, gifted or affiliate, it says so at the top. You know before you read a word. The FTC asks for that, and so do I.",
+  "A loan, a meal or a place at an event buys none of my opinion. If a deal asks for a good review, I turn it down.",
+  "When I get something wrong, I publish the correction. I do not quietly edit the page and move on.",
   "Embargoes are honoured to the minute.",
-  "Nothing is published from a private facility without the operator's permission.",
+  "I do not publish from a private facility unless the operator says yes first.",
 ]
 
 const credentialChecklist = [
@@ -57,12 +58,13 @@ export default function PressPage() {
     <main
       style={{
         minHeight: "100vh",
-        background: "#0A1523",
+        background: "transparent",
         color: "#B4B6B2",
         fontFamily: "Archivo,'Helvetica Neue',Helvetica,Arial,sans-serif",
         WebkitFontSmoothing: "antialiased",
       }}
     >
+      <PageBackdrop src="/images/creator-booth.jpg" pos="center 45%" opacity={0.2} />
       <header
         style={{
           borderBottom: "1px solid rgba(255,255,255,.1)",
@@ -78,7 +80,7 @@ export default function PressPage() {
             <span style={{ color: "#00D2BE" }}>Everything you need to credential us.</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 640 }}>
-            PaddockGavin is an independent automotive publication covering exotic and collector cars from inside the operation that moves them. Everything a credentialing office needs is on this page.
+            PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them, not from a desk outside it. Everything a credentialing office needs is on this page.
           </p>
           <p style={{ margin: 0, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", color: "#91918F" }}>
             Last updated {UPDATED}
@@ -115,7 +117,7 @@ export default function PressPage() {
             </table>
           </div>
           <p style={{ margin: "16px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "#B4B6B2" }}>
-            Original photography and video only. Nothing here is syndicated, aggregated or reposted from another outlet.
+            Original photography and video only. Nothing here is reposted or pulled from another outlet. I shoot it and I write it.
           </p>
         </section>
 
@@ -126,7 +128,7 @@ export default function PressPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Audience</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Verifiable on request, with platform-native screenshots and a downloadable one-page kit.
+            Ask and I will show you. Screenshots from the apps themselves, plus a one-page kit you can download.
           </p>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14.5 }}>
@@ -176,7 +178,7 @@ export default function PressPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Requesting a credential from us</h2>
           </div>
           <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Bringing us to your event, or offering a vehicle loan? DM @itspaddockgavin with the date, the location and what access is on offer. Assignment letters on publication letterhead, a W-9, certificates of insurance and prior credential history are all available on request, same day.
+            Bringing us to your event, or offering a vehicle loan? DM @itspaddockgavin with the date, the location and what access is on offer. Ask and you get the same day: an assignment letter on your letterhead, a W-9, proof of insurance, and a list of past credentials.
           </p>
           <p style={{ margin: "0 0 12px", fontSize: 14, lineHeight: 1.6, color: "#91918F", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", letterSpacing: ".1em", textTransform: "uppercase" }}>
             What a credentialing office typically needs:
@@ -228,7 +230,7 @@ export default function PressPage() {
             <h2 style={{ margin: 0, fontWeight: 800, fontSize: "var(--t-h2)", letterSpacing: "-.025em", color: "#FFFFFF" }}>Assets for publication</h2>
           </div>
           <p style={{ margin: "0 0 14px", fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
-            Logos, headshots, a one-page media kit and high-resolution stills are available for editorial use when covering PaddockGavin, Supercar IQ™, Tires &amp; Timepieces™ or The Gloss Game™. Ask and they are sent within the day.
+            Need art? There are logos, headshots, a one-page kit and high-resolution stills. Use them in any story about PaddockGavin, Supercar IQ™, Tires &amp; Timepieces™ or The Gloss Game™. Ask and they are sent within the day.
           </p>
           <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "#C4CBD6" }}>
             Use of those assets is for coverage of us. It is not a licence to the wider library, that is on the{" "}

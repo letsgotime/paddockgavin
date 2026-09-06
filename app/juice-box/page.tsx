@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 const AMAZON_URL = "https://www.amazon.com/Gloss-Game-Detailing-Discipline-Display/dp/B0FMPGNTPY"
 
@@ -65,6 +66,7 @@ export default function JuiceBoxPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0A1523" }}>
       <SiteNav active="gloss" />
+      <PageBackdrop src="/images/918-charging.webp" pos="center 50%" opacity={0.2} />
 
       {/* Telemetry bar */}
       <div style={{ borderBottom: "1px solid #27384F", background: "#0E1A2A" }}>

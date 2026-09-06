@@ -81,7 +81,7 @@ const CHAPTERS = [
     label: "The room",
     tone: "#4BA3DE",
     minmax: "min(360px,100%)",
-    blurb: "Donuts, Tires & Timepieces, and whatever rolled onto the deck that morning. The floor is in Lebanon, and I run the events on it.",
+    blurb: "Donuts, Tires & Timepieces, and whatever rolled onto the deck that morning. Collector mornings I ran, shot as they happened.",
   },
 ]
 
