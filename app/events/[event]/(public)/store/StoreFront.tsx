@@ -29,7 +29,8 @@ export default function StoreFront({ event, items }: { event: EventRow; items: S
   return (
     <main
       style={{
-        background: INK,
+        /* Translucent, so the ranch plate the page names shows through. */
+        background: "linear-gradient(180deg, rgba(10,21,35,.8), rgba(10,21,35,.95))",
         minHeight: "100dvh",
         padding:
           "max(28px, env(safe-area-inset-top)) 16px max(40px, env(safe-area-inset-bottom))",

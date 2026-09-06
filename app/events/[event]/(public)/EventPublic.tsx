@@ -1,11 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
-import { CrmLogin } from "@/components/crm-login"
 import { RanchMark } from "@/components/ranch-mark"
 import { RanchGallery } from "@/components/ranch-gallery"
 import VisitOps from "@/app/events/pistonpoweredranch/VisitOps"
@@ -275,6 +274,35 @@ export default function EventPublic({
   const acts = c.acts || []
   const [open, setOpen] = useState<string | null>(acts[0]?.id ?? null)
 
+  /* One reveal per section below the hero, the same rise the forms use.
+     Nothing above the fold moves, and nothing can stay hidden: reduced
+     motion shows everything at once, and a timer shows whatever the
+     observer never reached. */
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-r]"))
+    if (reduce) {
+      els.forEach((e) => e.classList.add("in"))
+      return
+    }
+    const io = new IntersectionObserver(
+      (en) =>
+        en.forEach((x) => {
+          if (x.isIntersecting) {
+            x.target.classList.add("in")
+            io.unobserve(x.target)
+          }
+        }),
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    )
+    els.forEach((e) => io.observe(e))
+    const fallback = window.setTimeout(() => els.forEach((e) => e.classList.add("in")), 1600)
+    return () => {
+      io.disconnect()
+      window.clearTimeout(fallback)
+    }
+  }, [])
+
   const facts = [
     longDate(event.starts_at),
     clockRange(event.starts_at, event.ends_at),
@@ -302,10 +330,15 @@ export default function EventPublic({
           .evTeaserFilm { max-width: min(78vw,340px); margin: 0 auto; width: 100% }
           .evTeaserFacts { grid-template-columns: 1fr; gap: 14px }
         }
-        @media (prefers-reduced-motion: reduce) { .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%) } }
+        [data-r]{opacity:0;transform:translate3d(0,22px,0)}
+        [data-r].in{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.16,.84,.32,1),transform .8s cubic-bezier(.16,.84,.32,1)}
+        @media (prefers-reduced-motion: reduce) {
+          .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%) }
+          [data-r],[data-r].in{opacity:1!important;transform:none!important;transition:none!important}
+        }
       `}</style>
+      <noscript><style>{`[data-r]{opacity:1!important;transform:none!important}`}</style></noscript>
       <SiteNav active="events" />
-      <CrmLogin />
 
       {/* The date and the count, kept in view. Not a link, so it does not take
           the tap that belongs to the menu behind it. */}
@@ -433,10 +466,10 @@ export default function EventPublic({
       {(c.sections || ["teaser", "acts", "day", "ground", "partners", "visit", "gallery", "rsvp"]).map((key) => {
         switch (key) {
           case "teaser":
-            return c.teaser ? <Teaser key={key} teaser={c.teaser} slug={event.slug} /> : null
+            return c.teaser ? <div key={key} data-r=""><Teaser teaser={c.teaser} slug={event.slug} /></div> : null
           case "acts":
             return (
-              <div key={key}>
+              <div key={key} data-r="">
       {acts.map((a) => (
         <Act key={a.id} act={a} slug={event.slug} open={open === a.id} onToggle={() => setOpen(open === a.id ? null : a.id)} />
       ))}
@@ -444,7 +477,7 @@ export default function EventPublic({
             )
           case "day":
             return day.length === 0 ? null : (
-              <div key={key}>
+              <div key={key} data-r="">
 <section id="the-day" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>The running order</p>
@@ -463,7 +496,7 @@ export default function EventPublic({
             )
           case "ground":
             return ground.length === 0 ? null : (
-              <div key={key}>
+              <div key={key} data-r="">
 <section id="the-ground" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
@@ -483,7 +516,7 @@ export default function EventPublic({
             )
           case "partners":
             return partners.sponsors.length === 0 && partners.vendors.length === 0 ? null : (
-              <div key={key}>
+              <div key={key} data-r="">
 <section id="partners-list" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>Confirmed so far</p>
@@ -517,25 +550,25 @@ export default function EventPublic({
               </div>
             )
           case "land":
-            return c.land ? <Band key={key} band={c.land} slug={event.slug} /> : null
+            return c.land ? <div key={key} data-r=""><Band band={c.land} slug={event.slug} /></div> : null
           case "why":
             return c.why ? (
-              <Band key={key} band={c.why} slug={event.slug}
-                    mark={b.logo ? <RanchMark src={b.logoOnDark || b.logo} alt={b.name || event.name} width={70} ratio={475 / 748} align="left" /> : undefined} />
+              <div key={key} data-r=""><Band band={c.why} slug={event.slug}
+                    mark={b.logo ? <RanchMark src={b.logoOnDark || b.logo} alt={b.name || event.name} width={70} ratio={475 / 748} align="left" /> : undefined} /></div>
             ) : null
           case "visit":
             return (
-              <section key={key} id="ops" style={{ scrollMarginTop: 96, padding: "clamp(40px,7vh,86px) clamp(16px,5vw,40px) clamp(10px,2vh,24px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
+              <div key={key} data-r=""><section id="ops" style={{ scrollMarginTop: 96, padding: "clamp(40px,7vh,86px) clamp(16px,5vw,40px) clamp(10px,2vh,24px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
                 <div style={{ maxWidth: 1180, margin: "0 auto" }}>
                   <VisitOps />
                 </div>
-              </section>
+              </section></div>
             )
           case "gallery":
-            return <RanchGallery key={key} accent="var(--accent)" />
+            return <div key={key} data-r=""><RanchGallery accent="var(--accent)" /></div>
           case "rsvp":
             return (
-              <div key={key}>
+              <div key={key} data-r="">
       <section id="rsvp" style={{ scrollMarginTop: 96, padding: "clamp(48px,8vw,90px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
         <div style={{ maxWidth: 860, margin: "0 auto" }}>
           <RsvpBlock eventId={event.id} accent="var(--accent)" fill="var(--accent-strong)" onFill="var(--on-accent)" source="event-page" />

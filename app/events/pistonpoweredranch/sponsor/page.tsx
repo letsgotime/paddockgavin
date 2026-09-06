@@ -24,6 +24,7 @@ export default function Page() {
       body={[
         "Fourteen curated acres an hour south of Nashville, on a working ranch that opens for one Saturday.",
         "Presenting, Title, Secondary and Supporting positions are available, and Community Partner for those who back the day without a campaign. Pricing is a conversation, not a rate card, because what a partner needs is rarely what a sheet lists.",
+        "Twenty hosted seats sit beside the sponsorship, in two rooms: The Terrace, on the rail above the show field, and The Owner's Table, which goes further out.",
       ]}
       img="/images/ranch/ppr-pasture.jpg"
       focal="center 58%"
@@ -37,6 +38,7 @@ export default function Page() {
         { t: "Title Sponsor", b: "The lead position on the field, on the collateral, and at the gate." },
         { t: "Secondary and Supporting", b: "A named place on the field and in everything that carries the day." },
         { t: "Community Partner", b: "Backing for the school and the day, named as such." },
+        { t: "Twenty hosted seats", b: "The Terrace: a shaded tent, table service and ranch raised Angus. The Owner's Table adds the quiet ride out and time with Oscar. Ask for the details." },
         { t: "Tell us the goal", b: "What you want the day to do for you, and we will build the position around it." },
       ]}
       note="A share of every net dollar goes to Community Elementary School. Your name sits beside that."

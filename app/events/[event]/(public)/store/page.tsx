@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import StoreFront from "./StoreFront"
+import { PageBackdrop } from "@/components/page-backdrop"
 import { loadEvent } from "@/lib/events/load"
 import { publicUrl } from "@/lib/events/types"
 import { storeItems } from "@/lib/shop/store"
@@ -51,5 +52,10 @@ export default async function StorePage({ params }: { params: Promise<{ event: s
   const { event } = await params
   const e = await loadEvent(event)
   if (!e) notFound()
-  return <StoreFront event={e} items={storeItems(e)} />
+  return (
+    <>
+      <PageBackdrop src="/images/ranch/ppr-barn.jpg" pos="center 50%" opacity={0.18} />
+      <StoreFront event={e} items={storeItems(e)} />
+    </>
+  )
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { loadEvent } from "@/lib/events/load"
 import { loadRoster, rosterCounts } from "@/lib/events/roster"
 import { ranchShare } from "@/lib/events/ranch-share"
+import { PageBackdrop } from "@/components/page-backdrop"
 
 /**
  * The field: which cars are actually coming.
@@ -44,9 +45,11 @@ export default async function Entries({ params }: { params: Promise<{ event: str
   const pending = counts?.pending ?? 0
 
   return (
+    <>
+    <PageBackdrop src="/images/ranch/ppr-light.jpg" pos="center 45%" opacity={0.18} />
     <main
       style={{
-        background: "var(--ink, #0A1523)",
+        background: "linear-gradient(180deg, rgba(10,21,35,.8), rgba(10,21,35,.95))",
         minHeight: "100dvh",
         fontFamily: BODY,
         padding: "max(28px, env(safe-area-inset-top)) 16px max(48px, env(safe-area-inset-bottom))",
@@ -88,5 +91,6 @@ export default async function Entries({ params }: { params: Promise<{ event: str
         </p>
       </div>
     </main>
+    </>
   )
 }

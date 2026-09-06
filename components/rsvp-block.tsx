@@ -215,8 +215,8 @@ export function RsvpBlock({
       <div style={{ ...kicker, color: accent }}>Free to attend</div>
       <h3 style={h3}>Tell us you are coming</h3>
       <p style={lede}>
-        There is no ticket and no charge. The count is what tells us how much food to cook and how
-        many restrooms to hire, so saying so genuinely helps.
+        There is no ticket and no charge. The count tells us how much food to cook and how many
+        restrooms to hire.
       </p>
 
       <form onSubmit={send} style={{ display: "grid", gap: 10, marginTop: 16 }}>

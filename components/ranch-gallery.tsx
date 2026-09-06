@@ -76,8 +76,8 @@ export function RanchGallery({ accent = "#F2C94C" }: { accent?: string }) {
         <p style={{ margin: "13px 0 0", fontSize: 16.5, lineHeight: 1.55, color: "#a9b4c2",
           maxWidth: "58ch" }}>
           It is a working cattle ranch every other day of the year. The gate, the rail, the bins and
-          the herd are all still there on the tenth of October, and the three hundred cars park
-          among them rather than on top of them.
+          the herd are all still there on the tenth of October. The three hundred cars park among
+          them, not on top of them.
         </p>
       </div>
 
