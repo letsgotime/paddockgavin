@@ -48,14 +48,14 @@ export function HomeHero() {
         </div>
 
         {/* Proof strip: the four numbers, once */}
-        <dl className="pg-proof" style={{ margin: "clamp(14px,2vw,22px) 0 0" }}>
+        <dl className="pg-proof pg-e1" style={{ margin: "clamp(14px,2vw,22px) 0 0" }}>
           {[
             { v: "29",   k: "cars owned" },
             { v: "78",   k: "found for others" },
             { v: "200+", k: "events run" },
             { v: "~1M",  k: "views a month" },
           ].map((s) => (
-            <div key={s.k} className="pg-e0" style={{ padding: "14px 16px 12px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)" }}>
+            <div key={s.k} style={{ padding: "14px 16px 12px" }}>
               <dt style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1, letterSpacing: "-.03em", color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{s.v}</dt>
               <dd style={{ margin: "6px 0 0", fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".16em", textTransform: "uppercase", color: "#B4B6B2" }}>{s.k}</dd>
             </div>
