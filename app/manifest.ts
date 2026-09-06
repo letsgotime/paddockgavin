@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "PaddockGavin",
     short_name: "PaddockGavin",
-    description: "Lot operations and events by day. Software by night. Nashville, Tennessee.",
+    description: "Events and client work by day. Code at night. Nashville, Tennessee.",
     start_url: "/",
     display: "standalone",
     background_color: "#0A0E1A",

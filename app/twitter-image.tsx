@@ -99,7 +99,7 @@ export default function OGImage() {
               maxWidth: 900,
             }}
           >
-            Two shifts.
+            Automotive. Tech.
             <br />
             <span style={{ color: "#F8B800" }}>Lifestyle.</span>
           </div>

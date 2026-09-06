@@ -646,7 +646,7 @@ export default function ScoreboardPage() {
                 color: "#CFE4F4",
               }}
             >
-              Day shift is somewhere else
+              The other side
             </span>
             <h2
               style={{
@@ -671,7 +671,7 @@ export default function ScoreboardPage() {
                 maxWidth: "54ch",
               }}
             >
-              Lot operations and events are the other half of the work. That side lives on its own pages.
+Events and the client work around them are the other half. That side lives on its own pages.
             </p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>

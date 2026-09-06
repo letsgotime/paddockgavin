@@ -108,7 +108,7 @@ const BASE: Metadata = {
     creator: "@PaddockGavin",
     images: [`${SITE}/opengraph-image`],
   },
-  keywords: ["exotic car broker Nashville", "sell my exotic car", "exotic car sourcing Tennessee", "exotic car content creator Tennessee", "paddock gavin", "automotive software Nashville", "luxury car lot operations", "exotic car events Nashville"],
+  keywords: ["exotic car broker Nashville", "sell my exotic car", "exotic car sourcing Tennessee", "exotic car content creator Tennessee", "paddock gavin", "automotive software Nashville", "automotive events Nashville", "exotic car events Nashville"],
   robots: { index: true, follow: true },
   manifest: "/manifest.webmanifest",
   other: {

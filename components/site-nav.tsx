@@ -18,7 +18,7 @@ interface NavGroup { title: string; tone: string; items: NavItem[] }
  */
 const NAV_GROUPS: NavGroup[] = [
   { title: "Day shift", tone: "#F2C94C", items: [
-    { key: "lotops", href: "/lot-ops", label: "Lot Ops in Action", note: "Gate at 8" },
+    { key: "book",   href: "/book",    label: "Book the floor",    note: "Private events" },
     { key: "events", href: "/events",  label: "Events",            note: "Book the floor" },
     { key: "intake", href: "/intake",  label: "Find me a car",     note: "Sourcing, retail or wholesale" },
   ]},
