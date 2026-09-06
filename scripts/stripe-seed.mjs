@@ -14,6 +14,12 @@ if (!KEY) {
   console.error("Set STRIPE_SECRET_KEY to the key for the mode you are seeding.")
   process.exit(1)
 }
+if (/PASTE|HERE|xxx/i.test(KEY) || !/^sk_(live|test)_[A-Za-z0-9]{20,}$/.test(KEY)) {
+  console.error("That is not a Stripe secret key. Replace the placeholder with the real key:")
+  console.error("  Stripe dashboard, Developers, API keys, Secret key, Reveal, copy the value that starts sk_live_")
+  console.error("  then run:  STRIPE_SECRET_KEY=sk_live_<the key> node scripts/stripe-seed.mjs")
+  process.exit(1)
+}
 const MODE = KEY.startsWith("sk_live_") ? "live" : "test"
 const EVENT = "pistonpoweredranch"
 
@@ -40,6 +46,19 @@ async function stripe(path, body) {
 }
 
 console.log(`Seeding ${MODE} mode for ${EVENT}`)
+process.on("uncaughtException", (err) => {
+  const msg = err?.message || String(err)
+  if (/Invalid API Key|No such|api_key/i.test(msg)) {
+    console.error(`Stripe refused the key: ${msg}`)
+    console.error("Check it is the live Secret key from the API keys page, copied whole, with no spaces.")
+  } else if (/cannot currently make live charges|activate/i.test(msg)) {
+    console.error(`Stripe said: ${msg}`)
+    console.error("The account is not activated for live payments yet. Finish activation in the Stripe dashboard, then run this again.")
+  } else {
+    console.error(`Stripe said: ${msg}`)
+  }
+  process.exit(1)
+})
 for (const it of ITEMS) {
   const found = await stripe(`/prices?lookup_keys[]=${encodeURIComponent(it.lookupKey)}&active=true&limit=1`)
   if (found.data?.length) {
