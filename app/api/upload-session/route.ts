@@ -88,7 +88,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ enforced: false, session: null })
   }
 
-  if (!result.success || result.action !== "submit-media" || !expectedHostnames.has(String(result.hostname))) {
+  /* Two widgets buy sessions here: the status page's, drawn as submit-media,
+     and the entry, stall and sponsor forms', drawn as apply-<surface>. The
+     gate used to accept only the first, which refused every photograph on
+     the entry form the moment the secret went in. */
+  const ACTION = /^(submit-media|apply-[a-z-]{2,30})$/
+  if (!result.success || !ACTION.test(String(result.action || "")) || !expectedHostnames.has(String(result.hostname))) {
+    console.warn("[turnstile] upload session refused", { success: result.success, action: result.action, hostname: result.hostname, codes: result["error-codes"] })
     return NextResponse.json({ error: "Verification failed" }, { status: 403 })
   }
 

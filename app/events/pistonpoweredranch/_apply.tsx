@@ -359,6 +359,9 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
      photograph was still going up when all five were done. */
   const uploading = useRef(false)
   const sessionRef = useRef<{ value: string | null; until: number } | null>(null)
+  /* The widget's token as a ref, so an upload that starts before the box
+     has settled can wait for it instead of asking with nothing. */
+  const tsLive = useRef("")
   const [ts, setTs] = useState("")
   const [tsState, setTsState] = useState<"loading" | "ready" | "solved" | "failed">("loading")
   const tsRef = useRef<HTMLDivElement>(null)
@@ -394,14 +397,17 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
           size: "flexible",
           action: `apply-${surface}`,
           callback: (t: string) => {
+            tsLive.current = t
             setTs(t)
             setTsState("solved")
           },
           "expired-callback": () => {
+            tsLive.current = ""
             setTs("")
             setTsState("ready")
           },
           "error-callback": () => {
+            tsLive.current = ""
             setTs("")
             setTsState("failed")
           },
@@ -433,10 +439,17 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     const held = sessionRef.current
     if (held && held.until > Date.now()) return held.value
     if (!draft.current) draft.current = draftId()
+    /* Photographs are usually picked before the box has finished. Give it
+       up to eight seconds rather than asking for a session with no token. */
+    let token = tsLive.current || ts
+    for (let i = 0; !token && i < 40; i++) {
+      await new Promise((r) => setTimeout(r, 200))
+      token = tsLive.current
+    }
     const res = await fetch("/api/upload-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: ts || null, draftId: draft.current, submissionType: DB_TYPE[form.kind] ?? "vehicle" }),
+      body: JSON.stringify({ token: token || null, draftId: draft.current, submissionType: DB_TYPE[form.kind] ?? "vehicle" }),
     })
     const j = (await res.json().catch(() => ({}))) as { enforced?: boolean; session?: string; expiresIn?: number; error?: string }
     if (!res.ok) throw new Error(j.error || "The human check did not pass. Tick the box and try again.")
@@ -591,6 +604,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
           statusToken,
           consent,
           turnstileToken: ts,
+          session: sessionRef.current?.value ?? null,
           fax: f.fax,
         }),
       })

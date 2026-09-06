@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { human } from "@/lib/ranch/human"
+import { verifySession, sessionSecret } from "@/lib/ranch/upload-session"
 import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "@/lib/email/ranch"
 import { ranchDb, consentFrom } from "@/lib/ranch/ranch-db"
 
@@ -59,6 +60,8 @@ interface Body {
   /** The three consents. See lib/ranch/ranch-db.ts. */
   consent?: unknown
   turnstileToken?: string
+  /** The signed upload session, when photographs went up before the send. */
+  session?: string
   /** The honeypot. Anything in it and the form was filled by a script. */
   fax?: string
 }
@@ -254,7 +257,14 @@ export async function POST(req: Request) {
 
     const surface = b.kind === "entry" ? "entry" : b.kind === "vendor-application" ? "vendor" : "sponsor"
     const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || null
-    const check = await human(b.turnstileToken, ip, `apply-${surface}`, "apply")
+    /* A submission whose photographs already passed the human check holds a
+       signed session for its draft, and that session is the proof: the
+       widget's token was spent buying it, and Cloudflare would answer
+       "duplicate" if it were verified again. A form with nothing to upload
+       never bought a session and presents the token as before. */
+    const held = typeof b.session === "string" && b.session ? (verifySession(b.session, sessionSecret()) as { e?: number } | null) : null
+    const sessionOk = Boolean(held && (typeof held.e !== "number" || held.e > Date.now()))
+    const check = sessionOk ? { ok: true } : await human(b.turnstileToken, ip, `apply-${surface}`, "apply")
     if (check && !check.ok) {
       console.warn("[apply] turnstile refused", { kind: b.kind, why: check.why })
       return NextResponse.json(
