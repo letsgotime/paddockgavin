@@ -281,25 +281,41 @@ export default function EventPublic({
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const els = Array.from(document.querySelectorAll<HTMLElement>("[data-r]"))
-    if (reduce) {
+    if (reduce || !("IntersectionObserver" in window)) {
       els.forEach((e) => e.classList.add("in"))
       return
+    }
+    /* Two ways to notice a section arriving, so no callback that never
+       fires can leave one hidden: the observer, and a plain measure on every
+       scroll. A blanket timer would show everything at once a second after
+       load, which is no reveal at all. */
+    const show = (e: HTMLElement) => e.classList.add("in")
+    const check = () => {
+      const h = window.innerHeight
+      els.forEach((e) => {
+        if (e.classList.contains("in")) return
+        const r = e.getBoundingClientRect()
+        if (r.top < h * 0.92 && r.bottom > 0) show(e)
+      })
     }
     const io = new IntersectionObserver(
       (en) =>
         en.forEach((x) => {
           if (x.isIntersecting) {
-            x.target.classList.add("in")
+            show(x.target as HTMLElement)
             io.unobserve(x.target)
           }
         }),
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
     )
     els.forEach((e) => io.observe(e))
-    const fallback = window.setTimeout(() => els.forEach((e) => e.classList.add("in")), 1600)
+    check()
+    window.addEventListener("scroll", check, { passive: true })
+    window.addEventListener("resize", check)
     return () => {
       io.disconnect()
-      window.clearTimeout(fallback)
+      window.removeEventListener("scroll", check)
+      window.removeEventListener("resize", check)
     }
   }, [])
 
