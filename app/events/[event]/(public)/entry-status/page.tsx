@@ -89,7 +89,8 @@ export default async function EntryStatusPage({
     )
   }
 
-  const s = statusCopy(entry.status)
+  const s = statusCopy(entry.status, entry.type)
+  const kind = entry.type === "vendor" ? "stall" : entry.type === "sponsor" ? "partner" : "car"
   const accent = TONE[s.tone]
   const submitted = new Date(entry.submittedAt).toLocaleDateString("en-US", {
     month: "long", day: "numeric", year: "numeric", timeZone: "America/Chicago",
@@ -107,8 +108,8 @@ export default async function EntryStatusPage({
 
       <dl style={{ margin: 0, display: "grid", gap: 1, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 14, overflow: "hidden" }}>
         {[
-          ["Entered by", entry.applicantName],
-          ["The car", entry.subject],
+          [kind === "car" ? "Entered by" : "Enquiry from", entry.applicantName],
+          [kind === "car" ? "The car" : kind === "stall" ? "The stall" : "The brand", entry.subject],
           ["Sent in", submitted],
         ]
           .filter(([, v]) => Boolean(v))
@@ -134,7 +135,7 @@ export default async function EntryStatusPage({
       )}
 
       <p style={{ margin: "30px 0 0", fontSize: 15, lineHeight: 1.6, color: "#7E8B99" }}>
-        This page always shows where your entry stands. Keep the link.
+        This page always shows where your {kind === "car" ? "entry" : "enquiry"} stands. Keep the link.
       </p>
       <p style={{ margin: "18px 0 0" }}>
         <a href="https://pistonpoweredranch.com" rel="noreferrer" style={{ display: "inline-block", font: "700 14px/1 inherit", letterSpacing: ".04em", textTransform: "uppercase", color: "#FFFFFF", background: "#E5141A", borderRadius: 11, padding: "14px 22px", textDecoration: "none" }}>
