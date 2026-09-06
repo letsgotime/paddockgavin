@@ -1,6 +1,71 @@
 import Link from "next/link"
+import { headers } from "next/headers"
 
-export default function NotFound() {
+/**
+ * Two doors, two wrong turns. The middleware stamps the ranch's own address
+ * with x-pg-brand, and the page reads it here so that a mistyped link on
+ * pistonpoweredranch.com lands on the ranch, in its own colours and with its
+ * own ways back in, rather than on the paddock with the other brand's name
+ * in the tab.
+ */
+export default async function NotFound() {
+  const h = await headers()
+  if (h.get("x-pg-brand") === "pistonpoweredranch") return <RanchNotFound />
+  return <PaddockNotFound />
+}
+
+const CINZEL = "Cinzel, 'Trajan Pro', 'Times New Roman', serif"
+const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+
+function RanchNotFound() {
+  const doors = [
+    { href: "/entry", label: "Enter a car" },
+    { href: "/vendor", label: "Take a stall" },
+    { href: "/sponsor", label: "Sponsor the day" },
+    { href: "/#rsvp", label: "Tell us you are coming" },
+  ]
+  return (
+    <div style={{ minHeight: "100svh", background: "#0A1523", display: "flex", flexDirection: "column", fontFamily: ARCHIVO }}>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" />
+      <div aria-hidden="true" style={{ display: "flex", height: 5 }}>
+        <i style={{ flex: "1 1 0", background: "#E5141A" }} />
+        <i style={{ flex: "1 1 0", background: "#1424A1" }} />
+        <i style={{ flex: "1 1 0", background: "#FAF8F4" }} />
+      </div>
+      <main style={{ flex: "1 1 auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(20px,5vw,40px)" }}>
+        <div className="pg-e1" style={{ position: "relative", maxWidth: 640, width: "100%", borderRadius: 18, background: "rgba(17,27,40,.58)", border: "1px solid rgba(255,255,255,.12)", padding: "clamp(28px,5vw,48px)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/rj-mark-320.png" alt="" width={72} height={72} style={{ display: "block", width: 72, height: "auto", marginBottom: 18 }} />
+          <p style={{ margin: "0 0 14px", display: "inline-flex", alignItems: "center", gap: 12, fontFamily: MONO, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#FF1A21" }}>
+            <i aria-hidden="true" style={{ width: 26, height: 3, background: "#E5141A", display: "block" }} />
+            Off the map
+          </p>
+          <h1 style={{ margin: "0 0 14px", fontFamily: CINZEL, fontWeight: 900, fontSize: "clamp(34px,6vw,58px)", lineHeight: 1.02, letterSpacing: "-.01em", color: "#FFFFFF", textWrap: "balance" }}>
+            <span style={{ display: "block" }}>Wrong gate.</span>
+            <span style={{ display: "block", color: "#FF1A21" }}>Nothing parked here.</span>
+          </h1>
+          <p style={{ margin: "0 0 26px", fontSize: 17.5, lineHeight: 1.6, color: "#B4B6B2", maxWidth: "48ch" }}>
+            That page is not on the ranch. The gate is back this way.
+          </p>
+          <Link href="/" style={{ display: "inline-flex", alignItems: "center", fontWeight: 800, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: "#E5141A", color: "#FFFFFF", padding: "14px 24px", borderRadius: 11, textDecoration: "none" }}>
+            Back to the ranch
+          </Link>
+          <div style={{ margin: "28px 0 0", padding: "22px 0 0", borderTop: "1px solid rgba(255,255,255,.12)", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(170px,46%),1fr))", gap: 10 }}>
+            {doors.map((d) => (
+              <Link key={d.href} href={d.href} style={{ display: "flex", alignItems: "center", gap: 12, background: "rgba(0,0,0,.28)", border: "1px solid rgba(255,255,255,.13)", padding: "13px 15px", borderRadius: 11, color: "#DDE3EB", textDecoration: "none" }}>
+                <i aria-hidden="true" style={{ flexShrink: 0, width: 10, height: 10, background: "#E5141A", transform: "rotate(45deg)", display: "block" }} />
+                <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase" }}>{d.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}
+
+function PaddockNotFound() {
   return (
     <div style={{ minHeight: "100svh", background: "#0E1A2A", display: "flex", flexDirection: "column" }}>
       {/* Speed stripe bar */}

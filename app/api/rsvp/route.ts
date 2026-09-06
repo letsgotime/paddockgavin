@@ -3,6 +3,7 @@ import { ranchDb, consentFrom } from "@/lib/ranch/ranch-db"
 import { EVENT_ID } from "@/lib/ranch/neon"
 import { renderRanchEmail, renderRanchText } from "@/lib/email/ranch"
 import { ranchTemplate } from "@/lib/email/ranch-templates"
+import { human, callerIp } from "@/lib/ranch/human"
 
 /**
  * The RSVP, recorded on the server.
@@ -31,6 +32,8 @@ interface Body {
   consent?: unknown
   /** The honeypot. Anything in it and a script filled the form. */
   fax?: string
+  /** Cloudflare's token from the widget on the form. */
+  turnstileToken?: string
 }
 
 export async function POST(req: Request) {
@@ -41,6 +44,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "bad_json" }, { status: 400 })
   }
   if ((b.fax ?? "").trim()) return NextResponse.json({ ok: true })
+
+  /* The same human check the entry, stall and sponsor forms pass. A bot that
+     fills this form does not get counted, emailed, or into the headcount the
+     caterer cooks for. */
+  const check = await human(b.turnstileToken, callerIp(req), "rsvp", "rsvp")
+  if (check && !check.ok) {
+    console.warn("[rsvp] human check refused", check.why)
+    return NextResponse.json(
+      { error: "verification", detail: "The human check did not pass. Tick the box again and resend." },
+      { status: 400 },
+    )
+  }
 
   const name = String(b.name ?? "").trim().slice(0, 120)
   const email = String(b.email ?? "").trim().toLowerCase().slice(0, 200)

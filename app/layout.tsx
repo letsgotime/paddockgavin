@@ -58,10 +58,30 @@ export async function generateMetadata(): Promise<Metadata> {
   const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
   return {
     ...BASE,
+    ...(ranch ? RANCH_DEFAULTS : {}),
     icons: ranch ? RANCH_ICONS : PG_ICONS,
     manifest: ranch ? "/brand/ranch.webmanifest" : "/manifest.webmanifest",
     appleWebApp: { ...(BASE.appleWebApp as object), title: ranch ? "Piston Powered Ranch" : "PaddockGavin" },
   }
+}
+
+/* What a ranch address says about itself when a page sets no title of its
+   own, the not-found page above all. Before this, pistonpoweredranch.com/rsvp
+   answered with the PaddockGavin title in the tab. */
+const RANCH_DEFAULTS: Metadata = {
+  title: {
+    default: "The Piston Powered Ranch",
+    template: "%s · The Piston Powered Ranch",
+  },
+  description:
+    "The Piston Powered Ranch at Rancho Jaramillo, Unionville, Tennessee. Saturday 10 October 2026. Free to attend.",
+  openGraph: {
+    title: "The Piston Powered Ranch",
+    description: "Rancho Jaramillo, Unionville, Tennessee. Saturday 10 October 2026. Free to attend.",
+    siteName: "The Piston Powered Ranch",
+    locale: "en_US",
+    type: "website",
+  },
 }
 
 const BASE: Metadata = {

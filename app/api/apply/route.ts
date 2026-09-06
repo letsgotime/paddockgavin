@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { human } from "@/lib/ranch/human"
 import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "@/lib/email/ranch"
 import { ranchDb, consentFrom } from "@/lib/ranch/ranch-db"
 
@@ -234,38 +235,6 @@ function deskDoc(kind: Kind, b: Body, name: string, org: string, reach: string, 
   }
 }
 
-/** Cloudflare's answer on a token, or null when this deployment has no secret. */
-async function human(token: string | undefined, ip: string | null, action: string): Promise<{ ok: boolean; why?: string } | null> {
-  const secret = process.env.TURNSTILE_SECRET
-  if (!secret) return null
-  if (!token) return { ok: false, why: "missing" }
-  try {
-    const body = new URLSearchParams({ secret, response: token })
-    if (ip) body.set("remoteip", ip)
-    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: body.toString(),
-    })
-    const j = (await res.json()) as { success?: boolean; action?: string; "error-codes"?: string[] }
-    /* A secret Cloudflare rejects is our fault. Refusing every genuine vendor,
-       sponsor and entrant because a key is wrong is far worse than letting a
-       bot through, and the honeypot still stands either way. */
-    if (!j.success && (j["error-codes"] || []).includes("invalid-input-secret")) {
-      console.error("[apply] TURNSTILE_SECRET is not a key Cloudflare accepts; the check is open until it is fixed")
-      return { ok: true }
-    }
-    if (!j.success) return { ok: false, why: (j["error-codes"] || []).join(",") || "failed" }
-    if (j.action && j.action !== action) return { ok: false, why: "wrong-action" }
-    return { ok: true }
-  } catch {
-    /* Cloudflare unreachable is not the applicant's fault. Let it through and
-       say so in the log, rather than turn away a real person. */
-    console.warn("[apply] turnstile siteverify unreachable")
-    return { ok: true }
-  }
-}
-
 export async function POST(req: Request) {
   try {
     const b: Body = await req.json()
@@ -285,7 +254,7 @@ export async function POST(req: Request) {
 
     const surface = b.kind === "entry" ? "entry" : b.kind === "vendor-application" ? "vendor" : "sponsor"
     const ip = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim() || null
-    const check = await human(b.turnstileToken, ip, `apply-${surface}`)
+    const check = await human(b.turnstileToken, ip, `apply-${surface}`, "apply")
     if (check && !check.ok) {
       console.warn("[apply] turnstile refused", { kind: b.kind, why: check.why })
       return NextResponse.json(

@@ -67,6 +67,15 @@ export function middleware(req: NextRequest) {
        This page reads the row on the server and needs nothing from the
        visitor but the link. */
     url.pathname = `/events/${slug}/entry-status`
+  } else if (path === "/rsvp") {
+    /* Typed by people and printed on things. The form lives on the landing
+       page, so this is the one short path that is a redirect rather than a
+       rewrite: a rewrite cannot carry the hash that scrolls to it. */
+    const to = req.nextUrl.clone()
+    to.pathname = "/"
+    to.search = ""
+    to.hash = "rsvp"
+    return NextResponse.redirect(to, 308)
   } else if (SHORT_PATHS.has(path)) {
     url.pathname = `/events/${slug}${path}`
   }

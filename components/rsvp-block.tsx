@@ -1,26 +1,41 @@
 "use client"
 
-import { useState } from "react"
-import { db } from "@/lib/crm/client"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * "Tell us you are coming."
  *
- * This is the one thing the old /show page did that the combined page did not:
- * it took an RSVP where the visitor already was, instead of sending them to
- * another domain to do it. Entry is free, so this is a headcount rather than a
- * ticket, and the headcount is what tells the caterer, the restroom contract
- * and the parking marshals what Saturday looks like.
+ * Entry is free, so this is a headcount rather than a ticket, and the
+ * headcount is what tells the caterer, the restroom contract and the parking
+ * marshals what Saturday looks like.
  *
- * Writes straight to public.spectators. The insert policy there accepts an
- * anonymous write, which is deliberate: asking a spectator to make an account
- * to say they are coming would cost more names than it protects.
+ * Recorded on the server through /api/rsvp, which keeps one row per address,
+ * stores the three consents with it, and sends the "you are counted" email.
+ * The form used to write the row itself through the browser on an anonymous
+ * token that the auth move took away, so it failed quietly for everyone.
+ *
+ * Two things stand between a script and the list: a honeypot field no person
+ * sees, and the same Cloudflare human check the entry, stall and sponsor
+ * forms pass. The server decides what to do with a submission that carries
+ * no token; the form itself never refuses a person for a box that did not
+ * draw.
  */
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+const TURNSTILE_SITEKEY = "0x4AAAAAAEkdaaU0WCZzdgGE"
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string
+      reset: (id?: string) => void
+    }
+  }
+}
 
 type State = "idle" | "sending" | "done" | "error"
+type Consent = { sms: boolean; event_email: boolean; pg_events: boolean }
 
 export function RsvpBlock({
   eventId,
@@ -45,53 +60,121 @@ export function RsvpBlock({
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [party, setParty] = useState("2")
+  const [consent, setConsent] = useState<Consent>({ sms: false, event_email: true, pg_events: false })
+  const [fax, setFax] = useState("")
   const [state, setState] = useState<State>("idle")
+  const [again, setAgain] = useState(false)
   const [why, setWhy] = useState("")
+
+  /* The human check, rendered explicitly so the token lands in state. */
+  const [ts, setTs] = useState("")
+  const [tsState, setTsState] = useState<"loading" | "ready" | "solved" | "failed">("loading")
+  const tsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    let gone = false
+    const render = () => {
+      if (gone || !tsRef.current || !window.turnstile) return
+      if (tsRef.current.childElementCount > 0) return
+      try {
+        window.turnstile.render(tsRef.current, {
+          sitekey: TURNSTILE_SITEKEY,
+          theme: "dark",
+          size: "flexible",
+          action: "rsvp",
+          callback: (t: string) => {
+            setTs(t)
+            setTsState("solved")
+          },
+          "expired-callback": () => {
+            setTs("")
+            setTsState("ready")
+          },
+          "error-callback": () => {
+            setTs("")
+            setTsState("failed")
+          },
+        })
+        setTsState((s) => (s === "solved" ? s : "ready"))
+      } catch {
+        setTsState("failed")
+      }
+    }
+    if (window.turnstile) {
+      render()
+      return () => {
+        gone = true
+      }
+    }
+    const existing = document.querySelector<HTMLScriptElement>('script[src^="https://challenges.cloudflare.com/turnstile"]')
+    if (existing) {
+      existing.addEventListener("load", render)
+      return () => {
+        gone = true
+        existing.removeEventListener("load", render)
+      }
+    }
+    const s = document.createElement("script")
+    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+    s.async = true
+    s.defer = true
+    s.addEventListener("load", render)
+    s.addEventListener("error", () => setTsState("failed"))
+    document.head.appendChild(s)
+    return () => {
+      gone = true
+    }
+  }, [])
 
   async function send(e: React.FormEvent) {
     e.preventDefault()
-    const client = db()
-    if (!client) {
+    setState("sending")
+    /* Every RSVP used to record a null source. The host, the path and any
+       campaign parameter are read here so the column is never empty. */
+    let where = source || "unknown"
+    try {
+      const u = new URL(window.location.href)
+      const tag = u.searchParams.get("utm_source") || u.searchParams.get("from") || u.searchParams.get("ref")
+      const at = u.hostname.replace(/^www\./, "") + u.pathname.replace(/\/$/, "")
+      where = [source, tag, at].filter(Boolean).join(" | ").slice(0, 120)
+    } catch {
+      /* keep the prop */
+    }
+    try {
+      const r = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventId,
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          party: Math.max(1, Math.min(20, Number(party) || 1)),
+          source: where,
+          consent,
+          fax,
+          turnstileToken: ts,
+        }),
+      })
+      const j = (await r.json().catch(() => ({}))) as { ok?: boolean; created?: boolean; error?: string; detail?: string }
+      if (!r.ok) {
+        setState("error")
+        setWhy(j?.detail || "That did not send. Try again, or come anyway: entry is free.")
+        if (j?.error === "verification") {
+          setTs("")
+          try {
+            window.turnstile?.reset()
+          } catch {
+            /* the widget draws again on its own */
+          }
+        }
+        return
+      }
+      setAgain(j?.created === false)
+      setState("done")
+    } catch {
       setState("error")
       setWhy("No connection. Try again in a moment.")
-      return
     }
-    setState("sending")
-    const r = await client.from("spectators").insert([
-      {
-        event_id: eventId,
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        party_size: Math.max(1, Math.min(20, Number(party) || 1)),
-        /* Every RSVP so far recorded a null source, so there is no way to tell
-           which post filled the field. The prop stays, but it is no longer the
-           only thing between us and knowing: the host, the path and any
-           campaign parameter are read here so the column is never empty. */
-        source: (function () {
-          try {
-            const u = new URL(window.location.href)
-            const tag =
-              u.searchParams.get("utm_source") ||
-              u.searchParams.get("from") ||
-              u.searchParams.get("ref")
-            const where = u.hostname.replace(/^www\./, "") + u.pathname.replace(/\/$/, "")
-            return [source, tag, where].filter(Boolean).join(" | ").slice(0, 120)
-          } catch {
-            return source || "unknown"
-          }
-        })(),
-      },
-    ])
-    if (r?.error) {
-      setState("error")
-      setWhy(
-        /duplicate|unique/i.test(r.error.message)
-          ? "You are already on the list, which is the right answer."
-          : "That did not send. Try again, or come anyway: entry is free.",
-      )
-      return
-    }
-    setState("done")
   }
 
   if (state === "done") {
@@ -99,12 +182,29 @@ export function RsvpBlock({
       <div className="pg-e1" style={wrap}>
         <div style={{ ...kicker, color: accent }}>You are counted</div>
         <p style={{ ...lede, marginTop: 10 }}>
-          Thank you, {name.trim().split(" ")[0] || "friend"}. Nothing else to do: entry is free and
-          there is no ticket. We will send parking and timings the week before.
+          {again
+            ? `Thank you, ${name.trim().split(" ")[0] || "friend"}. You were already on the list, and your count and your choices are updated. Entry is free and there is no ticket.`
+            : `Thank you, ${name.trim().split(" ")[0] || "friend"}. Nothing else to do: entry is free and there is no ticket. We will send parking and timings the week before.`}
         </p>
       </div>
     )
   }
+
+  const consentRow = (key: keyof Consent, label: string, note: string, locked?: boolean) => (
+    <label key={key} style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: locked ? "default" : "pointer" }}>
+      <input
+        type="checkbox"
+        checked={consent[key]}
+        disabled={locked}
+        onChange={(e) => setConsent({ ...consent, [key]: e.target.checked })}
+        style={{ width: 18, height: 18, marginTop: 2, flex: "0 0 auto", accentColor: solid }}
+      />
+      <span style={{ display: "grid", gap: 1 }}>
+        <span style={{ fontFamily: ARCHIVO, fontSize: 14, lineHeight: 1.4, color: "#EDF1F6" }}>{label}</span>
+        <span style={{ fontFamily: ARCHIVO, fontSize: 12.5, lineHeight: 1.45, color: "#8b95a3" }}>{note}</span>
+      </span>
+    </label>
+  )
 
   return (
     <div className="pg-e1" style={wrap}>
@@ -154,6 +254,24 @@ export function RsvpBlock({
             style={input}
           />
         </label>
+
+        {/* Nobody sees this field. A script that fills every input fills it. */}
+        <div aria-hidden="true" style={{ position: "absolute", left: -9999, width: 1, height: 1, overflow: "hidden" }}>
+          <label>
+            Fax
+            <input name="fax" tabIndex={-1} autoComplete="off" value={fax} onChange={(e) => setFax(e.target.value)} />
+          </label>
+        </div>
+
+        <div style={{ display: "grid", gap: 9, marginTop: 4, padding: "12px 14px 13px", border: "1px solid rgba(255,255,255,.13)", borderLeft: `3px solid ${solid}`, borderRadius: 12, background: "rgba(0,0,0,.22)" }}>
+          <span style={{ ...lbl, color: accent }}>How we may reach you</span>
+          {consentRow("event_email", "Emails about this event", "Parking and timings the week before. This is the one that makes the RSVP useful.", true)}
+          {consentRow("sms", "Text messages about the day", "Only for this event. Reply STOP at any time.")}
+          {consentRow("pg_events", "News of future PaddockGavin events", "A few times a year. Unsubscribe in one tap.")}
+        </div>
+
+        <div ref={tsRef} style={{ minHeight: tsState === "failed" ? 0 : 65, marginTop: 4 }} />
+
         <button
           type="submit"
           disabled={state === "sending"}
@@ -176,6 +294,7 @@ export function RsvpBlock({
 }
 
 const wrap: React.CSSProperties = {
+  position: "relative",
   padding: "24px 26px",
   borderRadius: 18,
   background: "rgba(17,27,40,.58)",
