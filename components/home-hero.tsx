@@ -31,10 +31,10 @@ export async function HomeHero() {
               Automotive &middot; Tech &middot; Lifestyle &middot; Nashville
             </p>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.02, letterSpacing: "-.025em", color: "#FFFFFF", textWrap: "balance" as never }}>
-              Automotive, tech, and the life around both.
+              Closer to the cars.
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.55, color: "#C4CBD6", maxWidth: "52ch" }}>
-              Gavin Brooks. I buy cars and keep them, detail them, and film the ones my friends and clients bring me. I run the events. I build the software. Sourcing a car for somebody comes with all of it, so I do that too.
+              If you are a fan of these cars and have only seen them through a screen, that is what the days are for. Standing close enough to hear one warm up, a car pulling on a mobile dyno, a lap of your own. And if you are curious about owning one, the right car holds its value and pays the rest back in the driving.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px", paddingTop: 6 }}>
               <Link href="#wall" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>

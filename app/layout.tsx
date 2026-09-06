@@ -90,12 +90,12 @@ const BASE: Metadata = {
     template: "%s · PaddockGavin",
   },
   description:
-    "Gavin Brooks, Nashville. Automotive, tech and the life around both. Cars I buy and detail, cars friends and clients bring me, the events I run, and the software I build.",
+    "Closer to the cars. If you have only seen them through a screen, the days out are where you stand next to one, hear it pull on a mobile dyno, or take a lap of your own. Nashville, Tennessee.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
     title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
-    description: "Gavin Brooks. Cars I buy and detail, cars friends and clients bring me, the events I run, and the software I build. Nashville, Tennessee.",
+    description: "Closer to the cars. Standing next to one, hearing it on a mobile dyno, taking a lap of your own. Nashville, Tennessee.",
     siteName: "PaddockGavin",
     locale: "en_US",
     type: "website",

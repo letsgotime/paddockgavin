@@ -24,7 +24,7 @@ export function HomeAskMe() {
   }
 
   return (
-    <Section id="contact" eyebrow="Ask me anything" tone="#00D2BE" title="Send it and I'll answer">
+    <Section id="contact" eyebrow="Questions" tone="#00D2BE" title="If you have one, send it">
       <p style={{ margin: 0 }}>
         A question for the camera, a date you want on the floor, a car you want found, or a brand deal. One inbox for all of it, and I&rsquo;m the one reading it.
       </p>
