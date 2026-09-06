@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
-const BLURB = "Closer to the cars. If you have only seen them through a screen, the days out are where you stand next to one, hear it pull on a mobile dyno, or take a lap of your own. Nashville, Tennessee."
+const BLURB = "Most people only see these cars on a screen. The days get you closer: a dream car within reach, a dyno pull you can feel, a lap of the track. Nashville."
 
 export const metadata: Metadata = {
   title: "Automotive, tech and lifestyle, Nashville · PaddockGavin",
   description: BLURB,
   openGraph: {
     title: "Automotive, tech and lifestyle, Nashville · PaddockGavin",
-    description: "Closer to the cars. Standing next to one, hearing it on a mobile dyno, taking a lap of your own. Nashville, Tennessee.",
+    description: "Most people only see these cars on a screen. The days get you closer. Nashville, Tennessee.",
     url: "https://paddockgavin.com",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
   },
@@ -44,7 +44,7 @@ export default function HomePage() {
       </Stage>
 
       <Stage sec="cars">
-        <Section id="cars" eyebrow="The cars" tone="#F2C94C" title="If you want to see one properly" cta={{ href: "/cars", label: "The garage" }} link={{ href: "/gallery", label: "The gallery" }}>
+        <Section id="cars" eyebrow="The cars" tone="#F2C94C" title="The cars, and what they are like to live with" cta={{ href: "/cars", label: "The garage" }} link={{ href: "/gallery", label: "The gallery" }}>
           <p style={{ margin: 0 }}>
             Twenty-nine cars over thirty years, and the ones friends and clients hand over the keys to. Every one gets detailed, photographed and written up honestly, so you get what it is like to live with rather than how it looks parked.
           </p>
@@ -54,13 +54,13 @@ export default function HomePage() {
       <Stage sec="events">
         <Section id="events" eyebrow="The events" tone="#00D2BE" title="The days people drive to" cta={{ href: "/events", label: "Every event" }} link={{ href: "/book", label: "Book the floor" }}>
           <p style={{ margin: 0 }}>
-            Two hundred and counting, on working ranches, in orchards and on showroom floors. If you have only seen these cars online, a day out is where you stand next to one. The next is the Piston Powered Ranch at Rancho Jaramillo, Saturday 10 October.
+            Two hundred and counting, on working ranches, in orchards and on showroom floors. The next is the Piston Powered Ranch at Rancho Jaramillo, on Saturday 10 October, and anybody who wants to come is welcome.
           </p>
         </Section>
       </Stage>
 
       <Stage sec="night">
-        <Section id="night" eyebrow="The tech" tone="#57C7F5" title="If you have ever wondered what that car was" cta={{ href: "/scoreboard", label: "The scoreboard" }}>
+        <Section id="night" eyebrow="The tech" tone="#57C7F5" title="Point a phone at a car and it tells you what it is" cta={{ href: "/scoreboard", label: "The scoreboard" }}>
           <p style={{ margin: 0 }}>
             Point a phone at a car and Supercar IQ tells you what it is. Around it sit the other builds and the book on getting paint right.
           </p>
@@ -73,7 +73,7 @@ export default function HomePage() {
       </Stage>
 
       <Stage sec="sourcing">
-        <Section id="sourcing" eyebrow="And if you need one found" tone="#B4B6B2" title="If you are looking for a particular car" cta={{ href: "/intake", label: "Start the intake" }}>
+        <Section id="sourcing" eyebrow="Sourcing" tone="#B4B6B2" title="Looking for a particular car" cta={{ href: "/intake", label: "Start the intake" }}>
           <p style={{ margin: 0 }}>
             It is the last thing on this page on purpose. Being around cars all week means the network is usually the fastest way to a specific one. Seventy-eight found so far, retail or wholesale, and the sale completes through a licensed dealer.
           </p>
