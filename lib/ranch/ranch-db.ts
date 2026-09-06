@@ -1,4 +1,5 @@
 import { Pool } from "pg"
+import { verifyFull } from "@/lib/db/ssl"
 
 /**
  * The ranch database, with the rights the public forms need.
@@ -16,7 +17,7 @@ let pool: Pool | null = null
 export function ranchDb(): Pool | null {
   const url = process.env.RANCH_DATABASE_URL || process.env.PISTON_RANCH_DATABASE_URL
   if (!url) return null
-  if (!pool) pool = new Pool({ connectionString: url.replace(/-pooler\./, "."), max: 3 })
+  if (!pool) pool = new Pool({ connectionString: verifyFull(url.replace(/-pooler\./, ".")), max: 3 })
   return pool
 }
 

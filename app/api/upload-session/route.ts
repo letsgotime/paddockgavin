@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { tooMany } from "@/lib/ranch/limit"
 import { randomUUID } from "node:crypto"
 import { SESSION_TTL_MS, signSession, sessionSecret, gateEnforced } from "@/lib/ranch/upload-session"
 
@@ -22,6 +23,8 @@ export const dynamic = "force-dynamic"
 const SUBMISSION_TYPES = new Set(["vehicle", "vendor", "sponsor"])
 
 export async function POST(req: Request) {
+  const limited = tooMany(req, "upload-session", 40)
+  if (limited) return limited
   const secret = process.env.TURNSTILE_SECRET || ""
   if (!gateEnforced()) {
     /* Not configured: uploads remain open. Loud on the server, explicit to

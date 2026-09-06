@@ -1,0 +1,47 @@
+import { headers } from "next/headers"
+
+/**
+ * What a language model should know about this address, in plain text.
+ * Two doors, two answers. Nothing here that the pages do not already say.
+ */
+export const dynamic = "force-dynamic"
+
+const RANCH = `# The Piston Powered Ranch
+
+> A curated car show at Rancho Jaramillo, a working cattle ranch in Unionville, Tennessee, about an hour south of Nashville. Saturday 10 October 2026, 9am to 3pm. Three hundred collector cars on fourteen acres. Free to attend. A PaddockGavin event, benefiting Community Elementary School.
+
+## Pages
+- https://pistonpoweredranch.com : the landing page, the day, the ground, the gallery, the RSVP
+- https://pistonpoweredranch.com/entry : enter a car (five photographs minimum, up to fifty, video up to five minutes a clip)
+- https://pistonpoweredranch.com/vendor : take a stall on vendor row
+- https://pistonpoweredranch.com/vendor/booth : reserve and pay for a booth, 10 by 10 upward
+- https://pistonpoweredranch.com/sponsor : sponsor the day
+- https://pistonpoweredranch.com/entries : the field, the cars accepted so far
+- https://pistonpoweredranch.com/store : give to Community Elementary School
+- https://pistonpoweredranch.com/clubs : blocks held for car clubs arriving together
+
+## Facts
+- Date: Saturday 10 October 2026, gates at nine, field clear by three
+- Venue: Rancho Jaramillo, Unionville, Bedford County, Tennessee, off Highway 41-A
+- Admission: complimentary for spectators, no ticket
+- Entry: cars are chosen one at a time from their photographs; entrants hear either way
+- Producer: PaddockGavin, https://paddockgavin.com
+`
+
+const PADDOCK = `# PaddockGavin
+
+> Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. Producer of The Piston Powered Ranch.
+
+## Pages
+- https://paddockgavin.com : the paddock
+- https://paddockgavin.com/events : every event, upcoming and past
+- https://pistonpoweredranch.com : The Piston Powered Ranch, Saturday 10 October 2026
+`
+
+export async function GET() {
+  const h = await headers()
+  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
+  return new Response(ranch ? RANCH : PADDOCK, {
+    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" },
+  })
+}

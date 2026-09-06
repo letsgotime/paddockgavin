@@ -31,6 +31,9 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "https://pistonpoweredranch.com/entry",   priority: 0.9,  changeFrequency: "weekly" },
   { url: "https://pistonpoweredranch.com/vendor",  priority: 0.8,  changeFrequency: "weekly" },
   { url: "https://pistonpoweredranch.com/sponsor", priority: 0.8,  changeFrequency: "weekly" },
+  { url: "https://pistonpoweredranch.com/store",   priority: 0.6,  changeFrequency: "weekly" },
+  { url: "https://pistonpoweredranch.com/entries", priority: 0.7,  changeFrequency: "daily"  },
+  { url: "https://pistonpoweredranch.com/clubs",   priority: 0.6,  changeFrequency: "monthly" },
   // Night shift / products
   { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
   { url: "/juice-box",               priority: 0.8,  changeFrequency: "monthly" },

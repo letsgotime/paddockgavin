@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { tooMany } from "@/lib/ranch/limit"
 import { human } from "@/lib/ranch/human"
 import { verifySession, sessionSecret } from "@/lib/ranch/upload-session"
 import { renderRanchEmail, renderRanchText, type Block, type RanchEmail } from "@/lib/email/ranch"
@@ -239,6 +240,8 @@ function deskDoc(kind: Kind, b: Body, name: string, org: string, reach: string, 
 }
 
 export async function POST(req: Request) {
+  const limited = tooMany(req, "apply", 10)
+  if (limited) return limited
   try {
     const b: Body = await req.json()
     const cfg = CONFIG[b.kind]

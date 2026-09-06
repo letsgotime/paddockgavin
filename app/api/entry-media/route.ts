@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { tooMany } from "@/lib/ranch/limit"
 import { ranchDb } from "@/lib/ranch/ranch-db"
 
 /**
@@ -29,6 +30,8 @@ interface Item {
 }
 
 export async function POST(req: Request) {
+  const limited = tooMany(req, "entry-media", 60)
+  if (limited) return limited
   let body: { token?: unknown; items?: unknown }
   try {
     body = await req.json()

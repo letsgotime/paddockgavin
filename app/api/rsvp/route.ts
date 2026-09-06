@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { tooMany } from "@/lib/ranch/limit"
 import { ranchDb, consentFrom } from "@/lib/ranch/ranch-db"
 import { EVENT_ID } from "@/lib/ranch/neon"
 import { renderRanchEmail, renderRanchText } from "@/lib/email/ranch"
@@ -37,6 +38,8 @@ interface Body {
 }
 
 export async function POST(req: Request) {
+  const limited = tooMany(req, "rsvp", 10)
+  if (limited) return limited
   let b: Body
   try {
     b = await req.json()

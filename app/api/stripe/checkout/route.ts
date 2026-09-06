@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { tooMany } from "@/lib/ranch/limit"
 import crypto from "node:crypto"
 import { STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
 import { priceIdFor } from "@/lib/stripe/prices"
@@ -136,6 +137,8 @@ async function donate(req: Request, cents: number, b: Body, ev: { slug: string; 
 }
 
 export async function POST(req: Request) {
+  const limited = tooMany(req, "checkout", 20)
+  if (limited) return limited
   try {
     const b: Body = await req.json()
 

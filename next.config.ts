@@ -88,7 +88,34 @@ const nextConfig: NextConfig = {
     }
   },
   async headers() {
+    /* Report only, on purpose. Stripe, Cloudflare's human check, the private
+       media store, the weather service and Vercel's own scripts all have to
+       be allowed before this can enforce, and the report route is how the
+       list is proven complete against real traffic. Nothing is blocked. */
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vercel.live",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' data: https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "media-src 'self' blob: https:",
+      "connect-src 'self' https://challenges.cloudflare.com https://api.weather.gov https://*.vercel-storage.com https://*.neon.tech https://vitals.vercel-insights.com https://vercel.live wss://ws-us3.pusher.com",
+      "frame-src https://challenges.cloudflare.com https://js.stripe.com https://checkout.stripe.com https://vercel.live",
+      "worker-src 'self' blob:",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self' https://checkout.stripe.com",
+      "report-uri /api/csp-report",
+    ].join("; ")
     return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
+          { key: "Content-Security-Policy-Report-Only", value: csp },
+        ],
+      },
       /* Static assets, long cache. Production only: the dev server's chunk
          names are stable, so a year of "immutable" pins the first CSS and JS
          a browser ever saw and every edit after it hydrates against stale

@@ -69,6 +69,8 @@ export async function generateMetadata(): Promise<Metadata> {
    own, the not-found page above all. Before this, pistonpoweredranch.com/rsvp
    answered with the PaddockGavin title in the tab. */
 const RANCH_DEFAULTS: Metadata = {
+  /* The paddock's canonical must not leak onto a ranch page that sets none. */
+  alternates: { canonical: null },
   title: {
     default: "The Piston Powered Ranch",
     template: "%s · The Piston Powered Ranch",

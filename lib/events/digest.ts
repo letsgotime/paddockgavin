@@ -1,4 +1,5 @@
 import { Pool } from "pg"
+import { verifyFull } from "@/lib/db/ssl"
 import type { EventRow } from "./types"
 
 /**
@@ -18,7 +19,7 @@ let pool: Pool | null = null
 function db(): Pool | null {
   const url = process.env.CRM_DATABASE_URL
   if (!url) return null
-  if (!pool) pool = new Pool({ connectionString: url, max: 3 })
+  if (!pool) pool = new Pool({ connectionString: verifyFull(url), max: 3 })
   return pool
 }
 
