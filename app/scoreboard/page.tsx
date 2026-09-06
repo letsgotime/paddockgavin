@@ -261,7 +261,7 @@ export default function ScoreboardPage() {
                   key={g.key}
                   type="button"
                   onClick={() => setFilter(g.key as Group)}
-                  className="pg-e0" style={{
+                  style={{
                     cursor: "pointer",
                     fontFamily: "Archivo, Helvetica, sans-serif",
                     fontWeight: 700,

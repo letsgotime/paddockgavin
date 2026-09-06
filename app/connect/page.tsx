@@ -372,12 +372,13 @@ export default function ConnectPage() {
                 href={l.href}
                 target={l.target}
                 rel={l.target === "_blank" ? "noopener noreferrer" : undefined}
-                className="pg-e1" style={{
+                style={{
                   display: "flex",
  alignItems: "center",
  gap: 14,
  minHeight: 64,
  textDecoration: "none",
+                  borderTop: "1px solid rgba(255,255,255,.09)",
                   borderLeft: `3px solid ${l.tone}`,
                   clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)",
                   padding: "15px clamp(16px,3vw,22px)",
