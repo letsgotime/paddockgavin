@@ -193,13 +193,13 @@ export function RsvpBlock({
   }
 
   const consentRow = (key: keyof Consent, label: string, note: string, locked?: boolean) => (
-    <label key={key} style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: locked ? "default" : "pointer" }}>
+    <label key={key} style={{ display: "flex", gap: 12, alignItems: "flex-start", minHeight: 44, cursor: locked ? "default" : "pointer" }}>
       <input
         type="checkbox"
         checked={consent[key]}
         disabled={locked}
         onChange={(e) => setConsent({ ...consent, [key]: e.target.checked })}
-        style={{ width: 18, height: 18, marginTop: 2, flex: "0 0 auto", accentColor: solid }}
+        style={{ width: 24, height: 24, marginTop: 0, flex: "0 0 auto", accentColor: solid }}
       />
       <span style={{ display: "grid", gap: 1 }}>
         <span style={{ fontFamily: ARCHIVO, fontSize: 14, lineHeight: 1.4, color: "#EDF1F6" }}>{label}</span>
@@ -331,7 +331,7 @@ const lbl: React.CSSProperties = {
   fontWeight: 600,
 }
 const input: React.CSSProperties = {
-  font: `400 15px/1.4 ${ARCHIVO}`,
+  font: `400 16px/1.4 ${ARCHIVO}`,
   color: "#fff",
   background: "rgba(0,0,0,.3)",
   border: "1px solid rgba(255,255,255,.13)",

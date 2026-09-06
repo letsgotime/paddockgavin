@@ -53,9 +53,14 @@ export function RanchGallery({ accent = "#F2C94C" }: { accent?: string }) {
           .rgGrid{grid-template-columns:repeat(2,1fr)}
           .rgGrid figure.wide{grid-column:span 2}
         }
-        @media (max-width:460px){
-          .rgGrid{grid-template-columns:1fr}
-          .rgGrid figure.wide{grid-column:span 1}
+        @media (max-width:640px){
+          /* One row you swipe. Nine frames stacked full width ran four thousand
+             pixels on a phone; every frame is still here, side by side. */
+          .rgGrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;
+            padding:0 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+          .rgGrid::-webkit-scrollbar{display:none}
+          .rgGrid figure{flex:0 0 78vw;scroll-snap-align:start;aspect-ratio:4/5}
+          .rgGrid figure.wide{flex:0 0 88vw;aspect-ratio:3/2}
         }
         @media (prefers-reduced-motion:reduce){.rgGrid img{transition:none}
           .rgGrid figure:hover img{transform:none}}

@@ -6,7 +6,7 @@ import { upload } from "@vercel/blob/client"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
-import { SiteFooter } from "@/components/site-footer"
+import { RanchFooter } from "@/components/ranch-footer"
 
 /* Copy ran through RAIL Redline, WARM / WEB PAGE / US, zero tells, with an
    explicit instruction not to introduce facts absent from the draft. */
@@ -309,7 +309,7 @@ export function ApplyPage(p: ApplyProps) {
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <RanchFooter />
     </>
   )
 }
@@ -1014,13 +1014,13 @@ const LOCAL = new Map<string, File>()
  */
 function Consents({ tone, value, onChange }: { tone: string; value: { sms: boolean; event_email: boolean; pg_events: boolean }; onChange: (v: { sms: boolean; event_email: boolean; pg_events: boolean }) => void }) {
   const row = (key: "sms" | "event_email" | "pg_events", label: string, note: string, locked?: boolean) => (
-    <label style={{ display: "flex", gap: 12, alignItems: "flex-start", cursor: locked ? "default" : "pointer" }}>
+    <label style={{ display: "flex", gap: 12, alignItems: "flex-start", minHeight: 44, cursor: locked ? "default" : "pointer" }}>
       <input
         type="checkbox"
         checked={value[key]}
         disabled={locked}
         onChange={(e) => onChange({ ...value, [key]: e.target.checked })}
-        style={{ width: 20, height: 20, marginTop: 2, flex: "0 0 auto", accentColor: tone }}
+        style={{ width: 24, height: 24, marginTop: 0, flex: "0 0 auto", accentColor: tone }}
       />
       <span style={{ display: "grid", gap: 2 }}>
         <span style={{ fontFamily: ARCHIVO, fontSize: 15, lineHeight: 1.4, color: "#EDF1F6" }}>{label}</span>

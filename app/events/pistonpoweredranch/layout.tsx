@@ -32,6 +32,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
   title: TITLE,
   description: DESC,
+  /* Add to Home Screen on the ranch address gets the ranch, not the paddock:
+     the root sets these for the paddock and the nearer layout has the say. */
+  manifest: ranchDoor ? "/brand/ranch.webmanifest" : "/manifest.webmanifest",
+  themeColor: ranchDoor ? "#0A1523" : "#0A0E1A",
+  appleWebApp: { capable: true, title: ranchDoor ? "Piston Powered Ranch" : "PaddockGavin", statusBarStyle: "black-translucent" },
   openGraph: {
     title: TITLE,
     description: DESC,

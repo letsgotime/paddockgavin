@@ -5,7 +5,7 @@ import { track } from "@vercel/analytics"
 import Image from "next/image"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { SiteNav } from "@/components/site-nav"
-import { SiteFooter } from "@/components/site-footer"
+import { RanchFooter } from "@/components/ranch-footer"
 import { RanchMark } from "@/components/ranch-mark"
 import { RanchGallery } from "@/components/ranch-gallery"
 import VisitOps from "@/app/events/pistonpoweredranch/VisitOps"
@@ -274,6 +274,7 @@ export default function EventPublic({
   const hero = c.hero
   const acts = c.acts || []
   const [open, setOpen] = useState<string | null>(acts[0]?.id ?? null)
+  const [groundOpen, setGroundOpen] = useState(false)
 
   /* One reveal per section below the hero, the same rise the forms use.
      Nothing above the fold moves, and nothing can stay hidden: reduced
@@ -352,6 +353,13 @@ export default function EventPublic({
         @media (prefers-reduced-motion: reduce) {
           .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%) }
           [data-r],[data-r].in{opacity:1!important;transform:none!important;transition:none!important}
+        }
+        .evGroundMore { display: none }
+        @media (max-width: 640px) {
+          /* Four spots, then a button. The list ran two thousand pixels on a
+             phone before the reader reached the partners. */
+          .evGround:not(.open) > div:nth-child(n+5) { display: none }
+          .evGroundMore { display: inline-flex; align-items: center }
         }
       `}</style>
       <noscript><style>{`[data-r]{opacity:1!important;transform:none!important}`}</style></noscript>
@@ -519,7 +527,7 @@ export default function EventPublic({
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>On the ground</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
+            <div className={`evGround${groundOpen ? " open" : ""}`} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {ground.map((f) => (
                 <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
                   <p style={{ margin: 0, fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--second)" }}>{f.kind === "poi" ? "Point" : f.kind}</p>
@@ -528,6 +536,12 @@ export default function EventPublic({
                 </div>
               ))}
             </div>
+            {ground.length > 4 && (
+              <button type="button" className="evGroundMore" onClick={() => setGroundOpen((v) => !v)} aria-expanded={groundOpen}
+                style={{ marginTop: 14, minHeight: 44, padding: "0 18px", borderRadius: 11, border: "1px solid rgba(255,255,255,.34)", background: "transparent", color: "var(--paper)", fontFamily: "var(--body)", fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", cursor: "pointer" }}>
+                {groundOpen ? "Fewer" : `All ${ground.length} spots`}
+              </button>
+            )}
           </div>
         </section>
               </div>
@@ -600,7 +614,7 @@ export default function EventPublic({
       })}
 
     </main>
-      <SiteFooter />
+      <RanchFooter />
     </div>
   )
 }
