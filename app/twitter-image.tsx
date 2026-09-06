@@ -101,7 +101,7 @@ export default function OGImage() {
           >
             Two shifts.
             <br />
-            <span style={{ color: "#F8B800" }}>for people.</span>
+            <span style={{ color: "#F8B800" }}>Lifestyle.</span>
           </div>
 
           <div
@@ -114,7 +114,7 @@ export default function OGImage() {
               letterSpacing: "0.02em",
             }}
           >
-            Concierge broker and vehicle sourcer. Retail or wholesale. Nashville, Tennessee.
+            Gavin Brooks. Cars, the events, and the software behind them. Nashville, Tennessee.
           </div>
         </div>
 

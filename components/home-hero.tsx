@@ -26,19 +26,19 @@ export function HomeHero() {
         >
           <div className="pg-hero-copy">
             <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".22em", textTransform: "uppercase", color: "#F2C94C" }}>
-              Nashville, Tennessee
+              Automotive &middot; Tech &middot; Lifestyle &middot; Nashville
             </p>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.02, letterSpacing: "-.025em", color: "#FFFFFF", textWrap: "balance" as never }}>
-              I find cars for people.
+              Automotive, tech, and the life around both.
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.55, color: "#C4CBD6", maxWidth: "52ch" }}>
-              Gavin Brooks, Nashville. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer&rsquo;s licence so every auction is open. Seventy-eight found for other people so far, most of them before they were listed.
+              Gavin Brooks. I buy cars and keep them, detail them, and film the ones my friends and clients bring me. I run the events. I build the software. Sourcing a car for somebody comes with all of it, so I do that too.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px", paddingTop: 6 }}>
-              <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>
-                Find me a car
+              <Link href="#wall" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>
+                Watch the latest
               </Link>
-              <a href="#wall" className="pg-textlink">Watch the latest</a>
+              <Link href="/cars" className="pg-textlink">The garage</Link>
             </div>
           </div>
           <div className="pg-hero-photo">
@@ -50,10 +50,10 @@ export function HomeHero() {
         {/* Proof strip: the four numbers, once */}
         <dl className="pg-proof pg-e1" style={{ margin: "clamp(14px,2vw,22px) 0 0" }}>
           {[
-            { v: "29",   k: "cars owned" },
-            { v: "78",   k: "found for others" },
-            { v: "200+", k: "events run" },
-            { v: "~1M",  k: "views a month" },
+            { v: "~1M",   k: "views a month" },
+            { v: "8,100", k: "followers" },
+            { v: "29",    k: "cars owned" },
+            { v: "200+",  k: "events run" },
           ].map((s) => (
             <div key={s.k} style={{ padding: "14px 16px 12px" }}>
               <dt style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1, letterSpacing: "-.03em", color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{s.v}</dt>

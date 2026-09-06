@@ -35,7 +35,7 @@ export default function VlogPage() {
           </div>
           {/* Stats */}
           <div style={{ display: "flex", flexWrap: "wrap", border: "1px solid #27384F", background: "#152538" }}>
-            {[["Views / 30 days","1,000,000"],["Followers","7,900"],["Format","Vertical"]].map(([k,v]) => (
+            {[["Views / 30 days","1,000,000"],["Followers","8,100"],["Format","Vertical"]].map(([k,v]) => (
               <div key={String(k)} style={{ flex: "1 1 200px", padding: "16px 20px", borderRight: "1px solid #27384F" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#848482" }}>{k}</p>
                 <p style={{ margin: 0, fontFamily: mono, fontSize: 19, letterSpacing: ".08em", color: "#00D2BE" }}>{v}</p>

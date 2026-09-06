@@ -179,7 +179,7 @@ export default function ConnectPage() {
       "BEGIN:VCARD", "VERSION:3.0",
       "N:Brooks;Gavin;;;", "FN:Gavin Brooks",
       "NICKNAME:PaddockGavin",
-      "ORG:PaddockGavin", "TITLE:Concierge broker and vehicle sourcer",
+      "ORG:PaddockGavin", "TITLE:Automotive creator and software builder",
       "ADR;TYPE=WORK:;;;Nashville;TN;;USA",
       "URL:https://paddockgavin.com",
       `X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/${HANDLE}`,

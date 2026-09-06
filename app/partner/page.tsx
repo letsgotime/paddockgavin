@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const stats = [
   { k: "~1,000,000", v: "Views / month" },
-  { k: "~7,900", v: "Instagram followers" },
+  { k: "~8,100", v: "Instagram followers" },
   { k: "Owners &\ncollectors", v: "Primary audience" },
   { k: "200+", v: "Events run" },
 ]
