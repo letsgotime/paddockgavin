@@ -33,6 +33,17 @@ export interface FollowerCount {
   measuredOn?: string
 }
 
+/**
+ * Set NEXT_PUBLIC_BEHOLD_FEED_1, not BEHOLD_FEED_ID.
+ *
+ * Three things read this feed and two of them run in the browser: the wall on
+ * the homepage and the gallery. A variable without the NEXT_PUBLIC prefix is
+ * never sent to the client, so setting BEHOLD_FEED_ID alone turns the follower
+ * count live and leaves the wall and the gallery on their seed images, which
+ * looks like the feed half working rather than not being configured.
+ *
+ * BEHOLD_FEED_ID is still read first, so a server-only deployment can use it.
+ */
 function feedId(): string {
   return (
     process.env.BEHOLD_FEED_ID ||
