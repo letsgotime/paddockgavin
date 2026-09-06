@@ -37,12 +37,6 @@ export default function StoreFront({ event, items }: { event: EventRow; items: S
         fontFamily: BODY,
       }}
     >
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Archivo:wght@400;600;700&display=swap"
-      />
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
         <div style={{ height: 3, width: 48, background: RED_FILL, borderRadius: 2 }} />
         <p style={{ margin: "18px 0 6px", font: `700 11px/1 ${MONO}`, letterSpacing: ".2em", textTransform: "uppercase", color: RED_TEXT }}>

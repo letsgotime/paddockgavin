@@ -12,7 +12,7 @@ export const metadata: Metadata = ranchShare({
   path: "/sponsor",
   title: "Sponsor the Day · The Piston Powered Ranch",
   description:
-    "Title, category exclusive and supporting sponsorship for The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo an hour south of Nashville. A share of every net dollar benefits Community Elementary School.",
+    "Sponsor The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo: Presenting, Title, Secondary, Supporting. Every net dollar shares with the school.",
 })
 
 export default function Page() {

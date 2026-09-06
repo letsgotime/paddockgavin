@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { track } from "@vercel/analytics"
 
 /**
  * "Tell us you are coming."
@@ -170,6 +171,7 @@ export function RsvpBlock({
         return
       }
       setAgain(j?.created === false)
+      track("rsvp", { again: j?.created === false })
       setState("done")
     } catch {
       setState("error")

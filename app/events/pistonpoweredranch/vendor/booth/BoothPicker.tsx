@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { track } from "@vercel/analytics"
 import { FOOTPRINTS, POWER_OPTIONS, PREMIUM_PLACEMENT, money, type Footprint } from "@/lib/stripe/catalog"
 
 /**
@@ -70,6 +71,7 @@ export function BoothPicker() {
         setWhy("That did not start. Reply to vendors@pistonpoweredranch.com and we will take it by hand.")
         return
       }
+      track("booth_reserve", { item: picked.item, premium })
       window.location.href = j.url
     } catch {
       setState("error")

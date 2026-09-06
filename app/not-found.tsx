@@ -27,7 +27,6 @@ function RanchNotFound() {
   ]
   return (
     <div style={{ minHeight: "100svh", background: "#0A1523", display: "flex", flexDirection: "column", fontFamily: ARCHIVO }}>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" />
       <div aria-hidden="true" style={{ display: "flex", height: 5 }}>
         <i style={{ flex: "1 1 0", background: "#E5141A" }} />
         <i style={{ flex: "1 1 0", background: "#1424A1" }} />

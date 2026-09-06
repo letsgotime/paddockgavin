@@ -40,7 +40,8 @@ const PADDOCK = `# PaddockGavin
 
 export async function GET() {
   const h = await headers()
-  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
+  const host = (h.get("host") || "").toLowerCase()
+  const ranch = h.get("x-pg-brand") === "pistonpoweredranch" || /(^|\.)pistonpoweredranch\.com$/.test(host.split(":")[0])
   return new Response(ranch ? RANCH : PADDOCK, {
     headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" },
   })

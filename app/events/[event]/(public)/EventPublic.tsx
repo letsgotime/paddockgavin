@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { track } from "@vercel/analytics"
 import Image from "next/image"
 import { RsvpBlock } from "@/components/rsvp-block"
 import { SiteNav } from "@/components/site-nav"
@@ -444,6 +445,7 @@ export default function EventPublic({
               <a
                 key={c.label}
                 href={c.href}
+                onClick={() => track("door", { door: c.label })}
                 style={{
                   fontFamily: "var(--body)",
                   fontWeight: 700,

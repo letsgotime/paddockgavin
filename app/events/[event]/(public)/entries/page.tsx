@@ -55,7 +55,6 @@ export default async function Entries({ params }: { params: Promise<{ event: str
         padding: "max(28px, env(safe-area-inset-top)) 16px max(48px, env(safe-area-inset-bottom))",
       }}
     >
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Archivo:wght@400;600;900&display=swap" />
       <div style={{ maxWidth: 780, margin: "0 auto" }}>
         <div style={{ height: 3, width: 48, background: "#E5141A", borderRadius: 2, marginBottom: 22 }} />
         <p style={{ margin: 0, fontFamily: MONO, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: "#FF1A21" }}>

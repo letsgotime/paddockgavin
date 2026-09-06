@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { track } from "@vercel/analytics"
 import { upload } from "@vercel/blob/client"
 import Image from "next/image"
 import Link from "next/link"
@@ -359,6 +360,10 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
      photograph was still going up when all five were done. */
   const uploading = useRef(false)
   const sessionRef = useRef<{ value: string | null; until: number } | null>(null)
+  /* Three marks in the funnel the page views cannot give: the first touch
+     of a field, the first file, and the send that landed. */
+  const started = useRef(false)
+  const firstFile = useRef(false)
   /* The widget's token as a ref, so an upload that starts before the box
      has settled can wait for it instead of asking with nothing. */
   const tsLive = useRef("")
@@ -472,6 +477,10 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
       return
     }
     const take = files.slice(0, room)
+    if (!firstFile.current) {
+      firstFile.current = true
+      track("upload_start", { kind: form.kind, files: take.length })
+    }
     const skipped = files.length - take.length
     uploading.current = true
 
@@ -612,6 +621,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         const j = (await res.json().catch(() => ({}))) as { recorded?: boolean; statusToken?: string | null }
         setRecorded(j.recorded === true)
         setToken(j.recorded && j.statusToken ? j.statusToken : "")
+        track("send", { kind: form.kind, recorded: j.recorded === true })
         setStatus("sent")
         return
       }
@@ -674,7 +684,15 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
   }
 
   return (
-    <section id="apply" style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,9vh,96px)", scrollMarginTop: 110 }}>
+    <section
+      id="apply"
+      onFocusCapture={() => {
+        if (started.current) return
+        started.current = true
+        track("form_start", { kind: form.kind })
+      }}
+      style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,9vh,96px)", scrollMarginTop: 110 }}
+    >
       <div
         data-r=""
         style={{

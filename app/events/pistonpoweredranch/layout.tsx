@@ -105,10 +105,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <>
       {ranchDoor ? (
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&display=swap"
-        />
+        <link rel="preload" href="/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
       ) : null}
       <style>{`
         /* The ranch marks are in the markup on both doors so the two are

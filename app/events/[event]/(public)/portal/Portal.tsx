@@ -236,9 +236,6 @@ function Frame({ children }: { children: React.ReactNode }) {
       padding: "max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom))",
       fontFamily: BODY,
     }}>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Archivo:wght@400;600;700&display=swap" />
       <div style={{
         width: "100%", maxWidth: 620, alignSelf: "flex-start", background: GLASS,
         border: `1px solid ${LINE}`, borderRadius: 16, padding: "clamp(20px,5vw,34px)",

@@ -56,7 +56,6 @@ export default async function ThankYou({ params }: { params: Promise<{ event: st
         fontFamily: BODY,
       }}
     >
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Archivo:wght@400;700&display=swap" />
       <div style={{ width: "100%", maxWidth: 560 }}>
         <div style={{ height: 3, width: 48, background: "#E5141A", borderRadius: 2, marginBottom: 24 }} />
         <h1 style={{ margin: "0 0 14px", fontFamily: "Cinzel, Georgia, serif", fontWeight: 700, color: "#EDF1F6", fontSize: "clamp(28px,6vw,40px)", lineHeight: 1.08 }}>
