@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 
-const BLURB = "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. 78 cars found for other people, most of them before they were listed."
+const BLURB = "Closer to the cars. If you have only seen them through a screen, the days out are where you stand next to one, hear it pull on a mobile dyno, or take a lap of your own. Nashville, Tennessee."
 
 export const metadata: Metadata = {
-  title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
+  title: "Automotive, tech and lifestyle, Nashville · PaddockGavin",
   description: BLURB,
   openGraph: {
-    title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
-    description: "I find cars for people. Retail or wholesale, every auction open, 78 found so far.",
+    title: "Automotive, tech and lifestyle, Nashville · PaddockGavin",
+    description: "Closer to the cars. Standing next to one, hearing it on a mobile dyno, taking a lap of your own. Nashville, Tennessee.",
     url: "https://paddockgavin.com",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "PaddockGavin" }],
   },
@@ -37,10 +37,45 @@ export default function HomePage() {
       <SiteNav active="home" />
       <HomeHero />
 
-      <Stage sec="sourcing">
-        <Section id="sourcing" eyebrow="Sourcing" tone="#F2C94C" title="Selling an exotic car, or looking for one?" cta={{ href: "/intake", label: "Start the intake" }} link={{ href: "/cars", label: "The Garage" }}>
+      <PhotoBreak src="/images/g993-out.webp" pos="center 40%" caption="Gunther Werks 993, loading out" />
+
+      <Stage sec="wall">
+        <HomeWall />
+      </Stage>
+
+      <Stage sec="cars">
+        <Section id="cars" eyebrow="The cars" tone="#F2C94C" title="If you want to see one properly" cta={{ href: "/cars", label: "The garage" }} link={{ href: "/gallery", label: "The gallery" }}>
           <p style={{ margin: 0 }}>
-            If you want to sell your exotic car, start the intake and I&rsquo;ll take it from there. I have found 78 cars for other people. Concierge broker and vehicle sourcer, retail or wholesale. We shop with a dealer&rsquo;s licence, so every auction is open.
+            Twenty-nine cars over thirty years, and the ones friends and clients hand over the keys to. Every one gets detailed, photographed and written up honestly, so you get what it is like to live with rather than how it looks parked.
+          </p>
+        </Section>
+      </Stage>
+
+      <Stage sec="events">
+        <Section id="events" eyebrow="The events" tone="#00D2BE" title="The days people drive to" cta={{ href: "/events", label: "Every event" }} link={{ href: "/book", label: "Book the floor" }}>
+          <p style={{ margin: 0 }}>
+            Two hundred and counting, on working ranches, in orchards and on showroom floors. If you have only seen these cars online, a day out is where you stand next to one. The next is the Piston Powered Ranch at Rancho Jaramillo, Saturday 10 October.
+          </p>
+        </Section>
+      </Stage>
+
+      <Stage sec="night">
+        <Section id="night" eyebrow="The tech" tone="#57C7F5" title="If you have ever wondered what that car was" cta={{ href: "/scoreboard", label: "The scoreboard" }}>
+          <p style={{ margin: 0 }}>
+            Point a phone at a car and Supercar IQ tells you what it is. Around it sit the other builds and the book on getting paint right.
+          </p>
+          <ProductRows />
+        </Section>
+      </Stage>
+
+      <Stage sec="mediakit">
+        <HomeMediaKit />
+      </Stage>
+
+      <Stage sec="sourcing">
+        <Section id="sourcing" eyebrow="And if you need one found" tone="#B4B6B2" title="If you are looking for a particular car" cta={{ href: "/intake", label: "Start the intake" }}>
+          <p style={{ margin: 0 }}>
+            It is the last thing on this page on purpose. Being around cars all week means the network is usually the fastest way to a specific one. Seventy-eight found so far, retail or wholesale, and the sale completes through a licensed dealer.
           </p>
           <LinkRow items={[
             { href: "/sell-my-exotic-car", label: "Sell my exotic car", note: "Retail or wholesale" },
@@ -48,33 +83,6 @@ export default function HomePage() {
             { href: "/exotic-car-consignment", label: "Consignment", note: "The retail lane" },
           ]} />
         </Section>
-      </Stage>
-
-      <Stage sec="day">
-        <Section id="day" eyebrow="Day shift · 08:00 to 18:00" tone="#F2C94C" title="On the lot" cta={{ href: "/lot-ops", label: "Lot Ops in Action" }} link={{ href: "/events", label: "Book the floor for a private event" }}>
-          <p style={{ margin: 0 }}>
-            The gate opens at eight and I&rsquo;m usually there before the cars. Every delivery gets unloaded, inspected, photographed and logged. Every car goes through inspection, photography, writeup and staging before it reaches a buyer. On event days I open before sunrise and close after the last guest clears the rope.
-          </p>
-        </Section>
-      </Stage>
-
-      <PhotoBreak src="/images/g993-out.webp" pos="center 40%" caption="Gunther Werks 993, loading out" />
-
-      <Stage sec="night">
-        <Section id="night" eyebrow="Night shift · after hours" tone="#00D2BE" title="What I build when the gate shuts" cta={{ href: "/scoreboard", label: "The scoreboard" }}>
-          <p style={{ margin: 0 }}>
-            The problems I run into on the lot are problems other people have too, so I build AI tools for lot operations, inventory and lead capture. I&rsquo;m also a detailing student, working through paint correction and ceramic coating.
-          </p>
-          <ProductRows />
-        </Section>
-      </Stage>
-
-      <Stage sec="wall">
-        <HomeWall />
-      </Stage>
-
-      <Stage sec="mediakit">
-        <HomeMediaKit />
       </Stage>
 
       <Stage sec="also">

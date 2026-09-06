@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { getFollowerCount, formatFollowers } from "@/lib/social"
 
 export const metadata: Metadata = {
   title: "The Vlog",
@@ -14,7 +15,8 @@ const mono = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 
 const EPS = [1,2,3,4,5,6].map(i => ({ id: `vlog-ep-${i}`, label: `EP 0${i}` }))
 
-export default function VlogPage() {
+export default async function VlogPage() {
+  const { followers } = await getFollowerCount()
   return (
     <div style={{ minHeight: "100vh", background: "#0E1A2A" }}>
       <SiteNav active="vlog" />
@@ -35,7 +37,7 @@ export default function VlogPage() {
           </div>
           {/* Stats */}
           <div style={{ display: "flex", flexWrap: "wrap", border: "1px solid #27384F", background: "#152538" }}>
-            {[["Views / 30 days","1,000,000"],["Followers","7,900"],["Format","Vertical"]].map(([k,v]) => (
+            {[["Views / 30 days","1,000,000"],["Followers", formatFollowers(followers).replace("~", "")],["Format","Vertical"]].map(([k,v]) => (
               <div key={String(k)} style={{ flex: "1 1 200px", padding: "16px 20px", borderRight: "1px solid #27384F" }}>
                 <p style={{ margin: "0 0 4px", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#848482" }}>{k}</p>
                 <p style={{ margin: 0, fontFamily: mono, fontSize: 19, letterSpacing: ".08em", color: "#00D2BE" }}>{v}</p>

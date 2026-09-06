@@ -90,17 +90,17 @@ const BASE: Metadata = {
     template: "%s · PaddockGavin",
   },
   description:
-    "Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. 78 cars found for other people, most of them before they were listed.",
+    "Closer to the cars. If you have only seen them through a screen, the days out are where you stand next to one, hear it pull on a mobile dyno, or take a lap of your own. Nashville, Tennessee.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {
     title: "Exotic car broker and sourcing, Nashville · PaddockGavin",
-    description: "I find cars for people. Retail or wholesale, every auction open, 78 found so far. Nashville, Tennessee.",
+    description: "Closer to the cars. Standing next to one, hearing it on a mobile dyno, taking a lap of your own. Nashville, Tennessee.",
     siteName: "PaddockGavin",
     locale: "en_US",
     type: "website",
     url: SITE,
-    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin · I find cars for people." }],
+    images: [{ url: `${SITE}/opengraph-image`, width: 1200, height: 630, alt: "PaddockGavin · Automotive, tech and lifestyle" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -120,7 +120,7 @@ const BASE: Metadata = {
         name: "Gavin Brooks",
         url: SITE,
         image: `${SITE}/images/gavin-on-lot.jpg`,
-        jobTitle: "Concierge broker and vehicle sourcer",
+        jobTitle: "Automotive creator and software builder",
         address: { "@type": "PostalAddress", addressLocality: "Nashville", addressRegion: "TN", addressCountry: "US" },
         sameAs: [
           "https://www.instagram.com/itspaddockgavin/",
@@ -135,7 +135,7 @@ const BASE: Metadata = {
         "@type": "LocalBusiness",
         "@id": `${SITE}/#business`,
         name: "PaddockGavin",
-        description: "Concierge broker and vehicle sourcer for exotic and collector cars. Retail or wholesale, shopping with a dealer's licence so every auction is open.",
+        description: "Automotive, tech and lifestyle from Nashville. Original photography and video, collector events, and the software behind them. Vehicle sourcing on request.",
         url: SITE,
         image: `${SITE}/opengraph-image`,
         founder: { "@id": `${SITE}/#person` },
@@ -154,7 +154,7 @@ const BASE: Metadata = {
         "@id": `${SITE}/#website`,
         url: SITE,
         name: "PaddockGavin",
-        description: "Concierge broker and vehicle sourcer, Nashville, Tennessee.",
+        description: "Automotive, tech and lifestyle, Nashville, Tennessee.",
         author: { "@id": `${SITE}/#person` },
         potentialAction: {
           "@type": "SearchAction",
