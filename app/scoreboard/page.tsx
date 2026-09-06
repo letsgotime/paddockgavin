@@ -671,7 +671,7 @@ export default function ScoreboardPage() {
                 maxWidth: "54ch",
               }}
             >
-              Eight to six is lot operations and events. That work lives on its own pages.
+              Lot operations and events are the other half of the work. That side lives on its own pages.
             </p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
