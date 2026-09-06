@@ -149,9 +149,9 @@ export default function VisitOps() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {([["Google", maps.google], ["Waze", maps.waze], ["Apple", maps.apple]] as const).map(([l, href]) => (
-              <a key={l} href={href} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "9px 15px", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
+              <a key={l} href={href} target="_blank" rel="noopener" style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "12px 16px", minHeight: 44, display: "inline-flex", alignItems: "center", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
             ))}
-            <button onClick={copyAddress} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, cursor: "pointer", color: copied ? "#04211D" : "#EDF1F6", background: copied ? "#00D2BE" : "rgba(255,255,255,.06)", border: `1px solid ${copied ? "#00D2BE" : "rgba(255,255,255,.16)"}`, borderRadius: 999, padding: "9px 15px", whiteSpace: "nowrap" }}>
+            <button onClick={copyAddress} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, cursor: "pointer", color: copied ? "#04211D" : "#EDF1F6", background: copied ? "#00D2BE" : "rgba(255,255,255,.06)", border: `1px solid ${copied ? "#00D2BE" : "rgba(255,255,255,.16)"}`, borderRadius: 999, padding: "12px 16px", minHeight: 44, display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
               {copied ? "Copied" : "Copy address"}
             </button>
           </div>
@@ -163,7 +163,7 @@ export default function VisitOps() {
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.1)" }}>
           <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#7F8A99", fontWeight: 600, marginRight: 4 }}>Once you are here</span>
           {([["Walk it on the map", "/map"], ["Bring a club block", "/clubs/"]] as const).map(([l, href]) => (
-            <a key={href} href={href} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "9px 15px", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
+            <a key={href} href={href} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "12px 16px", minHeight: 44, display: "inline-flex", alignItems: "center", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
           ))}
         </div>
       </div>

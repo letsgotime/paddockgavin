@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { ranchShare } from "@/lib/events/ranch-share"
 import { ApplyPage } from "../_apply"
+import { catalogFor, isOnSale } from "@/lib/stripe/catalog"
 
 
 /* Copy audited against the concours register on 30 August 2026: no tells from
@@ -15,8 +16,36 @@ export const metadata: Metadata = ranchShare({
     "Vendor spaces on the entry drive at The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo. Spaces start at $250 and scale with footprint.",
 })
 
+/* The booth sizes as offers a search engine can read, priced from the
+   same catalogue checkout charges from, so the figure here can never
+   drift from the figure on the card. The booth page is noindex, which
+   is why the offers live on this page. */
+function offersSchema() {
+  const items = Object.values(catalogFor("pistonpoweredranch") || {}).filter((i) => i.audience === "public" && isOnSale(i))
+  const offers = items.map((i) => ({
+    "@type": "Offer",
+    name: i.name,
+    price: ((i.cents || 0) / 100).toFixed(2),
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+    url: "https://pistonpoweredranch.com/vendor/booth",
+    validThrough: "2026-10-10",
+  }))
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Vendor booth at The Piston Powered Ranch",
+    description: "Booth space on vendor row at The Piston Powered Ranch, Saturday 10 October 2026, Rancho Jaramillo, Unionville, Tennessee.",
+    url: "https://pistonpoweredranch.com/vendor",
+    brand: { "@type": "Organization", name: "PaddockGavin", url: "https://paddockgavin.com" },
+    offers,
+  }
+}
+
 export default function Page() {
   return (
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(offersSchema()) }} />
     <ApplyPage
       kicker="Vendor row"
       title="The first thing guests walk past"
@@ -42,5 +71,6 @@ export default function Page() {
       closeLine="Every enquiry is answered."
       cta={{ label: "Reserve a booth", href: "/events/pistonpoweredranch/vendor/booth" }}
     />
+    </>
   )
 }

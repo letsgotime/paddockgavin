@@ -337,6 +337,7 @@ const input: React.CSSProperties = {
   border: "1px solid rgba(255,255,255,.13)",
   borderRadius: 10,
   padding: "10px 12px",
+  minHeight: 44,
   width: "100%",
 }
 const primary: React.CSSProperties = {
@@ -345,6 +346,7 @@ const primary: React.CSSProperties = {
   border: 0,
   borderRadius: 12,
   padding: "13px 24px",
+  minHeight: 44,
   cursor: "pointer",
   marginTop: 4,
 }

@@ -12,7 +12,7 @@ export const metadata: Metadata = ranchShare({
   path: "/entry",
   title: "Enter a Car · The Piston Powered Ranch",
   description:
-    "Three hundred places on the field, chosen from Nashville and from collections that travel. Submit a car for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo.",
+    "Car show registration for The Piston Powered Ranch, Saturday October 10 2026 at Rancho Jaramillo. Three hundred places, chosen one at a time. Free to enter.",
 })
 
 export default function Page() {
@@ -24,6 +24,7 @@ export default function Page() {
       body={[
         "We look for exotics, muscle, and golf carts worth a second look, in two, four or six seats. Trucks and SUVs do not show on this field.",
         "We read every entry ourselves. Photographs help. History helps more.",
+        "Registration is this form, and it costs nothing.",
       ]}
       img="/images/918-p1.webp"
       focal="center 50%"

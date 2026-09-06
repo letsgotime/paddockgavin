@@ -301,7 +301,7 @@ export function ApplyPage(p: ApplyProps) {
                 >
                   {p.cta.label}
                 </a>
-                <Link href="/events/pistonpoweredranch" style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>
+                <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>
                   Back to the event
                 </Link>
               </div>
@@ -653,6 +653,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
     width: "100%",
     boxSizing: "border-box",
     outline: "none",
+    minHeight: 44,
   }
   const label: React.CSSProperties = { fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#8b95a3" }
   const field = (l: string, el: React.ReactNode) => (
@@ -752,12 +753,12 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
             </div>
           ) : (
             <>
-              <input ref={nameRef} style={input} placeholder="Your name" autoComplete="name" value={f.name} onChange={up("name")} />
-              <input style={input} placeholder={form.orgLabel} autoComplete="organization" value={f.org} onChange={up("org")} />
-              <input style={input} type="email" inputMode="email" autoComplete="email"
-                placeholder="Email, so we can write back" value={f.reach} onChange={up("reach")} />
-              <input style={input} type="tel" inputMode="tel" autoComplete="tel"
-                placeholder="Phone, optional" value={f.phone} onChange={up("phone")} />
+              {field("Your name", <input ref={nameRef} style={input} placeholder="First and last" autoComplete="name" value={f.name} onChange={up("name")} />)}
+              {field(form.orgLabel, <input style={input} placeholder={form.orgLabel} autoComplete="organization" value={f.org} onChange={up("org")} />)}
+              {field("Email", <input style={input} type="email" inputMode="email" autoComplete="email"
+                placeholder="So we can write back" value={f.reach} onChange={up("reach")} />)}
+              {field("Phone, optional", <input style={input} type="tel" inputMode="tel" autoComplete="tel"
+                placeholder="If a call is easier" value={f.phone} onChange={up("phone")} />)}
 
               {surface === "vendor" && (
                 <>
@@ -766,17 +767,17 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                     {field("Footprint", select("footprint", FOOTPRINTS, "Not sure yet"))}
                     {field("Power", select("power", POWER))}
                   </div>
-                  <input style={input} type="url" inputMode="url" placeholder="Website or Instagram, optional" value={f.website} onChange={up("website")} />
+                  {field("Website or Instagram, optional", <input style={input} type="url" inputMode="url" placeholder="https://" value={f.website} onChange={up("website")} />)}
                 </>
               )}
               {surface === "sponsor" && (
                 <>
                   {field("Position you have in mind", select("level", SPONSOR_LEVELS, "Not sure yet"))}
-                  <input style={input} type="url" inputMode="url" placeholder="Website, optional" value={f.website} onChange={up("website")} />
+                  {field("Website, optional", <input style={input} type="url" inputMode="url" placeholder="https://" value={f.website} onChange={up("website")} />)}
                 </>
               )}
 
-              <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />
+              {field(surface === "entry" ? "About the car" : surface === "vendor" ? "What you sell and what you need" : "What you want the day to do", <textarea style={{ ...input, minHeight: 104, resize: "vertical" }} placeholder={form.askLabel} value={f.message} onChange={up("message")} />)}
 
               {surface === "entry" ? (
                 <Media
