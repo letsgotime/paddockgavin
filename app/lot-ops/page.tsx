@@ -8,11 +8,11 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 const STEPS = [
-  { word: "Checked",      line: "Looked over properly before it goes anywhere. Every panel, every corner." },
-  { word: "Cleaned",      line: "The road comes off before anything else happens." },
-  { word: "Photographed", line: "Every angle, while it\u2019s at its best." },
+  { word: "Checked",      line: "Looked over properly before it went anywhere. Every panel, every corner." },
+  { word: "Cleaned",      line: "The road came off before anything else happened." },
+  { word: "Photographed", line: "Every angle, while it was at its best." },
   { word: "Written up",   line: "What it is, what it has, what it needs." },
-  { word: "Safe",         line: "A spot of its own until it\u2019s wanted." },
+  { word: "Safe",         line: "A spot of its own until it was wanted." },
 ]
 
 const CREW = [
@@ -59,17 +59,17 @@ export default function LotOpsPage() {
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,42px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; Lebanon, TN</span>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Lot ops &middot; Lebanon, TN &middot; 2025 to 2026</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
-              The gate opens<br /><span style={{ color: "#F2C94C" }}>at eight</span>
+              The gate opened<br /><span style={{ color: "#F2C94C" }}>at eight</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#EDF1F6", maxWidth: "54ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place. I run the lot operations, and this is what that looks like.
+              The bay door went up and there was a transporter already waiting. Some mornings it was one car. Some mornings you could not walk through the place. This is the operation I ran, and what a morning on it looked like.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-                Watch the mornings
+                See the work
               </a>
               <Link href="/intake" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.4)", background: "rgba(10,21,35,.36)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
                 The full intake
@@ -80,7 +80,7 @@ export default function LotOpsPage() {
 
         {/* Lot board */}
         <section className="pg-e1" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(18px,2.6vw,26px)", display: "flex", flexDirection: "column", gap: 14 }}>
-          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>The lot in Lebanon. I run its mornings</span>
+          <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>The lot in Lebanon, and the mornings I ran there</span>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 16 }}>
             {[
               { k: "The floor", v: "70,000 sq ft", tone: "#00D2BE" },
@@ -103,7 +103,7 @@ export default function LotOpsPage() {
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Everything inbound</span>
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>Before it goes anywhere</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>Before it went anywhere</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             {STEPS.map((st, i) => (
@@ -158,8 +158,8 @@ export default function LotOpsPage() {
         {/* Outbound CTA */}
         <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(0,81,133,.9),rgba(0,81,133,.66))", border: "1px solid #0A6BAA", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
           <div style={{ flex: "1 1 300px", minWidth: 0 }}>
-            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>Nothing moves until we&rsquo;re sure</h2>
-            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "56ch" }}>Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.</p>
+            <h2 style={{ margin: "0 0 12px", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>Nothing moved until we were sure</h2>
+            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#CFE4F4", maxWidth: "56ch" }}>Everything leaving was verified first. There is real fraud in this business, and somebody had trusted us with a car they loved.</p>
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link href="/book" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
