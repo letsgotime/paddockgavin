@@ -293,7 +293,7 @@ export default function ConnectPage() {
               fontSize: "clamp(16px,4vw,18px)", lineHeight: 1.58, color: "#C4CBD6",
             }}
           >
-            Lot operations and events by day, and I source cars for people. Software and a book by night. Everything I answer comes from one inbox.
+            Events and client work by day, code and experiments at night. Everything I answer comes from one inbox.
           </p>
           {/* Readouts */}
           <div

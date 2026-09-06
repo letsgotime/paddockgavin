@@ -146,7 +146,7 @@ export function SiteFooter() {
               Gavin Brooks &middot; Nashville, Tennessee
             </p>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15.5, lineHeight: 1.55, color: "#B4B6B2" }}>
-              Lot operations, events and vehicle sourcing
+              Events, client work and vehicle sourcing
             </p>
             <a
               href="https://instagram.com/itspaddockgavin"
@@ -204,7 +204,7 @@ export function SiteFooter() {
               The lot
             </p>
             {[
-              { href: "/lot-ops", label: "Lot Ops in Action" },
+              { href: "/lot-ops", label: "Lot Ops, 2025 to 2026" },
               { href: "/events", label: "Events" },
               { href: "/events/pistonpoweredranch", label: "The Piston Powered Ranch" },
               { href: "/gallery", label: "The gallery" },

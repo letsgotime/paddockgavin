@@ -4,7 +4,7 @@ import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Terms",
-  description: "What you can do with what you find here, what happens when a car changes hands, and which of these things is mine versus my employer's.",
+  description: "What you can do with what you find here, what happens when a car changes hands, and which of these things is mine.",
 }
 
 const UPDATED = "August 2026"
@@ -14,18 +14,18 @@ const sections = [
     num: "01",
     heading: "Who you are dealing with",
     body: [
-      "PaddockGavin is Gavin Brooks, of Nashville, Tennessee. Everything published here is published by me personally. By day I run lot operations and events in Lebanon, Tennessee. That is employment, not a partnership, and this website is mine, not my employer's.",
-      "Some of what you see here happens on a dealership's floor, with the dealership's cars. Some of it is entirely my own. Each section says which, because blurring the two would be unfair to them and dishonest to you.",
+      "PaddockGavin is Gavin Brooks, of Nashville, Tennessee. Everything published here is published by me personally, on my own account. This website is mine. Where a car, a floor or an event belongs to somebody else, the page you are reading says so.",
+      "Some of what you see here was made on a dealership floor, with cars that were not mine. Some of it is entirely my own. Each section says which, because blurring the two would be unfair to them and dishonest to you.",
     ],
   },
   {
     num: "02",
     heading: "The content, and permission to be here",
     body: [
-      "Photographs and video captured on a dealership's floor are made and published with the dealership's permission. That permission runs to me. It does not run to you.",
+      "Photographs and video captured on a dealership floor were made and published with that dealership's permission. The permission ran to me. It does not run to you, and it did not transfer with anything published here.",
       "Everything on this site is protected by copyright: the photographs, the video, the writing, the captions, the layout, the code and the design system. You may look at it, link to it, and share a link. You may not copy it, repost it, re-upload it, feed it to a model, or use it in anything commercial without written permission.",
       "The watermark is not decoration. Where a mark appears on an image or a clip, it is copyright management information under 17 U.S.C. § 1202. Removing it, cropping it out or altering it to hide where the file came from is its own violation, separate from the copying. It carries statutory damages of $2,500 to $25,000 per instance, with no requirement that the work be registered first. If you find one of my files with the mark taken off, so will I.",
-      "I enforce this. Takedowns go out, and where the use is commercial or the mark has been removed, it does not stop at a takedown. The dealership holds and enforces its own rights in its own property, separately and at its own discretion; nothing here speaks for them.",
+      "I enforce this. Takedowns go out, and where the use is commercial or the mark has been removed, it does not stop at a takedown. Any dealership whose cars or premises appear holds and enforces its own rights in its own property, separately and at its own discretion; nothing here speaks for them.",
       "Think a use might be fine? Ask first. DM @itspaddockgavin. Most reasonable requests get a yes.",
     ],
   },
@@ -51,7 +51,7 @@ const sections = [
     num: "04",
     heading: "What is mine, and where it lives",
     body: [
-      "Separate from the day job, these are my own ventures. They are not my employer's, they do not run on their time, and they are governed by the terms of whichever platform they sit on.",
+      "These are my own ventures. They belong to nobody else, and they are governed by the terms of whichever platform they sit on.",
       "Buy the book and Amazon handles the order, the payment and the return. Hire me for automation and the engagement runs through Paddock20 with its own contract. Follow a link from here to any of them and you have left this site, their privacy policy and their terms take over at the click.",
       "Consultation is advice, not a warranty. Cars, paint, coatings, watches and tools are all things that can be damaged by the person handling them. What I tell you is what I would do with my own. What you do with yours is on you.",
     ],
@@ -161,7 +161,7 @@ export default function TermsPage() {
             <span style={{ color: "#F2C94C" }}>in plain English</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 620 }}>
-            What you can do with what you find here, what happens when a car changes hands, and which of these things is mine versus my employer&apos;s.
+            What you can do with what you find here, what happens when a car changes hands, and which of these things is mine.
           </p>
           <p
             style={{
