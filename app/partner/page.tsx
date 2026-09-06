@@ -2,15 +2,16 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { getFollowerCount, formatFollowers } from "@/lib/social"
 
 export const metadata: Metadata = {
   title: "Brand Partnerships",
   description: "Around a million views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.",
 }
 
-const stats = [
+const STATS = [
   { k: "~1,000,000", v: "Views / month" },
-  { k: "~8,100", v: "Instagram followers" },
+  { k: "FOLLOWERS", v: "Instagram followers" },
   { k: "Owners &\ncollectors", v: "Primary audience" },
   { k: "200+", v: "Events run" },
 ]
@@ -52,7 +53,9 @@ const rules = [
   "One brand per category at a time, so nothing competes with itself on the same page.",
 ]
 
-export default function PartnerPage() {
+export default async function PartnerPage() {
+  const { followers } = await getFollowerCount()
+  const stats = STATS.map((s) => (s.k === "FOLLOWERS" ? { ...s, k: formatFollowers(followers) } : s))
   return (
     <main
       style={{

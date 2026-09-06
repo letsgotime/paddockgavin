@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { getFollowerCount, formatFollowers } from "@/lib/social"
 
 const ARCHIVO = "Archivo, Helvetica, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
@@ -11,7 +12,8 @@ const NOTCH = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,
  * caption set as a headline over an empty card that faded in; the H1 was
  * screen-reader only. This one is the one e2 surface on the screen.
  */
-export function HomeHero() {
+export async function HomeHero() {
+  const { followers } = await getFollowerCount()
   return (
     <>
       <PageBackdrop src="/images/donuts-floor.webp" />
@@ -51,7 +53,7 @@ export function HomeHero() {
         <dl className="pg-proof pg-e1" style={{ margin: "clamp(14px,2vw,22px) 0 0" }}>
           {[
             { v: "~1M",   k: "views a month" },
-            { v: "8,100", k: "followers" },
+            { v: formatFollowers(followers).replace("~", ""), k: "followers" },
             { v: "29",    k: "cars owned" },
             { v: "200+",  k: "events run" },
           ].map((s) => (
