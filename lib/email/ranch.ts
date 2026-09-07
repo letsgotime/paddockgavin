@@ -53,6 +53,8 @@ export type Block =
   | { kind: "button"; label: string; href: string }
   | { kind: "rule" }
   | { kind: "quiet"; text: string }
+  /** Small descriptor text under a paragraph: a capacity, a format, a limit. */
+  | { kind: "caption"; text: string }
   | { kind: "links"; rows: { label: string; url: string; note?: string }[] }
   /* Photographs in a row, stacking on a phone. Each carries alt text over a
      dark cell, so a blocked image leaves a caption rather than a hole, and
@@ -72,6 +74,9 @@ export interface RanchEmail {
   blocks: Block[]
   /** Sits under the rule at the foot, above the address line. */
   signoff?: string
+  /** One line at the foot saying why this arrived: "You are receiving this
+      because you entered a car for 10 October." */
+  reason?: string
   unsubscribe?: string
 }
 
@@ -98,6 +103,9 @@ function renderBlock(b: Block): string {
 
     case "quiet":
       return `<tr><td style="padding:0 0 18px;font-family:${TEXT};font-size:15px;line-height:1.6;color:${MUTE};mso-line-height-rule:exactly">${esc(b.text)}</td></tr>`
+
+    case "caption":
+      return `<tr><td style="padding:0 0 22px;font-family:${LABEL};font-size:12.5px;line-height:1.55;letter-spacing:.02em;color:${MUTE};mso-line-height-rule:exactly">${esc(b.text)}</td></tr>`
 
     case "rule":
       return `<tr><td style="padding:6px 0 24px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td height="1" style="height:1px;line-height:1px;font-size:0;background:${HAIR}">&nbsp;</td></tr></table></td></tr>`
@@ -282,6 +290,7 @@ ${
 
     <tr><td class="pad" style="padding:34px 46px 0">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td align="center" style="padding:0 0 14px"><img src="https://pistonpoweredranch.com/brand/rj-mark-320.png" width="64" height="41" alt="Rancho Jaramillo" style="display:block;width:64px;height:auto;border:0;margin:0 auto" /></td></tr>
         <tr><td align="center" style="font-family:${DISPLAY};font-size:15px;letter-spacing:.34em;text-transform:uppercase;color:${INK};padding:0 0 4px" class="ink">The Piston Powered Ranch</td></tr>
         <tr><td align="center" style="font-family:${LABEL};font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:${MUTE};padding:0 0 30px" class="mute">Rancho Jaramillo &middot; Unionville, Tennessee</td></tr>
       </table>
@@ -311,7 +320,11 @@ ${
           Saturday 10 October 2026 &middot; 9am to 3pm<br />
           Rancho Jaramillo, Unionville, Tennessee<br />
           <span style="color:${HAIR};letter-spacing:.3em">&middot;&nbsp;&middot;&nbsp;&middot;</span><br />
-          A PaddockGavin event, benefiting Community Elementary School
+          A PaddockGavin event, benefiting Community Elementary School<br />
+          <a href="https://pistonpoweredranch.com" style="color:${MUTE};text-decoration:none">pistonpoweredranch.com</a>
+          &nbsp;&middot;&nbsp; <a href="https://pistonpoweredranch.com/legal/privacy" style="color:${MUTE};text-decoration:underline">Privacy</a>
+          &nbsp;&middot;&nbsp; <a href="https://pistonpoweredranch.com/legal/terms" style="color:${MUTE};text-decoration:underline">Terms</a>
+          ${e.reason ? `<br />${esc(e.reason)}` : ""}
           ${e.unsubscribe ? `<br /><a href="${esc(e.unsubscribe)}" style="color:${MUTE};text-decoration:underline">Unsubscribe</a>` : ""}
         </td></tr>
       </table>
@@ -331,7 +344,7 @@ ${
 export function renderRanchText(e: RanchEmail): string {
   const lines: string[] = ["THE PISTON POWERED RANCH", "Rancho Jaramillo, Unionville, Tennessee", "", e.heading.toUpperCase(), ""]
   for (const b of e.blocks) {
-    if (b.kind === "p" || b.kind === "lead" || b.kind === "quiet") lines.push(b.text, "")
+    if (b.kind === "p" || b.kind === "lead" || b.kind === "quiet" || b.kind === "caption") lines.push(b.text, "")
     else if (b.kind === "list") lines.push(...b.items.map((i) => `  - ${i}`), "")
     else if (b.kind === "facts") lines.push(...b.rows.map((r) => `  ${r.label}: ${r.value}`), "")
     else if (b.kind === "button") lines.push(`${b.label}: ${b.href}`, "")
@@ -345,6 +358,8 @@ export function renderRanchText(e: RanchEmail): string {
   }
   if (e.signoff) lines.push(e.signoff, "")
   lines.push("Saturday 10 October 2026, 9am to 3pm", "Rancho Jaramillo, Unionville, Tennessee", "A PaddockGavin event, benefiting Community Elementary School")
+  lines.push("pistonpoweredranch.com", "Privacy: https://pistonpoweredranch.com/legal/privacy", "Terms: https://pistonpoweredranch.com/legal/terms")
+  if (e.reason) lines.push("", e.reason)
   if (e.unsubscribe) lines.push("", `Unsubscribe: ${e.unsubscribe}`)
   return lines.join("\n")
 }
