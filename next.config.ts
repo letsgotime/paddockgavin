@@ -204,6 +204,9 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    /* 60 for the two heroes, which sit behind a gradient on a phone. The
+       optimizer refuses any quality not listed here with an empty body. */
+    qualities: [60, 75],
     remotePatterns: [
       { protocol: "https", hostname: "**.cloudflare.com" },
       { protocol: "https", hostname: "**.r2.dev" },
