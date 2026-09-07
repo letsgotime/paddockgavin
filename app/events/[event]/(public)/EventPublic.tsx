@@ -350,8 +350,8 @@ export default function EventPublic({
         }
         [data-r]{opacity:0;transform:translate3d(0,22px,0)}
         [data-r].in{opacity:1;transform:none;transition:opacity .8s cubic-bezier(.16,.84,.32,1),transform .8s cubic-bezier(.16,.84,.32,1)}
-        @media (prefers-reduced-motion: reduce) {
-          .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%) }
+        @media (prefers-reduced-motion: reduce), (max-width: 640px) {
+          .evKen { animation: none !important; transform: scale(1.08) translateY(-1.5%); will-change: auto }
           [data-r],[data-r].in{opacity:1!important;transform:none!important;transition:none!important}
         }
         .evGroundMore { display: none }

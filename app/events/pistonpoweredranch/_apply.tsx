@@ -192,6 +192,7 @@ export function ApplyPage(p: ApplyProps) {
         [data-r]{opacity:0;transform:translate3d(0,26px,0)}
         [data-r].in{opacity:1;transform:none;transition:opacity .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms),transform .85s cubic-bezier(.16,.84,.32,1) var(--d,0ms)}
         .pgKen{animation:pgKen 30s ease-in-out infinite alternate;transform-origin:center}
+        @media (max-width: 640px) { .pgKen { animation: none !important; transform: scale(1.06); will-change: auto } }
         .pgBand{position:sticky;top:0;height:100svh;overflow:hidden}
         .pgTile{transition:transform .5s cubic-bezier(.16,.84,.32,1),border-color .3s}
         @media (hover:hover){.pgTile:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.82)}}
