@@ -102,30 +102,8 @@ export default function CarsPage() {
       </section>
 
       {/* Photo grid */}
-      <section style={{ background: "#0E1A2A", padding: "clamp(46px,6vw,90px) clamp(14px,4vw,64px)" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 16, borderTop: "1px solid rgba(255,255,255,.14)", padding: "13px 0 0", margin: "0 0 clamp(22px,2.8vw,36px)" }}>
-          <span style={{ fontFamily: arch, fontWeight: 700, fontSize: "clamp(15px,1.05vw,19px)", letterSpacing: ".16em", textTransform: "uppercase", color: "#EDF1F6", flex: "0 0 auto" }}>The ones I have shots of</span>
-          <i style={{ flex: "1 1 auto", height: 5, background: "repeating-linear-gradient(90deg,rgba(255,255,255,.2) 0 1px,transparent 1px 6px)" }} />
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(210px,45%),1fr))", gap: 8 }}>
-          {[
-            { src: "/images/e92-front.jpg",        alt: "E92 M3 front" },
-            { src: "/images/e92-side.jpg",         alt: "E92 M3 side" },
-            { src: "/images/e92-wheels-three.jpg", alt: "E92 M3 wheels" },
-            { src: "/images/r8-garage.webp",       alt: "R8 in the garage" },
-            { src: "/images/r8-dog-walk.webp",     alt: "R8 on a dog walk" },
-            { src: "",                             alt: "" },
-          ].map((s, i) => s.src ? (
-            <figure key={i} style={{ margin: 0, position: "relative", background: "#0A1523", border: "1px solid rgba(255,255,255,.1)", overflow: "hidden", aspectRatio: "4/3" }}>
-              <Image src={s.src} alt={s.alt} fill style={{ objectFit: "cover" }} loading="lazy" />
-            </figure>
-          ) : (
-            <figure key={i} style={{ margin: 0, background: "#0A1523", border: "1px solid rgba(255,255,255,.1)", aspectRatio: "4/3" }} />
-          ))}
-        </div>
-      </section>
 
-      {/* Looking for one */}
+{/* Looking for one */}
       <section style={{ background: "#0A1523", padding: "clamp(44px,6vw,88px) clamp(14px,4vw,64px)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: "clamp(24px,3vw,52px)", alignItems: "center" }}>
           <div>
