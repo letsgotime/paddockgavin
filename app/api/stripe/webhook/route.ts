@@ -86,17 +86,54 @@ async function linkMetadata(linkId: string): Promise<Record<string, string>> {
   }
 }
 
-async function mail(payload: Record<string, unknown>): Promise<boolean> {
+/**
+ * A send that never reached Resend is the one failure nobody can find.
+ *
+ * public.email_events is fed by Resend's own webhook, so it only ever holds
+ * messages Resend accepted. When the handoff itself fails, Resend never sees
+ * the message, no webhook fires, and the row never exists. That gap sits
+ * immediately after money has moved: the payer is charged and their receipt
+ * is gone with nothing anywhere to say so. This writes the failure into the
+ * same table the deliveries land in, so one query answers "what did we fail
+ * to send" alongside "what bounced".
+ */
+async function recordSendFailure(tag: string, payload: Record<string, unknown>, reason: string) {
+  const to = Array.isArray(payload.to) ? String(payload.to[0] ?? "") : String(payload.to ?? "")
+  console.error("[stripe/webhook] message not sent", { tag, to, reason })
+  const db = crm()
+  if (!db) return
+  try {
+    await db.query(
+      `insert into public.email_events (event_id, email_id, type, recipient, subject, occurred_at, payload)
+       values ($1, null, 'send_failed', $2, $3, now(), $4)
+       on conflict (event_id) do nothing`,
+      [`send_failed:${tag}`, to || null, String(payload.subject ?? ""), JSON.stringify({ tag, reason })],
+    )
+  } catch (err) {
+    /* Nothing left to do but say so. The payment is already booked. */
+    console.error("[stripe/webhook] could not record the send failure either", err)
+  }
+}
+
+async function mail(payload: Record<string, unknown>, tag: string): Promise<boolean> {
   const key = process.env.RESEND_API_KEY
-  if (!key) return false
+  if (!key) {
+    await recordSendFailure(tag, payload, "RESEND_API_KEY is not set")
+    return false
+  }
   try {
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     })
-    return r.ok
-  } catch {
+    if (!r.ok) {
+      await recordSendFailure(tag, payload, `resend ${r.status}: ${(await r.text()).slice(0, 300)}`)
+      return false
+    }
+    return true
+  } catch (err) {
+    await recordSendFailure(tag, payload, String(err))
     return false
   }
 }
@@ -173,6 +210,11 @@ export async function POST(req: Request) {
         console.error("[stripe/webhook] CRM_DATABASE_URL is not set; asking Stripe to retry", { id })
         return NextResponse.json({ error: "not_configured" }, { status: 503 })
       }
+      else if (!id) {
+        /* Nothing to key the ledger on and nothing to dedupe a retry against,
+           so a retry could double book. Say so loudly and take the event. */
+        console.error("[stripe/webhook] paid event carried no id; nothing booked", { type: evt.type, amount, email })
+      }
 
       /* The receipt, and a line to the desk. Only on the first booking, so a
          redelivered event does not send a second receipt. */
@@ -189,7 +231,7 @@ export async function POST(req: Request) {
           if (t) {
             const blocks: Block[] = livemode ? t.blocks : [{ kind: "quiet", text: "Test mode: no money moved. This receipt is a rehearsal." }, ...t.blocks]
             const doc: RanchEmail = { ...t, blocks }
-            await mail({ from: t.from, to: [email], reply_to: desk, subject: t.subject, html: renderRanchEmail(doc), text: renderRanchText(doc) })
+            await mail({ from: t.from, to: [email], reply_to: desk, subject: t.subject, html: renderRanchEmail(doc), text: renderRanchText(doc) }, `receipt:${id}`)
           }
         }
 
@@ -213,7 +255,7 @@ export async function POST(req: Request) {
             { kind: "quiet", text: surface === "vendor" ? "Booked in the ledger. Add them to the vendor row from HQ when the pitch is placed." : "Booked in the ledger. Artwork and placement run from HQ." },
           ],
         }
-        await mail({ from: NOREPLY, to: [desk], subject: `${livemode ? "Paid" : "Test payment"}: ${meta.org || payer || email || id}, ${amountText}`, html: renderRanchEmail(note), text: renderRanchText(note) })
+        await mail({ from: NOREPLY, to: [desk], subject: `${livemode ? "Paid" : "Test payment"}: ${meta.org || payer || email || id}, ${amountText}`, html: renderRanchEmail(note), text: renderRanchText(note) }, `desk:${id}`)
       }
       break
     }
