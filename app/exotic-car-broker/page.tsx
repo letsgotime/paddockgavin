@@ -24,7 +24,7 @@ export default function Page() {
         { title: "The search", body: "Retail listings, the trade, and the auctions a dealer's licence opens. Most of the 78 cars I have found for people turned up before they were listed." },
         { title: "The offer, in writing", body: "Nothing is an offer until the selling dealer puts it in writing. The paperwork, the financing, the title, the funds and the delivery run on that dealer's licence and under its terms." },
       ]}
-      nashville="I am in Nashville, Tennessee. Twenty-nine cars owned over thirty years, seventy-eight found for other people, and the garage is on this site if you want to see what I keep."
+      nashville="I am in Nashville, Tennessee. Seventy-eight found for other people, and the garage is on this site if you want to see what I keep."
       faqs={[
         { q: "What does an exotic car broker do?", a: "Finds the car to your spec, rather than selling you what is on a lot. I search retail listings, the trade and the auctions a dealer's licence opens, and the sale completes through a licensed dealer." },
         { q: "How is the broker paid?", a: "A broker fee, if any, is set per sale and disclosed to you in writing before you sign the broker agreement. Beyond that, how I am paid is between me and the dealer." },

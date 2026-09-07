@@ -77,7 +77,7 @@ export default async function HomePage() {
       <Stage sec="sourcing">
         <Section id="sourcing" eyebrow="Sourcing" tone="#B4B6B2" title="Looking for a particular car" cta={{ href: "https://ig.me/m/itspaddockgavin", label: "Tell me the car" }}>
           <p style={{ margin: 0 }}>
-            It is the last thing on this page on purpose. Being around cars all week means the network is usually the fastest way to a specific one. Seventy-eight found so far, retail or wholesale, and the sale completes through a licensed dealer.
+            The car somebody wants is often one that never gets listed. Most of the seventy-eight came through a phone call rather than a listing, retail or wholesale, and the sale completes through a licensed dealer.
           </p>
           <LinkRow items={[
             { href: "/sell-my-exotic-car", label: "Sell my exotic car", note: "Retail or wholesale" },

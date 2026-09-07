@@ -140,7 +140,7 @@ export function SiteFooter() {
                 color: "#B4B6B2",
               }}
             >
-              A life bent toward cars
+              Events, client work and vehicle sourcing
             </p>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 16, lineHeight: 1.55, color: "#C4CBD6" }}>
               Gavin Brooks &middot; Nashville, Tennessee

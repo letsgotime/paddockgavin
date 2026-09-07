@@ -10,8 +10,7 @@ export async function HomeMediaKit() {
   return (
     <Section id="mediakit" eyebrow="For brands" tone="#F2C94C" title="An audience that owns the cars you make things for" cta={{ href: "#contact", label: "Pitch a brand deal" }} link={{ href: "/connect", label: "Every link" }}>
       <p style={{ margin: 0 }}>
-        About 1,000,000 views a month and around {formatFollowers(followers).replace("~", "")} followers, an audience of owners and collectors, watching vertical video with the sound off and the captions on. If you make products, tools or coatings, run events, or have an affiliate program, write me.
-      </p>
+        The people who watch this already own the cars, or are working out which one to buy next. The figures below come from Instagram Insights, and I will show you the screens.</p>
       <dl className="pg-proof" style={{ margin: "6px 0 0" }}>
         {[
           { v: "~1M",   k: "views a month" },

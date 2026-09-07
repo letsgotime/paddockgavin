@@ -283,7 +283,7 @@ export default function ConnectPage() {
                   fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#F2C94C",
                 }}
               >
-                A life bent toward cars
+                Events, client work and vehicle sourcing
               </span>
             </div>
           </div>
