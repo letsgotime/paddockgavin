@@ -21,7 +21,13 @@ const NOTCH = "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,
 
 /* Set this when the next date is confirmed and the page starts announcing it.
    Until then the page says the date is not set, which is true. */
-const NEXT: { date: string; place: string; href: string } | null = null
+/* Sunday, not the Saturday the first two ran on. Confirmed by Gavin on
+   7 September, and the page says the day out loud so nobody assumes. */
+const NEXT: { date: string; place: string; href: string } | null = {
+  date: "Sunday 6 December 2026",
+  place: "Scottsdale, Arizona",
+  href: "https://ig.me/m/itspaddockgavin",
+}
 
 const EDITIONS = [
   {
@@ -231,7 +237,7 @@ export default function TiresAndTimepiecesPage() {
           </h2>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
             {NEXT
-              ? `The next Tires and Timepieces is ${NEXT.date}, at ${NEXT.place}. Spectating is free, the way it has always been.`
+              ? `The next Tires and Timepieces is ${NEXT.date}, at ${NEXT.place}. A Sunday this time, not the Saturday the first two ran on. Doors at half past seven, done by ten, and spectating is free the way it has always been.`
               : "The date for the next one is being set. It posts here first, and spectating stays free the way it always was. If you want to know when, or you have a car that belongs in the register above, the fastest way is to message me."}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 18px", alignItems: "center" }}>

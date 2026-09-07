@@ -29,6 +29,15 @@ const KINDS = [
     img: "/images/f458-front-sq.webp",
   },
   {
+    key: "carcare",
+    eyebrow: "Car care",
+    title: "The Gloss Game",
+    tone: "#00D2BE",
+    blurb: "The detailing book. Which bucket, which mitt, what touches the paint after the wheels, and how to tell whether you need a machine before you spend a weekend finding out. On Amazon in paperback and Kindle.",
+    hint: "Or ask me a question about your paint",
+    img: "/images/f458-vents-sq.webp",
+  },
+  {
     key: "other",
     eyebrow: "Anything else",
     title: "Something different",
