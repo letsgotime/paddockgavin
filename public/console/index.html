@@ -4122,7 +4122,7 @@
                 u = r
                   .slice(0, 6)
                   .map(function (e) {
-                    var t = (e.details && e.details.vehicle) || "Vehicle",
+                    var t = (e.details && (e.details.vehicle || e.details.org)) || "Vehicle",
                       n = "approved" === e.status ? "" : ", " + i(e.status);
                     return (
                       '<div class="tl-row"><div class="tt">' +
@@ -4637,7 +4637,7 @@
               '</span><span class="li-v">' +
               i(
                 ("vehicle" === a.type
-                  ? a.details && a.details.vehicle
+                  ? a.details && (a.details.vehicle || a.details.org)
                   : "vendor" === a.type
                     ? a.details && a.details.business
                     : a.details && a.details.company) || "n/a",
@@ -5095,7 +5095,7 @@
                   o.slice(0, 6).forEach(function (e) {
                     var t =
                         "vehicle" === e.type
-                          ? (e.details && e.details.vehicle) || "Vehicle entry"
+                          ? (e.details && (e.details.vehicle || e.details.org)) || "Vehicle entry"
                           : "vendor" === e.type
                             ? (e.details && e.details.business) || "Vendor entry"
                             : (e.details && e.details.company) || "Sponsor inquiry",

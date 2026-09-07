@@ -161,10 +161,17 @@ export async function POST(req: Request) {
           booked = (ins.rowCount ?? 0) > 0
           if (!eventId) console.error("[stripe/webhook] no events row for slug, booked without event_id", { slug, id })
         } catch (err) {
-          console.error("[stripe/webhook] could not book the payment", err)
+          /* Money has moved and the ledger did not take it. Answering 200 here
+             told Stripe the event was handled and it never came back, so the
+             payment existed only in Stripe: no row, no receipt, nothing at the
+             desk. 500 makes Stripe retry, and the unique index on
+             stripe_object makes that retry harmless. */
+          console.error("[stripe/webhook] could not book the payment, asking Stripe to retry", err)
+          return NextResponse.json({ error: "ledger_write_failed" }, { status: 500 })
         }
       } else if (!db) {
-        console.error("[stripe/webhook] CRM_DATABASE_URL is not set; payment logged only", { id })
+        console.error("[stripe/webhook] CRM_DATABASE_URL is not set; asking Stripe to retry", { id })
+        return NextResponse.json({ error: "not_configured" }, { status: 503 })
       }
 
       /* The receipt, and a line to the desk. Only on the first booking, so a

@@ -33,9 +33,11 @@ declare global {
 
 type UpRow = { id: string; name: string; pct: number; done: boolean; label: string }
 
-function mintDraft(): string {
-  const k = "ppr_draft_id"
-  const gen = "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10)
+function mintDraft(token: string): string {
+  /* Keyed by the entry, not by the tab. Sharing one key with the entry form
+     put an add-later upload in the folder of whatever car was entered last. */
+  const k = "ppr_draft_add_" + token.slice(0, 12)
+  const gen = "d" + (globalThis.crypto?.randomUUID?.().replace(/-/g, "") || Date.now().toString(36) + Math.random().toString(36).slice(2, 10))
   try {
     const v = sessionStorage.getItem(k)
     if (v) return v
@@ -80,7 +82,7 @@ export function AddMedia({ token, photoCt, videoCt }: { token: string; photoCt: 
   const videoIn = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    draftRef.current = mintDraft()
+    draftRef.current = mintDraft(token)
     let gone = false
     const draw = () => {
       if (gone || !tsRef.current || !window.turnstile || widget.current !== null) return

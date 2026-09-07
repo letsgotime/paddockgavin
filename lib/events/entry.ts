@@ -61,7 +61,10 @@ export async function loadEntryByToken(token: string): Promise<EntryStatus | nul
       id: r.id,
       type: r.type,
       applicantName: r.applicant_name,
-      subject: d.org || null,
+      /* Two form generations, two keys. The older wrote the car to
+         details.org, the newer to details.vehicle, and reading one alone left
+         an entrant looking at their own page with no car on it. */
+      subject: d.vehicle || d.business || d.company || d.org || null,
       message: d.message || null,
       status: r.status || "pending",
       submittedAt: r.created_at,

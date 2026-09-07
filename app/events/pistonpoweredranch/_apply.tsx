@@ -81,9 +81,15 @@ const EMPTY_MEDIA: Manifest = { photo: [], video: [], voice: [], doc: [] }
  * cannot be written into anybody else's folder. Shape matches what that route
  * accepts: 8 to 64 characters of letters, digits, dash or underscore.
  */
+const DRAFT_KEY = "ppr_draft_entry"
+
 function draftId(): string {
-  const key = "ppr_draft_id"
-  const made = "d" + Date.now().toString(36) + Math.random().toString(36).slice(2, 10)
+  const key = DRAFT_KEY
+  /* Date.now plus Math.random under one fixed key meant a second entry from
+     the same tab reused the first entry's folder, so two cars' photographs
+     landed together in the store. A UUID cannot collide, and the key is
+     cleared the moment an entry is accepted so the next one starts clean. */
+  const made = "d" + (globalThis.crypto?.randomUUID?.().replace(/-/g, "") || Date.now().toString(36) + Math.random().toString(36).slice(2, 10))
   try {
     const held = sessionStorage.getItem(key)
     if (held) return held
@@ -642,6 +648,10 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         setToken(j.recorded && j.statusToken ? j.statusToken : "")
         track("send", { kind: form.kind, recorded: j.recorded === true })
         setStatus("sent")
+        /* This entry owns its folder now. Release the key so a second car
+           entered from the same tab mints its own. */
+        try { sessionStorage.removeItem(DRAFT_KEY) } catch {}
+        draft.current = ""
         return
       }
       const j = (await res.json().catch(() => ({}))) as { error?: string; detail?: string }
