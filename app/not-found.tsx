@@ -1,17 +1,32 @@
 import Link from "next/link"
-import { headers } from "next/headers"
 
 /**
- * Two doors, two wrong turns. The middleware stamps the ranch's own address
- * with x-pg-brand, and the page reads it here so that a mistyped link on
- * pistonpoweredranch.com lands on the ranch, in its own colours and with its
- * own ways back in, rather than on the paddock with the other brand's name
- * in the tab.
+ * Two doors, two wrong turns.
+ *
+ * This used to read x-pg-brand with headers(). The root not-found is part of
+ * every route's tree, so that one call opted the entire application out of
+ * static rendering: every page, including ones with no dynamic anything, was
+ * server rendered on demand and nothing was ever cached. One 404 was paying
+ * for the whole site.
+ *
+ * Both doors are in the markup and a line of script picks between them before
+ * the elements below it are parsed, so the right one is there on first paint.
+ * Without JavaScript the paddock shows, which is the safe default. The page
+ * is fully static again, and so is everything else.
  */
-export default async function NotFound() {
-  const h = await headers()
-  if (h.get("x-pg-brand") === "pistonpoweredranch") return <RanchNotFound />
-  return <PaddockNotFound />
+export default function NotFound() {
+  return (
+    <>
+      <style>{`.nfRanch{display:none}[data-door="ranch"] .nfRanch{display:block}[data-door="ranch"] .nfPaddock{display:none}`}</style>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.setAttribute('data-door',location.hostname.indexOf('pistonpoweredranch')>-1?'ranch':'paddock')`,
+        }}
+      />
+      <div className="nfRanch"><RanchNotFound /></div>
+      <div className="nfPaddock"><PaddockNotFound /></div>
+    </>
+  )
 }
 
 const CINZEL = "Cinzel, 'Trajan Pro', 'Times New Roman', serif"
