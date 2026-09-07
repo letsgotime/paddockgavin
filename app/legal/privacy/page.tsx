@@ -53,7 +53,7 @@ const sections = [
     heading: "What the servers see",
     body: [
       "Like every website, the infrastructure logs technical information: an IP address, a browser type, the page requested, the time. That is Cloudflare, sitting in front of the site to keep it up and to absorb attacks. It is security and delivery, not analytics about you, and I do not use it to build a profile of anybody.",
-      "On pistonpoweredranch.com, and only there, Google Analytics records that a page was looked at: which page, the device and browser, roughly which part of the world the request came from, and how you arrived. It is never told your name, your email, or anything you type into a form. paddockgavin.com loads no analytics at all.",
+      "Google Analytics records that a page was looked at: which page, the device and browser, roughly which part of the world the request came from, and how you arrived. It is never told your name, your email, or anything you type into a form. Each site has its own property and they are kept apart, so a visit to the ranch never lands in the website's numbers or the other way round.",
     ],
     table: {
       head: ["Service", "What it does here", "Its policy"],
