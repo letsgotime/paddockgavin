@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 
 const BLURB = "Most people only see these cars on a screen. The days get you closer: three hundred of them on a working ranch, close enough to touch. Nashville."
 
@@ -38,6 +39,30 @@ export default async function HomePage() {
     <>
       <SiteNav active="home" />
       <HomeHero />
+
+      {/* The word the brand is named after, explained where a first-time reader
+          will actually meet it. This is Gavin's own sentence, and the audit
+          called it the permission structure for the whole site: it was
+          reachable only from a footer group called Elsewhere. */}
+      <Stage sec="paddock">
+        <div style={{ borderLeft: "2px solid #F2C94C", paddingLeft: "clamp(16px,2.4vw,26px)", display: "flex", flexDirection: "column", gap: "clamp(12px,1.8vw,18px)" }}>
+          <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 10, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: "var(--t-eyebrow)", letterSpacing: ".2em", textTransform: "uppercase", color: "#B4B6B2" }}>
+            The word
+          </p>
+          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "60ch" }}>
+            A paddock is the part of a racetrack most people never see. Behind pit lane, where the
+            transporters park and the teams work.
+          </p>
+          <blockquote style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: "var(--t-h3)", lineHeight: 1.32, letterSpacing: "-.014em", color: "#FFFFFF", maxWidth: "42ch", textWrap: "balance" }}>
+            Nobody in a paddock is showing off. Everybody has something apart, and everybody is happy
+            to tell you why. You learn more standing around one for an afternoon than you do reading
+            for a year.
+          </blockquote>
+          <p style={{ margin: 0 }}>
+            <Link href="/why-a-paddock" className="pg-textlink">Why a Paddock</Link>
+          </p>
+        </div>
+      </Stage>
 
       <PhotoBreak src="/images/g993-out.webp" pos="center 40%" caption="Gunther Werks 993, loading out" />
 
