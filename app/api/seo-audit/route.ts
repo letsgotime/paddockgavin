@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { bearerFrom, emailFromToken, isStaff } from "@/lib/ranch/neon"
 
 const BASE = "https://api.dataforseo.com/v3"
 
@@ -19,7 +20,24 @@ async function dfs(path: string, body: unknown) {
   return res.json()
 }
 
-export async function GET() {
+/* Staff only. This route was open to the internet, and every hit spends the DataForSEO balance,
+   and as a GET a crawler or a link prefetch could trigger a paid run. Same three checks
+   as app/api/planning/route.ts: the bearer exists, the token verifies against
+   the keys our auth server publishes, and the database is asked who that is. */
+async function denyUnlessStaff(req: Request) {
+  const bearer = bearerFrom(req)
+  if (!bearer) return NextResponse.json({ error: "Sign in required" }, { status: 401 })
+  const email = await emailFromToken(bearer)
+  if (!email) return NextResponse.json({ error: "Invalid or expired session" }, { status: 401 })
+  if (!(await isStaff(bearer))) return NextResponse.json({ error: "Not authorised" }, { status: 403 })
+  return null
+}
+
+/* POST, not GET: nothing a crawler follows may spend money. */
+export async function POST(req: Request) {
+  const denied = await denyUnlessStaff(req)
+  if (denied) return denied
+
   const target = "paddockgavin.com"
   const keywords = [
     "exotic car broker nashville",

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { Resend } from "resend"
+import { bearerFrom, emailFromToken, isStaff } from "@/lib/ranch/neon"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -10,7 +11,23 @@ const RECIPIENTS = [
 
 const SITE = "https://paddockgavin.com"
 
-export async function POST() {
+/* Staff only. This route was open to the internet, and it mails from our own sending domain,
+   and an open mailer in a loop is how a Resend account gets suspended. Same three checks
+   as app/api/planning/route.ts: the bearer exists, the token verifies against
+   the keys our auth server publishes, and the database is asked who that is. */
+async function denyUnlessStaff(req: Request) {
+  const bearer = bearerFrom(req)
+  if (!bearer) return NextResponse.json({ error: "Sign in required" }, { status: 401 })
+  const email = await emailFromToken(bearer)
+  if (!email) return NextResponse.json({ error: "Invalid or expired session" }, { status: 401 })
+  if (!(await isStaff(bearer))) return NextResponse.json({ error: "Not authorised" }, { status: 403 })
+  return null
+}
+
+export async function POST(req: Request) {
+  const denied = await denyUnlessStaff(req)
+  if (denied) return denied
+
   if (!process.env.RESEND_API_KEY) {
     return NextResponse.json({ error: "RESEND_API_KEY not set" }, { status: 500 })
   }
