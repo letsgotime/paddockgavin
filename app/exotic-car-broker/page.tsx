@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <SourcingPage
       path="/exotic-car-broker"
+      photo={{ src: "/images/tt/tt-458-lot.webp", alt: "A white Ferrari 458 parked beside a black Lamborghini at one of our events", caption: "Most of them turn up because somebody went and found them." }}
       ctaHref="https://ig.me/m/itspaddockgavin"
       ctaLabel="Tell me the car"
       eyebrow="Exotic car broker"
