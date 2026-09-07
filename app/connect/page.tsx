@@ -105,7 +105,7 @@ const GROUPS = [
         key: "find",
         title: "Find me a car",
         note: "Concierge sourcing, retail or wholesale, with a dealer\u2019s licence",
-        href: "/intake",
+        href: "/exotic-car-broker",
         target: "_self",
         tone: "#F2C94C",
         datum: "Fee disclosed per sale",

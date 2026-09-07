@@ -190,7 +190,7 @@ export function SiteFooter() {
               { href: "/sell-my-exotic-car", label: "Sell my exotic car" },
               { href: "/exotic-car-broker", label: "Find me a car" },
               { href: "/exotic-car-consignment", label: "Consignment" },
-              { href: "/intake", label: "Start the intake" },
+              { href: "/intake", label: "Sell a car" },
             ].map((l) => (
               <Link key={l.href} href={l.href} className="pg-tap" style={{ padding: "7px 0", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 600, fontSize: 14.5, letterSpacing: ".08em", textTransform: "uppercase", color: "#DDE3EB", textDecoration: "none" }}>
                 {l.label}
@@ -242,7 +242,8 @@ export function SiteFooter() {
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#FFFFFF" }}>Tell me the car. I am the one reading it.</p>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px" }}>
-            <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Start the intake</Link>
+            <Link href="/intake" className="pg-tap" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Sell a car</Link>
+            <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" className="pg-tap" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "transparent", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.42)", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Find a car</a>
             <Link href="/partner" className="pg-textlink">Brands</Link>
             <Link href="/press" className="pg-textlink">Press</Link>
           </div>

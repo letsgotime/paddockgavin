@@ -136,7 +136,7 @@ export default function CarsPage() {
             <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "52ch" }}>Concierge sourcing, retail or wholesale, with a dealer&rsquo;s licence. Tell me the spec and the budget. 78 found so far, most of them before they were listed.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>Send me a spec</Link>
+            <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>Send me a spec</a>
           </div>
         </div>
       </section>
