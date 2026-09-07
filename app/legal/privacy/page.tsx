@@ -21,14 +21,14 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const UPDATED = "August 2026"
+const UPDATED = "September 2026"
 
 const sections = [
   {
     num: "01",
     heading: "The short version",
     body: [
-      "I collect what you type into a form, and nothing else about you personally. I do not sell your information, not to anyone, not ever, at any price. No advertising trackers, no data brokers, no third-party ad pixels. You do not need an account, and there is nothing to log into. Leave a form blank and I have no idea who you are.",
+      "I collect what you type into a form. I do not sell your information, not to anyone, not ever, at any price. No advertising trackers, no data brokers, no third-party ad pixels. The Piston Powered Ranch pages count visits with Google Analytics so we know whether anybody is coming, which is measurement rather than advertising, and section 03 says exactly what it sees. You do not need an account, and there is nothing to log into. Leave a form blank and I have no idea who you are.",
     ],
   },
   {
@@ -53,6 +53,7 @@ const sections = [
     heading: "What the servers see",
     body: [
       "Like every website, the infrastructure logs technical information: an IP address, a browser type, the page requested, the time. That is Cloudflare, sitting in front of the site to keep it up and to absorb attacks. It is security and delivery, not analytics about you, and I do not use it to build a profile of anybody.",
+      "On pistonpoweredranch.com, and only there, Google Analytics records that a page was looked at: which page, the device and browser, roughly which part of the world the request came from, and how you arrived. It is never told your name, your email, or anything you type into a form. paddockgavin.com loads no analytics at all.",
     ],
     table: {
       head: ["Service", "What it does here", "Its policy"],
@@ -60,6 +61,7 @@ const sections = [
         ["Cloudflare", "Hosting, security, video and images", "cloudflare.com/privacypolicy"],
         ["Behold", "Reads my public Instagram posts onto the wall", "behold.so/privacy"],
         ["Resend", "Delivers form enquiries to my inbox", "resend.com/legal/privacy-policy"],
+        ["Google Analytics", "Counts visits, on the ranch pages only", "policies.google.com/privacy"],
         ["Google Fonts", "Serves the typeface", "policies.google.com/privacy"],
       ],
     },
@@ -68,7 +70,7 @@ const sections = [
     num: "04",
     heading: "Cookies",
     body: [
-      "This site sets no advertising or tracking cookies. Cloudflare may set a strictly necessary cookie to tell a visitor apart from an attack. There is no consent banner because there is nothing to consent to, and I would rather not put one in your way for the sake of appearances.",
+      "This site sets no advertising cookies. Cloudflare may set a strictly necessary cookie to tell a visitor apart from an attack. On the ranch pages Google Analytics sets cookies of its own so that two visits on the same device can be told apart; they hold a random identifier rather than anything about you, and they expire on their own. If you would rather not be counted, any browser setting or extension that blocks Google Analytics stops it, and nothing else on the site depends on it.",
     ],
   },
   {
