@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { emailSubscribers } from "@/lib/db/schema"
-import { Resend } from "resend"
 import { render } from "@react-email/render"
 import SubscriberWelcome from "@/emails/subscriber-welcome"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResend } from "@/lib/email/resend"
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,7 +23,13 @@ export async function POST(req: NextRequest) {
     // Save to Neon
     await db.insert(emailSubscribers).values({ email, source, ip })
 
-    if (process.env.RESEND_API_KEY) {
+    /* Built here, not at the top of the file. See lib/email/resend.ts. The
+       row is already saved, so no key means no welcome note rather than a
+       lost subscriber. */
+    const resend = getResend()
+    if (!resend) {
+      console.log("[subscribe] No RESEND_API_KEY, row saved and no mail sent. Source:", source)
+    } else {
       // Welcome email to the subscriber
       const welcomeHtml = await render(SubscriberWelcome({ source }))
       await resend.emails.send({

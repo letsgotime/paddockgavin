@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { emailSubscribers } from "@/lib/db/schema"
-import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResend } from "@/lib/email/resend"
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,7 +19,12 @@ export async function POST(req: NextRequest) {
 
     await db.insert(emailSubscribers).values({ email, source: "juice-box", ip })
 
-    if (process.env.RESEND_API_KEY) {
+    /* Built here, not at the top of the file. See lib/email/resend.ts. The
+       row is already saved, so no key costs the alert, not the signup. */
+    const resend = getResend()
+    if (!resend) {
+      console.log("[juicebox] No RESEND_API_KEY, row saved and no alert sent.")
+    } else {
       await resend.emails.send({
         from:    "PaddockGavin <noreply@paddockgavin.com>",
         to:      "paddock20@gmail.com",
