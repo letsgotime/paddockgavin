@@ -21,7 +21,7 @@ export default function Page() {
         { title: "The car is listed and sold on your behalf", body: "Through a licensed dealer, on its licence and under its terms: the paperwork, the financing, the title, the funds and the delivery." },
         { title: "You are paid from the sale", body: "A broker fee, if any, is set per sale and disclosed to you in writing before you sign the broker agreement." },
       ]}
-      nashville="I am in Nashville, Tennessee. Seventy-eight cars found for other people so far; the intake is where every one of them started."
+      nashville="I am in Nashville, Tennessee. The intake is where every one of them started."
       faqs={[
         { q: "What is exotic car consignment?", a: "The car is listed and sold on your behalf, and you are paid from the sale. It is the retail lane: the buyer is the person who will drive the car." },
         { q: "Who actually sells the car?", a: "A licensed dealer. The paperwork, the financing, the title, the funds and the delivery all run on that dealer's licence and under its terms. Nothing is an offer until the selling dealer puts it in writing." },

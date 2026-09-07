@@ -88,7 +88,7 @@ export default function JuiceBoxPage() {
           <h1 style={{ margin: "0 0 22px", fontFamily: arch, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "16ch" }}>
             The GoTime<br /><span style={{ color: "#F2C94C" }}>Juice Box™</span>
           </h1>
-          <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote, the ones that keep earning their slot. Roughly $55K went through this garage finding them, on twenty-nine of his own cars plus clients&rsquo; and friends&rsquo;. This is what stayed within reach.</p>
+          <p style={{ margin: 0, fontSize: "clamp(18px,2.2vw,21px)", lineHeight: 1.6, color: "#DDE3EB", maxWidth: "54ch" }}>Not the best car detailing products by vote, the ones that keep earning their slot. Everything here earned it by staying within reach, wash after wash, across my own cars and the clients&rsquo; and friends&rsquo; cars I have worked on.</p>
           <div style={{ marginTop: 26, maxWidth: "62ch" }}>
             <p style={{ fontFamily: mono, fontSize: 12, lineHeight: 1.75, letterSpacing: ".02em", color: "#B4B6B2", borderLeft: "2px solid #00D2BE", padding: "2px 0 2px 16px", margin: 0 }}>
               <b style={{ color: "#EDF1F6", fontWeight: 400 }}>A dot means the link pays a commission.</b> Nothing was added because it pays, and nothing was left off because it doesn&rsquo;t. The book was written before any of the links existed.

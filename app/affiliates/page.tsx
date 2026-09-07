@@ -77,7 +77,7 @@ const SHIFT: {
 }[] = [
   {
     name: "Genius Consciousness",
-    desc: "What I took before a long day on the lot, and take now before a late one in the garage.",
+    desc: "What I took before a long day on the lot, and still take before a late one.",
     href: "https://thegeniusbrand.com/products/genius-consciousness",
     paid: true,
   },

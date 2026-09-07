@@ -68,7 +68,7 @@ export default function R8Page() {
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The ritual</span></span>
           <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>Foam first, glass after</h2>
-          <p style={{ margin: "0 0 26px", fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "56ch" }}>A supercar does not change the order of operations. The foam sits, the mitt follows, and the engine bay gets treated like a display case, because on this car, it is one.</p>
+          <p style={{ margin: "0 0 26px", fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "56ch" }}>The order of operations is the same on any car. The foam sits, the mitt follows, and the engine bay gets treated like a display case, because on this car, it is one.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: 8 }}>
             {[["918-pipes.webp","The foam bath, doing its work","01 \u00b7 The foam bath"],["918-charging.webp","The V10 under glass","02 \u00b7 The V10 under glass"]].map(([src, alt, cap]) => (
               <figure key={String(src)} style={{ margin: 0, border: "1px solid #27384F", background: "#0E1A2A" }}>

@@ -52,10 +52,9 @@ export async function HomeHero() {
         {/* Proof strip: the four numbers, once */}
         <dl className="pg-proof pg-e1" style={{ margin: "clamp(14px,2vw,22px) 0 0" }}>
           {[
-            { v: "~1M",   k: "views a month" },
+            { v: "10 Oct", k: "the next open day" },
+            { v: "Free",   k: "to come and look" },
             { v: formatFollowers(followers).replace("~", ""), k: "followers" },
-            { v: "29",    k: "cars owned" },
-            { v: "200+",  k: "events run" },
           ].map((s) => (
             <div key={s.k} style={{ padding: "14px 16px 12px" }}>
               <dt style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1, letterSpacing: "-.03em", color: "#FFFFFF", fontVariantNumeric: "tabular-nums" }}>{s.v}</dt>
