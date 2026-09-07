@@ -83,7 +83,7 @@ export default function CarsPage() {
             </div>
           </div>
         </div>
-        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Mine. Nothing on this page belongs to anyone else</p>
+        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Twenty-nine cars, in the order they arrived.</p>
       </section>
 
       {/* Register table */}

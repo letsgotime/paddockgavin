@@ -367,10 +367,10 @@ export default function WhyAPaddockPage() {
               On the lot, Lebanon, Tennessee
             </h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              The bay door goes up and there&rsquo;s a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place.
+              The bay door went up and there was a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place.
             </p>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: "56ch" }}>
-              Everything that comes off a truck gets looked over properly before it goes anywhere. Checked, cleaned, photographed, written up, put somewhere safe. Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.{" "}
+              Everything that came off a truck got looked over before it went anywhere. Checked, cleaned, photographed, written up, put somewhere safe. Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.{" "}
               <Link href="/lot-ops" style={{ color: "#00D2BE", textDecoration: "none" }}>The mornings have their own page.</Link>
             </p>
           </div>

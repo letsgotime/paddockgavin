@@ -22,7 +22,7 @@ export default function Page() {
       title="Who you reach"
       lede="Three hundred collector cars. The people who own them. Their families. Several hundred more who came to see what showed up."
       body={[
-        "Fourteen curated acres an hour south of Nashville, on a working ranch that opens for one Saturday.",
+        "Open pasture an hour south of Nashville, on a working ranch that opens for one Saturday.",
         "Presenting, Title, Secondary and Supporting positions are available, and Community Partner for those who back the day without a campaign. Pricing is a conversation, not a rate card, because what a partner needs is rarely what a sheet lists.",
         "Twenty hosted seats sit beside the sponsorship, in two rooms: The Terrace, on the rail above the show field, and The Owner's Table, which goes further out.",
       ]}

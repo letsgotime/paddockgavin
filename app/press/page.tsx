@@ -17,7 +17,7 @@ const masthead = [
 ]
 
 const audience = [
-  { metric: "Instagram followers", figure: "~8,000", source: "@itspaddockgavin, verifiable in-app" },
+  { metric: "Instagram followers", figure: "~8,100", source: "@itspaddockgavin, verifiable in-app" },
   { metric: "Views, trailing 30 days", figure: "~1,000,000", source: "Instagram Insights" },
   { metric: "Publishing cadence", figure: "Multiple times weekly", source: "Post history" },
   { metric: "Primary audience", figure: "Enthusiasts, owners, collectors, trade", source: "Instagram Insights" },

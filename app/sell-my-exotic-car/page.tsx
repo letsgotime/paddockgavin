@@ -32,7 +32,7 @@ export default function Page() {
       related={[
         { href: "/exotic-car-broker", label: "Looking for a car instead?", note: "Exotic car broker" },
         { href: "/exotic-car-consignment", label: "Consignment", note: "The retail lane, explained" },
-        { href: "/intake", label: "Start the intake", note: "Two minutes" },
+        { href: "/intake", label: "Start the intake", note: "Four steps" },
       ]}
     />
   )

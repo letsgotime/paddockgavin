@@ -21,7 +21,7 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       { name: "The Paddock",   short_name: "Paddock",  url: "/lot-ops",     description: "Lot ops, events, and car content" },
-      { name: "Find Me a Car", short_name: "Find Car", url: "/intake",      description: "Submit a car search intake" },
+      { name: "Find Me a Car", short_name: "Find Car", url: "/exotic-car-broker", description: "Tell me the car you are looking for" },
       { name: "The Gloss Game",short_name: "Gloss",    url: "/gloss-game",  description: "Book about car detailing" },
       { name: "Supercar IQ",   short_name: "SIQ",      url: "/supercar-iq", description: "Car knowledge and verification" },
     ],

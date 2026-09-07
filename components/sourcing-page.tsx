@@ -18,6 +18,8 @@ export interface SourcingPageProps {
   backdrop: string
   steps: { title: string; body: string }[]
   nashville: string
+  ctaHref?: string
+  ctaLabel?: string
   faqs: Faq[]
   related: { href: string; label: string; note: string }[]
 }
@@ -55,7 +57,7 @@ export function SourcingPage(p: SourcingPageProps) {
           <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.02, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "16ch", textWrap: "balance" as never }}>{p.h1}</h1>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.55, color: "#C4CBD6", maxWidth: "56ch" }}>{p.lead}</p>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px", paddingTop: 6 }}>
-            <Link href="/intake" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>Start the intake</Link>
+            <Link href={p.ctaHref ?? "/intake"} style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>{p.ctaLabel ?? "Start the intake"}</Link>
             <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" className="pg-textlink">or DM @itspaddockgavin</a>
           </div>
         </div>
@@ -78,7 +80,7 @@ export function SourcingPage(p: SourcingPageProps) {
       </div>
 
       <div className="pg-stage">
-        <Section id="nashville" eyebrow="Nashville, Tennessee" tone="#00D2BE" title="Based in Nashville" cta={{ href: "/intake", label: "Start the intake" }} link={{ href: "/cars", label: "The Garage" }}>
+        <Section id="nashville" eyebrow="Nashville, Tennessee" tone="#00D2BE" title="Based in Nashville" cta={{ href: p.ctaHref ?? "/intake", label: p.ctaLabel ?? "Start the intake" }} link={{ href: "/cars", label: "The Garage" }}>
           <p style={{ margin: 0 }}>{p.nashville}</p>
         </Section>
       </div>

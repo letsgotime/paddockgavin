@@ -12,7 +12,7 @@ type Status = "idle" | "sending" | "sent" | "error"
 const KINDS = [
   {
     key: "private",
-    eyebrow: "The floor",
+    eyebrow: "The day",
     title: "A private event",
     tone: "#4BA3DE",
     blurb: "Collector events in Middle Tennessee. Working ranches, orchards, showroom floors. Tell me the occasion and I will tell you where it fits.",
@@ -94,7 +94,7 @@ export default function BookPage() {
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Lebanon, TN</span>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Middle Tennessee</span>
             </span>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>
