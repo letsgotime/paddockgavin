@@ -387,6 +387,14 @@
   --pg-hairline-soft: rgba(255,255,255,.06);
   --pg-ring: 242, 201, 76;            /* TrackDay Yellow, as channels for rgba() */
 
+  /* State colours, named so nobody has to remember a hex.
+     Every red on this site is one of two, and picking a third fails the brand
+     check. --pg-error is the text one, lifted six points off Jaramillo Red so
+     small type still reads on the ink. --pg-error-fill paints: a filled
+     button, a rule, a badge. Reach for the token, not the number. */
+  --pg-error: #FF1A21;
+  --pg-error-fill: #E5141A;
+
   /* Motion tokens: one easing and duration vocabulary for the whole site. */
   --ease-settle: cubic-bezier(.2,.7,.2,1);
   --ease-press:  cubic-bezier(.3,0,.6,1);

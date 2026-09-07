@@ -227,6 +227,11 @@ export async function POST(req: Request) {
   try {
     const b: Body = await req.json()
 
+    /* Merchandise first. It is not event scoped, and everything past this
+       point assumes an event, so a tee falls through to unknown_event if
+       this is not here. It was not here once. */
+    if (b.kind === "shop") return shopCheckout(req, b)
+
     if (b.item === "donation") {
       const cents = Number(b.amountCents)
       if (!Number.isInteger(cents) || cents < DONATION_MIN || cents > DONATION_MAX) {
