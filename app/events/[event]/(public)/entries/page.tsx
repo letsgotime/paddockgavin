@@ -4,6 +4,8 @@ import { loadEvent } from "@/lib/events/load"
 import { loadRoster, rosterCounts } from "@/lib/events/roster"
 import { ranchShare } from "@/lib/events/ranch-share"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { SiteNav } from "@/components/site-nav"
+import { RanchFooter } from "@/components/ranch-footer"
 
 /**
  * The field: which cars are actually coming.
@@ -47,6 +49,8 @@ export default async function Entries({ params }: { params: Promise<{ event: str
   return (
     <>
     <PageBackdrop src="/images/ranch/ppr-light.jpg" pos="center 45%" opacity={0.18} />
+    <SiteNav active="events" />
+    <div aria-hidden="true" style={{ height: 74 }} />
     <main
       style={{
         background: "linear-gradient(180deg, rgba(10,21,35,.8), rgba(10,21,35,.95))",
@@ -90,6 +94,7 @@ export default async function Entries({ params }: { params: Promise<{ event: str
         </p>
       </div>
     </main>
+    <RanchFooter />
     </>
   )
 }

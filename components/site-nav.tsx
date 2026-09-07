@@ -147,7 +147,7 @@ export function SiteNav({ active = "home" }: Props) {
             }}
           >
             {/* Logo */}
-            <Link href="/" className="pg-tap" style={{ flex: "0 0 auto", display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none", whiteSpace: "nowrap" }}>
+            <Link href="/" className="pg-tap" style={{ flex: "0 1 auto", minWidth: 0, display: "inline-flex", alignItems: "center", gap: 11, textDecoration: "none", whiteSpace: "nowrap", overflow: "hidden" }}>
               <Image
                 src={ranch ? "/brand/rj-mark-ondark.png" : "/images/mark-on-dark-96.png"}
                 alt={ranch ? "Rancho Jaramillo" : "PG mark"}
@@ -155,7 +155,7 @@ export function SiteNav({ active = "home" }: Props) {
                 height={32}
                 style={{ height: 32, width: "auto", display: "block", flexShrink: 0 }}
               />
-              <span style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: ranch ? "clamp(13px,3.1vw,24px)" : "clamp(18px,1.7vw,24px)", letterSpacing: "-.018em", textTransform: "uppercase" }}>
+              <span className="pg-nav-word" style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: ranch ? "clamp(13px,3.1vw,24px)" : "clamp(18px,1.7vw,24px)", letterSpacing: "-.018em", textTransform: "uppercase", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>
                 {ranch ? (
                   <><span style={{ color: "#EDF1F6" }}>The Piston </span><span style={{ color: "#F2C94C" }}>Powered Ranch</span></>
                 ) : (

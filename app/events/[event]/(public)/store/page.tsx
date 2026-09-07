@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import StoreFront from "./StoreFront"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { SiteNav } from "@/components/site-nav"
+import { RanchFooter } from "@/components/ranch-footer"
 import { loadEvent } from "@/lib/events/load"
 import { publicUrl } from "@/lib/events/types"
 import { storeItems } from "@/lib/shop/store"
@@ -55,7 +57,10 @@ export default async function StorePage({ params }: { params: Promise<{ event: s
   return (
     <>
       <PageBackdrop src="/images/ranch/ppr-barn.jpg" pos="center 50%" opacity={0.18} />
+      <SiteNav active="events" />
+      <div aria-hidden="true" style={{ height: 74 }} />
       <StoreFront event={e} items={storeItems(e)} />
+      <RanchFooter />
     </>
   )
 }

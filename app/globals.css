@@ -470,6 +470,40 @@ a.pg-e0:hover, a.pg-e1:hover, button.pg-e0:hover, button.pg-e1:hover {
   border-color: var(--pg-hairline-strong);
 }
 
+/* ── PRESS AND FOCUS, EVERYWHERE ──
+   A phone has no hover, so the press state is the only confirmation that a tap
+   registered before the network answers, and there was none anywhere on the
+   site. The app routes also carried no author focus ring, so a keyboard met the
+   browser default on dark glass. Transform and outline only: both stay on the
+   compositor, off the main thread, and cost no JavaScript.
+
+   The glass rule above is written with a class, so it outranks a :where()
+   selector; those four get their own press rule at matching weight. */
+:where(a, button, [role="button"], summary):active {
+  transform: scale(.975);
+  transition: transform var(--dur-instant) var(--ease-press);
+}
+a.pg-e0:active, a.pg-e1:active, button.pg-e0:active, button.pg-e1:active {
+  transform: scale(.975);
+}
+:where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid #F2C94C;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where(a, button, [role="button"], summary):active,
+  a.pg-e0:active, a.pg-e1:active, button.pg-e0:active, button.pg-e1:active { transform: none; }
+}
+
+/* The header wordmark is 24 characters on the ranch door. Nothing in that row
+   could shrink, so the Menu button, the only navigation on the site, sat off
+   screen at every phone and tablet width. The mark carries the brand below
+   640px; between there and 900 the name ellipsises rather than pushing. */
+@media (max-width: 640px) {
+  .pg-nav-word { display: none; }
+}
+
 /* ── BACKDROP — one fixed layer for every page. The photograph comes from the
    page through --pg-backdrop (see components/page-backdrop.tsx); the wash,
    the film grain and the vignette are the same everywhere so pages feel like

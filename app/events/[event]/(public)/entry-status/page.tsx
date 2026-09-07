@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import { loadEvent } from "@/lib/events/load"
 import { loadEntryByToken, statusCopy } from "@/lib/events/entry"
 import { AddMedia } from "./AddMedia"
+import { SiteNav } from "@/components/site-nav"
+import { RanchFooter } from "@/components/ranch-footer"
 
 /**
  * Where an entrant finds out what happened to their car.
@@ -36,6 +38,8 @@ const TONE: Record<string, string> = {
 
 function Frame({ children, accent }: { children: React.ReactNode; accent?: string }) {
   return (
+    <>
+    <SiteNav active="events" />
     <main
       style={{
         background: "#0A1523",
@@ -43,7 +47,7 @@ function Frame({ children, accent }: { children: React.ReactNode; accent?: strin
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "clamp(20px,6vw,56px)",
+        padding: "clamp(94px,14vw,110px) clamp(20px,6vw,56px) clamp(20px,6vw,56px)",
         fontFamily: "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif",
       }}
     >
@@ -52,6 +56,8 @@ function Frame({ children, accent }: { children: React.ReactNode; accent?: strin
         {children}
       </div>
     </main>
+    <RanchFooter />
+    </>
   )
 }
 

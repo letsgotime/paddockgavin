@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { SiteNav } from "@/components/site-nav"
 
 export const metadata: Metadata = {
   title: "Terms",
@@ -127,11 +128,12 @@ export default function TermsPage() {
       }}
     >
       <PageBackdrop src="/images/f458-dash.webp" pos="center 50%" opacity={0.2} />
+      <SiteNav />
       {/* Hero */}
       <header
         style={{
           borderBottom: "1px solid rgba(255,255,255,.1)",
-          padding: "clamp(48px,6vw,88px) clamp(20px,5vw,80px) clamp(32px,4vw,56px)",
+          padding: "clamp(104px,12vw,132px) clamp(20px,5vw,80px) clamp(32px,4vw,56px)",
         }}
       >
         <div style={{ maxWidth: 820, margin: "0 auto" }}>

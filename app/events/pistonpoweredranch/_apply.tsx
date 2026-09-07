@@ -186,6 +186,7 @@ export function ApplyPage(p: ApplyProps) {
 
   return (
     <>
+      <noscript><style>{`[data-r]{opacity:1!important;transform:none!important}`}</style></noscript>
       <SiteNav active="events" />
       <style>{`
         @keyframes pgKen{from{transform:scale(1.02)}to{transform:scale(1.13) translateY(-1.4%)}}
