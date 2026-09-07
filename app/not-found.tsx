@@ -35,7 +35,7 @@ function RanchNotFound() {
       <main style={{ flex: "1 1 auto", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(20px,5vw,40px)" }}>
         <div className="pg-e1" style={{ position: "relative", maxWidth: 640, width: "100%", borderRadius: 18, background: "rgba(17,27,40,.58)", border: "1px solid rgba(255,255,255,.12)", padding: "clamp(28px,5vw,48px)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/rj-mark-320.png" alt="" width={72} height={72} style={{ display: "block", width: 72, height: "auto", marginBottom: 18 }} />
+          <img src="/brand/rj-mark-320.png" alt="" width={72} height={72} loading="lazy" decoding="async" style={{ display: "block", width: 72, height: "auto", marginBottom: 18 }} />
           <p style={{ margin: "0 0 14px", display: "inline-flex", alignItems: "center", gap: 12, fontFamily: MONO, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#FF1A21" }}>
             <i aria-hidden="true" style={{ width: 26, height: 3, background: "#E5141A", display: "block" }} />
             Off the map
