@@ -39,7 +39,7 @@ const CAN_BLOB = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
 
 /** Tool pages under public/, each a directory with an index.html. */
 const TOOL_PAGES = [
-  "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "rsvps",
+  "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "site-map", "rsvps",
   "chat", "console", "collateral", "clubs", "spectate", "status", "vote",
   "diag", "reset", "brand",
 ]
