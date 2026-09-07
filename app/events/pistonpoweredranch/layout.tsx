@@ -199,6 +199,7 @@ function RanchLockup() {
         width={168}
         height={107}
         sizes="168px"
+        priority
         style={{ height: "auto", width: "clamp(126px,15vw,168px)" }}
       />
       <span

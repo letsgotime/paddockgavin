@@ -20,6 +20,7 @@ export function RanchMark({
   src = "/brand/rj-mark-320.png",
   alt = "Rancho Jaramillo",
   ratio = 203 / 320,
+  priority = false,
 }: {
   width?: number
   opacity?: number
@@ -29,6 +30,8 @@ export function RanchMark({
   alt?: string
   /** height divided by width, so the box is right before the file arrives. */
   ratio?: number
+  /** Above the fold: fetch it with the page rather than on the lazy scan. */
+  priority?: boolean
 }) {
   return (
     <div
@@ -47,6 +50,7 @@ export function RanchMark({
         width={width}
         height={Math.round(width * ratio)}
         sizes={`${width}px`}
+        priority={priority}
         style={{ width, height: "auto", display: "block" }}
       />
       {label ? (

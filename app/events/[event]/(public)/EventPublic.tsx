@@ -393,6 +393,7 @@ export default function EventPublic({
           {b.logo ? (
             <div style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 9, padding: "clamp(96px,14vh,140px) 20px 0", pointerEvents: "none" }}>
               <RanchMark
+                priority
                 src={b.logoOnDark || b.logo}
                 alt={b.name || event.venue_name || event.name}
                 width={132}
