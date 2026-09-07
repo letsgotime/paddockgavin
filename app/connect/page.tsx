@@ -53,7 +53,7 @@ const GROUPS = [
     links: [
       {
         key: "floor",
-        title: "Book the floor",
+        title: "Book an event",
         note: "Collector events in Middle Tennessee, and I run them",
         href: "/events",
         target: "_self",

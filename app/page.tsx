@@ -54,9 +54,9 @@ export default async function HomePage() {
       </Stage>
 
       <Stage sec="events">
-        <Section id="events" eyebrow="The events" tone="#00D2BE" title="The days people drive to" cta={{ href: "/events", label: "Every event" }} link={{ href: "/book", label: "Book the floor" }}>
+        <Section id="events" eyebrow="The events" tone="#00D2BE" title="The days people drive to" cta={{ href: "/events", label: "Every event" }} link={{ href: "/book", label: "Book an event" }}>
           <p style={{ margin: 0 }}>
-            Two hundred and counting, on working ranches, in orchards and on showroom floors. The next is the Piston Powered Ranch at Rancho Jaramillo, on Saturday 10 October, and anybody who wants to come is welcome.
+            Two hundred and counting, on working ranches and in orchards. The next is the Piston Powered Ranch at Rancho Jaramillo, on Saturday 10 October, and anybody who wants to come is welcome.
           </p>
         </Section>
       </Stage>
