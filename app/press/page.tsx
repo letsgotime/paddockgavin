@@ -64,7 +64,7 @@ export default function PressPage() {
         WebkitFontSmoothing: "antialiased",
       }}
     >
-      <PageBackdrop src="/images/creator-booth.jpg" pos="center 45%" opacity={0.2} />
+      <PageBackdrop src="/images/creator-booth.webp" pos="center 45%" opacity={0.2} />
       <header
         style={{
           borderBottom: "1px solid rgba(255,255,255,.1)",

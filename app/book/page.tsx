@@ -17,7 +17,7 @@ const KINDS = [
     tone: "#4BA3DE",
     blurb: "Collector events in Middle Tennessee. Working ranches and orchards. Tell me the occasion and I will tell you where it fits.",
     hint: "The occasion, the date, the headcount",
-    img: "/images/ranch/ppr-walk.jpg",
+    img: "/images/ranch/ppr-walk.webp",
   },
   {
     key: "sales",
@@ -93,7 +93,7 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      <PageBackdrop src="/images/ranch/ppr-hero.jpg" opacity={0.2} />
+      <PageBackdrop src="/images/ranch/ppr-hero.webp" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 

@@ -54,7 +54,7 @@ export default function Page() {
         "Spaces start at $250 and scale with footprint. Food vendors work on a share of sales agreed up front, rather than a flat fee.",
         "Tell us what you sell and we will tell you where you fit.",
       ]}
-      img="/images/ranch/ppr-gate.jpg"
+      img="/images/ranch/ppr-gate.webp"
       focal="center 42%"
       bandImg="/images/donuts-inside.webp"
       bandFocal="center 50%"

@@ -28,7 +28,7 @@ export default function Page() {
       ]}
       img="/images/918-p1.webp"
       focal="center 50%"
-      bandImg="/images/ranch/ppr-field.jpg"
+      bandImg="/images/ranch/ppr-field.webp"
       bandFocal="center 45%"
       closeImg="/images/aston-wheel.webp"
       tone="#00D2BE"

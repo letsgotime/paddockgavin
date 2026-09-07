@@ -13,8 +13,8 @@ var FILES = [
   "/chat/index.html",
   "/chat/manifest.webmanifest",
   "/brand/pg-mark.png",
-  "/brand/rj-icon-192.png",
-  "/brand/rj-icon-512.png",
+  "/brand/rj-icon-192.webp",
+  "/brand/rj-icon-512.webp",
 ];
 
 self.addEventListener("install", function (e) {
