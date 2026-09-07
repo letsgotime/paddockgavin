@@ -172,12 +172,47 @@ export async function POST(req: Request) {
       const id = String(obj.id || "")
       const amount = Number(obj.amount_total ?? obj.amount_paid ?? 0)
       const currency = String(obj.currency || "usd").toLowerCase()
-      const details = (obj.customer_details as { email?: string; name?: string } | undefined) || {}
+      const details = (obj.customer_details as { email?: string; name?: string; phone?: string } | undefined) || {}
       const email = (typeof obj.customer_email === "string" && obj.customer_email) || details.email || null
       const payer = details.name || null
       const livemode = obj.livemode === true
       const ledger = ledgerOf(meta)
       const slug = meta.event_slug || meta.event || ""
+
+      /* Merchandise. Gavin packs and posts these himself, so the only thing
+         that has to happen is that the order and the address reach him. It is
+         handled before the event branch below, because a tee has no event and
+         everything after this point assumes one. */
+      if (meta.kind === "shop") {
+        const ship = (obj.shipping_details || (obj.collected_information as Record<string, unknown> | undefined)?.shipping_details) as
+          | { name?: string; address?: Record<string, string> }
+          | undefined
+        const a = ship?.address || {}
+        const lines = [
+          `${meta.covers || meta.slug || "Item"} x${meta.quantity || "1"}`,
+          `${(amount / 100).toFixed(2)} ${currency.toUpperCase()}${livemode ? "" : "  (TEST MODE, no money moved)"}`,
+          "",
+          ship?.name || payer || "No name given",
+          [a.line1, a.line2].filter(Boolean).join(", "),
+          [a.city, a.state, a.postal_code].filter(Boolean).join(" "),
+          a.country || "",
+          "",
+          email || "No email",
+          String(details.phone || "No phone"),
+        ].filter((l) => l !== undefined)
+
+        await mail(
+          {
+            from: NOREPLY,
+            to: ["gavin@paddockgavin.com"],
+            reply_to: email || undefined,
+            subject: `${livemode ? "Order" : "Test order"}: ${meta.covers || meta.slug}`,
+            text: lines.join("\n"),
+          },
+          `shop:${id}`,
+        )
+        return NextResponse.json({ ok: true })
+      }
 
       console.log("[stripe/webhook] paid", { type: evt.type, id, amount, currency, email, event: slug, kind: meta.kind, ledger, org: meta.org, livemode })
 

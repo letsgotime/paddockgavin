@@ -4,6 +4,7 @@ import crypto from "node:crypto"
 import { STRIPE_API, itemFor, isOnSale } from "@/lib/stripe/catalog"
 import { priceIdFor } from "@/lib/stripe/prices"
 import { DONATION_MIN, DONATION_MAX } from "@/lib/shop/store"
+import { bySlug, variantOf, buyable } from "@/lib/shop/catalogue"
 import { loadEvent } from "@/lib/events/load"
 
 /**
@@ -34,6 +35,12 @@ export const runtime = "nodejs"
 interface Body {
   /** A key in the catalogue, or "donation". Not an amount, deliberately. */
   item: string
+  /** "shop" routes to the merchandise branch, which is not event scoped. */
+  kind?: string
+  /** Merchandise only: the product slug and the size or option picked. */
+  slug?: string
+  variant?: string
+  quantity?: number
   email?: string
   org?: string
   /** Free text, carried into metadata so the desk sees it with the payment. */
@@ -122,6 +129,84 @@ async function donate(req: Request, cents: number, b: Body, ev: { slug: string; 
     payment_intent_data: {
       metadata: { event: ev.slug, kind: "donation" },
     },
+  })
+
+  const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(payload).toString(),
+  })
+  const json = await res.json()
+  if (!res.ok) {
+    return NextResponse.json({ error: "stripe", detail: json?.error?.message || "Stripe refused the session." }, { status: 502 })
+  }
+  return NextResponse.json({ url: json.url })
+}
+
+/**
+ * Merchandise. Not event scoped, and unlike a vendor booth it has to be posted
+ * to somebody, so Stripe collects the address.
+ *
+ * The price is read from lib/shop/catalogue on the server and never taken from
+ * the request, because a browser that can name its own price is a browser that
+ * will. The line is built inline rather than against a seeded Stripe price:
+ * merchandise changes more often than a booth does, and this file is the one
+ * place a price is allowed to live.
+ *
+ * Gavin ships these himself, so the webhook mails him the order and the
+ * address. Nothing here talks to a fulfilment service.
+ */
+async function shopCheckout(req: Request, b: Body) {
+  const product = bySlug(String(b.slug || ""))
+  if (!product) return NextResponse.json({ error: "unknown_item", detail: "No such product." }, { status: 400 })
+
+  const variant = variantOf(product, String(b.variant || ""))
+  if (!variant) return NextResponse.json({ error: "unknown_variant", detail: "No such size or option." }, { status: 400 })
+
+  if (!buyable(variant)) {
+    return NextResponse.json(
+      { error: "price_not_set", detail: `${product.name} does not have a price yet.` },
+      { status: 409 },
+    )
+  }
+
+  const qty = Number.isInteger(b.quantity) && b.quantity! > 0 ? Math.min(b.quantity!, 10) : 1
+
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!key) {
+    return NextResponse.json({ error: "not_configured", detail: "STRIPE_SECRET_KEY is not set on this deployment." }, { status: 503 })
+  }
+
+  const origin = new URL(req.url).origin
+  const label = product.variants.length > 1 ? `${product.name}, ${variant.label}` : product.name
+
+  const payload = flatten({
+    mode: "payment",
+    line_items: [
+      {
+        quantity: qty,
+        price_data: {
+          currency: "usd",
+          unit_amount: variant.cents as number,
+          product_data: { name: label },
+        },
+      },
+    ],
+    /* It is a physical thing and somebody has to post it. */
+    shipping_address_collection: { allowed_countries: ["US"] },
+    phone_number_collection: { enabled: true },
+    success_url: `${origin}/shop/${product.slug}?paid=1`,
+    cancel_url: `${origin}/shop/${product.slug}`,
+    customer_email: b.email || undefined,
+    metadata: {
+      kind: "shop",
+      ledger: "merch",
+      slug: product.slug,
+      variant: variant.label,
+      quantity: String(qty),
+      covers: label,
+    },
+    payment_intent_data: { metadata: { kind: "shop", slug: product.slug, variant: variant.label } },
   })
 
   const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
