@@ -127,6 +127,8 @@ export default function GlossGamePage() {
                 ["What order do you detail a car in?","Wheels first, paint last. Chapter four runs the wheel protocol to the Q-tip on the valve stems, and the loop above is the spine of the whole book."],
                 ["Do you need a machine to get the gloss back?","Sometimes. Chapter five, prep, correct, protect, is how to tell, before you spend a weekend or a dime you didn\u2019t need to."],
                 ["How do you detail a car interior?","By touchpoint, not by scent. Chapter six works the cabin the way hands do, vents, stitching, the places fingers land, so it stays clean between Saturdays."],
+                ["Why do vents get coated?","Because anything that takes a coating fades slower with one on. Vents sit in direct sun and they are the first plastic to go grey, so an uncoated vent ends up looking dry and about five years older than the panel next to it. Coated, the dirt washes off instead of soaking in, and it keeps cleaning easily for years rather than months."],
+                ["How do you clean an engine bay under glass?","Lift the glass first, so you are working on the bay and not through it. A safe all purpose cleaner with a little degreaser in it, then a pressure washer on a controlled stream rather than a jet, because a jet finds every connector you did not want it to find. The glass is the last thing you clean, not the first, since everything you rinse off the bay lands on it."],
                 ["How do you organize detailing supplies?","On hooks and shelves, bagged and labeled, one reach away. Time saved looking is time on the paint. Chapter two is the setup."],
               ].map(([q,a]) => (
                 <div key={String(q)} style={{ margin: "0 0 24px" }}>
