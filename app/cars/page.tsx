@@ -75,9 +75,9 @@ export default function CarsPage() {
               <span style={{ display: "block", fontFamily: arch, fontWeight: 800, fontSize: "clamp(31px,3.2vw,48px)", lineHeight: 1, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>The cars that</span>
               <span style={{ display: "block", fontFamily: arch, fontWeight: 400, fontSize: "clamp(30px,3.1vw,46px)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#F2C94C" }}>have been mine.</span>
             </h1>
-            <p style={{ margin: "0 0 24px", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE" }}>Not inventory, not a dealer lot. These are the ones I bought, ran, argued with and sold on. Sales bonuses and side hustles paid for every one of them, and they were bought to experience, not to show off.</p>
+            <p style={{ margin: "0 0 24px", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE" }}>Not inventory, not a dealer lot. Every one of them came out of sales bonuses and side hustles. The 1999 Accord got the same Saturday routine the R8 got.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(16px,2vw,30px)" }}>
-              {[["Owned", TOTAL], ["Logged", filled], ["Still here", current]].map(([k, v]) => (
+              {[["Still here", current]].map(([k, v]) => (
                 <span key={String(k)} style={{ fontFamily: arch, fontWeight: 600, fontSize: 14, letterSpacing: ".13em", textTransform: "uppercase", color: "#9BA5B3" }}>{k} <b style={{ fontFamily: arch, fontWeight: 700, color: "#fff", marginLeft: 6, fontVariantNumeric: "tabular-nums" }}>{v}</b></span>
               ))}
             </div>
