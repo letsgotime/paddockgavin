@@ -285,10 +285,10 @@ export default function WhyAPaddockPage() {
               On the lot, Lebanon, Tennessee
             </h2>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              The bay door went up and there was a transporter already waiting. Some mornings it&rsquo;s one car. Some mornings you can&rsquo;t walk through the place.
+              The bay door went up and there was a transporter already waiting. Some mornings it was one car. Some mornings you could not walk through the place.
             </p>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: "56ch" }}>
-              Everything that came off a truck got looked over before it went anywhere. Checked, cleaned, photographed, written up, put somewhere safe. Everything leaving gets verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.{" "}
+              Everything that came off a truck got looked over before it went anywhere. Checked, cleaned, photographed, written up, put somewhere safe. Everything leaving got verified first. There&rsquo;s real fraud in this business, and somebody trusted us with a car they love.{" "}
               <Link href="/lot-ops" style={{ color: "#00D2BE", textDecoration: "none" }}>The mornings have their own page.</Link>
             </p>
           </div>
@@ -404,13 +404,18 @@ export default function WhyAPaddockPage() {
               fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
-            From technology leadership to exotic car lot operations
+            Why one person does all of it
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.9vw,19px)", lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
-            I led technology for a long time. The whole way through I was buying cars, selling cars and reading about cars, without ever working around them.
+            People meet the two halves separately and assume there are two of me. There is a day of events and client work, and a night of code, and from outside they look like different jobs done by the same surname.
           </p>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.9vw,19px)", lineHeight: 1.62, color: "#EDF1F6", maxWidth: "60ch" }}>
-            Last October I stopped doing that. Now they&rsquo;re the same thing.
+            They are the same job. Supercar IQ reads a car the moment it arrives and pulls its spec, its recalls and what it is worth. The lot was a gate opening at eight on a transporter of cars that all had to be checked, photographed and written up before anybody saw them. That is one problem, and I have solved it twice, once with people and once with software.
+          </p>
+          <p style={{ margin: "0 0 22px", fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "54ch" }}>
+            Every photo and every clip on this site came from somebody standing somewhere holding
+            something, usually early, usually in bad light, usually while I was busy. That is the
+            whole of it, and it is why there is only one of me.
           </p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 6 }}>
             <Link

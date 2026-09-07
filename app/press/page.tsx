@@ -46,7 +46,7 @@ const credentialChecklist = [
   { item: "Audience figures with source", status: "On this page" },
   { item: "Editorial standards and disclosure policy", status: "On this page" },
   { item: "Letter of assignment on publication letterhead", status: "Available on request, same day" },
-  { item: "Business entity + W-9 / EIN", status: "Available on request" },
+  { item: "Sole proprietor W-9", status: "Available on request" },
   { item: "Certificate of insurance", status: "Available on request" },
   { item: "Prior credential history", status: "Building, regional shows first" },
   { item: "Headshot and government ID", status: "Available on request" },
@@ -77,7 +77,7 @@ export default function PressPage() {
           </p>
           <h1 style={{ margin: "0 0 18px", fontWeight: 800, fontSize: "var(--t-h1)", letterSpacing: "-.025em", lineHeight: 1.05, color: "#FFFFFF" }}>
             Independent publication.{" "}
-            <span style={{ color: "#00D2BE" }}>Everything you need to credential us.</span>
+            <span style={{ color: "#00D2BE" }}>What a credentialing office asks for, and how fast it comes.</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 640 }}>
             PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them. Everything a credentialing office needs is on this page.

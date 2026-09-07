@@ -39,7 +39,7 @@ export default function E92Page() {
       {/* Spec strip */}
       <div style={{ background: "#0A1523", borderTop: "1px solid #27384F", borderBottom: "1px solid #27384F" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", flexWrap: "wrap" }}>
-          {[["Chassis","E92 ZCP"],["Paint","Alpine White"],["Hours on paint","25"],["Tires","Michelin PS4S"]].map(([k,v]) => (
+          {[["Chassis","E92 ZCP"],["Paint","Alpine White"],["Finish","Corrected and coated"],["Tires","Michelin PS4S"]].map(([k,v]) => (
             <div key={String(k)} style={{ flex: "1 1 170px", padding: "16px 20px", borderRight: "1px solid #27384F" }}>
               <p style={{ margin: "0 0 4px", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#848482" }}>{k}</p>
               <p style={{ margin: 0, fontFamily: mono, fontSize: 17, letterSpacing: ".08em", color: "#00D2BE" }}>{v}</p>

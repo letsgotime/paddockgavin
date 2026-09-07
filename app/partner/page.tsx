@@ -212,7 +212,7 @@ export default async function PartnerPage() {
             }}
           >
             <p style={{ margin: "0 0 24px", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
-              The fastest way in is a DM. Include your brand name, what you make, and what kind of partnership you have in mind. Replies within 24 hours.
+              The fastest way in is a DM. Include your brand name, what you make, and what kind of partnership you have in mind. Replies the same day.
             </p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <a
