@@ -1,11 +1,26 @@
 import { ImageResponse } from "next/og"
+import { headers } from "next/headers"
 
 export const runtime = "edge"
 export const alt = "PaddockGavin"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
-export default function OGImage() {
+const RANCH_CARD = "https://pistonpoweredranch.com/og/ppr-rancho-og-v2.jpg"
+
+export default async function OGImage() {
+  /* The ranch's door shares the ranch's card. Without this a ranch page that
+     names no image of its own, entry status and the 404 above all, carried
+     the paddock's. The host is checked as well as the brand header so the
+     answer does not depend on the middleware having run. */
+  const h = await headers()
+  const host = h.get("host") || ""
+  if (h.get("x-pg-brand") === "pistonpoweredranch" || /(^|\.)pistonpoweredranch\.com$/.test(host)) {
+    const card = await fetch(RANCH_CARD)
+    return new Response(card.body, {
+      headers: { "Content-Type": "image/jpeg", "Cache-Control": "public, max-age=86400, s-maxage=86400" },
+    })
+  }
   return new ImageResponse(
     (
       <div
