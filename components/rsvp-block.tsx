@@ -101,29 +101,44 @@ export function RsvpBlock({
         setTsState("failed")
       }
     }
-    if (window.turnstile) {
-      render()
-      return () => {
-        gone = true
+    let booted = false
+    let existing: HTMLScriptElement | null = null
+    const boot = () => {
+      if (booted || gone) return
+      booted = true
+      if (window.turnstile) {
+        render()
+        return
       }
-    }
-    const existing = document.querySelector<HTMLScriptElement>('script[src^="https://challenges.cloudflare.com/turnstile"]')
-    if (existing) {
-      existing.addEventListener("load", render)
-      return () => {
-        gone = true
-        existing.removeEventListener("load", render)
+      existing = document.querySelector<HTMLScriptElement>('script[src^="https://challenges.cloudflare.com/turnstile"]')
+      if (existing) {
+        existing.addEventListener("load", render)
+        return
       }
+      const s = document.createElement("script")
+      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+      s.async = true
+      s.defer = true
+      s.addEventListener("load", render)
+      s.addEventListener("error", () => setTsState("failed"))
+      document.head.appendChild(s)
     }
-    const s = document.createElement("script")
-    s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-    s.async = true
-    s.defer = true
-    s.addEventListener("load", render)
-    s.addEventListener("error", () => setTsState("failed"))
-    document.head.appendChild(s)
+    /* The check is a script and an iframe from Cloudflare, and this form
+       sits at the foot of the page. It loads when the form is near, or on
+       the first touch of a field, not at page open. */
+    const el = tsRef.current
+    let io: IntersectionObserver | null = null
+    if (el && "IntersectionObserver" in window) {
+      io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { boot(); io?.disconnect() } }, { rootMargin: "700px 0px" })
+      io.observe(el)
+    } else boot()
+    const onFocus = () => boot()
+    document.addEventListener("focusin", onFocus)
     return () => {
       gone = true
+      io?.disconnect()
+      document.removeEventListener("focusin", onFocus)
+      existing?.removeEventListener("load", render)
     }
   }, [])
 

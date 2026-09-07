@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * The visit panel, rebuilt in the instrument language /show uses.
@@ -60,6 +60,8 @@ export default function VisitOps() {
   const [wx, setWx] = useState<Period | null>(null)
   const [wxState, setWxState] = useState<"loading" | "ok" | "down">("loading")
   const [copied, setCopied] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const [near, setNear] = useState(false)
 
   useEffect(() => {
     setNow(Date.now())
@@ -67,7 +69,18 @@ export default function VisitOps() {
     return () => clearInterval(t)
   }, [])
 
+  /* The forecast is a third-party call. It starts when these cards are
+     within seven hundred pixels of the viewport, not at page open. */
   useEffect(() => {
+    const el = rootRef.current
+    if (!el || !("IntersectionObserver" in window)) { setNear(true); return }
+    const io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { setNear(true); io.disconnect() } }, { rootMargin: "700px 0px" })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!near) return
     const ctl = new AbortController()
     const timer = setTimeout(() => ctl.abort(), 6000)
     fetch(NWS_FORECAST, { signal: ctl.signal, headers: { Accept: "application/geo+json" } })
@@ -81,7 +94,7 @@ export default function VisitOps() {
       .catch(() => setWxState("down"))
       .finally(() => clearTimeout(timer))
     return () => { clearTimeout(timer); ctl.abort() }
-  }, [])
+  }, [near])
 
   const gates = new Date(SHOW).getTime()
   const start = new Date(ANNOUNCE).getTime()
@@ -103,7 +116,7 @@ export default function VisitOps() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+    <div ref={rootRef} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <style>{`
         .pgRing{position:absolute;right:-8px;bottom:-8px;width:74px;height:74px;border-radius:50%;border:2px solid;pointer-events:none}
         .pgRing::before{content:"";position:absolute;inset:8px;border-radius:50%;border:2px solid rgba(0,210,190,.14);border-top-color:rgba(0,210,190,0.82)}

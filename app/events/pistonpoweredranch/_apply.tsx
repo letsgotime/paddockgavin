@@ -422,17 +422,34 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
         setTsState("failed")
       }
     }
-    if (window.turnstile) render()
-    else {
-      const s = document.createElement("script")
-      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-      s.async = true
-      s.onload = render
-      s.onerror = () => setTsState("failed")
-      document.head.appendChild(s)
+    let booted = false
+    const boot = () => {
+      if (booted || gone) return
+      booted = true
+      if (window.turnstile) render()
+      else {
+        const s = document.createElement("script")
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        s.async = true
+        s.onload = render
+        s.onerror = () => setTsState("failed")
+        document.head.appendChild(s)
+      }
     }
+    /* The form sits a screen below the hero. The check loads when the form
+       is near, or on the first touch of a field, not at page open. */
+    const el = tsRef.current
+    let io: IntersectionObserver | null = null
+    if (el && "IntersectionObserver" in window) {
+      io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) { boot(); io?.disconnect() } }, { rootMargin: "700px 0px" })
+      io.observe(el)
+    } else boot()
+    const onFocus = () => boot()
+    document.addEventListener("focusin", onFocus)
     return () => {
       gone = true
+      io?.disconnect()
+      document.removeEventListener("focusin", onFocus)
     }
   }, [surface])
 
