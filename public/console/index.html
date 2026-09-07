@@ -4106,7 +4106,8 @@
                   .from("submissions")
                   .select("*")
                   .eq("type", "vehicle")
-                  .order("created_at", { ascending: !1 });
+                  .order("created_at", { ascending: !1 })
+                  .limit(2000);
               if (a.error) return L(a.error);
               var r = a.data || [],
                 o = r.filter(function (e) {
@@ -4226,7 +4227,8 @@
                   .from("submissions")
                   .select("*")
                   .eq("type", "vendor")
-                  .order("created_at", { ascending: !1 });
+                  .order("created_at", { ascending: !1 })
+                  .limit(2000);
               if (r.error) return L(r.error);
               var o = (s && s.data) || [],
                 l = (r.data || []).filter(function (e) {
@@ -4345,7 +4347,8 @@
                 .from("accounts")
                 .select("*")
                 .eq("event_id", cur.id)
-                .order("created_at", { ascending: !1 });
+                .order("created_at", { ascending: !1 })
+                .limit(2000);
               if (accts.error) return L(accts.error);
               var subs = await n.from("submissions").select("type,status");
               var rows = accts.data || [],
@@ -5058,7 +5061,7 @@
           try {
             await a();
             var e = await B(),
-              t = await n.from("submissions").select("*").order("created_at", { ascending: !1 });
+              t = await n.from("submissions").select("*").order("created_at", { ascending: !1 }).limit(2000);
             if (t.error) throw t.error;
             var o = t.data || [],
               l = o.filter(function (e) {
