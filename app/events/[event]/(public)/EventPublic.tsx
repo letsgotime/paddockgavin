@@ -387,7 +387,7 @@ export default function EventPublic({
     <main style={{ background: "var(--ink)", minHeight: "100vh", position: "relative" }}>
       {hero && (
         <section style={{ position: "relative", minHeight: "100svh", display: "flex", flexDirection: "column", justifyContent: "space-between", overflow: "hidden" }}>
-          <Image className="evKen" src={hero.img} alt={hero.alt} fill priority fetchPriority="high" quality={60} sizes="(max-width: 640px) 60vw, 100vw" style={{ objectFit: "cover", objectPosition: hero.focal || "center 62%" }} />
+          <Image className="evKen" src={hero.img} alt={hero.alt} fill priority quality={60} sizes="100vw" style={{ objectFit: "cover", objectPosition: hero.focal || "center 62%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 4%,rgba(10,21,35,.92) 34%,rgba(10,21,35,.62) 72%,rgba(10,21,35,.4) 100%)" }} />
 
           {b.logo ? (

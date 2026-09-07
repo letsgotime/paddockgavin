@@ -210,7 +210,7 @@ export function ApplyPage(p: ApplyProps) {
             the hero was 714px tall on an iPhone and the headline sat on the
             bottom edge under the mark and the photograph. */}
         <section style={{ position: "relative", minHeight: "clamp(560px,78svh,800px)", display: "flex", alignItems: "flex-end", overflow: "hidden" }}>
-          <Image className="pgKen" src={p.img} alt="" fill priority fetchPriority="high" quality={60} sizes="(max-width: 640px) 60vw, 100vw" style={{ objectFit: "cover", objectPosition: p.focal || "center 55%" }} />
+          <Image className="pgKen" src={p.img} alt="" fill priority quality={60} sizes="100vw" style={{ objectFit: "cover", objectPosition: p.focal || "center 55%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 8%,rgba(10,21,35,.4) 58%,rgba(10,21,35,.6) 100%)" }} />
           <div style={{ position: "relative", width: "100%", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,8vh,96px)", display: "flex", flexDirection: "column", gap: 16 }}>
             <span data-r="" style={{ fontFamily: MONO, fontSize: "clamp(10.5px,1.3vw,12px)", letterSpacing: ".26em", textTransform: "uppercase", color: p.tone }}>
