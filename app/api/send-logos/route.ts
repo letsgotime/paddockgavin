@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server"
-import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { getResend } from "@/lib/email/resend"
 
 const RECIPIENTS = [
   { email: "bekahstallard@gmail.com",     name: "Bekah" },
@@ -11,8 +9,10 @@ const RECIPIENTS = [
 const SITE = "https://paddockgavin.com"
 
 export async function POST() {
-  if (!process.env.RESEND_API_KEY) {
-    return NextResponse.json({ error: "RESEND_API_KEY not set" }, { status: 500 })
+  /* Built here, not at the top of the file. See lib/email/resend.ts. */
+  const resend = getResend()
+  if (!resend) {
+    return NextResponse.json({ error: "no_mail", detail: "RESEND_API_KEY is not set." }, { status: 503 })
   }
 
   const results = await Promise.allSettled(
