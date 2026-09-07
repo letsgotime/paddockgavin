@@ -72,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
    the paddock door only. It used to sit in metadata.other, which Next writes
    out as <meta name="application/ld+json">: a tag no parser reads, and one
    that carried the paddock's Person and LocalBusiness onto every ranch page. */
-const PG_SCHEMA = [
+export const PG_SCHEMA = [
   {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -202,10 +202,9 @@ export async function generateViewport(): Promise<Viewport> {
   }
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const ranch = (await headers()).get("x-pg-brand") === "pistonpoweredranch"
   return (
     <html lang="en" className="bg-[#0A1523]">
       <body className={`${_archivo.variable} ${_archivoblack.variable} font-sans antialiased bg-[#0A1523] text-[#B4B6B2]`}>
@@ -231,9 +230,6 @@ export default async function RootLayout({
         <SiteBackdrop />
         <ScrollProgress />
         <RebrandNotice />
-        {ranch ? null : (
-          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PG_SCHEMA).replace(/</g, "\\u003c") }} />
-        )}
         {children}
         <Analytics />
       </body>

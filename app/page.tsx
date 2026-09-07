@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
 
+import { PG_SCHEMA } from "./layout"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { HomeHero } from "@/components/home-hero"
@@ -37,6 +38,11 @@ export default async function HomePage() {
   const wall = await getWallPosts()
   return (
     <>
+      {/* Who PaddockGavin is, for the machines. It lives here rather than in
+          the root layout because that shell is shared with the ranch door, and
+          deciding brand there needs headers(), which is a dynamic API that
+          breaks regeneration of the ISR event pages underneath it. */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(PG_SCHEMA).replace(/</g, "\\u003c") }} />
       <SiteNav active="home" />
       <HomeHero />
 
