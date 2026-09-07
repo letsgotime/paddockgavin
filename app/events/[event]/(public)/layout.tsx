@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { loadEvent } from "@/lib/events/load"
+import { RANCH_DEFAULTS, RANCH_ICONS } from "@/app/layout"
 
 /**
  * The public wrapper for one event.
@@ -20,10 +21,23 @@ import { loadEvent } from "@/lib/events/load"
 export async function generateMetadata({ params }: { params: Promise<{ event: string }> }): Promise<Metadata> {
   const { event } = await params
   if (event !== "pistonpoweredranch") return {}
+  /* Everything the ranch door says about itself. This used to be decided in
+     the root layout from the request header, which made every page in the
+     application dynamic; it is decided here from the path instead, so the
+     landing, the store and the field can be cached again. */
   return {
+    ...RANCH_DEFAULTS,
+    icons: RANCH_ICONS,
     manifest: "/brand/ranch.webmanifest",
     appleWebApp: { capable: true, title: "Piston Powered Ranch", statusBarStyle: "black-translucent" },
   }
+}
+
+/* The browser chrome around the page on a phone, the ranch's ink rather than
+   ours, and again from the path so it costs no dynamic render. */
+export async function generateViewport({ params }: { params: Promise<{ event: string }> }): Promise<Viewport> {
+  const { event } = await params
+  return { themeColor: event === "pistonpoweredranch" ? "#0A1523" : "#0A0E1A", width: "device-width", initialScale: 1 }
 }
 
 export default async function EventPublicLayout({

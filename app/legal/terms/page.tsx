@@ -1,11 +1,24 @@
 import type { Metadata } from "next"
+import { headers } from "next/headers"
 import Link from "next/link"
 import { PageBackdrop } from "@/components/page-backdrop"
 import { SiteNav } from "@/components/site-nav"
 
-export const metadata: Metadata = {
-  title: "Terms",
-  description: "What you can do with what you find here, what happens when a car changes hands, and which of these things is mine.",
+/* Served under both doors on the same path, with no rewrite to tell them
+   apart, so this is one of the few places that still has to read the request.
+   It costs this page a dynamic render, which is the right page to spend it
+   on: without it the ranch host answers with the paddock's title and, worse,
+   the paddock's canonical, which is a duplicate content signal. */
+const TITLE = "Terms"
+const DESCRIPTION = "What you can do with what you find here, what happens when a car changes hands, and which of these things is mine."
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ranch = (await headers()).get("x-pg-brand") === "pistonpoweredranch"
+  return {
+    title: ranch ? { absolute: `${TITLE} · The Piston Powered Ranch` } : TITLE,
+    description: DESCRIPTION,
+    ...(ranch ? { alternates: { canonical: null } } : {}),
+  }
 }
 
 const UPDATED = "August 2026"

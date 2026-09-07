@@ -1,6 +1,5 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { headers } from "next/headers"
 import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ScrollProgress } from "@/components/scroll-progress"
@@ -42,7 +41,7 @@ const PG_ICONS: Metadata["icons"] = {
   apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   shortcut: "/favicon.ico",
 }
-const RANCH_ICONS: Metadata["icons"] = {
+export const RANCH_ICONS: Metadata["icons"] = {
   icon: [
     { url: "/brand/rj-icon-32.png", sizes: "32x32", type: "image/png" },
     { url: "/brand/rj-icon-64.png", sizes: "64x64", type: "image/png" },
@@ -53,17 +52,6 @@ const RANCH_ICONS: Metadata["icons"] = {
   shortcut: "/brand/rj-icon-32.png",
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const h = await headers()
-  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
-  return {
-    ...BASE,
-    ...(ranch ? RANCH_DEFAULTS : {}),
-    icons: ranch ? RANCH_ICONS : PG_ICONS,
-    manifest: ranch ? "/brand/ranch.webmanifest" : "/manifest.webmanifest",
-    appleWebApp: { ...(BASE.appleWebApp as object), title: ranch ? "Piston Powered Ranch" : "PaddockGavin" },
-  }
-}
 
 /* What a ranch address says about itself when a page sets no title of its
    own, the not-found page above all. Before this, pistonpoweredranch.com/rsvp
@@ -124,7 +112,7 @@ export const PG_SCHEMA = [
   },
 ]
 
-const RANCH_DEFAULTS: Metadata = {
+export const RANCH_DEFAULTS: Metadata = {
   /* The paddock's canonical must not leak onto a ranch page that sets none. */
   alternates: { canonical: null },
   title: {
@@ -190,16 +178,33 @@ const BASE: Metadata = {
   },
 }
 
+/**
+ * The shell's metadata, and why it no longer reads the request.
+ *
+ * This used to pick brand from the x-pg-brand header. headers() is a dynamic
+ * API, and calling it here made every route in the application dynamic,
+ * including the landing, the store and the field, which are the three pages
+ * that most want to be cached. The first time Next tried to regenerate one of
+ * them the render threw DYNAMIC_SERVER_USAGE and the pages answered 500.
+ *
+ * Brand is in the path for everything that matters: the middleware rewrites
+ * the ranch host into /events/<slug>, so those routes read it from their own
+ * params in app/events/[event]/(public)/layout.tsx and stay cacheable. The
+ * few shared paths that are served under both doors without a rewrite, the
+ * legal pages, carry their own generateMetadata and pay for it themselves.
+ */
+export const metadata: Metadata = {
+  ...BASE,
+  icons: PG_ICONS,
+  manifest: "/manifest.webmanifest",
+}
+
 /* The theme colour is the browser chrome around the page on a phone, and it
    follows the door: the ranch's ink on pistonpoweredranch.com, ours here. */
-export async function generateViewport(): Promise<Viewport> {
-  const h = await headers()
-  const ranch = h.get("x-pg-brand") === "pistonpoweredranch"
-  return {
-    themeColor: ranch ? "#0A1523" : "#0A0E1A",
-    width: "device-width",
-    initialScale: 1,
-  }
+export const viewport: Viewport = {
+  themeColor: "#0A0E1A",
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({

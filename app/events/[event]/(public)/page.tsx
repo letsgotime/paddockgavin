@@ -16,13 +16,7 @@ import EventPublic from "./EventPublic"
  * shell.
  */
 
-/* Dynamic, not ISR. The root layout decides brand from the request headers in
-   generateMetadata and generateViewport, and a dynamic API cannot be read
-   while Next is regenerating a static page: the render threw
-   DYNAMIC_SERVER_USAGE and this route answered 500. Rendering per request is
-   the honest description of a page whose shell depends on which door was
-   used. */
-export const dynamic = "force-dynamic"
+export const revalidate = 300
 
 export async function generateStaticParams() {
   return (await loadEventSlugs()).map((event) => ({ event }))
