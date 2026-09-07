@@ -220,91 +220,9 @@ export default function WhyAPaddockPage() {
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
             Nobody in a paddock is showing off. Everybody has something apart, and everybody is happy to tell you why. You learn more standing around one for an afternoon than you do reading for a year.
           </p>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
-            Where I came to it from: a national sales leader, a D1 athlete, and twenty-six years in technology before the lot.
-          </p>
         </section>
 
-        {/* 02 — The garage */}
-        <section
-          data-reveal
-          className="pg-e1" style={{
-            position: "relative",
-            isolation: "isolate",
-            borderLeft: "3px solid #F2C94C",
-            clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)",
-            padding: "clamp(22px,3.2vw,34px)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-            overflow: "hidden"
-          }}
-        >
-          <span
-            aria-hidden="true"
-            style={{
-              position: "absolute", right: 16, top: 12,
-              fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: 110, lineHeight: 1, letterSpacing: "-.04em",
-              color: "transparent", WebkitTextStroke: "2px rgba(255,255,255,.16)", pointerEvents: "none",
-            }}
-          >02</span>
-          <Image
-            src="/images/gavin-gwagen.webp"
-            alt=""
-            aria-hidden
-            fill
-            loading="lazy"
-            style={{ objectFit: "cover", objectPosition: "center 28%", opacity: 0.3, zIndex: -1 }}
-          />
-          <span
-            aria-hidden="true"
-            style={{
-              position: "absolute", inset: 0, zIndex: -1,
-              background: "linear-gradient(160deg,rgba(14,26,42,.96) 0%,rgba(14,26,42,.86) 50%,rgba(14,26,42,.52) 100%)",
-            }}
-          />
-          <span
-            style={{
-              display: "inline-block", transform: "skewX(-12deg)",
-              background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start",
-            }}
-          >
-            <span
-              style={{
-                display: "inline-block", transform: "skewX(12deg)",
-                fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em",
-                textTransform: "uppercase", color: "#101010",
-              }}
-            >
-              The garage
-            </span>
-          </span>
-          <h2
-            style={{
-              margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800,
-              fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
-            }}
-          >
-            How I keep a garage
-          </h2>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
-            People think a garage is where you work on the car. Mine is mostly where I put things away.
-          </p>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
-            Nothing on the floor if I can help it. Everything on a hook or a shelf. I sweep more than I need to, and I like doing it.
-          </p>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
-            Towels get washed and folded before they&rsquo;re used again, because a dirty towel is how you put a scratch in something you love.
-          </p>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
-            Some evenings I&rsquo;ll go out there after work and not touch the car at all. Wipe down a shelf, sort out a drawer, see what&rsquo;s running low. It&rsquo;s the quietest part of my day.
-          </p>
-          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#B4B6B2", maxWidth: "60ch" }}>
-            The weekend is longer and it starts early. Wash it, go see everybody, come home and wash it again. Then whatever the car is asking for.
-          </p>
-        </section>
-
-        {/* 03 — The lot (full-bleed image card) */}
+        {/* 02 — The lot (full-bleed image card) */}
         <section
           data-reveal
           style={{
@@ -376,7 +294,7 @@ export default function WhyAPaddockPage() {
           </div>
         </section>
 
-        {/* 04 — What a car is (blue panel) */}
+        {/* 03 — What a car is (blue panel) */}
         <section
           data-reveal
           className="pg-e1" style={{
@@ -426,7 +344,7 @@ export default function WhyAPaddockPage() {
           </p>
         </section>
 
-        {/* 05 — The flip */}
+        {/* 04 — The flip */}
         <section
           data-reveal
           className="pg-e1" style={{
@@ -448,7 +366,7 @@ export default function WhyAPaddockPage() {
               fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 900, fontSize: 110, lineHeight: 1, letterSpacing: "-.04em",
               color: "transparent", WebkitTextStroke: "2px rgba(255,255,255,.16)", pointerEvents: "none",
             }}
-          >05</span>
+          >04</span>
           <Image
             src="/images/g993-ramp.webp"
             alt=""

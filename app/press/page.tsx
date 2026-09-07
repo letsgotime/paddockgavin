@@ -4,7 +4,7 @@ import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
   title: "Press",
-  description: "PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them, not from a desk outside it.",
+  description: "PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them.",
 }
 
 const UPDATED = "August 2026"
@@ -80,7 +80,7 @@ export default function PressPage() {
             <span style={{ color: "#00D2BE" }}>Everything you need to credential us.</span>
           </h1>
           <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 640 }}>
-            PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them, not from a desk outside it. Everything a credentialing office needs is on this page.
+            PaddockGavin covers exotic and collector cars. I write from inside the trade that moves them. Everything a credentialing office needs is on this page.
           </p>
           <p style={{ margin: 0, fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", color: "#91918F" }}>
             Last updated {UPDATED}
