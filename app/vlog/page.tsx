@@ -73,7 +73,7 @@ export default async function VlogPage() {
         <div style={{ maxWidth: 1080, margin: "0 auto", background: "#005185", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(24px,4vw,34px)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ flex: "1 1 320px" }}>
             <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>See something worth filming?</h2>
-            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#CFE4F4", maxWidth: "48ch" }}>DM me. If it is on the lot on a Saturday, there is a fair chance I am standing next to it.</p>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#CFE4F4", maxWidth: "48ch" }}>DM me. Saturdays were when the interesting things showed up, and I filmed most of them.</p>
           </div>
           <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>DM @itspaddockgavin</a>
         </div>

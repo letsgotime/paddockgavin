@@ -20,7 +20,7 @@ const NAV_GROUPS: NavGroup[] = [
   { title: "Day shift", tone: "#F2C94C", items: [
     { key: "book",   href: "/book",    label: "Book the floor",    note: "Private events" },
     { key: "events", href: "/events",  label: "Events",            note: "Book the floor" },
-    { key: "intake", href: "/intake",  label: "Find me a car",     note: "Sourcing, retail or wholesale" },
+    { key: "broker", href: "/exotic-car-broker", label: "Find me a car", note: "Sourcing, retail or wholesale" },
   ]},
   { title: "Night shift", tone: "#00D2BE", items: [
     { key: "scoreboard", href: "/scoreboard", label: "Scoreboard", note: "What I build" },

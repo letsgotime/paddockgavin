@@ -92,7 +92,7 @@ const BASE: Metadata = {
     template: "%s · PaddockGavin",
   },
   description:
-    "Most people only see these cars on a screen. The days get you closer: a dream car within reach, a dyno pull you can feel, a lap of the track. Nashville.",
+    "Most people only see these cars on a screen. The days get you closer: three hundred of them on a working ranch, close enough to touch. Nashville.",
   metadataBase: new URL(SITE),
   alternates: { canonical: SITE },
   openGraph: {

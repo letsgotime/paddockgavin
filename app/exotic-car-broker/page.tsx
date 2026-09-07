@@ -12,12 +12,14 @@ export default function Page() {
   return (
     <SourcingPage
       path="/exotic-car-broker"
+      ctaHref="https://ig.me/m/itspaddockgavin"
+      ctaLabel="Tell me the car"
       eyebrow="Exotic car broker"
       h1="Tell me the car. I will find it."
       lead="Concierge brokering and vehicle sourcing. I shop with a dealer's licence, so every auction is open, and the sale completes through a licensed dealer."
       backdrop="/images/f458-front.webp"
       steps={[
-        { title: "The spec and the budget", body: "Year, model, spec, colour, miles, budget. Start the intake with what you know. I am the one reading it." },
+        { title: "The spec and the budget", body: "Year, model, spec, colour, miles, budget. Send what you know. I am the one reading it." },
         { title: "The search", body: "Retail listings, the trade, and the auctions a dealer's licence opens. Most of the 78 cars I have found for people turned up before they were listed." },
         { title: "The offer, in writing", body: "Nothing is an offer until the selling dealer puts it in writing. The paperwork, the financing, the title, the funds and the delivery run on that dealer's licence and under its terms." },
       ]}
@@ -32,7 +34,7 @@ export default function Page() {
       related={[
         { href: "/sell-my-exotic-car", label: "Selling one instead?", note: "Retail or wholesale" },
         { href: "/cars", label: "The Garage", note: "29 cars over 30+ years" },
-        { href: "/intake", label: "Start the intake", note: "Two minutes" },
+        { href: "https://ig.me/m/itspaddockgavin", label: "Tell me the car", note: "Straight to me" },
       ]}
     />
   )

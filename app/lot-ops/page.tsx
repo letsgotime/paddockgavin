@@ -24,20 +24,11 @@ const CREW = [
   "Every team in the office",
 ]
 
-function centralHour() {
-  try { return new Date(new Date().toLocaleString("en-US", { timeZone: "America/Chicago" })).getHours() }
-  catch { return new Date().getHours() }
-}
-
 export default function LotOpsPage() {
   const [step, setStep] = useState(0)
-  const [lotNow, setLotNow] = useState("")
 
   useEffect(() => {
     const update = () => {
-      const h = centralHour()
-      const open = h >= 8 && h < 18
-      setLotNow(open ? "Gate\u2019s open" : h < 8 ? "Opens at 8" : "Closed, back at 8")
     }
     update()
     const tick = setInterval(update, 30000)
@@ -85,7 +76,7 @@ export default function LotOpsPage() {
             {[
               { k: "The floor", v: "70,000 sq ft", tone: "#00D2BE" },
               { k: "Gate",      v: "8:00 am",                     tone: "#00D2BE" },
-              { k: "Right now", v: lotNow || "\u2026",            tone: "#F2C94C" },
+              { k: "Ran",       v: "2025 to 2026",                 tone: "#F2C94C" },
               { k: "Outbound",  v: "Verified first",              tone: "#00D2BE" },
             ].map(row => (
               <span key={row.k} style={{ display: "flex", flexDirection: "column", gap: 7 }}>
@@ -134,13 +125,13 @@ export default function LotOpsPage() {
               <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>The crew</span>
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>It never stops</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#91918F" }}>Four of us, every morning</span>
           </div>
           <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch" }}>
-            Four of us run <span style={{ color: "#F2C94C" }}>the warehouse</span>
+            Four of us ran <span style={{ color: "#F2C94C" }}>the warehouse</span>
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "60ch" }}>
-            Me and three lot ops techs, on a 70,000 square foot warehouse floor. It never stops, it never looks the same two days running, and the cars passing through are some of the most sought-after in the world.
+            Me and three lot ops techs on the floor. It never looked the same two days running, and some mornings you could not walk through the place.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>In it with us, every day</span>
@@ -163,7 +154,7 @@ export default function LotOpsPage() {
           </div>
           <div style={{ flex: "0 0 auto", display: "flex", gap: 10, flexWrap: "wrap" }}>
             <Link href="/book" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
-              Buy, trade or sell
+              Sell a car
             </Link>
           </div>
         </section>

@@ -8,7 +8,7 @@ import { PageBackdrop } from "@/components/page-backdrop"
 export const metadata: Metadata = {
   title: "The Shop · PaddockGavin",
   description:
-    "Tees, caps, mugs and bags under the Rancho Jaramillo and PaddockGavin marks. Made to order, shipped before the tenth of October.",
+    "Tees, caps, mugs and bags under the Rancho Jaramillo and PaddockGavin marks. Made to order. Nothing here has a payment link yet.",
   alternates: { canonical: "https://paddockgavin.com/shop" },
   openGraph: {
     title: "The Shop · PaddockGavin",
@@ -50,7 +50,7 @@ export default function Page() {
               margin: "14px 0 0",
             }}
           >
-            Wear it on the tenth
+            Made for the tenth
           </h1>
           <p
             style={{
@@ -60,9 +60,9 @@ export default function Page() {
               color: "#A9B4C2",
             }}
           >
-            Everything here is made to order under one of two marks, so nothing sits in a box
-            waiting to be thrown away. Order before the last week of September and it arrives in
-            time to be worn on the field rather than carried home in a bag.
+            Everything here is made to order under one of two marks, so each one is printed
+            after it is ordered. None of it has a payment link yet. When it does, the date it
+            has to be ordered by will be on this page.
           </p>
 
           <div

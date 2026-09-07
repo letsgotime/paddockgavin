@@ -108,7 +108,7 @@ const GROUPS = [
         href: "/intake",
         target: "_self",
         tone: "#F2C94C",
-        datum: "No fee",
+        datum: "Fee disclosed per sale",
       },
       {
         key: "garage",

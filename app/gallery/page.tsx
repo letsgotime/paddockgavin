@@ -370,7 +370,7 @@ export default function GalleryPage() {
               <span style={{ color: "#F2C94C" }}>in whatever light was there</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "56ch" }}>
-              Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of the metal belongs to the lot I run, so I&rsquo;m the one standing next to it.
+              Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of it was shot on the lot I ran through 2026, which is why the angles are close.
             </p>
           </div>
           <div

@@ -34,7 +34,7 @@ export async function HomeHero() {
               Closer to the cars.
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.55, color: "#C4CBD6", maxWidth: "52ch" }}>
-              Most people fall for these cars on a screen, and for most people that&rsquo;s where it stays. Standing next to one while it warms up is a completely different thing, and I&rsquo;d rather more people got to do that. So the days are built around it: your dream car close enough to touch, a dyno pull you can feel in your chest, a lap of the track if you want one. And if you get to the point of buying one, I&rsquo;ll tell you straight what living with it is actually like.
+              Most people fall for these cars on a screen, and for most people that&rsquo;s where it stays. Standing next to one while it warms up is a completely different thing, and I&rsquo;d rather more people got to do that. So the days are built around it: three hundred cars on a working ranch, close enough to touch, and the people who own them standing next to them. And if you get to the point of buying one, I&rsquo;ll tell you straight what living with it is actually like.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px", paddingTop: 6 }}>
               <Link href="#wall" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>

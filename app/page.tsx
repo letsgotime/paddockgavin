@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 
-const BLURB = "Most people only see these cars on a screen. The days get you closer: a dream car within reach, a dyno pull you can feel, a lap of the track. Nashville."
+const BLURB = "Most people only see these cars on a screen. The days get you closer: three hundred of them on a working ranch, close enough to touch. Nashville."
 
 export const metadata: Metadata = {
   title: "Automotive, tech and lifestyle, Nashville · PaddockGavin",
