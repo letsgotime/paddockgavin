@@ -659,7 +659,7 @@ export default function ScoreboardPage() {
                 color: "#FFFFFF",
               }}
             >
-              The lot, the floor and the events
+              The events and the client work
             </h2>
             <p
               style={{
@@ -692,7 +692,7 @@ Events and the client work around them are the other half. That side lives on it
                 textDecoration: "none",
               }}
             >
-              Book the floor
+              Book an event
             </Link>
             <Link href="/exotic-car-broker" className="pg-textlink">Find me a car</Link>
           </div>

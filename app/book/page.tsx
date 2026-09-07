@@ -15,9 +15,9 @@ const KINDS = [
     eyebrow: "The day",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "Collector events in Middle Tennessee. Working ranches, orchards, showroom floors. Tell me the occasion and I will tell you where it fits.",
+    blurb: "Collector events in Middle Tennessee. Working ranches and orchards. Tell me the occasion and I will tell you where it fits.",
     hint: "The occasion, the date, the headcount",
-    img: "/images/donuts-floor-sq.webp",
+    img: "/images/ranch/ppr-walk.jpg",
   },
   {
     key: "sales",
@@ -84,13 +84,13 @@ export default function BookPage() {
     <>
       <SiteNav active="events" />
 
-      <PageBackdrop src="/images/donuts-square.webp" opacity={0.2} />
+      <PageBackdrop src="/images/ranch/ppr-hero.jpg" opacity={0.2} />
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(40px,7vw,84px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2.4vw,22px)" }}>
 
         {/* Hero */}
         <section style={{ position: "relative", minHeight: "clamp(300px,44vh,470px)", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-          <Image src="/images/donuts-floor.webp" alt="The floor, set for it" fill style={{ objectFit: "cover", objectPosition: "center 60%" }} priority />
+          <Image src="/images/ranch/ppr-dusk.jpg" alt="The ranch at dusk, set for an evening" fill style={{ objectFit: "cover", objectPosition: "center 60%" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
             <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>

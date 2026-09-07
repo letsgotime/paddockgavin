@@ -26,7 +26,7 @@ const WORK = [
 const formats = [
   {
     title: "Product feature",
-    desc: "Your product in context, on the car, in the garage, at the lot. One specific detail, shown honestly.",
+    desc: "Your product in context, on the car, in the garage, at the event. One specific detail, shown honestly.",
   },
   {
     title: "Detailing & coatings",
@@ -34,7 +34,7 @@ const formats = [
   },
   {
     title: "Event sponsorship",
-    desc: "Tires & Timepieces™ and the shows I run. Floor presence and content from the event.",
+    desc: "Tires & Timepieces™ and the shows I run. A place at the event and the content that comes out of it.",
   },
   {
     title: "Affiliate programme",

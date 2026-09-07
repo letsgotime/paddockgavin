@@ -21,7 +21,7 @@ const sections = [
     num: "02",
     heading: "What a form collects",
     body: [
-      "The forms on this site, booking the floor, asking me to find a car, a partnership enquiry, ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
+      "The forms on this site, booking an event, asking me to find a car, a partnership enquiry, ask for a name, a way to reach you, and whatever you write in the message. That is it. There is no hidden field.",
       "Enquiries reach me by email through Resend, a transactional mail provider. They pass the message through and do not use it for anything of their own. Nothing you send is added to a marketing list, because there is no marketing list.",
     ],
     table: {

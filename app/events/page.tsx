@@ -88,7 +88,7 @@ const PAST = [
     title: "Private client evenings",
     stateLabel: "Ongoing, by request",
     blurb:
-      "The floor booked out for a collector group, a brand, or a birthday. Closed to the public. Listed so you can see the room gets used this way.",
+      "A collector group, a brand, or a birthday, closed to the public. Working ranches and private properties around Middle Tennessee.",
     img: "/images/f458-dash.webp",
     href: "/connect",
     cta: "Ask about yours",
@@ -275,7 +275,7 @@ export default function EventsPage() {
               <span style={{ color: "#F2C94C" }}>we open</span>
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.56, color: "#E4E9F0", maxWidth: "58ch", textShadow: "0 1px 10px rgba(10,21,35,.8)" }}>
-              We produce collector car events in Middle Tennessee. Working ranches. Orchards. Showroom floors. What is booked runs at the top of this page. What already ran sits below. The properties we represent close it out.
+              We produce collector car events in Middle Tennessee. Working ranches. Orchards. Private properties. What is booked runs at the top of this page. What already ran sits below. The properties we represent close it out.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
