@@ -77,6 +77,8 @@ export interface RanchEmail {
   /** One line at the foot saying why this arrived: "You are receiving this
       because you entered a car for 10 October." */
   reason?: string
+  /** Fine print at the very foot: a limit, a condition, a term. */
+  disclaimer?: string
   unsubscribe?: string
 }
 
@@ -327,6 +329,7 @@ ${
           ${e.reason ? `<br />${esc(e.reason)}` : ""}
           ${e.unsubscribe ? `<br /><a href="${esc(e.unsubscribe)}" style="color:${MUTE};text-decoration:underline">Unsubscribe</a>` : ""}
         </td></tr>
+        ${e.disclaimer ? `<tr><td align="center" style="font-family:${LABEL};font-size:10px;line-height:1.6;color:${MUTE};padding:16px 0 0" class="mute">${esc(e.disclaimer)}</td></tr>` : ""}
       </table>
     </td></tr>
 
@@ -361,5 +364,6 @@ export function renderRanchText(e: RanchEmail): string {
   lines.push("pistonpoweredranch.com", "Privacy: https://pistonpoweredranch.com/legal/privacy", "Terms: https://pistonpoweredranch.com/legal/terms")
   if (e.reason) lines.push("", e.reason)
   if (e.unsubscribe) lines.push("", `Unsubscribe: ${e.unsubscribe}`)
+  if (e.disclaimer) lines.push("", e.disclaimer)
   return lines.join("\n")
 }
