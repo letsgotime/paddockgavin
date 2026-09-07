@@ -1,38 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import type { WallItem } from "@/lib/social"
 import Image from "next/image"
 import Link from "next/link"
 
-interface BeholdPost {
-  id: string
-  sizes?: { medium?: { mediaUrl?: string; width?: number; height?: number }; large?: { mediaUrl?: string }; full?: { mediaUrl?: string } }
-  thumbnailUrl?: string
-  mediaUrl?: string
-  mediaType?: string
-  prunedCaption?: string
-  caption?: string
-  permalink?: string
-}
-
-interface WallItem {
-  key: string
-  src: string
-  large: string
-  caption: string
-  isVideo: boolean
-  videoSrc?: string
-  permalink: string
-  wide: boolean
-}
-
 interface LightboxState { index: number }
-
-const BEHOLD_FEEDS = [
-  process.env.NEXT_PUBLIC_BEHOLD_FEED_1 ?? "",
-  process.env.NEXT_PUBLIC_BEHOLD_FEED_2 ?? "",
-  process.env.NEXT_PUBLIC_BEHOLD_FEED_3 ?? "",
-].filter(Boolean)
 
 /* Rendered on the server, so the section is there in the first frame. The
    Behold feed replaces them once it answers, if it answers. */
@@ -47,47 +20,9 @@ const SEED: WallItem[] = [
 const ARCHIVO = "Archivo, Helvetica, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
 
-export function HomeWall() {
-  const [items, setItems] = useState<WallItem[]>(SEED)
+export function HomeWall({ posts = [] }: { posts?: WallItem[] }) {
+  const items: WallItem[] = posts.length >= 4 ? posts : SEED
   const [lb, setLb] = useState<LightboxState | null>(null)
-
-  const firstLine = (text: string) => {
-    const line = String(text || "").split(/\r?\n/).find((l) => l.trim()) || ""
-    const clean = line.replace(/#[\w]+/g, "").replace(/\s+/g, " ").trim()
-    return clean.length > 78 ? clean.slice(0, 76).trim() + "…" : clean
-  }
-
-  useEffect(() => {
-    if (!BEHOLD_FEEDS.length) return
-    let alive = true
-    Promise.all(
-      BEHOLD_FEEDS.map((id) => fetch(`https://feeds.behold.so/${id}`).then((r) => (r.ok ? r.json() : null)).catch(() => null))
-    ).then((results) => {
-      const all: WallItem[] = []
-      results.forEach((data) => {
-        if (!data) return
-        const posts: BeholdPost[] = Array.isArray(data) ? data : data.posts || []
-        posts.slice(0, 12).forEach((p) => {
-          const sizes = p.sizes || {}
-          const med = sizes.medium || sizes.large || sizes.full || {}
-          const w = (med as { width?: number }).width || 1080
-          const h = (med as { height?: number }).height || 1350
-          all.push({
-            key: "bh-" + p.id,
-            src: (med as { mediaUrl?: string }).mediaUrl || p.thumbnailUrl || p.mediaUrl || "",
-            large: ((sizes.large || sizes.full || med) as { mediaUrl?: string }).mediaUrl || p.mediaUrl || "",
-            caption: firstLine(p.prunedCaption || p.caption || ""),
-            isVideo: p.mediaType === "VIDEO",
-            videoSrc: p.mediaType === "VIDEO" ? p.mediaUrl : undefined,
-            permalink: p.permalink || "",
-            wide: w > h,
-          })
-        })
-      })
-      if (alive && all.length >= 4) setItems(all)
-    })
-    return () => { alive = false }
-  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

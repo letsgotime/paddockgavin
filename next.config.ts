@@ -207,6 +207,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "**.cloudflare.com" },
       { protocol: "https", hostname: "**.r2.dev" },
+      /* Behold serves the wall's photography from its own CDN, and hands back
+         Instagram's URLs for some sizes. Without these next/image refuses the
+         host and the wall breaks rather than degrades, which would have
+         happened the moment a feed id was set. */
+      { protocol: "https", hostname: "**.behold.so" },
+      { protocol: "https", hostname: "**.cdninstagram.com" },
+      { protocol: "https", hostname: "**.fbcdn.net" },
     ],
   },
 }

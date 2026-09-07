@@ -21,6 +21,7 @@ import { HomeWall } from "@/components/home-wall"
 import { HomeMediaKit } from "@/components/home-media-kit"
 import { HomeAskMe } from "@/components/home-ask-me"
 import { Section, ProductRows, PhotoBreak, AlsoHere, LinkRow } from "@/components/home-sections"
+import { getWallPosts } from "@/lib/social"
 
 function Stage({ children, sec }: { children: React.ReactNode; sec: string }) {
   return <div data-sec={sec} className="pg-stage">{children}</div>
@@ -31,7 +32,8 @@ function Stage({ children, sec }: { children: React.ReactNode; sec: string }) {
  * "two shifts" are two. The car numbers live once, in the proof strip under
  * the hero; the audience numbers live under the brands heading.
  */
-export default function HomePage() {
+export default async function HomePage() {
+  const wall = await getWallPosts()
   return (
     <>
       <SiteNav active="home" />
@@ -40,7 +42,7 @@ export default function HomePage() {
       <PhotoBreak src="/images/g993-out.webp" pos="center 40%" caption="Gunther Werks 993, loading out" />
 
       <Stage sec="wall">
-        <HomeWall />
+        <HomeWall posts={wall} />
       </Stage>
 
       <Stage sec="cars">

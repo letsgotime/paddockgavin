@@ -82,3 +82,76 @@ export function formatFollowers(n: number): string {
   const step = n < 10_000 ? 100 : 1_000
   return "~" + (Math.round(n / step) * step).toLocaleString("en-US")
 }
+
+/** One tile on the wall. Shared so the server and the client agree on shape. */
+export interface WallItem {
+  key: string
+  src: string
+  large: string
+  caption: string
+  isVideo: boolean
+  videoSrc?: string
+  permalink: string
+  wide: boolean
+}
+
+interface BeholdPost {
+  id: string
+  sizes?: { medium?: { mediaUrl?: string; width?: number; height?: number }; large?: { mediaUrl?: string }; full?: { mediaUrl?: string } }
+  thumbnailUrl?: string
+  mediaUrl?: string
+  mediaType?: string
+  prunedCaption?: string
+  caption?: string
+  permalink?: string
+}
+
+/** First line of a caption, hashtags stripped, trimmed to fit a tile. */
+function firstLine(text: string): string {
+  const line = String(text || "").split(/\r?\n/).find((l) => l.trim()) || ""
+  const clean = line.replace(/#[\w]+/g, "").replace(/\s+/g, " ").trim()
+  return clean.length > 78 ? clean.slice(0, 76).trim() + "\u2026" : clean
+}
+
+/**
+ * The wall, fetched on the server.
+ *
+ * It used to fetch in the browser, which cost two things: the captions were
+ * never in the delivered HTML, so a search engine saw a wall of nothing, and
+ * every visitor watched the seed photographs get replaced a moment after the
+ * page settled. Fetching here puts the real captions in the markup and the
+ * real pictures in the first frame.
+ *
+ * Returns an empty array when no feed is configured or Behold does not answer,
+ * and the component falls back to its seed tiles, which is what ships today.
+ */
+export async function getWallPosts(limit = 12): Promise<WallItem[]> {
+  const id = feedId()
+  if (!id) return []
+  try {
+    const res = await fetch(`https://feeds.behold.so/${id}`, {
+      next: { revalidate: REVALIDATE_SECONDS },
+    })
+    if (!res.ok) throw new Error(String(res.status))
+    const data = await res.json()
+    const posts: BeholdPost[] = Array.isArray(data) ? data : data?.posts || []
+    return posts.slice(0, limit).map((p) => {
+      const sizes = p.sizes || {}
+      const med = sizes.medium || sizes.large || sizes.full || {}
+      const w = (med as { width?: number }).width || 1080
+      const h = (med as { height?: number }).height || 1350
+      return {
+        key: "bh-" + p.id,
+        src: (med as { mediaUrl?: string }).mediaUrl || p.thumbnailUrl || p.mediaUrl || "",
+        large: ((sizes.large || sizes.full || med) as { mediaUrl?: string }).mediaUrl || p.mediaUrl || "",
+        caption: firstLine(p.prunedCaption || p.caption || ""),
+        isVideo: p.mediaType === "VIDEO",
+        videoSrc: p.mediaType === "VIDEO" ? p.mediaUrl : undefined,
+        permalink: p.permalink || "",
+        wide: w > h,
+      }
+    }).filter((i) => i.src)
+  } catch {
+    return []
+  }
+}
