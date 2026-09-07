@@ -32,8 +32,10 @@ export interface Tool {
   money?: boolean
 }
 
-/** The tools deployment, which still holds most of the toolset. */
-export const TOOLS_ORIGIN = "https://piston-powered-ranch.vercel.app"
+/* Every tool is served by this deployment now. The constant stays because
+   emails need an absolute origin, but it points at the ranch rather than at
+   the retired preview URL, which is about to stop existing. */
+export const TOOLS_ORIGIN = "https://pistonpoweredranch.com"
 
 export const TOOLS: Tool[] = [
   /* HQ is the console. It used to be a route in this app that rendered eight

@@ -31,7 +31,6 @@ const RANCH_HOST = [{ type: "host" as const, value: "(www\\.)?pistonpoweredranch
  * neon_auth.jwks is encrypted with it. Uploads and the media signer need
  * BLOB_READ_WRITE_TOKEN for the private store.
  */
-const TOOLS = "https://piston-powered-ranch.vercel.app"
 const CAN_AUTH = Boolean(
   (process.env.RANCH_DATABASE_URL || process.env.PISTON_RANCH_DATABASE_URL || process.env.DATABASE_URL) &&
     process.env.BETTER_AUTH_SECRET,
@@ -66,17 +65,13 @@ const nextConfig: NextConfig = {
 
     /* beforeFiles, because a rewrite has to beat the route handler of the
        same name; afterFiles would never be reached. */
-    const stillOverThere = [
-      ...(CAN_AUTH ? [] : [proxy("/api/auth", `${TOOLS}/api/auth`), proxy("/api/auth/:path*", `${TOOLS}/api/auth/:path*`)]),
-      ...(CAN_BLOB ? [] : [proxy("/api/upload", `${TOOLS}/api/upload`), proxy("/api/media", `${TOOLS}/api/media`)]),
-    ]
-    if (stillOverThere.length) {
-      console.log(
-        `[ranch] still proxied to the tools deployment: ${[...(CAN_AUTH ? [] : ["auth"]), ...(CAN_BLOB ? [] : ["upload", "media"])].join(", ")}`,
-      )
-    } else {
-      console.log("[ranch] every ranch endpoint is served by this deployment")
-    }
+    /* There is nowhere to fall back to any more: the tools deployment has been
+       deleted. If either of these is ever false the endpoint fails here, loudly,
+       which is better than proxying to a hostname that no longer resolves. */
+    const stillOverThere: ReturnType<typeof proxy>[] = []
+    if (!CAN_AUTH) console.error("[ranch] sign in cannot work: RANCH_DATABASE_URL or BETTER_AUTH_SECRET is missing")
+    if (!CAN_BLOB) console.error("[ranch] uploads cannot work: BLOB_READ_WRITE_TOKEN is missing")
+    if (CAN_AUTH && CAN_BLOB) console.log("[ranch] every ranch endpoint is served by this deployment")
 
     return {
       beforeFiles: stillOverThere,

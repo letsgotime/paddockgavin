@@ -108,7 +108,7 @@ export default function RolesPage() {
           This one is for the five people running the day, so it wants a sign in first. There is no
           password: put your address in the email box and press the button that emails you a link.
         </p>
-        <a href="https://piston-powered-ranch.vercel.app/console/" style={{ ...pill, marginTop: 26 }}>
+        <a href="/console/" style={{ ...pill, marginTop: 26 }}>
           Sign in
         </a>
         <p style={{ color: FAINT, fontSize: 14, marginTop: 18, maxWidth: "56ch" }}>
