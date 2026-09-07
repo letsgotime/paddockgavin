@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { loadEvent } from "@/lib/events/load"
+import { loadEvent, loadEventSlugs } from "@/lib/events/load"
 import { loadRoster, rosterCounts } from "@/lib/events/roster"
 import { ranchShare } from "@/lib/events/ranch-share"
 import { PageBackdrop } from "@/components/page-backdrop"
@@ -21,6 +21,13 @@ import { RanchFooter } from "@/components/ranch-footer"
  */
 
 export const revalidate = 300
+
+/* Without this Next cannot know which events exist at build time, so it never
+   prerenders the route and marks every response no-store. The landing has had
+   it all along, which is why the landing cached and these two did not. */
+export async function generateStaticParams() {
+  return (await loadEventSlugs()).map((event) => ({ event }))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ event: string }> }): Promise<Metadata> {
   const { event } = await params
