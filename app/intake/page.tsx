@@ -19,7 +19,7 @@ const STEPS = [
 const ROUTES = [
   { id: "wholesale", name: "WHOLESALE",      speed: "Fastest",      blurb: "Dealer to dealer, run through Manheim Nashville on Wednesdays. A clean number and the car is gone. No tyre kickers, no weekend viewings." },
   { id: "drlive",    name: "LIVE AUCTION",   speed: "No reserve",   blurb: "A no reserve live auction. We shop with a dealer\u2019s licence, so every auction is open to us."           },
-  { id: "retail",    name: "dR RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it, takes longer, and usually pays the most."  },
+  { id: "retail",    name: "RETAIL",      speed: "Highest price", blurb: "Conventional retail transactions and trade-ins. Straight to the person who wants to own it, takes longer, and usually pays the most."  },
   { id: "unsure",    name: "NOT SURE YET",   speed: "Ask me",       blurb: "Tell us the car and what matters most, speed or price, and the concierge will point you at the right inventory."                        },
 ]
 

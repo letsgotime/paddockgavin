@@ -36,7 +36,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs"
 import { join, relative, sep } from "node:path"
 
-const SKIP_DIRS = new Set(["node_modules", ".next", ".git", "public", "out", "dist", "coverage", "emails"])
+const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".claude", "public", "out", "dist", "coverage", "emails"])
 /* Email is a different medium: it renders in clients with their own minimums
    and its own design system, built and measured separately. */
 const SKIP_PREFIX = ["lib/email/"]

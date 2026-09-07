@@ -75,7 +75,7 @@ export default async function HomePage() {
       </Stage>
 
       <Stage sec="sourcing">
-        <Section id="sourcing" eyebrow="Sourcing" tone="#B4B6B2" title="Looking for a particular car" cta={{ href: "/intake", label: "Start the intake" }}>
+        <Section id="sourcing" eyebrow="Sourcing" tone="#B4B6B2" title="Looking for a particular car" cta={{ href: "https://ig.me/m/itspaddockgavin", label: "Tell me the car" }}>
           <p style={{ margin: 0 }}>
             It is the last thing on this page on purpose. Being around cars all week means the network is usually the fastest way to a specific one. Seventy-eight found so far, retail or wholesale, and the sale completes through a licensed dealer.
           </p>

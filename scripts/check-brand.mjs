@@ -77,7 +77,7 @@ const RED_FILL = /\b(background|backgroundColor)\b[^,;]*?(#E5141A|var\(--accent-
 const FILL_PROPS =
   /\b(background|backgroundColor|backgroundImage|borderTop|borderBottom|borderLeft|borderRight|borderColor|border|fill|boxShadow|outline|outlineColor|stroke|textDecorationColor|accentColor|caretColor)\b/
 
-const SKIP_DIRS = new Set(["node_modules", ".next", ".git", "public", "out", "dist", "coverage"])
+const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".claude", "public", "out", "dist", "coverage"])
 const SKIP_FILES = new Set(["scripts/check-brand.mjs"])
 const EXT = /\.(tsx?|jsx?|mjs|cjs|css|scss|mdx|html|svg)$/
 
