@@ -211,7 +211,7 @@ for (const file of walk(ROOT)) {
       if (exemptMark && GOOGLE_MARK.includes(c.hex)) continue
 
       if (isPink(d)) {
-        push(rel, n, line, `${c.raw} is pink (${Math.round(d.white * 100)}% white in a red). Reds on this site are ${JARAMILLO_RED}, or ${RANCH_RED_TEXT} for small text.`)
+        push(rel, n, line, `${c.raw} is pink (${Math.round(d.white * 100)}% white in a red). Use var(--pg-error) for text or var(--pg-error-fill) to paint, which are ${RANCH_RED_TEXT} and ${JARAMILLO_RED}. Do not pick a third red.`)
         continue
       }
 

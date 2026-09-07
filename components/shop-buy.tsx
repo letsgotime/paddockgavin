@@ -98,7 +98,7 @@ export function ShopBuy({ product, accent }: { product: Product; accent: string 
       )}
 
       {error && (
-        <p role="alert" style={{ margin: "10px 0 0", font: `600 14px/1.5 ${ARCHIVO}`, color: "#FF1A21" }}>
+        <p role="alert" style={{ margin: "10px 0 0", font: `600 14px/1.5 ${ARCHIVO}`, color: "var(--pg-error)" }}>
           {error}
         </p>
       )}
