@@ -94,12 +94,12 @@ const nextConfig: NextConfig = {
        list is proven complete against real traffic. Nothing is blocked. */
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vercel.live",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://va.vercel-scripts.com https://vercel.live https://www.googletagmanager.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       "media-src 'self' blob: https:",
-      "connect-src 'self' https://challenges.cloudflare.com https://api.weather.gov https://*.vercel-storage.com https://*.neon.tech https://vitals.vercel-insights.com https://vercel.live wss://ws-us3.pusher.com",
+      "connect-src 'self' https://challenges.cloudflare.com https://api.weather.gov https://*.vercel-storage.com https://*.neon.tech https://vitals.vercel-insights.com https://vercel.live wss://ws-us3.pusher.com https://www.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
       "frame-src https://challenges.cloudflare.com https://js.stripe.com https://checkout.stripe.com https://vercel.live",
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",

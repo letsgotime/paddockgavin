@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Archivo, Archivo_Black } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { RanchAnalytics } from "@/components/ranch-analytics"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { RebrandNotice } from "@/components/rebrand-notice"
 import { SiteBackdrop } from "@/components/page-backdrop"
@@ -237,6 +238,7 @@ export default function RootLayout({
         <RebrandNotice />
         {children}
         <Analytics />
+        <RanchAnalytics />
       </body>
     </html>
   )
