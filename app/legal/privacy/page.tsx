@@ -60,6 +60,7 @@ const sections = [
         ["Cloudflare", "Hosting, security, video and images", "cloudflare.com/privacypolicy"],
         ["Behold", "Reads my public Instagram posts onto the wall", "behold.so/privacy"],
         ["Resend", "Delivers form enquiries to my inbox", "resend.com/legal/privacy-policy"],
+        ["Google Analytics", "Counts visits and which pages get read", "policies.google.com/privacy"],
         ["Google Fonts", "Serves the typeface", "policies.google.com/privacy"],
       ],
     },
@@ -68,7 +69,7 @@ const sections = [
     num: "04",
     heading: "Cookies",
     body: [
-      "This site sets no advertising or tracking cookies. Cloudflare may set a strictly necessary cookie to tell a visitor apart from an attack. There is no consent banner because there is nothing to consent to, and I would rather not put one in your way for the sake of appearances.",
+      "This site sets no advertising cookies and sells nothing about you to anybody. It does now use Google Analytics, which sets a _ga cookie to tell one visit from another so I can see which pages people actually read. Cloudflare may set a strictly necessary cookie to tell a visitor apart from an attack. There is no consent banner on the site today. If you would rather not be counted, any content blocker will stop the analytics script, and nothing on the page depends on it working.",
     ],
   },
   {

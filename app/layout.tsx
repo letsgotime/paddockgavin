@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Archivo, Archivo_Black } from "next/font/google"
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { RanchAnalytics } from "@/components/ranch-analytics"
 import { ScrollProgress } from "@/components/scroll-progress"
@@ -208,6 +209,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+/** GA4 measurement id for the PaddockGavin Website stream. Public by design. */
+const GA_ID = "G-87XWZ12M6P"
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -239,6 +243,19 @@ export default function RootLayout({
         {children}
         <Analytics />
         <RanchAnalytics />
+        {/* Google Analytics 4, stream 15736070958.
+            Production only, so a local dev session does not land in the
+            property. afterInteractive keeps it off the critical path: the
+            page paints first, the tag loads second. It sets a _ga cookie,
+            which is why the privacy policy now names it. */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   )
