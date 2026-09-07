@@ -18,7 +18,11 @@ import { STRIPE_API, type CatalogItem } from "./catalog"
  * refusal that read as a broken site.
  */
 const cache = new Map<string, { id: string; at: number }>()
-const TTL = 10 * 60 * 1000
+/* A price id is stable once created, and the amount is checked against the
+   catalogue on every resolve below, so a stale id cannot quietly charge the
+   wrong figure. Ten minutes meant a warm instance still asked Stripe six
+   times an hour per line item for an answer that had not changed. */
+const TTL = 6 * 60 * 60 * 1000
 
 export type Resolved = { id: string } | { error: string }
 

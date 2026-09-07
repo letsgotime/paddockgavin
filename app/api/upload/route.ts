@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client"
 import { bearerFrom, emailFromToken, isStaff } from "@/lib/ranch/neon"
 import { verifySession, sessionSecret, gateEnforced } from "@/lib/ranch/upload-session"
+import { ranchDb } from "@/lib/ranch/ranch-db"
 
 /**
  * Mints short-lived, scoped upload tokens for the public Submit form.
@@ -207,10 +208,38 @@ export async function POST(req: Request) {
         }
       },
 
-      /* Nothing to persist here: the client writes the finished manifest into
-         submissions.details when the form is actually submitted. Files
-         uploaded for an abandoned draft are orphans and get swept separately. */
-      onUploadCompleted: async () => {},
+      /* A row per finished file. The manifest the client posts at submit time
+         is still what binds photographs to an entry, but it only ever names
+         the files of entries that were actually sent. Everything abandoned
+         halfway used to exist in the blob store and nowhere else, which is why
+         orphans were invisible rather than merely untidy. Claiming happens at
+         submit; anything left unclaimed is what a sweeper should look at. */
+      onUploadCompleted: async ({ blob, tokenPayload }) => {
+        const db = ranchDb()
+        if (!db) return
+        let scope: string | null = null
+        let kind: string | null = null
+        let by: string | null = null
+        try {
+          const p = JSON.parse(tokenPayload || "{}") as { scope?: string; kind?: string; by?: string }
+          scope = p.scope ?? null
+          kind = p.kind ?? null
+          by = p.by ?? null
+        } catch {}
+        /* submissions/<type>/<draft>/<kind>/<file> */
+        const draft = blob.pathname.split("/")[2] ?? null
+        try {
+          await db.query(
+            `insert into public.uploads (pathname, url, draft_id, scope, kind, content_type, bytes, uploaded_by)
+             values ($1, $2, $3, $4, $5, $6, $7, $8)
+             on conflict (pathname) do nothing`,
+            [blob.pathname, blob.url, draft, scope, kind, blob.contentType ?? null, null, by],
+          )
+        } catch (err) {
+          /* Never fail an upload the visitor already completed over bookkeeping. */
+          console.error("[upload] could not record the file", err)
+        }
+      },
     })
 
     return NextResponse.json(json)

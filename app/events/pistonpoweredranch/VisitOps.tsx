@@ -20,7 +20,9 @@ const ADDRESS = "179 Enon Church Rd, Unionville, TN 37180"
 const GATE = { lat: 35.63751, lng: -86.59323 }
 const SHOW = "2026-10-10T09:00:00-05:00"
 const ANNOUNCE = "2026-08-26T00:00:00-05:00" // the run up, for the progress bar
-const NWS_FORECAST = "https://api.weather.gov/gridpoints/OHX/59,34/forecast"
+/* Ours, cached for half an hour. See app/api/weather/route.ts for why the
+   visitor's browser no longer talks to the National Weather Service. */
+const FORECAST = "/api/weather"
 
 const MONO = "ui-monospace, SFMono-Regular, Menlo, monospace"
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -83,13 +85,10 @@ export default function VisitOps() {
     if (!near) return
     const ctl = new AbortController()
     const timer = setTimeout(() => ctl.abort(), 6000)
-    fetch(NWS_FORECAST, { signal: ctl.signal, headers: { Accept: "application/geo+json" } })
+    fetch(FORECAST, { signal: ctl.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((j) => {
-        const periods: Period[] = j?.properties?.periods || []
-        const show = periods.find((p) => p.startTime?.slice(0, 10) === "2026-10-10")
-        const pick = show || periods.find((p) => p.name === "Today") || periods[0]
-        if (pick) { setWx(pick); setWxState("ok") } else setWxState("down")
+      .then((j: Period & { state?: string }) => {
+        if (j?.state === "ok") { setWx(j); setWxState("ok") } else setWxState("down")
       })
       .catch(() => setWxState("down"))
       .finally(() => clearTimeout(timer))
