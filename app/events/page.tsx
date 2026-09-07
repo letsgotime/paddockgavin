@@ -47,7 +47,7 @@ const UPCOMING: EventRow[] = [
     state: "confirmed",
     stateLabel: "Confirmed",
     blurb:
-      "Three hundred cars on a working ranch, on open pasture an hour south of Nashville. Spectating is free. A share of every net dollar goes to Community Elementary School.",
+      "Three hundred cars on a working ranch, on open pasture an hour south of Nashville. Podium 1 are bringing a race sim, so you can drive a lap yourself rather than watch one. Spectating is free, and a share of every net dollar goes to Community Elementary School.",
     img: "/images/ranch/ppr-gate.jpg",
     href: "/events/pistonpoweredranch",
     cta: "The event",
@@ -100,6 +100,16 @@ const PAST = [
     img: "/images/donuts-overflow.webp",
     href: "/gallery",
     cta: "The photos",
+  },
+  {
+    key: "denim",
+    title: "Denim \u0026 Diamonds",
+    stateLabel: "Saturday 20 November 2021",
+    blurb:
+      "The first one. Held in November 2021, under GoTime Motorsports, before any of the rest of this existed.",
+    img: "/images/ferrari-red.webp",
+    href: "/events",
+    cta: "Ask me about it",
   },
   {
     key: "private",
