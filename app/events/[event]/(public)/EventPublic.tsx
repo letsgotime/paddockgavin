@@ -144,7 +144,7 @@ function Teaser({ teaser, slug }: { teaser: NonNullable<EventContent["teaser"]>;
         <div className="evTeaser" style={{ background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))", border: "1px solid rgba(255,255,255,.16)", borderTop: "3px solid var(--accent-strong)", boxShadow: "0 16px 38px rgba(0,0,0,.5)", borderRadius: 16, padding: "clamp(20px,3.2vw,34px)" }}>
           <div className="evTeaserFilm">
             {teaser.film ? (
-              <video src={teaser.film} poster={teaser.poster} controls playsInline preload="none"
+              <video src={teaser.film} poster={teaser.poster ? `/_next/image?url=${encodeURIComponent(teaser.poster)}&w=640&q=60` : undefined} controls playsInline preload="none"
                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             ) : teaser.poster ? (
               <Image src={teaser.poster} alt={teaser.posterAlt || ""} fill sizes="360px" style={{ objectFit: "cover" }} />

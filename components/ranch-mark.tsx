@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 /**
  * The venue's mark, wherever its own door is being used.
  *
@@ -39,12 +41,12 @@ export function RanchMark({
         opacity,
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/brand/rj-mark-320.png"
-        alt="Rancho Jaramillo"
+      <Image
+        src={src}
+        alt={alt}
         width={width}
-        height={Math.round((width * 203) / 320)}
+        height={Math.round(width * ratio)}
+        sizes={`${width}px`}
         style={{ width, height: "auto", display: "block" }}
       />
       {label ? (

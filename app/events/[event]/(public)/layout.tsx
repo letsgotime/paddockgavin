@@ -39,6 +39,17 @@ export default async function EventPublicLayout({
 
   return (
     <>
+      {event === "pistonpoweredranch" && (
+        <style>{`
+          /* No floor under the ranch: every ranch page paints its own ground,
+             and the paddock's 199 KB fallback plate was downloaded under it.
+             Store and the field name their own plates later in the document
+             and keep them. The body face resolves to the Archivo this site
+             already serves, so the paddock's second Archivo is never fetched. */
+          :root { --pg-backdrop: none; --pg-backdrop-opacity: 0 }
+          body[class] { --font-sans: Archivo, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif }
+        `}</style>
+      )}
       {fonts.length > 0 && (
         <>
           <link rel="preconnect" href="https://fonts.googleapis.com" />

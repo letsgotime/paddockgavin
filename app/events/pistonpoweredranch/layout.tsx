@@ -1,4 +1,5 @@
 import type React from "react"
+import Image from "next/image"
 import { headers } from "next/headers"
 import type { Metadata } from "next"
 
@@ -109,7 +110,13 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <>
       {ranchDoor ? (
-        <link rel="preload" href="/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <>
+          <link rel="preload" href="/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
+          <style>{`
+            :root { --pg-backdrop: none; --pg-backdrop-opacity: 0 }
+            body[class] { --font-sans: Archivo, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif }
+          `}</style>
+        </>
       ) : null}
       <style>{`
         /* The ranch marks are in the markup on both doors so the two are
@@ -186,12 +193,12 @@ function RanchLockup() {
         pointerEvents: "none",
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src="/brand/rj-mark-320.png"
         alt="Rancho Jaramillo"
         width={168}
         height={107}
+        sizes="168px"
         style={{ height: "auto", width: "clamp(126px,15vw,168px)" }}
       />
       <span
