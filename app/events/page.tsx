@@ -299,6 +299,9 @@ export default function EventsPage() {
               <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 The Piston Powered Ranch
               </Link>
+              <a href="/track-days" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                Track days and autocross
+              </a>
               <a href="#property" className="pg-e0" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.34)", background: "rgba(10,21,35,.32)", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
                 Bring us a property
               </a>

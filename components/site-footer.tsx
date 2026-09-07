@@ -206,6 +206,7 @@ export function SiteFooter() {
             {[
               { href: "/lot-ops", label: "Lot Ops, 2025 to 2026" },
               { href: "/events", label: "Events" },
+              { href: "/track-days", label: "Track days and autocross" },
               { href: "/events/pistonpoweredranch", label: "The Piston Powered Ranch" },
               { href: "/gallery", label: "The gallery" },
             ].map((l) => (
