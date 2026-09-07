@@ -34,6 +34,7 @@ export default function Page() {
         { href: "/exotic-car-broker", label: "Looking for a car?", note: "Exotic car broker" },
         { href: "/intake", label: "Start the intake", note: "Four steps" },
       ]}
+      photo={{ src: "/images/tt/tt-918-veyron.webp", alt: "A Porsche 918 Spyder and a Bugatti Veyron parked nose out, side by side", caption: "Retail takes longer. This is the company the car keeps while it waits." }}
     />
   )
 }

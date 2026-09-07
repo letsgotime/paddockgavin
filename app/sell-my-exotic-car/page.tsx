@@ -34,6 +34,7 @@ export default function Page() {
         { href: "/exotic-car-consignment", label: "Consignment", note: "The retail lane, explained" },
         { href: "/intake", label: "Start the intake", note: "Four steps" },
       ]}
+      photo={{ src: "/images/tt/tt-r8-dusk.webp", alt: "An Audi R8 alone in a car park in the early morning", caption: "The quiet part. Before anybody has seen it, and before a number is on it." }}
     />
   )
 }

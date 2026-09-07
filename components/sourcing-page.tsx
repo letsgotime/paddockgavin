@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -20,6 +21,10 @@ export interface SourcingPageProps {
   nashville: string
   ctaHref?: string
   ctaLabel?: string
+  /* One photograph under the hero. Wide crops read best: these are banner
+     shaped on purpose so they sit between the hero and the steps without
+     pushing the first step below the fold on a phone. */
+  photo?: { src: string; alt: string; caption?: string }
   faqs: Faq[]
   related: { href: string; label: string; note: string }[]
 }
@@ -62,6 +67,21 @@ export function SourcingPage(p: SourcingPageProps) {
           </div>
         </div>
       </div>
+
+      {p.photo && (
+        <div className="pg-stage" style={{ paddingTop: "clamp(14px,2vw,22px)" }}>
+          <figure style={{ margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+            <div className="pg-e1" style={{ position: "relative", aspectRatio: "auto", overflow: "hidden", clipPath: "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)" }}>
+              <Image src={p.photo.src} alt={p.photo.alt} width={2000} height={700} sizes="(max-width: 900px) 100vw, 1080px" style={{ display: "block", width: "100%", height: "auto" }} />
+            </div>
+            {p.photo.caption && (
+              <figcaption style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#848482" }}>
+                {p.photo.caption}
+              </figcaption>
+            )}
+          </figure>
+        </div>
+      )}
 
       <div className="pg-stage">
         <Section id="how" eyebrow="How it works" tone="#F2C94C" title="Three steps, and I am on every one of them">
