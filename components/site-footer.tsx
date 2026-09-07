@@ -240,7 +240,7 @@ export function SiteFooter() {
         <div className="pg-e2" style={{ clipPath: "polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)", padding: "clamp(20px,3vw,30px)", marginBottom: "clamp(28px,3.5vw,44px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 28px" }}>
           <div style={{ flex: "1 1 320px", minWidth: 0 }}>
             <p style={{ margin: "0 0 6px", fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#F2C94C" }}>Looking for a car, or selling one?</p>
-            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#FFFFFF" }}>Tell me the car. I am the one reading it.</p>
+            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#FFFFFF" }}>Tell me what you’re after and I’ll go looking.</p>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "12px 22px" }}>
             <Link href="/intake" className="pg-tap" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Sell a car</Link>

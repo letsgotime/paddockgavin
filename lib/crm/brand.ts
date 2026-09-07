@@ -44,7 +44,7 @@ export type Brand = {
 /** Ours. The hub and every CRM surface wear this, always. */
 export const PADDOCKGAVIN: Brand = {
   name: "PaddockGavin",
-  logo: "/images/pg-mark.png",
+  logo: "/images/mark-on-dark.png",
   accent: "#F2C94C",
   accentName: "Paddock Amber",
   second: "#00D2BE",

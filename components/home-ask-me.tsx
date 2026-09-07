@@ -26,7 +26,7 @@ export function HomeAskMe() {
   return (
     <Section id="contact" eyebrow="Questions" tone="#00D2BE" title="Ask me anything about any of it">
       <p style={{ margin: 0 }}>
-        A question for the camera, a date you want in the diary, a car you want found, or a brand deal. One inbox for all of it, and I&rsquo;m the one reading it.
+        A question for the camera, a date you want in the diary, a car you want found, or a brand deal. One inbox for all of it, and it comes straight to me.
       </p>
       <div className="pg-e1" style={{ display: "flex", flexDirection: "column", gap: 12, padding: "clamp(16px,2.4vw,22px)", clipPath: "polygon(0 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%)" }}>
         <label htmlFor="pg-msg" style={{ fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".2em", textTransform: "uppercase", color: "#8B93A7" }}>

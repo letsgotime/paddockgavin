@@ -20,7 +20,7 @@ export default function Page() {
       lead="Concierge brokering and vehicle sourcing. I shop with a dealer's licence, so every auction is open, and the sale completes through a licensed dealer."
       backdrop="/images/f458-front.webp"
       steps={[
-        { title: "The spec and the budget", body: "Year, model, spec, colour, miles, budget. Send what you know. I am the one reading it." },
+        { title: "The spec and the budget", body: "Year, model, spec, colour, miles, budget. Send what you know and I’ll fill in the rest." },
         { title: "The search", body: "Retail listings, the trade, and the auctions a dealer's licence opens. Most of the 78 cars I have found for people turned up before they were listed." },
         { title: "The offer, in writing", body: "Nothing is an offer until the selling dealer puts it in writing. The paperwork, the financing, the title, the funds and the delivery run on that dealer's licence and under its terms." },
       ]}

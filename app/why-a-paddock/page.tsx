@@ -285,7 +285,7 @@ export default function WhyAPaddockPage() {
               fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF",
             }}
           >
-            Personal garage maintenance in Lebanon, Tennessee
+            How I keep a garage
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.62, color: "#C4CBD6", maxWidth: "60ch" }}>
             People think a garage is where you work on the car. Mine is mostly where I put things away.
