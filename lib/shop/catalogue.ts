@@ -180,9 +180,24 @@ export function bySlug(slug: string): Product | undefined {
   return PRODUCTS.find((p) => p.slug === slug)
 }
 
-/** A product is buyable only when a real price and a real link both exist. */
+/**
+ * A variant is buyable once it has a real price.
+ *
+ * It used to need a Stripe payment link as well, one per size, which is why
+ * everything sat at Soon: nobody was going to hand-make thirty links. Checkout
+ * now runs through /api/stripe/checkout, which prices the line from this file
+ * on the server, so a price is the only thing a variant needs.
+ *
+ * buyUrl stays on the type. A link is still the faster route for a one off,
+ * and if one is set the product page uses it in preference.
+ */
 export function buyable(v: Variant): boolean {
-  return !!v.buyUrl && typeof v.cents === "number" && v.cents > 0
+  return typeof v.cents === "number" && v.cents > 0
+}
+
+/** The variant a buyer picked, by its label, or null. */
+export function variantOf(p: Product, label: string): Variant | null {
+  return p.variants.find((v) => v.label === label) ?? null
 }
 
 export function anyBuyable(p: Product): boolean {

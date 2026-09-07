@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ShopBuy } from "@/components/shop-buy"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PRODUCTS, BRANDS, bySlug, priceRange, buyable } from "@/lib/shop/catalogue"
@@ -134,44 +135,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               {/* One button per variant rather than a select plus a button. Print
                   on demand means every size is its own payment link anyway, and
                   a disabled control that says why beats a live one that fails. */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 9, margin: "18px 0 0" }}>
-                {p.variants.map((v) => {
-                  const ok = buyable(v)
-                  return ok ? (
-                    <a
-                      key={v.label}
-                      href={v.buyUrl}
-                      rel="noopener"
-                      style={{
-                        font: `800 14px/1 ${ARCHIVO}`,
-                        letterSpacing: ".04em",
-                        color: "#04211d",
-                        background: b.accent,
-                        padding: "13px 20px",
-                        borderRadius: 10,
-                        textDecoration: "none",
-                      }}
-                    >
-                      {v.label}
-                    </a>
-                  ) : (
-                    <span
-                      key={v.label}
-                      aria-disabled="true"
-                      style={{
-                        font: `700 14px/1 ${ARCHIVO}`,
-                        letterSpacing: ".04em",
-                        color: "#6b7684",
-                        border: "1px solid rgba(255,255,255,.14)",
-                        padding: "13px 20px",
-                        borderRadius: 10,
-                      }}
-                    >
-                      {v.label}
-                    </span>
-                  )
-                })}
-              </div>
+              <ShopBuy product={p} accent={b.accent} />
 
               {!live && (
                 <p style={{ margin: "13px 0 0", font: `400 14px/1.6 ${ARCHIVO}`, color: "#7f8a99" }}>
