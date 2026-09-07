@@ -155,3 +155,121 @@ export async function getWallPosts(limit = 12): Promise<WallItem[]> {
     return []
   }
 }
+
+/* ---------------------------------------------------------------------------
+   The gallery, fetched on the server.
+
+   The gallery used to do all of this in the browser: three fetches, the tag
+   routing, the aspect maths. That cost the same two things the wall used to
+   cost. Search engines saw an empty page, because the markup contained no
+   photographs and no captions, and a shared link previewed as nothing. The
+   logic is unchanged, it just runs before the HTML is sent.
+
+   Feeds are read in order and merged. Behold filters a feed by hashtag, so
+   configuring FEED_1/2/3 as three tagged streams is what turns an Instagram
+   account into this site's picture library, and the routing below is what
+   decides where each post lands once it arrives.
+--------------------------------------------------------------------------- */
+
+/** Hashtag to chapter. A post with none of these lands in "the-room". */
+export const GALLERY_TAG_MAP: Record<string, string> = {
+  donuts: "the-room", bts: "nobody-films",
+  nobodyfilms: "nobody-films", stuffnobodyfilms: "nobody-films", trunkrelease: "nobody-films",
+  detail: "nobody-films", interior: "nobody-films",
+  whatidputonit: "what-id-put-on-it", glossgame: "what-id-put-on-it", theglossgame: "what-id-put-on-it",
+  detailing: "what-id-put-on-it", paintcorrection: "what-id-put-on-it", ceramic: "what-id-put-on-it",
+  theroom: "the-room", monthlyshowcase: "the-room", tiresandtimepieces: "the-room",
+  /* legacy inbound slug, kept so existing links keep resolving */
+  donutswithdupont: "the-room",
+  tirestimepieces: "the-room", carsandcoffee: "the-room", showroom: "the-room", event: "the-room",
+}
+
+export function chapterFromCaption(caption: string): string {
+  const tags = (caption || "").toLowerCase().replace(/\s/g, "").match(/#([a-z0-9]+)/g) || []
+  for (const t of tags) {
+    const key = t.replace("#", "")
+    if (GALLERY_TAG_MAP[key]) return GALLERY_TAG_MAP[key]
+  }
+  return "the-room"
+}
+
+export interface GalleryItem {
+  key: string
+  src: string
+  large: string
+  caption: string
+  isVideo: boolean
+  chapter: string
+  permalink: string
+  aspect: string
+  span: string
+}
+
+export interface FeedProfile {
+  username?: string
+  followersCount?: number
+}
+
+/** Every configured feed, in order. Empty when none are set. */
+function feedIds(): string[] {
+  return [
+    process.env.BEHOLD_FEED_ID,
+    process.env.NEXT_PUBLIC_BEHOLD_FEED_1,
+    process.env.NEXT_PUBLIC_BEHOLD_FEED_2,
+    process.env.NEXT_PUBLIC_BEHOLD_FEED_3,
+  ]
+    .map((v) => (v || "").trim())
+    .filter(Boolean)
+    .filter((v, i, a) => a.indexOf(v) === i)
+}
+
+/**
+ * Returns an empty list when nothing is configured or Behold does not answer,
+ * and the gallery falls back to its seed tiles, which is what ships today.
+ */
+export async function getGalleryItems(perFeed = 18): Promise<{ items: GalleryItem[]; profile: FeedProfile | null }> {
+  const ids = feedIds()
+  if (!ids.length) return { items: [], profile: null }
+
+  const results = await Promise.all(
+    ids.map((id) =>
+      fetch(`https://feeds.behold.so/${id}`, { next: { revalidate: REVALIDATE_SECONDS } })
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null)
+    )
+  )
+
+  const items: GalleryItem[] = []
+  let profile: FeedProfile | null = null
+  const seen = new Set<string>()
+
+  for (const data of results) {
+    if (!data) continue
+    if (data.profile && !profile) profile = data.profile as FeedProfile
+    const posts: BeholdPost[] = Array.isArray(data) ? data : data.posts || []
+    for (const p of posts.slice(0, perFeed)) {
+      /* The same post can appear in two tagged feeds. Keep the first. */
+      if (seen.has(p.id)) continue
+      seen.add(p.id)
+
+      const sizes = p.sizes || {}
+      const med = (sizes.medium || sizes.large || sizes.full || {}) as { mediaUrl?: string; width?: number; height?: number }
+      const w = med.width || 1080
+      const h = med.height || 1350
+      const src = med.mediaUrl || p.thumbnailUrl || p.mediaUrl || ""
+      if (!src) continue
+      items.push({
+        key: "bh-" + p.id,
+        src,
+        large: (sizes.full as { mediaUrl?: string } | undefined)?.mediaUrl || src,
+        caption: firstLine(p.prunedCaption || p.caption || ""),
+        isVideo: (p.mediaType || "").toLowerCase().includes("video"),
+        chapter: chapterFromCaption(p.caption || ""),
+        permalink: p.permalink || "",
+        aspect: w >= h * 1.3 ? "16/9" : w >= h * 0.85 ? "1/1" : "4/5",
+        span: "auto",
+      })
+    }
+  }
+  return { items, profile }
+}
