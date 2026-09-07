@@ -172,17 +172,22 @@ function renderBlock(b: Block): string {
     }
 
     case "button":
+      /* Outlook gets the VML alone. Everyone else gets a cell that carries
+         the colour and the padding, with the link filling it: a phone rule
+         used to put width:100% and padding on the link itself, and the two
+         added up to a button forty pixels wider than the sheet. */
       return `<tr><td class="btn" style="padding:6px 0 28px">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" bgcolor="${RED_FILL}" style="background:${RED_FILL}">
         <!--[if mso]>
         <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${esc(b.href)}" style="height:46px;v-text-anchor:middle;width:250px" arcsize="0%" strokecolor="${RED_FILL}" fillcolor="${RED_FILL}">
           <w:anchorlock/><center style="color:#FFFFFF;font-family:${LABEL};font-size:12px;font-weight:bold;letter-spacing:1.6px">${esc(b.label.toUpperCase())}</center>
         </v:roundrect>
         <![endif]-->
         <!--[if !mso]><!-- -->
-        <a href="${esc(b.href)}" style="display:inline-block;padding:15px 34px;font-family:${LABEL};font-size:12px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-decoration:none;background:${RED_FILL}">${esc(b.label)}</a>
+        <table role="presentation" class="btnT" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" class="btnC" bgcolor="${RED_FILL}" style="background:${RED_FILL};padding:15px 34px">
+        <a href="${esc(b.href)}" style="display:block;font-family:${LABEL};font-size:12px;font-weight:bold;letter-spacing:.16em;text-transform:uppercase;color:#FFFFFF;text-decoration:none;background:${RED_FILL}">${esc(b.label)}</a>
+        </td></tr></table>
         <!--<![endif]-->
-        </td></tr></table></td></tr>`
+        </td></tr>`
   }
 }
 
@@ -210,7 +215,9 @@ export function renderRanchEmail(e: RanchEmail): string {
        gets the roomier measure and the larger targets. A thumb is about 44px
        across; anything under that is a miss. */
     .p{font-size:17px !important;line-height:1.62 !important}
-    .btn a{display:block !important;width:100% !important;padding:17px 20px !important;font-size:17px !important}
+    .btnT{width:100% !important}
+    .btnC{padding:17px 16px !important}
+    .btn a{font-size:15px !important;letter-spacing:.14em !important}
     .strip td{display:block !important;width:100% !important;padding:0 0 8px 0 !important}
     .strip img{width:100% !important;height:auto !important}
   }
@@ -224,6 +231,8 @@ export function renderRanchEmail(e: RanchEmail): string {
     .mute{color:${MUTE} !important}
   }
   a{color:${RED}}
+  [data-ogsc] .btn a{color:#FFFFFF !important}
+  [data-ogsb] .btnC{background:${RED_FILL} !important}
 </style>
 </head>
 <body class="ground" bgcolor="${GROUND_SOLID}" background="${GROUND_IMG}" style="margin:0;padding:0;background:${GROUND_SOLID} url('${GROUND_IMG}') top center / 100% auto no-repeat;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
