@@ -69,7 +69,7 @@ export const PRODUCTS: Product[] = [
     backdrop: "/images/ranch/ppr-gate.jpg",
     madeToOrder: true,
     variants: [
-      { label: "S" }, { label: "M" }, { label: "L" }, { label: "XL" }, { label: "2XL" }, { label: "3XL" },
+      { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },
     ],
   },
   {
@@ -85,7 +85,7 @@ export const PRODUCTS: Product[] = [
     backdrop: "/images/ranch/ppr-light.jpg",
     madeToOrder: true,
     variants: [
-      { label: "S" }, { label: "M" }, { label: "L" }, { label: "XL" }, { label: "2XL" }, { label: "3XL" },
+      { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },
     ],
   },
   {
@@ -100,7 +100,7 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-barn.webp",
     madeToOrder: true,
-    variants: [{ label: "One size" }],
+    variants: [{ label: "One size", cents: 2499 }],
   },
   {
     slug: "pg-trucker",
@@ -114,7 +114,7 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-drive.webp",
     madeToOrder: true,
-    variants: [{ label: "One size" }],
+    variants: [{ label: "One size", cents: 1999 }],
   },
   {
     slug: "ranch-mug",
@@ -128,7 +128,37 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-coop.webp",
     madeToOrder: true,
-    variants: [{ label: "15oz" }],
+    variants: [{ label: "15oz", cents: 2499 }],
+  },
+  {
+    slug: "ppr-parasol",
+    name: "The Field Parasol",
+    kind: "Other",
+    brand: "ranch",
+    blurb: "Shade you can carry, for a field with none of its own.",
+    body: [
+      "Open pasture has no trees in it. That is what makes it a good field for three hundred cars and a bad one for standing in from nine until three, and it is the single most common thing people wish they had brought.",
+      "Wooden handle, wide enough to cover two people leaning on the same fence rail. It is not a golf umbrella and it is not for rain.",
+    ],
+    variants: [
+      { label: "One size", cents: 3499 },
+    ],
+    madeToOrder: true,
+  },
+  {
+    slug: "ppr-bottle",
+    name: "The Ranch Bottle",
+    kind: "Other",
+    brand: "ranch",
+    blurb: "Insulated steel, filled at the gate, still cold at three.",
+    body: [
+      "Six hours on grass in the sun, and the nearest tap is wherever we put it. An insulated bottle solves that better than anything else you can carry, and it is the other thing people ask for.",
+      "Vacuum walled steel, so what you put in it in the morning is the temperature it was in the morning. It fits a car door bin, which the mug does not.",
+    ],
+    variants: [
+      { label: "One size", cents: 2499 },
+    ],
+    madeToOrder: true,
   },
   {
     slug: "ranch-backpack",
@@ -142,7 +172,7 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-bales.webp",
     madeToOrder: true,
-    variants: [{ label: "One size" }],
+    variants: [{ label: "One size", cents: 4999 }],
   },
 ]
 
