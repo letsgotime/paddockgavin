@@ -55,7 +55,7 @@ export default async function Entries({ params }: { params: Promise<{ event: str
 
   return (
     <>
-    <PageBackdrop src="/images/ranch/ppr-light.jpg" pos="center 45%" opacity={0.18} />
+    <PageBackdrop src="/images/ranch/ppr-light.webp" pos="center 45%" opacity={0.18} />
     <SiteNav active="events" />
     <div aria-hidden="true" style={{ height: 74 }} />
     <main

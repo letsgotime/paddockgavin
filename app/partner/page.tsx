@@ -66,7 +66,7 @@ export default async function PartnerPage() {
         WebkitFontSmoothing: "antialiased",
       }}
     >
-      <PageBackdrop src="/images/creator-hero.jpg" pos="center 62%" opacity={0.2} />
+      <PageBackdrop src="/images/creator-hero.webp" pos="center 62%" opacity={0.2} />
       {/* Hero */}
       <header
         style={{

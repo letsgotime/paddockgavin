@@ -122,7 +122,7 @@ export default async function HomePage() {
         <AlsoHere />
       </Stage>
 
-      <PhotoBreak src="/images/creator-hero.jpg" pos="center 62%" caption="Aston Martin at golden hour" credit="Rickey Bohr" />
+      <PhotoBreak src="/images/creator-hero.webp" pos="center 62%" caption="Aston Martin at golden hour" credit="Rickey Bohr" />
 
       <Stage sec="contact">
         <HomeAskMe />

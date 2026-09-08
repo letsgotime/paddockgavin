@@ -12,7 +12,7 @@ interface LightboxState { index: number }
 const SEED: WallItem[] = [
   { key: "seed-0", src: "/images/918-pipes.webp",     large: "/images/918-pipes.webp",     caption: "Holy Trinity storage", isVideo: false, permalink: "", wide: true },
   { key: "seed-1", src: "/images/cullinan-doors.webp", large: "/images/cullinan-doors.webp", caption: "Black Badge Mansory Cullinan out of the warehouse at a local cars and coffee", isVideo: false, permalink: "", wide: false },
-  { key: "seed-2", src: "/images/carrera-traffic.jpg", large: "/images/carrera-traffic.jpg", caption: "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse", isVideo: false, permalink: "", wide: false },
+  { key: "seed-2", src: "/images/carrera-traffic.webp", large: "/images/carrera-traffic.webp", caption: "964 Carrera RS, E36 M3 Lightweight, 1 of 1 Dodge Viper on their way back to the warehouse", isVideo: false, permalink: "", wide: false },
   { key: "seed-3", src: "/images/downpipe.webp",      large: "/images/downpipe.webp",      caption: "992 GT3 Catback Exhaust inspection, looking for cats lol", isVideo: false, permalink: "", wide: true },
   { key: "seed-4", src: "/images/918-p1.webp",        large: "/images/918-p1.webp",        caption: "Holy Trinity Charging Center", isVideo: false, permalink: "", wide: false },
 ]

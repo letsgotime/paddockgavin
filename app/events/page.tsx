@@ -48,7 +48,7 @@ const UPCOMING: EventRow[] = [
     stateLabel: "Confirmed",
     blurb:
       "Three hundred cars on a working ranch, on open pasture an hour south of Nashville. Podium 1 are bringing a race sim, so you can drive a lap yourself rather than watch one. Spectating is free, and a share of every net dollar goes to Community Elementary School.",
-    img: "/images/ranch/ppr-gate.jpg",
+    img: "/images/ranch/ppr-gate.webp",
     href: "/events/pistonpoweredranch",
     cta: "The event",
     tone: "#F2C94C",
@@ -83,7 +83,7 @@ const UPCOMING: EventRow[] = [
     state: "scoping",
     stateLabel: "In scoping",
     blurb: "An orchard we are walking for a future field. In scoping. Nothing booked yet.",
-    img: "/images/carrera-traffic.jpg",
+    img: "/images/carrera-traffic.webp",
     href: "/encantoblossomorchard",
     cta: "The property",
     tone: "#00D2BE",
@@ -139,7 +139,7 @@ const VENUES = [
     name: "Rancho Jaramillo",
     place: "Unionville, TN",
     spec: "408 acres with 12 in use",
-    img: "/images/ranch/ppr-rail.jpg",
+    img: "/images/ranch/ppr-rail.webp",
     href: "/events/pistonpoweredranch",
     live: true,
   },
@@ -147,7 +147,7 @@ const VENUES = [
     name: "Encanto Blossom Orchard",
     place: "Shelbyville, TN",
     spec: "In scoping",
-    img: "/images/carrera-traffic.jpg",
+    img: "/images/carrera-traffic.webp",
     href: "/encantoblossomorchard",
     live: false,
   },
@@ -270,7 +270,7 @@ export default function EventsPage() {
         }
       `}</style>
 
-      <PageBackdrop src="/images/ranch/ppr-field.jpg" />
+      <PageBackdrop src="/images/ranch/ppr-field.webp" />
 
       {/* Ticker */}
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)" }}>

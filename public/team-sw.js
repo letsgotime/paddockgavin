@@ -34,8 +34,8 @@ var API_HOST = "apirest.c-10.us-east-1.aws.neon.tech";
    without live data anyway. */
 var FILES = [
   "/team.webmanifest",
-  "/brand/rj-icon-192.png",
-  "/brand/rj-icon-512.png",
+  "/brand/rj-icon-192.webp",
+  "/brand/rj-icon-512.webp",
   "/brand/pg-mark.png",
 ];
 

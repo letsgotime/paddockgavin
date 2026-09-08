@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
       "The gate is the first thing anyone sees of this place: two cedar posts, a hanging sign, and a track running off toward the field. It is on the back, full width, in one colour.",
       "Heavyweight cotton, cut straight rather than fitted, because a car show in October is not the day to be wearing something clingy.",
     ],
-    backdrop: "/images/ranch/ppr-gate.jpg",
+    backdrop: "/images/ranch/ppr-gate.webp",
     madeToOrder: true,
     variants: [
       { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },
@@ -82,7 +82,7 @@ export const PRODUCTS: Product[] = [
       "Saturday 10 October 2026, Rancho Jaramillo, Unionville Tennessee. Set in the ranch's own type, small on the chest, nothing on the back.",
       "The kind of shirt that means something to the people who were there and nothing to anybody else, which is the point.",
     ],
-    backdrop: "/images/ranch/ppr-light.jpg",
+    backdrop: "/images/ranch/ppr-light.webp",
     madeToOrder: true,
     variants: [
       { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },

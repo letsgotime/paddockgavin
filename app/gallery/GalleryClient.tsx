@@ -104,7 +104,7 @@ const SEED_IMAGES: Record<string, string[]> = {
   ],
   "what-id-put-on-it": [
     "/images/918-grey.webp", "/images/ferrari-red-sq.webp", "/images/g993-out-sq.webp",
-    "/images/ferrari-296.webp", "/images/carrera-traffic.jpg",
+    "/images/ferrari-296.webp", "/images/carrera-traffic.webp",
   ],
   "the-room": [
     "/images/donuts-floor.webp", "/images/ferrari-upperdeck-sq.webp", "/images/g993-ramp-sq.webp",
