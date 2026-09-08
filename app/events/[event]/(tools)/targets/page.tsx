@@ -1,7 +1,7 @@
 "use client"
 
 import { use, useCallback, useEffect, useRef, useState } from "react"
-import { db } from "@/lib/crm/client"
+import { db, accessToken } from "@/lib/crm/client"
 
 /**
  * Targets, ported into the CRM.
@@ -39,6 +39,7 @@ type Candidate = {
   website: string | null; sort: number; created_by: string | null; created_at: string
 }
 type Save = "ready" | "dirty" | "saving" | "saved" | "error"
+type LogRow = { kind: string; body: string; by_user: string | null; created_at: string }
 
 export default function Targets({ params }: { params: Promise<{ event: string }> }) {
   const { event } = use(params)
@@ -49,6 +50,46 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
   const [open, setOpen] = useState<number | null>(null)
   const [save, setSave] = useState<Save>("ready")
   const [why, setWhy] = useState("")
+
+  /* The outreach half. Targets could always hold a name; it could not start a
+     conversation with one, so nobody could tell from the board whether an
+     approach had gone out. */
+  const [log, setLog] = useState<Record<string, LogRow[]>>({})
+  const [busy, setBusy] = useState<string | null>(null)
+  const [reply, setReply] = useState<Record<string, string>>({})
+
+  const call = useCallback(async (path: string, init?: RequestInit) => {
+    const t = await accessToken()
+    if (!t) return null
+    const r = await fetch(path, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${t}`, "Content-Type": "application/json" } })
+    return { ok: r.ok, body: await r.json().catch(() => ({})) as Record<string, unknown> }
+  }, [])
+
+  const loadLog = useCallback(async (email: string) => {
+    if (!email) return
+    const r = await call(`/api/outreach?email=${encodeURIComponent(email)}`)
+    if (r?.ok) setLog((m) => ({ ...m, [email]: (r.body.log as LogRow[]) || [] }))
+  }, [call])
+
+  const sendApproach = useCallback(async (x: Candidate) => {
+    if (!x.contact_email) return
+    setBusy(x.id); setWhy("")
+    const r = await call("/api/outreach", { method: "POST", body: JSON.stringify({ id: x.id, kind: "approach" }) })
+    setBusy(null)
+    if (!r?.ok) { setSave("error"); setWhy(String(r?.body?.detail || r?.body?.error || "Could not send")); return }
+    setSave("saved"); await loadLog(x.contact_email)
+  }, [call, loadLog])
+
+  const logReply = useCallback(async (x: Candidate) => {
+    const text = (reply[x.id] || "").trim()
+    if (!text) return
+    setBusy(x.id)
+    const r = await call("/api/outreach", { method: "POST", body: JSON.stringify({ id: x.id, kind: "reply", body: text }) })
+    setBusy(null)
+    if (!r?.ok) { setSave("error"); setWhy(String(r?.body?.error || "Could not log")); return }
+    setReply((m) => ({ ...m, [x.id]: "" }))
+    if (x.contact_email) await loadLog(x.contact_email)
+  }, [call, loadLog, reply])
 
   /* One promise chain per row, so two quick edits cannot land out of order,
      and zero returned rows counts as a failure, because that is exactly what
@@ -267,11 +308,52 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
                 <input className="tgIn" value={x.owner ?? ""} placeholder="Whose contact is it" onChange={(e) => edit(x.id, "owner", e.target.value)} />
               </div>
               <textarea className="tgIn" style={{ marginTop: 8, minHeight: 44 }} value={x.detail ?? ""} placeholder="What we know, and what the ask is" onChange={(e) => edit(x.id, "detail", e.target.value)} />
-              {x.created_by ? (
-                <div style={{ marginTop: 7, fontFamily: MONO, fontSize: 10, color: "#7f8a99" }}>
-                  Added by {names[x.created_by.toLowerCase()] ?? x.created_by.split("@")[0]}
-                </div>
+              <div style={{ marginTop: 9, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                <button
+                  onClick={() => sendApproach(x)}
+                  disabled={!x.contact_email || busy === x.id}
+                  title={x.contact_email ? "Send the approach from the house template" : "Needs an email address first"}
+                  style={{ font: `700 12px/1 ${ARCHIVO}`, letterSpacing: ".06em", textTransform: "uppercase", cursor: x.contact_email ? "pointer" : "not-allowed",
+                    color: x.contact_email ? "#0A1523" : "#7f8a99", background: x.contact_email ? "#F2C94C" : "rgba(255,255,255,.06)",
+                    border: "1px solid rgba(255,255,255,.11)", borderRadius: 999, padding: "9px 15px", minHeight: 36, opacity: busy === x.id ? .6 : 1 }}>
+                  {busy === x.id ? "Sending" : "Send approach"}
+                </button>
+                <button
+                  onClick={() => x.contact_email && loadLog(x.contact_email)}
+                  disabled={!x.contact_email}
+                  style={{ font: `700 12px/1 ${ARCHIVO}`, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", color: "#dbe2ea",
+                    background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.11)", borderRadius: 999, padding: "9px 15px", minHeight: 36 }}>
+                  History
+                </button>
+                {x.created_by ? (
+                  <span style={{ fontFamily: MONO, fontSize: 10, color: "#7f8a99" }}>
+                    Added by {names[x.created_by.toLowerCase()] ?? x.created_by.split("@")[0]}
+                  </span>
+                ) : null}
+              </div>
+
+              {x.contact_email && log[x.contact_email]?.length ? (
+                <ul style={{ listStyle: "none", margin: "9px 0 0", padding: 0, display: "grid", gap: 6 }}>
+                  {log[x.contact_email].map((e, i) => (
+                    <li key={i} style={{ fontSize: 12.5, lineHeight: 1.5, color: "#a9b4c2", borderLeft: `2px solid ${e.kind === "reply" ? "#00D2BE" : e.kind === "send_failed" ? "#FF1A21" : "#F2C94C"}`, paddingLeft: 9 }}>
+                      <b style={{ color: "#dbe2ea", textTransform: "uppercase", fontFamily: MONO, fontSize: 9.5, letterSpacing: ".12em" }}>{e.kind}</b>
+                      {" "}{new Date(e.created_at).toLocaleDateString("en-US", { day: "numeric", month: "short" })}
+                      <span style={{ display: "block" }}>{e.body}</span>
+                    </li>
+                  ))}
+                </ul>
               ) : null}
+
+              <div style={{ display: "flex", gap: 7, marginTop: 8 }}>
+                <input className="tgIn" value={reply[x.id] ?? ""} placeholder="Log what they said back"
+                  onChange={(e) => setReply((m) => ({ ...m, [x.id]: e.target.value }))}
+                  onKeyDown={(e) => { if (e.key === "Enter") logReply(x) }} />
+                <button onClick={() => logReply(x)} disabled={!(reply[x.id] || "").trim()}
+                  style={{ font: `700 12px/1 ${ARCHIVO}`, cursor: "pointer", color: "#dbe2ea", background: "rgba(255,255,255,.06)",
+                    border: "1px solid rgba(255,255,255,.11)", borderRadius: 9, padding: "0 14px", minHeight: 36, whiteSpace: "nowrap" }}>
+                  Log
+                </button>
+              </div>
             </div>
           )) : <p style={{ marginTop: 12, fontSize: 14, color: "#a9b4c2" }}>No names against this yet. If you know somebody, put them in.</p>}
 
