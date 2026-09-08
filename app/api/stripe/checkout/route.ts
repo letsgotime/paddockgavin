@@ -177,6 +177,24 @@ async function shopCheckout(req: Request, b: Body) {
     return NextResponse.json({ error: "not_configured", detail: "STRIPE_SECRET_KEY is not set on this deployment." }, { status: 503 })
   }
 
+  /* A preview must never open a live session.
+     A preview deployment carrying the live key will happily create real
+     checkout sessions against the real account, which is exactly what
+     happened the first time this was tested: a cs_live session from a
+     branch build. Nothing was charged, because nobody typed a card, but
+     the account should not be reachable from a URL that exists to be
+     experimented with. Production is the only place a live key runs. */
+  const live = key.startsWith("sk_live_")
+  if (live && process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production") {
+    return NextResponse.json(
+      {
+        error: "live_key_off_production",
+        detail: `This is a ${process.env.VERCEL_ENV} deployment holding a live Stripe key. Set a test key on this environment.`,
+      },
+      { status: 503 },
+    )
+  }
+
   const origin = new URL(req.url).origin
   const label = product.variants.length > 1 ? `${product.name}, ${variant.label}` : product.name
 
