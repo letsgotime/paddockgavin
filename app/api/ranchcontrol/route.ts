@@ -13,8 +13,19 @@ export const dynamic = "force-dynamic"
 const COOKIE = "pg_rc"
 const COOKIE_VALUE = "ok"
 
+/* Every response here carries no-store: several people poll this every ten
+   seconds expecting each other's edits, and Vercel's platform default of a
+   60 second shared cache on a GET API route would mean up to five stale
+   polls between two real reads, invisible until somebody asks why the
+   number on their screen is not the number somebody else just typed. */
+function json(body: unknown, init?: ResponseInit) {
+  const res = NextResponse.json(body, init)
+  res.headers.set("Cache-Control", "no-store")
+  return res
+}
+
 function locked() {
-  return NextResponse.json({ error: "locked" }, { status: 401 })
+  return json({ error: "locked" }, { status: 401 })
 }
 
 function authed(req: NextRequest): boolean {
@@ -25,10 +36,10 @@ export async function GET(req: NextRequest) {
   if (!authed(req)) return locked()
   try {
     const state = await getFullState()
-    return NextResponse.json(state)
+    return json(state)
   } catch (err) {
     console.error("[ranchcontrol] could not load state", err)
-    return NextResponse.json({ error: "no_database" }, { status: 503 })
+    return json({ error: "no_database" }, { status: 503 })
   }
 }
 
@@ -60,45 +71,45 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json()
   } catch {
-    return NextResponse.json({ error: "bad_json" }, { status: 400 })
+    return json({ error: "bad_json" }, { status: 400 })
   }
 
   const who = typeof body.who === "string" ? body.who.trim().slice(0, 60) : ""
-  if (!who) return NextResponse.json({ error: "no_name" }, { status: 400 })
+  if (!who) return json({ error: "no_name" }, { status: 400 })
 
   try {
     if (body.type === "dial") {
       const k = typeof body.k === "string" ? body.k : ""
       const v = Number(body.v)
-      if (!k || !Number.isFinite(v)) return NextResponse.json({ error: "bad_body" }, { status: 400 })
+      if (!k || !Number.isFinite(v)) return json({ error: "bad_body" }, { status: 400 })
       await writeDial(k, v, who)
     } else if (body.type === "sheet") {
       const k = typeof body.k === "string" ? body.k : ""
       const f = body.f === "rate" || body.f === "qty" ? body.f : null
-      if (!k || !f) return NextResponse.json({ error: "bad_body" }, { status: 400 })
+      if (!k || !f) return json({ error: "bad_body" }, { status: 400 })
       const v = body.v === null ? null : Number(body.v)
-      if (v !== null && !Number.isFinite(v)) return NextResponse.json({ error: "bad_body" }, { status: 400 })
+      if (v !== null && !Number.isFinite(v)) return json({ error: "bad_body" }, { status: 400 })
       await writeSheetField(k, f, v, who)
     } else if (body.type === "sponsor") {
       const id = typeof body.id === "string" ? body.id : ""
-      if (!id || typeof body.body !== "object" || body.body === null) return NextResponse.json({ error: "bad_body" }, { status: 400 })
+      if (!id || typeof body.body !== "object" || body.body === null) return json({ error: "bad_body" }, { status: 400 })
       await writeSponsor(id, body.body as Record<string, unknown>, who)
     } else {
-      return NextResponse.json({ error: "bad_type" }, { status: 400 })
+      return json({ error: "bad_type" }, { status: 400 })
     }
   } catch (err) {
     if (err instanceof Error && err.message === "bad_key") {
-      return NextResponse.json({ error: "bad_key" }, { status: 400 })
+      return json({ error: "bad_key" }, { status: 400 })
     }
     console.error("[ranchcontrol] write failed", err)
-    return NextResponse.json({ error: "write_failed" }, { status: 500 })
+    return json({ error: "write_failed" }, { status: 500 })
   }
 
   try {
     const state = await getFullState()
-    return NextResponse.json(state)
+    return json(state)
   } catch (err) {
     console.error("[ranchcontrol] could not reload state after write", err)
-    return NextResponse.json({ error: "no_database" }, { status: 503 })
+    return json({ error: "no_database" }, { status: 503 })
   }
 }
