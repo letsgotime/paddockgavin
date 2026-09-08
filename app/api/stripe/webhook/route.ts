@@ -138,19 +138,39 @@ async function mail(payload: Record<string, unknown>, tag: string): Promise<bool
   }
 }
 
+/**
+ * Every signing secret this deployment will accept.
+ *
+ * One endpoint, one secret, and the account has more than one endpoint: the
+ * ranch domain and the PaddockGavin domain are separate registrations in
+ * Stripe even though the same function answers both, and each has its own
+ * secret. Verifying against a single one means every delivery to the other
+ * fails, which Stripe then retries for days.
+ *
+ * So STRIPE_WEBHOOK_SECRET takes a comma separated list. One value behaves
+ * exactly as before.
+ */
+function secrets(): string[] {
+  return (process.env.STRIPE_WEBHOOK_SECRET || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean)
+}
+
 export async function POST(req: Request) {
-  const secret = process.env.STRIPE_WEBHOOK_SECRET
+  const all = secrets()
   const raw = await req.text()
 
-  if (!secret) {
+  if (!all.length) {
     /* Never book anything unverified. Answering 503 tells Stripe to retry,
        which means events are not lost while the secret is being set. */
     console.error("[stripe/webhook] STRIPE_WEBHOOK_SECRET is not set; refusing to process")
     return NextResponse.json({ error: "not_configured" }, { status: 503 })
   }
 
-  if (!verify(raw, req.headers.get("stripe-signature"), secret)) {
-    console.error("[stripe/webhook] bad signature")
+  const sig = req.headers.get("stripe-signature")
+  if (!all.some((secret) => verify(raw, sig, secret))) {
+    console.error("[stripe/webhook] bad signature against all %d configured secrets", all.length)
     return NextResponse.json({ error: "bad_signature" }, { status: 400 })
   }
 
