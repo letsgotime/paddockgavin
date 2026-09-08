@@ -221,10 +221,13 @@
 
 <div class="toast" id="toast">Copied</div>
 
-<script src="/vendor/leaflet.js"></script>
-<script>
+<script type="module">
+/* Leaflet here is an ES module with named exports, not a classic script that
+   defines a window.L. Loading it with a plain src tag throws on its own export
+   statement and leaves L undefined, which is exactly what happened: the header
+   and the sheet rendered from static markup while the map never drew. */
+import * as L from "/vendor/leaflet.js";
 (function(){
-  "use strict";
 
   /* The verified centre of the event. This matches the geocode of the venue
      address to six decimal places and is the only coordinate on this page that
