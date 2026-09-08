@@ -336,7 +336,7 @@ export default function Targets({ params }: { params: Promise<{ event: string }>
                 <ul style={{ listStyle: "none", margin: "9px 0 0", padding: 0, display: "grid", gap: 6 }}>
                   {log[x.contact_email].map((e, i) => (
                     <li key={i} style={{ fontSize: 12.5, lineHeight: 1.5, color: "#a9b4c2", borderLeft: `2px solid ${e.kind === "reply" ? "#00D2BE" : e.kind === "send_failed" ? "#FF1A21" : "#F2C94C"}`, paddingLeft: 9 }}>
-                      <b style={{ color: "#dbe2ea", textTransform: "uppercase", fontFamily: MONO, fontSize: 9.5, letterSpacing: ".12em" }}>{e.kind}</b>
+                      <b style={{ color: "#dbe2ea", textTransform: "uppercase", fontFamily: MONO, fontSize: 10, letterSpacing: ".12em" }}>{e.kind}</b>
                       {" "}{new Date(e.created_at).toLocaleDateString("en-US", { day: "numeric", month: "short" })}
                       <span style={{ display: "block" }}>{e.body}</span>
                     </li>
