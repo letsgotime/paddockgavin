@@ -610,6 +610,39 @@ export default function RanchControlApp() {
             <strong>Three lines size themselves from attendance.</strong> At {a.heads.toLocaleString("en-US")} people the sheet carries {r.officers} traffic officers and{" "}
             {r.supers ? "one supervising officer, required once three or more are on site" : "no supervising officer"}, {r.portas} restrooms plus {r.ada} accessible, and {r.tables} tables at one per stall plus twenty for hospitality.
           </div>
+          {(() => {
+            /* Square footage comes straight off each tent's own stated
+               dimensions in its name, not a separate assumption. VIP seating
+               is the one figure the rate card actually states a capacity
+               for, "one 5ft round of eight under each", so it is the one
+               figure checked against a real headcount below. */
+            const TENTS: Record<string, { w: number; d: number; seatsEach?: number }> = {
+              "tent-vip": { w: 20, d: 20, seatsEach: 8 },
+              "tent-shade": { w: 20, d: 30 },
+              "tent-main": { w: 40, d: 60 },
+              "tent-second": { w: 20, d: 40 },
+            }
+            let count = 0
+            let sqft = 0
+            let vipSeats = 0
+            for (const row of ROWS) {
+              const spec = TENTS[row.k]
+              if (!spec) continue
+              const { qty } = rowValue(row, a, r, data.sheet[row.k])
+              count += qty
+              sqft += qty * spec.w * spec.d
+              if (spec.seatsEach) vipSeats += qty * spec.seatsEach
+            }
+            const vipSold = a.vipA + a.vipB
+            const vipCovers = vipSeats >= vipSold
+            return (
+              <div className="note info" style={{ marginTop: 12 }}>
+                <strong>Tent summary.</strong> {count} tents, {sqft.toLocaleString("en-US")} sq ft of frame under contract.
+                {" "}VIP seating covers VIP tickets: {vipSeats} seats under the four VIP tents against {vipSold} sold, {vipCovers ? `${vipSeats - vipSold} spare` : `${vipSold - vipSeats} short`}.
+                {" "}The shade, main and secondary tents have no stated per-tent capacity on the rate card, so there is nothing to check general admission against yet. That number has to come from whoever quoted them, not be assumed here.
+              </div>
+            )
+          })()}
           <h3 className="sec">Where it can come down</h3>
           <div className="lines">
             {levers.map(([h, p, amt], i) => (
