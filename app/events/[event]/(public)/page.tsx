@@ -101,6 +101,11 @@ export default async function EventPublicPage({ params }: { params: Promise<{ ev
     jsonLd.organizer = { "@type": "Organization", name: org.name, ...(org.url ? { url: org.url } : {}) }
   }
 
+  const performer = e.content?.performer
+  if (performer?.name) {
+    jsonLd.performer = { "@type": performer.type || "Person", name: performer.name }
+  }
+
   const adm = e.content?.admission
   if (adm && (adm.free || adm.price)) {
     jsonLd.offers = {
