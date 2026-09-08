@@ -16,7 +16,22 @@ import RanchControlApp from "./RanchControlApp"
  * Not indexed despite living in (public): this is Gavin's team's working
  * numbers, not a page for the public to find.
  */
-export const metadata: Metadata = { robots: { index: false, follow: false } }
+/* Icons and the default share image both come from RANCH_DEFAULTS /
+   RANCH_ICONS via the (public) group layout; only the title, description and
+   share copy are worth overriding for this one page. */
+export const metadata: Metadata = {
+  title: "Team Workspace",
+  description: "Budget, sponsors, and run of show for The Piston Powered Ranch team.",
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: "Piston Powered Ranch Team Workspace",
+    description: "Budget, sponsors, and run of show, live for the team.",
+  },
+  twitter: {
+    title: "Piston Powered Ranch Team Workspace",
+    description: "Budget, sponsors, and run of show, live for the team.",
+  },
+}
 
 export default async function RanchControlPage({ params }: { params: Promise<{ event: string }> }) {
   const { event } = await params
