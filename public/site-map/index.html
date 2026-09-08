@@ -156,7 +156,7 @@
 <div class="bar">
   <div class="brand">
     <b>The Piston Powered Ranch</b>
-    <span>Site map &middot; 10 October 2026</span>
+    <span>15 acres &middot; 10 October 2026</span>
   </div>
   <button class="btn" id="fit" type="button">Fit</button>
   <button class="btn" id="sat" type="button" aria-pressed="true">Satellite</button>
@@ -174,7 +174,9 @@
     <dl>
       <dt>Decimal</dt><dd id="lzDec"></dd>
       <dt>Aviation</dt><dd id="lzDdm"></dd>
-      <dt>What3</dt><dd id="lzWhat">Vanderbilt LifeFlight, 1 aircraft</dd>
+      <dt>Pad</dt><dd>40 m square &middot; 131 ft</dd>
+      <dt>Separation</dt><dd>213 m &middot; 700 ft to centre</dd>
+      <dt>Operator</dt><dd id="lzWhat">Vanderbilt LifeFlight, 1 aircraft</dd>
     </dl>
     <div class="row">
       <button class="btn" type="button" data-copy="lzDec">Copy decimal</button>
@@ -184,7 +186,7 @@
 
   <div class="warn">
     <b>The landing zone is provisional and must be walked before it is sent to LifeFlight.</b>
-    It is placed clear of the crowd line and away from the road, because the aerial shows power lines running along the south boundary. Confirm on the ground: overhead wires, slope, surface, and a clear approach and departure path into wind. Use the tap readout to set the real position, then send that.
+    It sits in a separate field 700 feet from the centre of the event and downwind of the cars, so rotor wash carries dust away from them. The aerial also shows power lines along the south boundary, which is why the approach is drawn from the north west. Confirm on the ground: overhead wires, slope, surface, and a clear approach and departure into wind. Use the tap readout to set the exact position, then send that.
   </div>
 
   <div class="coord">
@@ -213,7 +215,7 @@
   </div>
 
   <h2 style="margin-top:18px">Key</h2>
-  <p class="sub">Thirty vendor stalls, four VIP tents, five shaded eating tents, and three hundred cars.</p>
+  <p class="sub">Fifteen acres. Thirty vendor stalls, four VIP tents, five shaded eating tents, three hundred cars, and a landing zone in the next field.</p>
   <ul class="key" id="key"></ul>
 </div>
 
@@ -262,7 +264,7 @@
     { cat:"vendor", name:"Vendor row, east", note:"Fifteen stalls. Thirty in total across both rows.", poly: box(112,-30, 132,60) },
     { cat:"ga",   name:"Shade and eating", note:"Five 20x30 tents with long tables. Open to everyone.", poly: box(-64,-72, 68,-44) },
     { cat:"ops",  name:"Spectator parking", note:"Arrive from Enon Church Road and follow the drive.", poly: box(-150,-168, 150,-96) },
-    { cat:"ops",  name:"Helicopter LZ", note:"Vanderbilt LifeFlight. Provisional until walked. Clear of the crowd line and away from the road wires.", poly: box(-208,58, -140,126) },
+    { cat:"ops",  name:"Helicopter LZ", note:"Vanderbilt LifeFlight. A separate field, 700 feet from the centre of the event and downwind of the cars, so rotor wash carries dust away from them rather than over them. The pad drawn here is 40 m square, 131 feet, above the 100 foot minimum. Provisional until walked.", poly: box(-180,120, -140,160) },
     { cat:"hazard", name:"Creek bed", note:"Natural east boundary. Not a crossing point.", poly: box(140,-90, 152,140) },
     { cat:"ops",  name:"Encanto Blossom Orchard", note:"Farmers market.", poly: box(96,-116, 152,-62) }
   ];
@@ -291,7 +293,7 @@
     return part(ll[0],"N","S",2) + "  " + part(ll[1],"E","W",3);
   }
 
-  var LZ = at(-174, 92);
+  var LZ = at(-160, 140);
   var CTR = [CENTRE.lat, CENTRE.lng];
   document.getElementById("lzDec").textContent = dec(LZ);
   document.getElementById("lzDdm").textContent = ddm(LZ);
@@ -328,6 +330,11 @@
     m.addTo(layers[f.cat]); all.push(m);
     label([ll[0]-0.00016, ll[1]], f.name).addTo(layers[f.cat]);
   });
+
+  /* The separation between the pad and the event, drawn, because it is the
+     first thing a pilot asks and the second thing a safety officer asks. */
+  L.polyline([LZ, CTR], { color:"#5BD08A", weight:2, dashArray:"7 7", opacity:.85 }).addTo(layers.ops);
+  label([(LZ[0]+CTR[0])/2, (LZ[1]+CTR[1])/2], "700 ft to centre").addTo(layers.ops);
 
   var group = L.featureGroup(all);
   function fit(){ map.fitBounds(group.getBounds().pad(.14)); }
