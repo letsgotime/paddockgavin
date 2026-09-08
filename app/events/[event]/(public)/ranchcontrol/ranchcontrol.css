@@ -1,0 +1,227 @@
+/**
+ * Ranch control's visual design, ported from the claude.ai artifact: dark
+ * navy ground, Cinzel display face, the red/white/blue livery stripe, card
+ * panels for every number.
+ *
+ * Every selector below is scoped under .rcApp rather than left bare. The
+ * source file owned the whole document as a standalone artifact; this page
+ * shares a document with the rest of the site (the speed stripe, the site
+ * backdrop, analytics), so a bare `h1`, `table`, `footer` or `*` here would
+ * leak onto every other page instead of just this one. Scoping is the only
+ * change; the rules themselves are unchanged.
+ */
+
+.rcApp {
+  --ground: #0A1523; --panel: #111C2A; --panel-2: #16222F; --panel-3: #1B2937;
+  --ink: #FFFFFF; --body: #B9C4D1; --mute: #79879A;
+  --rule: rgba(255,255,255,.11); --rule-2: rgba(255,255,255,.06);
+  /*
+   * Jaramillo Red paints; --red-soft is the ranch's lifted lightness text
+   * red, used only for glyphs, never a fill. The source artifact used a
+   * different, lighter red here for the same role; this repo's brand check
+   * reads that one as pink and refuses to ship it, so this uses the ranch's
+   * own text red instead.
+   */
+  --red: #E5141A; --red-soft: #FF1A21;
+  --good: #4ED08A; --warn: #F2B138; --cold: #8A97A8; --vip: #F2C94C; --info: #57C7F5; --ga: #C9A3FF;
+  --display: Cinzel, "Trajan Pro", Georgia, serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  display: block;
+  background: var(--ground);
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  padding-bottom: env(safe-area-inset-bottom);
+  min-height: 100vh;
+}
+.rcApp, .rcApp * { box-sizing: border-box; }
+
+.rcApp .wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(11px,3vw,22px) 80px; }
+
+.rcApp header { padding: calc(env(safe-area-inset-top) + 20px) 0 16px; }
+.rcApp .livery { display: flex; height: 4px; border-radius: 2px; overflow: hidden; margin-bottom: 15px; max-width: 170px; }
+.rcApp .livery i { flex: 1 1 0; }
+.rcApp .eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--red-soft); margin: 0 0 7px; }
+.rcApp h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(29px,6.2vw,48px);
+  line-height: 1.02; letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.rcApp .sub { margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--body); max-width: 62ch; }
+
+/* tabs */
+.rcApp nav.tabs { position: sticky; top: 0; z-index: 40; display: flex; gap: 7px; overflow-x: auto; padding: 12px 0;
+  background: linear-gradient(180deg,var(--ground) 72%,transparent); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.rcApp nav.tabs::-webkit-scrollbar { display: none; }
+.rcApp nav.tabs button { flex: 0 0 auto; min-height: 42px; padding: 0 15px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--panel); color: var(--body);
+  font-family: var(--sans); font-size: 12.5px; font-weight: 700; letter-spacing: .06em; white-space: nowrap;
+  transition: transform 120ms cubic-bezier(.3,0,.6,1); }
+.rcApp nav.tabs button:active { transform: scale(.97); }
+.rcApp nav.tabs button:focus-visible { outline: 2px solid var(--warn); outline-offset: 2px; }
+.rcApp nav.tabs button[aria-selected="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+.rcApp nav.tabs button small { display: block; font-size: 10px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; opacity: .65; margin-top: 1px; }
+
+.rcApp .strip { display: grid; gap: 9px; grid-template-columns: repeat(auto-fit,minmax(min(152px,100%),1fr)); }
+.rcApp .cell { background: var(--panel); border: 1px solid var(--rule); border-radius: 13px; padding: 13px 14px; }
+.rcApp .cell dt { font-size: 10px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--mute); margin: 0 0 7px; }
+.rcApp .cell dd { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(22px,4.4vw,29px);
+  line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.rcApp .cell dd small { display: block; font-family: var(--sans); font-weight: 400; font-size: 11.5px; color: var(--mute);
+  margin-top: 7px; line-height: 1.45; letter-spacing: 0; }
+.rcApp .cell.bad dd { color: var(--red-soft); }
+.rcApp .cell.ok dd { color: var(--good); }
+.rcApp .cell.warn dd { color: var(--warn); }
+
+.rcApp h2 { margin: 0 0 6px; font-family: var(--display); font-weight: 700; font-size: clamp(19px,3.2vw,25px); color: var(--ink); }
+.rcApp h3.sec { margin: 26px 0 5px; font-family: var(--display); font-weight: 700; font-size: 17px; color: var(--ink); }
+.rcApp .lede { margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: var(--mute); max-width: 66ch; }
+.rcApp .panel { display: none; padding: 8px 0 30px; }
+.rcApp .panel.on { display: block; }
+
+/* dials */
+.rcApp .dials { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit,minmax(min(178px,100%),1fr)); }
+.rcApp .dial { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 13px; }
+.rcApp .dial label { display: block; font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--mute); margin: 0 0 7px; }
+.rcApp .dial input { width: 100%; font: inherit; font-family: var(--mono); font-size: 17px; font-weight: 700; padding: 9px 10px;
+  min-height: 44px; border: 1px solid var(--rule); border-radius: 9px; background: rgba(0,0,0,.3); color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+.rcApp .dial input:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: var(--red); }
+.rcApp .dial input:disabled { opacity: .6; cursor: not-allowed; }
+.rcApp .dial .hint { font-size: 11.5px; color: var(--mute); margin-top: 6px; line-height: 1.4; }
+
+/* tables */
+.rcApp .tw { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--rule); border-radius: 13px; background: var(--panel); }
+.rcApp table { border-collapse: collapse; width: 100%; min-width: 540px; }
+.rcApp thead th { background: var(--panel-2); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--mute); text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+.rcApp thead th.n { text-align: right; }
+.rcApp tbody td { padding: 9px 12px; border-bottom: 1px solid var(--rule-2); vertical-align: middle; }
+.rcApp tbody tr:last-child td { border-bottom: 0; }
+.rcApp tbody tr.open td { background: rgba(242,177,56,.05); }
+.rcApp tbody tr.derived td { background: rgba(87,199,245,.045); }
+.rcApp .nm { color: var(--ink); font-weight: 600; font-size: 14.5px; display: block; }
+.rcApp .nt { display: block; font-size: 11.5px; color: var(--mute); line-height: 1.45; margin-top: 3px; max-width: 48ch; }
+.rcApp td.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rcApp td.n .tot { font-size: 14px; color: var(--ink); font-weight: 700; }
+.rcApp .cin { font: inherit; font-family: var(--mono); font-size: 15px; width: 84px; text-align: right; padding: 8px 9px;
+  min-height: 40px; border: 1px solid var(--rule); border-radius: 8px; background: rgba(0,0,0,.3); color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+.rcApp .cin:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: var(--red); }
+.rcApp .cin:disabled { opacity: .6; cursor: not-allowed; }
+.rcApp .cin.q { width: 58px; }
+.rcApp .lock { font-family: var(--mono); font-size: 13px; color: var(--info); white-space: nowrap; }
+.rcApp tfoot td { padding: 13px 12px; border-top: 1px solid var(--rule); font-family: var(--display); font-weight: 800;
+  font-size: 16px; color: var(--ink); background: var(--panel-2); }
+.rcApp tfoot td.n { font-family: var(--mono); font-size: 17px; }
+.rcApp .tg { font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; padding: 3px 7px; border-radius: 3px; white-space: nowrap; }
+.rcApp .tg.q { background: rgba(78,208,138,.14); color: var(--good); }
+.rcApp .tg.o { background: rgba(242,177,56,.15); color: var(--warn); }
+.rcApp .tg.d { background: rgba(87,199,245,.14); color: var(--info); }
+
+.rcApp .who { background: var(--panel); border: 1px solid var(--rule); border-radius: 13px; padding: 13px 14px; margin: 0 0 16px; }
+.rcApp .who label { display: block; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin: 0 0 8px; }
+.rcApp .whoRow { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+.rcApp .whoRow input { flex: 1 1 190px; min-width: 0; font: inherit; font-size: 16px; padding: 11px 12px; min-height: 44px;
+  border: 1px solid var(--rule); border-radius: 9px; background: rgba(0,0,0,.3); color: var(--ink); }
+.rcApp .whoRow input:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: var(--red); }
+.rcApp .tag { font-family: var(--mono); font-size: 11.5px; color: var(--mute); white-space: nowrap; }
+.rcApp .tag.on { color: var(--good); font-weight: 700; }
+.rcApp .liveNote { margin: 9px 0 0; font-size: 12px; color: var(--mute); line-height: 1.5; }
+
+.rcApp ol.todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: t; }
+.rcApp ol.todo li { counter-increment: t; display: flex; gap: 12px; background: var(--panel); border: 1px solid var(--rule);
+  border-radius: 12px; padding: 12px 14px; align-items: flex-start; }
+.rcApp ol.todo li::before { content: counter(t); flex: 0 0 auto; width: 23px; height: 23px; border-radius: 50%; background: var(--red);
+  color: #fff; font-family: var(--mono); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.rcApp ol.todo b { display: block; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
+.rcApp ol.todo span { font-size: 13px; color: var(--mute); line-height: 1.5; }
+
+.rcApp .lines { display: grid; gap: 11px; }
+.rcApp .line { border: 1px solid var(--rule); border-radius: 13px; background: var(--panel); overflow: hidden; }
+.rcApp .lineHead { display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; padding: 13px 14px;
+  border-bottom: 1px solid var(--rule); background: var(--panel-2); flex-wrap: wrap; }
+.rcApp .lineHead h4 { margin: 0 0 4px; font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--ink); }
+.rcApp .lineHead p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--mute); max-width: 56ch; }
+.rcApp .lineMeta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: 0 0 auto; }
+.rcApp .lineMeta .amt { font-family: var(--mono); font-size: 13.5px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.rcApp .lineMeta .cnt { font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--mute); }
+.rcApp .lineMeta .cnt.on { color: var(--good); }
+.rcApp .slots { display: grid; gap: 1px; background: var(--rule-2); grid-template-columns: repeat(auto-fit,minmax(min(232px,100%),1fr)); }
+.rcApp .slot { background: var(--panel); padding: 11px 12px; display: grid; gap: 6px; align-content: start; }
+.rcApp .slot.filled { background: rgba(78,208,138,.05); }
+.rcApp .slotHead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rcApp .slotNo { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.rcApp .deg { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 6px; border-radius: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 64%; }
+.rcApp .deg.d1 { background: rgba(78,208,138,.15); color: var(--good); }
+.rcApp .deg.d2 { background: rgba(242,177,56,.15); color: var(--warn); }
+.rcApp .deg.d3 { background: rgba(138,151,168,.16); color: var(--cold); }
+.rcApp .f { font: inherit; font-size: 16px; width: 100%; min-width: 0; padding: 9px 10px; min-height: 42px; border: 1px solid var(--rule);
+  border-radius: 8px; background: rgba(0,0,0,.3); color: var(--ink); }
+.rcApp .f:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: var(--red); }
+.rcApp .f:disabled { opacity: .6; cursor: not-allowed; }
+.rcApp select.f { -webkit-appearance: none; appearance: none; padding-right: 28px;
+  background-image: linear-gradient(45deg,transparent 50%,var(--mute) 50%), linear-gradient(135deg,var(--mute) 50%,transparent 50%);
+  background-position: calc(100% - 14px) 18px, calc(100% - 9px) 18px; background-size: 5px 5px; background-repeat: no-repeat; }
+.rcApp .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+@media (max-width: 390px) { .rcApp .two { grid-template-columns: 1fr; } }
+.rcApp .slotFoot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.rcApp button.save { font-size: 11.5px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; padding: 0 14px;
+  min-height: 40px; border-radius: 8px; cursor: pointer; border: 0; background: var(--red); color: #fff; }
+.rcApp button.save:disabled { background: rgba(255,255,255,.07); color: var(--mute); cursor: not-allowed; }
+.rcApp button.save:focus-visible { outline: 2px solid var(--warn); outline-offset: 2px; }
+.rcApp .by { font-family: var(--mono); font-size: 10.5px; color: var(--mute); line-height: 1.4; }
+
+.rcApp ul.changes { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.rcApp ul.changes li { display: flex; gap: 10px; align-items: baseline; background: var(--panel); border: 1px solid var(--rule);
+  border-radius: 10px; padding: 10px 12px; font-size: 13px; line-height: 1.5; }
+.rcApp ul.changes time { flex: 0 0 auto; font-family: var(--mono); font-size: 10.5px; color: var(--mute); white-space: nowrap; }
+.rcApp ul.changes b { color: var(--ink); }
+.rcApp .empty { font-size: 13px; color: var(--mute); padding: 13px 0; }
+
+.rcApp .calc { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; background: var(--panel); margin: 0 0 16px; }
+.rcApp .calc > span { flex: 1 1 126px; padding: 13px 14px; min-width: 0; border-right: 1px solid var(--rule-2); }
+.rcApp .calc > span:last-child { border-right: 0; }
+.rcApp .calc > span.out { background: rgba(229,20,26,.09); }
+.rcApp .calc b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(19px,3.4vw,26px); line-height: 1;
+  color: var(--ink); font-variant-numeric: tabular-nums; }
+.rcApp .calc span.out b { color: var(--red-soft); }
+.rcApp .calc i { display: block; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase;
+  color: var(--mute); margin-top: 6px; line-height: 1.4; }
+.rcApp .calc em { flex: 0 0 auto; display: flex; align-items: center; padding: 0 10px; font-style: normal; font-family: var(--display);
+  font-weight: 800; font-size: 17px; color: var(--mute); border-right: 1px solid var(--rule-2); }
+@media (max-width: 560px) {
+  .rcApp .calc > span { flex: 1 1 100%; border-right: 0; border-bottom: 1px solid var(--rule-2); }
+  .rcApp .calc em { flex: 1 1 100%; justify-content: center; padding: 4px 0; border-right: 0; border-bottom: 1px solid var(--rule-2); }
+  .rcApp .calc > span:last-child { border-bottom: 0; }
+}
+
+.rcApp .note { border-left: 3px solid var(--red); background: rgba(229,20,26,.07); padding: 13px 15px; margin: 0 0 16px;
+  font-size: 13.5px; line-height: 1.6; color: var(--body); border-radius: 0 9px 9px 0; }
+.rcApp .note strong { color: var(--ink); }
+.rcApp .note.info { border-left-color: var(--info); background: rgba(87,199,245,.07); }
+.rcApp .note.good { border-left-color: var(--good); background: rgba(78,208,138,.07); }
+
+.rcApp footer { padding: 24px 0 0; text-align: center; border-top: 1px solid var(--rule); margin-top: 26px; }
+.rcApp footer p { margin: 0; font-size: 11.5px; line-height: 1.8; color: var(--mute); }
+
+/* the password gate */
+.rcApp .gate { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.rcApp .gateCard { width: 100%; max-width: 360px; background: var(--panel); border: 1px solid var(--rule); border-radius: 16px; padding: 28px 24px; text-align: center; }
+.rcApp .gateCard .livery { margin: 0 auto 18px; }
+.rcApp .gateCard h1 { font-size: clamp(22px,5vw,28px); margin-bottom: 6px; }
+.rcApp .gateCard p.sub { max-width: none; margin: 0 0 20px; font-size: 13.5px; }
+.rcApp .gateCard input[type="password"] { width: 100%; font: inherit; font-size: 17px; letter-spacing: .08em; text-align: center; padding: 12px 14px;
+  min-height: 46px; border: 1px solid var(--rule); border-radius: 9px; background: rgba(0,0,0,.3); color: var(--ink); margin-bottom: 12px; }
+.rcApp .gateCard input[type="password"]:focus { outline: 2px solid var(--red); outline-offset: 1px; border-color: var(--red); }
+.rcApp .gateCard button { width: 100%; font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 0 14px; min-height: 46px; border-radius: 9px; cursor: pointer; border: 0; background: var(--red); color: #fff; }
+.rcApp .gateCard button:disabled { background: rgba(255,255,255,.07); color: var(--mute); cursor: not-allowed; }
+.rcApp .gateError { margin: 12px 0 0; font-size: 12.5px; color: var(--red-soft); }
+.rcApp .gateNote { margin: 18px 0 0; font-size: 11.5px; color: var(--mute); line-height: 1.6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rcApp * { transition: none !important; animation: none !important; }
+}

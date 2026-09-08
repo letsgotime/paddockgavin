@@ -42,6 +42,9 @@ const SHORT_PATHS = new Set([
      form asking to come, this one is the answer about who is. Both are short
      paths because both are links somebody sends to somebody else. */
   "/entries",
+  /* The team's budget and sponsor tracker. Password gated, not indexed, not
+     linked from anywhere public; the short link is the only address it has. */
+  "/ranchcontrol",
 ])
 
 export function middleware(req: NextRequest) {
