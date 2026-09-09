@@ -45,10 +45,25 @@
 .smrApp .saveTag.saving, .smrApp .saveTag.saved, .smrApp .saveTag.error { opacity: 1; }
 .smrApp .saveTag.saved { color: #4ed08a; }
 .smrApp .saveTag.error { color: #FF1A21; }
-.smrApp .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 4px clamp(14px, 3vw, 28px) 40px; font-size: 12px; }
-.smrApp .legend span { display: flex; align-items: center; gap: 6px; }
-.smrApp .legend span.dim { opacity: 0.5; }
-.smrApp .legend i { width: 10px; height: 10px; border-radius: 3px; flex: 0 0 auto; }
+.smrApp .legend { display: flex; flex-wrap: wrap; gap: 20px 28px; padding: 10px clamp(14px, 3vw, 28px) 40px; }
+.smrApp .legendGroup { display: flex; flex-direction: column; gap: 8px; }
+.smrApp .legendGroup h3 {
+  margin: 0; font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--mute);
+}
+.smrApp .legendItems { display: flex; flex-wrap: wrap; gap: 6px; max-width: 420px; }
+.smrApp .legendItem {
+  display: flex; align-items: center; gap: 7px; font: inherit; font-size: 12px; color: var(--body);
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 6px 12px 6px 8px; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.smrApp .legendItem:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.26); color: #fff; }
+.smrApp .legendItem i { width: 10px; height: 10px; border-radius: 3px; flex: 0 0 auto; }
+.smrApp .legendItem .tag {
+  font-family: ui-monospace, monospace; font-style: normal; font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--mute); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 6px;
+}
+.smrApp .legendItem .tagHidden { color: #FF1A21; border-color: rgba(255, 26, 33, 0.4); }
 
 .mfTip.leaflet-tooltip {
   background: #14212f; color: #fff; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 6px;
@@ -62,19 +77,44 @@
 .mfHandle:active { cursor: grabbing; }
 .mfHandleSmall { width: 12px; height: 12px; }
 .mfRotateHandle {
-  width: 14px; height: 14px; border-radius: 50%; background: #F2C94C; border: 2px solid #14181d;
+  width: 22px; height: 22px; border-radius: 50%; background: #F2C94C; border: 2px solid #14181d;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
-}
-.mfRotateHandle::after {
-  content: ""; position: absolute; inset: 3px; border-radius: 50%;
-  border: 1.5px solid #14181d; border-top-color: transparent; border-left-color: transparent;
+  display: flex; align-items: center; justify-content: center;
 }
 .mfRotateHandle:active { cursor: grabbing; }
+.mfAngleTip.leaflet-tooltip {
+  background: #F2C94C; color: #14181d; border: none; border-radius: 999px;
+  font-family: ui-monospace, monospace; font-size: 11px; font-weight: 800; padding: 3px 9px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.mfAngleTip.leaflet-tooltip::before { display: none; }
 .mfPoint span {
   display: block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); cursor: grab; transform: translate(-50%, -50%);
 }
+@keyframes mfPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.4); }
+}
+.mfPoint.mfPulse span {
+  animation: mfPulse 0.6s ease-in-out infinite;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.28), 0 1px 4px rgba(0, 0, 0, 0.6);
+}
 .leaflet-popup-content-wrapper { background: #14212f; color: #b9c4d1; border-radius: 12px; }
-.leaflet-popup-content { margin: 12px 14px; font-size: 12.5px; line-height: 1.5; }
+.leaflet-popup-content { margin: 12px 14px; font-size: 12.5px; line-height: 1.5; width: 220px !important; }
 .leaflet-popup-content b { color: #fff; }
 .leaflet-popup-tip { background: #14212f; }
+.mfPopupImg { display: block; width: 100%; height: 96px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+.mfPopupBlurb { margin: 4px 0 0; }
+.mfPopupLL {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: ui-monospace, monospace; font-size: 11px; color: #79879a;
+}
+.mfCopyLL {
+  font: inherit; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px;
+  padding: 3px 9px; cursor: pointer;
+}
+.mfCopyLL:hover { background: rgba(255, 255, 255, 0.22); }
+.mfPopupHidden { margin: 8px 0 0; font-style: italic; color: #79879a; }

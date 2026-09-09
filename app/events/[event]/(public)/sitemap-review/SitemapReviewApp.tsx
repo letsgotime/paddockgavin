@@ -52,6 +52,12 @@ function colorFor(f: Feature) {
   return COLORS[f.category || ""] || "#9AA4B2"
 }
 
+const ROTATE_ICON =
+  '<svg viewBox="0 0 24 24" width="15" height="15">' +
+  '<path d="M4 12a8 8 0 1 1 2.6 5.9" fill="none" stroke="#14181d" stroke-width="2.6" stroke-linecap="round"/>' +
+  '<path d="M2.6 16.3 4 12l4.1 1.3" fill="none" stroke="#14181d" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+  "</svg>"
+
 function centroidOf(pts: [number, number][]): [number, number] {
   return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
 }
@@ -76,6 +82,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const mapRef = useRef<any>(null)
   const LRef = useRef<any>(null)
   const layersRef = useRef<Map<string, any>>(new Map())
+  const primaryRef = useRef<Map<string, any>>(new Map())
 
   const load = useCallback(async () => {
     const res = await fetch(`/api/map-features?event=${eventSlug}`)
@@ -158,6 +165,22 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       map.setView(CENTRE, 17)
       L.control.scale({ imperial: true, metric: true, position: "bottomleft" }).addTo(map)
       mapRef.current = map
+      // Popups are recreated on every render, so the copy-coordinates button
+      // inside them is wired once here by delegation rather than per-popup.
+      mapElRef.current?.addEventListener("click", (e) => {
+        const btn = (e.target as HTMLElement)?.closest(".mfCopyLL") as HTMLButtonElement | null
+        if (!btn) return
+        const ll = btn.getAttribute("data-ll") || ""
+        navigator.clipboard
+          ?.writeText(ll)
+          .then(() => {
+            btn.textContent = "Copied"
+            setTimeout(() => {
+              btn.textContent = "Copy"
+            }, 1200)
+          })
+          .catch(() => {})
+      })
       renderFeatures()
     })()
     return () => {
@@ -178,6 +201,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     if (!L || !map) return
     for (const g of layersRef.current.values()) map.removeLayer(g)
     layersRef.current.clear()
+    primaryRef.current.clear()
 
     for (const f of features) {
       const color = colorFor(f)
@@ -186,9 +210,14 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       if (f.geometry.type === "polygon") {
         let pts: [number, number][] = f.geometry.coords.map((p) => [p[0], p[1]])
 
-        const poly = L.polygon(pts, { color, weight: 2, fillColor: color, fillOpacity: 0.15 }).addTo(group)
+        const baseStyle = { color, weight: 2, fillColor: color, fillOpacity: 0.15 }
+        const hiStyle = { color, weight: 4, fillColor: color, fillOpacity: 0.35 }
+        const poly = L.polygon(pts, baseStyle).addTo(group)
+        poly._smrBase = baseStyle
+        poly._smrHi = hiStyle
         poly.bindTooltip(esc(f.name), { direction: "center", className: "mfTip", sticky: false })
         poly.bindPopup(popupHtml(f))
+        primaryRef.current.set(f.id, poly)
 
         const guide = L.polyline([centroidOf(pts), rotateHandleFor(pts)], {
           color, weight: 1, dashArray: "2 5", opacity: 0.6, interactive: false,
@@ -215,8 +244,9 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
 
         const rotateMarker = L.marker(rotateHandleFor(pts), {
           draggable: true,
-          icon: L.divIcon({ className: "mfRotateHandle", html: "", iconSize: [14, 14] }),
+          icon: L.divIcon({ className: "mfRotateHandle", html: ROTATE_ICON, iconSize: [22, 22] }),
         }).addTo(group)
+        rotateMarker.bindTooltip("+0°", { direction: "right", offset: [14, 0], className: "mfAngleTip", sticky: true })
 
         let startPts: [number, number][] = []
         let startAngle = 0
@@ -225,11 +255,17 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           const c = map.latLngToContainerPoint(centroidOf(startPts))
           const h = map.latLngToContainerPoint(rotateMarker.getLatLng())
           startAngle = Math.atan2(h.x - c.x, h.y - c.y)
+          rotateMarker.setTooltipContent("+0°")
+          rotateMarker.openTooltip()
         })
         rotateMarker.on("drag", (e: any) => {
           const c = map.latLngToContainerPoint(centroidOf(startPts))
           const h = map.latLngToContainerPoint(e.target.getLatLng())
-          const delta = Math.atan2(h.x - c.x, h.y - c.y) - startAngle
+          const rawDeg = ((Math.atan2(h.x - c.x, h.y - c.y) - startAngle) * 180) / Math.PI
+          // Snapped to 5 degree steps: freehand rotation was too fiddly to
+          // land on a clean angle against a fence line by eye.
+          const snapDeg = Math.round(rawDeg / 5) * 5
+          const delta = (snapDeg * Math.PI) / 180
           const cos = Math.cos(delta)
           const sin = Math.sin(delta)
           pts = startPts.map((p) => {
@@ -242,8 +278,12 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           poly.setLatLngs(pts)
           cornerMarkers.forEach((m, i) => m.setLatLng(pts[i]))
           guide.setLatLngs([centroidOf(pts), e.target.getLatLng()])
+          rotateMarker.setTooltipContent(`${snapDeg >= 0 ? "+" : ""}${snapDeg}°`)
         })
         rotateMarker.on("dragend", () => {
+          rotateMarker.setLatLng(rotateHandleFor(pts))
+          guide.setLatLngs([centroidOf(pts), rotateHandleFor(pts)])
+          rotateMarker.closeTooltip()
           saveGeometryLocal(f, { type: "polygon", coords: pts.map((p) => [p[0], p[1]]) })
         })
       } else if (f.geometry.type === "point") {
@@ -258,11 +298,17 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           saveGeometryLocal(f, { type: "point", coords: [p.lat, p.lng] })
         })
         marker.bindPopup(popupHtml(f))
+        primaryRef.current.set(f.id, marker)
       } else if (f.geometry.type === "path") {
         let pts: [number, number][] = f.geometry.coords.map((p) => [p[0], p[1]])
-        const line = L.polyline(pts, { color, weight: 4, dashArray: "7 7", opacity: 0.9 }).addTo(group)
+        const baseStyle = { color, weight: 4, dashArray: "7 7", opacity: 0.9 }
+        const hiStyle = { color, weight: 6, dashArray: "7 7", opacity: 1 }
+        const line = L.polyline(pts, baseStyle).addTo(group)
+        line._smrBase = baseStyle
+        line._smrHi = hiStyle
         line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", sticky: false })
         line.bindPopup(popupHtml(f))
+        primaryRef.current.set(f.id, line)
 
         pts.forEach((pt, i) => {
           L.marker(pt, {
@@ -290,8 +336,45 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     saveGeometry(f.id, geometry)
   }
 
+  // Legend click: pan/zoom to the feature and surface its popup, so a
+  // crowded map can be navigated by name instead of by eye.
+  function focusFeature(f: Feature) {
+    const L = LRef.current
+    const map = mapRef.current
+    if (!L || !map) return
+    if (f.geometry.type === "point") {
+      map.flyTo(f.geometry.coords, 19, { duration: 0.6 })
+    } else {
+      map.flyToBounds(L.latLngBounds(f.geometry.coords), { padding: [50, 50], maxZoom: 19, duration: 0.6 })
+    }
+    const layer = primaryRef.current.get(f.id)
+    if (layer) setTimeout(() => layer.openPopup(), 650)
+  }
+
+  function highlightFeature(id: string, on: boolean) {
+    const layer = primaryRef.current.get(id)
+    if (!layer) return
+    if (layer._smrBase) {
+      layer.setStyle(on ? layer._smrHi : layer._smrBase)
+    } else if (layer.getElement) {
+      const el = layer.getElement()
+      if (el) el.classList.toggle("mfPulse", on)
+    }
+  }
+
   function popupHtml(f: Feature) {
-    return `<b>${esc(f.name)}</b>${f.blurb ? "<br>" + esc(f.blurb) : ""}${f.status === "hidden" ? "<br><i>Hidden from the public page</i>" : ""}`
+    const c: [number, number] =
+      f.geometry.type === "point" ? f.geometry.coords : centroidOf(f.geometry.coords as [number, number][])
+    const ll = `${c[0].toFixed(5)}, ${c[1].toFixed(5)}`
+    const detail = f.detail as Record<string, unknown> | null
+    const image = detail && typeof detail.image === "string" ? (detail.image as string) : null
+    return `
+      ${image ? `<img class="mfPopupImg" src="${esc(image)}" alt="">` : ""}
+      <b>${esc(f.name)}</b>
+      ${f.blurb ? `<p class="mfPopupBlurb">${esc(f.blurb)}</p>` : ""}
+      <div class="mfPopupLL"><span>${ll}</span><button type="button" class="mfCopyLL" data-ll="${ll}">Copy</button></div>
+      ${f.status === "hidden" ? '<p class="mfPopupHidden">Hidden from the public page</p>' : ""}
+    `
   }
 
   if (phase === "loading") {
@@ -364,13 +447,38 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         </div>
       </div>
       <div className="legend">
-        {features.map((f) => (
-          <span key={f.id} className={f.status === "hidden" ? "dim" : ""}>
-            <i style={{ background: colorFor(f) }} />
-            {f.name}
-            {f.status === "hidden" ? " (hidden)" : ""}
-          </span>
-        ))}
+        {(
+          [
+            ["zone", "Zones"],
+            ["poi", "Points"],
+            ["route", "Route"],
+          ] as const
+        ).map(([kind, label]) => {
+          const items = features.filter((f) => f.kind === kind)
+          if (!items.length) return null
+          return (
+            <div className="legendGroup" key={kind}>
+              <h3>{label}</h3>
+              <div className="legendItems">
+                {items.map((f) => (
+                  <button
+                    key={f.id}
+                    type="button"
+                    className="legendItem"
+                    onClick={() => focusFeature(f)}
+                    onMouseEnter={() => highlightFeature(f.id, true)}
+                    onMouseLeave={() => highlightFeature(f.id, false)}
+                  >
+                    <i style={{ background: colorFor(f) }} />
+                    <span>{f.name}</span>
+                    {f.status === "hidden" && <em className="tag tagHidden">hidden</em>}
+                    {f.status === "draft" && <em className="tag">draft</em>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
