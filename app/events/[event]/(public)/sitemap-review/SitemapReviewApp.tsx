@@ -52,6 +52,19 @@ function colorFor(f: Feature) {
   return COLORS[f.category || ""] || "#9AA4B2"
 }
 
+function centroidOf(pts: [number, number][]): [number, number] {
+  return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
+}
+
+// The rotate handle sits beyond the midpoint of the NE-NW edge (points 2,3
+// in the stored SW,SE,NE,NW winding), pushed out from the centroid so it
+// clears the shape and reads as a separate control.
+function rotateHandleFor(pts: [number, number][]): [number, number] {
+  const c = centroidOf(pts)
+  const mid: [number, number] = [(pts[2][0] + pts[3][0]) / 2, (pts[2][1] + pts[3][1]) / 2]
+  return [c[0] + (mid[0] - c[0]) * 1.5, c[1] + (mid[1] - c[1]) * 1.5]
+}
+
 export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const [phase, setPhase] = useState<"loading" | "locked" | "ready" | "error">("loading")
   const [features, setFeatures] = useState<Feature[]>([])
@@ -171,58 +184,101 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       const group = L.layerGroup().addTo(map)
 
       if (f.geometry.type === "polygon") {
-        const pts = f.geometry.coords
-        const lats = pts.map((p) => p[0])
-        const lngs = pts.map((p) => p[1])
-        let sw: [number, number] = [Math.min(...lats), Math.min(...lngs)]
-        let ne: [number, number] = [Math.max(...lats), Math.max(...lngs)]
+        let pts: [number, number][] = f.geometry.coords.map((p) => [p[0], p[1]])
 
-        const rect = L.rectangle([sw, ne], { color, weight: 2, fillColor: color, fillOpacity: 0.15 }).addTo(group)
-        const label = L.marker([(sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2], {
-          interactive: false,
-          icon: L.divIcon({ className: "mfLbl", html: esc(f.name), iconSize: [0, 0] }),
+        const poly = L.polygon(pts, { color, weight: 2, fillColor: color, fillOpacity: 0.15 }).addTo(group)
+        poly.bindTooltip(esc(f.name), { direction: "center", className: "mfTip", sticky: false })
+        poly.bindPopup(popupHtml(f))
+
+        const guide = L.polyline([centroidOf(pts), rotateHandleFor(pts)], {
+          color, weight: 1, dashArray: "2 5", opacity: 0.6, interactive: false,
         }).addTo(group)
 
-        const corner = (pos: [number, number], which: "sw" | "ne") =>
-          L.marker(pos, {
+        const cornerMarkers = pts.map((pt, i) =>
+          L.marker(pt, {
             draggable: true,
             icon: L.divIcon({ className: "mfHandle", html: "", iconSize: [16, 16] }),
           })
             .addTo(group)
             .on("drag", (e: any) => {
               const p = e.target.getLatLng()
-              if (which === "sw") sw = [p.lat, p.lng]
-              else ne = [p.lat, p.lng]
-              rect.setBounds([sw, ne])
-              label.setLatLng([(sw[0] + ne[0]) / 2, (sw[1] + ne[1]) / 2])
+              pts[i] = [p.lat, p.lng]
+              poly.setLatLngs(pts)
+              guide.setLatLngs([centroidOf(pts), rotateMarker.getLatLng()])
             })
             .on("dragend", () => {
-              const newCoords: [number, number][] = [
-                [sw[0], sw[1]],
-                [sw[0], ne[1]],
-                [ne[0], ne[1]],
-                [ne[0], sw[1]],
-              ]
-              saveGeometryLocal(f, { type: "polygon", coords: newCoords })
-            })
+              rotateMarker.setLatLng(rotateHandleFor(pts))
+              guide.setLatLngs([centroidOf(pts), rotateHandleFor(pts)])
+              saveGeometryLocal(f, { type: "polygon", coords: pts.map((p) => [p[0], p[1]]) })
+            }),
+        )
 
-        corner(sw, "sw")
-        corner(ne, "ne")
-        rect.bindPopup(popupHtml(f))
+        const rotateMarker = L.marker(rotateHandleFor(pts), {
+          draggable: true,
+          icon: L.divIcon({ className: "mfRotateHandle", html: "", iconSize: [14, 14] }),
+        }).addTo(group)
+
+        let startPts: [number, number][] = []
+        let startAngle = 0
+        rotateMarker.on("dragstart", () => {
+          startPts = pts.map((p) => [p[0], p[1]])
+          const c = map.latLngToContainerPoint(centroidOf(startPts))
+          const h = map.latLngToContainerPoint(rotateMarker.getLatLng())
+          startAngle = Math.atan2(h.x - c.x, h.y - c.y)
+        })
+        rotateMarker.on("drag", (e: any) => {
+          const c = map.latLngToContainerPoint(centroidOf(startPts))
+          const h = map.latLngToContainerPoint(e.target.getLatLng())
+          const delta = Math.atan2(h.x - c.x, h.y - c.y) - startAngle
+          const cos = Math.cos(delta)
+          const sin = Math.sin(delta)
+          pts = startPts.map((p) => {
+            const pp = map.latLngToContainerPoint(p)
+            const dx = pp.x - c.x
+            const dy = pp.y - c.y
+            const rotated = map.containerPointToLatLng([c.x + dx * cos + dy * sin, c.y + dy * cos - dx * sin])
+            return [rotated.lat, rotated.lng] as [number, number]
+          })
+          poly.setLatLngs(pts)
+          cornerMarkers.forEach((m, i) => m.setLatLng(pts[i]))
+          guide.setLatLngs([centroidOf(pts), e.target.getLatLng()])
+        })
+        rotateMarker.on("dragend", () => {
+          saveGeometryLocal(f, { type: "polygon", coords: pts.map((p) => [p[0], p[1]]) })
+        })
       } else if (f.geometry.type === "point") {
         const pos = f.geometry.coords
         const marker = L.marker(pos, {
           draggable: true,
           icon: L.divIcon({ className: "mfPoint", html: `<span style="background:${color}"></span>`, iconSize: [14, 14] }),
         }).addTo(group)
-        L.marker(pos, { interactive: false, icon: L.divIcon({ className: "mfLbl", html: esc(f.name), iconSize: [0, 0] }) }).addTo(group)
+        marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", sticky: false })
         marker.on("dragend", (e: any) => {
           const p = e.target.getLatLng()
           saveGeometryLocal(f, { type: "point", coords: [p.lat, p.lng] })
         })
         marker.bindPopup(popupHtml(f))
       } else if (f.geometry.type === "path") {
-        L.polyline(f.geometry.coords, { color, weight: 3, dashArray: "6 6", opacity: 0.85 }).addTo(group).bindPopup(popupHtml(f))
+        let pts: [number, number][] = f.geometry.coords.map((p) => [p[0], p[1]])
+        const line = L.polyline(pts, { color, weight: 4, dashArray: "7 7", opacity: 0.9 }).addTo(group)
+        line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", sticky: false })
+        line.bindPopup(popupHtml(f))
+
+        pts.forEach((pt, i) => {
+          L.marker(pt, {
+            draggable: true,
+            icon: L.divIcon({ className: "mfHandle mfHandleSmall", html: "", iconSize: [12, 12] }),
+          })
+            .addTo(group)
+            .on("drag", (e: any) => {
+              const p = e.target.getLatLng()
+              pts[i] = [p.lat, p.lng]
+              line.setLatLngs(pts)
+            })
+            .on("dragend", () => {
+              saveGeometryLocal(f, { type: "path", coords: pts.map((p) => [p[0], p[1]]) })
+            })
+        })
       }
 
       layersRef.current.set(f.id, group)
@@ -297,7 +353,8 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         </div>
         <h1>Site Plan Review</h1>
         <p className="sub">
-          Drag either corner pin to move or resize a zone. Drag a point to move it. Every drop saves by itself.
+          Drag a corner pin to move or resize a zone, the gold pin to rotate it. Drag a point or a road pin to move
+          it. Every drop saves by itself.
         </p>
       </header>
       <div className="mapWrap">

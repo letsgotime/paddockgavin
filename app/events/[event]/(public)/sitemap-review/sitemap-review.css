@@ -50,15 +50,26 @@
 .smrApp .legend span.dim { opacity: 0.5; }
 .smrApp .legend i { width: 10px; height: 10px; border-radius: 3px; flex: 0 0 auto; }
 
-.mfLbl {
-  font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; width: max-content;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.75); transform: translate(-50%, -50%);
+.mfTip.leaflet-tooltip {
+  background: #14212f; color: #fff; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 6px;
+  font-size: 11.5px; font-weight: 700; padding: 4px 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
+.mfTip.leaflet-tooltip::before { border-top-color: #14212f; }
 .mfHandle {
   width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #14181d;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
 }
 .mfHandle:active { cursor: grabbing; }
+.mfHandleSmall { width: 12px; height: 12px; }
+.mfRotateHandle {
+  width: 14px; height: 14px; border-radius: 50%; background: #F2C94C; border: 2px solid #14181d;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
+}
+.mfRotateHandle::after {
+  content: ""; position: absolute; inset: 3px; border-radius: 50%;
+  border: 1.5px solid #14181d; border-top-color: transparent; border-left-color: transparent;
+}
+.mfRotateHandle:active { cursor: grabbing; }
 .mfPoint span {
   display: block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); cursor: grab; transform: translate(-50%, -50%);
