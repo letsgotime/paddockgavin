@@ -552,6 +552,14 @@ function PrintView({ features }: { features: Feature[] }) {
   const pois = features.filter((f): f is Feature & { geometry: { type: "point"; coords: [number, number] } } =>
     f.kind === "poi" && f.geometry.type === "point",
   )
+  // Ranch Gate sits off Highway 41-A, outside the satellite crop's own
+  // bounds (that crop is the property itself, not the public road). Drawn
+  // off the edge it would just clip out of the SVG viewBox, so it is left
+  // off the drawing and kept in the legend text instead.
+  const onMap = pois.filter((f) => {
+    const [x, y] = pctIn(...f.geometry.coords)
+    return x >= 0 && x <= 100 && y >= 0 && y <= 100
+  })
 
   return (
     <div className="printView">
@@ -597,7 +605,7 @@ function PrintView({ features }: { features: Feature[] }) {
               vectorEffect="non-scaling-stroke"
             />
           ))}
-          {pois.map((f) => {
+          {onMap.map((f) => {
             const [x, y] = pctIn(...f.geometry.coords)
             return (
               <g key={f.id}>
@@ -616,6 +624,7 @@ function PrintView({ features }: { features: Feature[] }) {
             <i style={{ background: colorFor(f) }} />
             {f.name}
             {f.status === "hidden" ? " (not on the public page)" : ""}
+            {f.kind === "poi" && !onMap.some((m) => m.id === f.id) ? " (off this crop, near the highway)" : ""}
           </span>
         ))}
       </div>
