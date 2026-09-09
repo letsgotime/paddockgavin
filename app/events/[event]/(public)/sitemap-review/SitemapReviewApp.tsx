@@ -262,13 +262,20 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const poly = L.polygon(pts, baseStyle).addTo(group)
         poly._smrBase = baseStyle
         poly._smrHi = hiStyle
-        poly.bindTooltip(esc(f.name), { direction: "center", className: "mfTip", permanent: true, interactive: false })
         poly.bindPopup(popupHtml(f))
         primaryRef.current.set(f.id, poly)
 
         const guide = L.polyline([centroidOf(pts), rotateHandleFor(pts)], {
           color, weight: 1, dashArray: "2 5", opacity: 0.6, interactive: false,
         }).addTo(group)
+
+        // The center dot is the click target and the color identifier at a
+        // glance; the name now floats above it instead of sitting on top of it.
+        const centerMarker = L.marker(centroidOf(pts), {
+          icon: L.divIcon({ className: "mfPoint mfZoneCenter", html: `<span style="background:${color}"></span>`, iconSize: [14, 14] }),
+        }).addTo(group)
+        centerMarker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
+        centerMarker.on("click", () => poly.openPopup(centerMarker.getLatLng()))
 
         const cornerMarkers = pts.map((pt, i) =>
           L.marker(pt, {
@@ -280,6 +287,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
               const p = e.target.getLatLng()
               pts[i] = [p.lat, p.lng]
               poly.setLatLngs(pts)
+              centerMarker.setLatLng(centroidOf(pts))
               guide.setLatLngs([centroidOf(pts), rotateMarker.getLatLng()])
             })
             .on("dragend", () => {
@@ -324,6 +332,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           })
           poly.setLatLngs(pts)
           cornerMarkers.forEach((m, i) => m.setLatLng(pts[i]))
+          centerMarker.setLatLng(centroidOf(pts))
           guide.setLatLngs([centroidOf(pts), e.target.getLatLng()])
           rotateMarker.setTooltipContent(`${snapDeg >= 0 ? "+" : ""}${snapDeg}°`)
         })
