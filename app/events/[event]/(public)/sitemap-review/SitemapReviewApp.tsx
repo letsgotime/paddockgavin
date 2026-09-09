@@ -62,6 +62,14 @@ function centroidOf(pts: [number, number][]): [number, number] {
   return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
 }
 
+// Percent position of a lat/lng within the fixed satellite crop's own
+// bounds. The print view draws on that static image directly, not the
+// live Leaflet map, so this is a plain linear map, no projection needed.
+function pctIn(lat: number, lng: number): [number, number] {
+  const [[south, west], [north, east]] = IMG_BOUNDS
+  return [((lng - west) / (east - west)) * 100, ((north - lat) / (north - south)) * 100]
+}
+
 // The rotate handle sits beyond the midpoint of the NE-NW edge (points 2,3
 // in the stored SW,SE,NE,NW winding), pushed out from the centroid so it
 // clears the shape and reads as a separate control.
@@ -477,7 +485,12 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           <i style={{ background: "#FAF8F4" }} />
           <i style={{ background: "#1424A1" }} />
         </div>
-        <h1>Site Plan Review</h1>
+        <div className="titleRow">
+          <h1>Site Plan Review</h1>
+          <button type="button" className="printBtn" onClick={() => window.print()}>
+            Print
+          </button>
+        </div>
         <p className="sub">
           Drag a corner pin to move or resize a zone, the gold pin to rotate it. Drag a point or a road pin to move
           it. Every drop saves by itself.
@@ -523,6 +536,92 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
             </div>
           )
         })}
+      </div>
+      <PrintView features={features} />
+    </div>
+  )
+}
+
+function PrintView({ features }: { features: Feature[] }) {
+  const zones = features.filter((f): f is Feature & { geometry: { type: "polygon"; coords: [number, number][] } } =>
+    f.kind === "zone" && f.geometry.type === "polygon",
+  )
+  const routes = features.filter((f): f is Feature & { geometry: { type: "path"; coords: [number, number][] } } =>
+    f.kind === "route" && f.geometry.type === "path",
+  )
+  const pois = features.filter((f): f is Feature & { geometry: { type: "point"; coords: [number, number] } } =>
+    f.kind === "poi" && f.geometry.type === "point",
+  )
+
+  return (
+    <div className="printView">
+      <div className="printHead">
+        <div className="printLivery">
+          <i style={{ background: "#E5141A" }} />
+          <i style={{ background: "#14181D" }} />
+          <i style={{ background: "#1424A1" }} />
+        </div>
+        <h1>The Piston Powered Ranch</h1>
+        <p>Site plan &middot; Saturday, October 10, 2026 &middot; Rancho Jaramillo, Unionville TN</p>
+      </div>
+      <div className="printMapBox">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" className="printSvg">
+          <image href="/images/sitemap/ranch-sat.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="none" />
+          {zones.map((f) => {
+            const pts = f.geometry.coords.map(([lat, lng]) => pctIn(lat, lng).join(",")).join(" ")
+            const [cx, cy] = pctIn(...centroidOf(f.geometry.coords))
+            return (
+              <g key={f.id}>
+                <polygon
+                  points={pts}
+                  fill={colorFor(f)}
+                  fillOpacity="0.22"
+                  stroke={colorFor(f)}
+                  strokeWidth="0.35"
+                  vectorEffect="non-scaling-stroke"
+                />
+                <text x={cx} y={cy} className="printLabel">
+                  {f.name}
+                </text>
+              </g>
+            )
+          })}
+          {routes.map((f) => (
+            <polyline
+              key={f.id}
+              points={f.geometry.coords.map(([lat, lng]) => pctIn(lat, lng).join(",")).join(" ")}
+              fill="none"
+              stroke={colorFor(f)}
+              strokeWidth="0.5"
+              strokeDasharray="1.4 1.1"
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+          {pois.map((f) => {
+            const [x, y] = pctIn(...f.geometry.coords)
+            return (
+              <g key={f.id}>
+                <circle cx={x} cy={y} r="0.9" fill={colorFor(f)} stroke="#14181d" strokeWidth="0.25" vectorEffect="non-scaling-stroke" />
+                <text x={x} y={y - 1.7} className="printLabel printLabelSm">
+                  {f.name}
+                </text>
+              </g>
+            )
+          })}
+        </svg>
+      </div>
+      <div className="printLegend">
+        {[...zones, ...routes, ...pois].map((f) => (
+          <span key={f.id}>
+            <i style={{ background: colorFor(f) }} />
+            {f.name}
+            {f.status === "hidden" ? " (not on the public page)" : ""}
+          </span>
+        ))}
+      </div>
+      <div className="printFoot">
+        <span>Piston Powered Ranch, site plan for internal reference</span>
+        <span>pistonpoweredranch.com</span>
       </div>
     </div>
   )

@@ -33,8 +33,16 @@
 .smrApp .smrLoading { text-align: center; padding: 100px 20px; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
 
 .smrApp.smrReady header { padding: 20px clamp(14px, 3vw, 28px) 6px; }
+.smrApp.smrReady .titleRow { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .smrApp.smrReady h1 { font-family: Cinzel, Georgia, serif; font-weight: 800; font-size: clamp(22px, 4vw, 30px); color: var(--ink); margin: 0 0 6px; }
 .smrApp.smrReady .sub { font-size: 13.5px; margin: 0; max-width: 62ch; }
+.smrApp .printBtn {
+  font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 7px 16px; cursor: pointer; transition: background 0.15s; margin-bottom: 6px;
+}
+.smrApp .printBtn:hover { background: rgba(255, 255, 255, 0.16); }
+.printView { display: none; }
 .smrApp .mapWrap { position: relative; margin: 14px clamp(14px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 13px; overflow: hidden; }
 .smrApp .mapEl { height: min(72vh, 680px); min-height: 360px; width: 100%; background: #0c1a14; }
 .smrApp .saveTag {
@@ -149,4 +157,40 @@
   .mfRotateHandle svg { width: 19px; height: 19px; }
   .mfPoint span { width: 20px; height: 20px; }
   .legendItem { padding: 9px 14px 9px 10px; }
+}
+
+/*
+ * The live map is Leaflet's own canvas plus drag handles built for editing,
+ * neither of which is meant for paper. Print renders a separate static
+ * view instead: one image, one SVG overlay built from the same feature
+ * list, sized off the page itself so it holds up in portrait or
+ * landscape without redoing any layout by hand.
+ */
+@media print {
+  @page { size: letter; margin: 0.45in; }
+  body * { visibility: hidden; }
+  .printView, .printView * { visibility: visible; }
+  .smrApp > header .titleRow, .smrApp > header .sub, .smrApp > .mapWrap, .smrApp > .legend { display: none !important; }
+  .printView {
+    display: block; position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #14181d;
+  }
+  .printHead { text-align: center; margin-bottom: 0.22in; }
+  .printLivery { display: flex; height: 3px; width: 1.6in; margin: 0 auto 0.12in; }
+  .printLivery i { flex: 1 1 0; }
+  .printHead h1 { font-family: Cinzel, Georgia, serif; font-size: 21pt; margin: 0 0 0.05in; color: #14181d; }
+  .printHead p { font-size: 10pt; color: #45505e; margin: 0; }
+  .printMapBox { width: 100%; border: 1px solid #9aa4b2; break-inside: avoid; }
+  .printSvg { display: block; width: 100%; height: auto; }
+  .printLabel {
+    font-size: 2.6px; font-weight: 700; fill: #fff; text-anchor: middle; dominant-baseline: middle;
+    paint-order: stroke; stroke: #14181d; stroke-width: 0.55px; stroke-linejoin: round;
+  }
+  .printLabelSm { font-size: 2.15px; }
+  .printLegend { display: flex; flex-wrap: wrap; gap: 5pt 16pt; margin-top: 0.2in; font-size: 10pt; break-inside: avoid; }
+  .printLegend span { display: flex; align-items: center; gap: 5pt; }
+  .printLegend i { width: 8pt; height: 8pt; border-radius: 2pt; flex: 0 0 auto; }
+  .printFoot {
+    display: flex; justify-content: space-between; margin-top: 0.24in; padding-top: 0.1in;
+    border-top: 1px solid #ccc; font-size: 10pt; color: #77828f;
+  }
 }
