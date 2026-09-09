@@ -177,7 +177,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       const topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
         subdomains: "abc",
         maxZoom: 17,
-        attribution: "Map data: &copy; OpenStreetMap contributors, SRTM &mdash; map style: &copy; OpenTopoMap (CC-BY-SA)",
+        attribution: "Map data: &copy; OpenStreetMap contributors, SRTM. Map style: &copy; OpenTopoMap (CC-BY-SA)",
       })
       const dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
         subdomains: "abcd",
