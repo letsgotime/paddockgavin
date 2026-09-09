@@ -259,6 +259,115 @@ function Act({ act, slug, open, onToggle }: { act: EventAct; slug: string; open:
   )
 }
 
+// The aerial crop's own fixed bounds. A straight percent map, not a
+// projection, since it is a flat photo of a small area, not a live map.
+const GROUNDS_BOUNDS: [[number, number], [number, number]] = [
+  [35.6243789, -86.5897796],
+  [35.6392011, -86.574083],
+]
+const GROUNDS_COLORS: Record<string, string> = {
+  vip: "#F2C94C", vendor: "#57C7F5", show: "#E5141A", parking: "#8A97A8",
+  ops: "#4ED08A", food: "#C9A3FF", entry: "#FFB020", charity: "#4ED08A", facility: "#57C7F5",
+}
+function groundsPct(lat: number, lng: number): [number, number] {
+  const [[south, west], [north, east]] = GROUNDS_BOUNDS
+  return [((lng - west) / (east - west)) * 100, ((north - lat) / (north - south)) * 100]
+}
+
+/**
+ * A rough, static read of the grounds: the same satellite crop and percent
+ * math the internal review tool uses, drawn once on the server, no map
+ * library shipped to a page that is otherwise JS-light. Anything whose
+ * coordinates fall outside this particular crop (Ranch Gate, off the
+ * highway) is left off the drawing rather than clipped at the edge.
+ */
+function GroundsMap({ features }: { features: MapFeatureRow[] }) {
+  const inBounds = (x: number, y: number) => x >= 0 && x <= 100 && y >= 0 && y <= 100
+  const zones = features.filter(
+    (f): f is MapFeatureRow & { geometry: { type: "polygon"; coords: [number, number][] } } =>
+      f.kind === "zone" && f.geometry?.type === "polygon",
+  )
+  const routes = features.filter(
+    (f): f is MapFeatureRow & { geometry: { type: "path"; coords: [number, number][] } } =>
+      f.kind === "route" && f.geometry?.type === "path",
+  )
+  const pois = features.filter((f): f is MapFeatureRow & { geometry: { type: "point"; coords: [number, number] } } => {
+    if (f.kind !== "poi" || f.geometry?.type !== "point") return false
+    return inBounds(...groundsPct(...f.geometry.coords))
+  })
+  if (zones.length === 0 && pois.length === 0) return null
+
+  const churchRd = groundsPct(35.6308917, -86.5836787)
+
+  return (
+    <div
+      style={{
+        position: "relative", width: "100%", aspectRatio: "1750 / 1728", borderRadius: 16, overflow: "hidden",
+        border: "1px solid rgba(255,255,255,.14)", marginBottom: 26, background: "#0c1a14",
+      }}
+    >
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "100%" }}>
+        <image href="/images/sitemap/ranch-sat.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="none" />
+        <rect x="0" y="0" width="100" height="100" fill="rgba(10,21,35,.16)" />
+        {routes.map((f) => (
+          <polyline
+            key={f.kind + f.name}
+            points={f.geometry.coords.map(([lat, lng]) => groundsPct(lat, lng).join(",")).join(" ")}
+            fill="none"
+            stroke={GROUNDS_COLORS.entry}
+            strokeWidth="0.6"
+            strokeDasharray="1.6 1.2"
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+        {zones.map((f) => {
+          const color = GROUNDS_COLORS[f.category || ""] || "#9AA4B2"
+          return (
+            <polygon
+              key={f.kind + f.name}
+              points={f.geometry.coords.map(([lat, lng]) => groundsPct(lat, lng).join(",")).join(" ")}
+              fill={color}
+              fillOpacity="0.28"
+              stroke={color}
+              strokeWidth="0.45"
+              vectorEffect="non-scaling-stroke"
+            />
+          )
+        })}
+        {pois.map((f) => {
+          const color = GROUNDS_COLORS[f.category || ""] || "#9AA4B2"
+          const [x, y] = groundsPct(...f.geometry.coords)
+          return (
+            <circle key={f.kind + f.name} cx={x} cy={y} r="1.1" fill={color} stroke="#0A1523" strokeWidth="0.35" vectorEffect="non-scaling-stroke" />
+          )
+        })}
+        <text
+          x={churchRd[0] - 1.5}
+          y={churchRd[1] + 2.6}
+          fontSize="2.7"
+          fontWeight="700"
+          fill="#fff"
+          stroke="#0A1523"
+          strokeWidth="0.55"
+          paintOrder="stroke"
+          textAnchor="end"
+        >
+          Enon Church Rd
+        </text>
+      </svg>
+      <p
+        style={{
+          position: "absolute", left: 12, bottom: 10, margin: 0, fontFamily: MONO, fontSize: 10.5, letterSpacing: ".08em",
+          textTransform: "uppercase", color: "rgba(255,255,255,.78)", background: "rgba(10,21,35,.72)", padding: "4px 9px",
+          borderRadius: 999,
+        }}
+      >
+        Rough layout, subject to change
+      </p>
+    </div>
+  )
+}
+
 export default function EventPublic({
   event,
   day = [],
@@ -528,6 +637,7 @@ export default function EventPublic({
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>On the ground</h2>
+            <GroundsMap features={ground} />
             <div className={`evGround${groundOpen ? " open" : ""}`} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {ground.map((f) => (
                 <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
