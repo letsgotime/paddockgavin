@@ -23,6 +23,9 @@ function db(): Pool | null {
   return pool
 }
 
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+
 const COOKIE = "pg_map"
 const GATE = "179179"
 
@@ -73,11 +76,13 @@ export async function PATCH(req: NextRequest) {
   const p = db()
   if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
   try {
-    await p.query(
+    const dbInfo = await p.query(`select current_database() as db, inet_server_addr()::text as host, current_user as who`)
+    const result = await p.query(
       `update public.map_features set geometry = $2::jsonb, updated_at = now() where id = $1`,
       [b.id, JSON.stringify(b.geometry)],
     )
-    return NextResponse.json({ ok: true })
+    console.log("[map-features] patch", { id: b.id, rowCount: result.rowCount, ...dbInfo.rows[0] })
+    return NextResponse.json({ ok: true, rowCount: result.rowCount, debug: dbInfo.rows[0] })
   } catch (err) {
     console.error("[map-features] write failed", err)
     return NextResponse.json({ error: "write_failed" }, { status: 500 })
