@@ -342,6 +342,10 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     const L = LRef.current
     const map = mapRef.current
     if (!L || !map) return
+    // On a short mobile viewport the map can sit lower than the fold; bring
+    // the whole map into view first so Leaflet has room to keep the popup
+    // it is about to open on-screen too, instead of autopanning it above the fold.
+    mapElRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
     if (f.geometry.type === "point") {
       map.flyTo(f.geometry.coords, 19, { duration: 0.6 })
     } else {
