@@ -45,6 +45,7 @@ const SHORT_PATHS = new Set([
   /* The team's budget and sponsor tracker. Password gated, not indexed, not
      linked from anywhere public; the short link is the only address it has. */
   "/ranchcontrol",
+  "/sitemap-review",
 ])
 
 export function middleware(req: NextRequest) {
