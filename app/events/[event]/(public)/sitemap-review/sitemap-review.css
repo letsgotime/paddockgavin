@@ -75,9 +75,10 @@
 
 .mfTip.leaflet-tooltip {
   background: #14212f !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-radius: 5px; font-size: 11px; font-weight: 700; padding: 2px 7px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
-  white-space: nowrap; pointer-events: none;
+  border-radius: 4px; font-size: 10.5px; font-weight: 700; padding: 1px 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+  white-space: nowrap; pointer-events: none; line-height: 1.5;
 }
+.mfTip.leaflet-tooltip:hover, .mfTip.leaflet-tooltip.leaflet-tooltip-active { z-index: 1000 !important; }
 .mfTip.leaflet-tooltip::before { border-top-color: #14212f !important; }
 .mfHandle {
   width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #14181d;
