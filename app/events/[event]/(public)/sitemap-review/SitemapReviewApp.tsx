@@ -215,7 +215,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const poly = L.polygon(pts, baseStyle).addTo(group)
         poly._smrBase = baseStyle
         poly._smrHi = hiStyle
-        poly.bindTooltip(esc(f.name), { direction: "center", className: "mfTip", sticky: false })
+        poly.bindTooltip(esc(f.name), { direction: "center", className: "mfTip", permanent: true, interactive: false })
         poly.bindPopup(popupHtml(f))
         primaryRef.current.set(f.id, poly)
 
@@ -292,7 +292,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           draggable: true,
           icon: L.divIcon({ className: "mfPoint", html: `<span style="background:${color}"></span>`, iconSize: [14, 14] }),
         }).addTo(group)
-        marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", sticky: false })
+        marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
         marker.on("dragend", (e: any) => {
           const p = e.target.getLatLng()
           saveGeometryLocal(f, { type: "point", coords: [p.lat, p.lng] })
@@ -306,7 +306,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const line = L.polyline(pts, baseStyle).addTo(group)
         line._smrBase = baseStyle
         line._smrHi = hiStyle
-        line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", sticky: false })
+        line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", permanent: true, interactive: false })
         line.bindPopup(popupHtml(f))
         primaryRef.current.set(f.id, line)
 
