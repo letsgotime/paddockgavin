@@ -121,6 +121,26 @@
 .mfCopyLL:hover { background: rgba(255, 255, 255, 0.22); }
 .mfPopupHidden { margin: 8px 0 0; font-style: italic; color: #79879a; }
 
+.coordReadout {
+  position: absolute; left: 10px; bottom: 10px; z-index: 1000; font-family: ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.02em; padding: 5px 9px; border-radius: 6px;
+  background: rgba(10, 21, 35, 0.85); color: #b9c4d1; border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+.leaflet-control-layers {
+  background: #14212f !important; border: 1px solid rgba(255, 255, 255, 0.16) !important; border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important; color: #fff;
+}
+.leaflet-control-layers-toggle { filter: invert(1) brightness(1.6); }
+.leaflet-control-layers-expanded { padding: 10px 12px !important; font-size: 12.5px; }
+.leaflet-control-layers-separator { border-color: rgba(255, 255, 255, 0.16) !important; }
+.leaflet-control-layers label { color: #fff; display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.leaflet-control-attribution {
+  background: rgba(10, 21, 35, 0.7) !important; color: #6b7686 !important; font-size: 10px !important;
+  padding: 1px 6px !important; border-radius: 4px 0 0 0;
+}
+.leaflet-control-attribution a { color: #8a94a3 !important; }
+
 /* iPhone first: a fingertip needs a bigger target than a mouse cursor does. */
 @media (pointer: coarse) {
   .mfHandle { width: 26px; height: 26px; }

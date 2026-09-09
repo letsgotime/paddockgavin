@@ -83,6 +83,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const LRef = useRef<any>(null)
   const layersRef = useRef<Map<string, any>>(new Map())
   const primaryRef = useRef<Map<string, any>>(new Map())
+  const coordElRef = useRef<HTMLDivElement | null>(null)
 
   const load = useCallback(async () => {
     const res = await fetch(`/api/map-features?event=${eventSlug}`)
@@ -155,15 +156,53 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       const L = await import(/* webpackIgnore: true */ "/vendor/leaflet.js")
       if (cancelled || !mapElRef.current) return
       LRef.current = L
-      const map = L.map(mapElRef.current, { minZoom: 15, maxZoom: 20, zoomSnap: 0, zoomDelta: 0.5 })
-      L.imageOverlay(
+      const map = L.map(mapElRef.current, {
+        minZoom: 13,
+        maxZoom: 20,
+        zoomSnap: 0,
+        zoomDelta: 0.5,
+        attributionControl: false,
+      })
+
+      const satellite = L.imageOverlay(
         "/images/sitemap/ranch-sat.jpg",
         IMG_BOUNDS as unknown as [[number, number], [number, number]],
         { attribution: "Imagery Esri, Maxar, Earthstar Geographics" },
-      ).addTo(map)
-      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS).pad(0.25))
+      )
+      const grayscale = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        subdomains: "abcd",
+        maxZoom: 20,
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+      })
+      const topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+        subdomains: "abc",
+        maxZoom: 17,
+        attribution: "Map data: &copy; OpenStreetMap contributors, SRTM &mdash; map style: &copy; OpenTopoMap (CC-BY-SA)",
+      })
+      const dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        subdomains: "abcd",
+        maxZoom: 20,
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+      })
+      satellite.addTo(map)
+      L.control
+        .layers(
+          { Satellite: satellite, "Roads (grayscale)": grayscale, Topo: topo, Dark: dark },
+          undefined,
+          { position: "topright", collapsed: true },
+        )
+        .addTo(map)
+      // Leaflet's default attribution names Leaflet itself; the free tile
+      // providers above require their own credit to stay usable, so keep
+      // that and drop the rest, tucked small in the corner.
+      L.control.attribution({ prefix: false, position: "bottomright" }).addTo(map)
+
+      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS).pad(1.2))
       map.setView(CENTRE, 17)
       L.control.scale({ imperial: true, metric: true, position: "bottomleft" }).addTo(map)
+      map.on("mousemove", (e: any) => {
+        if (coordElRef.current) coordElRef.current.textContent = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`
+      })
       mapRef.current = map
       // Popups are recreated on every render, so the copy-coordinates button
       // inside them is wired once here by delegation rather than per-popup.
@@ -449,6 +488,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         <div className={`saveTag ${saveState}`}>
           {saveState === "saving" ? "Saving" : saveState === "saved" ? "Saved" : saveState === "error" ? "Not saved, try again" : ""}
         </div>
+        <div ref={coordElRef} className="coordReadout">35.63175, -86.58083</div>
       </div>
       <div className="legend">
         {(
