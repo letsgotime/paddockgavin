@@ -283,6 +283,38 @@ export default function MeetingUpdatesApp() {
           </div>
         </header>
 
+        <h2>The pitch, two ways</h2>
+        <p className="sub">Same day, what goes public versus what Oscar needs to see in full.</p>
+        <p className="intro" style={{ marginBottom: 10 }}><b>Public<span className="mtag pub">safe to use</span></b></p>
+        <p className="intro" style={{ marginBottom: 14 }}>Help Middle Tennessee close out fall before it gets chilly. Spend a day on the ranch.</p>
+        <ul className="mlist">
+          <li>Three hundred curated exotic cars</li>
+          <li>Open pit barbecue, ranch raised Black Angus</li>
+          <li>A vendor fair, curated with the ranch</li>
+          <li>A live car giveaway</li>
+          <li>A live exotic car auction</li>
+          <li>A livestock auction</li>
+          <li>A helicopter landing</li>
+          <li>Live music from one of country music&rsquo;s biggest names</li>
+          <li>Encanto Blossom Orchard&rsquo;s farmers market: apples, baked goods, preserves, tamales, and more</li>
+        </ul>
+        <p className="intro" style={{ marginBottom: 10 }}><b>For Oscar<span className="mtag priv">not for anyone else</span></b></p>
+        <ul className="mlist internal">
+          <li><b>Exotic car show.</b> Up to three hundred cars.</li>
+          <li><b>Open pit BBQ.</b> Ranch raised Black Angus, donated by Rancho Jaramillo.</li>
+          <li><b>Vendor fair.</b> Twenty five to thirty five vendors, already committed ones on the next page.</li>
+          <li><b>Live car giveaway.</b> Mechanics on a Mission. Not understood yet, see the section below.</li>
+          <li><b>Live exotic car auction.</b> Waiting on duPont Registry to commit. Bring a Trailer is the named backup.</li>
+          <li><b>Livestock auction.</b> Ranch raised. Need details from Oscar: is it his own Black Angus steer, and is it one steer or both.</li>
+          <li><b>Helicopter landing.</b> Life Flight Vanderbilt, Megan Jones is the contact to email.</li>
+          <li><b>Live music.</b> A major country name, confirmed, cannot go public yet.</li>
+          <li><b>Encanto Blossom Orchard farmers market.</b> Apples, fruit, baked goods, apple butter, grape jam, tamales, and more.</li>
+          <li><b>Custom cowboy boots.</b> Need a vendor.</li>
+          <li><b>Custom cowboy hats.</b> Need a vendor. Seth, if that contact is real.</li>
+          <li><b>Custom sneakers.</b> Need a vendor.</li>
+          <li><b>Cigars.</b> Placentia, Poppa P&rsquo;s, or the duPont contact. Not decided.</li>
+        </ul>
+
         <div className="refs">
           <h3>References</h3>
           <a className="refLink" href="/sitemap-review" target="_blank" rel="noopener noreferrer">
@@ -351,38 +383,6 @@ export default function MeetingUpdatesApp() {
         <div className="decide">
           {MECH_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
         </div>
-
-        <h2>The pitch, two ways</h2>
-        <p className="sub">Same day, what goes public versus what Oscar needs to see in full.</p>
-        <p className="intro" style={{ marginBottom: 10 }}><b>Public<span className="mtag pub">safe to use</span></b></p>
-        <p className="intro" style={{ marginBottom: 14 }}>Help Middle Tennessee close out fall before it gets chilly. Spend a day on the ranch.</p>
-        <ul className="mlist">
-          <li>Three hundred curated exotic cars</li>
-          <li>Open pit barbecue, ranch raised Black Angus</li>
-          <li>A vendor fair, curated with the ranch</li>
-          <li>A live car giveaway</li>
-          <li>A live exotic car auction</li>
-          <li>A livestock auction</li>
-          <li>A helicopter landing</li>
-          <li>Live music from one of country music&rsquo;s biggest names</li>
-          <li>Encanto Blossom Orchard&rsquo;s farmers market: apples, baked goods, preserves, tamales, and more</li>
-        </ul>
-        <p className="intro" style={{ marginBottom: 10 }}><b>For Oscar<span className="mtag priv">not for anyone else</span></b></p>
-        <ul className="mlist internal">
-          <li><b>Exotic car show.</b> Up to three hundred cars.</li>
-          <li><b>Open pit BBQ.</b> Ranch raised Black Angus, donated by Rancho Jaramillo.</li>
-          <li><b>Vendor fair.</b> Twenty five to thirty five vendors, already committed ones on the next page.</li>
-          <li><b>Live car giveaway.</b> Mechanics on a Mission. Not understood yet, see the section above.</li>
-          <li><b>Live exotic car auction.</b> Waiting on duPont Registry to commit. Bring a Trailer is the named backup.</li>
-          <li><b>Livestock auction.</b> Ranch raised. Need details from Oscar: is it his own Black Angus steer, and is it one steer or both.</li>
-          <li><b>Helicopter landing.</b> Life Flight Vanderbilt, Megan Jones is the contact to email.</li>
-          <li><b>Live music.</b> A major country name, confirmed, cannot go public yet.</li>
-          <li><b>Encanto Blossom Orchard farmers market.</b> Apples, fruit, baked goods, apple butter, grape jam, tamales, and more.</li>
-          <li><b>Custom cowboy boots.</b> Need a vendor.</li>
-          <li><b>Custom cowboy hats.</b> Need a vendor. Seth, if that contact is real.</li>
-          <li><b>Custom sneakers.</b> Need a vendor.</li>
-          <li><b>Cigars.</b> Placentia, Poppa P&rsquo;s, or the duPont contact. Not decided.</li>
-        </ul>
 
         <div className="notes">
           <h3>Notes</h3>
