@@ -318,6 +318,17 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     layersRef.current.clear()
     primaryRef.current.clear()
 
+    // A CSS-only size bump leaves Leaflet's own centering margin (half of
+    // the iconSize passed to divIcon, set as an inline style) calculated
+    // from the smaller desktop size, so the enlarged circle would sit off
+    // its true coordinate. Sized correctly at creation time instead, once
+    // per render rather than once per marker.
+    const coarse = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches
+    const HANDLE = coarse ? 26 : 16
+    const HANDLE_SMALL = coarse ? 22 : 12
+    const ROTATE = coarse ? 30 : 22
+    const POINT = coarse ? 20 : 14
+
     for (const f of features) {
       const color = colorFor(f)
       const group = L.layerGroup().addTo(map)
@@ -340,7 +351,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         // The center dot is the click target and the color identifier at a
         // glance; the name now floats above it instead of sitting on top of it.
         const centerMarker = L.marker(centroidOf(pts), {
-          icon: L.divIcon({ className: "mfPoint mfZoneCenter", html: `<span style="background:${color}"></span>`, iconSize: [14, 14] }),
+          icon: L.divIcon({ className: "mfPoint mfZoneCenter", html: `<span style="background:${color}"></span>`, iconSize: [POINT, POINT] }),
         }).addTo(group)
         centerMarker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
         centerMarker.on("click", () => poly.openPopup(centerMarker.getLatLng()))
@@ -348,7 +359,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const cornerMarkers = pts.map((pt, i) =>
           L.marker(pt, {
             draggable: true,
-            icon: L.divIcon({ className: "mfHandle", html: "", iconSize: [16, 16] }),
+            icon: L.divIcon({ className: "mfHandle", html: "", iconSize: [HANDLE, HANDLE] }),
           })
             .addTo(group)
             .on("drag", (e: any) => {
@@ -367,7 +378,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
 
         const rotateMarker = L.marker(rotateHandleFor(pts), {
           draggable: true,
-          icon: L.divIcon({ className: "mfRotateHandle", html: ROTATE_ICON, iconSize: [22, 22] }),
+          icon: L.divIcon({ className: "mfRotateHandle", html: ROTATE_ICON, iconSize: [ROTATE, ROTATE] }),
         }).addTo(group)
         rotateMarker.bindTooltip("+0°", { direction: "right", offset: [14, 0], className: "mfAngleTip", sticky: true })
 
@@ -414,7 +425,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const pos = f.geometry.coords
         const marker = L.marker(pos, {
           draggable: true,
-          icon: L.divIcon({ className: "mfPoint", html: `<span style="background:${color}"></span>`, iconSize: [14, 14] }),
+          icon: L.divIcon({ className: "mfPoint", html: `<span style="background:${color}"></span>`, iconSize: [POINT, POINT] }),
         }).addTo(group)
         marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
         marker.on("dragend", (e: any) => {
@@ -437,7 +448,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         pts.forEach((pt, i) => {
           L.marker(pt, {
             draggable: true,
-            icon: L.divIcon({ className: "mfHandle mfHandleSmall", html: "", iconSize: [12, 12] }),
+            icon: L.divIcon({ className: "mfHandle mfHandleSmall", html: "", iconSize: [HANDLE_SMALL, HANDLE_SMALL] }),
           })
             .addTo(group)
             .on("drag", (e: any) => {

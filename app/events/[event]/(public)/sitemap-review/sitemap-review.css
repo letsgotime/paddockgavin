@@ -166,12 +166,18 @@
   }
 }
 
-/* iPhone first: a fingertip needs a bigger target than a mouse cursor does. */
+/* iPhone first: a fingertip needs a bigger target than a mouse cursor does.
+   These need !important: Leaflet's own iconSize option sets width/height
+   as an inline style on each divIcon, which otherwise wins over a class
+   rule regardless of whether the media query matches. Confirmed live that
+   without it these silently stayed at their 16-22px desktop size on a real
+   touch viewport. */
 @media (pointer: coarse) {
-  .mfHandle { width: 26px; height: 26px; }
-  .mfHandleSmall { width: 22px; height: 22px; }
-  .mfRotateHandle { width: 30px; height: 30px; }
+  .mfHandle { width: 26px !important; height: 26px !important; }
+  .mfHandleSmall { width: 22px !important; height: 22px !important; }
+  .mfRotateHandle { width: 30px !important; height: 30px !important; }
   .mfRotateHandle svg { width: 19px; height: 19px; }
+  .mfPoint { width: 20px !important; height: 20px !important; }
   .mfPoint span { width: 20px; height: 20px; }
   .legendItem { padding: 9px 14px 9px 10px; }
 }
