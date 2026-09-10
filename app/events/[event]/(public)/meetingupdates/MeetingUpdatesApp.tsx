@@ -283,6 +283,18 @@ export default function MeetingUpdatesApp() {
           </div>
         </header>
 
+        <div className="refs">
+          <h3>References</h3>
+          <a className="refLink" href="/sitemap-review" target="_blank" rel="noopener noreferrer">
+            <span className="refName">Site Map Review</span>
+            <span className="refDesc">Pin placement for vendors, sponsors, and the site plan</span>
+          </a>
+          <a className="refLink" href="/ranchcontrol" target="_blank" rel="noopener noreferrer">
+            <span className="refName">Ranch Control</span>
+            <span className="refDesc">Budget and sponsor tracker</span>
+          </a>
+        </div>
+
         <p className="intro">What we&rsquo;re covering today: VIP pricing, entry pricing, and the sponsor plan, plus the smaller open items below.</p>
         <div className="decide" style={{ marginBottom: 30 }}>
           <h2>By the end of today</h2>
@@ -582,6 +594,14 @@ function MuStyle() {
   .mtag.priv{background:var(--pg-error-fill);color:var(--paper);font-weight:700}
   .notes{border:1.5px dashed var(--line);border-radius:3px;padding:18px 20px;margin-bottom:10px}
   .notes h3{margin:0 0 12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+  .refs{border:1.5px solid var(--line);border-radius:3px;padding:16px 20px;margin-bottom:28px}
+  .refs h3{margin:0 0 4px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+  .refLink{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+  .refLink:first-of-type{border-top:0}
+  .refName{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .refName::after{content:" →";color:var(--red)}
+  .refDesc{font-size:11.5px;color:var(--mute);text-align:right}
+  @media (hover:hover){ .refLink:hover .refName{color:var(--red)} }
   footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10.5px;color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center}
   .footMark{height:20px;width:auto;flex:0 0 auto;opacity:.85}
   .footLeft{display:flex;align-items:center;gap:9px}
@@ -601,6 +621,7 @@ function MuStyle() {
     .mu-shell{background:var(--paper)}
     .sheet{padding:0.4in;max-width:none}
     .notes{break-inside:avoid}
+    .refs{break-inside:avoid}
     .rooms{break-inside:avoid}
     .tGroup{break-inside:avoid}
     .targetsSheet{break-before:page;page-break-before:always}
