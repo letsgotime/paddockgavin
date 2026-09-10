@@ -132,6 +132,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         setAuthBusy(false)
         return
       }
+      setSaveState("idle")
       await load()
     } catch {
       setAuthError("Could not reach the server.")
@@ -151,10 +152,20 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // way back in short of a hard refresh: soft navigation can restore the
       // page from cache without ever re-checking auth, so the password form
       // never came back on its own. A 401 here now forces it back onscreen.
+      //
+      // The map itself has to be torn down here too, not just the phase: the
+      // password screen and the ready screen are different branches of the
+      // same render, so React unmounts the live map's DOM node the moment
+      // phase changes. The Leaflet instance in mapRef still points at that
+      // now-detached node. Left alone, logging back in flips phase back to
+      // ready, the effect that builds the map sees mapRef already set and
+      // skips rebuilding it, and the map never appears on the fresh node.
       if (res.status === 401) {
+        mapRef.current?.remove()
+        mapRef.current = null
         setPhase("locked")
         setAuthError("Logged out. Enter the password again, then retry the move.")
-        setSaveState("error")
+        setSaveState("idle")
         return
       }
       if (!res.ok) throw new Error("failed")
