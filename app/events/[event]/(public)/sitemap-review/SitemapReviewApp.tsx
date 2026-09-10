@@ -292,23 +292,6 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         maxZoom: 20,
         attribution: cartoAttr,
       })
-      // Labels only, transparent everywhere else: the one thing a raw aerial
-      // photo cannot show on its own. Placed in labelsPane (above satellite's
-      // overlayPane, below markerPane) so they actually paint on top of the
-      // photo instead of under it. Two versions, light and dark ink, since
-      // one reads on the photo and the other on Dark.
-      const roadLabels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}{r}.png${cartoQuery}`, {
-        subdomains: "abcd",
-        maxZoom: 20,
-        attribution: cartoAttr,
-        pane: "labelsPane",
-      })
-      const darkLabels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/dark_only_labels/{z}/{x}/{y}{r}.png${cartoQuery}`, {
-        subdomains: "abcd",
-        maxZoom: 20,
-        attribution: cartoAttr,
-        pane: "labelsPane",
-      })
       satellite.addTo(map)
       // A tile layer computes its own grid from the map's current center and
       // zoom the moment it is added, unlike an image overlay, which only
@@ -318,7 +301,6 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // load, from inside leaflet.js itself. View goes first now.
       map.setMaxBounds(L.latLngBounds(IMG_BOUNDS))
       map.setView(CENTRE, 17)
-      if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
           { Satellite: satellite, "Roads (grayscale)": grayscale, Topo: topo, Dark: dark, Voyager: voyager },
@@ -326,19 +308,21 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           { position: "topright", collapsed: true },
         )
         .addTo(map)
-      // Grayscale, Topo and Voyager already carry their own labels baked
-      // into the style; stacking an overlay on top of those would just
-      // double up the same road names in a different typeface. Satellite
-      // and Dark are the two bases with none of their own, one per ink
-      // color so the text actually reads against what is under it.
-      if (cartoKey) {
-        map.on("baselayerchange", (e: any) => {
-          map.removeLayer(roadLabels)
-          map.removeLayer(darkLabels)
-          if (e.name === "Satellite") roadLabels.addTo(map)
-          else if (e.name === "Dark") darkLabels.addTo(map)
-        })
-      }
+      // Grayscale, Topo and Voyager already carry their own road labels
+      // baked into the style. Satellite and Dark had none of their own, so
+      // this used to overlay CARTO's OSM-sourced label tiles on top of
+      // them — text positioned against OSM's road centerline, which reads
+      // as floating well off the actual road the moment it sits over a
+      // real georeferenced photo instead of CARTO's own basemap, since the
+      // two disagree on exactly where this particular road runs. Same
+      // point EventPublic.tsx already labels this road at, same reasoning
+      // for using it: a hand-placed label on a spot actually checked
+      // against the photo beats an auto-generated one that never was.
+      L.marker([35.6308917, -86.5836787], {
+        icon: L.divIcon({ className: "mfRoadLabel", html: "Enon Church Rd", iconSize: [140, 16], iconAnchor: [70, 8] }),
+        interactive: false,
+        pane: "labelsPane",
+      }).addTo(map)
       // Leaflet's default attribution names Leaflet itself; the free tile
       // providers above require their own credit to stay usable, so keep
       // that and drop the rest, tucked small in the corner.
