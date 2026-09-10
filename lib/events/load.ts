@@ -71,6 +71,7 @@ export type MapFeatureGeometry =
   | { type: "path"; coords: [number, number][] }
 export interface MapFeatureRow {
   kind: string
+  slug: string
   name: string
   category: string | null
   blurb: string | null
@@ -105,7 +106,7 @@ export async function loadMapFeatures(eventId: string): Promise<MapFeatureRow[]>
   if (!p) return []
   try {
     const { rows } = await p.query(
-      `select kind, name, category, blurb, geometry
+      `select kind, slug, name, category, blurb, geometry
          from public.map_features
         where event_id = $1 and status <> 'hidden'
         order by case kind when 'zone' then 0 when 'poi' then 1 else 2 end, sort`,

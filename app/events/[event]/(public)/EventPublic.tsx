@@ -280,12 +280,20 @@ function groundsPct(lat: number, lng: number): [number, number] {
  * library shipped to a page that is otherwise JS-light. Anything whose
  * coordinates fall outside this particular crop (Ranch Gate, off the
  * highway) is left off the drawing rather than clipped at the edge.
+ *
+ * The view itself frames the show grounds, not the whole aerial crop: the
+ * fixed 0-100 viewBox this used to carry showed the same wide, mostly empty
+ * photo regardless of how tightly the real zones and points clustered
+ * inside it, on desktop and, worse, on a phone. Ranch Gate is excluded from
+ * that framing on purpose — the property's own entrance, a real quarter
+ * mile from the show floor, would pull the crop right back out to the
+ * over-wide view this replaces.
  */
 function GroundsMap({ features }: { features: MapFeatureRow[] }) {
   const inBounds = (x: number, y: number) => x >= 0 && x <= 100 && y >= 0 && y <= 100
   const zones = features.filter(
     (f): f is MapFeatureRow & { geometry: { type: "polygon"; coords: [number, number][] } } =>
-      f.kind === "zone" && f.geometry?.type === "polygon",
+      f.kind === "zone" && f.slug !== "ranch-gate" && f.geometry?.type === "polygon",
   )
   const routes = features.filter(
     (f): f is MapFeatureRow & { geometry: { type: "path"; coords: [number, number][] } } =>
@@ -299,14 +307,31 @@ function GroundsMap({ features }: { features: MapFeatureRow[] }) {
 
   const churchRd = groundsPct(35.6308917, -86.5836787)
 
+  const framePts = [
+    ...zones.flatMap((f) => f.geometry.coords.map(([lat, lng]) => groundsPct(lat, lng))),
+    ...pois.map((f) => groundsPct(...f.geometry.coords)),
+  ]
+  const PAD = 6
+  const vx = Math.max(0, Math.min(...framePts.map((p) => p[0])) - PAD)
+  const vy = Math.max(0, Math.min(...framePts.map((p) => p[1])) - PAD)
+  const vw = Math.min(100, Math.max(...framePts.map((p) => p[0])) + PAD) - vx
+  const vh = Math.min(100, Math.max(...framePts.map((p) => p[1])) + PAD) - vy
+  // Point radius and label size were tuned for a viewBox that always spanned
+  // the full 100 units. Reusing those same numbers against a much smaller
+  // vw would blow them up by however much tighter the crop is now, so they
+  // scale down by the same factor the crop scaled up, holding roughly the
+  // same size on screen a viewer actually sees regardless of how tight a
+  // given event's own footprint turns out to be.
+  const scale = vw / 100
+
   return (
     <div
       style={{
-        position: "relative", width: "100%", aspectRatio: "1750 / 1728", borderRadius: 16, overflow: "hidden",
+        position: "relative", width: "100%", aspectRatio: `${vw} / ${vh}`, borderRadius: 16, overflow: "hidden",
         border: "1px solid rgba(255,255,255,.14)", marginBottom: 26, background: "#0c1a14",
       }}
     >
-      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "100%" }}>
+      <svg viewBox={`${vx} ${vy} ${vw} ${vh}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", width: "100%", height: "100%" }}>
         <image href="/images/sitemap/ranch-sat.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="none" />
         <rect x="0" y="0" width="100" height="100" fill="rgba(10,21,35,.16)" />
         {routes.map((f) => (
@@ -338,17 +363,17 @@ function GroundsMap({ features }: { features: MapFeatureRow[] }) {
           const color = GROUNDS_COLORS[f.category || ""] || "#9AA4B2"
           const [x, y] = groundsPct(...f.geometry.coords)
           return (
-            <circle key={f.kind + f.name} cx={x} cy={y} r="1.1" fill={color} stroke="#0A1523" strokeWidth="0.35" vectorEffect="non-scaling-stroke" />
+            <circle key={f.kind + f.name} cx={x} cy={y} r={1.1 * scale} fill={color} stroke="#0A1523" strokeWidth="0.35" vectorEffect="non-scaling-stroke" />
           )
         })}
         <text
-          x={churchRd[0] - 1.5}
-          y={churchRd[1] + 2.6}
-          fontSize="2.7"
+          x={churchRd[0] - 1.5 * scale}
+          y={churchRd[1] + 2.6 * scale}
+          fontSize={2.7 * scale}
           fontWeight="700"
           fill="#fff"
           stroke="#0A1523"
-          strokeWidth="0.55"
+          strokeWidth={0.55 * scale}
           paintOrder="stroke"
           textAnchor="end"
         >

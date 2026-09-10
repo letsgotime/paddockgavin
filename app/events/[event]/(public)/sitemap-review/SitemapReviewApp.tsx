@@ -79,6 +79,22 @@ function rotateHandleFor(pts: [number, number][]): [number, number] {
   return [c[0] + (mid[0] - c[0]) * 1.5, c[1] + (mid[1] - c[1]) * 1.5]
 }
 
+// Every coordinate across every feature, for framing the default view on
+// the show grounds themselves rather than the fixed centre of the wider
+// aerial crop. Ranch Gate is left out on purpose: it is the property's own
+// entrance, a real quarter mile from the show floor, not a stray point to
+// average in. Folding it back in would pull the default view right back
+// out to the over-wide crop this exists to get away from.
+function eventFootprint(features: Feature[]): [number, number][] {
+  const pts: [number, number][] = []
+  for (const f of features) {
+    if (f.slug === "ranch-gate") continue
+    if (f.geometry.type === "point") pts.push(f.geometry.coords)
+    else pts.push(...f.geometry.coords)
+  }
+  return pts
+}
+
 export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const [phase, setPhase] = useState<"loading" | "locked" | "ready" | "error">("loading")
   const [features, setFeatures] = useState<Feature[]>([])
@@ -290,15 +306,21 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // there is nothing to show. Paired with an unpadded maxBounds, the
       // photo's own edge is now the hard edge of how far this map goes.
       //
-      // +0.3: this runs the instant the map container exists, and .mapEl's
-      // own height is a vh-based clamp, which can still be mid-reflow
-      // (scrollbar, font swap) at that exact moment. Asking for very
-      // slightly more zoom than the bare measurement calls for is a
-      // deliberate margin against a container that finishes a hair smaller
-      // than it measured, not an attempt at a precise fit.
+      // +0.3: this runs the instant the map container exists, which can
+      // still be mid-reflow (scrollbar, font swap) at that exact moment.
+      // Asking for very slightly more zoom than the bare measurement calls
+      // for is a deliberate margin against a container that finishes a
+      // hair smaller than it measured, not an attempt at a precise fit.
       map.setMaxBounds(L.latLngBounds(IMG_BOUNDS))
       map.setView(CENTRE, 17)
       map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true) + 0.3))
+      // CENTRE + 17 above is only the fallback for an empty feature list.
+      // The real default view frames the show grounds themselves: every
+      // zone, point and route pin, Ranch Gate excepted (see eventFootprint).
+      // Without this, the map opened on a wide crop chosen for the photo's
+      // own bounds, and a visitor had to zoom in themselves to find the show.
+      const footprint = eventFootprint(features)
+      if (footprint.length) map.fitBounds(L.latLngBounds(footprint), { padding: [28, 28] })
       if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
