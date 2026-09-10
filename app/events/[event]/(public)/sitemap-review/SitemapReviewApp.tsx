@@ -147,6 +147,16 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ id, geometry }),
       })
+      // A dropped cookie showed up as an endless, silent "not saved" with no
+      // way back in short of a hard refresh: soft navigation can restore the
+      // page from cache without ever re-checking auth, so the password form
+      // never came back on its own. A 401 here now forces it back onscreen.
+      if (res.status === 401) {
+        setPhase("locked")
+        setAuthError("Logged out. Enter the password again, then retry the move.")
+        setSaveState("error")
+        return
+      }
       if (!res.ok) throw new Error("failed")
       setSaveState("saved")
       setTimeout(() => setSaveState((s) => (s === "saved" ? "idle" : s)), 1500)
