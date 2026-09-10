@@ -199,22 +199,39 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         IMG_BOUNDS as unknown as [[number, number], [number, number]],
         { attribution: "Imagery Esri, Maxar, Earthstar Geographics" },
       )
-      const grayscale = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      // CARTO's raster basemaps sit under /rastertiles/ and, as of Sep 2026,
+      // require a key on the query string or every tile comes back a
+      // watermark reading "API KEY REQUIRED" instead of the map itself.
+      const cartoKey = process.env.NEXT_PUBLIC_CARTO_BASEMAPS_API_KEY
+      const cartoQuery = cartoKey ? `?key=${cartoKey}` : ""
+      const cartoAttr = "&copy; OpenStreetMap contributors &copy; CARTO"
+      const grayscale = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png${cartoQuery}`, {
         subdomains: "abcd",
         maxZoom: 20,
-        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+        attribution: cartoAttr,
       })
       const topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
         subdomains: "abc",
         maxZoom: 17,
         attribution: "Map data: &copy; OpenStreetMap contributors, SRTM. Map style: &copy; OpenTopoMap (CC-BY-SA)",
       })
-      const dark = L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+      const dark = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png${cartoQuery}`, {
         subdomains: "abcd",
         maxZoom: 20,
-        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+        attribution: cartoAttr,
+      })
+      // Labels only, transparent everywhere else: the one thing a raw aerial
+      // photo cannot show on its own. Added after satellite, so it paints on
+      // top within the shared tile pane without needing a pane of its own,
+      // and stays below every zone, pin and tooltip this tool draws, which
+      // all live in Leaflet's later panes regardless.
+      const roadLabels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}{r}.png${cartoQuery}`, {
+        subdomains: "abcd",
+        maxZoom: 20,
+        attribution: cartoAttr,
       })
       satellite.addTo(map)
+      if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
           { Satellite: satellite, "Roads (grayscale)": grayscale, Topo: topo, Dark: dark },
@@ -222,6 +239,16 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           { position: "topright", collapsed: true },
         )
         .addTo(map)
+      // Grayscale, Topo and Dark already carry their own labels baked into
+      // the style; stacking this overlay on top of those would just double
+      // up the same road names in a different typeface. Satellite is the
+      // only base with none of its own, so the overlay follows it alone.
+      if (cartoKey) {
+        map.on("baselayerchange", (e: any) => {
+          if (e.name === "Satellite") roadLabels.addTo(map)
+          else map.removeLayer(roadLabels)
+        })
+      }
       // Leaflet's default attribution names Leaflet itself; the free tile
       // providers above require their own credit to stay usable, so keep
       // that and drop the rest, tucked small in the corner.
