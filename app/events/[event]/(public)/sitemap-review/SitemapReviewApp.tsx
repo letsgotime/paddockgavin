@@ -54,6 +54,14 @@ const COLORS: Record<string, string> = {
   charity: "#6C7FF0",
   facility: "#2FC7C7",
   livestock: "#B08968",
+  // Sampled straight from the real mark (public/brand/rj-mark-320.png,
+  // solid fill pixels average #1423A0), then pushed to full saturation
+  // and lifted for a version that actually holds its own on a lit-up
+  // aerial photo instead of reading as navy-on-navy. Same hue, same
+  // brand, just turned up. Split into its own category: gate is a
+  // structure, not a route, which entry's orange (Gravel Drive) was
+  // never really the right fit for.
+  gate: "#0017D6",
 }
 function colorFor(f: Feature) {
   return COLORS[f.category || ""] || "#9AA4B2"

@@ -270,7 +270,7 @@ const GROUNDS_BOUNDS: [[number, number], [number, number]] = [
 const GROUNDS_COLORS: Record<string, string> = {
   vip: "#F2C94C", vendor: "#57C7F5", show: "#E5141A", parking: "#8A97A8",
   ops: "#4ED08A", food: "#C9A3FF", entry: "#FFB020", charity: "#6C7FF0", facility: "#2FC7C7",
-  livestock: "#B08968",
+  livestock: "#B08968", gate: "#0017D6",
 }
 function groundsPct(lat: number, lng: number): [number, number] {
   const [[south, west], [north, east]] = GROUNDS_BOUNDS
