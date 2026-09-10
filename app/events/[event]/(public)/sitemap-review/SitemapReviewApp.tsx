@@ -194,20 +194,20 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         attributionControl: false,
       })
 
-      /* Grayscale and Topo each need their own filter recipe, so each gets
-         its own pane rather than the single shared tile pane every other
-         base layer renders into unfiltered. CARTO's light_all is already
-         close to neutral; a contrast lift is what makes it read as a clean
-         canvas instead of flat. OpenTopoMap is the opposite problem: styled
-         after a German survey map, saturated and busy by design, so it gets
-         desaturated and lifted toward the muted, hillshade-first look these
-         satellite/road pins actually need to sit on top of. */
+      /* Grayscale and Topo each get their own pane so a filter on one never
+         touches the other or any unfiltered base layer sharing the default
+         pane. CARTO's light_all is already close to neutral; a contrast
+         lift is what makes it read as a clean canvas instead of flat.
+         Topo now runs on Thunderforest Outdoors rather than OpenTopoMap,
+         a style built for exactly this instead of a generic OSM reskin,
+         so it only needs a light touch, not the heavy desaturation a
+         busier source would still be fighting. */
       const grayscalePane = map.createPane("grayscalePane")
       grayscalePane.style.zIndex = "200"
       grayscalePane.style.filter = "grayscale(0.5) contrast(1.2) brightness(1.02)"
       const topoPane = map.createPane("topoPane")
       topoPane.style.zIndex = "200"
-      topoPane.style.filter = "saturate(0.35) contrast(1.15) brightness(1.03)"
+      topoPane.style.filter = "contrast(1.05) brightness(1.02)"
 
       const satellite = L.imageOverlay(
         "/images/sitemap/ranch-sat.jpg",
@@ -226,13 +226,11 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         attribution: cartoAttr,
         pane: "grayscalePane",
       })
-      const topo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+      const thunderforestKey = process.env.NEXT_PUBLIC_THUNDERFOREST_API_KEY
+      const topo = L.tileLayer(`https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png${thunderforestKey ? `?apikey=${thunderforestKey}` : ""}`, {
         subdomains: "abc",
         maxZoom: 20,
-        /* OpenTopoMap's own tiles stop at 17; past that Leaflet upscales
-           the zoom-17 tile instead of requesting one that does not exist. */
-        maxNativeZoom: 17,
-        attribution: "Map data: &copy; OpenStreetMap contributors, SRTM. Map style: &copy; OpenTopoMap (CC-BY-SA)",
+        attribution: "Maps &copy; Thunderforest, data &copy; OpenStreetMap contributors",
         pane: "topoPane",
       })
       const dark = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png${cartoQuery}`, {
