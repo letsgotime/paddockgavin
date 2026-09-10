@@ -327,7 +327,15 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     const HANDLE = coarse ? 26 : 16
     const HANDLE_SMALL = coarse ? 22 : 12
     const ROTATE = coarse ? 30 : 22
-    const POINT = coarse ? 20 : 14
+    // Sized to comfortably hold a two-digit number, not just a plain dot:
+    // 4px bigger than the old label-less version in each pointer mode.
+    const POINT = coarse ? 24 : 18
+
+    // A permanent name tooltip can only ever make overlap less likely, never
+    // impossible: two names close enough together still collide regardless
+    // of font size. A number cannot, the same fix the print view already
+    // uses, brought here as the default instead of an alternate view.
+    const numberOf = new Map(features.map((f, i) => [f.id, i + 1]))
 
     for (const f of features) {
       const color = colorFor(f)
@@ -348,12 +356,18 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           color, weight: 1, dashArray: "2 5", opacity: 0.6, interactive: false,
         }).addTo(group)
 
-        // The center dot is the click target and the color identifier at a
-        // glance; the name now floats above it instead of sitting on top of it.
+        // The number is the permanent, always-legible identifier; the full
+        // name is a bonus on hover, never the only way to read it, and
+        // never at risk of colliding with a neighbor since only one hover
+        // tooltip is ever open at a time.
         const centerMarker = L.marker(centroidOf(pts), {
-          icon: L.divIcon({ className: "mfPoint mfZoneCenter", html: `<span style="background:${color}"></span>`, iconSize: [POINT, POINT] }),
+          icon: L.divIcon({
+            className: "mfPoint mfZoneCenter",
+            html: `<span style="background:${color}">${numberOf.get(f.id)}</span>`,
+            iconSize: [POINT, POINT],
+          }),
         }).addTo(group)
-        centerMarker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
+        centerMarker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", interactive: false })
         centerMarker.on("click", () => poly.openPopup(centerMarker.getLatLng()))
 
         const cornerMarkers = pts.map((pt, i) =>
@@ -425,9 +439,13 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const pos = f.geometry.coords
         const marker = L.marker(pos, {
           draggable: true,
-          icon: L.divIcon({ className: "mfPoint", html: `<span style="background:${color}"></span>`, iconSize: [POINT, POINT] }),
+          icon: L.divIcon({
+            className: "mfPoint",
+            html: `<span style="background:${color}">${numberOf.get(f.id)}</span>`,
+            iconSize: [POINT, POINT],
+          }),
         }).addTo(group)
-        marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", permanent: true, interactive: false })
+        marker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", interactive: false })
         marker.on("dragend", (e: any) => {
           const p = e.target.getLatLng()
           saveGeometryLocal(f, { type: "point", coords: [p.lat, p.lng] })
@@ -441,9 +459,22 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         const line = L.polyline(pts, baseStyle).addTo(group)
         line._smrBase = baseStyle
         line._smrHi = hiStyle
-        line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", permanent: true, interactive: false })
+        line.bindTooltip(esc(f.name), { direction: "top", className: "mfTip", interactive: false })
         line.bindPopup(popupHtml(f))
         primaryRef.current.set(f.id, line)
+
+        // A line has no single point to badge the way a zone or a point
+        // does; its own centroid stands in for one, non-draggable, purely
+        // a number to click or hover.
+        const routeMarker = L.marker(centroidOf(pts), {
+          icon: L.divIcon({
+            className: "mfPoint mfRouteCenter",
+            html: `<span style="background:${color}">${numberOf.get(f.id)}</span>`,
+            iconSize: [POINT, POINT],
+          }),
+        }).addTo(group)
+        routeMarker.bindTooltip(esc(f.name), { direction: "top", offset: [0, -8], className: "mfTip", interactive: false })
+        routeMarker.on("click", () => line.openPopup(routeMarker.getLatLng()))
 
         pts.forEach((pt, i) => {
           L.marker(pt, {
@@ -624,6 +655,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
                     onMouseLeave={() => highlightFeature(f.id, false)}
                   >
                     <i style={{ background: colorFor(f) }} />
+                    <b className="legendNum">{features.indexOf(f) + 1}</b>
                     <span>{f.name}</span>
                     {f.status === "hidden" && <em className="tag tagHidden">hidden</em>}
                     {f.status === "draft" && <em className="tag">draft</em>}

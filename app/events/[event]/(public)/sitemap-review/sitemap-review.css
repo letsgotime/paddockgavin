@@ -72,6 +72,11 @@
 }
 .smrApp .legendItem:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.26); color: #fff; }
 .smrApp .legendItem i { width: 10px; height: 10px; border-radius: 3px; flex: 0 0 auto; }
+.smrApp .legendItem .legendNum {
+  display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px;
+  border-radius: 50%; background: #fff; color: #14181d; font-family: ui-monospace, monospace;
+  font-style: normal; font-size: 10px; font-weight: 800; flex: 0 0 auto;
+}
 .smrApp .legendItem .tag {
   font-family: ui-monospace, monospace; font-style: normal; font-size: 10px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--mute); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 6px;
@@ -104,9 +109,11 @@
 }
 .mfAngleTip.leaflet-tooltip::before { display: none; }
 .mfPoint span {
-  display: block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); cursor: grab; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); cursor: grab; transform: translate(-50%, -50%);
+  font-family: ui-monospace, monospace; font-size: 10px; font-weight: 800; color: #14181d; line-height: 1;
 }
+.mfRouteCenter span { cursor: pointer; }
 @keyframes mfPulse {
   0%, 100% { transform: translate(-50%, -50%) scale(1); }
   50% { transform: translate(-50%, -50%) scale(1.4); }
@@ -177,8 +184,8 @@
   .mfHandleSmall { width: 22px !important; height: 22px !important; }
   .mfRotateHandle { width: 30px !important; height: 30px !important; }
   .mfRotateHandle svg { width: 19px; height: 19px; }
-  .mfPoint { width: 20px !important; height: 20px !important; }
-  .mfPoint span { width: 20px; height: 20px; }
+  .mfPoint { width: 24px !important; height: 24px !important; }
+  .mfPoint span { width: 24px; height: 24px; font-size: 11px; }
   .legendItem { padding: 9px 14px 9px 10px; }
 }
 
