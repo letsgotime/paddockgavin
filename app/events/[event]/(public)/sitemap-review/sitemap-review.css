@@ -36,15 +36,20 @@
 .smrApp.smrReady .titleRow { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 .smrApp.smrReady h1 { font-family: Cinzel, Georgia, serif; font-weight: 800; font-size: clamp(22px, 4vw, 30px); color: var(--ink); margin: 0 0 6px; }
 .smrApp.smrReady .sub { font-size: 13.5px; margin: 0; max-width: 62ch; }
-.smrApp .printBtn {
+.smrApp .titleBtns { display: flex; gap: 8px; margin-bottom: 6px; }
+.smrApp .printBtn, .smrApp .legendBtn {
   font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   color: #fff; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--rule); border-radius: 999px;
-  padding: 7px 16px; cursor: pointer; transition: background 0.15s; margin-bottom: 6px;
+  padding: 7px 16px; cursor: pointer; transition: background 0.15s;
 }
-.smrApp .printBtn:hover { background: rgba(255, 255, 255, 0.16); }
+.smrApp .printBtn:hover, .smrApp .legendBtn:hover { background: rgba(255, 255, 255, 0.16); }
+.smrApp .legendBtn { border-color: rgba(242, 201, 76, 0.5); color: #F2C94C; }
+.smrApp .legendBtn:hover { background: rgba(242, 201, 76, 0.12); }
 .printView { display: none; }
 .smrApp .mapWrap { position: relative; margin: 14px clamp(14px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 13px; overflow: hidden; }
-.smrApp .mapEl { height: min(72vh, 680px); min-height: 360px; width: 100%; background: #0c1a14; }
+/* Capped well short of the viewport on purpose: the map filling the whole
+   frame with no visible edge left no hint the legend existed below it. */
+.smrApp .mapEl { height: min(50vh, 520px); min-height: 320px; width: 100%; background: #0c1a14; }
 .smrApp .saveTag {
   position: absolute; top: 10px; right: 10px; z-index: 1000; font-family: ui-monospace, monospace; font-size: 10.5px;
   letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: rgba(10, 21, 35, 0.85);

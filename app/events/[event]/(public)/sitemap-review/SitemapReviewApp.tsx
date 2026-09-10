@@ -92,6 +92,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const layersRef = useRef<Map<string, any>>(new Map())
   const primaryRef = useRef<Map<string, any>>(new Map())
   const coordElRef = useRef<HTMLDivElement | null>(null)
+  const legendRef = useRef<HTMLDivElement | null>(null)
 
   const load = useCallback(async () => {
     const res = await fetch(`/api/map-features?event=${eventSlug}`)
@@ -517,9 +518,18 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         </div>
         <div className="titleRow">
           <h1>Site Plan Review</h1>
-          <button type="button" className="printBtn" onClick={() => window.print()}>
-            Print
-          </button>
+          <div className="titleBtns">
+            <button
+              type="button"
+              className="legendBtn"
+              onClick={() => legendRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            >
+              Legend &darr;
+            </button>
+            <button type="button" className="printBtn" onClick={() => window.print()}>
+              Print
+            </button>
+          </div>
         </div>
         <p className="sub">
           Drag a corner pin to move or resize a zone, the gold pin to rotate it. Drag a point or a road pin to move
@@ -533,7 +543,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         </div>
         <div ref={coordElRef} className="coordReadout">35.63175, -86.58083</div>
       </div>
-      <div className="legend">
+      <div className="legend" ref={legendRef}>
         {(
           [
             ["zone", "Zones"],
