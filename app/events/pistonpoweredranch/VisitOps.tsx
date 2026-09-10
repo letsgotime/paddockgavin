@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react"
  * alone cannot show, which is how far through something we are.
  *
  * Every value is real. The address is the one on the deed, the coordinates are
- * the surveyed turn in off Highway 41-A, and the weather is the National
+ * the surveyed turn in off Enon Church Road, and the weather is the National
  * Weather Service grid the ranch sits in. When a source is silent the card
  * says so rather than showing a plausible number.
  */
@@ -155,7 +155,7 @@ export default function VisitOps() {
             <div style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#00D2BE", fontWeight: 600 }}>Finding it</div>
             <div style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(17px,2vw,21px)", color: "#fff", marginTop: 8, letterSpacing: "-.015em" }}>{ADDRESS}</div>
             <div style={{ fontFamily: ARCHIVO, fontSize: 13.5, color: "#9BA7B5", marginTop: 5, lineHeight: 1.5 }}>
-              Rancho Jaramillo, Bedford County. Turn in off Highway 41-A, then the ranch road.
+              Rancho Jaramillo, Bedford County. Turn in off Enon Church Road, then the ranch road.
               <span style={{ fontFamily: MONO, color: "#7F8A99" }}> {GATE.lat}, {GATE.lng}</span>
             </div>
           </div>

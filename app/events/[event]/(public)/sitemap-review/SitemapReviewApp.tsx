@@ -592,7 +592,7 @@ function PrintView({ features }: { features: Feature[] }) {
   const pois = features.filter((f): f is Feature & { geometry: { type: "point"; coords: [number, number] } } =>
     f.kind === "poi" && f.geometry.type === "point",
   )
-  // Ranch Gate sits off Highway 41-A, outside the satellite crop's own
+  // Ranch Gate sits off Enon Church Road, outside the satellite crop's own
   // bounds (that crop is the property itself, not the public road). Drawn
   // off the edge it would just clip out of the SVG viewBox, so it is left
   // off the drawing and kept in the legend text instead.

@@ -564,7 +564,7 @@ function spectatorT(stage: Stage, v: Vars): Rendered | null {
           rows: [
             { label: "Gates", value: "9am tomorrow" },
             { label: "Finish", value: "3pm" },
-            { label: "Parking", value: "Signed from Highway 41-A, free" },
+            { label: "Parking", value: "Signed from Enon Church Road, free" },
             { label: "Cost", value: "Nothing, for any of it" },
           ],
         }
