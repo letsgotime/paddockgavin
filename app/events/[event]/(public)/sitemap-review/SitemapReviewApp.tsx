@@ -192,6 +192,11 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         zoomSnap: 0,
         zoomDelta: 0.5,
         attributionControl: false,
+        // The map sits mid-page with the legend below it. Leaflet's default
+        // traps every scroll-wheel tick the moment the cursor crosses the
+        // map, so a normal scroll down the page zooms the map instead of
+        // passing through it. The +/- buttons already cover wheel-free zoom.
+        scrollWheelZoom: false,
       })
 
       /* Grayscale and Topo each get their own pane so a filter on one never
@@ -274,8 +279,19 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // all sent it calculating against nothing, which Leaflet did not fail
       // on quietly: real "reading parentNode of undefined" errors, every
       // load, from inside leaflet.js itself. View goes first now.
-      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS).pad(1.2))
+      //
+      // minZoom was a flat 13 before, which on most screens let a user zoom
+      // out two clicks from the default view and see past the photo's own
+      // edge into the empty map canvas behind it, road labels floating over
+      // nothing. getBoundsZoom(bounds, true) asks Leaflet for the opposite
+      // of fitBounds: not the zoom where the photo fits inside the view, but
+      // the minimum zoom where the photo still covers the view completely,
+      // the same "cover" a CSS background-size would give. Below that,
+      // there is nothing to show. Paired with an unpadded maxBounds, the
+      // photo's own edge is now the hard edge of how far this map goes.
+      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS))
       map.setView(CENTRE, 17)
+      map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true)))
       if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
