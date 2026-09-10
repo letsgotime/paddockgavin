@@ -819,7 +819,11 @@ export default function RanchControlApp() {
                 {LAUNCH.map(([surface, who, state], i) => (
                   <tr key={i}>
                     <td>
-                      <span className="nm">{surface}</span>
+                      {surface.startsWith("/") ? (
+                        <a className="nm" href={surface}>{surface}</a>
+                      ) : (
+                        <a className="nm" href={`https://${surface}`} target="_blank" rel="noopener">{surface}</a>
+                      )}
                     </td>
                     <td style={{ color: "var(--mute)", fontSize: 13.5 }}>{who}</td>
                     <td style={{ fontSize: 13.5 }}>{state}</td>

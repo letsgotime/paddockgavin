@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import SitemapReviewApp from "./SitemapReviewApp"
+import { SiteNav } from "@/components/site-nav"
 
 /**
  * The review tool for public.map_features.
@@ -30,6 +31,7 @@ export default async function SitemapReviewPage({ params }: { params: Promise<{ 
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&display=swap" />
       <link rel="stylesheet" href="/vendor/leaflet.css" />
+      <SiteNav active="events" />
       <SitemapReviewApp eventSlug={event} />
     </>
   )

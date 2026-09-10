@@ -187,7 +187,7 @@ export const LAUNCH: [string, string, string][] = [
   ["/sponsor", "Sponsors", "Live. No rate card on it, deliberately."],
   ["/entries", "Everyone", "Live. Reads accepted cars only; none accepted yet."],
   ["/store", "Everyone", "Live. Most rows still price TBD."],
-  ["/site-map", "Everyone", "Live. Satellite, coordinates, LZ provisional."],
+  ["/sitemap-review", "Team", "Live. Satellite, coordinates, LZ provisional."],
   ["/status", "Entrants", "Live. The link in every confirmation email."],
   ["/targets", "Team", "Live. Outreach board with sending and a log."],
   ["/console", "Team", "Live. Money behind can_see_money()."],
