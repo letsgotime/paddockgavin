@@ -182,14 +182,15 @@
   .printHead p { font-size: 10pt; color: #45505e; margin: 0; }
   .printMapBox { width: 100%; border: 1px solid #9aa4b2; break-inside: avoid; }
   .printSvg { display: block; width: 100%; height: auto; }
-  .printLabel {
-    font-size: 2.6px; font-weight: 700; fill: #fff; text-anchor: middle; dominant-baseline: middle;
-    paint-order: stroke; stroke: #14181d; stroke-width: 0.55px; stroke-linejoin: round;
-  }
-  .printLabelSm { font-size: 2.15px; }
+  .printBadgeNum { font-size: 2.1px; font-weight: 800; fill: #14181d; }
   .printLegend { display: flex; flex-wrap: wrap; gap: 5pt 16pt; margin-top: 0.2in; font-size: 10pt; break-inside: avoid; }
-  .printLegend span { display: flex; align-items: center; gap: 5pt; }
+  .printLegend span { display: flex; align-items: center; gap: 6pt; }
   .printLegend i { width: 8pt; height: 8pt; border-radius: 2pt; flex: 0 0 auto; }
+  .printLegendNum {
+    display: inline-flex; align-items: center; justify-content: center; width: 17pt; height: 17pt;
+    border-radius: 50%; background: #fff; border: 1px solid #14181d; color: #14181d; font-size: 10pt;
+    font-weight: 800; flex: 0 0 auto;
+  }
   .printFoot {
     display: flex; justify-content: space-between; margin-top: 0.24in; padding-top: 0.1in;
     border-top: 1px solid #ccc; font-size: 10pt; color: #77828f;

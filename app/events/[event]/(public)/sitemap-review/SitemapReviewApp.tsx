@@ -590,6 +590,26 @@ function PrintView({ features }: { features: Feature[] }) {
     const [x, y] = pctIn(...f.geometry.coords)
     return x >= 0 && x <= 100 && y >= 0 && y <= 100
   })
+  // A name's own length used to decide whether it collided with its
+  // neighbor, not how much room the spot actually had: "Encanto Blossom
+  // Orchard Farmers Market" reached clean across the gap to "Community
+  // Elementary Corner" even though the two pins themselves were not that
+  // close. A number can't do that regardless of name length or how tight
+  // a cluster gets, which is why every venue map with this many spots in
+  // one small area is numbered pins plus a legend, not text on the photo.
+  const drawn = [...zones, ...routes, ...onMap]
+  const numberOf = new Map(drawn.map((f, i) => [f.id, i + 1]))
+  function badge(x: number, y: number, n: number | undefined, key: string) {
+    if (n === undefined) return null
+    return (
+      <g key={key}>
+        <circle cx={x} cy={y} r="1.9" fill="#fff" stroke="#14181d" strokeWidth="0.3" />
+        <text x={x} y={y} textAnchor="middle" dominantBaseline="central" className="printBadgeNum">
+          {n}
+        </text>
+      </g>
+    )
+  }
 
   return (
     <div className="printView">
@@ -618,9 +638,6 @@ function PrintView({ features }: { features: Feature[] }) {
                   strokeWidth="0.35"
                   vectorEffect="non-scaling-stroke"
                 />
-                <text x={cx} y={cy} className="printLabel">
-                  {f.name}
-                </text>
               </g>
             )
           })}
@@ -637,26 +654,26 @@ function PrintView({ features }: { features: Feature[] }) {
           ))}
           {onMap.map((f) => {
             const [x, y] = pctIn(...f.geometry.coords)
-            return (
-              <g key={f.id}>
-                <circle cx={x} cy={y} r="0.9" fill={colorFor(f)} stroke="#14181d" strokeWidth="0.25" vectorEffect="non-scaling-stroke" />
-                <text x={x} y={y - 1.7} className="printLabel printLabelSm">
-                  {f.name}
-                </text>
-              </g>
-            )
+            return <circle key={f.id} cx={x} cy={y} r="0.9" fill={colorFor(f)} stroke="#14181d" strokeWidth="0.25" vectorEffect="non-scaling-stroke" />
           })}
+          {zones.map((f) => badge(...pctIn(...centroidOf(f.geometry.coords)), numberOf.get(f.id), f.id + "-n"))}
+          {routes.map((f) => badge(...pctIn(...centroidOf(f.geometry.coords)), numberOf.get(f.id), f.id + "-n"))}
+          {onMap.map((f) => badge(...pctIn(...f.geometry.coords), numberOf.get(f.id), f.id + "-n"))}
         </svg>
       </div>
       <div className="printLegend">
-        {[...zones, ...routes, ...pois].map((f) => (
-          <span key={f.id}>
-            <i style={{ background: colorFor(f) }} />
-            {f.name}
-            {f.status === "hidden" ? " (not on the public page)" : ""}
-            {f.kind === "poi" && !onMap.some((m) => m.id === f.id) ? " (off this crop, near the highway)" : ""}
-          </span>
-        ))}
+        {[...zones, ...routes, ...pois].map((f) => {
+          const n = numberOf.get(f.id)
+          return (
+            <span key={f.id}>
+              <i style={{ background: colorFor(f) }} />
+              {n !== undefined && <b className="printLegendNum">{n}</b>}
+              {f.name}
+              {f.status === "hidden" ? " (not on the public page)" : ""}
+              {f.kind === "poi" && n === undefined ? " (off this crop, near the highway)" : ""}
+            </span>
+          )
+        })}
       </div>
       <div className="printFoot">
         <span>Piston Powered Ranch, site plan for internal reference</span>
