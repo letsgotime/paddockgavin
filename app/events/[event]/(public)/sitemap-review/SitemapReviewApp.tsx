@@ -37,6 +37,12 @@ const IMG_BOUNDS: [[number, number], [number, number]] = [
   [35.6392011, -86.574083],
 ]
 
+// Every category gets its own colour, no two alike. charity and facility
+// used to double up on ops's green and vendor's blue respectively, which
+// is what made the legend read as fewer categories than it actually had.
+// livestock is new, split out of facility, which had been the catch-all
+// for both actual public facilities (First Aid, Restrooms) and the two
+// animal pens, unrelated things sharing one swatch for no real reason.
 const COLORS: Record<string, string> = {
   vip: "#F2C94C",
   vendor: "#57C7F5",
@@ -45,8 +51,9 @@ const COLORS: Record<string, string> = {
   ops: "#4ED08A",
   food: "#C9A3FF",
   entry: "#FFB020",
-  charity: "#4ED08A",
-  facility: "#57C7F5",
+  charity: "#6C7FF0",
+  facility: "#2FC7C7",
+  livestock: "#B08968",
 }
 function colorFor(f: Feature) {
   return COLORS[f.category || ""] || "#9AA4B2"
