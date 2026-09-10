@@ -295,32 +295,8 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // all sent it calculating against nothing, which Leaflet did not fail
       // on quietly: real "reading parentNode of undefined" errors, every
       // load, from inside leaflet.js itself. View goes first now.
-      //
-      // minZoom was a flat 13 before, which on most screens let a user zoom
-      // out two clicks from the default view and see past the photo's own
-      // edge into the empty map canvas behind it, road labels floating over
-      // nothing. getBoundsZoom(bounds, true) asks Leaflet for the opposite
-      // of fitBounds: not the zoom where the photo fits inside the view, but
-      // the minimum zoom where the photo still covers the view completely,
-      // the same "cover" a CSS background-size would give. Below that,
-      // there is nothing to show. Paired with an unpadded maxBounds, the
-      // photo's own edge is now the hard edge of how far this map goes.
-      //
-      // +0.3: this runs the instant the map container exists, which can
-      // still be mid-reflow (scrollbar, font swap) at that exact moment.
-      // Asking for very slightly more zoom than the bare measurement calls
-      // for is a deliberate margin against a container that finishes a
-      // hair smaller than it measured, not an attempt at a precise fit.
       map.setMaxBounds(L.latLngBounds(IMG_BOUNDS))
       map.setView(CENTRE, 17)
-      map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true) + 0.3))
-      // CENTRE + 17 above is only the fallback for an empty feature list.
-      // The real default view frames the show grounds themselves: every
-      // zone, point and route pin, Ranch Gate excepted (see eventFootprint).
-      // Without this, the map opened on a wide crop chosen for the photo's
-      // own bounds, and a visitor had to zoom in themselves to find the show.
-      const footprint = eventFootprint(features)
-      if (footprint.length) map.fitBounds(L.latLngBounds(footprint), { padding: [28, 28] })
       if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
@@ -351,6 +327,35 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         if (coordElRef.current) coordElRef.current.textContent = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`
       })
       mapRef.current = map
+      // Both calls below read the container's real pixel size, and both
+      // used to run in this same synchronous block, right as the container
+      // was created — a size read at that exact instant proved unreliable
+      // (a fitBounds tried this way landed zoomed into one corner of the
+      // grounds instead of framing all of it, confirmed live, not a fixed
+      // 100% of the time but often enough to matter). One requestAnimationFrame
+      // is enough for the browser to finish the layout pass the aspect-ratio
+      // container triggers; invalidateSize makes Leaflet re-read the
+      // now-settled size before either calculation runs against it.
+      //
+      // minZoom: getBoundsZoom(bounds, true) asks Leaflet for the opposite
+      // of fitBounds — not the zoom where the photo fits inside the view,
+      // but the minimum zoom where the photo still covers the view
+      // completely, the same "cover" a CSS background-size would give.
+      // Below that, there is nothing to show. Paired with an unpadded
+      // maxBounds, the photo's own edge is now the hard edge of how far
+      // this map goes.
+      //
+      // fitBounds: frames the show grounds themselves, every zone and
+      // point pin, Ranch Gate excepted (see eventFootprint) — without it
+      // the map opened on the wide crop chosen for the photo's own bounds,
+      // and a visitor had to zoom in themselves to find the show.
+      requestAnimationFrame(() => {
+        if (cancelled) return
+        map.invalidateSize({ pan: false })
+        map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true) + 0.3))
+        const footprint = eventFootprint(features)
+        if (footprint.length) map.fitBounds(L.latLngBounds(footprint), { padding: [28, 28] })
+      })
       // Popups are recreated on every render, so the copy-coordinates button
       // inside them is wired once here by delegation rather than per-popup.
       mapElRef.current?.addEventListener("click", (e) => {
