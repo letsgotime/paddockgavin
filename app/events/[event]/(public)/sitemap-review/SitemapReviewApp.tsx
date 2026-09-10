@@ -208,6 +208,13 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       const topoPane = map.createPane("topoPane")
       topoPane.style.zIndex = "200"
       topoPane.style.filter = "contrast(1.05) brightness(1.02)"
+      // Satellite is an L.imageOverlay, which defaults to Leaflet's
+      // overlayPane (z-index 400) — well above the default tilePane (200)
+      // that a plain tile layer would land in. The labels layers below need
+      // their own pane above 400, or they paint and never get seen, sitting
+      // under the satellite photo on every load.
+      const labelsPane = map.createPane("labelsPane")
+      labelsPane.style.zIndex = "450"
 
       const satellite = L.imageOverlay(
         "/images/sitemap/ranch-sat.jpg",
@@ -244,20 +251,21 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         attribution: cartoAttr,
       })
       // Labels only, transparent everywhere else: the one thing a raw aerial
-      // photo cannot show on its own. Added after satellite, so it paints on
-      // top within the shared tile pane without needing a pane of its own,
-      // and stays below every zone, pin and tooltip this tool draws, which
-      // all live in Leaflet's later panes regardless. Two versions, light
-      // and dark ink, since one reads on the photo and the other on Dark.
+      // photo cannot show on its own. Placed in labelsPane (above satellite's
+      // overlayPane, below markerPane) so they actually paint on top of the
+      // photo instead of under it. Two versions, light and dark ink, since
+      // one reads on the photo and the other on Dark.
       const roadLabels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}{r}.png${cartoQuery}`, {
         subdomains: "abcd",
         maxZoom: 20,
         attribution: cartoAttr,
+        pane: "labelsPane",
       })
       const darkLabels = L.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/dark_only_labels/{z}/{x}/{y}{r}.png${cartoQuery}`, {
         subdomains: "abcd",
         maxZoom: 20,
         attribution: cartoAttr,
+        pane: "labelsPane",
       })
       satellite.addTo(map)
       // A tile layer computes its own grid from the map's current center and
