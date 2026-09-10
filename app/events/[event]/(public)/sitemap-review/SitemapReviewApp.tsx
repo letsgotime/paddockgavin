@@ -243,6 +243,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       })
       satellite.addTo(map)
       if (cartoKey) roadLabels.addTo(map)
+      console.log("[map debug]", { cartoKeyPresent: !!cartoKey, cartoKeyLen: cartoKey?.length, hasRoadLabels: map.hasLayer(roadLabels) })
       L.control
         .layers(
           { Satellite: satellite, "Roads (grayscale)": grayscale, Topo: topo, Dark: dark, Voyager: voyager },
