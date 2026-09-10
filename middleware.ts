@@ -46,6 +46,7 @@ const SHORT_PATHS = new Set([
      linked from anywhere public; the short link is the only address it has. */
   "/ranchcontrol",
   "/sitemap-review",
+  "/meetingupdates",
 ])
 
 export function middleware(req: NextRequest) {
