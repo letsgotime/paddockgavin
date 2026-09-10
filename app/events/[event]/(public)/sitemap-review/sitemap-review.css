@@ -155,6 +155,17 @@
 }
 .leaflet-control-attribution a { color: #8a94a3 !important; }
 
+/* The full credit line runs close to the map's whole width once the
+   viewport gets narrow enough, which put it directly under the
+   coordinate readout in the same bottom strip. Truncated here instead
+   of fixed by moving either control, since neither has anywhere else
+   sensible to go without crowding the zoom buttons or the scale bar. */
+@media (max-width: 480px) {
+  .leaflet-control-attribution {
+    max-width: 148px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+}
+
 /* iPhone first: a fingertip needs a bigger target than a mouse cursor does. */
 @media (pointer: coarse) {
   .mfHandle { width: 26px; height: 26px; }
