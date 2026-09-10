@@ -242,8 +242,15 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
         attribution: cartoAttr,
       })
       satellite.addTo(map)
+      // A tile layer computes its own grid from the map's current center and
+      // zoom the moment it is added, unlike an image overlay, which only
+      // needs its own fixed bounds. Adding one before the map has a view at
+      // all sent it calculating against nothing, which Leaflet did not fail
+      // on quietly: real "reading parentNode of undefined" errors, every
+      // load, from inside leaflet.js itself. View goes first now.
+      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS).pad(1.2))
+      map.setView(CENTRE, 17)
       if (cartoKey) roadLabels.addTo(map)
-      console.log("[map debug]", { cartoKeyPresent: !!cartoKey, cartoKeyLen: cartoKey?.length, hasRoadLabels: map.hasLayer(roadLabels) })
       L.control
         .layers(
           { Satellite: satellite, "Roads (grayscale)": grayscale, Topo: topo, Dark: dark, Voyager: voyager },
@@ -268,9 +275,6 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // providers above require their own credit to stay usable, so keep
       // that and drop the rest, tucked small in the corner.
       L.control.attribution({ prefix: false, position: "bottomright" }).addTo(map)
-
-      map.setMaxBounds(L.latLngBounds(IMG_BOUNDS).pad(1.2))
-      map.setView(CENTRE, 17)
       L.control.scale({ imperial: true, metric: true, position: "bottomleft" }).addTo(map)
       map.on("mousemove", (e: any) => {
         if (coordElRef.current) coordElRef.current.textContent = `${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`
