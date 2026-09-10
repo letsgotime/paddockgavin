@@ -74,7 +74,15 @@ const nextConfig: NextConfig = {
     if (CAN_AUTH && CAN_BLOB) console.log("[ranch] every ranch endpoint is served by this deployment")
 
     return {
-      beforeFiles: stillOverThere,
+      /* public/favicon.ico is a real file at that exact path, so an afterFiles
+         rewrite never runs for it — the filesystem always answers first. This
+         one has to go before it, or the ranch door keeps handing out the
+         paddock's icon at the one URL a crawler checks without reading the
+         page. */
+      beforeFiles: [
+        { source: "/favicon.ico", destination: "/brand/rj-favicon.ico", has: RANCH_HOST },
+        ...stillOverThere,
+      ],
       afterFiles: [
         ...TOOL_PAGES.flatMap(page),
         /* The singular reads better in a message and people type it. */
