@@ -105,7 +105,7 @@ function Band({ band, slug, mark }: { band: EventBand; slug: string; mark?: Reac
       <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}>
         {mark}
         {band.kicker && (
-          <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>{band.kicker}</span>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>{band.kicker}</span>
         )}
         <h2 style={{ margin: 0, fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.6vw,48px)", lineHeight: 1.05, color: "var(--paper)", maxWidth: "20ch" }}>
           {band.title}
@@ -152,7 +152,7 @@ function Teaser({ teaser, slug }: { teaser: NonNullable<EventContent["teaser"]>;
           </div>
           <div className="evTeaserSay">
             {teaser.kicker && (
-              <span style={{ fontFamily: MONO, fontSize: "clamp(10px,1.2vw,11.5px)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>{teaser.kicker}</span>
+              <span style={{ fontFamily: MONO, fontSize: "clamp(11.5px,1.3vw,13px)", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--accent)" }}>{teaser.kicker}</span>
             )}
             <h2 style={{ margin: "10px 0 0", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4vw,44px)", lineHeight: 1.06, color: "var(--paper)" }}>{teaser.title}</h2>
             <p style={{ margin: "16px 0 0", fontFamily: "var(--body)", fontSize: "clamp(15px,1.7vw,18px)", lineHeight: 1.62, color: "#C9D1DB" }}>{teaser.body}</p>
@@ -554,7 +554,7 @@ export default function EventPublic({
       {hero && (
         <nav aria-label="Take part" style={{ borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto", padding: "16px clamp(16px,5vw,40px) 18px", display: "grid", gap: 10, gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", alignItems: "center" }}>
-            <span style={{ gridColumn: "1 / -1", fontFamily: MONO, fontSize: 11, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)" }}>Take part</span>
+            <span style={{ gridColumn: "1 / -1", fontFamily: MONO, fontSize: 13, letterSpacing: ".22em", textTransform: "uppercase", color: "var(--accent)" }}>Take part</span>
             {[
               { href: `/events/${event.slug}/entry`, label: "Enter a car" },
               { href: `/events/${event.slug}/vendor`, label: "Take a stall" },
@@ -616,7 +616,7 @@ export default function EventPublic({
               <div key={key} data-r="">
 <section id="the-day" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-            <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>The running order</p>
+            <p style={{ margin: 0, fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>The running order</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>How the day goes</h2>
             <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 1, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 14, overflow: "hidden" }}>
               {day.map((r, i) => (
@@ -635,7 +635,7 @@ export default function EventPublic({
               <div key={key} data-r="">
 <section id="the-ground" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-            <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
+            <p style={{ margin: 0, fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>On the ground</h2>
             <GroundsMap features={ground} />
             <div className={`evGround${groundOpen ? " open" : ""}`} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
@@ -662,7 +662,7 @@ export default function EventPublic({
               <div key={key} data-r="">
 <section id="partners-list" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-            <p style={{ margin: 0, fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>Confirmed so far</p>
+            <p style={{ margin: 0, fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>Confirmed so far</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>Who is with us</h2>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: "clamp(20px,3vw,38px)" }}>
               {[["Partners", partners.sponsors], ["On vendor row", partners.vendors]].map(([head, list]) => {
