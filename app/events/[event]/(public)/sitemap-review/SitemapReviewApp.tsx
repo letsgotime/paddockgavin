@@ -62,6 +62,12 @@ const COLORS: Record<string, string> = {
   // structure, not a route, which entry's orange (Gravel Drive) was
   // never really the right fit for.
   gate: "#0017D6",
+  // Live Music Standing Room was filed under show, same as Show Field and
+  // Stage, on the reasoning that it's part of the show experience. Same
+  // reasoning is exactly why that was wrong once it sat right next to
+  // Show Field on the map: an audience is a different kind of space from
+  // where the cars sit, and needed to read as one at a glance, not match.
+  audience: "#7EE236",
 }
 function colorFor(f: Feature) {
   return COLORS[f.category || ""] || "#9AA4B2"
