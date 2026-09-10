@@ -289,9 +289,16 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
       // the same "cover" a CSS background-size would give. Below that,
       // there is nothing to show. Paired with an unpadded maxBounds, the
       // photo's own edge is now the hard edge of how far this map goes.
+      //
+      // +0.3: this runs the instant the map container exists, and .mapEl's
+      // own height is a vh-based clamp, which can still be mid-reflow
+      // (scrollbar, font swap) at that exact moment. Asking for very
+      // slightly more zoom than the bare measurement calls for is a
+      // deliberate margin against a container that finishes a hair smaller
+      // than it measured, not an attempt at a precise fit.
       map.setMaxBounds(L.latLngBounds(IMG_BOUNDS))
       map.setView(CENTRE, 17)
-      map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true)))
+      map.setMinZoom(Math.max(13, map.getBoundsZoom(IMG_BOUNDS, true) + 0.3))
       if (cartoKey) roadLabels.addTo(map)
       L.control
         .layers(
