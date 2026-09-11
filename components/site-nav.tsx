@@ -118,8 +118,12 @@ export function SiteNav({ active = "home" }: Props) {
   const shiftLabel = shift === "day" ? "Day shift" : "Night shift"
 
   const groups    = ranch ? RANCH_GROUPS : NAV_GROUPS
-  const pillTone  = ranch ? "#F2C94C" : shiftColor
-  const pillLabel = ranch ? "The Ranch" : shiftLabel
+  /* Jaramillo Red, text weight (#FF1A21) rather than the fill weight
+     (#E5141A): the brand row's own note says the lit variant is for small
+     text and dots, never a fill, which is exactly what this pill is. Was
+     PaddockGavin's gold, which isn't Rancho Jaramillo's mark at all. */
+  const pillTone  = ranch ? "#FF1A21" : shiftColor
+  const pillLabel = ranch ? "Rancho Jaramillo" : shiftLabel
   const pillValue = ranch ? (days === 0 ? "Today" : days === 1 ? "1 day" : `${days} days`) : clock
   const eyebrow   = ranch
     ? "Saturday 10 October · gates at nine"

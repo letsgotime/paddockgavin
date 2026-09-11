@@ -43,15 +43,6 @@ function brandVars(e: EventRow): React.CSSProperties {
   }
 }
 
-/** Whole days until the event, counted in the venue's day, not the reader's. */
-function daysUntil(iso: string | null): number | null {
-  if (!iso) return null
-  const at = (d: Date) =>
-    Date.parse(new Date(d).toLocaleDateString("en-CA", { timeZone: "America/Chicago" }) + "T00:00:00Z")
-  const left = Math.round((at(new Date(iso)) - at(new Date())) / 86400000)
-  return left < 0 ? null : left
-}
-
 /** Saturday, October 10, 2026. Fixed to the venue's day, not the reader's. */
 function longDate(iso: string | null): string {
   if (!iso) return ""
@@ -276,6 +267,34 @@ function groundsPct(lat: number, lng: number): [number, number] {
   const [[south, west], [north, east]] = GROUNDS_BOUNDS
   return [((lng - west) / (east - west)) * 100, ((north - lat) / (north - south)) * 100]
 }
+function centroidOf(pts: [number, number][]): [number, number] {
+  return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length]
+}
+
+/**
+ * Filters and numbers the grounds the same way for the map and the card
+ * list under it, from one pass over the features: a badge on the map and
+ * the number on its card are the same lookup against the same list, not
+ * two counts that happen to agree today.
+ */
+function drawnGround(features: MapFeatureRow[]) {
+  const inBounds = (x: number, y: number) => x >= 0 && x <= 100 && y >= 0 && y <= 100
+  const zones = features.filter(
+    (f): f is MapFeatureRow & { geometry: { type: "polygon"; coords: [number, number][] } } =>
+      f.kind === "zone" && f.slug !== "ranch-gate" && f.geometry?.type === "polygon",
+  )
+  const routes = features.filter(
+    (f): f is MapFeatureRow & { geometry: { type: "path"; coords: [number, number][] } } =>
+      f.kind === "route" && f.geometry?.type === "path",
+  )
+  const pois = features.filter((f): f is MapFeatureRow & { geometry: { type: "point"; coords: [number, number] } } => {
+    if (f.kind !== "poi" || f.geometry?.type !== "point") return false
+    return inBounds(...groundsPct(...f.geometry.coords))
+  })
+  const drawn = [...zones, ...routes, ...pois]
+  const numberOf = new Map(drawn.map((f, i) => [f.kind + f.name, i + 1]))
+  return { zones, routes, pois, numberOf }
+}
 
 /**
  * A rough, static read of the grounds: the same satellite crop and percent
@@ -292,20 +311,8 @@ function groundsPct(lat: number, lng: number): [number, number] {
  * mile from the show floor, would pull the crop right back out to the
  * over-wide view this replaces.
  */
-function GroundsMap({ features }: { features: MapFeatureRow[] }) {
-  const inBounds = (x: number, y: number) => x >= 0 && x <= 100 && y >= 0 && y <= 100
-  const zones = features.filter(
-    (f): f is MapFeatureRow & { geometry: { type: "polygon"; coords: [number, number][] } } =>
-      f.kind === "zone" && f.slug !== "ranch-gate" && f.geometry?.type === "polygon",
-  )
-  const routes = features.filter(
-    (f): f is MapFeatureRow & { geometry: { type: "path"; coords: [number, number][] } } =>
-      f.kind === "route" && f.geometry?.type === "path",
-  )
-  const pois = features.filter((f): f is MapFeatureRow & { geometry: { type: "point"; coords: [number, number] } } => {
-    if (f.kind !== "poi" || f.geometry?.type !== "point") return false
-    return inBounds(...groundsPct(...f.geometry.coords))
-  })
+function GroundsMap({ features, numberOf }: { features: MapFeatureRow[]; numberOf: Map<string, number> }) {
+  const { zones, routes, pois } = drawnGround(features)
   if (zones.length === 0 && pois.length === 0) return null
 
   const churchRd = groundsPct(35.6308917, -86.5836787)
@@ -326,6 +333,20 @@ function GroundsMap({ features }: { features: MapFeatureRow[] }) {
   // same size on screen a viewer actually sees regardless of how tight a
   // given event's own footprint turns out to be.
   const scale = vw / 100
+
+  // White disc, dark number: same badge sitemap-review prints on the back
+  // of the site plan, so a number here means the same spot there.
+  function badge(x: number, y: number, n: number | undefined, key: string) {
+    if (n === undefined) return null
+    return (
+      <g key={key}>
+        <circle cx={x} cy={y} r={2.1 * scale} fill="#fff" stroke="#0A1523" strokeWidth={0.35 * scale} />
+        <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fontFamily={MONO} fontWeight="700" fill="#0A1523" style={{ fontSize: `${2.3 * scale}px` }}>
+          {n}
+        </text>
+      </g>
+    )
+  }
 
   return (
     <div
@@ -369,6 +390,9 @@ function GroundsMap({ features }: { features: MapFeatureRow[] }) {
             <circle key={f.kind + f.name} cx={x} cy={y} r={1.1 * scale} fill={color} stroke="#0A1523" strokeWidth="0.35" vectorEffect="non-scaling-stroke" />
           )
         })}
+        {zones.map((f) => badge(...groundsPct(...centroidOf(f.geometry.coords)), numberOf.get(f.kind + f.name), f.kind + f.name + "-n"))}
+        {routes.map((f) => badge(...groundsPct(...centroidOf(f.geometry.coords)), numberOf.get(f.kind + f.name), f.kind + f.name + "-n"))}
+        {pois.map((f) => badge(...groundsPct(...f.geometry.coords), numberOf.get(f.kind + f.name), f.kind + f.name + "-n"))}
         <text
           x={churchRd[0] - 1.5 * scale}
           y={churchRd[1] + 2.6 * scale}
@@ -465,10 +489,6 @@ export default function EventPublic({
     event.charity ? `Benefiting ${event.charity}` : "",
   ].filter(Boolean)
 
-  const left = daysUntil(event.starts_at)
-  const shortDay = event.starts_at
-    ? new Date(event.starts_at).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "America/Chicago" })
-    : ""
   const b = event.brand || {}
 
   return (
@@ -502,24 +522,10 @@ export default function EventPublic({
       <noscript><style>{`[data-r]{opacity:1!important;transform:none!important}`}</style></noscript>
       <SiteNav active="events" />
 
-      {/* The date and the count, kept in view. Not a link, so it does not take
-          the tap that belongs to the menu behind it. */}
-      {shortDay && (
-        <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)", pointerEvents: "none" }}>
-          <div className="pg-e0" style={{ maxWidth: 1180, margin: "0 auto", display: "flex", alignItems: "center", gap: 12, padding: "9px 16px", borderRadius: 12, background: "linear-gradient(180deg,rgba(12,24,38,.94),rgba(10,21,35,.9))" }}>
-            <i aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent-strong)", flex: "0 0 auto" }} />
-            <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {shortDay}
-            </span>
-            <i aria-hidden="true" style={{ flex: "1 1 auto" }} />
-            {left !== null && (
-              <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--second)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-                {left === 0 ? "Today" : left === 1 ? "1 day" : `${left} days`}
-              </span>
-            )}
-          </div>
-        </div>
-      )}
+      {/* The day and the count already live in the nav pill above (SiteNav),
+          in Rancho Jaramillo's own red. This page used to carry a second,
+          near-identical bar right under it, same information twice in two
+          different static boxes. One countdown, not two. */}
 
     <main style={{ background: "var(--ink)", minHeight: "100vh", position: "relative" }}>
       {hero && (
@@ -643,14 +649,26 @@ export default function EventPublic({
             return day.length === 0 ? null : (
               <div key={key} data-r="">
 <section id="the-day" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
-          <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+          <div style={{ maxWidth: 780, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>The running order</p>
-            <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>How the day goes</h2>
-            <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 1, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 14, overflow: "hidden" }}>
+            <h2 style={{ margin: "12px 0 34px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>How the day goes</h2>
+            <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 12 }}>
               {day.map((r, i) => (
-                <li key={i} style={{ background: "var(--ink)", display: "grid", gridTemplateColumns: "minmax(120px,170px) 1fr", gap: 18, padding: "14px 18px" }}>
-                  <span style={{ fontFamily: MONO, fontSize: 13, color: "var(--second)", fontVariantNumeric: "tabular-nums" }}>{r.time_label}</span>
-                  <span style={{ fontFamily: "var(--body)", fontSize: 16, color: "#C9D1DB" }}>{r.activity}</span>
+                <li key={i} style={{ display: "grid", gridTemplateColumns: "22px 1fr", gap: 16 }}>
+                  {/* The rail: a node on each stop, a line to the next one.
+                      Each row draws its own segment rather than one absolute
+                      line the length of the list, so it never depends on the
+                      list's total height being known up front. */}
+                  <div style={{ position: "relative", display: "flex", justifyContent: "center" }}>
+                    <i aria-hidden="true" style={{ width: 11, height: 11, marginTop: 24, borderRadius: "50%", background: "var(--accent-strong)", boxShadow: "0 0 0 4px var(--ink), 0 0 0 5px rgba(255,255,255,.14)", flexShrink: 0, zIndex: 1 }} />
+                    {i < day.length - 1 && (
+                      <i aria-hidden="true" style={{ position: "absolute", top: 35, bottom: -12, left: "50%", width: 2, marginLeft: -1, background: "rgba(255,255,255,.14)" }} />
+                    )}
+                  </div>
+                  <div className="pg-e0" style={{ padding: "15px 20px", borderRadius: 13, display: "grid", gridTemplateColumns: "minmax(100px,150px) 1fr", gap: 18, alignItems: "baseline" }}>
+                    <span style={{ fontFamily: MONO, fontSize: 13.5, fontWeight: 700, letterSpacing: ".02em", color: "var(--accent)", fontVariantNumeric: "tabular-nums" }}>{r.time_label}</span>
+                    <span style={{ fontFamily: "var(--body)", fontSize: 16.5, color: "#EDF1F6" }}>{r.activity}</span>
+                  </div>
                 </li>
               ))}
             </ol>
@@ -658,22 +676,34 @@ export default function EventPublic({
         </section>
               </div>
             )
-          case "ground":
-            return ground.length === 0 ? null : (
+          case "ground": {
+            if (ground.length === 0) return null
+            const { numberOf } = drawnGround(ground)
+            return (
               <div key={key} data-r="">
 <section id="the-ground" style={{ scrollMarginTop: 96, padding: "clamp(44px,7vw,80px) clamp(16px,5vw,40px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
             <p style={{ margin: 0, fontFamily: MONO, fontSize: 13, letterSpacing: ".2em", textTransform: "uppercase", color: "var(--accent)" }}>What is where</p>
             <h2 style={{ margin: "12px 0 26px", fontFamily: "var(--display)", fontWeight: 700, fontSize: "clamp(26px,4.2vw,40px)", color: "var(--paper)" }}>On the ground</h2>
-            <GroundsMap features={ground} />
+            <GroundsMap features={ground} numberOf={numberOf} />
             <div className={`evGround${groundOpen ? " open" : ""}`} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
-              {ground.map((f) => (
-                <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
-                  <p style={{ margin: 0, fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--second)" }}>{f.kind === "poi" ? "Point" : f.kind}</p>
-                  <p style={{ margin: "7px 0 0", fontFamily: "var(--display)", fontSize: 19, fontWeight: 700, color: "var(--paper)" }}>{f.name}</p>
-                  {f.blurb && <p style={{ margin: "8px 0 0", fontFamily: "var(--body)", fontSize: 15, lineHeight: 1.55, color: "#9FAAB8" }}>{f.blurb}</p>}
-                </div>
-              ))}
+              {ground.map((f) => {
+                const n = numberOf.get(f.kind + f.name)
+                return (
+                  <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      {n !== undefined && (
+                        <span aria-hidden="true" style={{ display: "inline-flex", flex: "0 0 auto", alignItems: "center", justifyContent: "center", width: 19, height: 19, borderRadius: "50%", background: "#fff", color: "#0A1523", fontFamily: MONO, fontSize: 10.5, fontWeight: 700 }}>
+                          {n}
+                        </span>
+                      )}
+                      <p style={{ margin: 0, fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--second)" }}>{f.kind === "poi" ? "Point" : f.kind}</p>
+                    </div>
+                    <p style={{ margin: "7px 0 0", fontFamily: "var(--display)", fontSize: 19, fontWeight: 700, color: "var(--paper)" }}>{f.name}</p>
+                    {f.blurb && <p style={{ margin: "8px 0 0", fontFamily: "var(--body)", fontSize: 15, lineHeight: 1.55, color: "#9FAAB8" }}>{f.blurb}</p>}
+                  </div>
+                )
+              })}
             </div>
             {ground.length > 4 && (
               <button type="button" className="evGroundMore" onClick={() => setGroundOpen((v) => !v)} aria-expanded={groundOpen}
@@ -685,6 +715,7 @@ export default function EventPublic({
         </section>
               </div>
             )
+          }
           case "partners":
             return partners.sponsors.length === 0 && partners.vendors.length === 0 ? null : (
               <div key={key} data-r="">
@@ -732,6 +763,16 @@ export default function EventPublic({
               <div key={key} data-r=""><section id="ops" style={{ scrollMarginTop: 96, padding: "clamp(40px,7vh,86px) clamp(16px,5vw,40px) clamp(10px,2vh,24px)", borderTop: "1px solid rgba(255,255,255,.12)" }}>
                 <div style={{ maxWidth: 1180, margin: "0 auto" }}>
                   <VisitOps />
+                  {/* Rancho Jaramillo's own mark is all over the rest of the
+                      page; this is the one place that credits who actually
+                      plans and runs the day on the ranch's behalf. */}
+                  <div style={{ marginTop: "clamp(30px,5vh,56px)", paddingTop: "clamp(30px,5vh,56px)", borderTop: "1px solid rgba(255,255,255,.12)", display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textAlign: "center" }}>
+                    <RanchMark src="/images/mark-on-dark-96.png" alt="PaddockGavin" width={104} ratio={96 / 174} />
+                    <p style={{ margin: 0, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#9FAAB8" }}>Produced by PaddockGavin</p>
+                    <p style={{ margin: 0, fontFamily: "var(--body)", fontSize: 16, lineHeight: 1.6, color: "#C9D1DB", maxWidth: "54ch" }}>
+                      PaddockGavin plans and runs The Piston Powered Ranch end to end: entries, vendors, sponsors, the site plan, the day itself.
+                    </p>
+                  </div>
                 </div>
               </section></div>
             )
