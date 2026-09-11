@@ -33,11 +33,24 @@ function authed(req: NextRequest): boolean {
   return req.cookies.get(COOKIE)?.value === "ok"
 }
 
+// force-dynamic keeps Next.js from statically prerendering this at build
+// time, but Vercel's edge still cached real responses anyway (confirmed in
+// runtime logs: cache=HIT and cache=STALE on this exact route) since
+// nothing here told it not to — a client's own {cache:'no-store'} on
+// fetch() only governs the browser's cache, never the CDN sitting in
+// between. This is what made a freshly-saved footer note keep reading
+// back empty. Every response needs its own explicit no-store.
+function noStore(body: unknown, init?: ResponseInit) {
+  const res = NextResponse.json(body, init)
+  res.headers.set("Cache-Control", "no-store, must-revalidate")
+  return res
+}
+
 export async function GET(req: NextRequest) {
-  if (!authed(req)) return NextResponse.json({ error: "locked" }, { status: 401 })
+  if (!authed(req)) return noStore({ error: "locked" }, { status: 401 })
   const slug = req.nextUrl.searchParams.get("event") || ""
   const p = db()
-  if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
+  if (!p) return noStore({ error: "no_database" }, { status: 503 })
   try {
     const [{ rows }, meta] = await Promise.all([
       p.query(
@@ -54,10 +67,10 @@ export async function GET(req: NextRequest) {
       // already makes.
       p.query(`select site_plan_footer_note from public.event_meta where id = 1`),
     ])
-    return NextResponse.json({ features: rows, footerNote: meta.rows[0]?.site_plan_footer_note ?? "" })
+    return noStore({ features: rows, footerNote: meta.rows[0]?.site_plan_footer_note ?? "" })
   } catch (err) {
     console.error("[map-features] read failed", err)
-    return NextResponse.json({ error: "read_failed" }, { status: 500 })
+    return noStore({ error: "read_failed" }, { status: 500 })
   }
 }
 
@@ -65,8 +78,11 @@ export async function POST(req: NextRequest) {
   const limited = tooMany(req, "map-features-auth", 20)
   if (limited) return limited
   const b = await req.json().catch(() => ({}))
-  if (b.password !== GATE) return NextResponse.json({ error: "locked" }, { status: 401 })
-  const res = NextResponse.json({ ok: true })
+  if (b.password !== GATE) return noStore({ error: "locked" }, { status: 401 })
+  // A cached "ok" carrying one visitor's auth cookie served back to the
+  // next one would be a real login bypass, not just stale data — the same
+  // fix as GET's, more load-bearing here.
+  const res = noStore({ ok: true })
   res.cookies.set(COOKIE, "ok", { httpOnly: true, secure: true, sameSite: "lax", maxAge: 60 * 60 * 24 * 30, path: "/" })
   return res
 }
@@ -74,11 +90,11 @@ export async function POST(req: NextRequest) {
 export async function PATCH(req: NextRequest) {
   const limited = tooMany(req, "map-features-write", 120)
   if (limited) return limited
-  if (!authed(req)) return NextResponse.json({ error: "locked" }, { status: 401 })
+  if (!authed(req)) return noStore({ error: "locked" }, { status: 401 })
 
   const b = await req.json().catch(() => null)
   const p = db()
-  if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
+  if (!p) return noStore({ error: "no_database" }, { status: 503 })
 
   // Two different things PATCH here: a zone/point/route's geometry, or the
   // print sheet's footer note. Same tool, same autosave-on-drop philosophy
@@ -91,17 +107,17 @@ export async function PATCH(req: NextRequest) {
       )
       if (result.rowCount === 0) {
         console.error("[map-features] footer note patch matched no row")
-        return NextResponse.json({ error: "not_found" }, { status: 404 })
+        return noStore({ error: "not_found" }, { status: 404 })
       }
-      return NextResponse.json({ ok: true })
+      return noStore({ ok: true })
     } catch (err) {
       console.error("[map-features] footer note write failed", err)
-      return NextResponse.json({ error: "write_failed" }, { status: 500 })
+      return noStore({ error: "write_failed" }, { status: 500 })
     }
   }
 
   if (!b || typeof b.id !== "string" || !b.geometry) {
-    return NextResponse.json({ error: "bad_request" }, { status: 400 })
+    return noStore({ error: "bad_request" }, { status: 400 })
   }
   try {
     const result = await p.query(
@@ -110,11 +126,11 @@ export async function PATCH(req: NextRequest) {
     )
     if (result.rowCount === 0) {
       console.error("[map-features] patch matched no row", { id: b.id })
-      return NextResponse.json({ error: "not_found" }, { status: 404 })
+      return noStore({ error: "not_found" }, { status: 404 })
     }
-    return NextResponse.json({ ok: true })
+    return noStore({ ok: true })
   } catch (err) {
     console.error("[map-features] write failed", err)
-    return NextResponse.json({ error: "write_failed" }, { status: 500 })
+    return noStore({ error: "write_failed" }, { status: 500 })
   }
 }
