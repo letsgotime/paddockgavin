@@ -227,6 +227,11 @@ export default function MeetingUpdatesApp() {
     setNameState(n)
     try { localStorage.setItem("ppr_name", n) } catch { /* ignore */ }
     setNamePaneOpen(false)
+    fetch("/api/meeting-updates", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ logAccess: true, name: n }),
+    }).catch(() => {})
   }
 
   if (phase === "loading") return <div className="mu-shell"><MuStyle /><p style={{ padding: 40, fontFamily: "monospace" }}>Loading…</p></div>
@@ -263,6 +268,8 @@ export default function MeetingUpdatesApp() {
             <h3>Who are you?</h3>
             <button type="button" onClick={() => chooseName("Gavin")}>Gavin</button>
             <button type="button" onClick={() => chooseName("Oscar")}>Oscar</button>
+            <button type="button" onClick={() => chooseName("Bekah")}>Bekah</button>
+            <button type="button" onClick={() => chooseName("Guest")}>Guest</button>
             <NameInput onGo={chooseName} />
           </div>
         </div>
@@ -298,85 +305,85 @@ export default function MeetingUpdatesApp() {
           <li>Live music from one of country music&rsquo;s biggest names</li>
           <li>Encanto Blossom Orchard&rsquo;s farmers market: apples, baked goods, preserves, tamales, and more</li>
         </ul>
-        <p className="intro" style={{ marginBottom: 10 }}><b>For Oscar<span className="mtag priv">not for anyone else</span></b></p>
-        <ul className="mlist internal">
-          <li><b>Exotic car show.</b> Up to three hundred cars.</li>
-          <li><b>Open pit BBQ.</b> Ranch raised Black Angus, donated by Rancho Jaramillo.</li>
-          <li><b>Vendor fair.</b> Twenty five to thirty five vendors, already committed ones on the next page.</li>
-          <li><b>Live car giveaway.</b> Mechanics on a Mission. Not understood yet, see the section below.</li>
-          <li><b>Live exotic car auction.</b> Waiting on duPont Registry to commit. Bring a Trailer is the named backup.</li>
-          <li><b>Livestock auction.</b> Ranch raised. Need details from Oscar: is it his own Black Angus steer, and is it one steer or both.</li>
-          <li><b>Helicopter landing.</b> Life Flight Vanderbilt, Megan Jones is the contact to email.</li>
-          <li><b>Live music.</b> A major country name, confirmed, cannot go public yet.</li>
-          <li><b>Encanto Blossom Orchard farmers market.</b> Apples, fruit, baked goods, apple butter, grape jam, tamales, and more.</li>
-          <li><b>Custom cowboy boots.</b> Need a vendor.</li>
-          <li><b>Custom cowboy hats.</b> Need a vendor. Seth, if that contact is real.</li>
-          <li><b>Custom sneakers.</b> Need a vendor.</li>
-          <li><b>Cigars.</b> Placentia, Poppa P&rsquo;s, or the duPont contact. Not decided.</li>
-        </ul>
-
-        <div className="refs">
-          <h3>References</h3>
-          <a className="refLink" href="/sitemap-review" target="_blank" rel="noopener noreferrer">
-            <span className="refName">Site Map Review</span>
-            <span className="refDesc">Pin placement for vendors, sponsors, and the site plan</span>
-          </a>
-          <a className="refLink" href="/ranchcontrol" target="_blank" rel="noopener noreferrer">
-            <span className="refName">Ranch Control</span>
-            <span className="refDesc">Budget and sponsor tracker</span>
-          </a>
-        </div>
-
-        <p className="intro">What we&rsquo;re covering today: VIP pricing, entry pricing, and the sponsor plan, plus the smaller open items below.</p>
-        <div className="decide" style={{ marginBottom: 30 }}>
-          <h2>By the end of today</h2>
-          {TODAY_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
-        </div>
-
-        <p className="intro">The hospitality copy below is already written and lives on the event page today. The price is new: settled internally at $249 and $399, never yet shown to anyone outside the team. Nothing here is live. This is the draft for approval before it goes public.</p>
-        <h2>The two rooms</h2>
-        <p className="sub">Both hosted. One goes further out.</p>
-        <div className="rooms">
-          <div className="room terrace">
-            <p className="roomName">The Terrace</p><p className="roomPrice">$249</p><p className="roomSeats">20 seats</p>
-            <ul>
-              <li>Shaded tent, table service, air kept moving</li>
-              <li>A bottle of whiskey, a bottle of wine, or dinner at Southall or Sinatra, arranged before you arrive</li>
-              <li>Ranch raised Angus, aged steaks</li>
-              <li>Commemorative shirt and hat</li>
-              <li>Corral, petting zoo, and the photo areas</li>
+            <p className="intro" style={{ marginBottom: 10 }}><b>For Oscar<span className="mtag priv">not for anyone else</span></b></p>
+            <ul className="mlist internal">
+              <li><b>Exotic car show.</b> Up to three hundred cars.</li>
+              <li><b>Open pit BBQ.</b> Ranch raised Black Angus, donated by Rancho Jaramillo.</li>
+              <li><b>Vendor fair.</b> Twenty five to thirty five vendors, already committed ones on the next page.</li>
+              <li><b>Live car giveaway.</b> Mechanics on a Mission. Not understood yet, see the section below.</li>
+              <li><b>Live exotic car auction.</b> Waiting on duPont Registry to commit. Bring a Trailer is the named backup.</li>
+              <li><b>Livestock auction.</b> Ranch raised. Need details from Oscar: is it his own Black Angus steer, and is it one steer or both.</li>
+              <li><b>Helicopter landing.</b> Life Flight Vanderbilt, Megan Jones is the contact to email.</li>
+              <li><b>Live music.</b> A major country name, confirmed, cannot go public yet.</li>
+              <li><b>Encanto Blossom Orchard farmers market.</b> Apples, fruit, baked goods, apple butter, grape jam, tamales, and more.</li>
+              <li><b>Custom cowboy boots.</b> Need a vendor.</li>
+              <li><b>Custom cowboy hats.</b> Need a vendor. Seth, if that contact is real.</li>
+              <li><b>Custom sneakers.</b> Need a vendor.</li>
+              <li><b>Cigars.</b> Placentia, Poppa P&rsquo;s, or the duPont contact. Not decided.</li>
             </ul>
-          </div>
-          <div className="room owner">
-            <p className="roomName">The Owner&rsquo;s Table</p><p className="roomPrice">$399</p><p className="roomSeats">10 seats</p>
-            <ul>
-              <li>Everything on The Terrace, plus</li>
-              <li className="extra">The quiet ride out by golf cart or hay ride</li>
-              <li className="extra">A place the crowd never finds, for the pictures</li>
-              <li className="extra">Time with Oscar, away from the noise</li>
-              <li className="extra">A concierge from the ranch who stays with you</li>
-              <li className="extra">Hay rides behind a horse, hay straws in the cocktails</li>
-            </ul>
-          </div>
-        </div>
-        <div className="assumption"><b>One pairing to confirm, not yet written down anywhere:</b> which price goes with which room. Above assumes Terrace at $249 and Owner&rsquo;s Table at $399, the higher price on the room that goes further out. If that is backwards, mark it below.</div>
-        <div className="total">
-          <div><span className="label">Total at thirty of thirty seats</span><span className="sub2">20 &times; $249 plus 10 &times; $399</span></div>
-          <span className="figure">$8,970</span>
-        </div>
 
-        <div className="decide">
-          <h2>To decide today</h2>
-          {VIP_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
-        </div>
+            <div className="refs">
+              <h3>References</h3>
+              <a className="refLink" href="/sitemap-review" target="_blank" rel="noopener noreferrer">
+                <span className="refName">Site Map Review</span>
+                <span className="refDesc">Pin placement for vendors, sponsors, and the site plan</span>
+              </a>
+              <a className="refLink" href="/ranchcontrol" target="_blank" rel="noopener noreferrer">
+                <span className="refName">Ranch Control</span>
+                <span className="refDesc">Budget and sponsor tracker</span>
+              </a>
+            </div>
 
-        <h2>Also on the table</h2>
-        <p className="sub">Not VIP. The rest of today&rsquo;s agenda.</p>
-        <div className="decide">
-          {TABLE_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
-        </div>
-        <div className="assumption"><b>The sponsor bundle, proposed:</b> $500 gets two VIP seats, an event sign with their brand, the steak meal, a complimentary gift, and every other VIP perk: $250 a seat. $1,000 gets four seats at the same rate, same perks. The $399 solo seat costs more per seat and carries no sign. Needs its own added value, or it is the worse deal.</div>
-        <div className="assumption"><b>The hospitality tent is its own sponsorship, not just entry pricing:</b> whoever sponsors it staffs a table inside and gets real time with the $25 crowd, a self selected, more engaged audience than the general field. A charity, Hagerty, or a bank are all real fits. Ties directly to the open Collector insurance and Collector finance rows on the next page: this is the product to actually offer them, not just a category.</div>
+            <p className="intro">What we&rsquo;re covering today: VIP pricing, entry pricing, and the sponsor plan, plus the smaller open items below.</p>
+            <div className="decide" style={{ marginBottom: 30 }}>
+              <h2>By the end of today</h2>
+              {TODAY_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
+            </div>
+
+            <p className="intro">The hospitality copy below is already written and lives on the event page today. The price is new: settled internally at $249 and $399, never yet shown to anyone outside the team. Nothing here is live. This is the draft for approval before it goes public.</p>
+            <h2>The two rooms</h2>
+            <p className="sub">Both hosted. One goes further out.</p>
+            <div className="rooms">
+              <div className="room terrace">
+                <p className="roomName">The Terrace</p><p className="roomPrice">$249</p><p className="roomSeats">20 seats</p>
+                <ul>
+                  <li>Shaded tent, table service, air kept moving</li>
+                  <li>A bottle of whiskey, a bottle of wine, or dinner at Southall or Sinatra, arranged before you arrive</li>
+                  <li>Ranch raised Angus, aged steaks</li>
+                  <li>Commemorative shirt and hat</li>
+                  <li>Corral, petting zoo, and the photo areas</li>
+                </ul>
+              </div>
+              <div className="room owner">
+                <p className="roomName">The Owner&rsquo;s Table</p><p className="roomPrice">$399</p><p className="roomSeats">10 seats</p>
+                <ul>
+                  <li>Everything on The Terrace, plus</li>
+                  <li className="extra">The quiet ride out by golf cart or hay ride</li>
+                  <li className="extra">A place the crowd never finds, for the pictures</li>
+                  <li className="extra">Time with Oscar, away from the noise</li>
+                  <li className="extra">A concierge from the ranch who stays with you</li>
+                  <li className="extra">Hay rides behind a horse, hay straws in the cocktails</li>
+                </ul>
+              </div>
+            </div>
+            <div className="assumption"><b>One pairing to confirm, not yet written down anywhere:</b> which price goes with which room. Above assumes Terrace at $249 and Owner&rsquo;s Table at $399, the higher price on the room that goes further out. If that is backwards, mark it below.</div>
+            <div className="total">
+              <div><span className="label">Total at thirty of thirty seats</span><span className="sub2">20 &times; $249 plus 10 &times; $399</span></div>
+              <span className="figure">$8,970</span>
+            </div>
+
+            <div className="decide">
+              <h2>To decide today</h2>
+              {VIP_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
+            </div>
+
+            <h2>Also on the table</h2>
+            <p className="sub">Not VIP. The rest of today&rsquo;s agenda.</p>
+            <div className="decide">
+              {TABLE_ROWS.map((r) => <DecideRow key={r.id} id={r.id} data={data} onToggle={toggleCheck}>{r.html}</DecideRow>)}
+            </div>
+            <div className="assumption"><b>The sponsor bundle, proposed:</b> $500 gets two VIP seats, an event sign with their brand, the steak meal, a complimentary gift, and every other VIP perk: $250 a seat. $1,000 gets four seats at the same rate, same perks. The $399 solo seat costs more per seat and carries no sign. Needs its own added value, or it is the worse deal.</div>
+            <div className="assumption"><b>The hospitality tent is its own sponsorship, not just entry pricing:</b> whoever sponsors it staffs a table inside and gets real time with the $25 crowd, a self selected, more engaged audience than the general field. A charity, Hagerty, or a bank are all real fits. Ties directly to the open Collector insurance and Collector finance rows on the next page: this is the product to actually offer them, not just a category.</div>
 
         <h2>Mechanics on a Mission</h2>
         <p className="sub">Giving away a car at the event. Confirm fast, we don&rsquo;t understand the mechanics of it yet.</p>
@@ -390,7 +397,7 @@ export default function MeetingUpdatesApp() {
         </div>
         <footer>
           <span className="footLeft"><img className="footMark" src={MARK} alt="" /><span>Piston Powered Ranch &middot; Event update</span></span>
-          <span>Meeting September 10, 2026</span>
+          <span>Meeting September 11, 2026</span>
         </footer>
       </div>
 
@@ -431,7 +438,7 @@ export default function MeetingUpdatesApp() {
 
         <footer>
           <span className="footLeft"><img className="footMark" src={MARK} alt="" /><span>Piston Powered Ranch &middot; Sponsor targets</span></span>
-          <span>Meeting September 10, 2026</span>
+          <span>Meeting September 11, 2026</span>
         </footer>
       </div>
     </div>

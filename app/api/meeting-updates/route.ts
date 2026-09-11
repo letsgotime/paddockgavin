@@ -61,6 +61,24 @@ export async function PATCH(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "locked" }, { status: 401 })
 
   const b = await req.json().catch(() => null)
+
+  // Who's actually opening this: fired once when a browser picks or
+  // re-confirms a name, not on every autosave. There's no real per-person
+  // login behind the shared password, so a name plus a timestamp is the
+  // whole signal available, and it's the same name already shown in the
+  // "Signing as" pill.
+  if (b && b.logAccess === true && typeof b.name === "string" && b.name.trim()) {
+    const p = db()
+    if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
+    try {
+      await p.query(`insert into public.meeting_updates_access_log (name) values ($1)`, [b.name.trim().slice(0, 60)])
+      return NextResponse.json({ ok: true })
+    } catch (err) {
+      console.error("[meeting-updates] access log write failed", err)
+      return NextResponse.json({ error: "write_failed" }, { status: 500 })
+    }
+  }
+
   if (!b || typeof b.data !== "object" || b.data === null) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 })
   }
