@@ -807,12 +807,34 @@ function PrintView({ features }: { features: Feature[] }) {
   // one small area is numbered pins plus a legend, not text on the photo.
   const drawn = [...zones, ...routes, ...onMap]
   const numberOf = new Map(drawn.map((f, i) => [f.id, i + 1]))
+
+  // Frame the show grounds themselves, the same fix already applied to the
+  // live map and the public page's map: the fixed 0-100 viewBox showed the
+  // whole wide aerial crop regardless of how tightly the real zones
+  // clustered inside it, mostly empty farmland on a page meant to show the
+  // event. zones+routes+onMap is exactly what gets drawn below.
+  const framePts = [
+    ...zones.flatMap((f) => f.geometry.coords.map(([lat, lng]) => pctIn(lat, lng))),
+    ...routes.flatMap((f) => f.geometry.coords.map(([lat, lng]) => pctIn(lat, lng))),
+    ...onMap.map((f) => pctIn(...f.geometry.coords)),
+  ]
+  const PAD = 6
+  const vx = Math.max(0, Math.min(...framePts.map((p) => p[0])) - PAD)
+  const vy = Math.max(0, Math.min(...framePts.map((p) => p[1])) - PAD)
+  const vw = Math.min(100, Math.max(...framePts.map((p) => p[0])) + PAD) - vx
+  const vh = Math.min(100, Math.max(...framePts.map((p) => p[1])) + PAD) - vy
+  // Badge and marker sizes below were tuned for a viewBox that always
+  // spanned the full 100 units; reused as-is against a much smaller vw they
+  // would balloon by however much tighter the crop got, so they scale down
+  // by the same factor the crop scaled up.
+  const scale = vw / 100
+
   function badge(x: number, y: number, n: number | undefined, key: string) {
     if (n === undefined) return null
     return (
       <g key={key}>
-        <circle cx={x} cy={y} r="1.9" fill="#fff" stroke="#14181d" strokeWidth="0.3" />
-        <text x={x} y={y} textAnchor="middle" dominantBaseline="central" className="printBadgeNum">
+        <circle cx={x} cy={y} r={1.9 * scale} fill="#fff" stroke="#14181d" strokeWidth={0.3 * scale} />
+        <text x={x} y={y} textAnchor="middle" dominantBaseline="central" className="printBadgeNum" style={{ fontSize: `${2.1 * scale}px` }}>
           {n}
         </text>
       </g>
@@ -830,8 +852,8 @@ function PrintView({ features }: { features: Feature[] }) {
         <h1>The Piston Powered Ranch</h1>
         <p>Site plan &middot; Saturday, October 10, 2026 &middot; Rancho Jaramillo, Unionville TN</p>
       </div>
-      <div className="printMapBox">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" className="printSvg">
+      <div className="printMapBox" style={{ aspectRatio: `${vw} / ${vh}` }}>
+        <svg viewBox={`${vx} ${vy} ${vw} ${vh}`} preserveAspectRatio="xMidYMid meet" className="printSvg">
           <image href="/images/sitemap/ranch-sat.jpg" x="0" y="0" width="100" height="100" preserveAspectRatio="none" />
           {zones.map((f) => {
             const pts = f.geometry.coords.map(([lat, lng]) => pctIn(lat, lng).join(",")).join(" ")
@@ -862,7 +884,7 @@ function PrintView({ features }: { features: Feature[] }) {
           ))}
           {onMap.map((f) => {
             const [x, y] = pctIn(...f.geometry.coords)
-            return <circle key={f.id} cx={x} cy={y} r="0.9" fill={colorFor(f)} stroke="#14181d" strokeWidth="0.25" vectorEffect="non-scaling-stroke" />
+            return <circle key={f.id} cx={x} cy={y} r={0.9 * scale} fill={colorFor(f)} stroke="#14181d" strokeWidth="0.25" vectorEffect="non-scaling-stroke" />
           })}
           {zones.map((f) => badge(...pctIn(...centroidOf(f.geometry.coords)), numberOf.get(f.id), f.id + "-n"))}
           {routes.map((f) => badge(...pctIn(...centroidOf(f.geometry.coords)), numberOf.get(f.id), f.id + "-n"))}

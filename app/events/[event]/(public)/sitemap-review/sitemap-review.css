@@ -224,10 +224,15 @@
   .printHead { text-align: center; margin-bottom: 0.22in; }
   .printLivery { display: flex; height: 3px; width: 1.6in; margin: 0 auto 0.12in; }
   .printLivery i { flex: 1 1 0; }
-  .printHead h1 { font-family: Cinzel, Georgia, serif; font-size: 21pt; margin: 0 0 0.05in; color: #14181d; }
+  /* .smrApp.smrReady h1 (the live page's own title rule) is a more specific
+     selector than a bare .printHead h1 and was winning the cascade, so the
+     print title rendered in --ink (white) on the printed page's white
+     background: there, but invisible. Matched and beaten on specificity
+     instead of reached for !important. */
+  .smrApp .printView .printHead h1 { font-family: Cinzel, Georgia, serif; font-size: 21pt; margin: 0 0 0.05in; color: #14181d; }
   .printHead p { font-size: 10pt; color: #45505e; margin: 0; }
   .printMapBox { width: 100%; border: 1px solid #9aa4b2; break-inside: avoid; }
-  .printSvg { display: block; width: 100%; height: auto; }
+  .printSvg { display: block; width: 100%; height: 100%; }
   .printBadgeNum { font-size: 2.1px; font-weight: 800; fill: #14181d; }
   .printLegend { display: flex; flex-wrap: wrap; gap: 5pt 16pt; margin-top: 0.2in; font-size: 10pt; break-inside: avoid; }
   .printLegend span { display: flex; align-items: center; gap: 6pt; }
