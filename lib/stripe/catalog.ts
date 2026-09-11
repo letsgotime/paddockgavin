@@ -159,8 +159,14 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
    * Stripe, plus a lookupKey so live mode finds it. No component changes and
    * no route changes. */
 
-  vipTerrace: { key: "vipTerrace", name: "The Terrace", covers: "The Terrace, 10 October 2026", audience: "public", ledger: "vip" },
-  vipOwnersTable: { key: "vipOwnersTable", name: "The Owner's Table", covers: "The Owner's Table, 10 October 2026", audience: "public", ledger: "vip" },
+  vipTerrace: {
+    key: "vipTerrace", name: "The Terrace", covers: "The Terrace, 10 October 2026", audience: "public", ledger: "vip",
+    productId: "prod_VEM3gMLF4iGozZ", priceId: "price_1UDtLrEz1mDAE4gUVErAMONI", lookupKey: "ppr-2026-vip-terrace", cents: 24900,
+  },
+  vipOwnersTable: {
+    key: "vipOwnersTable", name: "The Owner's Table", covers: "The Owner's Table, 10 October 2026", audience: "public", ledger: "vip",
+    productId: "prod_VEM4J0NLrfeBxM", priceId: "price_1UDtLsEz1mDAE4gUcN4C7zIn", lookupKey: "ppr-2026-vip-owners-table", cents: 39900,
+  },
 
   teeRanchGate: { key: "teeRanchGate", name: "Ranch Gate Tee", covers: "Ranch Gate Tee", audience: "public", ledger: "other" },
   teePprOctober: { key: "teePprOctober", name: "October Tee", covers: "October Tee", audience: "public", ledger: "other" },
