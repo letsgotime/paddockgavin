@@ -468,8 +468,35 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
               rotateMarker.setLatLng(rotateHandleFor(pts))
               guide.setLatLngs([centroidOf(pts), rotateHandleFor(pts)])
               saveGeometryLocal(f, { type: "polygon", coords: pts.map((p) => [p[0], p[1]]) })
+            })
+            // A corner in the wrong place is common; a corner too many is
+            // commoner, ported from the old /site-plan/edit staff tracer this
+            // tool replaces. Three is the fewest a polygon can still be.
+            .on("dblclick", (e: any) => {
+              L.DomEvent.stop(e)
+              if (pts.length <= 3) {
+                window.alert("A zone needs at least three corners.")
+                return
+              }
+              const next = pts.filter((_, j) => j !== i)
+              saveGeometryLocal(f, { type: "polygon", coords: next.map((p) => [p[0], p[1]]) })
             }),
         )
+
+        // A small dot at each edge's midpoint; click to split that edge and
+        // add a corner there, the other half of the same ported capability.
+        pts.forEach((pt, i) => {
+          const nextPt = pts[(i + 1) % pts.length]
+          const mid: [number, number] = [(pt[0] + nextPt[0]) / 2, (pt[1] + nextPt[1]) / 2]
+          L.marker(mid, {
+            icon: L.divIcon({ className: "mfMidpoint", html: "", iconSize: [HANDLE_SMALL, HANDLE_SMALL] }),
+          })
+            .addTo(group)
+            .on("click", () => {
+              const inserted = [...pts.slice(0, i + 1), mid, ...pts.slice(i + 1)]
+              saveGeometryLocal(f, { type: "polygon", coords: inserted.map((p) => [p[0], p[1]]) })
+            })
+        })
 
         const rotateMarker = L.marker(rotateHandleFor(pts), {
           draggable: true,
@@ -701,8 +728,9 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           </div>
         </div>
         <p className="sub">
-          Drag a corner pin to move or resize a zone, the gold pin to rotate it. Drag a point or a road pin to move
-          it. Every drop saves by itself.
+          Drag a corner pin to move or resize a zone, the gold pin to rotate it. Tap a small dot on an edge to add a
+          corner there, double tap a corner to remove it. Drag a point or a road pin to move it. Every drop saves by
+          itself.
         </p>
       </header>
       <div className="mapWrap">

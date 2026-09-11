@@ -47,6 +47,26 @@ const TOOL_PAGES = [
 
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      /* Retired 2026-09-11: this static tracer wrote the same map_features
+         geometry /sitemap-review does, through a separate staff-auth path,
+         and /sitemap-review has since grown everything it had (corner-drag
+         editing, now also midpoint-add and corner-remove) plus what it
+         never did — the legend, the print sheet, basemap switching. Two
+         tools quietly editing one table was the actual problem, not which
+         one survived. No `has: RANCH_HOST` guard on purpose: this path
+         currently also answers on paddockgavin.com (a leak in the
+         TOOL_PAGES rewrite below, not yet root-caused), and the redirect
+         should still land somewhere correct there rather than only on the
+         host it was meant for. */
+      {
+        source: "/site-plan/edit",
+        destination: "/events/pistonpoweredranch/sitemap-review",
+        permanent: true,
+      },
+    ]
+  },
   async rewrites() {
     /* A tool root, and any page beneath it that is not a file. The lookahead
        keeps assets out of it: /collateral/files/x.pdf has a dot and is served

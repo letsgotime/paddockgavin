@@ -107,6 +107,11 @@
 }
 .mfHandle:active { cursor: grabbing; }
 .mfHandleSmall { width: 12px; height: 12px; }
+.mfMidpoint {
+  width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(20, 24, 29, 0.6); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: pointer; transform: translate(-50%, -50%);
+}
 .mfRotateHandle {
   width: 22px; height: 22px; border-radius: 50%; background: #F2C94C; border: 2px solid #14181d;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
@@ -193,6 +198,7 @@
 @media (pointer: coarse) {
   .mfHandle { width: 26px !important; height: 26px !important; }
   .mfHandleSmall { width: 22px !important; height: 22px !important; }
+  .mfMidpoint { width: 22px !important; height: 22px !important; }
   .mfRotateHandle { width: 30px !important; height: 30px !important; }
   .mfRotateHandle svg { width: 19px; height: 19px; }
   .mfPoint { width: 24px !important; height: 24px !important; }
