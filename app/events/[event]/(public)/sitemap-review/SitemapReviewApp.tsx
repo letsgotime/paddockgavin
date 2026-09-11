@@ -123,6 +123,7 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
   const [authBusy, setAuthBusy] = useState(false)
   const [authError, setAuthError] = useState("")
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle")
+  const [footerNote, setFooterNote] = useState("")
   const mapElRef = useRef<HTMLDivElement | null>(null)
   const mapRef = useRef<any>(null)
   const LRef = useRef<any>(null)
@@ -143,8 +144,24 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
     }
     const data = await res.json()
     setFeatures(data.features || [])
+    setFooterNote(data.footerNote || "")
     setPhase("ready")
   }, [eventSlug])
+
+  // No save button, same as everything else here: PATCHes on blur, a beat
+  // after the last keystroke so it isn't firing on every character.
+  const footerSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  function saveFooterNote(next: string) {
+    setFooterNote(next)
+    if (footerSaveTimer.current) clearTimeout(footerSaveTimer.current)
+    footerSaveTimer.current = setTimeout(() => {
+      fetch(`/api/map-features?event=${eventSlug}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ footerNote: next }),
+      }).catch(() => {})
+    }, 600)
+  }
 
   useEffect(() => {
     load()
@@ -732,6 +749,16 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           corner there, double tap a corner to remove it. Drag a point or a road pin to move it. Every drop saves by
           itself.
         </p>
+        <label className="footerNoteField">
+          <span>Print footer note</span>
+          <input
+            type="text"
+            value={footerNote}
+            placeholder="e.g. Zones subject to change prior to event"
+            onChange={(e) => setFooterNote(e.target.value)}
+            onBlur={(e) => saveFooterNote(e.target.value)}
+          />
+        </label>
       </header>
       <div className="mapWrap">
         <div ref={mapElRef} className="mapEl" />
@@ -775,12 +802,12 @@ export default function SitemapReviewApp({ eventSlug }: { eventSlug: string }) {
           )
         })}
       </div>
-      <PrintView features={features} />
+      <PrintView features={features} footerNote={footerNote} />
     </div>
   )
 }
 
-function PrintView({ features }: { features: Feature[] }) {
+function PrintView({ features, footerNote }: { features: Feature[]; footerNote: string }) {
   const zones = features.filter((f): f is Feature & { geometry: { type: "polygon"; coords: [number, number][] } } =>
     f.kind === "zone" && f.geometry.type === "polygon",
   )
@@ -906,7 +933,7 @@ function PrintView({ features }: { features: Feature[] }) {
         })}
       </div>
       <div className="printFoot">
-        <span>Piston Powered Ranch, site plan for internal reference</span>
+        <span>{footerNote || "Zones subject to change prior to event"}</span>
         <span>pistonpoweredranch.com</span>
       </div>
     </div>

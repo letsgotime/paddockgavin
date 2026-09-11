@@ -39,15 +39,22 @@ export async function GET(req: NextRequest) {
   const p = db()
   if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
   try {
-    const { rows } = await p.query(
-      `select mf.id, mf.kind, mf.slug, mf.name, mf.category, mf.status, mf.blurb, mf.geometry, mf.detail
-         from public.map_features mf
-         join public.events e on e.id = mf.event_id
-        where e.slug = $1
-        order by case mf.kind when 'zone' then 0 when 'poi' then 1 else 2 end, mf.sort`,
-      [slug],
-    )
-    return NextResponse.json({ features: rows })
+    const [{ rows }, meta] = await Promise.all([
+      p.query(
+        `select mf.id, mf.kind, mf.slug, mf.name, mf.category, mf.status, mf.blurb, mf.geometry, mf.detail
+           from public.map_features mf
+           join public.events e on e.id = mf.event_id
+          where e.slug = $1
+          order by case mf.kind when 'zone' then 0 when 'poi' then 1 else 2 end, mf.sort`,
+        [slug],
+      ),
+      // event_meta has no event_id column yet (see loadRunOfShow's own
+      // comment on the same gap) — one singleton row for the one event this
+      // site is about, same assumption every other reader of this table
+      // already makes.
+      p.query(`select site_plan_footer_note from public.event_meta where id = 1`),
+    ])
+    return NextResponse.json({ features: rows, footerNote: meta.rows[0]?.site_plan_footer_note ?? "" })
   } catch (err) {
     console.error("[map-features] read failed", err)
     return NextResponse.json({ error: "read_failed" }, { status: 500 })
@@ -70,11 +77,32 @@ export async function PATCH(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "locked" }, { status: 401 })
 
   const b = await req.json().catch(() => null)
+  const p = db()
+  if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
+
+  // Two different things PATCH here: a zone/point/route's geometry, or the
+  // print sheet's footer note. Same tool, same autosave-on-drop philosophy
+  // either way — the note just isn't tied to any one feature row.
+  if (b && typeof b.footerNote === "string") {
+    try {
+      const result = await p.query(
+        `update public.event_meta set site_plan_footer_note = $1, updated_at = now() where id = 1`,
+        [b.footerNote],
+      )
+      if (result.rowCount === 0) {
+        console.error("[map-features] footer note patch matched no row")
+        return NextResponse.json({ error: "not_found" }, { status: 404 })
+      }
+      return NextResponse.json({ ok: true })
+    } catch (err) {
+      console.error("[map-features] footer note write failed", err)
+      return NextResponse.json({ error: "write_failed" }, { status: 500 })
+    }
+  }
+
   if (!b || typeof b.id !== "string" || !b.geometry) {
     return NextResponse.json({ error: "bad_request" }, { status: 400 })
   }
-  const p = db()
-  if (!p) return NextResponse.json({ error: "no_database" }, { status: 503 })
   try {
     const result = await p.query(
       `update public.map_features set geometry = $2::jsonb, updated_at = now() where id = $1`,
