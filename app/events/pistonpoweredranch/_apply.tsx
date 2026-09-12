@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
 import { upload } from "@vercel/blob/client"
 import Image from "next/image"
@@ -11,10 +11,10 @@ import { RanchFooter } from "@/components/ranch-footer"
 /* Copy ran through RAIL Redline, WARM / WEB PAGE / US, zero tells, with an
    explicit instruction not to introduce facts absent from the draft. */
 
-const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
-const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
+export const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+export const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+export const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
+export const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
 
 /* The public face. Links in what the person keeps (the status link, the
    booth page) are written against this rather than against whichever door
@@ -149,6 +149,7 @@ export type ApplyProps = {
   closeLine: string
   form?: { kind: string; head: string; orgLabel: string; askLabel: string }
   hideMission?: boolean
+  extra?: ReactNode
 }
 
 type Status = "idle" | "sending" | "sent" | "error"
@@ -286,6 +287,8 @@ export function ApplyPage(p: ApplyProps) {
             ))}
           </div>
         </section>
+
+        {p.extra}
 
         {p.form && <ApplyForm tone={p.tone} form={p.form} />}
 
