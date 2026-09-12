@@ -88,9 +88,11 @@ export const metadata: Metadata = {
     description:
       "One of 999. The rear glass deleted for a vented panel, a V12 that revs to 9,500 rpm, and the build plate that made it one-of-one.",
     url: "https://paddockgavin.com/features/812-competizione",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: TITLE }],
+    /* No explicit images array: this route's own opengraph-image.tsx is
+       picked up automatically by file convention. Setting images here
+       would override that with the site's generic card. */
   },
-  twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
+  twitter: { card: "summary_large_image" },
 }
 
 /** Breaks a section out to the full viewport width from inside a
