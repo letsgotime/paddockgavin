@@ -148,6 +148,7 @@ export type ApplyProps = {
   note?: string
   closeLine: string
   form?: { kind: string; head: string; orgLabel: string; askLabel: string }
+  hideMission?: boolean
 }
 
 type Status = "idle" | "sending" | "sent" | "error"
@@ -320,7 +321,7 @@ export function ApplyPage(p: ApplyProps) {
           </div>
         </section>
       </main>
-      <RanchFooter />
+      <RanchFooter showMission={!p.hideMission} />
     </>
   )
 }

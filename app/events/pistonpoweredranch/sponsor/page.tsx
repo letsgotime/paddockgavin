@@ -44,6 +44,7 @@ export default function Page() {
       form={{ kind: "sponsor-application", head: "Tell us what you want the day to do for you.", orgLabel: "Company or brand", askLabel: "What you sell, who you want in front of, and what a win looks like" }}
       closeLine="Every enquiry is answered."
       cta={{ label: "Start the conversation", href: "#apply" }}
+      hideMission
     />
   )
 }
