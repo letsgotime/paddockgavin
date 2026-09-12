@@ -12,7 +12,7 @@ export const metadata: Metadata = ranchShare({
   path: "/sponsor",
   title: "Sponsor the Day · The Piston Powered Ranch",
   description:
-    "Sponsor The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo: Presenting, Title, Secondary, Supporting. Every net dollar shares with the school.",
+    "Sponsor The Piston Powered Ranch, October 10 2026 at Rancho Jaramillo: Presenting, Title, Secondary and Supporting positions available.",
 })
 
 export default function Page() {
@@ -37,11 +37,10 @@ export default function Page() {
         { t: "Presenting Sponsor", b: "One partner, above the title. The day carries your name." },
         { t: "Title Sponsor", b: "The lead position on the field, on the collateral, and at the gate." },
         { t: "Secondary and Supporting", b: "A named place on the field and in everything that carries the day." },
-        { t: "Community Partner", b: "Backing for the school and the day, named as such." },
+        { t: "Community Partner", b: "Backing the day without a campaign, named as such." },
         { t: "Hosted seats", b: "The Terrace: a shaded tent, table service and ranch raised Angus. The Owner's Table adds the quiet ride out and time with Oscar. Ask for the details." },
         { t: "Tell us the goal", b: "What you want the day to do for you, and we will build the position around it." },
       ]}
-      note="Every net dollar goes toward school lunches nearby, $2,500 at a time, until ten neighboring schools are covered. Your name sits beside that."
       form={{ kind: "sponsor-application", head: "Tell us what you want the day to do for you.", orgLabel: "Company or brand", askLabel: "What you sell, who you want in front of, and what a win looks like" }}
       closeLine="Every enquiry is answered."
       cta={{ label: "Start the conversation", href: "#apply" }}
