@@ -1,30 +1,61 @@
 # The hospitality tent
 
-Recorded 12 September 2026, from Mikal's dictation, as the working brief for
-the next Claude Code session. The Piston Powered Ranch, Saturday October 10,
-2026, 9am to 3pm, Rancho Jaramillo, Unionville TN. Four weeks out.
+Recorded 12 September 2026 from Mikal's dictation, revised the same day from
+his second pass. Working brief for the next Claude Code session. The Piston
+Powered Ranch, Saturday October 10, 2026, 9am to 3pm, Rancho Jaramillo,
+Unionville TN. Four weeks out.
 
-## The decision
+## What it is
 
-Add one hospitality tent. It sits near the food row and up against the show
-field, and far enough from the VIP compound that the two never read as the
-same product. VIP stays the premium room; the tent is the step between
-general admission and VIP.
+One hospitality tent: an upscale, shaded, general admission room. It sits
+near the food row and up against the show field, and far enough from the VIP
+compound that the two never read as the same product. Bigger and nicer than
+anything else a general admission guest can step into, a place to get out of
+the heat and hang out. As of now it is planned as the only place on the
+field where alcohol is served to guests who are not VIP, and that holds only
+once it is covered (bar deal, license, liquor liability), so public copy
+stays soft on the exclusivity until it is signed.
 
 Dictated placement, verbatim intent: "near the food, probably on top of the
 show cars, but far enough away from VIP." Confirm the exact spot on the site
 plan before it lands on the public map.
 
-## The three packages
+## Sell the sponsorship on the site
 
-- **$25**: hospitality tent access, two drinks, and one more small inclusion
-  still to be named. Mikal's words: "something else we'll do for free," so
-  the third item should cost the event nothing (a sticker, a koozie, a photo
-  wall, name it and it ships).
-- **$75**: tent access, a t-shirt, three drinks, and one more access
-  inclusion still to be named (dictation cut off at "access to another...").
-- **$100**: covers two people, with t-shirts and free drinks through the
-  day. Whether that is one shirt or two was not said; confirm before copy.
+This is the round two headline, the thing we are missing. The tent's
+sponsorship is for sale to a vendor, a charity, or a sponsor, and the site
+barely says so.
+
+- **The sponsor page** gets a high end visual block for the tent, loud and
+  proud: photo led, premium, in the concours register, sitting with the
+  sponsor tiers. Not a text line. This is the enticement piece.
+- **The homepage** carries it in a secondary format: present, clickable,
+  pointing at the sponsor page block, never competing with the hero or with
+  VIP.
+- **The pitch the block makes**, in substance: the tent's sponsor staffs it
+  with their own employees and their own team, with their products in the
+  room, and what they buy is a slower, better interaction with the public
+  than any booth ever gets, with their name on the tent all day. If
+  Mechanics on a Mission takes it, they bring a couple of their cars into
+  the tent (the dictation cut off right there; confirm what follows the
+  cars before that detail prints).
+
+## The three packages, revised
+
+Round two moved the packages, and the one open conflict is settled: Mikal
+confirmed on 12 September that the $100 package covers two people and free
+drinks stands.
+
+- **$25**: tent access, two cocktails, and one swag item.
+- **$75**: tent access, three cocktails, a t-shirt, and another swag item.
+- **$100**: tent access for two people, free drinks through the day, a
+  t-shirt and a hat, and possibly one more item ("something else" in the
+  dictation). Whether the shirt and hat are one set or one per person is
+  not yet said; confirm before print.
+
+Carried from round two: drinks on the $25 and $75 tiers are **cocktails**,
+and the third inclusions are swag items (the $25 one should cost the event
+nothing).
 
 Every package includes tent access. Nothing here touches free admission or
 free car entry, anywhere, in any copy.
@@ -44,11 +75,10 @@ naming change never touches the catalog.
 
 ## The money
 
-- Target: **$5,000** from the tent, alongside **$9,000 from VIP** (Mikal's
-  figures. HQ's revenue sheet currently has no VIP or hospitality line, so
-  add both rows and the sheet will finally show what he is pointing at).
+- Target: **$5,000** from the tent, alongside **$9,000 from VIP**. Both
+  rows are in HQ's revenue sheet now (added after round one).
 - Drink splits are in negotiation. Until the bar deal is signed, public copy
-  stays generic about who pours and what a drink is. The budget already
+  stays generic about who pours and what a cocktail is. The budget already
   carries the bar vendor as TBD with liquor liability requirements
   (PaddockGavin and Rancho Jaramillo as additional insured).
 - Cost context already in HQ's budget: a 20x40 tent runs about $500 a day
@@ -58,41 +88,50 @@ naming change never touches the catalog.
   and not charge for cars." The show stays free to enter and free to watch;
   the tent is the paid layer the car crowd can choose on their own.
 
+## Where the build stands, checked 12 September
+
+- HQ revenue rows: **done**. "VIP (Terrace + Owner's Table)" at $9,000 and
+  "Hospitality Tent" at $5,000 are in revenue_items.
+- Homepage: mentions "hospitality" twice, but both are the VIP room's
+  hospitality language. The tent as its own named product is **not there**;
+  add it in the secondary format above.
+- Sponsor page: **no mention at all**. The loud and proud visual block is
+  the gap this brief exists to close.
+- Sales page, Stripe items, checkout kinds, map feature: **not built yet**.
+
 ## How it plugs into what exists
 
 1. **Stripe**: three catalog items in `scripts/stripe-seed.mjs` under the
    existing convention: `ppr-2026-hospitality-25`, `ppr-2026-hospitality-75`,
    `ppr-2026-hospitality-100`, with matching kinds in
-   `app/api/stripe/checkout/route.ts`. Seed with the same idempotent script;
-   the checkout route resolves by lookup key.
-2. **A public page** selling the three packages, in the concours register
-   like the booth page, reachable on the ranch domain (the booth page's paid
-   flow is the pattern: catalog item, checkout, receipt, desk email).
-3. **HQ**: two new `revenue_items` rows in the existing shape (kind, label,
-   low_cents, high_cents): hospitality at 500000 low, and VIP at 900000 low.
-4. **The map**: one `map_features` row for the tent once the spot is
-   confirmed; the site-plan tracer at `/site-plan/edit` places it on the
-   aerial.
-5. **Event copy**: the ranch homepage content (the events row in Neon)
-   mentions the tent where food and VIP are described, and run of show
-   carries its hours if it has any.
+   `app/api/stripe/checkout/route.ts`. Neutral product names. The package
+   shapes are settled enough to seed; only the swag item names are still
+   open, and they do not block a price.
+2. **A public sales page** for the three packages, in the concours register
+   like the booth page (catalog item, checkout, receipt, desk email).
+3. **The sponsor page block and homepage mention** described above.
+4. **The map**: one `map_features` row once the spot is confirmed; the
+   site-plan tracer at `/site-plan/edit` places it on the aerial.
+5. **Run of show** carries the tent's hours if it has any.
 
 ## Open before it ships
 
-1. The $25 package's third inclusion and the $75 package's extra access
-   item.
-2. One shirt or two on the $100 package.
+1. The swag items: the $25 and $75 inclusions, the $100 "something else",
+   and whether the $100 shirt and hat are one set or one per person.
+2. Alcohol coverage: bar deal, license, liquor liability. This gates the
+   "only non-VIP alcohol on the field" line everywhere.
 3. The exact tent location on the site plan.
 4. Charity confirmation: Mechanics on a Mission first (which also unlocks
    the held press kit sentence about the car giveaway), Stars of Atlanta
-   name, spelling, and terms as the backup.
-5. The drink split, and what "drinks" covers (beer and wine, cocktails,
-   non-alcoholic), which drives both the license posture and the copy.
+   name, spelling, and terms as the backup. And the end of the sentence
+   about MoM's "couple of cars" in the tent.
 
 ## Do not
 
 - Do not touch free admission or free car entry.
 - Do not put any charity's name into Stripe product names.
-- Do not promise bar specifics in public copy until the split is signed.
+- Do not print the alcohol exclusivity, or any bar specifics, until the
+  deal is signed and covered.
 - Do not blur the tent with VIP. The Terrace and The Owner's Table stay
-  their own product at their own altitude.
+  their own product at their own altitude, and the sponsor page block sells
+  the tent to sponsors while VIP keeps selling seats to guests.
