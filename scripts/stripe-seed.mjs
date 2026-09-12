@@ -24,14 +24,25 @@ const MODE = KEY.startsWith("sk_live_") ? "live" : "test"
 const EVENT = "pistonpoweredranch"
 
 const ITEMS = [
-  { lookupKey: "ppr-2026-vendor-booth-10x10", name: "Vendor Booth, 10 by 10", cents: 25000, kind: "vendorBooth" },
-  { lookupKey: "ppr-2026-vendor-booth-10x20", name: "Vendor Booth, 10 by 20", cents: 35000, kind: "vendorBooth10x20" },
-  { lookupKey: "ppr-2026-vendor-booth-20x20", name: "Vendor Booth, 20 by 20", cents: 50000, kind: "vendorBooth20x20" },
-  { lookupKey: "ppr-2026-vendor-booth-40x40", name: "Vendor Booth, 40 by 40", cents: 65000, kind: "vendorBooth40x40" },
-  { lookupKey: "ppr-2026-vendor-premium-placement", name: "Premium placement", cents: 15000, kind: "vendorPremiumPlacement" },
-  { lookupKey: "ppr-2026-sponsor-supporting", name: "Supporting Sponsor", cents: 50000, kind: "supporting" },
-  { lookupKey: "ppr-2026-sponsor-secondary-title", name: "Secondary Sponsor", cents: 250000, kind: "secondaryTitle" },
-  { lookupKey: "ppr-2026-sponsor-premier-title", name: "Title Sponsor", cents: 500000, kind: "premierTitle" },
+  { lookupKey: "ppr-2026-vendor-booth-10x10", name: "Vendor Booth, 10 by 10", cents: 24999, kind: "vendorBooth" },
+  { lookupKey: "ppr-2026-vendor-booth-10x20", name: "Vendor Booth, 10 by 20", cents: 34999, kind: "vendorBooth10x20" },
+  { lookupKey: "ppr-2026-vendor-booth-20x20", name: "Vendor Booth, 20 by 20", cents: 49999, kind: "vendorBooth20x20" },
+  { lookupKey: "ppr-2026-vendor-booth-40x40", name: "Vendor Booth, 40 by 40", cents: 64999, kind: "vendorBooth40x40" },
+  { lookupKey: "ppr-2026-vendor-premium-placement", name: "Premium placement", cents: 14999, kind: "vendorPremiumPlacement" },
+  { lookupKey: "ppr-2026-sponsor-supporting", name: "Supporting Sponsor", cents: 49999, kind: "supporting" },
+  { lookupKey: "ppr-2026-sponsor-secondary-title", name: "Secondary Sponsor", cents: 249999, kind: "secondaryTitle" },
+  { lookupKey: "ppr-2026-sponsor-premier-title", name: "Title Sponsor", cents: 499999, kind: "premierTitle" },
+  { lookupKey: "ppr-2026-tee-ranch-gate", name: "The Gate Tee", cents: 1999, kind: "teeRanchGate" },
+  { lookupKey: "ppr-2026-tee-october", name: "October Tenth Tee", cents: 1999, kind: "teePprOctober" },
+  { lookupKey: "ppr-2026-cap-ranch", name: "The Ranch Cap", cents: 2499, kind: "capRanch" },
+  { lookupKey: "ppr-2026-trucker-pg", name: "PaddockGavin Trucker", cents: 1999, kind: "truckerPg" },
+  { lookupKey: "ppr-2026-mug-ranch", name: "The Ranch Mug", cents: 2499, kind: "mugRanch" },
+  { lookupKey: "ppr-2026-parasol", name: "The Field Parasol", cents: 3499, kind: "parasolRanch" },
+  { lookupKey: "ppr-2026-bottle", name: "The Ranch Bottle", cents: 2499, kind: "bottleRanch" },
+  { lookupKey: "ppr-2026-backpack-ranch", name: "Field Backpack", cents: 4999, kind: "backpackRanch" },
+  { lookupKey: "ppr-2026-hospitality-25", name: "Hospitality Tent, two cocktails and swag", cents: 2499, kind: "hospitality25" },
+  { lookupKey: "ppr-2026-hospitality-75", name: "Hospitality Tent, three cocktails and swag", cents: 7499, kind: "hospitality75" },
+  { lookupKey: "ppr-2026-hospitality-100", name: "Hospitality Tent, pair", cents: 9999, kind: "hospitality100" },
 ]
 
 async function stripe(path, body) {

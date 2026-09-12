@@ -73,10 +73,10 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Vendor booth, 10 by 10, The Piston Powered Ranch, 10 October 2026",
     audience: "public",
     ledger: "vendor_setup",
-    productId: "prod_VAskeBHu2wx7Oj",
-    priceId: "price_1UAWzGRJpXHmje77uDzxNMAg",
+    productId: "prod_VCuDwUkVg2oEWt",
+    priceId: "price_1UEz6jEz1mDAE4gUICu94jJp",
     lookupKey: "ppr-2026-vendor-booth-10x10",
-    cents: 25000,
+    cents: 24999,
   },
   vendorBooth10x20: {
     key: "vendorBooth10x20",
@@ -84,8 +84,10 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Vendor booth, 10 by 20, The Piston Powered Ranch, 10 October 2026",
     audience: "public",
     ledger: "vendor_setup",
+    productId: "prod_VCuDSat1uExPNY",
+    priceId: "price_1UEz6rEz1mDAE4gUskIRdpTr",
     lookupKey: "ppr-2026-vendor-booth-10x20",
-    cents: 35000,
+    cents: 34999,
   },
   vendorBooth20x20: {
     key: "vendorBooth20x20",
@@ -93,8 +95,10 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Vendor booth, 20 by 20, The Piston Powered Ranch, 10 October 2026",
     audience: "public",
     ledger: "vendor_setup",
+    productId: "prod_VCuDpnDUxHNXY2",
+    priceId: "price_1UEz6zEz1mDAE4gUuGZcTHnc",
     lookupKey: "ppr-2026-vendor-booth-20x20",
-    cents: 50000,
+    cents: 49999,
   },
   vendorBooth40x40: {
     key: "vendorBooth40x40",
@@ -102,8 +106,10 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Vendor booth, 40 by 40, The Piston Powered Ranch, 10 October 2026",
     audience: "public",
     ledger: "vendor_setup",
+    productId: "prod_VCuDUAxRn6DtOY",
+    priceId: "price_1UEz7WEz1mDAE4gU9napuTm5",
     lookupKey: "ppr-2026-vendor-booth-40x40",
-    cents: 65000,
+    cents: 64999,
   },
   vendorPremiumPlacement: {
     key: "vendorPremiumPlacement",
@@ -111,8 +117,10 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Premium placement on vendor row",
     audience: "public",
     ledger: "vendor_setup",
+    productId: "prod_VCuDoLmmord57m",
+    priceId: "price_1UEz7eEz1mDAE4gUOzH2j5o4",
     lookupKey: "ppr-2026-vendor-premium-placement",
-    cents: 15000,
+    cents: 14999,
   },
   supporting: {
     key: "supporting",
@@ -123,7 +131,7 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     productId: "prod_VAskNMROtPmvuq",
     priceId: "price_1UAWzGRJpXHmje770wv7jUj9",
     lookupKey: "ppr-2026-sponsor-supporting",
-    cents: 50000,
+    cents: 49999,
   },
   secondaryTitle: {
     key: "secondaryTitle",
@@ -134,7 +142,7 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     productId: "prod_VAskun9aDAKszv",
     priceId: "price_1UAWzHRJpXHmje779GTCTJYp",
     lookupKey: "ppr-2026-sponsor-secondary-title",
-    cents: 250000,
+    cents: 249999,
   },
   premierTitle: {
     key: "premierTitle",
@@ -145,7 +153,7 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     productId: "prod_VAskygpO23zwTW",
     priceId: "price_1UAWzIRJpXHmje77AkoTNkVM",
     lookupKey: "ppr-2026-sponsor-premier-title",
-    cents: 500000,
+    cents: 499999,
   },
 
   /* The VIP rooms stay wired and unpriced here.
@@ -175,10 +183,12 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     key: "capRanch", name: "The Ranch Cap", covers: "The Ranch Cap", audience: "public", ledger: "other",
     productId: "prod_VFSMHmKk6AS8ci", priceId: "price_1UExROEz1mDAE4gUsXuFoVBt", lookupKey: "ppr-2026-cap-ranch", cents: 2499,
   },
-  /* The one item still unpriced: its Stripe price was refused at creation, and
-     it is also the only PaddockGavin-branded product in a Rancho Jaramillo
-     store, which is a placement question before it is a pricing one. */
-  truckerPg: { key: "truckerPg", name: "PaddockGavin Trucker", covers: "PaddockGavin Trucker", audience: "public", ledger: "other" },
+  /* Priced, but still the only PaddockGavin-branded product sitting in a
+     Rancho Jaramillo store. That is a placement question, not a pricing one. */
+  truckerPg: {
+    key: "truckerPg", name: "PaddockGavin Trucker", covers: "PaddockGavin Trucker", audience: "public", ledger: "other",
+    productId: "prod_VFU6eaRIBx4FjM", priceId: "price_1UEz8FEz1mDAE4gUTejjVcxd", lookupKey: "ppr-2026-trucker-pg", cents: 1999,
+  },
   mugRanch: {
     key: "mugRanch", name: "The Ranch Mug", covers: "The Ranch Mug", audience: "public", ledger: "other",
     productId: "prod_VFSNbvQNdgol8y", priceId: "price_1UExSmEz1mDAE4gUFFeDcn3U", lookupKey: "ppr-2026-mug-ranch", cents: 2499,
@@ -202,15 +212,16 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
 
   hospitality25: {
     key: "hospitality25", name: "Hospitality Tent, two cocktails and swag", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other",
-    productId: "prod_VFSRXeY55lBocE", priceId: "price_1UExWOEz1mDAE4gUPthfPcy3", lookupKey: "ppr-2026-hospitality-25", cents: 2500,
+    productId: "prod_VFSRXeY55lBocE", priceId: "price_1UEz7pEz1mDAE4gUtl4gIS1t", lookupKey: "ppr-2026-hospitality-25", cents: 2499,
   },
   hospitality75: {
     key: "hospitality75", name: "Hospitality Tent, three cocktails and swag", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other",
-    productId: "prod_VFSQiqptpOTcYM", priceId: "price_1UExVmEz1mDAE4gUl5V1InKY", lookupKey: "ppr-2026-hospitality-75", cents: 7500,
+    productId: "prod_VFSQiqptpOTcYM", priceId: "price_1UEz7vEz1mDAE4gUET8FLKPQ", lookupKey: "ppr-2026-hospitality-75", cents: 7499,
   },
-  /* Wired and unpriced: its Stripe price was refused at creation, same as the
-     trucker. Everything else about it is ready. */
-  hospitality100: { key: "hospitality100", name: "Hospitality Tent, two people", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other" },
+  hospitality100: {
+    key: "hospitality100", name: "Hospitality Tent, pair", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other",
+    productId: "prod_VFU672nJ09w7LB", priceId: "price_1UEz85Ez1mDAE4gUs3FDVZr0", lookupKey: "ppr-2026-hospitality-100", cents: 9999,
+  },
   },
 }
 
@@ -230,14 +241,14 @@ export interface Footprint {
 }
 
 export const FOOTPRINTS: Footprint[] = [
-  { size: "10 by 10", sqft: 100, item: "vendorBooth", cents: 25000, note: "One table, one canopy, the standard row space." },
-  { size: "10 by 20", sqft: 200, item: "vendorBooth10x20", cents: 35000, note: "Two frontages, or a trailer parked behind the counter." },
-  { size: "20 by 20", sqft: 400, item: "vendorBooth20x20", cents: 50000, note: "A build rather than a stall. Seating, or a working display." },
-  { size: "40 by 40", sqft: 1600, item: "vendorBooth40x40", cents: 65000, note: "An activation. Vehicles inside the footprint, room to gather." },
+  { size: "10 by 10", sqft: 100, item: "vendorBooth", cents: 24999, note: "One table, one canopy, the standard row space." },
+  { size: "10 by 20", sqft: 200, item: "vendorBooth10x20", cents: 34999, note: "Two frontages, or a trailer parked behind the counter." },
+  { size: "20 by 20", sqft: 400, item: "vendorBooth20x20", cents: 49999, note: "A build rather than a stall. Seating, or a working display." },
+  { size: "40 by 40", sqft: 1600, item: "vendorBooth40x40", cents: 64999, note: "An activation. Vehicles inside the footprint, room to gather." },
 ]
 
 /** The add-on, on top of any footprint. */
-export const PREMIUM_PLACEMENT = { item: "vendorPremiumPlacement", cents: 15000, label: "Premium placement" }
+export const PREMIUM_PLACEMENT = { item: "vendorPremiumPlacement", cents: 14999, label: "Premium placement" }
 
 /** Generator power is a separate ask because the ranch has no mains in the row. */
 export const POWER_OPTIONS = [
