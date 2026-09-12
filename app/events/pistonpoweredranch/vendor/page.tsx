@@ -59,7 +59,7 @@ export default function Page() {
       bandImg="/images/donuts-inside.webp"
       bandFocal="center 50%"
       closeImg="/images/ranch/ppr-bins.jpg"
-      tone="#4BA3DE"
+      tone="#1424A1"
       asksHead="What to tell us"
       asks={[
         { t: "What you sell", b: "Product, food, service, or something we have not seen yet." },

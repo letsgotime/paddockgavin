@@ -31,7 +31,7 @@ export default function Page() {
       bandImg="/images/donuts-overflow.webp"
       bandFocal="center 55%"
       closeImg="/images/ranch/g-bales.webp"
-      tone="#F2C94C"
+      tone="#E5141A"
       asksHead="Positions"
       asks={[
         { t: "Presenting Sponsor", b: "One partner, above the title. The day carries your name." },

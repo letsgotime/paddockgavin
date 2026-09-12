@@ -309,7 +309,7 @@ export function ApplyPage(p: ApplyProps) {
                 href={p.cta.href}
                 target={p.cta.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener"
-                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
               >
                 {p.cta.label}
               </a>
@@ -756,7 +756,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 </p>
               )}
               {surface === "entry" && recorded && token && (
-                <a className="pgGo" href={`/events/pistonpoweredranch/portal?t=${token}`} style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a className="pgGo" href={`/events/pistonpoweredranch/portal?t=${token}`} style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Create your account
                 </a>
               )}
@@ -778,7 +778,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 </div>
               )}
               {surface === "vendor" && (
-                <a className="pgGo" href="/events/pistonpoweredranch/vendor/booth" style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a className="pgGo" href="/events/pistonpoweredranch/vendor/booth" style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Reserve the standard space now
                 </a>
               )}
@@ -845,7 +845,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 onClick={send}
                 disabled={status === "sending"}
                 className="pgGo"
-                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", border: "none", padding: "16px 28px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? .6 : 1, clipPath: CLIP_SM }}
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", border: "none", padding: "16px 28px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? .6 : 1, clipPath: CLIP_SM }}
               >
                 {status === "sending" ? "Sending" : "Send it"}
               </button>
@@ -945,7 +945,7 @@ function Media({
         <input ref={photoRef} type="file" accept="image/*" multiple hidden onChange={(e) => { onAdd("photo", e.target.files); e.target.value = "" }} />
         <input ref={videoRef} type="file" accept="video/*" hidden onChange={(e) => { onAdd("video", e.target.files); e.target.value = "" }} />
         <button type="button" disabled={Boolean(busy)} onClick={() => photoRef.current?.click()} className="pgGo"
-          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: met ? "transparent" : tone, color: met ? "#EDF1F6" : "#101010", border: met ? "1px solid rgba(255,255,255,.3)" : "none", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1, clipPath: CLIP_SM }}>
+          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: met ? "transparent" : tone, color: "#EDF1F6", border: met ? "1px solid rgba(255,255,255,.3)" : "none", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1, clipPath: CLIP_SM }}>
           {photos.length ? "Add more photographs" : "Add photographs"}
         </button>
         <button type="button" disabled={Boolean(busy) || videos.length >= MAX_VIDEOS} onClick={() => videoRef.current?.click()}

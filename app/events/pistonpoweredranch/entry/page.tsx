@@ -31,7 +31,7 @@ export default function Page() {
       bandImg="/images/ranch/ppr-field.webp"
       bandFocal="center 45%"
       closeImg="/images/aston-wheel.webp"
-      tone="#00D2BE"
+      tone="#E5141A"
       asksHead="What to send"
       asks={[
         { t: "The car", b: "Year, make, model, and what makes this one worth the drive." },
