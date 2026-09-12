@@ -28,7 +28,7 @@ export default function Page() {
       ]}
       img="/images/ranch/ppr-pasture.jpg"
       focal="center 58%"
-      bandImg="/images/donuts-overflow.webp"
+      bandImg="/images/ranch/g-cattle.webp"
       bandFocal="center 55%"
       closeImg="/images/ranch/g-bales.webp"
       tone="#E5141A"

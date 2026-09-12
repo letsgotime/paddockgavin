@@ -105,7 +105,7 @@ function Band({ band, slug, mark }: { band: EventBand; slug: string; mark?: Reac
         {band.stats && band.stats.length > 0 && (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(148px,1fr))", gap: 12, marginTop: 6, width: "100%", maxWidth: 720 }}>
             {band.stats.map(([k, v]) => (
-              <div key={k} style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(10,21,35,.6)", borderRadius: 10, padding: "16px 14px", display: "grid", gap: 4 }}>
+              <div key={k} style={{ border: "1px solid rgba(255,255,255,.14)", background: "rgba(10,21,35,.4)", backdropFilter: "blur(14px) saturate(150%)", WebkitBackdropFilter: "blur(14px) saturate(150%)", borderRadius: 10, padding: "16px 14px", display: "grid", gap: 4 }}>
                 <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: "#848482" }}>{k}</span>
                 <span style={{ fontFamily: "var(--body)", fontWeight: 700, fontSize: 16, color: "#EDF1F6" }}>{v}</span>
               </div>
@@ -132,7 +132,7 @@ function Teaser({ teaser, slug }: { teaser: NonNullable<EventContent["teaser"]>;
         </>
       )}
       <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
-        <div className="evTeaser" style={{ background: "linear-gradient(155deg,rgba(16,29,45,.9),rgba(10,21,35,.94))", border: "1px solid rgba(255,255,255,.16)", borderTop: "3px solid var(--accent-strong)", boxShadow: "0 16px 38px rgba(0,0,0,.5)", borderRadius: 16, padding: "clamp(20px,3.2vw,34px)" }}>
+        <div className="evTeaser" style={{ background: "linear-gradient(155deg,rgba(16,29,45,.62),rgba(10,21,35,.68))", backdropFilter: "blur(26px) saturate(150%)", WebkitBackdropFilter: "blur(26px) saturate(150%)", border: "1px solid rgba(255,255,255,.16)", borderTop: "3px solid var(--accent-strong)", boxShadow: "0 16px 38px rgba(0,0,0,.5)", borderRadius: 16, padding: "clamp(20px,3.2vw,34px)" }}>
           <div className="evTeaserFilm">
             {teaser.film ? (
               <video src={teaser.film} poster={teaser.poster ? `/_next/image?url=${encodeURIComponent(teaser.poster)}&w=640&q=60` : undefined} controls playsInline preload="none"
@@ -225,7 +225,7 @@ function Act({ act, slug, open, onToggle }: { act: EventAct; slug: string; open:
             ))}
 
             {act.tiers?.map((t) => (
-              <div key={t.name} style={{ marginTop: 22, padding: "18px 20px", border: "1px solid rgba(255,255,255,.14)", borderTop: `3px solid ${t.tone}`, borderRadius: 14 }}>
+              <div key={t.name} style={{ marginTop: 22, padding: "18px 20px", border: "1px solid rgba(255,255,255,.16)", background: "rgba(21,37,56,.4)", backdropFilter: "blur(18px) saturate(150%)", WebkitBackdropFilter: "blur(18px) saturate(150%)", borderTop: `3px solid ${t.tone}`, borderRadius: 14 }}>
                 <p style={{ margin: 0, fontFamily: "var(--display)", fontSize: 21, fontWeight: 700, color: "var(--paper)" }}>{t.name}</p>
                 <p style={{ margin: "6px 0 12px", fontFamily: "var(--body)", fontSize: 15.5, color: "#9FAAB8" }}>{t.line}</p>
                 <ul style={{ margin: 0, paddingLeft: 18, color: "#C9D1DB", fontFamily: "var(--body)", fontSize: 15.5 }}>
@@ -690,7 +690,7 @@ export default function EventPublic({
               {ground.map((f) => {
                 const n = numberOf.get(f.kind + f.name)
                 return (
-                  <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
+                  <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(21,37,56,.38)", backdropFilter: "blur(14px) saturate(140%)", WebkitBackdropFilter: "blur(14px) saturate(140%)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       {n !== undefined ? (
                         <span aria-hidden="true" style={{ display: "inline-flex", flex: "0 0 auto", alignItems: "center", justifyContent: "center", width: 19, height: 19, borderRadius: "50%", background: "#fff", color: "#0A1523", fontFamily: MONO, fontSize: 10.5, fontWeight: 700 }}>
@@ -744,7 +744,7 @@ export default function EventPublic({
                 const rows = list as PartnerRow[]
                 if (rows.length === 0) return null
                 return (
-                  <div key={head as string}>
+                  <div key={head as string} style={{ padding: "clamp(18px,2.4vw,26px)", border: "1px solid rgba(255,255,255,.14)", background: "rgba(21,37,56,.4)", backdropFilter: "blur(20px) saturate(150%)", WebkitBackdropFilter: "blur(20px) saturate(150%)", borderRadius: 14 }}>
                     <p style={{ margin: "0 0 10px", fontFamily: MONO, fontSize: 10.5, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--second)" }}>{head as string}</p>
                     <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 8 }}>
                       {rows.map((r) => (
@@ -782,7 +782,7 @@ export default function EventPublic({
                   {/* Rancho Jaramillo's own mark is all over the rest of the
                       page; this is the one place that credits who actually
                       plans and runs the day on the ranch's behalf. */}
-                  <div style={{ marginTop: "clamp(30px,5vh,56px)", paddingTop: "clamp(30px,5vh,56px)", borderTop: "1px solid rgba(255,255,255,.12)", display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textAlign: "center" }}>
+                  <div style={{ marginTop: "clamp(30px,5vh,56px)", padding: "clamp(30px,5vh,56px) clamp(20px,4vw,40px)", border: "1px solid rgba(255,255,255,.14)", background: "rgba(21,37,56,.4)", backdropFilter: "blur(22px) saturate(150%)", WebkitBackdropFilter: "blur(22px) saturate(150%)", borderRadius: 18, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textAlign: "center" }}>
                     <RanchMark src="/images/mark-on-dark-96.png" alt="PaddockGavin" width={104} ratio={96 / 174} />
                     <p style={{ margin: 0, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#9FAAB8" }}>Produced by PaddockGavin</p>
                     <p style={{ margin: 0, fontFamily: "var(--body)", fontSize: 16, lineHeight: 1.6, color: "#C9D1DB", maxWidth: "54ch" }}>

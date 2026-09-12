@@ -244,7 +244,6 @@ export function ApplyPage(p: ApplyProps) {
               <div
                 data-r=""
                 className="pg-e1" style={{
-                  background: "rgba(10,21,35,.82)",
                   borderTop: `3px solid ${p.tone}`,
                   boxShadow: "0 30px 90px rgba(0,0,0,.5)",
                   clipPath: CLIP,
@@ -279,7 +278,7 @@ export function ApplyPage(p: ApplyProps) {
                 key={a.t}
                 data-r=""
                 className="pgTile"
-                style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(21,37,56,.55)", clipPath: CLIP_SM, padding: "18px 20px", display: "flex", flexDirection: "column", gap: 7, ["--d" as string]: `${i * 80}ms` }}
+                style={{ border: "1px solid rgba(255,255,255,.14)", background: "rgba(21,37,56,.4)", backdropFilter: "blur(16px) saturate(150%)", WebkitBackdropFilter: "blur(16px) saturate(150%)", clipPath: CLIP_SM, padding: "18px 20px", display: "flex", flexDirection: "column", gap: 7, ["--d" as string]: `${i * 80}ms` }}
               >
                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 15.5, textTransform: "uppercase", letterSpacing: "-.008em", color: "#FFFFFF" }}>{a.t}</span>
                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C4CCD6" }}>{a.b}</span>
@@ -290,21 +289,24 @@ export function ApplyPage(p: ApplyProps) {
 
         {p.form && <ApplyForm tone={p.tone} form={p.form} />}
 
-        {/* A plain close, not a third full-bleed photo band. Hero and the
-            mid-page band already carry that device once each; stacking a
-            third copy of the same sticky-parallax-plus-gradient treatment
-            read as the same beat repeating rather than a page with any
-            rhythm to it. closeImg still exists on every caller so it is
-            kept as a quiet corner accent instead of being dropped outright. */}
-        <section style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,.1)", padding: "clamp(48px,9vh,110px) clamp(16px,5vw,40px)", overflow: "hidden" }}>
-          <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, width: "min(38vw,420px)", height: "100%", opacity: 0.22, maskImage: "linear-gradient(to left,#000,transparent)", WebkitMaskImage: "linear-gradient(to left,#000,transparent)" }}>
-            <Image src={p.closeImg} alt="" fill sizes="420px" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
-          </div>
-          <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}>
-            <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
+        {/* A real photo, not the hero/mid-page band's sticky-parallax rig a
+            third time over: that read as the same moving beat repeating
+            rather than a page with any rhythm to it. This is the plain
+            static equivalent of the homepage's own Band component, image
+            fixed in normal flow, so the close is a photograph again
+            without reintroducing the thing that felt awkward before. */}
+        <section style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,.1)", padding: "clamp(56px,10vh,130px) clamp(16px,5vw,40px)", overflow: "hidden" }}>
+          <Image src={p.closeImg} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg,rgba(10,21,35,.95) 0%,rgba(10,21,35,.82) 40%,rgba(10,21,35,.42) 100%)" }} />
+          <div
+            data-r=""
+            className="pg-e1"
+            style={{ position: "relative", maxWidth: 620, borderTop: `3px solid ${p.tone}`, boxShadow: "0 30px 90px rgba(0,0,0,.55)", clipPath: CLIP, padding: "clamp(24px,4vw,40px)", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}
+          >
+            <p style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
               {p.closeLine}
             </p>
-            <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", ["--d" as string]: "110ms" }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
               <a
                 className="pgGo"
                 href={p.cta.href}

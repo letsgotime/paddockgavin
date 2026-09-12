@@ -56,7 +56,7 @@ export default function Page() {
       ]}
       img="/images/ranch/ppr-gate.webp"
       focal="center 42%"
-      bandImg="/images/donuts-inside.webp"
+      bandImg="/images/ranch/ppr-barn.jpg"
       bandFocal="center 50%"
       closeImg="/images/ranch/ppr-bins.jpg"
       tone="#1424A1"
