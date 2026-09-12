@@ -65,7 +65,18 @@ export async function loadEventSlugs(): Promise<string[]> {
 }
 
 export interface RunOfShowRow { time_label: string; activity: string }
-export interface MapFeatureRow { kind: string; name: string; category: string | null; blurb: string | null }
+export type MapFeatureGeometry =
+  | { type: "polygon"; coords: [number, number][] }
+  | { type: "point"; coords: [number, number] }
+  | { type: "path"; coords: [number, number][] }
+export interface MapFeatureRow {
+  kind: string
+  slug: string
+  name: string
+  category: string | null
+  blurb: string | null
+  geometry: MapFeatureGeometry | null
+}
 export interface PartnerRow { company: string; category?: string | null; tier?: string | null }
 
 /**
@@ -95,7 +106,7 @@ export async function loadMapFeatures(eventId: string): Promise<MapFeatureRow[]>
   if (!p) return []
   try {
     const { rows } = await p.query(
-      `select kind, name, category, blurb
+      `select kind, slug, name, category, blurb, geometry
          from public.map_features
         where event_id = $1 and status <> 'hidden'
         order by case kind when 'zone' then 0 when 'poi' then 1 else 2 end, sort`,

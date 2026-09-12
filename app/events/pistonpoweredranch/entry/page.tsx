@@ -26,12 +26,12 @@ export default function Page() {
         "We read every entry ourselves. Photographs help. History helps more.",
         "Registration is this form, and it costs nothing.",
       ]}
-      img="/images/918-p1.webp"
+      img="/images/ranch/g-drive.webp"
       focal="center 50%"
       bandImg="/images/ranch/ppr-field.webp"
       bandFocal="center 45%"
-      closeImg="/images/aston-wheel.webp"
-      tone="#00D2BE"
+      closeImg="/images/ranch/g-barn.webp"
+      tone="#E5141A"
       asksHead="What to send"
       asks={[
         { t: "The car", b: "Year, make, model, and what makes this one worth the drive." },

@@ -17,10 +17,10 @@ const DOORS = [
   { href: "/events/pistonpoweredranch/sponsor", label: "Sponsor the day" },
   { href: "/events/pistonpoweredranch#rsvp", label: "Tell us you are coming" },
   { href: "/events/pistonpoweredranch/entries", label: "The field" },
-  { href: "/events/pistonpoweredranch/store", label: "Give to the school" },
+  { href: "/events/pistonpoweredranch/store", label: "Give to the school", altLabel: "Visit the store" },
 ]
 
-export function RanchFooter() {
+export function RanchFooter({ showMission = true }: { showMission?: boolean } = {}) {
   return (
     <footer style={{ borderTop: "1px solid rgba(255,255,255,.12)", background: "#0A1523", padding: "clamp(36px,6vw,64px) clamp(16px,5vw,40px) clamp(28px,4vw,40px)", fontFamily: ARCHIVO }}>
       <div style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gap: 26 }}>
@@ -33,13 +33,18 @@ export function RanchFooter() {
         <nav aria-label="Ranch pages" style={{ display: "flex", flexWrap: "wrap", gap: "6px 8px" }}>
           {DOORS.map((d) => (
             <Link key={d.href} href={d.href} style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 14px", borderRadius: 999, border: "1px solid rgba(255,255,255,.16)", color: "#EDF1F6", textDecoration: "none", fontWeight: 700, fontSize: 13, letterSpacing: ".04em", textTransform: "uppercase" }}>
-              {d.label}
+              {showMission ? d.label : d.altLabel ?? d.label}
             </Link>
           ))}
         </nav>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 22px", paddingTop: 18, borderTop: "1px solid rgba(255,255,255,.1)", fontSize: 13.5, color: "#8b95a3" }}>
           <span>
-            A <a href="https://paddockgavin.com" style={{ color: "#C9D1DB", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.22)" }}>PaddockGavin</a> event, benefiting Community Elementary School.
+            A <a href="https://paddockgavin.com" style={{ color: "#C9D1DB", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.22)" }}>PaddockGavin</a> event
+            {/* Was "benefiting Community Elementary School", stale against
+                tonight's real mission everywhere else on the site (ten
+                schools, $2,500 each). The sponsor page turns this off
+                entirely rather than showing a shortened version of it. */}
+            {showMission && ", funding lunches at ten local schools, $2,500 each"}.
           </span>
           <a href="mailto:hello@pistonpoweredranch.com" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "#C9D1DB", textDecoration: "none" }}>hello@pistonpoweredranch.com</a>
           <Link href="/legal/privacy" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "#8b95a3", textDecoration: "none" }}>Privacy</Link>

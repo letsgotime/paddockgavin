@@ -56,10 +56,10 @@ export default function Page() {
       ]}
       img="/images/ranch/ppr-gate.webp"
       focal="center 42%"
-      bandImg="/images/donuts-inside.webp"
+      bandImg="/images/ranch/ppr-barn.jpg"
       bandFocal="center 50%"
       closeImg="/images/ranch/ppr-bins.jpg"
-      tone="#4BA3DE"
+      tone="#1424A1"
       asksHead="What to tell us"
       asks={[
         { t: "What you sell", b: "Product, food, service, or something we have not seen yet." },

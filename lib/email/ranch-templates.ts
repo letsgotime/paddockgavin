@@ -564,7 +564,7 @@ function spectatorT(stage: Stage, v: Vars): Rendered | null {
           rows: [
             { label: "Gates", value: "9am tomorrow" },
             { label: "Finish", value: "3pm" },
-            { label: "Parking", value: "Signed from Highway 41-A, free" },
+            { label: "Parking", value: "Signed from Enon Church Road, free" },
             { label: "Cost", value: "Nothing, for any of it" },
           ],
         }
@@ -606,15 +606,16 @@ function vipT(surface: Surface, v: Vars): Rendered {
     heading: "A different way to watch",
     blocks: [
       { kind: "lead", text: `${first(v)}, you are already on the list and nothing about that changes. Entry is free and it stays free.` },
-      { kind: "p", text: "For anyone who would rather not spend six hours standing on grass, there are two ways to take the day at a slower pace. Both are limited by the number of chairs that fit, not by a sales target." },
+      { kind: "p", text: "For anyone who would rather not spend six hours standing on grass, there are two ways to take the day at a slower pace. Both are limited by the number of seats that fit, not by a sales target." },
       {
         kind: "facts",
         rows: [
-          { label: "VIP Patio", value: "From $249" },
-          { label: "VIP Owners Quarters", value: "From $499" },
+          { label: "The Terrace", value: "$249, 20 seats" },
+          { label: "The Owner's Table", value: "$399, 10 seats" },
         ],
       },
-      { kind: "p", text: "What each includes is being finalised with the ranch this week, and we would rather send you the detail than a promise. Reply with the word patio or quarters and we will hold you a place and send the specifics the moment they are set." },
+      { kind: "p", text: "Both are hosted: a shaded tent, table service, a bottle of whiskey or wine (or dinner at Southall or Sinatra), ranch raised Angus, aged steaks, a shirt and hat, and the corral and photo areas. The Owner's Table goes further out: the quiet ride by golf cart or hay ride, a spot the crowd never finds, time with Oscar away from the noise, and a concierge who stays with you." },
+      { kind: "p", text: "Reply with the word terrace or table and we will hold you a seat." },
       { kind: "quiet", text: "If you would rather just walk the field, do exactly that. Three hundred cars, free, and nobody will ask you for anything." },
     ],
     signoff: "Every dollar above the cost of putting the day on goes to Community Elementary School.",

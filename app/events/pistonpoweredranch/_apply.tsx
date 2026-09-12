@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { track } from "@vercel/analytics"
 import { upload } from "@vercel/blob/client"
 import Image from "next/image"
@@ -11,10 +11,10 @@ import { RanchFooter } from "@/components/ranch-footer"
 /* Copy ran through RAIL Redline, WARM / WEB PAGE / US, zero tells, with an
    explicit instruction not to introduce facts absent from the draft. */
 
-const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
-const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
+export const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+export const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+export const CLIP = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
+export const CLIP_SM = "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)"
 
 /* The public face. Links in what the person keeps (the status link, the
    booth page) are written against this rather than against whichever door
@@ -148,6 +148,8 @@ export type ApplyProps = {
   note?: string
   closeLine: string
   form?: { kind: string; head: string; orgLabel: string; askLabel: string }
+  hideMission?: boolean
+  extra?: ReactNode
 }
 
 type Status = "idle" | "sending" | "sent" | "error"
@@ -243,7 +245,6 @@ export function ApplyPage(p: ApplyProps) {
               <div
                 data-r=""
                 className="pg-e1" style={{
-                  background: "rgba(10,21,35,.82)",
                   borderTop: `3px solid ${p.tone}`,
                   boxShadow: "0 30px 90px rgba(0,0,0,.5)",
                   clipPath: CLIP,
@@ -278,7 +279,7 @@ export function ApplyPage(p: ApplyProps) {
                 key={a.t}
                 data-r=""
                 className="pgTile"
-                style={{ border: "1px solid rgba(255,255,255,.12)", background: "rgba(21,37,56,.55)", clipPath: CLIP_SM, padding: "18px 20px", display: "flex", flexDirection: "column", gap: 7, ["--d" as string]: `${i * 80}ms` }}
+                style={{ border: "1px solid rgba(255,255,255,.14)", background: "rgba(21,37,56,.4)", backdropFilter: "blur(16px) saturate(150%)", WebkitBackdropFilter: "blur(16px) saturate(150%)", clipPath: CLIP_SM, padding: "18px 20px", display: "flex", flexDirection: "column", gap: 7, ["--d" as string]: `${i * 80}ms` }}
               >
                 <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: 15.5, textTransform: "uppercase", letterSpacing: "-.008em", color: "#FFFFFF" }}>{a.t}</span>
                 <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#C4CCD6" }}>{a.b}</span>
@@ -287,37 +288,45 @@ export function ApplyPage(p: ApplyProps) {
           </div>
         </section>
 
+        {p.extra}
+
         {p.form && <ApplyForm tone={p.tone} form={p.form} />}
 
-        <section style={{ position: "relative" }}>
-          <div className="pgBand" aria-hidden="true">
-            <Image src={p.closeImg} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
-            <span style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.86) 0%,rgba(10,21,35,.46) 30%,rgba(10,21,35,.9) 78%,rgba(10,21,35,.99) 100%)" }} />
-          </div>
-          <div style={{ position: "relative", marginTop: "-66svh", paddingBottom: "clamp(56px,13vh,140px)" }}>
-            <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}>
-              <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
-                {p.closeLine}
-              </p>
-              <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", ["--d" as string]: "110ms" }}>
-                <a
-                  className="pgGo"
-                  href={p.cta.href}
-                  target={p.cta.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener"
-                  style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
-                >
-                  {p.cta.label}
-                </a>
-                <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>
-                  Back to the event
-                </Link>
-              </div>
+        {/* A real photo, not the hero/mid-page band's sticky-parallax rig a
+            third time over: that read as the same moving beat repeating
+            rather than a page with any rhythm to it. This is the plain
+            static equivalent of the homepage's own Band component, image
+            fixed in normal flow, so the close is a photograph again
+            without reintroducing the thing that felt awkward before. */}
+        <section style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,.1)", padding: "clamp(56px,10vh,130px) clamp(16px,5vw,40px)", overflow: "hidden" }}>
+          <Image src={p.closeImg} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
+          <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg,rgba(10,21,35,.95) 0%,rgba(10,21,35,.82) 40%,rgba(10,21,35,.42) 100%)" }} />
+          <div
+            data-r=""
+            className="pg-e1"
+            style={{ position: "relative", maxWidth: 620, borderTop: `3px solid ${p.tone}`, boxShadow: "0 30px 90px rgba(0,0,0,.55)", clipPath: CLIP, padding: "clamp(24px,4vw,40px)", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}
+          >
+            <p style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
+              {p.closeLine}
+            </p>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <a
+                className="pgGo"
+                href={p.cta.href}
+                target={p.cta.href.startsWith("http") ? "_blank" : undefined}
+                rel="noopener"
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#FFFFFF", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
+              >
+                {p.cta.label}
+              </a>
+              <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: p.tone, textDecoration: "none" }}>
+                Back to the event
+              </Link>
             </div>
           </div>
         </section>
       </main>
-      <RanchFooter />
+      <RanchFooter showMission={!p.hideMission} />
     </>
   )
 }
@@ -753,7 +762,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 </p>
               )}
               {surface === "entry" && recorded && token && (
-                <a className="pgGo" href={`/events/pistonpoweredranch/portal?t=${token}`} style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a className="pgGo" href={`/events/pistonpoweredranch/portal?t=${token}`} style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Create your account
                 </a>
               )}
@@ -775,7 +784,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 </div>
               )}
               {surface === "vendor" && (
-                <a className="pgGo" href="/events/pistonpoweredranch/vendor/booth" style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
+                <a className="pgGo" href="/events/pistonpoweredranch/vendor/booth" style={{ alignSelf: "flex-start", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", padding: "14px 22px", clipPath: CLIP_SM, textDecoration: "none" }}>
                   Reserve the standard space now
                 </a>
               )}
@@ -842,7 +851,7 @@ function ApplyForm({ tone, form }: { tone: string; form: NonNullable<ApplyProps[
                 onClick={send}
                 disabled={status === "sending"}
                 className="pgGo"
-                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#101010", border: "none", padding: "16px 28px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? .6 : 1, clipPath: CLIP_SM }}
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: tone, color: "#FFFFFF", border: "none", padding: "16px 28px", cursor: status === "sending" ? "default" : "pointer", opacity: status === "sending" ? .6 : 1, clipPath: CLIP_SM }}
               >
                 {status === "sending" ? "Sending" : "Send it"}
               </button>
@@ -942,7 +951,7 @@ function Media({
         <input ref={photoRef} type="file" accept="image/*" multiple hidden onChange={(e) => { onAdd("photo", e.target.files); e.target.value = "" }} />
         <input ref={videoRef} type="file" accept="video/*" hidden onChange={(e) => { onAdd("video", e.target.files); e.target.value = "" }} />
         <button type="button" disabled={Boolean(busy)} onClick={() => photoRef.current?.click()} className="pgGo"
-          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: met ? "transparent" : tone, color: met ? "#EDF1F6" : "#101010", border: met ? "1px solid rgba(255,255,255,.3)" : "none", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1, clipPath: CLIP_SM }}>
+          style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", background: met ? "transparent" : tone, color: "#EDF1F6", border: met ? "1px solid rgba(255,255,255,.3)" : "none", padding: "13px 20px", cursor: busy ? "default" : "pointer", opacity: busy ? 0.6 : 1, clipPath: CLIP_SM }}>
           {photos.length ? "Add more photographs" : "Add photographs"}
         </button>
         <button type="button" disabled={Boolean(busy) || videos.length >= MAX_VIDEOS} onClick={() => videoRef.current?.click()}
