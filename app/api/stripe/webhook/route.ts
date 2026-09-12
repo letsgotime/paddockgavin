@@ -67,7 +67,7 @@ function ledgerOf(meta: Record<string, string>): Ledger {
   if (l === "vendor_setup" || l === "sponsorship" || l === "revenue_share" || l === "vip" || l === "other") return l
   const k = meta.kind || ""
   if (k === "vendorBooth") return "vendor_setup"
-  if (/supporting|Title|sponsor/i.test(k)) return "sponsorship"
+  if (/bronze|silver|gold|platinum|title|sponsor/i.test(k)) return "sponsorship"
   if (/^vip/.test(k)) return "vip"
   return "other"
 }

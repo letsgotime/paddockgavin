@@ -64,7 +64,7 @@ export default function Page() {
       lede="Three hundred collector cars. The people who own them. Their families. Several hundred more who came to see what showed up."
       body={[
         "Open pasture an hour south of Nashville, on a working ranch that opens for one Saturday.",
-        "Presenting, Title, Secondary and Supporting positions are available, and Community Partner for those who back the day without a campaign. Pricing is a conversation, not a rate card, because what a partner needs is rarely what a sheet lists.",
+        "Bronze, Silver, Gold and Platinum each carry an allocation of transport, because the cars have to get here and that is the part nobody budgets for. Title sits above them. Community Partner is for those who back the day without a campaign.",
         "Hosted seats sit beside the sponsorship, in two rooms: The Terrace, on the rail above the show field, and The Owner's Table, which goes further out.",
       ]}
       img="/images/ranch/ppr-pasture.jpg"
@@ -75,9 +75,11 @@ export default function Page() {
       tone="#E5141A"
       asksHead="Positions"
       asks={[
-        { t: "Presenting Sponsor", b: "One partner, above the title. The day carries your name." },
-        { t: "Title Sponsor", b: "The lead position on the field, on the collateral, and at the gate." },
-        { t: "Secondary and Supporting", b: "A named place on the field and in everything that carries the day." },
+        { t: "Title Sponsor", b: "The lead position on the field, on the collateral, and at the gate. What it takes is a conversation." },
+        { t: "Platinum", b: "Two trucks of transport, and the position on the field that goes with them." },
+        { t: "Gold", b: "A whole truck, and a named place in everything that carries the day." },
+        { t: "Silver", b: "Two thirds of a truck, and your name on the field." },
+        { t: "Bronze", b: "A quarter truck, and the first rung with your name on it." },
         { t: "Community Partner", b: "Backing the day without a campaign, named as such." },
         { t: "Hosted seats", b: "The Terrace: rail-side above the show field, table service and ranch raised Angus. The Owner's Table adds the quiet ride out and time with Oscar. Ask for the details." },
         { t: "Tell us the goal", b: "What you want the day to do for you, and we will build the position around it." },

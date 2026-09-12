@@ -122,38 +122,59 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     lookupKey: "ppr-2026-vendor-premium-placement",
     cents: 14999,
   },
-  supporting: {
-    key: "supporting",
-    name: "Supporting Sponsor",
-    covers: "Supporting Sponsor, The Piston Powered Ranch, 10 October 2026",
+  /* The sponsorship ladder, set by Gavin 12 September.
+   *
+   * Each tier carries an allocation of transport: the Transportation Sponsor
+   * hauls the cars, and a tier buys a share of a truck. That allocation is the
+   * benefit, so it travels in `covers` and lands on the receipt.
+   *
+   * Title sits at the top with no figure. It is genuinely undecided, so it
+   * carries no cents and reads as "by conversation" rather than a number
+   * nobody has agreed to. */
+
+  bronze: {
+    key: "bronze",
+    name: "Bronze Sponsor",
+    covers: "Bronze Sponsor, a quarter truck, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
-    productId: "prod_VAskNMROtPmvuq",
-    priceId: "price_1UAWzGRJpXHmje770wv7jUj9",
-    lookupKey: "ppr-2026-sponsor-supporting",
+    lookupKey: "ppr-2026-sponsor-bronze",
     cents: 49999,
   },
-  secondaryTitle: {
-    key: "secondaryTitle",
-    name: "Secondary Sponsor",
-    covers: "Secondary Sponsor, The Piston Powered Ranch, 10 October 2026",
+  silver: {
+    key: "silver",
+    name: "Silver Sponsor",
+    covers: "Silver Sponsor, two thirds of a truck, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
-    productId: "prod_VAskun9aDAKszv",
-    priceId: "price_1UAWzHRJpXHmje779GTCTJYp",
-    lookupKey: "ppr-2026-sponsor-secondary-title",
+    lookupKey: "ppr-2026-sponsor-silver",
+    cents: 99999,
+  },
+  gold: {
+    key: "gold",
+    name: "Gold Sponsor",
+    covers: "Gold Sponsor, a whole truck, The Piston Powered Ranch, 10 October 2026",
+    audience: "desk",
+    ledger: "sponsorship",
+    lookupKey: "ppr-2026-sponsor-gold",
     cents: 249999,
   },
-  premierTitle: {
-    key: "premierTitle",
+  platinum: {
+    key: "platinum",
+    name: "Platinum Sponsor",
+    covers: "Platinum Sponsor, two trucks, The Piston Powered Ranch, 10 October 2026",
+    audience: "desk",
+    ledger: "sponsorship",
+    lookupKey: "ppr-2026-sponsor-platinum",
+    cents: 499999,
+  },
+  titleSponsor: {
+    key: "titleSponsor",
     name: "Title Sponsor",
     covers: "Title Sponsor, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
-    productId: "prod_VAskygpO23zwTW",
-    priceId: "price_1UAWzIRJpXHmje77AkoTNkVM",
-    lookupKey: "ppr-2026-sponsor-premier-title",
-    cents: 499999,
+    lookupKey: "ppr-2026-sponsor-title",
   },
 
   /* The VIP rooms stay wired and unpriced here.
