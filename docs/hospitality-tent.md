@@ -123,6 +123,13 @@ copy, the map label, and event copy, and swaps without a rebuild. Stripe
 product names stay neutral ("Hospitality Tent" plus the package) so a
 naming change never touches the catalog.
 
+Gavin, 12 September: use a "Your Brand" placeholder in the outreach JPG
+for now rather than naming Mechanics on a Mission there, since neither
+partner is confirmed yet. Styled as a dashed gold-bordered box around
+"Your Brand" in the headline, in place of the swappable name the build
+rule describes. The same treatment applies anywhere else a specific
+partner name would otherwise print before one is confirmed.
+
 ## The money
 
 - Target: **$5,000** from the tent, alongside **$9,000 from VIP**. Both
