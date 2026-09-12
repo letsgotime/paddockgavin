@@ -94,7 +94,7 @@ export function weeklyDigest(v: DigestVars): RanchEmail & { subject: string; fro
   blocks.push({
     kind: "p",
     text:
-      "Nothing to book and nothing to print. Turn in off Highway 41-A and the marshals will point you down the ranch road. Spectator parking is free, on the pasture south of the show field.",
+      "Nothing to book and nothing to print. Turn in off Enon Church Road and the marshals will point you down the ranch road. Spectator parking is free, on the pasture south of the show field.",
   })
   blocks.push({ kind: "button", label: "Everything about the day", href: TOOLS })
 

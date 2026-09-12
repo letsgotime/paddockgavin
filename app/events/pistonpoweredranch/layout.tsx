@@ -2,6 +2,7 @@ import type React from "react"
 import Image from "next/image"
 import { headers } from "next/headers"
 import type { Metadata } from "next"
+import { RANCH_ICONS } from "@/app/layout"
 
 /* Flat numbers, no superlative. The earlier line led on "the 12 most curated
    acres in automotive", an unprovable claim from a year one event with no past
@@ -37,6 +38,9 @@ export async function generateMetadata(): Promise<Metadata> {
      the root sets these for the paddock and the nearer layout has the say. */
   manifest: ranchDoor ? "/brand/ranch.webmanifest" : "/manifest.webmanifest",
   appleWebApp: { capable: true, title: ranchDoor ? "Piston Powered Ranch" : "PaddockGavin", statusBarStyle: "black-translucent" },
+  /* Same reasoning as the manifest line above: the root layout's icons are
+     the paddock's, and only the nearer layout knows this door is the ranch's. */
+  ...(ranchDoor ? { icons: RANCH_ICONS } : {}),
   openGraph: {
     title: TITLE,
     description: DESC,

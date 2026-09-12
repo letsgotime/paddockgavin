@@ -98,18 +98,25 @@
 
     <span class="live" id="live">Reading the layout…</span>
     <!-- The way to fix a plan that is wrong, from the page that shows it is
-         wrong. Staff only on the other side; to anybody else it is a sign in
-         link, which is why it can sit on a page a vendor might open. -->
-    <a class="live" id="traceln" href="/site-plan/edit" style="left: auto; right: 12px; text-decoration: none">Trace it on the aerial</a>
+         wrong. Retired 2026-09-11: this used to point at the old staff-only
+         tracer, now folded into the team tool at /sitemap-review, so this
+         goes there directly instead of through the /site-plan/edit redirect.
+         Password gated the same as every other team tool, not console
+         staff auth, which is why it is still fine to sit on a page a
+         vendor might open. -->
+    <a class="live" id="traceln" href="/events/pistonpoweredranch/sitemap-review" style="left: auto; right: 12px; text-decoration: none">Trace it on the aerial</a>
 
     <script type="module">
       import { db as makeDb, EVENT_ID } from "/vendor/ranch-db.js?v=2026-09-02f";
       import { PARCEL, ROADS, CREEKS } from "/map/geo.js";
 
       var LETTERS = "abcdefgh";
+      /* Kept in sync by hand with GROUNDS_COLORS in EventPublic.tsx and
+         COLORS in SitemapReviewApp.tsx — same categories, same hex values,
+         three different renderers. */
       var CAT = {
-        show: "#d99400", vendor: "#00776e", vip: "#2d6f9e", parking: "#5b6672",
-        ops: "#FF1A21", entry: "#a8801a", charity: "#8a6a00", food: "#00776e", facility: "#5b6672",
+        show: "#E5141A", vendor: "#57C7F5", vip: "#F2C94C", parking: "#8A97A8",
+        ops: "#4ED08A", entry: "#FFB020", charity: "#6C7FF0", food: "#C9A3FF", facility: "#2FC7C7",
       };
       /* Same fallback the map carries, so the sheet prints even if the API
          is slow, and like the map it leaves out anything the database marks

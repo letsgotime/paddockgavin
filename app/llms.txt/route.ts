@@ -22,7 +22,7 @@ const RANCH = `# The Piston Powered Ranch
 
 ## Facts
 - Date: Saturday 10 October 2026, gates at nine, field clear by three
-- Venue: Rancho Jaramillo, Unionville, Bedford County, Tennessee, off Highway 41-A
+- Venue: Rancho Jaramillo, Unionville, Bedford County, Tennessee, off Enon Church Road
 - Admission: complimentary for spectators, no ticket
 - Entry: cars are chosen one at a time from their photographs; entrants hear either way
 - Producer: PaddockGavin, https://paddockgavin.com

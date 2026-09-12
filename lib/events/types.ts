@@ -108,6 +108,9 @@ export interface EventContent {
   /** The credit under the venue's mark. */
   organizer?: EventOrganizer
   admission?: EventAdmission
+  /** Who is on stage, for structured data. Optional: most events name nobody,
+   *  and an empty field there is correct rather than missing. */
+  performer?: { name: string; type?: "Person" | "PerformingGroup" }
   producer?: string
   seo?: { title?: string; description?: string }
   hero?: {

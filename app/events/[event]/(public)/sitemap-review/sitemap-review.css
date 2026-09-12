@@ -1,0 +1,260 @@
+.smrApp {
+  --ground: #0a1523;
+  --panel: #111c2a;
+  --ink: #fff;
+  --body: #b9c4d1;
+  --mute: #79879a;
+  --rule: rgba(255, 255, 255, 0.11);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--ground);
+  color: var(--body);
+  min-height: 100vh;
+}
+.smrApp .livery { display: flex; height: 4px; border-radius: 2px; overflow: hidden; margin-bottom: 16px; max-width: 160px; }
+.smrApp .livery i { flex: 1 1 0; }
+.smrApp .smrCard {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: clamp(60px, 12vw, 100px) 22px 40px;
+}
+.smrApp .smrCard h1 { font-family: Cinzel, Georgia, serif; font-weight: 800; font-size: 28px; color: var(--ink); margin: 0 0 8px; }
+.smrApp .smrCard .sub { font-size: 14px; margin: 0 0 20px; }
+.smrApp .smrCard form { display: flex; gap: 8px; }
+.smrApp .smrCard input {
+  flex: 1; font: inherit; font-size: 16px; padding: 11px 12px; min-height: 46px;
+  border: 1px solid var(--rule); border-radius: 9px; background: rgba(0, 0, 0, 0.3); color: var(--ink);
+}
+.smrApp .smrCard button {
+  min-height: 46px; padding: 0 18px; border-radius: 9px; border: 0; background: #e5141a; color: #fff;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+}
+.smrApp .smrCard button:disabled { opacity: 0.5; }
+.smrApp .smrCard .err { color: #FF1A21; font-size: 13px; margin-top: 10px; }
+.smrApp .smrLoading { text-align: center; padding: 100px 20px; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
+
+.smrApp.smrReady header { padding: 20px clamp(14px, 3vw, 28px) 6px; }
+.smrApp.smrReady .titleRow { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.smrApp.smrReady h1 { font-family: Cinzel, Georgia, serif; font-weight: 800; font-size: clamp(22px, 4vw, 30px); color: var(--ink); margin: 0 0 6px; }
+.smrApp.smrReady .sub { font-size: 13.5px; margin: 0; max-width: 62ch; }
+.smrApp .footerNoteField {
+  display: flex; flex-direction: column; gap: 4px; max-width: 420px; margin-top: 12px;
+}
+.smrApp .footerNoteField span {
+  font-family: ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute);
+}
+.smrApp .footerNoteField input {
+  font: inherit; font-size: 13.5px; padding: 8px 10px; min-height: 38px;
+  border: 1px solid var(--rule); border-radius: 8px; background: rgba(255, 255, 255, 0.04); color: var(--ink);
+}
+.smrApp .footerNoteField input:focus { outline: none; border-color: rgba(255, 255, 255, 0.4); }
+.smrApp .titleBtns { display: flex; gap: 8px; margin-bottom: 6px; }
+.smrApp .printBtn, .smrApp .legendBtn {
+  font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #fff; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 7px 16px; cursor: pointer; transition: background 0.15s;
+}
+.smrApp .printBtn:hover, .smrApp .legendBtn:hover { background: rgba(255, 255, 255, 0.16); }
+.smrApp .legendBtn { border-color: rgba(242, 201, 76, 0.5); color: #F2C94C; }
+.smrApp .legendBtn:hover { background: rgba(242, 201, 76, 0.12); }
+.printView { display: none; }
+.smrApp .mapWrap { position: relative; margin: 14px clamp(14px, 3vw, 28px); border: 1px solid var(--rule); border-radius: 13px; overflow: hidden; }
+/* 8:5 measured from the show grounds themselves (every zone, point and
+   route, not the wider aerial crop): roughly 590m east-west by 375m
+   north-south at this latitude. A flat vh-based height had no relation to
+   that shape, so fitting the grounds to the container still left dead
+   space on whichever axis the container ran long. max-height keeps a very
+   wide screen from stretching the map absurdly tall; the frame filling
+   the whole viewport with no visible edge was also how the legend below
+   it went unnoticed before, so this stays capped well short of that. */
+.smrApp .mapEl { aspect-ratio: 8 / 5; max-height: 620px; min-height: 320px; width: 100%; background: #0c1a14; }
+.smrApp .saveTag {
+  position: absolute; top: 10px; right: 10px; z-index: 1000; font-family: ui-monospace, monospace; font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; background: rgba(10, 21, 35, 0.85);
+  color: var(--mute); border: 1px solid var(--rule); opacity: 0; transition: opacity 0.2s;
+}
+.smrApp .saveTag.saving, .smrApp .saveTag.saved, .smrApp .saveTag.error { opacity: 1; }
+.smrApp .saveTag.saved { color: #4ed08a; }
+.smrApp .saveTag.error { color: #FF1A21; }
+.smrApp .legend { display: flex; flex-wrap: wrap; gap: 20px 28px; padding: 10px clamp(14px, 3vw, 28px) 40px; }
+.smrApp .legendGroup { display: flex; flex-direction: column; gap: 8px; }
+.smrApp .legendGroup h3 {
+  margin: 0; font-family: ui-monospace, monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--body);
+}
+.smrApp .legendItems { display: flex; flex-wrap: wrap; gap: 6px; max-width: 420px; }
+.smrApp .legendItem {
+  display: flex; align-items: center; gap: 7px; font: inherit; font-size: 12px; color: var(--body);
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--rule); border-radius: 999px;
+  padding: 6px 12px 6px 8px; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.smrApp .legendItem:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.26); color: #fff; }
+.smrApp .legendItem i { width: 10px; height: 10px; border-radius: 3px; flex: 0 0 auto; }
+.smrApp .legendItem .legendNum {
+  display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px;
+  border-radius: 50%; background: #fff; color: #14181d; font-family: ui-monospace, monospace;
+  font-style: normal; font-size: 10px; font-weight: 800; flex: 0 0 auto;
+}
+.smrApp .legendItem .tag {
+  font-family: ui-monospace, monospace; font-style: normal; font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--mute); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 6px;
+}
+.smrApp .legendItem .tagHidden { color: #FF1A21; border-color: rgba(255, 26, 33, 0.4); }
+
+.mfRoadLabel {
+  color: #fff; font-size: 12px; font-weight: 700; text-align: center; line-height: 16px;
+  text-shadow: -1px -1px 0 #0a1523, 1px -1px 0 #0a1523, -1px 1px 0 #0a1523, 1px 1px 0 #0a1523, 0 0 4px #0a1523;
+  pointer-events: none; white-space: nowrap;
+}
+.mfTip.leaflet-tooltip {
+  background: #14212f !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 4px; font-size: 10.5px; font-weight: 700; padding: 1px 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+  white-space: nowrap; pointer-events: none; line-height: 1.5;
+}
+.mfTip.leaflet-tooltip:hover, .mfTip.leaflet-tooltip.leaflet-tooltip-active { z-index: 1000 !important; }
+.mfTip.leaflet-tooltip::before { border-top-color: #14212f !important; }
+.mfHandle {
+  width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #14181d;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
+}
+.mfHandle:active { cursor: grabbing; }
+.mfHandleSmall { width: 12px; height: 12px; }
+.mfMidpoint {
+  width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.55);
+  border: 1.5px solid rgba(20, 24, 29, 0.6); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: pointer; transform: translate(-50%, -50%);
+}
+.mfRotateHandle {
+  width: 22px; height: 22px; border-radius: 50%; background: #F2C94C; border: 2px solid #14181d;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5); cursor: grab; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center;
+}
+.mfRotateHandle:active { cursor: grabbing; }
+.mfAngleTip.leaflet-tooltip {
+  background: #F2C94C; color: #14181d; border: none; border-radius: 999px;
+  font-family: ui-monospace, monospace; font-size: 11px; font-weight: 800; padding: 3px 9px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.mfAngleTip.leaflet-tooltip::before { display: none; }
+.mfPoint span {
+  display: flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6); cursor: grab; transform: translate(-50%, -50%);
+  font-family: ui-monospace, monospace; font-size: 10px; font-weight: 800; color: #14181d; line-height: 1;
+}
+.mfRouteCenter span { cursor: pointer; }
+@keyframes mfPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.4); }
+}
+.mfPoint.mfPulse span {
+  animation: mfPulse 0.6s ease-in-out infinite;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.28), 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+.leaflet-popup-content-wrapper { background: #14212f !important; color: #b9c4d1 !important; border-radius: 12px; }
+.leaflet-popup-content { margin: 12px 14px; font-size: 12.5px; line-height: 1.5; width: 220px !important; max-height: 50vh; overflow-y: auto; }
+.leaflet-popup-content b { color: #fff !important; }
+.leaflet-popup-tip { background: #14212f !important; }
+.leaflet-popup-close-button { color: #b9c4d1 !important; }
+.mfPopupImg { display: block; width: 100%; height: 96px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+.mfPopupBlurb { margin: 4px 0 0; }
+.mfPopupLL {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px;
+  padding-top: 8px; border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: ui-monospace, monospace; font-size: 11px; color: #79879a;
+}
+.mfCopyLL {
+  font: inherit; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
+  background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px;
+  padding: 3px 9px; cursor: pointer;
+}
+.mfCopyLL:hover { background: rgba(255, 255, 255, 0.22); }
+.mfPopupHidden { margin: 8px 0 0; font-style: italic; color: #79879a; }
+
+.coordReadout {
+  position: absolute; left: 10px; bottom: 10px; z-index: 1000; font-family: ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: 0.02em; padding: 5px 9px; border-radius: 6px;
+  background: rgba(10, 21, 35, 0.85); color: #b9c4d1; border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+.leaflet-control-layers {
+  background: #14212f !important; border: 1px solid rgba(255, 255, 255, 0.16) !important; border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important; color: #fff;
+}
+.leaflet-control-layers-toggle { filter: invert(1) brightness(1.6); }
+.leaflet-control-layers-expanded { padding: 10px 12px !important; font-size: 12.5px; }
+.leaflet-control-layers-separator { border-color: rgba(255, 255, 255, 0.16) !important; }
+.leaflet-control-layers label { color: #fff; display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.leaflet-control-attribution {
+  background: rgba(10, 21, 35, 0.7) !important; color: #6b7686 !important; font-size: 10px !important;
+  padding: 1px 6px !important; border-radius: 4px 0 0 0;
+}
+.leaflet-control-attribution a { color: #8a94a3 !important; }
+
+/* The full credit line runs close to the map's whole width once the
+   viewport gets narrow enough, which put it directly under the
+   coordinate readout in the same bottom strip. Truncated here instead
+   of fixed by moving either control, since neither has anywhere else
+   sensible to go without crowding the zoom buttons or the scale bar. */
+@media (max-width: 480px) {
+  .leaflet-control-attribution {
+    max-width: 148px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+}
+
+/* iPhone first: a fingertip needs a bigger target than a mouse cursor does.
+   These need !important: Leaflet's own iconSize option sets width/height
+   as an inline style on each divIcon, which otherwise wins over a class
+   rule regardless of whether the media query matches. Confirmed live that
+   without it these silently stayed at their 16-22px desktop size on a real
+   touch viewport. */
+@media (pointer: coarse) {
+  .mfHandle { width: 26px !important; height: 26px !important; }
+  .mfHandleSmall { width: 22px !important; height: 22px !important; }
+  .mfMidpoint { width: 22px !important; height: 22px !important; }
+  .mfRotateHandle { width: 30px !important; height: 30px !important; }
+  .mfRotateHandle svg { width: 19px; height: 19px; }
+  .mfPoint { width: 24px !important; height: 24px !important; }
+  .mfPoint span { width: 24px; height: 24px; font-size: 11px; }
+  .legendItem { padding: 9px 14px 9px 10px; }
+}
+
+/*
+ * The live map is Leaflet's own canvas plus drag handles built for editing,
+ * neither of which is meant for paper. Print renders a separate static
+ * view instead: one image, one SVG overlay built from the same feature
+ * list, sized off the page itself so it holds up in portrait or
+ * landscape without redoing any layout by hand.
+ */
+@media print {
+  @page { size: letter; margin: 0.45in; }
+  body * { visibility: hidden; }
+  .printView, .printView * { visibility: visible; }
+  .smrApp > header .titleRow, .smrApp > header .sub, .smrApp > .mapWrap, .smrApp > .legend { display: none !important; }
+  .printView {
+    display: block; position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #14181d;
+  }
+  .printHead { text-align: center; margin-bottom: 0.22in; }
+  .printLivery { display: flex; height: 3px; width: 1.6in; margin: 0 auto 0.12in; }
+  .printLivery i { flex: 1 1 0; }
+  /* .smrApp.smrReady h1 (the live page's own title rule) is a more specific
+     selector than a bare .printHead h1 and was winning the cascade, so the
+     print title rendered in --ink (white) on the printed page's white
+     background: there, but invisible. Matched and beaten on specificity
+     instead of reached for !important. */
+  .smrApp .printView .printHead h1 { font-family: Cinzel, Georgia, serif; font-size: 21pt; margin: 0 0 0.05in; color: #14181d; }
+  .printHead p { font-size: 10pt; color: #45505e; margin: 0; }
+  .printMapBox { width: 100%; border: 1px solid #9aa4b2; break-inside: avoid; }
+  .printSvg { display: block; width: 100%; height: 100%; }
+  .printBadgeNum { font-size: 2.1px; font-weight: 800; fill: #14181d; }
+  .printLegend { display: flex; flex-wrap: wrap; gap: 5pt 16pt; margin-top: 0.2in; font-size: 10pt; break-inside: avoid; }
+  .printLegend span { display: flex; align-items: center; gap: 6pt; }
+  .printLegend i { width: 8pt; height: 8pt; border-radius: 2pt; flex: 0 0 auto; }
+  .printLegendNum {
+    display: inline-flex; align-items: center; justify-content: center; width: 17pt; height: 17pt;
+    border-radius: 50%; background: #fff; border: 1px solid #14181d; color: #14181d; font-size: 10pt;
+    font-weight: 800; flex: 0 0 auto;
+  }
+  .printFoot {
+    display: flex; justify-content: space-between; margin-top: 0.24in; padding-top: 0.1in;
+    border-top: 1px solid #ccc; font-size: 10pt; color: #77828f;
+  }
+}
