@@ -18,8 +18,16 @@ once it is covered (bar deal, license, liquor liability), so public copy
 stays soft on the exclusivity until it is signed.
 
 Dictated placement, verbatim intent: "near the food, probably on top of the
-show cars, but far enough away from VIP." Confirm the exact spot on the site
-plan before it lands on the public map.
+show cars, but far enough away from VIP." Confirmed and placed: "behind the
+live stage viewing area #9, just off the show cars," with a screenshot of
+the site plan showing the new zone directly south of Live Music Standing
+Room, against the show field's north edge. Now a `map_features` row,
+slug `hospitality-tent`, zone kind, category `audience` (the closest fit
+in the constrained category set, matching Live Music Standing Room's own
+category since both are general admission gathering space, not VIP). The
+polygon is a reasonable rectangle in the right spot and the right rough
+size against the other amenity zones, not a surveyed footprint; adjust it
+in `/events/pistonpoweredranch/sitemap-review` if it needs to move.
 
 ## Sell the sponsorship on the site
 
@@ -41,14 +49,27 @@ barely says so.
   the tent (the dictation cut off right there; confirm what follows the
   cars before that detail prints).
 
-The visual itself sits beside this brief: `docs/PPR_HospitalityTent_Sponsor.jpg`,
-rendered from the house type, the official marks and the ranch's own field
-photograph (`public/images/ranch/ppr-field.webp`). It is the design
-reference for the sponsor page block and is shaped for outreach. Build the
-page block itself as live text over the same photograph rather than
-embedding the bitmap, so the copy stays readable to search. Note: the
-bitmap's $100 chip still shows round two's contents; it re-renders the
-moment the third-pass packages are confirmed as final.
+A visual sits beside this brief: `docs/PPR_HospitalityTent_Sponsor.jpg`,
+built from `public/images/ranch/ppr-field.webp`. Three problems with it as
+it stands, found looking at it in the Claude Code session:
+
+1. That source photograph is very likely not real Rancho Jaramillo
+   photography: a single track car alone in mist, cinematic grading,
+   shallow depth of field, nothing like the rest of the ranch's own iPhone
+   library. Flagged the same night this note was added, not yet confirmed
+   or replaced.
+2. Its $100 chip still shows round two's contents (two people, free
+   drinks, tee and hat), not the third pass settled below.
+3. Its mission line ("a share of every net dollar goes to Community
+   Elementary School") is the pre-rewrite framing, replaced everywhere
+   else on the site with the real one: ten schools, $2,500 each.
+
+**The sponsor page block itself is already built and live**, shipped the
+same night. It is typographic, not photo led, on purpose: no honest
+photograph of a tent that does not yet exist was available, so it does
+not use this image or any other. Treat the JPG as a separate outreach
+asset (email, a direct sponsor pitch) rather than a rebuild instruction
+for the site block, once its photo, price and mission line are fixed.
 
 ## The three packages, settled a third time
 
@@ -150,11 +171,14 @@ is left is not the packages themselves.
 
 1. Alcohol coverage: bar deal, license, liquor liability. This gates the
    "only non-VIP alcohol on the field" line everywhere.
-2. The exact tent location on the site plan.
-3. Charity confirmation: Mechanics on a Mission first (which also unlocks
+2. Charity confirmation: Mechanics on a Mission first (which also unlocks
    the held press kit sentence about the car giveaway), Stars of Atlanta
    name, spelling, and terms as the backup. And the end of the sentence
    about MoM's "couple of cars" in the tent.
+3. The sponsor outreach JPG's three stale facts (photo, $100 chip, mission
+   line), if it is going to be sent to anyone. See above.
+
+The site plan location is settled; see the placement note near the top.
 
 ## Do not
 
