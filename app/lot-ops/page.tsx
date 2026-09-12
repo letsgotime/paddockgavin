@@ -118,6 +118,42 @@ export default function LotOpsPage() {
           </p>
         </section>
 
+        {/* One morning, for example */}
+        <section className="pg-e1" style={{ borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px" }}>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>One morning, for example</span>
+            </span>
+            <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 16, height: 1, background: "rgba(255,255,255,.14)", display: "block" }} />
+          </div>
+          <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "26ch" }}>
+            It arrived with the rear glass deleted
+          </h2>
+          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "62ch" }}>
+            A transporter backed up to the bay with an 812 Competizione on the top deck, one of 999 built with the name. Ferrari had pulled the rear glass out entirely and put a vented aluminium panel in its place, three pairs of fins pressed straight into the metal. That does not read from a photo. Standing behind the car, it is the first thing you see.
+          </p>
+          <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "62ch" }}>
+            The V12 under the panel up front revs to 9,500 rpm without a turbocharger anywhere near it, the highest redline Ferrari has put in a road car. None of that changed what happened to it that morning: checked, cleaned, photographed, written up, and given a spot of its own until it was wanted.
+          </p>
+          <div style={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden", borderRadius: 2 }}>
+            <Image src="/images/lot/812-arrival.webp" alt="An 812 Competizione backed off a transporter, rear glass replaced with a vented panel" fill style={{ objectFit: "cover", objectPosition: "center 40%" }} />
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 14 }}>
+            <figure style={{ margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ position: "relative", aspectRatio: "4 / 3", overflow: "hidden", borderRadius: 2 }}>
+                <Image src="/images/lot/812-v12.webp" alt="The naturally aspirated V12 under the bonnet" fill style={{ objectFit: "cover" }} />
+              </div>
+              <figcaption style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".04em", color: "#91918F" }}>6.5 litres, no turbo, 9,500 rpm.</figcaption>
+            </figure>
+            <figure style={{ margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ position: "relative", aspectRatio: "4 / 3", overflow: "hidden", borderRadius: 2 }}>
+                <Image src="/images/lot/812-brake.webp" alt="Forged wheel and carbon ceramic brake detail" fill style={{ objectFit: "cover" }} />
+              </div>
+              <figcaption style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".04em", color: "#91918F" }}>Forged wheel, carbon ceramic rotor.</figcaption>
+            </figure>
+          </div>
+        </section>
+
         {/* The crew */}
         <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
