@@ -4,6 +4,7 @@ import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { ARCHIVO, MONO, NOTCH, FullBleed, Eyebrow, Frame, PullQuote, DetailSpread, DETAIL_SPREAD_RESPONSIVE_CSS, type DetailBlock } from "@/components/paddock-files"
 
 /* The first entry in The Paddock Files. Gavin's call, 2026-09-12: rebrand
    the source material under this name, use every usable photo, and blur
@@ -20,15 +21,16 @@ import { PageBackdrop } from "@/components/page-backdrop"
    so it cannot reappear as prose. The source deck carried "GoTime
    Motorsports" and a "Vault Badge" trademark on every page and claimed
    "direct access to duPont Registry Exchange buyers and inventory"; none
-   of that travels here. */
+   of that travels here.
 
+   The shared layout (FullBleed, Eyebrow, Frame, PullQuote, DetailSpread)
+   moved to components/paddock-files.tsx once a second entry made it a real
+   pattern rather than a one-off. Anything entry-specific stays here. */
+
+const DIR = "812c"
 const TITLE = "The 812 Competizione"
 /* Gavin is naming this entry; TITLE is a placeholder using the model name.
    The series name, The Paddock Files, is fixed — swap only TITLE. */
-
-const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
-const NOTCH = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%)"
 
 const SPECS: [string, string][] = [
   ["Engine", "6.5L naturally aspirated V12"],
@@ -46,7 +48,7 @@ const SPECS: [string, string][] = [
   ["Production", "999 coupés, 599 Aperta convertibles"],
 ]
 
-const DETAILS = [
+const DETAILS: DetailBlock[] = [
   {
     tone: "#F2C94C",
     eyebrow: "Glass delete",
@@ -95,54 +97,16 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 }
 
-/** Breaks a section out to the full viewport width from inside a
- *  max-width container. `overflow-x: clip` is already set globally
- *  (app/globals.css:102), so this cannot introduce horizontal scroll. */
-function FullBleed({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
-  return (
-    <div style={{ width: "100vw", marginLeft: "calc(50% - 50vw)", marginRight: "calc(50% - 50vw)", ...style }}>
-      {children}
-    </div>
-  )
-}
-
-function Eyebrow({ children, tone = "#F2C94C", dark }: { children: React.ReactNode; tone?: string; dark?: boolean }) {
-  return (
-    <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 10, fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".22em", textTransform: "uppercase", color: dark ? "#EDF1F6" : "#9AA4B2" }}>
-      <i aria-hidden="true" style={{ width: 24, height: 2, background: tone, flex: "0 0 auto" }} />
-      {children}
-    </p>
-  )
-}
-
-function Frame({ img, alt, ratio, priority, objectPosition }: { img: string; alt: string; ratio: string; priority?: boolean; objectPosition?: string }) {
-  return (
-    <div className="pg-e0" style={{ position: "relative", aspectRatio: ratio, overflow: "hidden", clipPath: NOTCH }}>
-      <Image src={`/images/features/812c/${img}.webp`} alt={alt} fill priority={priority} sizes="(max-width: 900px) 100vw, 1080px" style={{ objectFit: "cover", objectPosition: objectPosition || "center" }} />
-    </div>
-  )
-}
-
-function PullQuote({ children, tone = "#F2C94C" }: { children: React.ReactNode; tone?: string }) {
-  return (
-    <div className="pg-e1" style={{ clipPath: NOTCH, padding: "clamp(24px,4vw,44px) clamp(22px,4.4vw,52px)", borderLeft: `3px solid ${tone}` }}>
-      <p style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "clamp(22px,3.6vw,36px)", lineHeight: 1.16, letterSpacing: "-.02em", color: "#FFFFFF", textWrap: "balance" as never }}>
-        {children}
-      </p>
-    </div>
-  )
-}
-
 export default function Page() {
   return (
     <>
-      <PageBackdrop src="/images/features/812c/backdrop.webp" opacity={0.14} />
+      <PageBackdrop src={`/images/features/${DIR}/backdrop.webp`} opacity={0.14} />
       <SiteNav />
 
       {/* Full-bleed hero — the magazine cover */}
       <FullBleed>
         <section style={{ position: "relative", minHeight: "clamp(420px,64vh,720px)", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-          <Image src="/images/features/812c/reveal-close.webp" alt="A Ferrari 812 Competizione backed off a transporter, rear glass replaced with a vented panel" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 58%" }} />
+          <Image src={`/images/features/${DIR}/reveal-close.webp`} alt="A Ferrari 812 Competizione backed off a transporter, rear glass replaced with a vented panel" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 58%" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(6,12,20,.96) 4%,rgba(6,12,20,.62) 42%,rgba(6,12,20,.14) 72%,rgba(6,12,20,.32) 100%)" }} />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(6,12,20,.5) 0%,transparent 26%)" }} />
           <div style={{ position: "relative", width: "100%", maxWidth: 1080, margin: "0 auto", padding: "clamp(28px,6vw,64px) clamp(18px,4vw,40px) clamp(36px,6vw,64px)", display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,20px)" }}>
@@ -187,10 +151,10 @@ export default function Page() {
       <FullBleed style={{ marginTop: "clamp(-8px,-1vw,0px)" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(420px,100%),1fr))", gap: 3 }}>
           <div style={{ position: "relative", aspectRatio: "4 / 5" }}>
-            <Image src="/images/features/812c/reveal-wide.webp" alt="The 812 Competizione on the transporter's top deck, seen from below and behind" fill sizes="(max-width: 840px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+            <Image src={`/images/features/${DIR}/reveal-wide.webp`} alt="The 812 Competizione on the transporter's top deck, seen from below and behind" fill sizes="(max-width: 840px) 100vw, 50vw" style={{ objectFit: "cover" }} />
           </div>
           <div style={{ position: "relative", aspectRatio: "4 / 5" }}>
-            <Image src="/images/features/812c/side-profile.webp" alt="A side profile of the car on the transporter's ramp, outdoors in full sun" fill sizes="(max-width: 840px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+            <Image src={`/images/features/${DIR}/side-profile.webp`} alt="A side profile of the car on the transporter's ramp, outdoors in full sun" fill sizes="(max-width: 840px) 100vw, 50vw" style={{ objectFit: "cover" }} />
           </div>
         </div>
       </FullBleed>
@@ -237,23 +201,7 @@ export default function Page() {
             Three things a spec sheet undersells
           </h2>
         </div>
-        {DETAILS.map((d) => (
-          <FullBleed key={d.h}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", direction: d.flip ? "rtl" : "ltr" }} className="pg-detail-spread">
-              <div style={{ position: "relative", minHeight: "clamp(320px,52vh,600px)", direction: "ltr" }}>
-                <Image src={`/images/features/812c/${d.img}.webp`} alt={d.alt} fill sizes="(max-width: 840px) 100vw, 50vw" style={{ objectFit: "cover" }} />
-              </div>
-              <div style={{ direction: "ltr", display: "flex", alignItems: "center", background: "#0E1B2C" }}>
-                <div style={{ padding: "clamp(28px,4vw,56px)", display: "flex", flexDirection: "column", gap: 12, maxWidth: 520, margin: "0 auto" }}>
-                  <Eyebrow tone={d.tone}>{d.eyebrow}</Eyebrow>
-                  <h3 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.12, letterSpacing: "-.02em", color: "#FFFFFF" }}>{d.h}</h3>
-                  <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 16.5, lineHeight: 1.62, color: "#C4CBD6" }}>{d.body}</p>
-                  <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#77828F" }}>{d.caption}</p>
-                </div>
-              </div>
-            </div>
-          </FullBleed>
-        ))}
+        {DETAILS.map((d) => <DetailSpread key={d.h} d={d} dir={DIR} />)}
       </section>
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 760, margin: "0 auto", padding: "clamp(52px,7vw,92px) clamp(18px,4vw,40px) 0", display: "flex", flexDirection: "column", gap: "clamp(52px,7vw,92px)" }}>
@@ -271,8 +219,8 @@ export default function Page() {
             critical is more than a thumb away from the wheel.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: "clamp(10px,1.4vw,16px)" }}>
-            <Frame img="wheel-wide" alt="The carbon fibre steering wheel, instrument cluster visible behind it" ratio="4 / 5" />
-            <Frame img="dash-cluster" alt="A closer view of the instrument cluster and its white-faced tachometer" ratio="4 / 5" />
+            <Frame dir={DIR} img="wheel-wide" alt="The carbon fibre steering wheel, instrument cluster visible behind it" ratio="4 / 5" />
+            <Frame dir={DIR} img="dash-cluster" alt="A closer view of the instrument cluster and its white-faced tachometer" ratio="4 / 5" />
           </div>
         </section>
 
@@ -288,8 +236,8 @@ export default function Page() {
             gripped by brushed aluminium calipers with the Ferrari script cast into them.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: "clamp(10px,1.4vw,16px)" }}>
-            <Frame img="v12" alt="The naturally aspirated V12 engine, red cam covers visible under the open bonnet" ratio="4 / 3" />
-            <Frame img="brake-detail" alt="A forged wheel and carbon ceramic brake rotor, low angle" ratio="4 / 3" />
+            <Frame dir={DIR} img="v12" alt="The naturally aspirated V12 engine, red cam covers visible under the open bonnet" ratio="4 / 3" />
+            <Frame dir={DIR} img="brake-detail" alt="A forged wheel and carbon ceramic brake rotor, low angle" ratio="4 / 3" />
           </div>
         </section>
 
@@ -306,7 +254,7 @@ export default function Page() {
             to match. The serial number and the full configuration are blurred below. They identify
             one specific car and the person who ordered it, and neither is this page&rsquo;s to publish.
           </p>
-          <Frame img="plate-blurred" alt="The Atelier personalization plate, model name and header legible, serial number and configuration blurred" ratio="5 / 3" />
+          <Frame dir={DIR} img="plate-blurred" alt="The Atelier personalization plate, model name and header legible, serial number and configuration blurred" ratio="5 / 3" />
           <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#848482" }}>
             Ferrari&rsquo;s own record of the build. The number is the owner&rsquo;s, not this page&rsquo;s.
           </p>
@@ -336,11 +284,7 @@ export default function Page() {
 
       </main>
 
-      <style>{`
-        @media (max-width: 840px) {
-          .pg-detail-spread { grid-template-columns: 1fr !important; direction: ltr !important; }
-        }
-      `}</style>
+      <style>{DETAIL_SPREAD_RESPONSIVE_CSS}</style>
 
       <SiteFooter />
     </>

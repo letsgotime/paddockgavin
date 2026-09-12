@@ -16,6 +16,7 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "/events/tires-and-timepieces", priority: 0.8, changeFrequency: "monthly" },
   { url: "/features",                priority: 0.75, changeFrequency: "monthly" },
   { url: "/features/812-competizione", priority: 0.7,  changeFrequency: "yearly"  },
+  { url: "/features/singer-964",       priority: 0.7,  changeFrequency: "yearly"  },
   // Cars
   { url: "/cars",                    priority: 0.9,  changeFrequency: "monthly" },
   { url: "/cars/r8",                 priority: 0.85, changeFrequency: "monthly" },

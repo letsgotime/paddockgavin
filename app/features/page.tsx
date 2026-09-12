@@ -14,6 +14,13 @@ const NOTCH = "polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,
 
 const ENTRIES = [
   {
+    n: "02",
+    slug: "singer-964",
+    title: "The Singer 964",
+    dek: "A 1992 Porsche 911 taken apart and rebuilt by Singer: an Ed Pink-built flat-six, a center-fill fuel cap, and a cabin trimmed to one buyer's own spec.",
+    img: "singer964/hero",
+  },
+  {
     n: "01",
     slug: "812-competizione",
     title: "The 812 Competizione",
