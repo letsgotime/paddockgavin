@@ -1,153 +1,152 @@
-# Hospitality tent
+# The hospitality tent
 
-Recorded from Gavin's own voice memo, 11 September 2026, cross-checked against
-what was already on record in `meetingupdates` and `targets` before this file
-existed. Nothing below is invented: where the dictation was unclear or where
-it conflicts with an earlier draft, that is called out explicitly rather than
-resolved by guessing. A prior AI-generated summary of this same memo claimed
-this file already existed with specific tent-rental cost figures ($500/day
-for a 20x40, $2,000/day for a 40x60) — it did not exist, and those figures do
-not match the real rate card at `lib/ranch/tent-rates.ts` (Franklin's sheet:
-20x40 runs $400, 40x60 runs $1,200-$1,300 depending on style). Treat that
-summary as unreliable; this file replaces it.
+Recorded 12 September 2026, from Mikal's dictation, as the working brief for
+the next Claude Code session. The Piston Powered Ranch, Saturday October 10,
+2026, 9am to 3pm, Rancho Jaramillo, Unionville TN. Four weeks out.
 
-## What it is
+**Reconciliation note:** this file was independently written twice from the
+same voice memo — once here, once by a separate Claude session (Claude
+Fable 5) that committed it to `main`, verified and signed. This version is
+that real one, restored as the base, with two genuine additions folded in
+from the independent pass (marked where they appear) and one stale
+reference corrected. An earlier version of this file on this branch cited
+tent-rental figures that didn't match a specific vendor's rate card and
+briefly, wrongly, treated the whole memo as unreliable before the real
+`main` version turned up — that was a mistake in verification, not a fact
+about the memo itself. Nothing in this file is invented; every open item
+below is genuinely open, not guessed at.
 
-A hospitality tent, ticketed, three packages. Distinct from the VIP rooms
-(Terrace/Owner's Table) and from general admission, which stays free. In
-Gavin's own words: "a way for us to charge for cars and not charge for cars."
+## The decision
 
-**This supersedes an earlier draft**, not just adds to it. `meetingupdates`
-already had a single $25 tier drafted: "a $25 donation buys a t-shirt and a
-seat in a limited hospitality tent, shade and better refreshments, capacity
-capped... replaces the $20-after-100-cars idea." Today's dictation is three
-tiers, and moves the t-shirt from the $25 tier up to the $75 tier. **Confirm
-with Gavin that the shirt has actually moved**, rather than assuming the old
-draft's inclusion list still applies to the new $25 tier.
+Add one hospitality tent. It sits near the food row and up against the show
+field, and far enough from the VIP compound that the two never read as the
+same product. VIP stays the premium room; the tent is the step between
+general admission and VIP.
 
-## Location
-
-Gavin's words, verbatim, because the dictation was genuinely unclear here:
-"near the food, um, I guess, probably on top of the show cars is what I'm
-thinking... So near the food, but so far enough away from VIP." The "on top
-of the show cars" phrase does not resolve into a coherent site-plan
-instruction as spoken — it may have been a self-correction that trailed off.
-
-**Confirmed intent:** near the food row, clearly separated from VIP so the
-two never blur into each other.
-**Not confirmed:** whether it sits on, beside, or away from the show field
-itself.
-
-Do not place a `map_features` zone for this until Gavin confirms the actual
-spot against the real site plan (`/sitemap-review`). Guessing a polygon here
-risks conflicting with the show field or an existing zone.
+Dictated placement, verbatim intent: "near the food, probably on top of the
+show cars, but far enough away from VIP." Confirm the exact spot on the site
+plan before it lands on the public map.
 
 ## The three packages
 
-| Tier | Includes | Open item |
-|---|---|---|
-| $25 | Tent access, two drinks, + one more inclusion | Gavin: "something else will do for free" — read as: a third inclusion that costs the event nothing to provide. Not named. Do not invent one. |
-| $75 | T-shirt, three drinks, tent access, + one more inclusion | Gavin: "access another... a thing" — the dictation cuts off here. Genuinely unknown, not a placeholder for something implied. |
-| $100 | T-shirt, unlimited/free drinks, covers **two people** | Unclear whether "covers two people" means two shirts or one shared shirt. Also unclear whether "free drinks" at this tier differs from "three drinks" at $75 in practice (unlimited vs. a set count). |
+- **$25**: hospitality tent access, two drinks, and one more small inclusion
+  still to be named. Mikal's words: "something else we'll do for free," so
+  the third item should cost the event nothing (a sticker, a koozie, a photo
+  wall, name it and it ships).
+- **$75**: tent access, a t-shirt, three drinks, and one more access
+  inclusion still to be named (dictation cut off at "access to another...").
+- **$100**: covers two people, with t-shirts and free drinks through the
+  day. Whether that is one shirt or two was not said; confirm before copy.
 
-Cross-check against the real swag budget before locking in shirts for two
-tiers: `meetingupdates` already has "Swag budget: shirts and hats, under $750
-to start. Need a vendor and a quality bar" as an open line. Two tiers with a
-shirt (and the $100 tier possibly needing two) changes that math meaningfully
-before deciding how many people can actually be sold this package.
+Every package includes tent access. Nothing here touches free admission or
+free car entry, anywhere, in any copy.
 
-## Naming and sponsorship
+**Independent finding:** `meetingupdates` already had a *different* $25
+tier drafted before this memo: "a $25 donation buys a t-shirt and a seat in
+a limited hospitality tent, shade and better refreshments, capacity
+capped... replaces the $20-after-100-cars idea." This memo's three-tier
+structure moves the shirt up to $75. **Confirm the shirt has actually
+moved off the $25 tier** rather than assuming the old draft's list still
+applies to it. Relatedly, `meetingupdates` also has an open line — "Swag
+budget: shirts and hats, under $750 to start" — worth checking against two
+tiers now carrying a shirt (and $100 possibly needing two).
 
-Two names in play, not yet decided between:
+## The name
 
-- **Mechanics on a Mission** — Gavin's stated starting point: "they have
-  them pretty much prime to give away a car," meaning this partner is
-  already lined up for the live car giveaway, so pairing the tent under the
-  same name is a natural fit. This is also a name already established
-  elsewhere in this event's content (the car giveaway act).
-- **STARS (Atlanta)** — a charity Gavin named as a second option, described
-  as "the backup."
+Build it first as the **Mechanics on a Mission Hospitality Tent**. They are
+already primed as the charity partner and the car giveaway, so the tent
+naming gives them a home on the field. The backup naming partner is
+**Stars**, the Atlanta charity (exact organization name and spelling to
+confirm), who Mikal is aiming at to underwrite the tent.
 
-Separately, `meetingupdates`'s own sponsor-target board already has a
-`hospitality` category on file: **"The founding-partner ask. Oscar signs
-this one."** That line predates today's dictation and names real candidate
-sponsors for staffing a table inside the tent (not the same as naming the
-tent) — Hagerty and a bank, tied to the open Collector insurance and
-Collector finance rows. Whoever backs the tent gets real time with what that
-note calls "the $25 crowd, a self selected, more engaged audience."
+Build rule: the tent's partner name is one variable. It appears in page
+copy, the map label, and event copy, and swaps without a rebuild. Stripe
+product names stay neutral ("Hospitality Tent" plus the package) so a
+naming change never touches the catalog.
 
-**Build rule:** whichever name is finally confirmed, keep it as a single
-swappable value (a constant or a CMS/content field), never hardcoded into
-Stripe product names, checkout copy, or the catalog keys below. A sponsor
-change should never require touching the payment plumbing.
-
-**Do not publicly announce or imply either name is confirmed** until Oscar
-signs off — same standing rule as the VIP pricing hold and the unannounced
-live-music headliner.
+**Independent finding:** `meetingupdates`'s own sponsor-target board
+already has a `hospitality` category on file, predating this memo: "The
+founding-partner ask. Oscar signs this one." That line names real
+candidate sponsors for *staffing a table inside* the tent (a separate
+question from naming the tent itself) — Hagerty and a bank, tied to the
+open Collector insurance and Collector finance rows, described as getting
+real time with "the $25 crowd, a self selected, more engaged audience."
 
 ## The money
 
-- Tent target: **$5,000**.
-- VIP target: **$9,000** — this checks out against the real catalog: 20
-  Terrace seats at $249 + 10 Owner's Table seats at $399 = $8,970, so
-  Gavin's number is grounded in the actual sell-out math, not a round guess.
-- Drink sales split with whoever supplies the bar: **still being
-  negotiated**. Do not put any specific split, vendor name, or drink-pricing
-  detail into public copy until that's settled — same handling as any other
-  undecided commercial term on this event.
+- Target: **$5,000** from the tent, alongside **$9,000 from VIP** (Mikal's
+  figures. HQ's revenue sheet currently has no VIP or hospitality line, so
+  add both rows and the sheet will finally show what he is pointing at —
+  confirmed: `revenue_items` currently holds three rows, vendor booths and
+  two sponsor tiers, nothing for VIP or hospitality).
+- Drink splits are in negotiation. Until the bar deal is signed, public copy
+  stays generic about who pours and what a drink is. The budget already
+  carries the bar vendor as TBD with liquor liability requirements
+  (PaddockGavin and Rancho Jaramillo as additional insured).
+- Cost context already in HQ's budget: a 20x40 tent runs about $500 a day
+  (range 500 to 900) and a 40x60 about $2,000 a day (range 2,000 to 5,000),
+  Nashville rates. The package math should clear the tent cost with room.
+  (A separate, more specific source exists too: `lib/ranch/tent-rates.ts`,
+  a real vendor's transcribed rate card — 20x40 at $400, 40x60 at
+  $1,200-$1,300 depending on style. The two don't need to agree; one is a
+  rough HQ planning range, the other one vendor's actual quote. Worth
+  knowing both exist before citing either as *the* number.)
+- The strategy, in Mikal's words: "this is a way for us to charge for cars
+  and not charge for cars." The show stays free to enter and free to watch;
+  the tent is the paid layer the car crowd can choose on their own.
+- `200` at $25 was floated as a prospective purchase count in a follow-up
+  note, with $75/$100 modeled as a realistic upsell drop-off underneath it
+  (50 and 15) rather than a confirmed split — see the note this added to
+  `RanchControlApp.tsx`'s revenue table for the exact modeled lines.
 
-## What's already real and shouldn't be re-invented
+## How it plugs into what exists
 
-- `targets` (the sponsor-target board, `app/events/[event]/(tools)/targets/page.tsx`)
-  already has a `hospitality` domain (`#9B7FE0`, "Food, drink and the hosted
-  areas"). No new domain needs adding there. It does **not** have a separate
-  `vip` domain — worth asking Gavin whether VIP tracking belongs under
-  `sponsor` or needs its own line, rather than assuming either way.
-- Tent rental cost reality lives at `lib/ranch/tent-rates.ts`, Franklin's
-  real rate card (270 772 1122). It is vendor cost, gated behind
-  `can_see_money()`, and must stay that way — reference the file, do not
-  copy its figures into any public-facing surface.
-- `lib/ranchcontrol/data.ts` already budgets "twenty tables for hospitality"
-  into the banquet-table count. Worth checking this still makes sense once
-  a real capacity number exists for the tent.
+1. **Stripe**: three catalog items in `scripts/stripe-seed.mjs` under the
+   existing convention: `ppr-2026-hospitality-25`, `ppr-2026-hospitality-75`,
+   `ppr-2026-hospitality-100`, with matching kinds in
+   `app/api/stripe/checkout/route.ts`. Seed with the same idempotent script;
+   the checkout route resolves by lookup key. Leave price/cents absent until
+   Oscar approves — same hold, same mechanism already proven out on the VIP
+   rooms this session.
+2. **A public page** selling the three packages, in the concours register
+   like the booth page, reachable on the ranch domain (the booth page's paid
+   flow is the pattern: catalog item, checkout, receipt, desk email).
+3. **HQ**: two new `revenue_items` rows in the existing shape (kind, label,
+   low_cents, high_cents): hospitality at 500000 low, and VIP at 900000 low.
+4. **The map**: one `map_features` row for the tent once the spot is
+   confirmed. Placement happens through `/sitemap-review` — **not**
+   `/site-plan/edit`, which was the old staff tracer; it's been retired and
+   redirects to `/sitemap-review` as of this session, and the corner
+   add/remove editing it used to offer now lives there too.
+5. **Event copy**: the ranch homepage content (the events row in Neon)
+   mentions the tent where food and VIP are described, and run of show
+   carries its hours if it has any.
+6. **Also already real and worth knowing about, not re-adding**: `targets`
+   (`app/events/[event]/(tools)/targets/page.tsx`, the sponsor-outreach
+   board) already has a `hospitality` domain. That's a name-and-status
+   tracker, a different thing from `revenue_items`'s dollar tracking — both
+   are real, neither duplicates the other, no gap to fill there.
 
-## Wiring, once the open items above are answered
+## Open before it ships
 
-Follow the existing catalog conventions in `lib/stripe/catalog.ts` exactly —
-they were written for precisely this situation (an item that's structurally
-ready but not yet priced or approved):
+1. The $25 package's third inclusion and the $75 package's extra access
+   item.
+2. One shirt or two on the $100 package.
+3. The exact tent location on the site plan.
+4. Charity confirmation: Mechanics on a Mission first (which also unlocks
+   the held press kit sentence about the car giveaway), Stars of Atlanta
+   name, spelling, and terms as the backup.
+5. The drink split, and what "drinks" covers (beer and wine, cocktails,
+   non-alcoholic), which drives both the license posture and the copy.
+6. Whether the $25-tier shirt from the earlier `meetingupdates` draft has
+   actually moved to $75, or that draft is simply superseded wholesale.
 
-1. Three new `CatalogItem` entries under `pistonpoweredranch`, `ledger:
-   "other"` (or a new `"hospitality"` ledger value if that reads better
-   against the existing `vendor_setup | sponsorship | vip | other` set —
-   Claude Code's call at build time), `audience: "public"`.
-2. Lookup keys following the house pattern: `ppr-2026-hospitality-25`,
-   `ppr-2026-hospitality-75`, `ppr-2026-hospitality-100`.
-3. Leave `priceId`/`cents` absent until Oscar approves, exactly like the VIP
-   rooms were held pending approval — same hold, same mechanism, already
-   proven out this session.
-4. A public sales page, modeled on the existing booth-purchase flow
-   (`app/events/pistonpoweredranch/vendor/booth/BoothPicker.tsx` is the
-   closest existing pattern: footprint cards, a price that reads TBD until
-   `isOnSale()` is true).
-5. Once the location is confirmed: a `map_features` zone, not before.
-6. A homepage mention — likely as a new `act` (matching the existing acts
-   pattern already on the page) or folded into the VIP act's neighboring
-   content, once naming and packages are locked.
-7. Revenue tracking: confirm with Gavin whether hospitality/VIP need their
-   own rows in whatever revenue view he's picturing, since `targets` already
-   has hospitality as a category — this may already be enough, or he may
-   want a dedicated dollar-tracking surface distinct from `targets`'
-   name-and-status tracking. Don't assume which.
+## Do not
 
-## Open questions (answer any of these and the brief updates)
-
-1. $25 tier's third inclusion — what is it, given it must cost the event
-   nothing?
-2. $75 tier's fourth inclusion — the dictation cut off mid-sentence.
-3. $100 tier — one shirt covering two people, or two shirts?
-4. Exact tent placement on the real site plan.
-5. Mechanics on a Mission vs. STARS (Atlanta) — which one, and has either
-   actually said yes yet?
-6. Drink-sale split terms, once negotiated.
-7. Does VIP need its own `targets` domain, or does it sit under `sponsor`?
+- Do not touch free admission or free car entry.
+- Do not put any charity's name into Stripe product names.
+- Do not promise bar specifics in public copy until the split is signed.
+- Do not blur the tent with VIP. The Terrace and The Owner's Table stay
+  their own product at their own altitude.
+- Do not place a `map_features` zone before the location is confirmed —
+  guessing a polygon risks overlapping the show field or an existing zone.
