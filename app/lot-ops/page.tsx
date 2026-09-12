@@ -118,6 +118,25 @@ export default function LotOpsPage() {
           </p>
         </section>
 
+        {/* One morning, for example — the full write-up lives at /features/812-competizione */}
+        <section className="pg-e1" style={{ borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "clamp(16px,2.6vw,28px)" }}>
+          <div style={{ position: "relative", flex: "0 0 auto", width: "clamp(160px,22vw,220px)", aspectRatio: "4 / 3", overflow: "hidden", borderRadius: 2 }}>
+            <Image src="/images/features/812c/reveal-close.webp" alt="An 812 Competizione backed off a transporter, rear glass replaced with a vented panel" fill style={{ objectFit: "cover" }} />
+          </div>
+          <div style={{ flex: "1 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>One morning, for example</span>
+            <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "26ch" }}>
+              An 812 Competizione, rear glass deleted
+            </h2>
+            <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 16, lineHeight: 1.56, color: "#C4CBD6", maxWidth: "58ch" }}>
+              One of 999 built with the name, a V12 that revs to 9,500 rpm, and a vented aluminium panel where the rear glass used to be. It came through the lot, was never mine, and got the same five steps as anything else.
+            </p>
+            <Link href="/features/812-competizione" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 14, letterSpacing: ".04em", textTransform: "uppercase", color: "#F2C94C", textDecoration: "none", width: "fit-content" }}>
+              See the full feature &rarr;
+            </Link>
+          </div>
+        </section>
+
         {/* The crew */}
         <section className="pg-e1" style={{ background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderLeft: "3px solid #F2C94C", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3.2vw,34px)", display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
