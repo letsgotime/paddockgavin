@@ -124,7 +124,7 @@ export default function LotOpsPage() {
             <Image src="/images/features/812c/reveal-close.webp" alt="An 812 Competizione backed off a transporter, rear glass replaced with a vented panel" fill style={{ objectFit: "cover" }} />
           </div>
           <div style={{ flex: "1 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>One morning, for example</span>
+            <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>The Paddock Files &middot; Entry 01</span>
             <h2 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "26ch" }}>
               An 812 Competizione, rear glass deleted
             </h2>
