@@ -194,21 +194,21 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
 
   teeRanchGate: {
     key: "teeRanchGate", name: "The Gate Tee", covers: "The Gate Tee", audience: "public", ledger: "other",
-    productId: "prod_VFSLMRh1Q5wtgL", priceId: "price_1UExQyEz1mDAE4gUHIj5pIB9", lookupKey: "ppr-2026-tee-ranch-gate", cents: 1999,
+    productId: "prod_VFSLMRh1Q5wtgL", priceId: "price_1UEzfQEz1mDAE4gUXZzC1EXF", lookupKey: "ppr-2026-tee-ranch-gate", cents: 3499,
   },
   teePprOctober: {
     key: "teePprOctober", name: "October Tenth Tee", covers: "October Tenth Tee", audience: "public", ledger: "other",
-    productId: "prod_VFSLkxSwxvDHT4", priceId: "price_1UExRDEz1mDAE4gUf202P99I", lookupKey: "ppr-2026-tee-october", cents: 1999,
+    productId: "prod_VFSLkxSwxvDHT4", priceId: "price_1UEzfZEz1mDAE4gUlxHuyX7e", lookupKey: "ppr-2026-tee-october", cents: 3499,
   },
   capRanch: {
     key: "capRanch", name: "The Ranch Cap", covers: "The Ranch Cap", audience: "public", ledger: "other",
-    productId: "prod_VFSMHmKk6AS8ci", priceId: "price_1UExROEz1mDAE4gUsXuFoVBt", lookupKey: "ppr-2026-cap-ranch", cents: 2499,
+    productId: "prod_VFSMHmKk6AS8ci", priceId: "price_1UEzfhEz1mDAE4gUc4rcZwdG", lookupKey: "ppr-2026-cap-ranch", cents: 2999,
   },
   /* Priced, but still the only PaddockGavin-branded product sitting in a
      Rancho Jaramillo store. That is a placement question, not a pricing one. */
   truckerPg: {
     key: "truckerPg", name: "PaddockGavin Trucker", covers: "PaddockGavin Trucker", audience: "public", ledger: "other",
-    productId: "prod_VFU6eaRIBx4FjM", priceId: "price_1UEz8FEz1mDAE4gUTejjVcxd", lookupKey: "ppr-2026-trucker-pg", cents: 1999,
+    productId: "prod_VFU6eaRIBx4FjM", priceId: "price_1UEzfpEz1mDAE4gUSoaylqga", lookupKey: "ppr-2026-trucker-pg", cents: 2999,
   },
   mugRanch: {
     key: "mugRanch", name: "The Ranch Mug", covers: "The Ranch Mug", audience: "public", ledger: "other",

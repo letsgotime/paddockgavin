@@ -48,6 +48,18 @@ export interface Product {
   variants: Variant[]
   /** Shown on the product page, because print on demand has real lead times. */
   madeToOrder?: boolean
+  /**
+   * What Printful actually prints, when it prints it.
+   *
+   * `garment` and `color` name a blank in lib/printful/garments.ts; `size`
+   * comes from the variant the buyer picked. `printFile` is a public URL
+   * Printful fetches the artwork from, and while it is absent the order
+   * falls back to the desk email and Gavin packs it himself. That absence is
+   * the honest state until real print files exist: a mockup of a shirt is a
+   * picture, not artwork, and sending one to a printer produces a photograph
+   * of a t-shirt printed on a t-shirt.
+   */
+  printful?: { garment: string; color: string; printFile?: string }
 }
 
 export const BRANDS: Record<Brand, { name: string; ink: string; paper: string; accent: string }> = {
@@ -68,8 +80,9 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/ppr-gate.webp",
     madeToOrder: true,
+    printful: { garment: "ccTee", color: "Pepper" },
     variants: [
-      { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },
+      { label: "S", cents: 3499 }, { label: "M", cents: 3499 }, { label: "L", cents: 3499 }, { label: "XL", cents: 3499 }, { label: "2XL", cents: 3499 }, { label: "3XL", cents: 3499 },
     ],
   },
   {
@@ -84,8 +97,9 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/ppr-light.webp",
     madeToOrder: true,
+    printful: { garment: "ccTee", color: "Ivory" },
     variants: [
-      { label: "S", cents: 1999 }, { label: "M", cents: 1999 }, { label: "L", cents: 1999 }, { label: "XL", cents: 1999 }, { label: "2XL", cents: 1999 }, { label: "3XL", cents: 1999 },
+      { label: "S", cents: 3499 }, { label: "M", cents: 3499 }, { label: "L", cents: 3499 }, { label: "XL", cents: 3499 }, { label: "2XL", cents: 3499 }, { label: "3XL", cents: 3499 },
     ],
   },
   {
@@ -100,7 +114,8 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-barn.webp",
     madeToOrder: true,
-    variants: [{ label: "One size", cents: 2499 }],
+    printful: { garment: "dadHat", color: "Black" },
+    variants: [{ label: "One size", cents: 2999 }],
   },
   {
     slug: "pg-trucker",
@@ -114,7 +129,7 @@ export const PRODUCTS: Product[] = [
     ],
     backdrop: "/images/ranch/g-drive.webp",
     madeToOrder: true,
-    variants: [{ label: "One size", cents: 1999 }],
+    variants: [{ label: "One size", cents: 2999 }],
   },
   {
     slug: "ranch-mug",

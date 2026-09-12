@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server"
+import { placeOrder } from "@/lib/printful/client"
+import { bySlug } from "@/lib/shop/catalogue"
 import crypto from "node:crypto"
 import { crm } from "@/lib/crm/pool"
 import { STRIPE_API, money } from "@/lib/stripe/catalog"
@@ -221,13 +223,53 @@ export async function POST(req: Request) {
           String(details.phone || "No phone"),
         ].filter((l) => l !== undefined)
 
+        /* Hand it to Printful when the product names a blank and has real
+           artwork to print. Everything else, and every failure, falls through
+           to the desk email below, which is exactly what the shop did before
+           Printful existed. The money is already taken by this point, so an
+           order that cannot be placed has to reach a person, not a log. */
+        let fulfilment = "Gavin packs and posts this one."
+        const product = bySlug(String(meta.slug || ""))
+        const pf = product?.printful
+        if (pf?.printFile) {
+          const placed = await placeOrder(
+            id,
+            {
+              name: ship?.name || payer || undefined,
+              address1: a.line1,
+              address2: a.line2,
+              city: a.city,
+              state: a.state,
+              zip: a.postal_code,
+              country: a.country,
+              email: email || undefined,
+              phone: typeof details.phone === "string" ? details.phone : undefined,
+            },
+            [
+              {
+                garment: pf.garment,
+                color: pf.color,
+                size: String(meta.variant || ""),
+                quantity: Number(meta.quantity || 1),
+                printFile: pf.printFile,
+                name: meta.covers || product?.name || "Item",
+              },
+            ],
+          )
+          fulfilment = placed.ok
+            ? placed.status === "already_placed"
+              ? "Printful already had this one. A webhook retry, nothing to do."
+              : `Printful order ${placed.orderId} created${placed.draft ? " as a DRAFT: confirm it in Printful before it prints." : " and confirmed."}`
+            : `PRINTFUL DID NOT TAKE THIS ORDER (${placed.reason}): ${placed.detail}\nThe customer has paid. Fulfil it by hand.`
+        }
+
         await mail(
           {
             from: NOREPLY,
             to: ["gavin@paddockgavin.com"],
             reply_to: email || undefined,
             subject: `${livemode ? "Order" : "Test order"}: ${meta.covers || meta.slug}`,
-            text: lines.join("\n"),
+            text: [...lines, "", fulfilment].join("\n"),
           },
           `shop:${id}`,
         )
