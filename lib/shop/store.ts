@@ -112,12 +112,22 @@ function giving(e: EventRow): StoreItem[] {
   ]
 }
 
+/**
+ * Every product in the shop catalogue needs a line here.
+ *
+ * The parasol and the bottle were missing, so both rendered a card that could
+ * never sell: no catalogue key meant no price could ever turn them on and the
+ * button had nothing to call. If a product is added to lib/shop/catalogue.ts,
+ * add it here and in lib/stripe/catalog.ts too, or it is decoration.
+ */
 const MERCH_KEYS: Record<string, string> = {
   "ranch-gate-tee": "teeRanchGate",
   "ppr-october-tee": "teePprOctober",
   "ranch-cap": "capRanch",
   "pg-trucker": "truckerPg",
   "ranch-mug": "mugRanch",
+  "ppr-parasol": "parasolRanch",
+  "ppr-bottle": "bottleRanch",
   "ranch-backpack": "backpackRanch",
 }
 
@@ -144,8 +154,43 @@ function merch(e: EventRow): StoreItem[] {
   })
 }
 
+/**
+ * The hospitality tent's three packages.
+ *
+ * Read from the Stripe catalogue like merchandise is, so a tier with no price
+ * yet shows as TBD rather than disappearing. The blurbs are the settled
+ * inclusions from docs/hospitality-tent.md; the $100 tier covers two people
+ * and the other two are per ticket, which is the one thing a buyer has to
+ * understand before paying.
+ */
+const HOSPITALITY: { key: string; name: string; blurb: string }[] = [
+  { key: "hospitality25", name: "Hospitality Tent, one ticket", blurb: "Tent access, two cocktails, and a ticket for the day's raffle." },
+  { key: "hospitality75", name: "Hospitality Tent, one ticket with the bottle", blurb: "Tent access, three cocktails, a t-shirt, and the insulated Ranch Bottle." },
+  { key: "hospitality100", name: "Hospitality Tent, two people", blurb: "Tent access for two, three cocktails each, and a t-shirt each." },
+]
+
+function hospitality(e: EventRow): StoreItem[] {
+  const set = catalogFor(e.slug)
+  const out: StoreItem[] = []
+  for (const h of HOSPITALITY) {
+    const entry = set[h.key]
+    if (!entry) continue
+    const onSale = isOnSale(entry)
+    out.push({
+      slug: h.key,
+      name: h.name,
+      group: "Tickets",
+      blurb: h.blurb,
+      availability: onSale ? "buy" : "tbd",
+      cents: onSale ? entry.cents : undefined,
+      checkoutKey: h.key,
+    })
+  }
+  return out
+}
+
 export function storeItems(e: EventRow): StoreItem[] {
-  return [...giving(e), ...tickets(e), ...merch(e)]
+  return [...giving(e), ...tickets(e), ...hospitality(e), ...merch(e)]
 }
 
 export function money(cents: number): string {

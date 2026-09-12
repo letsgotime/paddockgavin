@@ -148,26 +148,69 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     cents: 500000,
   },
 
-  /* Everything below is wired and unpriced.
+  /* The VIP rooms stay wired and unpriced here.
    *
-   * Each has a card in the store, a key the checkout route understands and a
-   * button that is inert until there is something to charge. None carries a
-   * number, because none has one: the VIP rooms have always been "pricing is a
-   * conversation" and no shirt or hat has a price or a payment link anywhere.
-   *
-   * Putting any of them on sale is priceId and cents from the objects in
-   * Stripe, plus a lookupKey so live mode finds it. No component changes and
-   * no route changes. */
+   * Both have a card in the store, a key the checkout route understands and a
+   * button that is inert until there is something to charge. Their real prices
+   * exist in Stripe and sit on a commit held back pending Oscar's approval, so
+   * they are deliberately absent from this file rather than missing. */
 
   vipTerrace: { key: "vipTerrace", name: "The Terrace", covers: "The Terrace, 10 October 2026", audience: "public", ledger: "vip" },
   vipOwnersTable: { key: "vipOwnersTable", name: "The Owner's Table", covers: "The Owner's Table, 10 October 2026", audience: "public", ledger: "vip" },
 
-  teeRanchGate: { key: "teeRanchGate", name: "Ranch Gate Tee", covers: "Ranch Gate Tee", audience: "public", ledger: "other" },
-  teePprOctober: { key: "teePprOctober", name: "October Tee", covers: "October Tee", audience: "public", ledger: "other" },
-  capRanch: { key: "capRanch", name: "Ranch Cap", covers: "Ranch Cap", audience: "public", ledger: "other" },
-  truckerPg: { key: "truckerPg", name: "PG Trucker", covers: "PG Trucker", audience: "public", ledger: "other" },
-  mugRanch: { key: "mugRanch", name: "Ranch Mug", covers: "Ranch Mug", audience: "public", ledger: "other" },
-  backpackRanch: { key: "backpackRanch", name: "Ranch Backpack", covers: "Ranch Backpack", audience: "public", ledger: "other" },
+  /* Merchandise, priced 12 September against the live objects in Stripe. The
+     amounts mirror lib/shop/catalogue.ts, which is what the shop pages read;
+     these are what the server charges. Fulfilment is print on demand, so a
+     size that costs the same carries one price rather than six. */
+
+  teeRanchGate: {
+    key: "teeRanchGate", name: "The Gate Tee", covers: "The Gate Tee", audience: "public", ledger: "other",
+    productId: "prod_VFSLMRh1Q5wtgL", priceId: "price_1UExQyEz1mDAE4gUHIj5pIB9", lookupKey: "ppr-2026-tee-ranch-gate", cents: 1999,
+  },
+  teePprOctober: {
+    key: "teePprOctober", name: "October Tenth Tee", covers: "October Tenth Tee", audience: "public", ledger: "other",
+    productId: "prod_VFSLkxSwxvDHT4", priceId: "price_1UExRDEz1mDAE4gUf202P99I", lookupKey: "ppr-2026-tee-october", cents: 1999,
+  },
+  capRanch: {
+    key: "capRanch", name: "The Ranch Cap", covers: "The Ranch Cap", audience: "public", ledger: "other",
+    productId: "prod_VFSMHmKk6AS8ci", priceId: "price_1UExROEz1mDAE4gUsXuFoVBt", lookupKey: "ppr-2026-cap-ranch", cents: 2499,
+  },
+  /* The one item still unpriced: its Stripe price was refused at creation, and
+     it is also the only PaddockGavin-branded product in a Rancho Jaramillo
+     store, which is a placement question before it is a pricing one. */
+  truckerPg: { key: "truckerPg", name: "PaddockGavin Trucker", covers: "PaddockGavin Trucker", audience: "public", ledger: "other" },
+  mugRanch: {
+    key: "mugRanch", name: "The Ranch Mug", covers: "The Ranch Mug", audience: "public", ledger: "other",
+    productId: "prod_VFSNbvQNdgol8y", priceId: "price_1UExSmEz1mDAE4gUFFeDcn3U", lookupKey: "ppr-2026-mug-ranch", cents: 2499,
+  },
+  parasolRanch: {
+    key: "parasolRanch", name: "The Field Parasol", covers: "The Field Parasol", audience: "public", ledger: "other",
+    productId: "prod_VFSNp2wBUz3CK6", priceId: "price_1UExSzEz1mDAE4gULcR77W9X", lookupKey: "ppr-2026-parasol", cents: 3499,
+  },
+  bottleRanch: {
+    key: "bottleRanch", name: "The Ranch Bottle", covers: "The Ranch Bottle", audience: "public", ledger: "other",
+    productId: "prod_VFSOII9nTkAHwm", priceId: "price_1UExTbEz1mDAE4gUdWHRwvO2", lookupKey: "ppr-2026-bottle", cents: 2499,
+  },
+  backpackRanch: {
+    key: "backpackRanch", name: "Field Backpack", covers: "Field Backpack", audience: "public", ledger: "other",
+    productId: "prod_VFSPnRUIo3cVKz", priceId: "price_1UExUVEz1mDAE4gU6lNHYJfU", lookupKey: "ppr-2026-backpack-ranch", cents: 4999,
+  },
+
+  /* The hospitality tent's three packages. Product names in Stripe stay
+     neutral and carry no partner name, so naming the tent never touches the
+     catalogue. The $100 tier covers two people; the other two are per ticket. */
+
+  hospitality25: {
+    key: "hospitality25", name: "Hospitality Tent, two cocktails and swag", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other",
+    productId: "prod_VFSRXeY55lBocE", priceId: "price_1UExWOEz1mDAE4gUPthfPcy3", lookupKey: "ppr-2026-hospitality-25", cents: 2500,
+  },
+  hospitality75: {
+    key: "hospitality75", name: "Hospitality Tent, three cocktails and swag", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other",
+    productId: "prod_VFSQiqptpOTcYM", priceId: "price_1UExVmEz1mDAE4gUl5V1InKY", lookupKey: "ppr-2026-hospitality-75", cents: 7500,
+  },
+  /* Wired and unpriced: its Stripe price was refused at creation, same as the
+     trucker. Everything else about it is ready. */
+  hospitality100: { key: "hospitality100", name: "Hospitality Tent, two people", covers: "Hospitality Tent, 10 October 2026", audience: "public", ledger: "other" },
   },
 }
 
