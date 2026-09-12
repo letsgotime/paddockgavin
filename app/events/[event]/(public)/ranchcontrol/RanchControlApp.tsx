@@ -59,6 +59,9 @@ const REV_LINES: [string, string, number, number][] = [
   ["Premier sponsor", "Floor, starting at", 5000, 1],
   ["Secondary sponsor", "Floor, category exclusive", 2500, 2],
   ["Supporting sponsor", "Floor, starting at", 500, 4],
+  ["Hospitality tent, $25", "Modeled, not sold. Package details open, see docs/hospitality-tent.md", 25, 200],
+  ["Hospitality tent, $75", "Modeled split, realistic upsell off the $25 base", 75, 50],
+  ["Hospitality tent, $100", "Modeled split, smallest premium slice", 100, 15],
 ]
 
 const LIVE_OK = "Live. Everyone with the link sees each change as it saves."
