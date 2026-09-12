@@ -223,6 +223,7 @@ export function SiteFooter() {
             </p>
             {[
               { href: "/cars", label: "The Garage" },
+              { href: "/features", label: "The Paddock Files" },
               { href: "/scoreboard", label: "The scoreboard" },
               { href: "/why-a-paddock", label: "Why a Paddock" },
               { href: "https://paddock20.com", label: "Paddock20" },
