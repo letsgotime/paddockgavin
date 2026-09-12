@@ -49,9 +49,15 @@ against $75 on a per-person basis: $50 a head for fewer drinks and less
 swag than the $75 ticket gets for $75. Caught and fixed the same day,
 settled directly with Gavin in the Claude Code session:
 
-- **$25**: tent access, two cocktails, and one swag item. Per ticket.
-- **$75**: tent access, three cocktails, a t-shirt, and another swag item.
-  Per ticket.
+- **$25**: tent access, two cocktails, and a raffle ticket for the day's
+  raffle. No product, no fulfilment, an allocation into a slot already
+  on the run of show, which is the only way to genuinely cost the event
+  nothing. Per ticket.
+- **$75**: tent access, three cocktails, a t-shirt, and the Ranch Bottle
+  (the insulated steel one already in `lib/shop/catalogue.ts` at $24.99,
+  made to order, no stock to hold). Picked over the Field Parasol,
+  the shop's other shade-relief item, because a bottle is easier to
+  carry around a car show all day. Per ticket.
 - **$100**: tent access for two people, three cocktails each (six total),
   and a t-shirt each (two total). This keeps $100 ahead of $75 on drinks
   and shirts per person, at a lower rate per head, which reads as a pair
@@ -61,9 +67,12 @@ Note: round two's hat is out. Gavin confirmed directly: "Hat's out for
 now." The $100 tier is tent access for two, three cocktails each, and a
 t-shirt each, nothing more.
 
-Carried forward: drinks on all three tiers are **cocktails**, and the
-non-drink inclusions are swag items (the $25 one should cost the event
-nothing).
+Carried forward: drinks on all three tiers are **cocktails**.
+
+Ruled out on purpose: the PG Trucker in the same shop catalogue is
+PaddockGavin-branded (amber PG monogram on navy), not Rancho Jaramillo's.
+Handing it out as tent swag would be the cross-brand leak scrubbed
+everywhere else on the ranch site tonight, price aside.
 
 Every package includes tent access. Nothing here touches free admission or
 free car entry, anywhere, in any copy.
@@ -100,24 +109,26 @@ naming change never touches the catalog.
 
 - HQ revenue rows: **done**. "VIP (Terrace + Owner's Table)" at $9,000 and
   "Hospitality Tent" at $5,000 are in revenue_items.
-- Homepage: mentions "hospitality" twice, but both are the VIP room's
-  hospitality language. The tent as its own named product is **not there**;
-  add it in the secondary format above.
-- Sponsor page: **no mention at all**. The loud and proud visual block is
-  the gap this brief exists to close.
-- Sales page, Stripe items, checkout kinds, map feature: **not built yet**.
+- Sponsor page block and homepage secondary mention: **done**, shipped
+  the same night this pass of the brief was written. The homepage's VIP
+  copy also had its own "shaded tent" language fixed, since it was
+  reading as the same product as this one.
+- Sales page, Stripe items, checkout kinds, map feature: **not built
+  yet**. The package shapes below are now settled enough to build all
+  four against.
 
 ## How it plugs into what exists
 
 1. **Stripe**: three catalog items in `scripts/stripe-seed.mjs` under the
    existing convention: `ppr-2026-hospitality-25`, `ppr-2026-hospitality-75`,
    `ppr-2026-hospitality-100`, with matching kinds in
-   `app/api/stripe/checkout/route.ts`. Neutral product names. The package
-   shapes are settled enough to seed; only the swag item names are still
-   open, and they do not block a price.
+   `app/api/stripe/checkout/route.ts`. Neutral product names. All three
+   packages are fully settled now, swag items included; nothing here
+   blocks seeding real prices.
 2. **A public sales page** for the three packages, in the concours register
    like the booth page (catalog item, checkout, receipt, desk email).
 3. **The sponsor page block and homepage mention** described above.
+   **Done.**
 4. **The map**: one `map_features` row once the spot is confirmed, placed
    through `/events/pistonpoweredranch/sitemap-review` (`/site-plan/edit`
    is gone, redirected there earlier this session).
@@ -125,13 +136,13 @@ naming change never touches the catalog.
 
 ## Open before it ships
 
-1. The swag items: what the $25 tier's item and the $75 tier's second
-   item actually are. The $100 tier is fully settled: two shirts, no
-   hat, one per person.
-2. Alcohol coverage: bar deal, license, liquor liability. This gates the
+All three packages are fully settled: drinks, swag, and headcount. What
+is left is not the packages themselves.
+
+1. Alcohol coverage: bar deal, license, liquor liability. This gates the
    "only non-VIP alcohol on the field" line everywhere.
-3. The exact tent location on the site plan.
-4. Charity confirmation: Mechanics on a Mission first (which also unlocks
+2. The exact tent location on the site plan.
+3. Charity confirmation: Mechanics on a Mission first (which also unlocks
    the held press kit sentence about the car giveaway), Stars of Atlanta
    name, spelling, and terms as the backup. And the end of the sentence
    about MoM's "couple of cars" in the tent.
