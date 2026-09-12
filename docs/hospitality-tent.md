@@ -57,8 +57,9 @@ settled directly with Gavin in the Claude Code session:
   and shirts per person, at a lower rate per head, which reads as a pair
   discount rather than a tier that quietly gives less for more.
 
-Note: round two's hat did not come back in this pass. Not deliberately
-cut, just not restated. Confirm whether it is still in before print.
+Note: round two's hat is out. Gavin confirmed directly: "Hat's out for
+now." The $100 tier is tent access for two, three cocktails each, and a
+t-shirt each, nothing more.
 
 Carried forward: drinks on all three tiers are **cocktails**, and the
 non-drink inclusions are swag items (the $25 one should cost the event
@@ -125,8 +126,8 @@ naming change never touches the catalog.
 ## Open before it ships
 
 1. The swag items: what the $25 tier's item and the $75 tier's second
-   item actually are. The $100 tier's two shirts are confirmed one per
-   person; whether a hat is still included is not (see above).
+   item actually are. The $100 tier is fully settled: two shirts, no
+   hat, one per person.
 2. Alcohol coverage: bar deal, license, liquor liability. This gates the
    "only non-VIP alcohol on the field" line everywhere.
 3. The exact tent location on the site plan.
