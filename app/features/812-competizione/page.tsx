@@ -32,19 +32,29 @@ const NOTCH = "polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,
 const SPECS: [string, string][] = [
   ["Engine", "6.5L naturally aspirated V12"],
   ["Power", "819 hp at 9,250 rpm"],
+  ["Torque", "510 lb-ft at 7,000 rpm"],
   ["Redline", "9,500 rpm, the highest in any road-going Ferrari"],
   ["Transmission", "7-speed dual-clutch"],
+  ["Drivetrain", "Rear-wheel drive, four-wheel steering"],
   ["0 to 62 mph", "2.85 seconds"],
+  ["0 to 124 mph (est.)", "7.5 seconds"],
   ["Top speed", "211 mph"],
+  ["Dry weight", "1,487 kg / 3,278 lb"],
+  ["Weight distribution", "49% front, 51% rear"],
+  ["Tyres", "Michelin Cup2R"],
   ["Production", "999 coupés, 599 Aperta convertibles"],
 ]
+/* Everything marked (est.) is an enthusiast estimate compiled from public
+   sources, not a Ferrari-published figure, and is stated as such below the
+   table. This page is not affiliated with, sponsored by, or endorsed by
+   Ferrari S.p.A. */
 
 const DETAILS = [
   {
     tone: "#F2C94C",
     eyebrow: "Glass delete",
     h: "The rear window is gone",
-    body: "Ferrari pulled the rear glass out entirely and put a vented aluminium panel in its place, three pairs of fins pressed straight into the metal. It manages the air coming off the roof instead of showing what is behind it, and it is the one detail a photo does not prepare you for.",
+    body: "Ferrari pulled the rear glass out entirely and put a vented aluminium panel in its place, three pairs of fins pressed straight into the metal, a production first for the brand. Ferrari's own figure is roughly 10% more rear downforce than the 812 Superfast carries. It manages the air coming off the roof instead of showing what is behind it, and it is the one detail a photo does not prepare you for.",
     img: "glass-delete",
     alt: "The vented aluminium rear panel that replaces the glass, seen from above in showroom light",
     caption: "The panel Ferrari uses instead of a window.",
@@ -124,6 +134,11 @@ export default function Page() {
             built with the name. It was not mine. It came through while I was running lot operations,
             and this is what it looked like up close before it went anywhere.
           </p>
+          <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
+            It is the highest-revving engine Ferrari has ever put in a road car, in what the brand
+            has positioned as the last and purest expression of its front-engine, naturally
+            aspirated V12 before the lineup turns hybrid. That is the whole reason to look closely.
+          </p>
           <Photo img="cover" alt="A car transporter backed up to the bay, ramp down, empty before the reveal" ratio="16 / 10" caption="Before the doors opened." />
         </section>
 
@@ -165,6 +180,11 @@ export default function Page() {
               ))}
             </dl>
           </div>
+          <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 13.5, lineHeight: 1.55, color: "#77828F", maxWidth: "62ch" }}>
+            Figures marked (est.) are enthusiast estimates compiled from public sources, not
+            published by Ferrari. This page is not affiliated with, sponsored by, or endorsed by
+            Ferrari S.p.A.
+          </p>
         </section>
 
         {/* What makes it different */}
@@ -194,9 +214,10 @@ export default function Page() {
             A cockpit built around the redline
           </h2>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            The tachometer sits dead centre, white-faced, and everything either side of it is a
-            touch control or a paddle. Ferrari's own logic: nothing critical is more than a thumb
-            away from the wheel.
+            The tachometer sits dead centre, white-faced, flanked by two customizable TFT displays,
+            and everything either side of the wheel rim is a touch control or a paddle. It is part
+            of what Ferrari calls the Carbon Driver Zone, the same logic as a Formula 1 car: nothing
+            critical is more than a thumb away from the wheel.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: "clamp(10px,1.4vw,16px)" }}>
             <Photo img="wheel-wide" alt="The carbon fibre steering wheel, instrument cluster visible behind it" ratio="4 / 5" />
@@ -212,11 +233,12 @@ export default function Page() {
           </h2>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
             No turbocharger anywhere near it, and a redline higher than any road-going Ferrari has
-            carried. Underneath, forged wheels and carbon ceramic rotors do the stopping.
+            carried. Underneath, forged 20-inch wheels and carbon ceramic rotors do the stopping,
+            gripped by brushed aluminium calipers with the Ferrari script cast into them.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: "clamp(10px,1.4vw,16px)" }}>
             <Photo img="v12" alt="The naturally aspirated V12 engine, red cam covers visible under the open bonnet" ratio="4 / 3" caption="6.5 litres, no turbo, 9,500 rpm." />
-            <Photo img="brake-detail" alt="A forged wheel and carbon ceramic brake rotor, low angle" ratio="4 / 3" caption="Forged wheel, carbon ceramic rotor." />
+            <Photo img="brake-detail" alt="A forged wheel and carbon ceramic brake rotor, low angle" ratio="4 / 3" caption="20-inch forged wheel, carbon ceramic rotor." />
           </div>
         </section>
 
