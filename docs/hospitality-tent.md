@@ -41,6 +41,15 @@ barely says so.
   the tent (the dictation cut off right there; confirm what follows the
   cars before that detail prints).
 
+The visual itself sits beside this brief: `docs/PPR_HospitalityTent_Sponsor.jpg`,
+rendered from the house type, the official marks and the ranch's own field
+photograph (`public/images/ranch/ppr-field.webp`). It is the design
+reference for the sponsor page block and is shaped for outreach. Build the
+page block itself as live text over the same photograph rather than
+embedding the bitmap, so the copy stays readable to search. Note: the
+bitmap's $100 chip still shows round two's contents; it re-renders the
+moment the third-pass packages are confirmed as final.
+
 ## The three packages, settled a third time
 
 Round two's $100 figure (two people, free drinks through the day, a
