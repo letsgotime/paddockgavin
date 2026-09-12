@@ -13,7 +13,7 @@ import { SiteNav } from "@/components/site-nav"
  * sitemap-review already uses. Password gated, its own cookie.
  */
 export const metadata: Metadata = {
-  title: "9/10/26 PPR Event Update",
+  title: "9/11/26 PPR Event Update",
   robots: { index: false, follow: false },
 }
 

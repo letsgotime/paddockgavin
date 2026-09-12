@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 
 /**
- * The live, editable "9/10/26 PPR Event Update" document.
+ * The live, editable "PPR Event Update" document.
  *
  * Ported from a claude.ai artifact: same two print-ready sheets, same
  * content, same interaction model (tap a box, type a note, it saves
@@ -241,7 +241,7 @@ export default function MeetingUpdatesApp() {
       <div className="mu-shell">
         <MuStyle />
         <div style={{ maxWidth: 380, margin: "80px auto", padding: 24 }}>
-          <h1 style={{ fontFamily: "Cinzel, serif", fontSize: 24 }}>9/10/26 PPR Event Update</h1>
+          <h1 style={{ fontFamily: "Cinzel, serif", fontSize: 24 }}>9/11/26 PPR Event Update</h1>
           <form onSubmit={submitPassword} style={{ display: "grid", gap: 10, marginTop: 20 }}>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" autoFocus
               style={{ padding: "11px 13px", border: "1.5px solid #837555", borderRadius: 8, font: "15px Archivo,sans-serif" }} />

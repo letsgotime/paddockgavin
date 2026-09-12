@@ -75,10 +75,11 @@ real time with "the $25 crowd, a self selected, more engaged audience."
 ## The money
 
 - Target: **$5,000** from the tent, alongside **$9,000 from VIP** (Mikal's
-  figures. HQ's revenue sheet currently has no VIP or hospitality line, so
-  add both rows and the sheet will finally show what he is pointing at —
-  confirmed: `revenue_items` currently holds three rows, vendor booths and
-  two sponsor tiers, nothing for VIP or hospitality).
+  figures. **Done**: both are now rows in `revenue_items` (sort_order 4
+  and 5). `kind` only allows `vendor | sponsor | other` at the database
+  level, no `vip` or `hospitality` value, so both landed as `other`,
+  distinguished by label. low_cents and high_cents are equal on both —
+  single-point targets, not a range, since no range was given for either.
 - Drink splits are in negotiation. Until the bar deal is signed, public copy
   stays generic about who pours and what a drink is. The budget already
   carries the bar vendor as TBD with liquor liability requirements
