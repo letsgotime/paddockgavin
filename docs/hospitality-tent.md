@@ -1,9 +1,10 @@
 # The hospitality tent
 
-Recorded 12 September 2026 from Mikal's dictation, revised the same day from
-his second pass. Working brief for the next Claude Code session. The Piston
-Powered Ranch, Saturday October 10, 2026, 9am to 3pm, Rancho Jaramillo,
-Unionville TN. Four weeks out.
+Recorded 12 September 2026 from Mikal's dictation, revised the same day
+from his second pass, and once more from a third pass settled directly
+with Gavin in the Claude Code session. Working brief for the next Claude
+Code session. The Piston Powered Ranch, Saturday October 10, 2026, 9am to
+3pm, Rancho Jaramillo, Unionville TN. Four weeks out.
 
 ## What it is
 
@@ -40,21 +41,27 @@ barely says so.
   the tent (the dictation cut off right there; confirm what follows the
   cars before that detail prints).
 
-## The three packages, revised
+## The three packages, settled a third time
 
-Round two moved the packages, and the one open conflict is settled: Mikal
-confirmed on 12 September that the $100 package covers two people and free
-drinks stands.
+Round two's $100 figure (two people, free drinks through the day, a
+t-shirt and a hat) turned out to shortchange that tier once checked
+against $75 on a per-person basis: $50 a head for fewer drinks and less
+swag than the $75 ticket gets for $75. Caught and fixed the same day,
+settled directly with Gavin in the Claude Code session:
 
-- **$25**: tent access, two cocktails, and one swag item.
+- **$25**: tent access, two cocktails, and one swag item. Per ticket.
 - **$75**: tent access, three cocktails, a t-shirt, and another swag item.
-- **$100**: tent access for two people, free drinks through the day, a
-  t-shirt and a hat, and possibly one more item ("something else" in the
-  dictation). Whether the shirt and hat are one set or one per person is
-  not yet said; confirm before print.
+  Per ticket.
+- **$100**: tent access for two people, three cocktails each (six total),
+  and a t-shirt each (two total). This keeps $100 ahead of $75 on drinks
+  and shirts per person, at a lower rate per head, which reads as a pair
+  discount rather than a tier that quietly gives less for more.
 
-Carried from round two: drinks on the $25 and $75 tiers are **cocktails**,
-and the third inclusions are swag items (the $25 one should cost the event
+Note: round two's hat did not come back in this pass. Not deliberately
+cut, just not restated. Confirm whether it is still in before print.
+
+Carried forward: drinks on all three tiers are **cocktails**, and the
+non-drink inclusions are swag items (the $25 one should cost the event
 nothing).
 
 Every package includes tent access. Nothing here touches free admission or
@@ -110,14 +117,16 @@ naming change never touches the catalog.
 2. **A public sales page** for the three packages, in the concours register
    like the booth page (catalog item, checkout, receipt, desk email).
 3. **The sponsor page block and homepage mention** described above.
-4. **The map**: one `map_features` row once the spot is confirmed; the
-   site-plan tracer at `/site-plan/edit` places it on the aerial.
+4. **The map**: one `map_features` row once the spot is confirmed, placed
+   through `/events/pistonpoweredranch/sitemap-review` (`/site-plan/edit`
+   is gone, redirected there earlier this session).
 5. **Run of show** carries the tent's hours if it has any.
 
 ## Open before it ships
 
-1. The swag items: the $25 and $75 inclusions, the $100 "something else",
-   and whether the $100 shirt and hat are one set or one per person.
+1. The swag items: what the $25 tier's item and the $75 tier's second
+   item actually are. The $100 tier's two shirts are confirmed one per
+   person; whether a hat is still included is not (see above).
 2. Alcohol coverage: bar deal, license, liquor liability. This gates the
    "only non-VIP alcohol on the field" line everywhere.
 3. The exact tent location on the site plan.
