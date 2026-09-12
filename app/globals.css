@@ -23,6 +23,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* This site already carries its own full light/dark theming (every brand
+   in this codebase, both ranch and PaddockGavin). Some browsers and
+   extensions force a dark-mode filter over pages that never asked for
+   one, which desaturates real brand colors along with everything else:
+   the ranch's Jaramillo red and blue washed out exactly this way when
+   viewed through one. color-scheme tells the browser both schemes are
+   genuinely supported here, so it has no reason to guess; forced-color-adjust
+   opts every element out of being overridden by such a filter, since the
+   colors on this site are never accidental. */
+html {
+  color-scheme: light dark;
+  forced-color-adjust: none;
+}
+
 :root {
   /* ── PALETTE — all real automotive paint ── */
   --yellow:        #F2C94C;   /* TrackDay Yellow — PRIMARY: headlines, buttons, wordmark */
