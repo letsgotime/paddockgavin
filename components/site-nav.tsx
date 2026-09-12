@@ -39,11 +39,20 @@ const NAV_GROUPS: NavGroup[] = [
 /**
  * The ranch's own menu, for pistonpoweredranch.com. Somebody arriving for a
  * charity car show at a ranch was being handed the whole of PaddockGavin.
- * Every destination here is on the event. Tones are gold and the ranch's text
- * red, and no blue, which does not carry on the ink.
+ * Every destination here is on the event.
+ *
+ * Brand rule for this whole file: on the ranch door, every tone, fill and
+ * accent is Jaramillo's own (Jaramillo Blue #8FA9F2 text weight, Jaramillo
+ * Red #FF1A21 text weight, matching --second/--accent elsewhere on the
+ * ranch's own pages). PaddockGavin's gold (#F2C94C) belongs only on
+ * PaddockGavin's own door, never here — it had leaked into this file's
+ * ranch-mode groups and the "Count me in" button, both fixed below. The one
+ * place PaddockGavin's own mark is intentional on the ranch site is the
+ * "Produced by PaddockGavin" credit near the foot of the homepage, which
+ * names PaddockGavin explicitly and stays gold on purpose.
  */
 const RANCH_GROUPS: NavGroup[] = [
-  { title: "The day", tone: "#F2C94C", items: [
+  { title: "The day", tone: "#8FA9F2", items: [
     { key: "day",   href: "/",      label: "The day",      note: "10 October" },
     { key: "show",  href: "/#show", label: "The show",     note: "On the field" },
     { key: "rsvp",  href: "/#rsvp", label: "Spectate",     note: "Free to attend" },
@@ -161,7 +170,7 @@ export function SiteNav({ active = "home" }: Props) {
               />
               <span className="pg-nav-word" style={{ fontFamily: ARCHIVO, fontWeight: 800, fontSize: ranch ? "clamp(13px,3.1vw,24px)" : "clamp(18px,1.7vw,24px)", letterSpacing: "-.018em", textTransform: "uppercase", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>
                 {ranch ? (
-                  <><span style={{ color: "#EDF1F6" }}>The Piston </span><span style={{ color: "#F2C94C" }}>Powered Ranch</span></>
+                  <><span style={{ color: "#EDF1F6" }}>The Piston </span><span style={{ color: "#FF1A21" }}>Powered Ranch</span></>
                 ) : (
                   <><span style={{ color: "#F2C94C" }}>Paddock</span><span style={{ color: "#57C7F5" }}>Gavin</span></>
                 )}
@@ -298,7 +307,7 @@ export function SiteNav({ active = "home" }: Props) {
             <div style={{ marginTop: "clamp(26px,4vw,44px)", display: "flex", flexWrap: "wrap", gap: 10 }}>
               {ranch ? (
                 <>
-                  <Link href="/#rsvp" onClick={() => setOpen(false)} style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "14px 24px", clipPath: NOTCH_MD, textDecoration: "none" }}>
+                  <Link href="/#rsvp" onClick={() => setOpen(false)} style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", background: "#E5141A", color: "#FFFFFF", padding: "14px 24px", clipPath: NOTCH_MD, textDecoration: "none" }}>
                     Count me in
                   </Link>
                   <Link href="/events/pistonpoweredranch/entry" onClick={() => setOpen(false)} style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".06em", textTransform: "uppercase", color: "#EDF1F6", border: "1px solid rgba(255,255,255,.28)", padding: "14px 24px", clipPath: NOTCH_MD, textDecoration: "none" }}>
