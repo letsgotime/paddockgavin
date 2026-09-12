@@ -174,7 +174,7 @@ export default function VisitOps() {
             together. Same pills as the maps, so they read as ways in. */}
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginTop: 16, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.1)" }}>
           <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#7F8A99", fontWeight: 600, marginRight: 4 }}>Once you are here</span>
-          {([["Walk it on the map", "/map"], ["Bring a club block", "/clubs/"]] as const).map(([l, href]) => (
+          {([["Walk it on the map", "/#the-ground"], ["Bring a club block", "/clubs/"]] as const).map(([l, href]) => (
             <a key={href} href={href} style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12.5, color: "#EDF1F6", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.16)", borderRadius: 999, padding: "12px 16px", minHeight: 44, display: "inline-flex", alignItems: "center", textDecoration: "none", whiteSpace: "nowrap" }}>{l}</a>
           ))}
         </div>

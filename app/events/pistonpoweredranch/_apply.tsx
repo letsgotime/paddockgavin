@@ -289,30 +289,33 @@ export function ApplyPage(p: ApplyProps) {
 
         {p.form && <ApplyForm tone={p.tone} form={p.form} />}
 
-        <section style={{ position: "relative" }}>
-          <div className="pgBand" aria-hidden="true">
-            <Image src={p.closeImg} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
-            <span style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom,rgba(10,21,35,.86) 0%,rgba(10,21,35,.46) 30%,rgba(10,21,35,.9) 78%,rgba(10,21,35,.99) 100%)" }} />
+        {/* A plain close, not a third full-bleed photo band. Hero and the
+            mid-page band already carry that device once each; stacking a
+            third copy of the same sticky-parallax-plus-gradient treatment
+            read as the same beat repeating rather than a page with any
+            rhythm to it. closeImg still exists on every caller so it is
+            kept as a quiet corner accent instead of being dropped outright. */}
+        <section style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,.1)", padding: "clamp(48px,9vh,110px) clamp(16px,5vw,40px)", overflow: "hidden" }}>
+          <div aria-hidden="true" style={{ position: "absolute", top: 0, right: 0, width: "min(38vw,420px)", height: "100%", opacity: 0.22, maskImage: "linear-gradient(to left,#000,transparent)", WebkitMaskImage: "linear-gradient(to left,#000,transparent)" }}>
+            <Image src={p.closeImg} alt="" fill sizes="420px" style={{ objectFit: "cover", objectPosition: "center 50%" }} />
           </div>
-          <div style={{ position: "relative", marginTop: "-66svh", paddingBottom: "clamp(56px,13vh,140px)" }}>
-            <div style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}>
-              <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
-                {p.closeLine}
-              </p>
-              <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", ["--d" as string]: "110ms" }}>
-                <a
-                  className="pgGo"
-                  href={p.cta.href}
-                  target={p.cta.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noopener"
-                  style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
-                >
-                  {p.cta.label}
-                </a>
-                <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: "#00D2BE", textDecoration: "none" }}>
-                  Back to the event
-                </Link>
-              </div>
+          <div style={{ position: "relative", maxWidth: 1180, margin: "0 auto", display: "flex", flexDirection: "column", gap: 18, alignItems: "flex-start" }}>
+            <p data-r="" style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(22px,3.6vw,38px)", lineHeight: 1.06, letterSpacing: "-.024em", textTransform: "uppercase", color: "#FFFFFF", maxWidth: "20ch" }}>
+              {p.closeLine}
+            </p>
+            <div data-r="" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", ["--d" as string]: "110ms" }}>
+              <a
+                className="pgGo"
+                href={p.cta.href}
+                target={p.cta.href.startsWith("http") ? "_blank" : undefined}
+                rel="noopener"
+                style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: p.tone, color: "#101010", padding: "16px 28px", clipPath: CLIP_SM, textDecoration: "none" }}
+              >
+                {p.cta.label}
+              </a>
+              <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontFamily: MONO, fontSize: 12.5, letterSpacing: ".14em", textTransform: "uppercase", color: p.tone, textDecoration: "none" }}>
+                Back to the event
+              </Link>
             </div>
           </div>
         </section>

@@ -692,12 +692,28 @@ export default function EventPublic({
                 return (
                   <div key={f.kind + f.name} style={{ padding: "16px 18px", border: "1px solid rgba(255,255,255,.14)", borderRadius: 14, background: "rgba(255,255,255,.02)" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      {n !== undefined && (
+                      {n !== undefined ? (
                         <span aria-hidden="true" style={{ display: "inline-flex", flex: "0 0 auto", alignItems: "center", justifyContent: "center", width: 19, height: 19, borderRadius: "50%", background: "#fff", color: "#0A1523", fontFamily: MONO, fontSize: 10.5, fontWeight: 700 }}>
                           {n}
                         </span>
+                      ) : (
+                        /* Off the drawn crop rather than a missing number: Ranch
+                           Gate sits on Enon Church Road, outside the aerial
+                           photo's own bounds, the same reason it's excluded
+                           from the map above. A bare gap here read as a bug;
+                           this reads as a different, deliberate kind of pin. */
+                        <span
+                          aria-hidden="true"
+                          title="Off the pictured grounds"
+                          style={{ display: "inline-flex", flex: "0 0 auto", alignItems: "center", justifyContent: "center", width: 19, height: 19, borderRadius: "50%", border: "1px solid rgba(255,255,255,.4)", color: "rgba(255,255,255,.7)", fontFamily: MONO, fontSize: 11, fontWeight: 700, lineHeight: 1 }}
+                        >
+                          ↗
+                        </span>
                       )}
                       <p style={{ margin: 0, fontFamily: MONO, fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--second)" }}>{f.kind === "poi" ? "Point" : f.kind}</p>
+                      {n === undefined && (
+                        <span style={{ fontFamily: MONO, fontSize: 10, letterSpacing: ".1em", textTransform: "uppercase", color: "#7E8B99" }}>off map</span>
+                      )}
                     </div>
                     <p style={{ margin: "7px 0 0", fontFamily: "var(--display)", fontSize: 19, fontWeight: 700, color: "var(--paper)" }}>{f.name}</p>
                     {f.blurb && <p style={{ margin: "8px 0 0", fontFamily: "var(--body)", fontSize: 15, lineHeight: 1.55, color: "#9FAAB8" }}>{f.blurb}</p>}
@@ -772,6 +788,12 @@ export default function EventPublic({
                     <p style={{ margin: 0, fontFamily: "var(--body)", fontSize: 16, lineHeight: 1.6, color: "#C9D1DB", maxWidth: "54ch" }}>
                       PaddockGavin plans and runs The Piston Powered Ranch end to end: entries, vendors, sponsors, the site plan, the day itself.
                     </p>
+                    <a
+                      href="https://paddockgavin.com/events"
+                      style={{ marginTop: 4, display: "inline-flex", alignItems: "center", fontFamily: "var(--body)", fontWeight: 700, fontSize: 13.5, letterSpacing: ".04em", textTransform: "uppercase", color: "#101010", background: "#F2C94C", padding: "12px 22px", borderRadius: 10, textDecoration: "none" }}
+                    >
+                      See every PaddockGavin event
+                    </a>
                   </div>
                 </div>
               </section></div>
