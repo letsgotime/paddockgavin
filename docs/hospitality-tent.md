@@ -49,20 +49,23 @@ barely says so.
   the tent (the dictation cut off right there; confirm what follows the
   cars before that detail prints).
 
-A visual sits beside this brief: `docs/PPR_HospitalityTent_Sponsor.jpg`,
-built from `public/images/ranch/ppr-field.webp`. Three problems with it as
-it stands, found looking at it in the Claude Code session:
+A visual sits beside this brief: `docs/PPR_HospitalityTent_Sponsor.jpg`.
+Regenerated the same night to fix three problems found looking at the
+first version in the Claude Code session:
 
-1. That source photograph is very likely not real Rancho Jaramillo
-   photography: a single track car alone in mist, cinematic grading,
-   shallow depth of field, nothing like the rest of the ranch's own iPhone
-   library. Flagged the same night this note was added, not yet confirmed
-   or replaced.
-2. Its $100 chip still shows round two's contents (two people, free
-   drinks, tee and hat), not the third pass settled below.
-3. Its mission line ("a share of every net dollar goes to Community
-   Elementary School") is the pre-rewrite framing, replaced everywhere
-   else on the site with the real one: ten schools, $2,500 each.
+1. The background is now `public/images/ranch/ppr-pasture.jpg`, real
+   Rancho Jaramillo cattle-and-pasture photography, not the earlier
+   image (a single track car alone in mist, cinematic grading) that was
+   very likely not a real ranch photo at all.
+2. Its $100 chip now reads "two people, three cocktails each, two
+   shirts," matching the third pass settled below, not round two's.
+3. Its mission line now reads "funding lunches at ten local schools,
+   $2,500 each," matching the real framing used everywhere else on the
+   site, not the pre-rewrite one-school version.
+
+Built as an HTML page (real brand marks, the corrected copy) and
+rendered to the JPG via headless Chrome rather than hand-edited, so the
+whole thing regenerates cleanly if any of these three facts move again.
 
 **The sponsor page block itself is already built and live**, shipped the
 same night. It is typographic, not photo led, on purpose: no honest
@@ -175,8 +178,8 @@ is left is not the packages themselves.
    the held press kit sentence about the car giveaway), Stars of Atlanta
    name, spelling, and terms as the backup. And the end of the sentence
    about MoM's "couple of cars" in the tent.
-3. The sponsor outreach JPG's three stale facts (photo, $100 chip, mission
-   line), if it is going to be sent to anyone. See above.
+
+The sponsor outreach JPG's three facts are fixed; it is ready to send.
 
 The site plan location is settled; see the placement note near the top.
 
