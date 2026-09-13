@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Printful check · The Piston Powered Ranch</title>
+<meta name="robots" content="noindex,nofollow" />
+<style>
+  :root{--ink:#0A1523;--paper:#EDF1F6;--mute:#8b95a3;--ok:#00D2BE;--bad:#FF1A21;--warn:#F2C94C;
+    --line:rgba(255,255,255,.14);
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:Archivo,system-ui,-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);
+    font-size:15px;line-height:1.6;padding:24px}
+  .wrap{max-width:720px;margin:0 auto}
+  h1{font:900 24px/1.2 var(--sans);margin:0 0 4px;letter-spacing:-.02em}
+  p.sub{margin:0 0 22px;color:var(--mute);font-size:14px}
+  .verdict{font:800 18px/1.4 var(--sans);padding:15px 17px;border-radius:12px;margin:0 0 6px}
+  .verdict.good{background:rgba(0,210,190,.13);border:1px solid rgba(0,210,190,.5)}
+  .verdict.bad{background:rgba(255,26,33,.13);border:1px solid rgba(255,26,33,.5)}
+  .verdict.wait{background:rgba(242,201,76,.13);border:1px solid rgba(242,201,76,.5)}
+  .who{margin:0 0 20px;color:var(--mute);font-size:13px;font-family:var(--mono)}
+  .row{display:flex;justify-content:space-between;gap:18px;padding:12px 2px;
+    border-bottom:1px solid var(--line)}
+  .row .k{color:var(--mute)}
+  .row .v{font-family:var(--mono);text-align:right}
+  h2{font:800 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;
+    color:var(--bad);margin:26px 0 10px}
+  ul{margin:0;padding-left:20px}
+  li{margin:0 0 10px}
+  a{color:var(--bad)}
+  .foot{margin:26px 0 0;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--mute);font-size:13px}
+  button{margin:16px 0 0;font:800 14px/1 var(--sans);color:#151000;background:var(--warn);
+    border:0;border-radius:10px;padding:13px 22px;cursor:pointer;min-height:44px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Printful check</h1>
+<p class="sub">What Printful says about this deployment, right now.</p>
+<div id="out">Checking…</div>
+</div>
+
+<script type="module">
+/**
+ * Is the shop's dropship connection real?
+ *
+ * The answer lives behind a staff gate that reads an Authorization header,
+ * which a browser never sends by following a link. This page holds the
+ * session already, so it signs the request itself. Nothing is typed, pasted
+ * or displayed: the key stays on the server and only ever gets talked about
+ * in yes or no.
+ */
+import { accessToken, lastTokenError, me } from "/vendor/ranch-db.js?v=2026-09-02f";
+
+const out = document.getElementById("out");
+
+/* Printful's own strings land in this page. Anything from outside gets
+   escaped before it reaches innerHTML. */
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const verdict = (tone, text) => `<div class="verdict ${tone}">${esc(text)}</div>`;
+const row = (k, v) => `<div class="row"><span class="k">${esc(k)}</span><span class="v">${esc(v)}</span></div>`;
+const yes = (b) => (b ? "Yes" : "No");
+
+/* A hung fetch is the same problem this page exists to find, so every call
+   is raced against a clock. */
+const T = (p, ms = 12000) =>
+  Promise.race([p, new Promise((r) => setTimeout(() => r({ __timeout: true }), ms))]);
+
+function signInPrompt(why) {
+  out.innerHTML =
+    verdict("wait", "Not signed in on this browser.") +
+    `<p>${esc(why || "")}</p>` +
+    `<p>Sign in at <a href="/console/index.html">the console</a>, then reload this page.</p>`;
+}
+
+try {
+  const token = await T(accessToken());
+  if (token && token.__timeout) {
+    out.innerHTML = verdict("bad", "The sign in service did not answer within 12 seconds.");
+  } else if (!token) {
+    signInPrompt(lastTokenError);
+  } else {
+    /* me() is an RPC, and RPCs return whatever the function returns: a bare
+       email today, a row if that ever changes. Read both rather than print
+       "undefined" at somebody. */
+    const who = await T(me().catch(() => null));
+    const email =
+      who && !who.__timeout
+        ? typeof who === "string"
+          ? who || null
+          : who.email || null
+        : null;
+
+    const res = await T(
+      fetch("/api/printful-check", {
+        headers: { Authorization: "Bearer " + token, Accept: "application/json" },
+      }).then(async (r) => ({ ok: r.ok, status: r.status, body: await r.json().catch(() => null) }))
+        .catch((e) => ({ __err: e.message }))
+    );
+
+    if (res && res.__timeout) {
+      out.innerHTML = verdict("bad", "Printful did not answer within 12 seconds.");
+    } else if (res && res.__err) {
+      out.innerHTML = verdict("bad", "Could not reach the check: " + res.__err);
+    } else if (!res.ok) {
+      const msg = (res.body && res.body.error) || ("The check answered " + res.status + ".");
+      out.innerHTML =
+        verdict("bad", msg) +
+        (res.status === 403
+          ? "<p>That account is signed in but is not staff, so it cannot see this.</p>"
+          : "");
+    } else {
+      const d = res.body || {};
+      const v = String(d.verdict || "");
+      const tone = v.startsWith("READY") ? "good" : v.startsWith("CONNECTED") ? "wait" : "bad";
+
+      let h = verdict(tone, v || "No verdict came back.");
+      if (email) h += `<p class="who">signed in as ${esc(email)}</p>`;
+      if (d.detail) h += `<p>${esc(d.detail)}</p>`;
+
+      h += row("Key present on this deployment", yes(d.key && d.key.present));
+      if (d.key && d.key.present) {
+        h += row("Printful accepted the key", yes(d.key.acceptedByPrintful));
+        h += row("Store it can see", (d.stores || []).map((s) => s.name || s.id).join(", ") || "none");
+        h += row("Can read orders", yes(d.ordersReadable));
+        h += row("New orders", d.autoConfirmMeaning || "");
+      }
+      if (d.catalogue) {
+        const g = d.catalogue.garments || [];
+        const variants = g.reduce((n, x) => n + (x.variants || 0), 0);
+        h += row("Blanks mapped", g.length + " garments, " + variants + " variants");
+        h += row("Products carrying artwork",
+          d.catalogue.productsWithArtwork + " of " + d.catalogue.productsMappedToABlank);
+      }
+
+      if (d.notes && d.notes.length) {
+        h += "<h2>What to do</h2><ul>" + d.notes.map((n) => `<li>${esc(n)}</li>`).join("") + "</ul>";
+      }
+
+      h += `<p class="foot">Nothing on this page is a secret. Screenshot it and send it over.</p>`;
+      h += `<button id="copy" type="button">Copy this as text</button>`;
+      out.innerHTML = h;
+
+      document.getElementById("copy").addEventListener("click", async (e) => {
+        const text = out.innerText.replace(/\n{3,}/g, "\n\n").trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          e.target.textContent = "Copied.";
+        } catch {
+          e.target.textContent = "Copy did not work. Screenshot it instead.";
+        }
+      });
+    }
+  }
+} catch (e) {
+  out.innerHTML = verdict("bad", "This page broke: " + (e && e.message ? e.message : e));
+}
+</script>
+</body>
+</html>

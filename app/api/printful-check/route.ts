@@ -48,6 +48,19 @@ async function ask(path: string, key: string) {
 }
 
 export async function GET(req: NextRequest) {
+  /**
+   * A browser gets the page, not a 401.
+   *
+   * The gate reads an Authorization header, which a browser never sends by
+   * following a link, so the first build of this route answered 401 to the one
+   * person it was written for. A plain visit now lands on /printful, which
+   * signs the request with the session that browser already holds. Anything
+   * asking for JSON is the page itself, or curl, and falls through to the
+   * check.
+   */
+  const wantsJson = (req.headers.get("accept") || "").includes("application/json")
+  if (!wantsJson) return NextResponse.redirect(new URL("/printful/", req.url), 303)
+
   const denied = await denyUnlessStaff(req)
   if (denied) return denied
 
