@@ -6,6 +6,7 @@ import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { STATS } from "@/lib/site-data"
 
 const CARS = [
   { n:"01", name:"1991 Honda Accord EX",          meta:"Black on tan",               note:"Dad\u2019s car. Saturday wax jobs came before anything else.", c:"#0B0D10", t:"#C8A878" },
@@ -23,7 +24,7 @@ const CARS = [
   { n:"13", name:"2011 Chevy Silverado 1500 6.2L", meta:"Silver on black",            note:"Crew cab, V8, and a lot of chrome to keep up with.", c:"#C6CBD0", t:"#14171C" },
   { n:"14", name:"2003 Honda S2000",               meta:"Silver on black",            note:"The only one I regret selling. The dog rode shotgun.",
     story:"The dream car, found in 2013 in Salt Lake City: a 2003 with 59,000 miles, bought under my wife\u2019s rule of no third car until we had a second house. Check engine light came on day two. I called the seller, and he asked where I worked. A few hours later a stranger walked into my office with a check for the repair. $1,600, good at his bank the same day. The repair got done. Still grateful to that man.", c:"#C6CBD0", t:"#14171C" },
-  { n:"15", name:"2010 Lexus RX350 AWD",           meta:"Truffle Mica on tan",        note:"Winter drives and grocery runs at showroom standard.", c:"#4A3A30", t:"#C8A878" },
+  { n:"15", name:"2010 Lexus RX350 AWD",           meta:"Truffle Mica on tan",        note:"Winter drives and grocery runs.", c:"#4A3A30", t:"#C8A878" },
   { n:"16", name:"2011 Infiniti G37S Convertible", meta:"Black on black",             note:"Top down. Leather care became a schedule.", c:"#0B0D10", t:"#14171C" },
   { n:"17", name:"2009 BMW M3 E93 Convertible",    meta:"Black Sapphire on black",    note:"First M badge. 8,000 rpm with the roof away.",
     story:"The first M3, and the best car day of my life to that point. Black on black with the retractable hardtop, bought used in Georgia. Fully loaded, which meant headlight washers: a gasket that wept water after every wash. One more thing to watch on a car you pay attention to.", c:"#101722", t:"#14171C" },
@@ -44,7 +45,7 @@ const CARS = [
   { n:"29", name:"2015 Chevy Express 2500",        meta:"Still here",                 note:"The mobile detailing van.", c:"", t:"" },
 ]
 
-const TOTAL = 29
+const TOTAL = STATS.carsOwned
 const filled = CARS.length
 const current = CARS.filter(c => c.meta === "Still here").length
 const range = `${CARS[0].name.split(" ")[0]} to ${CARS[CARS.length-1].name.split(" ")[0]}`
@@ -75,7 +76,7 @@ export default function CarsPage() {
               <span style={{ display: "block", fontFamily: arch, fontWeight: 800, fontSize: "clamp(31px,3.2vw,48px)", lineHeight: 1, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>The cars that</span>
               <span style={{ display: "block", fontFamily: arch, fontWeight: 400, fontSize: "clamp(30px,3.1vw,46px)", lineHeight: 1.1, letterSpacing: "-.02em", color: "#F2C94C" }}>have been mine.</span>
             </h1>
-            <p style={{ margin: "0 0 24px", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE" }}>Not inventory, not a dealer lot. Every one of them came out of sales bonuses and side hustles. The 1999 Accord got the same Saturday routine the R8 got.</p>
+            <p style={{ margin: "0 0 24px", fontSize: 18, lineHeight: 1.6, color: "#B9C2CE" }}>Every car here was mine, paid for with sales bonuses and side hustles. Cars that came through the lot but were never mine are in <Link href="/features" style={{ color: "#F2C94C" }}>The Paddock Files</Link>. The 1999 Accord got the same Saturday routine the R8 got.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(16px,2vw,30px)" }}>
               {[["Still here", current]].map(([k, v]) => (
                 <span key={String(k)} style={{ fontFamily: arch, fontWeight: 600, fontSize: 14, letterSpacing: ".13em", textTransform: "uppercase", color: "#9BA5B3" }}>{k} <b style={{ fontFamily: arch, fontWeight: 700, color: "#fff", marginLeft: 6, fontVariantNumeric: "tabular-nums" }}>{v}</b></span>
@@ -83,7 +84,7 @@ export default function CarsPage() {
             </div>
           </div>
         </div>
-        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>Twenty-nine cars, in the order they arrived.</p>
+        <p className="pg-e0" style={{ position: "relative", zIndex: 4, margin: 0, background: "rgba(8,17,29,.9)", borderTop: "1px solid rgba(255,255,255,.14)", padding: "clamp(10px,1.6vh,18px) clamp(14px,3vw,30px) clamp(12px,2vh,22px)", fontFamily: arch, fontWeight: 600, fontSize: 14.5, letterSpacing: ".12em", textTransform: "uppercase", color: "#DFE5ED" }}>{STATS.carsOwned} cars, in the order they arrived.</p>
       </section>
 
       {/* Register table */}
@@ -98,7 +99,7 @@ export default function CarsPage() {
             <RegisterRow key={c.n} car={c} />
           ))}
         </div>
-        <p style={{ margin: "clamp(18px,2.2vw,26px) 0 0", fontSize: 17, lineHeight: 1.6, color: "#9BA5B3", maxWidth: "60ch" }}>The list is still growing. Every car got the same Saturday treatment, regardless of what it cost.</p>
+        <p style={{ margin: "clamp(18px,2.2vw,26px) 0 0", fontSize: 17, lineHeight: 1.6, color: "#9BA5B3", maxWidth: "60ch" }}>The list is still growing.</p>
       </section>
 
       {/* Photo grid */}
@@ -111,7 +112,7 @@ export default function CarsPage() {
               <span style={{ display: "block", fontFamily: arch, fontWeight: 800, fontSize: "clamp(29px,2.5vw,39px)", lineHeight: 1.02, letterSpacing: "-.024em", textTransform: "uppercase", color: "#fff" }}>Looking for one</span>
               <span style={{ display: "block", fontFamily: arch, fontWeight: 400, fontSize: "clamp(28px,2.4vw,37px)", lineHeight: 1.14, letterSpacing: "-.02em", color: "#F2C94C" }}>like these?</span>
             </h2>
-            <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "52ch" }}>Concierge sourcing, retail or wholesale, with a dealer&rsquo;s licence. Tell me the spec and the budget. 78 found so far, most of them before they were listed.</p>
+            <p style={{ margin: 0, fontSize: 18, lineHeight: 1.6, color: "#B9C2CE", maxWidth: "52ch" }}>I source cars for people, retail or wholesale, with a dealer&rsquo;s licence. Tell me the spec and the budget. I&rsquo;ve found {STATS.carsFound} so far, most of them before they were listed.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 700, fontSize: 14, letterSpacing: ".12em", textTransform: "uppercase", background: "#F2C94C", color: "#0E1A2A", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%)", textDecoration: "none" }}>Send me a spec</a>

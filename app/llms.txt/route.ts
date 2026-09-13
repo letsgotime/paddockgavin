@@ -30,11 +30,19 @@ const RANCH = `# The Piston Powered Ranch
 
 const PADDOCK = `# PaddockGavin
 
-> Gavin Brooks, Nashville, Tennessee. Concierge broker and vehicle sourcer, retail or wholesale, shopping with a dealer's licence so every auction is open. Producer of The Piston Powered Ranch.
+> Gavin Brooks, Nashville, Tennessee. Four pillars: automotive; PaddockGavin Events, car events built around cars and lifestyle; detailing, and The Gloss Game, his detailing book; and lifestyle and technology, from spreadsheets to agentic engineering and Supercar IQ. Brokers exotic and luxury cars, retail or wholesale, shopping with a dealer's licence so every auction is open. Producer of The Piston Powered Ranch.
 
 ## Pages
-- https://paddockgavin.com : the paddock
-- https://paddockgavin.com/events : every event, upcoming and past
+- https://paddockgavin.com : the homepage and the four pillars
+- https://paddockgavin.com/cars : the Garage, the cars Gavin has owned
+- https://paddockgavin.com/features : The Paddock Files, notable cars that came through the lot
+- https://paddockgavin.com/events : PaddockGavin Events, upcoming and past
+- https://paddockgavin.com/events/tires-and-timepieces : Tires & Timepieces, cars and watches in Scottsdale
+- https://paddockgavin.com/track-days : track days near Nashville
+- https://paddockgavin.com/gloss-game : The Gloss Game, the detailing book, and the free product index
+- https://paddockgavin.com/why-a-paddock : the word behind the name, learning, code and watches
+- https://paddockgavin.com/supercar-iq : Supercar IQ, identify a car from a photo
+- https://paddockgavin.com/exotic-car-broker : buy, sell or consign an exotic or luxury car
 - https://pistonpoweredranch.com : The Piston Powered Ranch, Saturday 10 October 2026
 `
 

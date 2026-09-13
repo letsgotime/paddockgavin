@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { STATS } from "@/lib/site-data"
 
 export const metadata: Metadata = {
   title: "The E92",
@@ -32,7 +33,7 @@ export default function E92Page() {
             <span style={{ display: "block" }}>One car.</span>
             <span style={{ display: "block", color: "#F2C94C" }}>Twenty-five hours.</span>
           </h1>
-          <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB", maxWidth: "54ch" }}>The newest car in the garage is the last naturally aspirated M3. This is the log: paint corrected, vents coated, studs converted, wheels out to gloss black.</p>
+          <p style={{ margin: 0, fontSize: 19, lineHeight: 1.65, color: "#DDE3EB", maxWidth: "54ch" }}>The E92 is the last naturally aspirated M3. This is the log: paint corrected, vents coated, studs converted, wheels finished in gloss black.</p>
         </div>
       </section>
 
@@ -73,7 +74,7 @@ export default function E92Page() {
           <div>
             <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The correction</span></span>
             <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>Panel by panel</h2>
-            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Cut, refine, jewel. Alpine White does not forgive shortcuts. It just files them under a different light and shows you later.</p>
+            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Cut, refine, jewel. Alpine White hides a shortcut in one light and shows it in the next, so every panel got all three steps.</p>
           </div>
         </div>
       </section>
@@ -84,7 +85,7 @@ export default function E92Page() {
           <div>
             <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The studs</span></span>
             <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>ECS conversion</h2>
-            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Wheel bolts out, ECS studs in, all four corners. A wheel that hangs itself on the hub is a wheel you never scratch on the way past the caliper.</p>
+            <p style={{ margin: 0, fontSize: 17.5, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Wheel bolts out, ECS studs in, on all four corners. With studs the wheel hangs on the hub while you fit it, so it never scrapes the caliper.</p>
           </div>
           <figure style={{ margin: 0, border: "1px solid #27384F", background: "#0E1A2A" }}>
             <Image src="/images/aston-wheel.webp" alt="ECS wheel studs installed" width={560} height={374} style={{ width: "100%", height: "auto", display: "block" }} />
@@ -98,7 +99,7 @@ export default function E92Page() {
         <div style={{ maxWidth: 1080, margin: "0 auto", background: "#152538", border: "1px solid #27384F", clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(24px,4vw,34px)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ flex: "1 1 320px" }}>
             <h2 style={{ margin: "0 0 8px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>The method is written down</h2>
-            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#B4B6B2", maxWidth: "48ch" }}>Every step on this page is a chapter in the book. One of the <Link href="/cars" style={{ color: "#00D2BE" }}>29 in the register</Link>.</p>
+            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6, color: "#B4B6B2", maxWidth: "48ch" }}>The steps on this page are all in the book. The E92 is one of the <Link href="/cars" style={{ color: "#00D2BE" }}>{STATS.carsOwned} cars in the register</Link>.</p>
           </div>
           <Link href="/gloss-game" style={{ display: "inline-flex", alignItems: "center", fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>The Gloss Game</Link>
         </div>

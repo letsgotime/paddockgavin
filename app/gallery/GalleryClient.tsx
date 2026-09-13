@@ -134,6 +134,17 @@ function seedItems(): WallItem[] {
   return all
 }
 
+/* Shown when a filter (usually Video, before the feed has any clips) matches nothing. */
+function EmptyFilter() {
+  return (
+    <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "56ch" }}>
+      Nothing here yet. Clips land on{" "}
+      <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ color: "#00D2BE" }}>Instagram</a>{" "}
+      first, and show up here once the feed picks them up.
+    </p>
+  )
+}
+
 function chapterFromCaption(caption: string): string {
   const tags = (caption || "").toLowerCase().replace(/\s/g, "").match(/#([a-z0-9]+)/g) || []
   for (const t of tags) {
@@ -207,7 +218,13 @@ export function GalleryClient({ initialItems, initialProfile }: {
     { key: "nobody-films", label: "The stuff nobody films" },
     { key: "what-id-put-on-it", label: "What I'd put on it" },
     { key: "the-room", label: "The room" },
+    { key: "video", label: "Video" },
   ]
+
+  /* "video" cuts across chapters; every other key is a chapter id. */
+  const matchesFilter = (item: WallItem, key: string) =>
+    key === "all" ? true : key === "video" ? item.isVideo : item.chapter === key
+  const filteredCount = items.filter((i) => matchesFilter(i, filter)).length
 
   const fmt = (n: number) => {
     if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M"
@@ -216,7 +233,7 @@ export function GalleryClient({ initialItems, initialProfile }: {
   }
 
   const readouts = [
-    { label: "Pillars", value: "3", tone: "#00D2BE" },
+    { label: "Chapters", value: String(CHAPTERS.length), tone: "#00D2BE" },
     { label: "Frames", value: loaded ? String(items.length) : "\u2026", tone: "#F2C94C" },
     { label: "Followers", value: profile?.followersCount ? fmt(profile.followersCount) : "@itspaddockgavin", tone: "#4BA3DE" },
   ]
@@ -245,10 +262,10 @@ export function GalleryClient({ initialItems, initialProfile }: {
           <span
             style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F", flex: "0 0 auto", paddingLeft: 4 }}
           >
-            Pillar
+            Chapter
           </span>
           {FILTERS.map((f) => {
-            const count = f.key === "all" ? items.length : items.filter((i) => i.chapter === f.key).length
+            const count = items.filter((i) => matchesFilter(i, f.key)).length
             const active = filter === f.key
             return (
               <button
@@ -319,7 +336,7 @@ export function GalleryClient({ initialItems, initialProfile }: {
               <span style={{ color: "#F2C94C" }}>in whatever light was there</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo,Helvetica,sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#C4CBD6", maxWidth: "56ch" }}>
-              Three pillars. The details nobody bothers to film, what I&rsquo;d put on the paint, and the room these cars pass through. Most of it was shot on the lot I ran through 2026, which is why the angles are close.
+              Three chapters: the details nobody films, what I&rsquo;d put on the paint, and the room these cars pass through. Most of it was shot on the lot I ran through 2026. Video lives here too. Everything starts as a phone video, and clips land on Instagram first.
             </p>
           </div>
           <div
@@ -344,7 +361,8 @@ export function GalleryClient({ initialItems, initialProfile }: {
 
         {/* Flat grid view */}
         {view === "grid" && (() => {
-          const gridItems = filter === "all" ? items : items.filter(i => i.chapter === filter)
+          const gridItems = items.filter(i => matchesFilter(i, filter))
+          if (gridItems.length === 0) return <EmptyFilter />
           return (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(190px,46%),1fr))", gap: "clamp(10px,1.5vw,16px)", gridAutoFlow: "dense" }}>
               {gridItems.map((item, idx) => (
@@ -358,6 +376,11 @@ export function GalleryClient({ initialItems, initialProfile }: {
                   <span style={{ position:"absolute", left:0, right:0, bottom:0, padding:"28px 10px 9px", pointerEvents:"none", background:"linear-gradient(to top,rgba(10,21,35,.9) 0%,rgba(10,21,35,0))", display:"block" }}>
                     <span style={{ display:"block", fontFamily:"Archivo,Helvetica,sans-serif", fontWeight:600, fontSize:12, lineHeight:1.4, color:"#EDF1F6" }}>{item.caption}</span>
                   </span>
+                  {item.isVideo && (
+                    <span aria-hidden="true" style={{ position: "absolute", right: 10, top: 10, width: 24, height: 24, border: "1.5px solid rgba(255,255,255,.82)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(10,21,35,.3)" }}>
+                      <i style={{ width: 0, height: 0, borderLeft: "7px solid #FFFFFF", borderTop: "4.5px solid transparent", borderBottom: "4.5px solid transparent", marginLeft: 2 }} />
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -365,10 +388,10 @@ export function GalleryClient({ initialItems, initialProfile }: {
         })()}
 
         {/* Chapters view */}
+        {view === "chapters" && filteredCount === 0 && <EmptyFilter />}
         {view === "chapters" && CHAPTERS.map((ch, ci) => {
-          const visibleItems = filter === "all"
-            ? items.filter((i) => i.chapter === ch.id)
-            : filter === ch.id ? items.filter((i) => i.chapter === ch.id) : []
+          /* "video" keeps every chapter but narrows each one to its clips. */
+          const visibleItems = items.filter((i) => i.chapter === ch.id && matchesFilter(i, filter))
           if (visibleItems.length === 0 && filter !== "all") return null
           const pool = visibleItems
           return (

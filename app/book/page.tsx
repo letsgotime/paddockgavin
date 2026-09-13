@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PGEEyebrow } from "@/components/pge-brand"
 
 type Status = "idle" | "sending" | "sent" | "error"
 
@@ -15,7 +16,7 @@ const KINDS = [
     eyebrow: "The day",
     title: "A private event",
     tone: "#4BA3DE",
-    blurb: "Collector events in Middle Tennessee. Working ranches and orchards. Tell me the occasion and I will tell you where it fits.",
+    blurb: "Private collector events on ranches and orchards in Middle Tennessee. Tell me the occasion and I will tell you where it fits.",
     hint: "The occasion, the date, the headcount",
     img: "/images/ranch/ppr-walk.webp",
   },
@@ -24,7 +25,7 @@ const KINDS = [
     eyebrow: "Buy, trade or sell",
     title: "Your next vehicle",
     tone: "#00D2BE",
-    blurb: "I source retail or wholesale with a dealer\u2019s licence, so every auction is open.",
+    blurb: "I source retail or wholesale on a dealer\u2019s license, so every auction is open to me.",
     hint: "The car, the budget, buying or selling",
     img: "/images/f458-front-sq.webp",
   },
@@ -33,7 +34,7 @@ const KINDS = [
     eyebrow: "Car care",
     title: "The Gloss Game",
     tone: "#00D2BE",
-    blurb: "The detailing book. Which bucket, which mitt, what touches the paint after the wheels, and how to tell whether you need a machine before you spend a weekend finding out. On Amazon in paperback and Kindle.",
+    blurb: "My detailing book covers buckets, mitts, wash order, and when you actually need a machine. It is on Amazon in paperback and Kindle.",
     hint: "Or ask me a question about your paint",
     img: "/images/f458-vents-sq.webp",
   },
@@ -42,7 +43,7 @@ const KINDS = [
     eyebrow: "Anything else",
     title: "Something different",
     tone: "#B4B6B2",
-    blurb: "Reach out on IG or LinkedIn, or put it in the form. It all lands with me.",
+    blurb: "Message me on Instagram or LinkedIn, or use the form. It all comes to me.",
     hint: "Whatever it is",
     img: "/images/gavin-gwagen-sq.webp",
   },
@@ -50,7 +51,7 @@ const KINDS = [
 
 
 export default function BookPage() {
-  const [picked, setPicked] = useState("club")
+  const [picked, setPicked] = useState(KINDS[0].key)
   const [form, setForm] = useState({ name: "", reach: "", date: "", message: "" })
   const [status, setStatus] = useState<Status>("idle")
 
@@ -102,14 +103,12 @@ export default function BookPage() {
           <Image src="/images/ranch/ppr-dusk.jpg" alt="The ranch at dusk, set for an evening" fill style={{ objectFit: "cover", objectPosition: "center 60%" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.42) 56%,rgba(10,21,35,.3) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.4vw,38px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "6px 16px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#101010" }}>Book it &middot; Middle Tennessee</span>
-            </span>
+            <PGEEyebrow>PaddockGavin Events &middot; Book it</PGEEyebrow>
             <h1 style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
-              Tell me what you&rsquo;re <span style={{ color: "#F2C94C" }}>bringing</span>
+              Tell me what you&rsquo;re <span style={{ color: "#00D2BE" }}>bringing</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.58, color: "#EDF1F6", maxWidth: "56ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              Pick the one that fits, give me the shape of it, and I&rsquo;ll come back with the details. Every one of these lands with me.
+              Pick the one that fits and give me the rough shape of it. It comes straight to me, and I&rsquo;ll reply with the details.
             </p>
           </div>
         </section>
@@ -123,7 +122,7 @@ export default function BookPage() {
                 key={k.key}
                 type="button"
                 onClick={() => { setPicked(k.key); setStatus("idle"); document.getElementById("form")?.scrollIntoView({ behavior: "smooth", block: "start" }) }}
-                className="pg-e1" style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(242,201,76,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", border: on ? "1px solid rgba(242,201,76,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
+                className="pg-e1" style={{ position: "relative", overflow: "hidden", isolation: "isolate", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: 10, background: on ? "rgba(0,210,190,.12)" : "linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.013))", border: on ? "1px solid rgba(0,210,190,.5)" : "1px solid rgba(255,255,255,.11)", borderLeft: `3px solid ${k.tone}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%)", padding: "clamp(18px,2.4vw,24px)" }}
               >
                 <div style={{ position: "absolute", inset: 0, zIndex: -1 }}>
                   <Image src={k.img} alt="" fill style={{ objectFit: "cover", opacity: 0.36 }} />
@@ -132,7 +131,7 @@ export default function BookPage() {
                 <span style={{ display: "flex", alignItems: "center", gap: 10, width: "100%" }}>
                   <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: k.tone }}>{k.eyebrow}</span>
                   <i aria-hidden="true" style={{ flex: "1 1 auto", height: 0, borderBottom: "1px dotted rgba(255,255,255,.18)" }} />
-                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: on ? "#F2C94C" : "#91918F" }}>{on ? "Selected" : "Pick"}</span>
+                  <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: on ? "#00D2BE" : "#91918F" }}>{on ? "Selected" : "Pick"}</span>
                 </span>
                 <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 800, fontSize: "clamp(19px,2.2vw,24px)", letterSpacing: "-.016em", lineHeight: 1.12, color: "#FFFFFF" }}>{k.title}</span>
                 <span style={{ fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 15.5, lineHeight: 1.52, color: "#C4CBD6" }}>{k.blurb}</span>
@@ -148,8 +147,8 @@ export default function BookPage() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#CFE4F4" }}>Booking</span>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#F2C94C", padding: "5px 13px" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#101010" }}>{cur.title}</span>
+            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#00D2BE", padding: "5px 13px" }}>
+              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 12, letterSpacing: ".14em", textTransform: "uppercase", color: "#00302B" }}>{cur.title}</span>
             </span>
             <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 12, height: 1, background: "rgba(255,255,255,.2)", display: "block" }} />
           </div>

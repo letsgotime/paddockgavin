@@ -65,6 +65,16 @@ const nextConfig: NextConfig = {
         destination: "/events/pistonpoweredranch/sitemap-review",
         permanent: true,
       },
+      /* Retired 2026-09-12 in the three-pillar consolidation. Each address is indexed or printed somewhere, so it lands on the page that absorbed it. */
+      { source: "/sell-my-exotic-car", destination: "/exotic-car-broker#sell", permanent: true },
+      { source: "/exotic-car-consignment", destination: "/exotic-car-broker#consignment", permanent: true },
+      { source: "/juice-box", destination: "/gloss-game#picks", permanent: true },
+      { source: "/vlog", destination: "/gallery", permanent: true },
+      { source: "/garage", destination: "/cars", permanent: true },
+      { source: "/donuts", destination: "/events", permanent: true },
+      { source: "/events/creator-day", destination: "/events", permanent: true },
+      { source: "/encantoevents", destination: "/encantoblossomorchard", permanent: true },
+      { source: "/pistonranch", destination: "/events/pistonpoweredranch", permanent: true },
     ]
   },
   async rewrites() {

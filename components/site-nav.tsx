@@ -3,38 +3,22 @@
 import { useEffect, useState, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { SITE_GROUPS } from "@/lib/site-map"
+import { PGEMark } from "@/components/pge-brand"
 
 type Shift = "day" | "night"
 
 interface NavItem { key: string; href: string; label: string; note: string }
-interface NavGroup { title: string; tone: string; items: NavItem[] }
+interface NavGroup { key?: string; title: string; tone: string; items: NavItem[] }
 
 /**
- * The menu, grouped the way the site is lived: what happens on the lot by
- * day, what gets built at night, what is on the calendar, and the rest.
- * Eleven flat items at 20px and weight 800 read as a wall on a phone; four
- * groups of two or three at 17px read as a map. The note under each label
- * is kept on every screen size instead of hidden below 620px.
+ * The menu, grouped by pillar, from the same map the footer and /connect use.
+ * Elsewhere stays in the footer, so the menu reads as a map and not a wall.
+ * The note under each label is kept on every screen size.
  */
-const NAV_GROUPS: NavGroup[] = [
-  { title: "Day shift", tone: "#F2C94C", items: [
-    { key: "book",   href: "/book",    label: "Book an event",     note: "Private events" },
-    { key: "events", href: "/events",  label: "Events",            note: "Private bookings" },
-    { key: "broker", href: "/exotic-car-broker", label: "Find me a car", note: "Sourcing, retail or wholesale" },
-  ]},
-  { title: "Night shift", tone: "#00D2BE", items: [
-    { key: "scoreboard", href: "/scoreboard", label: "Scoreboard", note: "What I build" },
-    { key: "cars",       href: "/cars",       label: "The Garage", note: "29 cars" },
-    { key: "gallery",    href: "/gallery",    label: "Gallery",    note: "Three pillars" },
-  ]},
-  { title: "On the calendar", tone: "#4BA3DE", items: [
-    { key: "ranch",   href: "/events/pistonpoweredranch", label: "The Piston Powered Ranch", note: "Oct 10" },
-  ]},
-  { title: "The rest", tone: "#B4B6B2", items: [
-    { key: "why",     href: "/why-a-paddock", label: "Why a Paddock", note: "The word" },
-    { key: "connect", href: "/connect",       label: "Connect",       note: "Every link" },
-  ]},
-]
+const NAV_GROUPS: NavGroup[] = SITE_GROUPS
+  .filter((g) => g.key !== "elsewhere")
+  .map((g) => ({ key: g.key, title: g.title, tone: g.tone, items: g.links }))
 
 /**
  * The ranch's own menu, for pistonpoweredranch.com. Somebody arriving for a
@@ -274,6 +258,7 @@ export function SiteNav({ active = "home" }: Props) {
                 <div key={g.title}>
                   <p style={{ margin: "0 0 4px", display: "flex", alignItems: "center", gap: 10, fontFamily: MONO, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: g.tone }}>
                     <i aria-hidden="true" style={{ width: 18, height: 2, background: g.tone, flex: "0 0 auto" }} />
+                    {g.key === "events" && <PGEMark height={14} />}
                     {g.title}
                   </p>
                   {g.items.map((item) => {
