@@ -68,6 +68,31 @@ import { requestReset, completeReset } from "/vendor/ranch-db.js?v=2026-09-02f";
 const q = new URLSearchParams(location.search);
 const token = q.get("token") || q.get("t") || "";
 
+/**
+ * Where this person was before their password stopped working.
+ *
+ * A reset is a round trip through an inbox, and the page they were trying to
+ * reach has to survive it: the ?next= arrives here, rides out on the emailed
+ * link, comes back on the return leg, and decides where they land at the end.
+ * Without it everybody finishes on HQ regardless of what they were doing,
+ * which is the same stranding the gates themselves used to cause.
+ *
+ * Same origin only, and never back to this page, which would loop.
+ */
+function nextPath() {
+  try {
+    const raw = q.get("next");
+    if (!raw) return null;
+    const u = new URL(raw, location.origin);
+    if (u.origin !== location.origin) return null;
+    if (u.pathname === "/reset" || u.pathname.indexOf("/reset/") === 0) return null;
+    return u.pathname + u.search + u.hash;
+  } catch {
+    return null;
+  }
+}
+const back = nextPath();
+
 const pw = document.getElementById("pw");
 const go = document.getElementById("go");
 const said = document.getElementById("said");
@@ -96,7 +121,9 @@ go.addEventListener("click", async () => {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
         say("That is not an address.", "bad"); go.disabled = false; return;
       }
-      const problem = await requestReset(val, location.origin + "/reset/");
+      const redirectTo =
+        location.origin + "/reset/" + (back ? "?next=" + encodeURIComponent(back) : "");
+      const problem = await requestReset(val, redirectTo);
       /* The service answers the same way whether or not the address exists, so
          nobody can use this to find out who has an account. Say the same. */
       if (!problem) {
@@ -112,8 +139,8 @@ go.addEventListener("click", async () => {
     if (val.length < 8) { say("Eight characters or more, please.", "bad"); go.disabled = false; return; }
     const problem = await completeReset(val, token);
     if (!problem) {
-      say("Done. Sending you to the console.", "ok");
-      setTimeout(() => { location.href = "/console/"; }, 1200);
+      say(back ? "Done. Taking you back to what you were doing." : "Done. Sending you to the console.", "ok");
+      setTimeout(() => { location.href = back || "/console/"; }, 1200);
     } else {
       say(problem, "bad");
       go.disabled = false;

@@ -3603,6 +3603,33 @@
       window.sendEmailCode = sendEmailCode;
       window.verifyEmailCode = verifyEmailCode;
       window.NEEDS_VERIFICATION = NEEDS_VERIFICATION;
+
+      /**
+       * Where to put somebody back once they are in.
+       *
+       * A gated page sends people here as /console/?next=<its own address>.
+       * Without honouring that, signing in lands them on HQ with the thing
+       * they came for still undone and no sign of how to reach it again.
+       * That is how a vendor approval got lost: the person signed in, saw a
+       * dashboard, and had no way back to the queue they had been sent to.
+       *
+       * Same origin only, and never back into the console. An open redirect
+       * on a sign in page hands an attacker a way to bounce a freshly signed
+       * in session onto a page of their choosing, and a next pointing at the
+       * console itself would just loop.
+       */
+      window.ranchNext = function () {
+        try {
+          var raw = new URLSearchParams(location.search).get("next");
+          if (!raw) return null;
+          var u = new URL(raw, location.origin);
+          if (u.origin !== location.origin) return null;
+          if (u.pathname === "/console" || u.pathname.indexOf("/console/") === 0) return null;
+          return u.pathname + u.search + u.hash;
+        } catch (e) {
+          return null;
+        }
+      };
       try {
         ((window.__pgdb = makeDb()),
           window.dispatchEvent(new Event("pgdb-ready")));
@@ -4027,7 +4054,10 @@
               return;
             }
             btn.disabled = true; btn.textContent = "Sending";
-            var problem = await magicLink(em, location.origin + "/journeys/");
+            /* Back where they came from if a page sent them, Journeys only
+               as the fallback for somebody who opened the console directly. */
+            var back = window.ranchNext();
+            var problem = await magicLink(em, location.origin + (back || "/journeys/"));
             if (problem) {
               said.style.color = "#FF1A21";
               said.textContent = problem;
@@ -4035,7 +4065,9 @@
               return;
             }
             said.style.color = "#00D2BE";
-            said.textContent = "Check your email. The link signs you straight in and lands you on Journeys.";
+            said.textContent = back
+              ? "Check your email. The link signs you in and takes you back to what you were doing."
+              : "Check your email. The link signs you straight in and lands you on Journeys.";
             btn.textContent = "Sent";
           }),
           document.getElementById("enterBtn").addEventListener("click", function () {
@@ -4078,6 +4110,14 @@
                           d.unlockFlash.classList.add("go"),
                           setTimeout(function () {
                             ((c = !0), d.unlockFlash.classList.remove("go"), d.protoctl.classList.remove("hide"));
+                            /* A page sent them here to sign in, so send them
+                               back to it. Signing in and landing on a console
+                               route they never asked for is the whole bug. */
+                            var back = window.ranchNext();
+                            if (back) {
+                              location.href = back;
+                              return;
+                            }
                             /* This used to send you to Journeys when no route was asked for,
                                which loops: signing in lands here with no route, gets
                                bounced to Journeys, and Journeys sends you back here for
@@ -6277,6 +6317,15 @@
               await a();
               var e = await n.auth.getSession();
               if (e && e.data && e.data.session && ((c = !0), "enter" === u)) {
+                /* Arriving already signed in with a page waiting: a magic
+                   link that landed here, or the reload after a code. Send
+                   them on rather than showing a console they did not ask
+                   for. */
+                var back = window.ranchNext();
+                if (back) {
+                  location.href = back;
+                  return;
+                }
                 var t = y || re || "ops";
                 ((y = null), f(t));
               }

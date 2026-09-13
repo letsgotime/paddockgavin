@@ -108,7 +108,9 @@ export default function RolesPage() {
           This one is for the five people running the day, so it wants a sign in first. There is no
           password: put your address in the email box and press the button that emails you a link.
         </p>
-        <a href="/console/" style={{ ...pill, marginTop: 26 }}>
+        {/* Carries this page as ?next=, so signing in comes back here rather
+            than stranding somebody on HQ with the list still unseen. */}
+        <a href={`/console/?next=${encodeURIComponent("/roles")}`} style={{ ...pill, marginTop: 26 }}>
           Sign in
         </a>
         <p style={{ color: FAINT, fontSize: 14, marginTop: 18, maxWidth: "56ch" }}>
