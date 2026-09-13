@@ -3,6 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ShopBuy } from "@/components/shop-buy"
 import { SiteNav } from "@/components/site-nav"
+import { ShopCart } from "@/components/shop-cart"
 import { SiteFooter } from "@/components/site-footer"
 import { PRODUCTS, BRANDS, bySlug, priceRange, buyable, SHOP_MISSION } from "@/lib/shop/catalogue"
 
@@ -73,6 +74,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteNav />
+      <ShopCart />
       <main style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
         <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
           <Link
