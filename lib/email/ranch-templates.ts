@@ -363,7 +363,7 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
           { kind: "lead", text: `Thank you for asking about ${co} at the Piston Powered Ranch.` },
           { kind: "p", text: "Gavin Brooks and Bekah Stallard read every partner enquiry themselves. One of them will come back to you on what you actually asked about, rather than sending the same deck to everybody." },
           WHEN,
-          { kind: "p", text: "Three hundred cars, every one of them chosen. Free for the public to attend. The day benefits Community Elementary School." },
+          { kind: "p", text: "Three hundred cars, every one of them chosen. Free for the public to attend. 25% of net profit fills a semi truck with food. Right now it goes to kids." },
         ],
         signoff: "If you have a date you need an answer by, put it in your reply and we will work to it.",
       }
@@ -618,7 +618,7 @@ function vipT(surface: Surface, v: Vars): Rendered {
       { kind: "p", text: "Reply with the word terrace or table and we will hold you a seat." },
       { kind: "quiet", text: "If you would rather just walk the field, do exactly that. Three hundred cars, free, and nobody will ask you for anything." },
     ],
-    signoff: "Every dollar above the cost of putting the day on goes to Community Elementary School.",
+    signoff: "25% of net profit fills a semi truck with food. Right now it goes to kids.",
     unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
   }
 }
@@ -672,7 +672,7 @@ function packagesSponsorT(v: Vars): Rendered {
           "Three hundred cars, every one chosen rather than first come",
           "Free for the public, so the gate is not a filter on who sees you",
           "One working ranch, one day, no competing stages",
-          "The day benefits Community Elementary School",
+          "25% of net profit fills a semi truck with food, right now for kids",
         ],
       },
       { kind: "p", text: "Tell us what a good outcome looks like for you and we will tell you straight whether the tenth can deliver it. Where it can, we invoice from this system and everything runs through one person from there." },
@@ -725,7 +725,7 @@ function merchT(surface: Surface, v: Vars): Rendered {
       ...(v.shopUrl ? ([{ kind: "button", label: "See what there is", href: v.shopUrl }] as Block[]) : ([{ kind: "quiet", text: "[shop link to come]" }] as Block[])),
       { kind: "quiet", text: "Entry is still free, and it stays free whether you buy anything or not." },
     ],
-    signoff: "What is left after the cost of the day goes to Community Elementary School.",
+    signoff: "25% of net profit fills a semi truck with food. Right now it goes to kids.",
     unsubscribe: "mailto:hello@pistonpoweredranch.com?subject=Unsubscribe",
   }
 }
