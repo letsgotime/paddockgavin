@@ -6,149 +6,42 @@ import Image from "next/image"
 import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { SITE_GROUPS } from "@/lib/site-map"
+import { DM, INSTAGRAM } from "@/lib/site-data"
 
 type Shift = "day" | "night"
+type ConnectLink = { key: string; title: string; note: string; href: string; target: "_blank" | "_self"; tone: string; datum: string | null }
 
-const HANDLE = "PaddockGavin"
+const HANDLE = "itspaddockgavin"
 
-const GROUPS = [
-  {
-    key: "watch",
-    label: "Watch and follow",
-    tone: "#00D2BE",
-    links: [
-      {
-        key: "ig",
-        title: "Instagram",
-        note: "The clips land here first",
-        href: `https://instagram.com/${HANDLE}`,
-        target: "_blank",
-        tone: "#00D2BE",
-        datum: `@${HANDLE}`,
-      },
-      {
-        key: "wall",
-        title: "The wall",
-        note: "Every clip, filtered by pillar",
-        href: "/#wall",
-        target: "_self",
-        tone: "#F2C94C",
-        datum: null as string | null,
-      },
-      {
-        key: "gal",
-        title: "The gallery",
-        note: "Three pillars of stills",
-        href: "/gallery",
-        target: "_self",
-        tone: "#00D2BE",
-        datum: null as string | null,
-      },
-    ],
-  },
-  {
-    key: "come",
-    label: "Come see us",
-    tone: "#F2C94C",
-    links: [
-      {
-        key: "floor",
-        title: "Book an event",
-        note: "Collector events in Middle Tennessee, and I run them",
-        href: "/events",
-        target: "_self",
-        tone: "#4BA3DE",
-        datum: null as string | null,
-      },
-    ],
-  },
-  {
-    key: "built",
-    label: "Things I built",
-    tone: "#4BA3DE",
-    links: [
-      {
-        key: "gloss",
-        title: "The Gloss Game",
-        note: "The book, on Amazon today",
-        href: "https://www.amazon.com/s?k=The+Gloss+Game+Gavin+Brooks",
-        target: "_blank",
-        tone: "#F2C94C",
-        datum: "Buy",
-      },
-      {
-        key: "siq",
-        title: "Supercar IQ",
-        note: "Point a phone at a car and it tells you what it is",
-        href: "https://supercariq.com",
-        target: "_blank",
-        tone: "#00D2BE",
-        datum: null as string | null,
-      },
-      {
-        key: "board",
-        title: "The scoreboard",
-        note: "Everything on the night shift, with dates",
-        href: "/scoreboard",
-        target: "_self",
-        tone: "#4BA3DE",
-        datum: null as string | null,
-      },
-    ],
-  },
-  {
-    key: "work",
-    label: "Work with me",
-    tone: "#B4B6B2",
-    links: [
-      {
-        key: "find",
-        title: "Find me a car",
-        note: "Concierge sourcing, retail or wholesale, with a dealer\u2019s licence",
-        href: "/exotic-car-broker",
-        target: "_self",
-        tone: "#F2C94C",
-        datum: "Fee disclosed per sale",
-      },
-      {
-        key: "garage",
-        title: "The garage",
-        note: "29 of my own, and what happened to each",
-        href: "/garage",
-        target: "_self",
-        tone: "#B4B6B2",
-        datum: "29",
-      },
-      {
-        key: "p20",
-        title: "Paddock20",
-        note: "Software and marketing, the night-shift agency",
-        href: "https://paddock20.com",
-        target: "_blank",
-        tone: "#00D2BE",
-        datum: null as string | null,
-      },
-      {
-        key: "hq",
-        title: "gavinbrookshq.com",
-        note: "The operator side: metrics, systems, r\u00e9sum\u00e9",
-        href: "https://gavinbrookshq.com",
-        target: "_blank",
-        tone: "#848482",
-        datum: null as string | null,
-      },
-      {
-        key: "li",
-        title: "LinkedIn",
-        note: "Gavin Brooks, the leadership side",
-        href: "https://www.linkedin.com/in/gavinbrooksleader",
-        target: "_blank",
-        tone: "#4BA3DE",
-        datum: null as string | null,
-      },
-    ],
-  },
-]
+const FOLLOW = {
+  key: "follow",
+  label: "Follow along",
+  tone: "#00D2BE",
+  links: [
+    { key: "ig", title: "Instagram", note: "The clips land here first", href: INSTAGRAM, target: "_blank", tone: "#00D2BE", datum: `@${HANDLE}` },
+    { key: "wall", title: "The wall", note: "The latest posts, on the homepage", href: "/#wall", target: "_self", tone: "#F2C94C", datum: null },
+  ] as ConnectLink[],
+}
+
+const PILLAR_GROUPS = SITE_GROUPS.filter((g) => g.key !== "elsewhere").map((g) => ({
+  key: g.key,
+  label: g.title,
+  tone: g.tone,
+  links: g.links.map((l): ConnectLink => ({ key: l.key, title: l.label, note: l.note, href: l.href, target: l.external ? "_blank" : "_self", tone: g.tone, datum: null })),
+}))
+
+const ELSEWHERE = {
+  key: "elsewhere",
+  label: "Elsewhere",
+  tone: "#8B93A7",
+  links: [
+    { key: "p20", title: "Paddock20", note: "The software studio", href: "https://paddock20.com", target: "_blank", tone: "#00D2BE", datum: null },
+    { key: "li", title: "LinkedIn", note: "Gavin Brooks", href: "https://www.linkedin.com/in/gavinbrooksleader", target: "_blank", tone: "#4BA3DE", datum: null },
+  ] as ConnectLink[],
+}
+
+const GROUPS = [FOLLOW, ...PILLAR_GROUPS, ELSEWHERE]
 
 export default function ConnectPage() {
   const [shift, setShift] = useState<Shift>("day")
@@ -182,7 +75,7 @@ export default function ConnectPage() {
       "ORG:PaddockGavin", "TITLE:Automotive creator and software builder",
       "ADR;TYPE=WORK:;;;Nashville;TN;;USA",
       "URL:https://paddockgavin.com",
-      `X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/${HANDLE}`,
+      `X-SOCIALPROFILE;TYPE=instagram:${INSTAGRAM}`,
       "END:VCARD",
     ].join("\r\n")
     const url = URL.createObjectURL(new Blob([card], { type: "text/vcard" }))
@@ -283,7 +176,7 @@ export default function ConnectPage() {
                   fontSize: 12.5, letterSpacing: ".16em", textTransform: "uppercase", color: "#F2C94C",
                 }}
               >
-                Events, client work and vehicle sourcing
+                Automotive &middot; Events &middot; Lifestyle &amp; Technology
               </span>
             </div>
           </div>
@@ -293,7 +186,7 @@ export default function ConnectPage() {
               fontSize: "clamp(16px,4vw,18px)", lineHeight: 1.58, color: "#C4CBD6",
             }}
           >
-            Events and client work by day, code and experiments at night. Everything I answer comes from one inbox.
+            Cars, the events I put on, and whatever I am learning next. Every message comes to one inbox, and I answer it.
           </p>
           {/* Readouts */}
           <div
@@ -328,7 +221,7 @@ export default function ConnectPage() {
             {saved ? "Saved to contacts" : "Save my contact"}
           </button>
           <a
-            href="https://ig.me/m/itspaddockgavin"
+            href={DM}
             target="_blank"
             rel="noopener noreferrer"
             className="pg-e1" style={{
@@ -432,7 +325,7 @@ export default function ConnectPage() {
             The fastest lane
           </span>
           <a
-            href="https://ig.me/m/itspaddockgavin"
+            href={DM}
             target="_blank"
             rel="noopener noreferrer"
             style={{

@@ -8,11 +8,11 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 
 const STEPS = [
-  { word: "Checked",      line: "Looked over properly before it went anywhere. Every panel, every corner." },
+  { word: "Checked",      line: "Every panel and every corner was looked over before it went anywhere." },
   { word: "Cleaned",      line: "The road came off before anything else happened." },
-  { word: "Photographed", line: "Every angle, while it was at its best." },
-  { word: "Written up",   line: "What it is, what it has, what it needs." },
-  { word: "Safe",         line: "A spot of its own until it was wanted." },
+  { word: "Photographed", line: "Shot from every angle while it was at its best." },
+  { word: "Written up",   line: "A note on what it is, what it has and what it needs." },
+  { word: "Safe",         line: "It had a spot of its own until it was wanted." },
 ]
 
 const CREW = [
@@ -56,7 +56,7 @@ export default function LotOpsPage() {
               The gate opened<br /><span style={{ color: "#F2C94C" }}>at eight</span>
             </h1>
             <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: "clamp(17px,1.8vw,19px)", lineHeight: 1.56, color: "#EDF1F6", maxWidth: "54ch", textShadow: "0 1px 10px rgba(10,21,35,.85)" }}>
-              The bay door went up and there was a transporter already waiting. Some mornings it was one car. Some mornings you could not walk through the place. This is the operation I ran, and what a morning on it looked like.
+              The bay door went up and a transporter was already waiting. Some mornings it was one car, and some mornings you could not walk through the place. This is the operation I ran and what a morning on it looked like.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
@@ -150,7 +150,7 @@ export default function LotOpsPage() {
             Four of us ran <span style={{ color: "#F2C94C" }}>the warehouse</span>
           </h2>
           <p style={{ margin: 0, fontFamily: "Archivo, Helvetica, sans-serif", fontSize: 17, lineHeight: 1.58, color: "#C4CBD6", maxWidth: "60ch" }}>
-            Me and three lot ops techs on the floor. It never looked the same two days running, and some mornings you could not walk through the place.
+            It was me and three lot ops techs on the floor, and it never looked the same two days running.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <span style={{ fontFamily: "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", color: "#91918F" }}>In it with us, every day</span>
@@ -175,6 +175,7 @@ export default function LotOpsPage() {
             <Link href="/book" style={{ display: "inline-flex", alignItems: "center", fontFamily: "Archivo, Helvetica, sans-serif", fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>
               Sell a car
             </Link>
+            <Link href="/why-a-paddock" className="pg-textlink">The rest of the story</Link>
           </div>
         </section>
 

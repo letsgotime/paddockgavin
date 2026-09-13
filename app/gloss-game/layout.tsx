@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "The Gloss Game™ · Gavin Brooks | PaddockGavin",
+  title: "The Gloss Game™ · Gavin Brooks",
   description:
-    "The Gloss Game by Gavin Brooks. Twelve chapters on car care, built on a driveway in Escondido in 1993 and fifty-five thousand dollars of finding out what wasn't needed. Paperback and Kindle on Amazon.",
+    "The Gloss Game by Gavin Brooks. Twelve chapters on car care, built on a driveway in Escondido in 1993 and fifty-five thousand dollars of finding out what wasn't needed. Paperback and Kindle on Amazon, plus the free Juice Box product index.",
   openGraph: {
     type: "book",
     title: "The Gloss Game™, this isn't detailing, it's discipline on display",

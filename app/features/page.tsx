@@ -59,9 +59,13 @@ export default function FeaturesIndex() {
             The Paddock Files
           </h1>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            The cars that come through, looked at properly: what the engineering actually does, the
-            real numbers behind the spec sheet, and the one or two details a listing photo never
-            shows. Not every car I see gets one. Only the ones worth this much attention do.
+            Longer write-ups on cars that came through the lot: what the engineering does, the
+            numbers behind the spec sheet, and the details a listing photo misses.
+          </p>
+          <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
+            None of these cars were mine. The ones I&rsquo;ve owned are in{" "}
+            <Link href="/cars" style={{ color: "#F2C94C" }}>the Garage</Link>. I write one up when
+            there&rsquo;s enough to say about a car to fill a page.
           </p>
         </section>
 

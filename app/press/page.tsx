@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { STATS } from "@/lib/site-data"
 
 export const metadata: Metadata = {
   title: "Press",
@@ -18,7 +19,7 @@ const masthead = [
 
 const audience = [
   { metric: "Instagram followers", figure: "~8,100", source: "@itspaddockgavin, verifiable in-app" },
-  { metric: "Views, trailing 30 days", figure: "~1,000,000", source: "Instagram Insights" },
+  { metric: "Views, trailing 30 days", figure: STATS.monthlyViews, source: "Instagram Insights" },
   { metric: "Publishing cadence", figure: "Multiple times weekly", source: "Post history" },
   { metric: "Primary audience", figure: "Enthusiasts, owners, collectors, trade", source: "Instagram Insights" },
   { metric: "Editorial archive", figure: "paddockgavin.com", source: "Dated, public, permanent" },

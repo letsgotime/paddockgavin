@@ -3,7 +3,8 @@ import { NextResponse } from "next/server"
 // Email destination is held server-side, never rendered client-side
 const TO = "paddock20auto@gmail.com"
 
-type InquiryKind = "ask-me" | "book-the-floor" | "creator-day-rsvp" | "intake" | "work"
+/* The kinds the site's forms actually send: /book sends its card key, /events sends venue-offer. */
+type InquiryKind = "ask-me" | "intake" | "venue-offer" | "private" | "sales" | "carcare" | "other"
 
 interface InquiryBody {
   kind: InquiryKind
@@ -24,10 +25,12 @@ interface InquiryBody {
 
 const SUBJECTS: Record<InquiryKind, string> = {
   "ask-me": "PaddockGavin · Ask Me",
-  "book-the-floor": "PaddockGavin · Book the Floor",
-  "creator-day-rsvp": "PaddockGavin · Creator Day RSVP",
   intake: "PaddockGavin · Car Intake",
-  work: "PaddockGavin · Work With Us",
+  "venue-offer": "PaddockGavin Events · Venue offer",
+  private: "PaddockGavin Events · Private event",
+  sales: "PaddockGavin · Buy, sell or trade",
+  carcare: "PaddockGavin · The Gloss Game",
+  other: "PaddockGavin · Something different",
 }
 
 function buildHtml(body: InquiryBody): string {

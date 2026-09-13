@@ -20,10 +20,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const p = bySlug(slug)
-  if (!p) return { title: "Not found · PaddockGavin" }
+  if (!p) return { title: "Not found" }
   const url = `https://paddockgavin.com/shop/${p.slug}`
   return {
-    title: `${p.name} · The Shop · PaddockGavin`,
+    title: `${p.name} · The Shop`,
     description: p.blurb,
     alternates: { canonical: url },
     openGraph: { title: p.name, description: p.blurb, url, siteName: "PaddockGavin", type: "website" },

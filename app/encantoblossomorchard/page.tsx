@@ -4,11 +4,12 @@ import Link from "next/link"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { PageBackdrop } from "@/components/page-backdrop"
+import { PGEEyebrow } from "@/components/pge-brand"
 
 export const metadata: Metadata = {
   title: "Encanto Blossom Orchard",
   description:
-    "An orchard in Shelbyville, Tennessee we are walking for a future field. In scoping. Nothing booked yet.",
+    "An orchard in Shelbyville, Tennessee that PaddockGavin Events is walking as a possible venue. Nothing is booked yet.",
 }
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
@@ -25,18 +26,14 @@ export default function EncantoPage() {
           <Image src="/images/carrera-traffic.webp" alt="Orchard country outside Shelbyville, Tennessee" fill style={{ objectFit: "cover" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.95) 10%,rgba(10,21,35,.45) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 14, maxWidth: 720 }}>
-            <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: "#00D2BE", padding: "6px 15px", alignSelf: "flex-start" }}>
-              <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>
-                In scoping &middot; Shelbyville, TN
-              </span>
-            </span>
+            <PGEEyebrow>PaddockGavin Events &middot; Shelbyville, TN</PGEEyebrow>
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Encanto Blossom
               <br />
-              <span style={{ color: "#F2C94C" }}>Orchard</span>
+              <span style={{ color: "#00D2BE" }}>Orchard</span>
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(16px,1.6vw,18px)", lineHeight: 1.56, color: "#E4E9F0", maxWidth: "54ch" }}>
-              An orchard we are walking for a future field. In scoping. Nothing booked yet.
+              An orchard we are walking as a possible venue for a future event. Nothing is booked yet, and dates will post here first.
             </p>
           </div>
         </section>
