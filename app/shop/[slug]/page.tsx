@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import { ShopBuy } from "@/components/shop-buy"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
-import { PRODUCTS, BRANDS, bySlug, priceRange, buyable } from "@/lib/shop/catalogue"
+import { PRODUCTS, BRANDS, bySlug, priceRange, buyable, SHOP_MISSION } from "@/lib/shop/catalogue"
 
 const ARCHIVO = "Archivo, 'Helvetica Neue', Helvetica, Arial, sans-serif"
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
@@ -22,11 +22,15 @@ export async function generateMetadata({
   const p = bySlug(slug)
   if (!p) return { title: "Not found · PaddockGavin" }
   const url = `https://paddockgavin.com/shop/${p.slug}`
+  /* The shop carries both marks, so the page names the one the product
+     actually wears. A Rancho Jaramillo tee titled "PaddockGavin" is the same
+     mixed signal as a ranch email in PaddockGavin gold. */
+  const house = BRANDS[p.brand].name
   return {
-    title: `${p.name} · The Shop · PaddockGavin`,
+    title: `${p.name} · ${house}`,
     description: p.blurb,
     alternates: { canonical: url },
-    openGraph: { title: p.name, description: p.blurb, url, siteName: "PaddockGavin", type: "website" },
+    openGraph: { title: p.name, description: p.blurb, url, siteName: house, type: "website" },
   }
 }
 
@@ -38,8 +42,36 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const price = priceRange(p)
   const live = p.variants.some(buyable)
 
+  /* Product structured data.
+   *
+   * Without this a product page is a blue link: no price, no availability, no
+   * eligibility for a shopping result. The offer is only claimed when a real
+   * price exists, because advertising an offer with no amount is the kind of
+   * markup that gets a whole domain demoted. */
+  const cents = p.variants.map((v) => v.cents).filter((c): c is number => typeof c === "number" && c > 0)
+  const jsonLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: p.blurb,
+    brand: { "@type": "Brand", name: b.name },
+    url: `https://paddockgavin.com/shop/${p.slug}`,
+  }
+  if (cents.length) {
+    jsonLd.offers = {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: (Math.min(...cents) / 100).toFixed(2),
+      highPrice: (Math.max(...cents) / 100).toFixed(2),
+      offerCount: cents.length,
+      availability: "https://schema.org/InStock",
+      url: `https://paddockgavin.com/shop/${p.slug}`,
+    }
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteNav />
       <main style={{ background: "#0A1523", minHeight: "100vh", paddingTop: 96 }}>
         <section style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px)" }}>
@@ -156,6 +188,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                     two weeks. Ordering by the last week of September puts it on the field with you.
                   </p>
                 )}
+                <p style={{ margin: "16px 0 0", paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.12)", font: `400 13.5px/1.6 ${ARCHIVO}`, color: "#9FAAB8" }}>
+                  {SHOP_MISSION}
+                </p>
               </div>
             </div>
           </div>

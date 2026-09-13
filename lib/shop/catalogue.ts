@@ -67,15 +67,27 @@ export const BRANDS: Record<Brand, { name: string; ink: string; paper: string; a
   pg: { name: "PaddockGavin", ink: "#0A1523", paper: "#0E1A2A", accent: "#F2C94C" },
 }
 
+/**
+ * What the shop is for, in one line, shown on every product page.
+ *
+ * Kept here rather than written into each product because it is one claim
+ * about the business, not eight claims about eight garments, and because the
+ * beneficiary is deliberately not permanent. "Right now" is load bearing:
+ * Gavin said the focus may move, and copy that hard-codes children would be a
+ * promise nobody agreed to make.
+ */
+export const SHOP_MISSION =
+  "25% of net profit fills a semi truck with food. Right now that truck goes to kids. The beef on the field is raised on this ranch, and the aim is the same either way: get everybody Eatin' Good."
+
 export const PRODUCTS: Product[] = [
   {
     slug: "ranch-gate-tee",
     name: "The Gate Tee",
     kind: "Tee",
     brand: "ranch",
-    blurb: "The Rancho Jaramillo gate, printed the size it deserves.",
+    blurb: "A western graphic tee built around the Rancho Jaramillo gate, printed full width across the back.",
     body: [
-      "The gate is the first thing anyone sees of this place: two cedar posts, a hanging sign, and a track running off toward the field. It is on the back, full width, in one colour.",
+      "The gate is the first thing anyone sees of this place. Two cedar posts, a hanging sign, and a track running off toward the field. It goes on the back, full width, in one colour.",
       "Heavyweight cotton, cut straight rather than fitted, because a car show in October is not the day to be wearing something clingy.",
     ],
     backdrop: "/images/ranch/ppr-gate.webp",
@@ -90,10 +102,10 @@ export const PRODUCTS: Product[] = [
     name: "October Tenth Tee",
     kind: "Tee",
     brand: "ranch",
-    blurb: "The date, the place, and nothing else.",
+    blurb: "The date, the place, and nothing else. A car show t shirt for the people who were there.",
     body: [
       "Saturday 10 October 2026, Rancho Jaramillo, Unionville Tennessee. Set in the ranch's own type, small on the chest, nothing on the back.",
-      "The kind of shirt that means something to the people who were there and nothing to anybody else, which is the point.",
+      "It means something to the people who stood in that field and nothing to anybody else.",
     ],
     backdrop: "/images/ranch/ppr-light.webp",
     madeToOrder: true,
@@ -107,10 +119,10 @@ export const PRODUCTS: Product[] = [
     name: "The Ranch Cap",
     kind: "Hat",
     brand: "ranch",
-    blurb: "Six panel, curved brim, the mark stitched small.",
+    blurb: "Unstructured six panel with a curved brim and the Rancho Jaramillo mark stitched small.",
     body: [
-      "Unstructured six panel with a curved brim and a brass slider, so it packs flat and does not sit on your head like a billboard.",
-      "The Rancho Jaramillo mark is embroidered small on the front, in one colour. Nothing on the side, nothing on the back.",
+      "Six panels, a curved brim and a brass slider at the back, so it packs flat instead of sitting on your head like a billboard.",
+      "The mark is embroidered small on the front in one colour. Nothing on the side, nothing on the back.",
     ],
     backdrop: "/images/ranch/g-barn.webp",
     madeToOrder: true,
@@ -122,10 +134,10 @@ export const PRODUCTS: Product[] = [
     name: "PaddockGavin Trucker",
     kind: "Hat",
     brand: "pg",
-    blurb: "Mesh back, foam front, the PG monogram.",
+    blurb: "Foam front, mesh back, the PaddockGavin monogram. Made for a field in the sun.",
     body: [
-      "A proper trucker: foam front, mesh back, snap closure. Made for a field in the sun rather than for a shelf.",
-      "PG monogram on the front panel in amber on navy.",
+      "A proper trucker. Foam front, mesh back, snap closure, built for standing in a pasture rather than sitting on a shelf.",
+      "This one carries PaddockGavin's own monogram rather than the ranch mark, because PaddockGavin is who puts the day on.",
     ],
     backdrop: "/images/ranch/g-drive.webp",
     madeToOrder: true,
@@ -136,7 +148,7 @@ export const PRODUCTS: Product[] = [
     name: "The Ranch Mug",
     kind: "Mug",
     brand: "ranch",
-    blurb: "Fifteen ounces, because twelve is not a cup of coffee.",
+    blurb: "Fifteen ounces of ceramic, because twelve is not a cup of coffee.",
     body: [
       "Ceramic, fifteen ounces, dishwasher and microwave safe. The mark on one side and the date on the other.",
       "Sized for the morning of a build day rather than for a desk.",
@@ -150,9 +162,9 @@ export const PRODUCTS: Product[] = [
     name: "The Field Parasol",
     kind: "Other",
     brand: "ranch",
-    blurb: "Shade you can carry, for a field with none of its own.",
+    blurb: "Shade you can carry, for a pasture that has none of its own.",
     body: [
-      "Open pasture has no trees in it. That is what makes it a good field for three hundred cars and a bad one for standing in from nine until three, and it is the single most common thing people wish they had brought.",
+      "Open pasture has no trees in it. That is what makes it a good field for three hundred collector cars and a bad one for standing in from nine until three, and it is the thing people most wish they had brought.",
       "Wooden handle, wide enough to cover two people leaning on the same fence rail. It is not a golf umbrella and it is not for rain.",
     ],
     variants: [
@@ -165,10 +177,10 @@ export const PRODUCTS: Product[] = [
     name: "The Ranch Bottle",
     kind: "Other",
     brand: "ranch",
-    blurb: "Insulated steel, filled at the gate, still cold at three.",
+    blurb: "Vacuum walled steel. Filled at the gate, still cold at three.",
     body: [
-      "Six hours on grass in the sun, and the nearest tap is wherever we put it. An insulated bottle solves that better than anything else you can carry, and it is the other thing people ask for.",
-      "Vacuum walled steel, so what you put in it in the morning is the temperature it was in the morning. It fits a car door bin, which the mug does not.",
+      "Six hours on grass in the sun, and the nearest tap is wherever we put it. Vacuum walled steel keeps what you poured in at the temperature you poured it.",
+      "It fits a car door bin, which the mug does not.",
     ],
     variants: [
       { label: "One size", cents: 2499 },
@@ -180,9 +192,9 @@ export const PRODUCTS: Product[] = [
     name: "Field Backpack",
     kind: "Backpack",
     brand: "ranch",
-    blurb: "For a camera, a jacket, and whatever the field hands you.",
+    blurb: "Roll top, padded sleeve, water resistant base, for a camera, a jacket and whatever the field hands you.",
     body: [
-      "Roll top, padded laptop sleeve, water resistant base for setting down on grass. The mark is on the front panel, small.",
+      "Roll top closure, a padded laptop sleeve and a water resistant base for setting down on grass. The mark sits small on the front panel.",
       "Built for a day where you are carrying a camera in the morning and a coat by the afternoon.",
     ],
     backdrop: "/images/ranch/g-bales.webp",

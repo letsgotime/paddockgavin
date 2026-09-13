@@ -6,13 +6,13 @@ import { PRODUCTS, BRANDS, priceRange, anyBuyable } from "@/lib/shop/catalogue"
 import { PageBackdrop } from "@/components/page-backdrop"
 
 export const metadata: Metadata = {
-  title: "The Shop · PaddockGavin",
+  title: "The Shop · Rancho Jaramillo and PaddockGavin",
   description:
     "Tees, caps, mugs and bags under the Rancho Jaramillo and PaddockGavin marks. Made to order. Nothing here has a payment link yet.",
   alternates: { canonical: "https://paddockgavin.com/shop" },
   openGraph: {
-    title: "The Shop · PaddockGavin",
-    description: "Tees, caps, mugs and bags under the Rancho Jaramillo and PaddockGavin marks.",
+    title: "The Shop · Rancho Jaramillo and PaddockGavin",
+    description: "Western graphic tees, caps, mugs and bags under the Rancho Jaramillo and PaddockGavin marks. 25% of net profit fills a semi truck with food.",
     url: "https://paddockgavin.com/shop",
     siteName: "PaddockGavin",
     type: "website",
