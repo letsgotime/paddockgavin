@@ -37,7 +37,7 @@ const TOLERANCE_SECONDS = 300
 const RANCH = "https://pistonpoweredranch.com"
 const NOREPLY = "The Piston Powered Ranch <noreply@pistonpoweredranch.com>"
 
-type Ledger = "vendor_setup" | "sponsorship" | "revenue_share" | "vip" | "other"
+type Ledger = "vendor_setup" | "sponsorship" | "revenue_share" | "vip" | "merch" | "event_day" | "other"
 
 function verify(raw: string, header: string | null, secret: string): boolean {
   if (!header) return false
@@ -63,10 +63,38 @@ function verify(raw: string, header: string | null, secret: string): boolean {
   return crypto.timingSafeEqual(a, b)
 }
 
+
+/**
+ * One row per payment, and only one.
+ *
+ * `stripe_object` is unique, so a redelivered event writes nothing and reports
+ * false. Returns whether this call was the one that booked it, which is what
+ * gates receipts: a retry must not send a second one.
+ */
+async function bookPayment(
+  db: NonNullable<ReturnType<typeof crm>>,
+  eventId: string | null,
+  kind: Ledger,
+  stripeObject: string,
+  amountCents: number,
+  currency: string,
+  email: string | null,
+  livemode: boolean,
+): Promise<boolean> {
+  const ins = await db.query(
+    `insert into public.payments (event_id, kind, stripe_object, amount_cents, currency, status, payer_email, livemode)
+     values ($1, $2, $3, $4, $5, 'paid', $6, $7)
+     on conflict (stripe_object) do nothing
+     returning id`,
+    [eventId, kind, stripeObject, amountCents, currency, email, livemode],
+  )
+  return (ins.rowCount ?? 0) > 0
+}
+
 /** The ledger line, from what the session was told when it was made. */
 function ledgerOf(meta: Record<string, string>): Ledger {
   const l = meta.ledger
-  if (l === "vendor_setup" || l === "sponsorship" || l === "revenue_share" || l === "vip" || l === "other") return l
+  if (l === "vendor_setup" || l === "sponsorship" || l === "revenue_share" || l === "vip" || l === "merch" || l === "event_day" || l === "other") return l
   const k = meta.kind || ""
   if (k === "vendorBooth") return "vendor_setup"
   if (/bronze|silver|gold|platinum|title|sponsor/i.test(k)) return "sponsorship"
@@ -187,6 +215,48 @@ export async function POST(req: Request) {
   let meta = (obj.metadata as Record<string, string>) || {}
 
   switch (evt.type) {
+    /* Sold in person, on the day, off a Stripe reader.
+     *
+     * A reader makes a PaymentIntent; it never makes a Checkout Session, so
+     * without this case every sale at the gate on 10 October would sit in
+     * Stripe and never reach the ledger. The card_present test is what keeps
+     * that honest in the other direction too: an online sale raises this same
+     * event moments after its checkout.session.completed, and booking both
+     * would count every web order twice. Online is "card", a reader is
+     * "card_present", so only the reader gets through here.
+     */
+    case "payment_intent.succeeded": {
+      const types = (obj.payment_method_types as string[] | undefined) || []
+      const charges = ((obj.charges as { data?: { payment_method_details?: { type?: string } }[] } | undefined)?.data) || []
+      const inPerson = types.includes("card_present") || charges.some((c) => c.payment_method_details?.type === "card_present")
+      if (!inPerson) return NextResponse.json({ ok: true, skipped: "not_in_person" })
+
+      const id = String(obj.id || "")
+      const amount = Number(obj.amount_received ?? obj.amount ?? 0)
+      const currency = String(obj.currency || "usd").toLowerCase()
+      const email = (typeof obj.receipt_email === "string" && obj.receipt_email) || null
+      const livemode = obj.livemode === true
+      const db = crm()
+      if (!db) {
+        console.error("[stripe/webhook] CRM_DATABASE_URL is not set; asking Stripe to retry", { id })
+        return NextResponse.json({ error: "not_configured" }, { status: 503 })
+      }
+      if (!id) {
+        console.error("[stripe/webhook] in-person payment carried no id; nothing booked", { amount })
+        return NextResponse.json({ ok: true })
+      }
+      try {
+        const slug = meta.event_slug || meta.event || "pistonpoweredranch"
+        const ev = await db.query<{ id: string }>(`select id from public.events where slug = $1 limit 1`, [slug])
+        const booked = await bookPayment(db, ev.rows[0]?.id ?? null, "event_day", id, amount, currency, email, livemode)
+        console.log("[stripe/webhook] in person", { id, amount, currency, booked, livemode })
+      } catch (err) {
+        console.error("[stripe/webhook] could not book an in-person payment, asking Stripe to retry", err)
+        return NextResponse.json({ error: "ledger_write_failed" }, { status: 500 })
+      }
+      return NextResponse.json({ ok: true })
+    }
+
     case "checkout.session.completed":
     case "invoice.paid": {
       if (!meta.kind && typeof obj.payment_link === "string") meta = { ...(await linkMetadata(obj.payment_link)), ...meta }
@@ -263,6 +333,20 @@ export async function POST(req: Request) {
             : `PRINTFUL DID NOT TAKE THIS ORDER (${placed.reason}): ${placed.detail}\nThe customer has paid. Fulfil it by hand.`
         }
 
+        /* Book it as merch. The shop used to return here without writing a
+           row, so not one shirt ever appeared in the ledger: the money was in
+           Stripe and the books said the shop had sold nothing. */
+        const shopDb = crm()
+        if (shopDb && id) {
+          try {
+            const ev = await shopDb.query<{ id: string }>(`select id from public.events where slug = $1 limit 1`, ["pistonpoweredranch"])
+            await bookPayment(shopDb, ev.rows[0]?.id ?? null, "merch", id, amount, currency, email, livemode)
+          } catch (err) {
+            console.error("[stripe/webhook] could not book a shop order, asking Stripe to retry", err)
+            return NextResponse.json({ error: "ledger_write_failed" }, { status: 500 })
+          }
+        }
+
         await mail(
           {
             from: NOREPLY,
@@ -285,14 +369,7 @@ export async function POST(req: Request) {
         try {
           const ev = slug ? await db.query<{ id: string }>(`select id from public.events where slug = $1 limit 1`, [slug]) : { rows: [] }
           const eventId = ev.rows[0]?.id ?? null
-          const ins = await db.query(
-            `insert into public.payments (event_id, kind, stripe_object, amount_cents, currency, status, payer_email, livemode)
-             values ($1, $2, $3, $4, $5, 'paid', $6, $7)
-             on conflict (stripe_object) do nothing
-             returning id`,
-            [eventId, ledger, id, amount, currency, email, livemode],
-          )
-          booked = (ins.rowCount ?? 0) > 0
+          booked = await bookPayment(db, eventId, ledger, id, amount, currency, email, livemode)
           if (!eventId) console.error("[stripe/webhook] no events row for slug, booked without event_id", { slug, id })
         } catch (err) {
           /* Money has moved and the ledger did not take it. Answering 200 here
