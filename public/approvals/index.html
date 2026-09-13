@@ -105,9 +105,16 @@
         <label for="email" style="position:absolute;left:-9999px">Your email</label>
         <input id="email" type="email" autocomplete="email" inputmode="email"
                placeholder="the address you were invited on" />
-        <button type="submit">Email me a link</button>
+        <button type="submit">Send me a code</button>
+      </form>
+      <form id="codeForm" hidden>
+        <label for="code" style="position:absolute;left:-9999px">The six digit code</label>
+        <input id="code" type="text" inputmode="numeric" autocomplete="one-time-code"
+               pattern="[0-9]*" maxlength="6" placeholder="six digits" />
+        <button type="submit">Sign me in</button>
       </form>
       <p class="said" id="gateSaid"></p>
+      <p class="sent" id="gateAlt" hidden></p>
     </div>
   </section>
 
@@ -141,7 +148,7 @@
  *
  * Built for a phone first. Both people who need it most read their mail on one.
  */
-import { accessToken, lastTokenError, magicLink, me, db as makeDb, rpc } from "/vendor/ranch-db.js?v=2026-09-02f";
+import { accessToken, lastTokenError, magicLink, sendSignInCode, signInWithCode, me, db as makeDb, rpc } from "/vendor/ranch-db.js?v=2026-09-12a";
 
 const KINDS = [
   { key: "vehicle", label: "Cars" },
@@ -194,18 +201,60 @@ function showGate(why, hint, offerLink) {
   el("magic").hidden = !offerLink;
 }
 
+/**
+ * A code, not a link, as the first offer.
+ *
+ * See sendSignInCode in ranch-db.js for why. Short version: a link tapped in
+ * Mail on a phone can sign you in inside the mail app's own browser, which is
+ * not the one you go back to, and the failure is invisible because a session
+ * really did get created. A code is typed into the browser you are standing
+ * in, so it cannot land anywhere else. The link stays as a second option for
+ * anyone reading mail on the same machine they work on.
+ */
+let waitingOn = "";
+
 el("magic").addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = el("email").value.trim();
   if (!email) return;
   const b = el("magic").querySelector("button"), said = el("gateSaid");
   b.disabled = true; b.textContent = "Sending";
-  /* The callback is this page, so the link in the inbox opens the desk
-     already signed in rather than dropping somebody on HQ. */
-  const err = await magicLink(email, location.href);
-  b.disabled = false; b.textContent = "Email me a link";
+  const err = await sendSignInCode(email);
+  b.disabled = false; b.textContent = "Send me a code";
   said.className = "said " + (err ? "bad" : "ok");
-  said.textContent = err || "Sent. Open it on this phone and it lands right here.";
+  if (err) { said.textContent = err; return; }
+  waitingOn = email;
+  said.textContent = "Sent to " + email + ". Type the six digits below.";
+  el("codeForm").hidden = false;
+  el("code").focus();
+  const alt = el("gateAlt");
+  alt.hidden = false;
+  alt.innerHTML = 'Reading mail on this same machine? ' +
+    '<button type="button" class="link" id="useLink">Send a link instead</button>';
+});
+
+el("codeForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const b = el("codeForm").querySelector("button"), said = el("gateSaid");
+  b.disabled = true; b.textContent = "Checking";
+  const err = await signInWithCode(waitingOn, el("code").value);
+  b.disabled = false; b.textContent = "Sign me in";
+  if (err) { said.className = "said bad"; said.textContent = err; return; }
+  said.className = "said ok";
+  said.textContent = "In. Loading the list.";
+  /* The session is live in this browser now, so start the page over rather
+     than reasoning about which half of it already ran. */
+  location.reload();
+});
+
+document.addEventListener("click", async (e) => {
+  if (!e.target.closest("#useLink")) return;
+  const said = el("gateSaid");
+  said.className = "said";
+  said.textContent = "Sending a link";
+  const err = await magicLink(waitingOn, location.href);
+  said.className = "said " + (err ? "bad" : "ok");
+  said.textContent = err || "Link sent. Open it on this machine and it lands right here.";
 });
 
 /* ------------------------------------------------------------------ render */
@@ -336,7 +385,7 @@ async function load() {
 try {
   const token = await accessToken();
   if (!token) {
-    showGate("Sign in to decide", lastTokenError || "Send yourself a link and it opens this page.", true);
+    showGate("Sign in to decide", "Put your address in and we will send you a six digit code.", true);
   } else {
     try { db = makeDb(); } catch (err) { db = null; }
     const staff = (await rpc("is_staff")) === true;

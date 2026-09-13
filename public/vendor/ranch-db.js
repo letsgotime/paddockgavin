@@ -368,6 +368,59 @@ export async function verifyEmailCode(email, otp) {
   }
 }
 
+/**
+ * Six digits, typed into the browser you are already standing in.
+ *
+ * This is the most reliable door we have, and the reason is a phone. A magic
+ * link tapped inside Mail on an iPhone can open in the mail app's own web
+ * view: the session cookie is set there, in a browser the person never chose
+ * and will not go back to, and when they open Safari they are signed out
+ * again. The record of that looks exactly like a successful sign in, because
+ * a session really was created. It just was not created where they were
+ * standing. Bekah has two sessions to her name, both from an iPhone, both
+ * with zero seconds of activity after them.
+ *
+ * A code cannot do that. It is read in one place and typed in another, and
+ * the session lands in whichever browser did the typing, which is by
+ * definition the one in front of the person.
+ *
+ * `/sign-in/email-otp` creates the account if there is not one, marks the
+ * address confirmed either way, and opens a session. That matters here
+ * because `is_staff()` in Postgres requires a confirmed address, so somebody
+ * allowlisted but never signed up becomes staff on their first code.
+ */
+export async function sendSignInCode(email) {
+  const c = authClient();
+  if (!c) return "No connection to the sign in service.";
+  try {
+    const { error } = await c.emailOtp.sendVerificationOtp({ email, type: "sign-in" });
+    if (error) return error.message || "We could not send the code.";
+    return null;
+  } catch (e) {
+    return "We could not reach the sign in service. Check your connection.";
+  }
+}
+
+/** The other half: the code back, and a session if it is right. */
+export async function signInWithCode(email, code) {
+  const c = authClient();
+  if (!c) return "No connection to the sign in service.";
+  const otp = String(code || "").replace(/\D/g, "");
+  if (otp.length < 4) return "Type the six digits from the email.";
+  try {
+    const { error } = await c.signIn.emailOtp({ email, otp });
+    if (error) {
+      const said = error.code || error.message || "";
+      if (/TOO_MANY_ATTEMPTS/i.test(said)) return "Too many tries. Ask for a new code.";
+      if (/expired/i.test(said)) return "That code has expired. Ask for a new one.";
+      return "That code is not right. Check it and try again.";
+    }
+    return null;
+  } catch (e) {
+    return "We could not reach the sign in service. Check your connection.";
+  }
+}
+
 /** The way the onboarding email tells people to get in. */
 export async function magicLink(email, callbackURL) {
   const c = authClient();
