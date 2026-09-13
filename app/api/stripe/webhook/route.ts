@@ -299,9 +299,39 @@ export async function POST(req: Request) {
            Printful existed. The money is already taken by this point, so an
            order that cannot be placed has to reach a person, not a log. */
         let fulfilment = "Gavin packs and posts this one."
-        const product = bySlug(String(meta.slug || ""))
-        const pf = product?.printful
-        if (pf?.printFile) {
+
+        /* Every line in the basket, not just the first.
+           meta.cart is "slug:size:qty|slug:size:qty", written at checkout. A
+           single-item purchase has no cart key and falls back to the older
+           fields, so older sessions still in flight keep working. */
+        const packed = String(meta.cart || "")
+        const entries = packed
+          ? packed.split("|").map((seg) => {
+              const [slug, size, qty] = seg.split(":")
+              return { slug, size, qty: Number(qty) || 1 }
+            })
+          : [{ slug: String(meta.slug || ""), size: String(meta.variant || ""), qty: Number(meta.quantity || 1) }]
+
+        const printable = []
+        const byHand: string[] = []
+        for (const e of entries) {
+          const prod = bySlug(e.slug)
+          const map = prod?.printful
+          if (map?.printFile) {
+            printable.push({
+              garment: map.garment,
+              color: map.color,
+              size: e.size,
+              quantity: e.qty,
+              printFile: map.printFile,
+              name: prod?.name || e.slug,
+            })
+          } else if (prod) {
+            byHand.push(`${prod.name} (${e.size}) x${e.qty}`)
+          }
+        }
+
+        if (printable.length) {
           const placed = await placeOrder(
             id,
             {
@@ -315,22 +345,16 @@ export async function POST(req: Request) {
               email: email || undefined,
               phone: typeof details.phone === "string" ? details.phone : undefined,
             },
-            [
-              {
-                garment: pf.garment,
-                color: pf.color,
-                size: String(meta.variant || ""),
-                quantity: Number(meta.quantity || 1),
-                printFile: pf.printFile,
-                name: meta.covers || product?.name || "Item",
-              },
-            ],
+            printable,
           )
           fulfilment = placed.ok
             ? placed.status === "already_placed"
               ? "Printful already had this one. A webhook retry, nothing to do."
-              : `Printful order ${placed.orderId} created${placed.draft ? " as a DRAFT: confirm it in Printful before it prints." : " and confirmed."}`
+              : `Printful order ${placed.orderId} created for ${printable.length} line${printable.length === 1 ? "" : "s"}${placed.draft ? " as a DRAFT: confirm it in Printful before it prints." : " and confirmed."}`
             : `PRINTFUL DID NOT TAKE THIS ORDER (${placed.reason}): ${placed.detail}\nThe customer has paid. Fulfil it by hand.`
+        }
+        if (byHand.length) {
+          fulfilment += `\n\nNot dropshipped, pack these yourself:\n  ${byHand.join("\n  ")}`
         }
 
         /* Book it as merch. The shop used to return here without writing a

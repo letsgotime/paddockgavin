@@ -71,13 +71,18 @@ export const BRANDS: Record<Brand, { name: string; ink: string; paper: string; a
  * What the shop is for, in one line, shown on every product page.
  *
  * Kept here rather than written into each product because it is one claim
- * about the business, not eight claims about eight garments, and because the
- * beneficiary is deliberately not permanent. "Right now" is load bearing:
+ * about the business, not eight claims about eight garments.
+ *
+ * $2,500 is the unit. The event fills ten buckets on the day; the store fills
+ * more of them year round out of 25% of net profit. Two streams, one unit,
+ * which is why both figures can appear without contradicting each other.
+ *
+ * The beneficiary is deliberately not permanent. "Right now" is load bearing:
  * Gavin said the focus may move, and copy that hard-codes children would be a
  * promise nobody agreed to make.
  */
 export const SHOP_MISSION =
-  "25% of net profit fills a semi truck with food. Right now that truck goes to kids. The beef on the field is raised on this ranch, and the aim is the same either way: get everybody Eatin' Good."
+  "The day raises $25,000, ten donations of $2,500. The store runs all year, and 25% of net profit from every order fills more of those $2,500 buckets. It buys a semi truck of food, and right now that food goes to kids. Eatin' Good."
 
 export const PRODUCTS: Product[] = [
   {

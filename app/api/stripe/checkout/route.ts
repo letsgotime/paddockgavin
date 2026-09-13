@@ -41,6 +41,8 @@ interface Body {
   slug?: string
   variant?: string
   quantity?: number
+  /** A basket. Takes precedence over the single-item fields above. */
+  cart?: { slug?: string; variant?: string; quantity?: number }[]
   email?: string
   org?: string
   /** Free text, carried into metadata so the desk sees it with the payment. */
@@ -157,20 +159,46 @@ async function donate(req: Request, cents: number, b: Body, ev: { slug: string; 
  * address. Nothing here talks to a fulfilment service.
  */
 async function shopCheckout(req: Request, b: Body) {
-  const product = bySlug(String(b.slug || ""))
-  if (!product) return NextResponse.json({ error: "unknown_item", detail: "No such product." }, { status: 400 })
+  /* One item or a whole cart, normalised to the same shape.
+   *
+   * The single-item form is the older one and still works, because the
+   * product page posts it. A cart arrives as `cart`, and every line is
+   * checked before anything is charged: one bad line refuses the whole
+   * basket rather than quietly dropping it, because a buyer who paid for
+   * three things and received two has no way of knowing which two.
+   */
+  const raw = Array.isArray(b.cart) && b.cart.length
+    ? b.cart
+    : [{ slug: String(b.slug || ""), variant: String(b.variant || ""), quantity: b.quantity }]
 
-  const variant = variantOf(product, String(b.variant || ""))
-  if (!variant) return NextResponse.json({ error: "unknown_variant", detail: "No such size or option." }, { status: 400 })
-
-  if (!buyable(variant)) {
-    return NextResponse.json(
-      { error: "price_not_set", detail: `${product.name} does not have a price yet.` },
-      { status: 409 },
-    )
+  if (raw.length > 20) {
+    return NextResponse.json({ error: "cart_too_large", detail: "Twenty lines is the limit." }, { status: 400 })
   }
 
-  const qty = Number.isInteger(b.quantity) && b.quantity! > 0 ? Math.min(b.quantity!, 10) : 1
+  type Line = { slug: string; label: string; cents: number; qty: number; variant: string }
+  const lines: Line[] = []
+  for (const entry of raw) {
+    const product = bySlug(String(entry?.slug || ""))
+    if (!product) return NextResponse.json({ error: "unknown_item", detail: "No such product." }, { status: 400 })
+
+    const variant = variantOf(product, String(entry?.variant || ""))
+    if (!variant) return NextResponse.json({ error: "unknown_variant", detail: `No such size or option on ${product.name}.` }, { status: 400 })
+
+    if (!buyable(variant)) {
+      return NextResponse.json(
+        { error: "price_not_set", detail: `${product.name} does not have a price yet.` },
+        { status: 409 },
+      )
+    }
+    const qty = Number.isInteger(entry?.quantity) && (entry!.quantity as number) > 0 ? Math.min(entry!.quantity as number, 10) : 1
+    lines.push({
+      slug: product.slug,
+      label: product.variants.length > 1 ? `${product.name}, ${variant.label}` : product.name,
+      cents: variant.cents as number,
+      qty,
+      variant: variant.label,
+    })
+  }
 
   const key = process.env.STRIPE_SECRET_KEY
   if (!key) {
@@ -178,35 +206,39 @@ async function shopCheckout(req: Request, b: Body) {
   }
 
   const origin = new URL(req.url).origin
-  const label = product.variants.length > 1 ? `${product.name}, ${variant.label}` : product.name
+  const single = lines.length === 1 ? lines[0] : null
+
+  /* The cart, compactly, so the webhook can place one Printful order per
+     line. Stripe caps a metadata value at 500 characters, which this format
+     keeps well inside at twenty lines. */
+  const packed = lines.map((l) => `${l.slug}:${l.variant}:${l.qty}`).join("|")
 
   const payload = flatten({
     mode: "payment",
-    line_items: [
-      {
-        quantity: qty,
-        price_data: {
-          currency: "usd",
-          unit_amount: variant.cents as number,
-          product_data: { name: label },
-        },
+    line_items: lines.map((l) => ({
+      quantity: l.qty,
+      price_data: {
+        currency: "usd",
+        unit_amount: l.cents,
+        product_data: { name: l.label },
       },
-    ],
+    })),
     /* It is a physical thing and somebody has to post it. */
     shipping_address_collection: { allowed_countries: ["US"] },
     phone_number_collection: { enabled: true },
-    success_url: `${origin}/shop/${product.slug}?paid=1`,
-    cancel_url: `${origin}/shop/${product.slug}`,
+    success_url: single ? `${origin}/shop/${single.slug}?paid=1` : `${origin}/shop?paid=1`,
+    cancel_url: single ? `${origin}/shop/${single.slug}` : `${origin}/shop`,
     customer_email: b.email || undefined,
     metadata: {
       kind: "shop",
       ledger: "merch",
-      slug: product.slug,
-      variant: variant.label,
-      quantity: String(qty),
-      covers: label,
+      slug: single ? single.slug : "cart",
+      variant: single ? single.variant : "",
+      quantity: String(lines.reduce((n, l) => n + l.qty, 0)),
+      covers: single ? single.label : `${lines.length} items`,
+      cart: packed,
     },
-    payment_intent_data: { metadata: { kind: "shop", slug: product.slug, variant: variant.label } },
+    payment_intent_data: { metadata: { kind: "shop", slug: single ? single.slug : "cart", variant: single ? single.variant : "" } },
   })
 
   const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
