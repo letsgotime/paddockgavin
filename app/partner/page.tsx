@@ -3,17 +3,18 @@ import Link from "next/link"
 import Image from "next/image"
 import { PageBackdrop } from "@/components/page-backdrop"
 import { getFollowerCount, formatFollowers } from "@/lib/social"
+import { STATS } from "@/lib/site-data"
 
 export const metadata: Metadata = {
   title: "Brand Partnerships",
-  description: "Around a million views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.",
+  description: `Reach owners and collectors who drive the cars you make things for. Product features, coatings, event sponsorship and affiliate programs, with ${STATS.monthlyViews} views a month.`,
 }
 
-const STATS = [
-  { k: "~1,000,000", v: "Views / month" },
+const STAT_ROWS = [
+  { k: STATS.monthlyViews, v: "Views / month" },
   { k: "FOLLOWERS", v: "Instagram followers" },
   { k: "Owners &\ncollectors", v: "Primary audience" },
-  { k: "200+", v: "Events run" },
+  { k: STATS.eventsRun, v: "Events run" },
 ]
 
 const WORK = [
@@ -55,7 +56,7 @@ const rules = [
 
 export default async function PartnerPage() {
   const { followers } = await getFollowerCount()
-  const stats = STATS.map((s) => (s.k === "FOLLOWERS" ? { ...s, k: formatFollowers(followers) } : s))
+  const stats = STAT_ROWS.map((s) => (s.k === "FOLLOWERS" ? { ...s, k: formatFollowers(followers) } : s))
   return (
     <main
       style={{
@@ -83,7 +84,7 @@ export default async function PartnerPage() {
             <span style={{ color: "#F2C94C" }}>people who buy cars</span>
           </h1>
           <p style={{ margin: "0 0 36px", fontSize: 18, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 660 }}>
-            ~1,000,000 views a month, and an audience that owns the cars you make things for. Products, tools, coatings, events, affiliate programs.
+            The people watching are owners, collectors and enthusiasts who drive the cars your products are made for. Your brand gets shown on real cars and at real events, and every paid piece is labelled. The numbers are below.
           </p>
 
           {/* Stat row */}
@@ -163,7 +164,7 @@ export default async function PartnerPage() {
             What the work looks like
           </h2>
           <p style={{ margin: "0 0 22px", fontSize: 16, lineHeight: 1.6, color: "#C4CBD6", maxWidth: 560 }}>
-            Original photography and video only. No stock, no repost, no borrowed footage. Every frame below was shot on the job.
+            Everything is original photography and video, shot on the job. Nothing is stock, reposted or borrowed.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,45%),1fr))", gap: 8, marginBottom: 22 }}>
             {WORK.map((w) => (
@@ -212,7 +213,7 @@ export default async function PartnerPage() {
             }}
           >
             <p style={{ margin: "0 0 24px", fontSize: 15, lineHeight: 1.6, color: "#C4CBD6" }}>
-              The fastest way in is a DM. Include your brand name, what you make, and what kind of partnership you have in mind. Replies the same day.
+              The fastest way in is a DM. Include your brand name, what you make, and what kind of partnership you have in mind. I reply the same day.
             </p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               <a

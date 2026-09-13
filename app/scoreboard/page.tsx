@@ -35,7 +35,7 @@ const BUILDS = [
     name: "Paddock20",
     host: "paddock20.com",
     href: "https://paddock20.com",
-    what: "Software and marketing for businesses. The agency the night work runs through.",
+    what: "Software and marketing for businesses. The agency my builds run through.",
     status: "live" as const,
     datum: "Open",
     group: "live" as Group,
@@ -160,7 +160,7 @@ export default function ScoreboardPage() {
               style={{
                 display: "inline-block",
                 transform: "skewX(-12deg)",
-                background: "#00D2BE",
+                background: "#57C7F5",
                 padding: "6px 16px",
                 margin: "0 0 16px",
               }}
@@ -174,10 +174,10 @@ export default function ScoreboardPage() {
                   fontSize: 12.5,
                   letterSpacing: ".16em",
                   textTransform: "uppercase",
-                  color: "#00302B",
+                  color: "#0A1523",
                 }}
               >
-                Night shift
+                What I build
               </span>
             </span>
             <h1
@@ -191,8 +191,8 @@ export default function ScoreboardPage() {
                 color: "#FFFFFF",
               }}
             >
-              The board<br />
-              <span style={{ color: "#00D2BE" }}>after the gate shuts</span>
+              The things I build<br />
+              <span style={{ color: "#57C7F5" }}>and where each one stands</span>
             </h1>
             <p
               style={{
@@ -204,7 +204,7 @@ export default function ScoreboardPage() {
                 maxWidth: "58ch",
               }}
             >
-              Twenty-six years of technology moved to evenings. Everything here is mine, built on my own time. None of it runs on anyone else&rsquo;s hours.
+              Each row is something I built or started. The status shows whether it is shipping, live or retired, and the link takes you straight to it.
             </p>
           </div>
 
@@ -621,7 +621,7 @@ export default function ScoreboardPage() {
           </div>
         </section>
 
-        {/* Day shift CTA */}
+        {/* Events CTA */}
         <section
           className="pg-e1" style={{
             display: "flex",

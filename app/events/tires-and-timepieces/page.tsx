@@ -4,6 +4,7 @@ import Link from "next/link"
 import { PageBackdrop } from "@/components/page-backdrop"
 import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { PGE, PGEEyebrow } from "@/components/pge-brand"
 
 /* Sourced entirely from the GoTime Motorsports event summaries for editions 2
    and 3, supplied by Gavin on 2026-09-07. Nothing here is estimated.
@@ -46,7 +47,7 @@ const EDITIONS = [
     cars: "190+",
     value: "$59M+",
     reach: "20 cities across Arizona and California",
-    note: "Before the holidays. Three times the crowd of the spring edition.",
+    note: "It ran before the holidays, with three times the spring crowd.",
   },
 ]
 
@@ -80,18 +81,18 @@ const CREDITS = [
 export const metadata: Metadata = {
   title: "Tires & Timepieces",
   description:
-    "Two and a half hours on a Saturday morning in Scottsdale, Arizona: 190 of the rarest cars in the world in a jeweler’s car park, free to walk into. The record from two editions, and what was parked there.",
+    "An early morning of cars and watches in a Scottsdale jeweler’s car park. Gates open at half past seven, it’s done by ten, and anybody can walk in for free. The next one is Sunday 6 December 2026.",
   openGraph: {
     title: "Tires & Timepieces",
     description:
-      "190 cars, $59M on the tarmac, 1,500 people, and nobody paid to get in. The record from two editions in Scottsdale.",
+      "Cars and watches in a Scottsdale jeweler’s car park, early on a weekend morning, free to walk in. From PaddockGavin Events.",
     url: "https://paddockgavin.com/events/tires-and-timepieces",
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Tires and Timepieces" }],
   },
   twitter: { card: "summary_large_image", images: ["/opengraph-image"] },
 }
 
-function Eyebrow({ children, tone = "#F2C94C" }: { children: React.ReactNode; tone?: string }) {
+function Eyebrow({ children, tone = PGE.teal }: { children: React.ReactNode; tone?: string }) {
   return (
     <p style={{ margin: 0, display: "flex", alignItems: "center", gap: 10, fontFamily: MONO, fontSize: "var(--t-eyebrow)", letterSpacing: ".2em", textTransform: "uppercase", color: "#B4B6B2" }}>
       <i aria-hidden="true" style={{ width: 22, height: 2, background: tone, flex: "0 0 auto" }} />
@@ -108,69 +109,71 @@ export default function TiresAndTimepiecesPage() {
 
       <main style={{ position: "relative", zIndex: 1, minWidth: 0, maxWidth: 1080, margin: "0 auto", padding: "clamp(16px,3vw,28px) clamp(12px,4vw,40px) clamp(60px,8vw,110px)", display: "flex", flexDirection: "column", gap: "clamp(44px,6vw,84px)" }}>
 
-        {/* Hero */}
+        {/* Hero: the morning, not the money */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(16px,2.4vw,26px)" }}>
-          <Eyebrow>Scottsdale, Arizona</Eyebrow>
+          <PGEEyebrow>PaddockGavin Events &middot; Scottsdale</PGEEyebrow>
           <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.02, letterSpacing: "-.026em", color: "#FFFFFF", textWrap: "balance" }}>
             Tires &amp; Timepieces
           </h1>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            A jeweler in Scottsdale sells Patek Philippe and Rolex. Twice we filled their car park
-            with the rarest cars we could get hold of, opened the gate at half past seven on a
-            Saturday morning, and let anybody walk in. By ten it was over and the street was empty
-            again. The second time, a hundred and ninety cars turned up and fifteen hundred people
-            came to stand next to them.
+            A jeweler in Scottsdale that sells Patek Philippe and Rolex lent us its car park for a
+            morning, twice. We filled it with cars, opened the gates at half past seven, and anybody
+            could walk in. By ten it was over and the street was empty again.
           </p>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            Nobody paid to get in. Every ticket was free, and they went in thirty hours.
+            Every ticket has been free.{" "}
+            {NEXT ? (
+              <>
+                The next one is <a href="#next" className="pg-textlink">{NEXT.date}</a>.
+              </>
+            ) : null}
           </p>
 
-          <div className="pg-e2" style={{ position: "relative", aspectRatio: "16 / 11", overflow: "hidden", clipPath: NOTCH, marginTop: 6 }}>
-            <Image src="/images/tt/tt-enzo.webp" alt="A Giallo Yellow Ferrari Enzo with both doors up, parked on the street at Tires and Timepieces" fill sizes="(max-width: 900px) 100vw, 1080px" style={{ objectFit: "cover", objectPosition: "center 55%" }} priority />
+          <div className="pg-e2" style={{ position: "relative", aspectRatio: "2 / 1", overflow: "hidden", clipPath: NOTCH, marginTop: 6 }}>
+            <Image src="/images/tt/tt-aerial.webp" alt="Looking down on the event: cars parked along both sides of the street and people walking between them" fill sizes="(max-width: 900px) 100vw, 1080px" style={{ objectFit: "cover" }} priority />
           </div>
           <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#848482" }}>
-            Ferrari Enzo. One of 399 built, and one of seven finished in this yellow.
+            The October 2023 edition, from above.
           </p>
         </section>
 
         {/* What the morning was */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,22px)" }}>
-          <Eyebrow tone="#00D2BE">Two and a half hours</Eyebrow>
+          <Eyebrow>Two and a half hours</Eyebrow>
           <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF", textWrap: "balance" }}>
-            What the morning actually was
+            What you get when you walk in
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 14, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.62, color: "#C4CBD6", maxWidth: "62ch" }}>
             <p style={{ margin: 0 }}>
-              Coffee at the gate from Blue House and donuts from Pearl&rsquo;s, both hot, both free.
-              A DJ set up under the awning. Somewhere down the row you could get a massage, or a
-              B-12 shot, or try on a pair of shoes worth more than most people&rsquo;s watches.
+              Free coffee from Blue House and hot donuts from Pearl&rsquo;s at the gate. A DJ under
+              the awning. Further down the row you could get a massage or a B-12 shot, or try on
+              sneakers.
             </p>
             <p style={{ margin: 0 }}>
-              The point of it was never the shopping. It was that a person who had only ever seen an
-              F40 on a screen could stand a foot away from one on a Saturday morning, for nothing,
-              and ask the owner what it is like to drive. Most of the owners were standing right
-              there, and most of them wanted to tell you.
+              The shopping was never the point. If you had only seen an F40 on a screen, you could
+              stand a foot away from one and ask the owner what it&rsquo;s like to drive. Most of
+              the owners were right there, and happy to tell you.
             </p>
           </div>
         </section>
 
         {/* The record */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(16px,2.2vw,26px)" }}>
-          <Eyebrow>The record</Eyebrow>
+          <Eyebrow>So far</Eyebrow>
           <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF" }}>
-            Two editions, counted
+            Two editions
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: "clamp(12px,1.6vw,18px)" }}>
             {EDITIONS.map((e) => (
               <div key={e.n} className="pg-e1" style={{ display: "flex", flexDirection: "column", gap: 12, padding: "clamp(18px,2.4vw,26px)", clipPath: NOTCH }}>
-                <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".18em", textTransform: "uppercase", color: "#F2C94C" }}>
+                <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".18em", textTransform: "uppercase", color: PGE.teal }}>
                   Edition {e.n}
                 </p>
                 <p style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h3)", lineHeight: 1.16, letterSpacing: "-.018em", color: "#FFFFFF" }}>
                   {e.date}
                 </p>
                 <dl style={{ margin: 0, display: "grid", gridTemplateColumns: "1fr auto", gap: "9px 16px", fontFamily: ARCHIVO, fontSize: 15.5, color: "#C4CBD6" }}>
-                  {[["People through", e.people], ["Cars on display", e.cars], ["Value on the tarmac", e.value]].map(([k, v]) => (
+                  {[["People through", e.people], ["Cars on display", e.cars]].map(([k, v]) => (
                     <div key={k} style={{ display: "contents" }}>
                       <dt style={{ margin: 0, color: "#9AA4B2" }}>{k}</dt>
                       <dd style={{ margin: 0, fontVariantNumeric: "tabular-nums", fontWeight: 700, color: "#EDF1F6" }}>{v}</dd>
@@ -178,29 +181,56 @@ export default function TiresAndTimepiecesPage() {
                   ))}
                 </dl>
                 <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 15, lineHeight: 1.55, color: "#9AA4B2" }}>
-                  They came from {e.reach}. {e.note}
+                  People came from {e.reach}. {e.note}
                 </p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* The cars */}
+        {/* Next */}
+        <section id="next" style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,22px)", scrollMarginTop: 120 }}>
+          <Eyebrow>The next one</Eyebrow>
+          <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF" }}>
+            {NEXT ? "It’s on the calendar" : "It’s coming back"}
+          </h2>
+          <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
+            {NEXT
+              ? `The next Tires and Timepieces is ${NEXT.date}, in ${NEXT.place}. It’s a Sunday this time, not a Saturday. Gates open at half past seven, it’s done by ten, and spectating is still free.`
+              : "The next date is being set, and it posts here first. Spectating stays free. If you want to know when, or you have a car for the field below, message me."}
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 18px", alignItems: "center" }}>
+            <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" className="pg-tap" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>
+              Tell me you want in
+            </a>
+            <Link href="/events" className="pg-textlink">Every event</Link>
+            <Link href="/partner" className="pg-textlink">Sponsor one</Link>
+          </div>
+        </section>
+
+        {/* The field: the register, kept as proof, below the fold */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(16px,2.2vw,26px)" }}>
           <Eyebrow tone="#4BA3DE">The display register</Eyebrow>
           <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF", textWrap: "balance" }}>
-            What was parked there
+            The field
           </h2>
           <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            Not a list of what turned up. A list of what we went and found, because a car park full
-            of good cars and a car park with a One-77 in it are two different mornings.
+            These are some of the cars from the register for both editions, with build numbers as
+            recorded. The register valued the spring field at more than $45 million and the October
+            field at more than $59 million.
+          </p>
+          <div className="pg-e2" style={{ position: "relative", aspectRatio: "16 / 11", overflow: "hidden", clipPath: NOTCH }}>
+            <Image src="/images/tt/tt-enzo.webp" alt="A Giallo Yellow Ferrari Enzo with both doors up, parked on the street at Tires and Timepieces" fill sizes="(max-width: 900px) 100vw, 1080px" style={{ objectFit: "cover", objectPosition: "center 55%" }} />
+          </div>
+          <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#848482" }}>
+            Ferrari Enzo. One of 399 built, and one of seven finished in this yellow.
           </p>
           <div className="pg-e1" style={{ clipPath: NOTCH, padding: "clamp(6px,1vw,10px) clamp(14px,2vw,22px)" }}>
             <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
               {CARS.map((c, i) => (
                 <li key={c.car} style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: "2px 14px", padding: "14px 0", borderTop: i === 0 ? "none" : "1px solid rgba(255,255,255,.09)" }}>
                   <span style={{ fontFamily: ARCHIVO, fontWeight: 700, fontSize: 16.5, color: "#EDF1F6", flex: "1 1 auto", minWidth: 0 }}>{c.car}</span>
-                  <span style={{ fontFamily: MONO, fontSize: 14, fontVariantNumeric: "tabular-nums", color: "#F2C94C", flex: "0 0 auto" }}>{c.price}</span>
+                  <span style={{ fontFamily: MONO, fontSize: 14, fontVariantNumeric: "tabular-nums", color: "#B4B6B2", flex: "0 0 auto" }}>{c.price}</span>
                   <span style={{ fontFamily: ARCHIVO, fontSize: 14.5, lineHeight: 1.5, color: "#9AA4B2", flex: "1 0 100%" }}>{c.note}</span>
                 </li>
               ))}
@@ -219,41 +249,11 @@ export default function TiresAndTimepiecesPage() {
           </div>
         </section>
 
-        {/* Scale */}
-        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,20px)" }}>
-          <div className="pg-e1" style={{ position: "relative", aspectRatio: "2 / 1", overflow: "hidden", clipPath: NOTCH }}>
-            <Image src="/images/tt/tt-aerial.webp" alt="Looking down on the event: cars parked along both sides of the street and people walking between them" fill sizes="(max-width: 900px) 100vw, 1080px" style={{ objectFit: "cover" }} />
-          </div>
-          <p style={{ margin: 0, fontFamily: MONO, fontSize: "var(--t-small)", letterSpacing: ".04em", color: "#848482" }}>
-            The October edition, from above. Two hours later there was nothing there at all.
-          </p>
-        </section>
-
-        {/* Next */}
-        <section style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,22px)" }}>
-          <Eyebrow>The next one</Eyebrow>
-          <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF" }}>
-            {NEXT ? "It is on the calendar" : "It is coming back"}
-          </h2>
-          <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "var(--t-lead)", lineHeight: 1.6, color: "#C4CBD6", maxWidth: "62ch" }}>
-            {NEXT
-              ? `The next Tires and Timepieces is ${NEXT.date}, at ${NEXT.place}. A Sunday this time, not the Saturday the first two ran on. Doors at half past seven, done by ten, and spectating is free the way it has always been.`
-              : "The date for the next one is being set. It posts here first, and spectating stays free the way it always was. If you want to know when, or you have a car that belongs in the register above, the fastest way is to message me."}
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 18px", alignItems: "center" }}>
-            <a href="https://ig.me/m/itspaddockgavin" target="_blank" rel="noopener noreferrer" className="pg-tap" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 14, letterSpacing: ".07em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 28px", clipPath: NOTCH, textDecoration: "none" }}>
-              Tell me you want in
-            </a>
-            <Link href="/events" className="pg-textlink">Every event</Link>
-            <Link href="/partner" className="pg-textlink">Sponsor one</Link>
-          </div>
-        </section>
-
         {/* Credits */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(14px,2vw,22px)" }}>
-          <Eyebrow tone="#B4B6B2">Who made it</Eyebrow>
+          <Eyebrow tone="#B4B6B2">Credits</Eyebrow>
           <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.022em", color: "#FFFFFF" }}>
-            None of it was one person
+            Who made it happen
           </h2>
           <dl style={{ margin: 0, display: "flex", flexDirection: "column", gap: 16 }}>
             {CREDITS.map((c) => (

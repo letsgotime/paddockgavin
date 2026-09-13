@@ -3,30 +3,22 @@ import type { MetadataRoute } from "next"
 const BASE = "https://paddockgavin.com"
 
 const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
-  // Core
   { url: "/",                        priority: 1.0,  changeFrequency: "weekly"  },
-  { url: "/why-a-paddock",           priority: 0.8,  changeFrequency: "yearly"  },
   { url: "/connect",                 priority: 0.7,  changeFrequency: "monthly" },
-  { url: "/book",                    priority: 0.7,  changeFrequency: "monthly" },
-  { url: "/intake",                  priority: 0.9,  changeFrequency: "monthly" },
-  { url: "/sell-my-exotic-car",      priority: 0.95, changeFrequency: "monthly" },
-  { url: "/exotic-car-broker",       priority: 0.95, changeFrequency: "monthly" },
-  { url: "/exotic-car-consignment",  priority: 0.9,  changeFrequency: "monthly" },
-  { url: "/track-days",              priority: 0.9,  changeFrequency: "monthly" },
-  { url: "/events/tires-and-timepieces", priority: 0.8, changeFrequency: "monthly" },
-  { url: "/features",                priority: 0.75, changeFrequency: "monthly" },
-  { url: "/features/812-competizione", priority: 0.7,  changeFrequency: "yearly"  },
-  { url: "/features/singer-964",       priority: 0.7,  changeFrequency: "yearly"  },
-  // Cars
+  // Automotive
   { url: "/cars",                    priority: 0.9,  changeFrequency: "monthly" },
   { url: "/cars/r8",                 priority: 0.85, changeFrequency: "monthly" },
   { url: "/cars/e92",                priority: 0.85, changeFrequency: "monthly" },
-  // Day shift
-  { url: "/lot-ops",                 priority: 0.85, changeFrequency: "monthly" },
+  { url: "/features",                priority: 0.75, changeFrequency: "monthly" },
+  { url: "/features/812-competizione", priority: 0.7,  changeFrequency: "yearly"  },
+  { url: "/features/singer-964",       priority: 0.7,  changeFrequency: "yearly"  },
   { url: "/gallery",                 priority: 0.75, changeFrequency: "weekly"  },
-  { url: "/vlog",                    priority: 0.75, changeFrequency: "weekly"  },
-  { url: "/scoreboard",              priority: 0.75, changeFrequency: "weekly"  },
-  { url: "/events",                  priority: 0.75, changeFrequency: "monthly" },
+  { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
+  // PaddockGavin Events
+  { url: "/events",                  priority: 0.8,  changeFrequency: "monthly" },
+  { url: "/events/tires-and-timepieces", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/track-days",              priority: 0.9,  changeFrequency: "monthly" },
+  { url: "/book",                    priority: 0.7,  changeFrequency: "monthly" },
   { url: "/encantoblossomorchard",   priority: 0.6,  changeFrequency: "monthly" },
   // The Piston Powered Ranch, Oct 10 2026. Listed at its own domain, because
   // that is where each of these pages now says it lives. A sitemap that
@@ -39,13 +31,17 @@ const STATIC: { url: string; priority: number; changeFrequency: MetadataRoute.Si
   { url: "https://pistonpoweredranch.com/store",   priority: 0.6,  changeFrequency: "weekly" },
   { url: "https://pistonpoweredranch.com/entries", priority: 0.7,  changeFrequency: "daily"  },
   { url: "https://pistonpoweredranch.com/clubs",   priority: 0.6,  changeFrequency: "monthly" },
-  // Night shift / products
-  { url: "/gloss-game",              priority: 0.95, changeFrequency: "monthly" },
-  { url: "/juice-box",               priority: 0.8,  changeFrequency: "monthly" },
-  { url: "/shop",                    priority: 0.85, changeFrequency: "weekly"  },
+  // Lifestyle & Technology
+  { url: "/why-a-paddock",           priority: 0.85, changeFrequency: "monthly" },
+  { url: "/scoreboard",              priority: 0.75, changeFrequency: "weekly"  },
   { url: "/supercar-iq",             priority: 0.85, changeFrequency: "weekly"  },
-  // Partnerships
+  { url: "/lot-ops",                 priority: 0.8,  changeFrequency: "monthly" },
+  // Work with me
+  { url: "/exotic-car-broker",       priority: 0.95, changeFrequency: "monthly" },
+  { url: "/intake",                  priority: 0.9,  changeFrequency: "monthly" },
   { url: "/partner",                 priority: 0.7,  changeFrequency: "monthly" },
+  // Elsewhere
+  { url: "/shop",                    priority: 0.85, changeFrequency: "weekly"  },
   { url: "/affiliates",              priority: 0.65, changeFrequency: "monthly" },
   { url: "/press",                   priority: 0.7,  changeFrequency: "monthly" },
   // Legal

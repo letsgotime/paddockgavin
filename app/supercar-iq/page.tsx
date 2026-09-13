@@ -45,12 +45,12 @@ export default function SupercarIQPage() {
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px) clamp(40px,6vw,70px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(340px,100%),1fr))", gap: "clamp(28px,4vw,56px)", alignItems: "center" }}>
           <div>
-            <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 26px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Launches Sep 2026 &middot; pre-order open</span></span>
+            <span style={{ display: "inline-block", background: "#57C7F5", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 26px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#0A1523" }}>Launches Sep 2026 &middot; pre-order open</span></span>
             <h1 style={{ margin: "0 0 18px", fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", fontFamily: arch }}>
               <span style={{ display: "block" }}>Point it at a supercar.</span>
               <span style={{ display: "block", color: "#F2C94C" }}>Get the dossier.</span>
             </h1>
-            <p style={{ margin: "0 0 28px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Supercar IQ reads a photo and answers with the whole record: factory spec, tire sizes, recalls, crash ratings, what it sells for and where. Not a guess dressed up as an answer: a file that was built before you ever raised the phone.</p>
+            <p style={{ margin: "0 0 28px", fontSize: 19, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>Scan a car with your phone and Supercar IQ tells you what it is. You get the factory spec, tire sizes, recalls, crash ratings, and what it sells for and where. That record is built and checked before you scan, so it arrives with the answer.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
               <a href="#preorder" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Pre-order &middot; from $4.99</a>
               <a href="https://instagram.com/itspaddockgavin" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", fontFamily: arch, fontWeight: 800, fontSize: 15, letterSpacing: ".05em", textTransform: "uppercase", color: "#00D2BE", border: "1px solid #00D2BE", padding: "14px 25px", clipPath: "polygon(0 0,100% 0,100% calc(100% - 11px),calc(100% - 11px) 100%,0 100%)", textDecoration: "none" }}>Follow @itspaddockgavin</a>
@@ -89,15 +89,15 @@ export default function SupercarIQPage() {
       {/* The capsule */}
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The capsule</span></span>
+          <span style={{ display: "inline-block", background: "#57C7F5", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#0A1523" }}>The capsule</span></span>
           <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch", fontFamily: arch }}>Every car earns a permanent file</h2>
-          <p style={{ margin: "0 0 34px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "58ch" }}>For each make, model and year, Supercar IQ keeps one record, the capsule, and fills it from four directions. Built once, checked nightly, ready before you ask.</p>
+          <p style={{ margin: "0 0 34px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "58ch" }}>For each make, model and year, Supercar IQ keeps one record, the capsule, and fills it from four directions. Each one is checked every night, so it is ready before you scan.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(250px,100%),1fr))", gap: 2, background: "#27384F", border: "1px solid #27384F" }}>
             {[
               ["01 \u00b7 Factory spec","Engine, gearbox, drivetrain, horsepower, 0 to 60, top speed, curb weight, and the tire sizes it left the factory on."],
-              ["02 \u00b7 Safety record","Recalls with what they were for, federal crash ratings, complaint counts. The part sellers skip."],
+              ["02 \u00b7 Safety record","Recalls and what they were for, federal crash ratings and complaint counts."],
               ["03 \u00b7 Market fingerprint","Real comps: the value range, the trend, which colors carry a premium, and which auction house moves the most of them."],
-              ["04 \u00b7 Visual tells","The things your eye checks, pop-up headlights, a Targa bar, flying buttresses, taught to the scanner, one silhouette at a time."],
+              ["04 \u00b7 Visual tells","The details your eye checks, like pop-up headlights, a Targa bar or flying buttresses. The scanner learns them one silhouette at a time."],
             ].map(([t,d]) => (
               <div key={String(t)} style={{ background: "#152538", padding: "clamp(20px,2.6vw,28px)" }}>
                 <p style={{ margin: "0 0 10px", fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color: "#00D2BE" }}>{t}</p>
@@ -112,7 +112,7 @@ export default function SupercarIQPage() {
       <section style={{ background: "#0A1523", padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: "clamp(28px,4vw,56px)", alignItems: "center" }}>
           <div>
-            <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Capsule health</span></span>
+            <span style={{ display: "inline-block", background: "#57C7F5", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#0A1523" }}>Capsule health</span></span>
             <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "20ch", fontFamily: arch }}>A file that fills itself in</h2>
             <p style={{ margin: 0, fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "50ch" }}>A capsule scores itself as it grows: spec first, then safety, then market, then the visual read. Tap the layers to watch one build.</p>
           </div>
@@ -141,9 +141,9 @@ export default function SupercarIQPage() {
       {/* The scan */}
       <section style={{ padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
-          <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>The scan</span></span>
+          <span style={{ display: "inline-block", background: "#57C7F5", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#0A1523" }}>The scan</span></span>
           <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch", fontFamily: arch }}>The AI and the file answer together</h2>
-          <p style={{ margin: "0 0 12px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "58ch" }}>When you scan, the live AI and the capsule are asked at the same time. Where they agree, you get confirmation. Where they disagree on a number, the factory record wins. A spec sheet does not hallucinate horsepower.</p>
+          <p style={{ margin: "0 0 12px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "58ch" }}>When you scan, the live AI and the capsule are asked at the same time. Where they agree, you get confirmation. Where they disagree on a number, the factory record wins.</p>
           <p style={{ margin: 0, fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "58ch" }}>Tire sizes, crash ratings and recall counts arrive with the identification, not as a second search you have to run.</p>
           <div style={{ margin: "34px 0 0", border: "1px solid #27384F", background: "#0E1A2A" }}>
             {[["SCAN","The whole record, the moment the car is identified."],["GARAGE","The same record pinned to your car, with your price, dates and notes on top."],["VALUE","The capsule\u2019s range against the live market feed, two sources checking each other."],["STUDIO","The dossier condensed into a card and caption, ready to post."]].map(([k,v]) => (
@@ -160,11 +160,11 @@ export default function SupercarIQPage() {
       <section id="preorder" style={{ background: "#0A1523", padding: "clamp(48px,8vw,88px) clamp(20px,5vw,40px)" }}>
         <div style={{ maxWidth: 1080, margin: "0 auto" }}>
           <div aria-hidden="true" style={{ height: 9, background: "repeating-linear-gradient(112deg,#F2C94C 0 24px,#0A1523 24px 48px)", margin: "0 0 clamp(28px,4vw,44px)" }} />
-          <span style={{ display: "inline-block", background: "#00D2BE", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#00302B" }}>Pre-order</span></span>
+          <span style={{ display: "inline-block", background: "#57C7F5", transform: "skewX(-12deg)", padding: "7px 16px", margin: "0 0 20px" }}><span style={{ display: "inline-block", transform: "skewX(12deg)", fontWeight: 800, fontSize: 13, letterSpacing: ".16em", textTransform: "uppercase", color: "#0A1523" }}>Pre-order</span></span>
           <h2 style={{ margin: "0 0 14px", fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF", maxWidth: "22ch", fontFamily: arch }}>Hold your seat before the doors open</h2>
           <p style={{ margin: "0 0 34px", fontSize: 18, lineHeight: 1.65, color: "#B4B6B2", maxWidth: "54ch" }}>Pre-order locks the early price. The app lands at the end of September; your access starts the day it does.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(300px,100%),1fr))", gap: 14, maxWidth: 820 }}>
-            {[{tier:"First 60 days",color:"#00D2BE",price:"$4.99",sub:"with pre-order",desc:"Two months of the full record, every scan, every capsule, for the price of a coffee."},
+            {[{tier:"First 60 days",color:"#00D2BE",price:"$4.99",sub:"with pre-order",desc:"Two months of the full record, with every scan and every capsule included."},
               {tier:"First 12 months",color:"#F2C94C",price:"$19.99",sub:"/year",desc:"A full year, locked before the price moves."}].map(({tier,color,price,sub,desc}) => (
               <div key={tier} style={{ background: "#152538", border: "1px solid #27384F", borderTop: `3px solid ${color}`, clipPath: "polygon(0 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%)", padding: "clamp(22px,3vw,30px)", display: "flex", flexDirection: "column", gap: 10 }}>
                 <p style={{ margin: 0, fontFamily: mono, fontSize: 12, letterSpacing: ".2em", textTransform: "uppercase", color }}>{tier}</p>

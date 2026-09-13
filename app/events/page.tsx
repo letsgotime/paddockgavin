@@ -8,6 +8,7 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { CrmLogin } from "@/components/crm-login"
 import { RsvpBlock } from "@/components/rsvp-block"
+import { PGELockup } from "@/components/pge-brand"
 
 /* Copy on this page ran through RAIL Redline (paddock20.com/rail/redline).
    Run: Claude Sonnet 4.5 · WARM · WEB PAGE · US · DataForSEO target
@@ -47,7 +48,7 @@ const UPCOMING: EventRow[] = [
     state: "confirmed",
     stateLabel: "Confirmed",
     blurb:
-      "Three hundred cars on a working ranch, on open pasture an hour south of Nashville. Podium 1 are bringing a race sim, so you can drive a lap yourself rather than watch one. Spectating is free, and a share of every net dollar goes to Community Elementary School.",
+      "Three hundred cars on open pasture, an hour south of Nashville. Podium 1 are bringing a race sim, so you can drive a lap yourself. Spectating is free.",
     img: "/images/ranch/ppr-gate.webp",
     href: "/events/pistonpoweredranch",
     cta: "The event",
@@ -65,10 +66,10 @@ const UPCOMING: EventRow[] = [
     state: "confirmed",
     stateLabel: "Confirmed, Sunday 6 December",
     blurb:
-      "Cars and watches, in a jeweler\u2019s car park on a Saturday morning. The October edition drew 1,500 people to 190 cars worth more than $59 million, and every ticket was free.",
+      "Cars and watches in a Scottsdale jeweler\u2019s car park, on a Sunday morning this time. Gates open at half past seven and anybody can walk in. The last one drew 1,500 people.",
     img: "/images/tt/tt-enzo-sq.webp",
     href: "/events/tires-and-timepieces",
-    cta: "The record",
+    cta: "The morning",
     tone: "#4BA3DE",
   },
   {
@@ -82,7 +83,7 @@ const UPCOMING: EventRow[] = [
     register: "Dates post here first",
     state: "scoping",
     stateLabel: "In scoping",
-    blurb: "An orchard we are walking for a future field. In scoping. Nothing booked yet.",
+    blurb: "An orchard in Shelbyville we are walking as a possible venue. Nothing is booked yet.",
     img: "/images/carrera-traffic.webp",
     href: "/encantoblossomorchard",
     cta: "The property",
@@ -96,7 +97,7 @@ const PAST = [
     title: "Donuts",
     stateLabel: "Final edition, August 2026",
     blurb:
-      "Monthly collector morning on the showroom floor in Lebanon. August 2026 was the final edition. Coffee, whatever you drove, and a room that never looked the same twice.",
+      "A monthly morning on the showroom floor in Lebanon, with coffee and whatever you drove. August 2026 was the last one.",
     img: "/images/donuts-overflow.webp",
     href: "/gallery",
     cta: "The photos",
@@ -106,9 +107,9 @@ const PAST = [
     title: "Denim \u0026 Diamonds",
     stateLabel: "Saturday 20 November 2021",
     blurb:
-      "The first one. Held in November 2021, under GoTime Motorsports, before any of the rest of this existed.",
+      "Our first event, in November 2021, when we were still trading as GoTime Motorsports.",
     img: "/images/ferrari-red.webp",
-    href: "/events",
+    href: "https://ig.me/m/itspaddockgavin",
     cta: "Ask me about it",
   },
   {
@@ -116,7 +117,7 @@ const PAST = [
     title: "Private client evenings",
     stateLabel: "Ongoing, by request",
     blurb:
-      "A collector group, a brand, or a birthday, closed to the public. Working ranches and private properties around Middle Tennessee.",
+      "Closed to the public, for a collector group, a brand or a birthday. We host them on ranches and private properties around Middle Tennessee.",
     img: "/images/f458-dash.webp",
     href: "/connect",
     cta: "Ask about yours",
@@ -182,7 +183,7 @@ function dateParts(iso: string) {
   return { m: MONTHS[d.getMonth()], d: d.getDate(), y: d.getFullYear() }
 }
 
-function Tag({ children, bg = "#F2C94C", fg = "#101010" }: { children: React.ReactNode; bg?: string; fg?: string }) {
+function Tag({ children, bg = "#00D2BE", fg = "#00302B" }: { children: React.ReactNode; bg?: string; fg?: string }) {
   return (
     <span style={{ display: "inline-block", transform: "skewX(-12deg)", background: bg, padding: "6px 15px", alignSelf: "flex-start" }}>
       <span style={{ display: "inline-block", transform: "skewX(12deg)", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: fg }}>
@@ -276,11 +277,11 @@ export default function EventsPage() {
       <div style={{ position: "fixed", top: 75, left: 0, right: 0, zIndex: 60, padding: "0 clamp(12px,4vw,40px)" }}>
         <div className="pg-e1" style={{ maxWidth: 1180, margin: "0 auto", clipPath: CLIP, padding: "11px clamp(14px,2.4vw,22px)", display: "flex", alignItems: "center", gap: "clamp(10px,2vw,18px)", overflow: "hidden" }}>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 10, flex: "0 0 auto" }}>
-            <i aria-hidden="true" style={{ width: 9, height: 9, borderRadius: "50%", background: "#F2C94C", animation: "pgPulse 2.2s ease-in-out infinite", display: "block" }} />
-            <span style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap" }}>Next on the field</span>
+            <i aria-hidden="true" style={{ width: 9, height: 9, borderRadius: "50%", background: "#00D2BE", animation: "pgPulse 2.2s ease-in-out infinite", display: "block" }} />
+            <span style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap" }}>Next up</span>
           </span>
           <i aria-hidden="true" style={{ flex: "1 1 auto", minWidth: 10 }} />
-          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#F2C94C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>
+          <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#EDF1F6", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>
             {next ? next.title : "Dates post here first"}
           </span>
           <span style={{ fontFamily: MONO, fontSize: 13, letterSpacing: ".1em", textTransform: "uppercase", color: "#00D2BE", fontVariantNumeric: "tabular-nums", flex: "0 0 auto", whiteSpace: "nowrap" }}>
@@ -296,14 +297,14 @@ export default function EventsPage() {
           <Image data-kb="" src="/images/ranch/ppr-bins.jpg" alt="The grain bins and the ranch road at Rancho Jaramillo" fill style={{ objectFit: "cover", objectPosition: "center 62%", animation: "pgKb 26s ease-in-out infinite alternate", transformOrigin: "center" }} priority />
           <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top,rgba(10,21,35,.97) 6%,rgba(10,21,35,.9) 38%,rgba(10,21,35,.62) 74%,rgba(10,21,35,.42) 100%)" }} />
           <div style={{ position: "relative", padding: "clamp(22px,3.6vw,40px)", display: "flex", flexDirection: "column", gap: 16, maxWidth: 760 }}>
-            <Tag>Car shows &middot; Middle Tennessee</Tag>
+            <PGELockup height={40} />
             <h1 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h1)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
-              Every field
+              Days out built
               <br />
-              <span style={{ color: "#F2C94C" }}>we open</span>
+              <span style={{ color: "#00D2BE" }}>around cars</span>
             </h1>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(17px,1.7vw,19px)", lineHeight: 1.56, color: "#E4E9F0", maxWidth: "58ch", textShadow: "0 1px 10px rgba(10,21,35,.8)" }}>
-              We produce collector car events in Middle Tennessee. Working ranches. Orchards. Private properties. What is booked runs at the top of this page. What already ran sits below. The properties we represent close it out.
+              We put on car events in Middle Tennessee, and one in Scottsdale. Booked dates are at the top of this page, with past events and the places we host further down.
             </p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <Link href="/events/pistonpoweredranch" style={{ display: "inline-flex", alignItems: "center", fontFamily: ARCHIVO, fontWeight: 700, fontSize: 15, letterSpacing: ".04em", textTransform: "uppercase", background: "#F2C94C", color: "#101010", padding: "15px 26px", clipPath: CLIP_SM, textDecoration: "none" }}>
@@ -348,7 +349,7 @@ export default function EventsPage() {
 
                 <div style={{ flex: "1 1 320px", minWidth: 0, padding: "clamp(20px,2.8vw,32px)", display: "flex", flexDirection: "column", gap: 12 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                    <Tag bg={e.state === "confirmed" ? "#F2C94C" : "#00D2BE"} fg={e.state === "confirmed" ? "#101010" : "#00302B"}>
+                    <Tag bg={e.state === "confirmed" ? "#00D2BE" : "#B4B6B2"} fg={e.state === "confirmed" ? "#00302B" : "#101010"}>
                       {e.stateLabel}
                     </Tag>
                     <Eyebrow color="#B4B6B2">
@@ -382,7 +383,7 @@ export default function EventsPage() {
 
         {/* What already ran */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
-          <SectionHead title="What already ran" right={<Eyebrow color="#B4B6B2">The record</Eyebrow>} />
+          <SectionHead title="Past events" right={<Eyebrow color="#B4B6B2">Already ran</Eyebrow>} />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(272px,1fr))", gap: "clamp(12px,2vw,18px)" }}>
             {PAST.map((e) => (
               <article key={e.key} className="pgCard" style={{ position: "relative", border: "1px solid rgba(255,255,255,.12)", boxShadow: "inset 0 1px 0 rgba(255,255,255,.12)", clipPath: CLIP, overflow: "hidden", isolation: "isolate", display: "flex", flexDirection: "column", minHeight: 268 }}>
@@ -424,14 +425,14 @@ export default function EventsPage() {
 
         {/* Venues */}
         <section style={{ display: "flex", flexDirection: "column", gap: "clamp(12px,2vw,18px)" }}>
-          <SectionHead title="The properties we represent" right={<Eyebrow>Venues</Eyebrow>} />
+          <SectionHead title="Where we host" right={<Eyebrow>Venues</Eyebrow>} />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(12px,2vw,18px)" }}>
             {VENUES.map((v) => (
               <Link key={v.name} href={v.href} className="pgCard" style={{ position: "relative", minHeight: 210, border: "1px solid rgba(255,255,255,.12)", clipPath: CLIP, overflow: "hidden", isolation: "isolate", display: "flex", alignItems: "flex-end", textDecoration: "none" }}>
                 <Image src={v.img} alt="" aria-hidden fill style={{ objectFit: "cover", opacity: 0.5, zIndex: -1 }} />
                 <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: -1, background: "linear-gradient(to top,rgba(10,21,35,.96) 12%,rgba(10,21,35,.42) 100%)" }} />
                 <div style={{ padding: "clamp(16px,2.2vw,22px)", display: "flex", flexDirection: "column", gap: 6, width: "100%" }}>
-                  <Eyebrow color={v.live ? "#F2C94C" : "#B4B6B2"}>{v.place}</Eyebrow>
+                  <Eyebrow color={v.live ? "#00D2BE" : "#B4B6B2"}>{v.place}</Eyebrow>
                   <span style={{ fontFamily: ARCHIVO, fontWeight: 900, fontSize: "clamp(20px,2.4vw,26px)", lineHeight: 1.05, letterSpacing: "-.02em", textTransform: "uppercase", color: "#FFFFFF" }}>{v.name}</span>
                   <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: ".12em", textTransform: "uppercase", color: "#B4B6B2" }}>{v.spec}</span>
                 </div>
@@ -441,20 +442,20 @@ export default function EventsPage() {
         </section>
 
         {/* Bring us a property */}
-        <section id="property" className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(242,201,76,.09),rgba(255,255,255,.014))", border: "1px solid rgba(242,201,76,.28)", borderTop: "3px solid #F2C94C", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
+        <section id="property" className="pg-e1" style={{ position: "relative", background: "linear-gradient(150deg,rgba(0,210,190,.09),rgba(255,255,255,.014))", border: "1px solid rgba(0,210,190,.28)", borderTop: "3px solid #00D2BE", clipPath: CLIP_LG, padding: "clamp(22px,3.4vw,36px)", display: "flex", flexWrap: "wrap", gap: "clamp(20px,3vw,36px)" }}>
           <div style={{ flex: "5 1 300px", minWidth: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-            <Tag>Have ground</Tag>
+            <Tag>Have a venue</Tag>
             <h2 style={{ margin: 0, fontFamily: ARCHIVO, fontWeight: 800, fontSize: "var(--t-h2)", lineHeight: 1.05, letterSpacing: "-.025em", color: "#FFFFFF" }}>
               Bring us a property
             </h2>
             <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.55, color: "#D8DEE7", maxWidth: "50ch" }}>
-              A ranch, an orchard, an airfield, a floor. If it holds cars and people, tell us where it is. We handle curation, ticketing, marshals and the site plan.
+              If you have a ranch, orchard, airfield or floor that can hold cars and people, tell us where it is. We handle the curation, ticketing, marshals and site plan.
             </p>
           </div>
           <div style={{ flex: "4 1 280px", minWidth: 0, display: "flex", flexDirection: "column", gap: 10 }}>
             {status === "sent" ? (
               <p style={{ margin: 0, fontFamily: ARCHIVO, fontSize: 16, lineHeight: 1.5, color: "#00D2BE" }}>
-                Got it. We will come back to you at the address you left.
+                Got it. We will reply using the contact details you left.
               </p>
             ) : (
               <>

@@ -174,7 +174,6 @@ export const CATALOGS: Record<string, Record<string, CatalogItem>> = {
     covers: "Title Sponsor, The Piston Powered Ranch, 10 October 2026",
     audience: "desk",
     ledger: "sponsorship",
-    lookupKey: "ppr-2026-sponsor-title",
   },
 
   /* The VIP rooms stay wired and unpriced here.

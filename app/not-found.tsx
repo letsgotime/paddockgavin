@@ -116,7 +116,7 @@ function PaddockNotFound() {
           {/* Quick links */}
           <div style={{ margin: "28px 0 0", padding: "22px 0 0", borderTop: "1px solid #27384F", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,46%),1fr))", gap: 10 }}>
             {[
-              { href: "/vlog", label: "The Vlog", icon: <i aria-hidden="true" style={{ flexShrink: 0, width: 0, height: 0, borderLeft: "13px solid #00D2BE", borderTop: "8px solid transparent", borderBottom: "8px solid transparent" }} />, accent: "#00D2BE" },
+              { href: "/events", label: "Events", icon: <i aria-hidden="true" style={{ flexShrink: 0, width: 0, height: 0, borderLeft: "13px solid #00D2BE", borderTop: "8px solid transparent", borderBottom: "8px solid transparent" }} />, accent: "#00D2BE" },
               { href: "/cars", label: "The garage", icon: <i aria-hidden="true" style={{ flexShrink: 0, width: 13, height: 13, background: "#F2C94C", transform: "rotate(45deg)", display: "block" }} />, accent: "#F2C94C" },
               { href: "/gallery", label: "The gallery", icon: <i aria-hidden="true" style={{ flexShrink: 0, display: "grid", gridTemplateColumns: "6px 6px", gap: 2 }}><i style={{ width: 6, height: 6, background: "#B4B6B2", display: "block" }} /><i style={{ width: 6, height: 6, background: "#B4B6B2", display: "block" }} /><i style={{ width: 6, height: 6, background: "#B4B6B2", display: "block" }} /><i style={{ width: 6, height: 6, background: "#B4B6B2", display: "block" }} /></i>, accent: "#B4B6B2" },
             ].map(({ href, label, icon, accent }) => (
