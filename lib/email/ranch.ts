@@ -322,7 +322,7 @@ ${
           Saturday 10 October 2026 &middot; 9am to 3pm<br />
           Rancho Jaramillo, Unionville, Tennessee<br />
           <span style="color:${HAIR};letter-spacing:.3em">&middot;&nbsp;&middot;&nbsp;&middot;</span><br />
-          A PaddockGavin event, benefiting Community Elementary School<br />
+          A PaddockGavin event. 25% of net profit fills a semi truck with food. Right now it goes to kids.<br />
           <a href="https://pistonpoweredranch.com" style="color:${MUTE};text-decoration:none">pistonpoweredranch.com</a>
           &nbsp;&middot;&nbsp; <a href="https://pistonpoweredranch.com/legal/privacy" style="color:${MUTE};text-decoration:underline">Privacy</a>
           &nbsp;&middot;&nbsp; <a href="https://pistonpoweredranch.com/legal/terms" style="color:${MUTE};text-decoration:underline">Terms</a>
@@ -360,7 +360,7 @@ export function renderRanchText(e: RanchEmail): string {
     }
   }
   if (e.signoff) lines.push(e.signoff, "")
-  lines.push("Saturday 10 October 2026, 9am to 3pm", "Rancho Jaramillo, Unionville, Tennessee", "A PaddockGavin event, benefiting Community Elementary School")
+  lines.push("Saturday 10 October 2026, 9am to 3pm", "Rancho Jaramillo, Unionville, Tennessee", "A PaddockGavin event. 25% of net profit fills a semi truck with food. Right now it goes to kids.")
   lines.push("pistonpoweredranch.com", "Privacy: https://pistonpoweredranch.com/legal/privacy", "Terms: https://pistonpoweredranch.com/legal/terms")
   if (e.reason) lines.push("", e.reason)
   if (e.unsubscribe) lines.push("", `Unsubscribe: ${e.unsubscribe}`)

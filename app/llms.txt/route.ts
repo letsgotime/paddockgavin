@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic"
 
 const RANCH = `# The Piston Powered Ranch
 
-> A curated car show at Rancho Jaramillo, a working cattle ranch in Unionville, Tennessee, about an hour south of Nashville. Saturday 10 October 2026, 9am to 3pm. Three hundred collector cars on fourteen acres. Free to attend. A PaddockGavin event, benefiting Community Elementary School.
+> A curated car show at Rancho Jaramillo, a working cattle ranch in Unionville, Tennessee, about an hour south of Nashville. Saturday 10 October 2026, 9am to 3pm. Three hundred collector cars on fourteen acres. Free to attend. A PaddockGavin event. 25% of net profit fills a semi truck with food. Right now it goes to kids.
 
 ## Pages
 - https://pistonpoweredranch.com : the landing page, the day, the ground, the gallery, the RSVP
@@ -17,7 +17,7 @@ const RANCH = `# The Piston Powered Ranch
 - https://pistonpoweredranch.com/vendor/booth : reserve and pay for a booth, 10 by 10 upward
 - https://pistonpoweredranch.com/sponsor : sponsor the day
 - https://pistonpoweredranch.com/entries : the field, the cars accepted so far
-- https://pistonpoweredranch.com/store : give to Community Elementary School
+- https://pistonpoweredranch.com/store : give, and the money buys food
 - https://pistonpoweredranch.com/clubs : blocks held for car clubs arriving together
 
 ## Facts
@@ -26,6 +26,7 @@ const RANCH = `# The Piston Powered Ranch
 - Admission: complimentary for spectators, no ticket
 - Entry: cars are chosen one at a time from their photographs; entrants hear either way
 - Producer: PaddockGavin, https://paddockgavin.com
+- Charity: 25% of net profit fills a semi truck with food. Right now it goes to kids, and the focus can change from time to time
 `
 
 const PADDOCK = `# PaddockGavin

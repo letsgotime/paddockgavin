@@ -929,7 +929,7 @@ export default function RanchControlApp() {
           <p>
             Rancho Jaramillo
             <br />
-            A PaddockGavin event, benefiting Community Elementary School
+            A PaddockGavin event. 25% of net profit fills a semi truck with food. Right now it goes to kids.
             <br />
             Internal working document. Costs, margins and sponsor positions are not public.
           </p>

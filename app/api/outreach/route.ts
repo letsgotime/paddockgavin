@@ -58,7 +58,7 @@ function approach(r: Row, who: string): RanchEmail {
     {
       kind: "p",
       text:
-        "It is a car show on a working cattle ranch an hour south of Nashville: three hundred collector cars parked by marque on twelve acres of pasture, free for anyone to walk in, and it benefits Community Elementary School.",
+        "It is a car show on a working cattle ranch an hour south of Nashville: three hundred collector cars parked by marque on fourteen acres of pasture, free for anyone to walk in. 25% of net profit fills a semi truck with food. Right now it goes to kids.",
     },
     {
       kind: "p",

@@ -139,7 +139,7 @@ const VENUES = [
   {
     name: "Rancho Jaramillo",
     place: "Unionville, TN",
-    spec: "408 acres with 12 in use",
+    spec: "408 acres with 14 in use",
     img: "/images/ranch/ppr-rail.webp",
     href: "/events/pistonpoweredranch",
     live: true,

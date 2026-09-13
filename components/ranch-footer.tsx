@@ -40,11 +40,14 @@ export function RanchFooter({ showMission = true }: { showMission?: boolean } = 
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 22px", paddingTop: 18, borderTop: "1px solid rgba(255,255,255,.1)", fontSize: 13.5, color: "#8b95a3" }}>
           <span>
             A <a href="https://paddockgavin.com" style={{ color: "#C9D1DB", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.22)" }}>PaddockGavin</a> event
-            {/* Was "benefiting Community Elementary School", stale against
-                tonight's real mission everywhere else on the site (ten
-                schools, $2,500 each). The sponsor page turns this off
+            {/* Named one school until 11 Sep, then ten schools at $2,500 each.
+                Both wrote the beneficiary as settled, and it is not: the
+                commitment is 25% of net profit spent on a semi truck of food,
+                and who it feeds is chosen a season at a time. "Right now" is
+                the load bearing half of the sentence, so it is not trimmed
+                for length on any surface. The sponsor page turns this off
                 entirely rather than showing a shortened version of it. */}
-            {showMission && ", funding lunches at ten local schools, $2,500 each"}.
+            {showMission && ". 25% of net profit fills a semi truck with food. Right now it goes to kids"}.
           </span>
           <a href="mailto:hello@pistonpoweredranch.com" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "#C9D1DB", textDecoration: "none" }}>hello@pistonpoweredranch.com</a>
           <Link href="/legal/privacy" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, color: "#8b95a3", textDecoration: "none" }}>Privacy</Link>

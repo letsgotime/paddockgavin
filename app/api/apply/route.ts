@@ -161,7 +161,7 @@ function applicantDoc(kind: Kind, name: string, org: string, token: string, d: R
         FACTS,
         {
           kind: "p",
-          text: "Three hundred cars, every one of them chosen. Free for the public to attend. The day benefits Community Elementary School.",
+          text: "Three hundred cars, every one of them chosen. Free for the public to attend. 25% of net profit fills a semi truck with food. Right now it goes to kids.",
         },
       ],
       signoff: "If you have a date you need an answer by, put it in your reply and we will work to it.",
