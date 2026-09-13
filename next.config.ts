@@ -41,8 +41,20 @@ const CAN_BLOB = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
 const TOOL_PAGES = [
   "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "site-map", "rsvps",
   "chat", "console", "collateral", "clubs", "spectate", "status", "vote",
-  "diag", "reset", "brand",
+  "diag", "reset", "brand", "store-check",
 ]
+
+/**
+ * The same list, as a regex group, for the cache rules below.
+ *
+ * These were hand-typed in three places and had already drifted: site-map and
+ * brand were in TOOL_PAGES and in none of them, so both quietly took the page
+ * rule's hour of stale-while-revalidate instead of sixty seconds, which is the
+ * exact failure the comment down there describes. Deriving it means adding a
+ * tool to one array is enough. `journey` is an alias that redirects to
+ * `journeys` and has no directory of its own, so it is added by hand.
+ */
+const TOOL_GROUP = [...TOOL_PAGES, "journey"].join("|")
 
 
 
@@ -205,11 +217,11 @@ const nextConfig: NextConfig = {
          build for up to an hour after the deploy that fixed it. Sixty
          seconds at the edge, then a real revalidation. */
       {
-        source: "/(journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)/:path*",
+        source: `/(${TOOL_GROUP})/:path*`,
         headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=60, must-revalidate" }],
       },
       {
-        source: "/(journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)",
+        source: `/(${TOOL_GROUP})`,
         headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=60, must-revalidate" }],
       },
       /* The tools' photography, proxied from the other deployment. Before
@@ -224,7 +236,7 @@ const nextConfig: NextConfig = {
       },
       // Pages — short cache, revalidate in background
       {
-        source: "/((?!_next/static|_next/image|favicon.ico|vendor/.*\\.js|team/|team-sw|img/|(?:journeys|journey|board|asks|crew|judging|map|site-plan|rsvps|chat|console|collateral|clubs|spectate|status|vote|diag|reset)(?:/|$)).*)",
+        source: `/((?!_next/static|_next/image|favicon.ico|vendor/.*\\.js|team/|team-sw|img/|(?:${TOOL_GROUP})(?:/|$)).*)`,
         headers: [
           { key: "Cache-Control", value: "public, s-maxage=60, stale-while-revalidate=3600" },
           { key: "X-Content-Type-Options", value: "nosniff" },

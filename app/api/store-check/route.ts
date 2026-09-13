@@ -4,16 +4,16 @@ import { GARMENTS } from "@/lib/printful/garments"
 import { PRODUCTS } from "@/lib/shop/catalogue"
 
 /**
- * Is Printful actually talking to us?
+ * Can the store take an order and ship it?
  *
  * The token lives in Vercel and nowhere a developer can reach, which is
  * right, and which also means nobody can test the connection from a laptop.
  * The first proof that fulfilment works should not be a customer's order
- * failing, so this asks Printful the questions that matter and reports what
+ * failing, so this asks the print shop the questions that matter and reports what
  * it hears back.
  *
  * It never returns the token, or any part of it. The only thing said about
- * the key is whether one is present and whether Printful accepted it.
+ * the key is whether one is present and whether the print shop accepted it.
  *
  * Staff only, same three checks as the other internal routes: a bearer
  * exists, the token verifies against our auth server's published keys, and
@@ -53,13 +53,13 @@ export async function GET(req: NextRequest) {
    *
    * The gate reads an Authorization header, which a browser never sends by
    * following a link, so the first build of this route answered 401 to the one
-   * person it was written for. A plain visit now lands on /printful, which
+   * person it was written for. A plain visit now lands on /store-check, which
    * signs the request with the session that browser already holds. Anything
    * asking for JSON is the page itself, or curl, and falls through to the
    * check.
    */
   const wantsJson = (req.headers.get("accept") || "").includes("application/json")
-  if (!wantsJson) return NextResponse.redirect(new URL("/printful/", req.url), 303)
+  if (!wantsJson) return NextResponse.redirect(new URL("/store-check", req.url), 303)
 
   const denied = await denyUnlessStaff(req)
   if (denied) return denied
@@ -100,12 +100,12 @@ export async function GET(req: NextRequest) {
   if (!authOk) {
     notes.push(
       stores.status === 401
-        ? "Printful refused the token. It may be expired, revoked, or copied incompletely. Check its expiry under developers.printful.com, Tokens."
-        : `Printful answered ${stores.status} when asked for stores.`,
+        ? "The print shop refused the key. It may be expired, revoked, or copied incompletely. Check its expiry in the print shop dashboard, under Tokens."
+        : `The print shop answered ${stores.status} when asked for stores.`,
     )
   }
   if (authOk && storeList.length === 0) {
-    notes.push("The token authenticated but no store is visible to it. If it was scoped to a single store, that store may have been deleted.")
+    notes.push("The key works but no store is visible to it. If it was scoped to a single store, that store may have been deleted.")
   }
   if (authOk && storeList.length > 1) {
     notes.push("This token can see more than one store, so it is account level. Orders will need a store id, which the client does not send. Reissue it scoped to a single store.")
@@ -125,17 +125,17 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     verdict: ready
       ? withArtwork.length
-        ? "READY. Printful is connected and at least one product can be dropshipped."
-        : "CONNECTED, waiting on artwork. Printful accepts this token; no product has a print file yet."
+        ? "READY. The store is connected and at least one product can ship."
+        : "CONNECTED, waiting on artwork. The key works; no product has a print file yet."
       : "NOT READY. See notes.",
-    key: { present: true, acceptedByPrintful: authOk },
+    key: { present: true, accepted: authOk },
     stores: storeList,
     ordersReadable: orders.ok,
     autoConfirm: (process.env.PRINTFUL_AUTO_CONFIRM || "").toLowerCase() === "true",
     autoConfirmMeaning:
       (process.env.PRINTFUL_AUTO_CONFIRM || "").toLowerCase() === "true"
         ? "Orders go straight to production."
-        : "Orders arrive as drafts and wait for you to confirm them in Printful.",
+        : "Orders arrive as drafts and wait for you to confirm them at the print shop.",
     catalogue: { garments, productsMappedToABlank: mapped.length, productsWithArtwork: withArtwork.length },
     notes,
   })

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Printful check · The Piston Powered Ranch</title>
+<title>Store check · The Piston Powered Ranch</title>
 <meta name="robots" content="noindex,nofollow" />
 <style>
   :root{--ink:#0A1523;--paper:#EDF1F6;--mute:#8b95a3;--ok:#00D2BE;--bad:#FF1A21;--warn:#F2C94C;
@@ -38,14 +38,14 @@
 </head>
 <body>
 <div class="wrap">
-<h1>Printful check</h1>
-<p class="sub">What Printful says about this deployment, right now.</p>
+<h1>Store check</h1>
+<p class="sub">Whether the store can take an order and ship it, right now.</p>
 <div id="out">Checking…</div>
 </div>
 
 <script type="module">
 /**
- * Is the shop's dropship connection real?
+ * Can the store actually take an order and ship it?
  *
  * The answer lives behind a staff gate that reads an Authorization header,
  * which a browser never sends by following a link. This page holds the
@@ -53,12 +53,12 @@
  * or displayed: the key stays on the server and only ever gets talked about
  * in yes or no.
  */
-import { accessToken, lastTokenError, me } from "/vendor/ranch-db.js?v=2026-09-02f";
+import { accessToken, lastTokenError, magicLink, me } from "/vendor/ranch-db.js?v=2026-09-02f";
 
 const out = document.getElementById("out");
 
-/* Printful's own strings land in this page. Anything from outside gets
-   escaped before it reaches innerHTML. */
+/* The print shop's own strings land in this page. Anything from outside
+   gets escaped before it reaches innerHTML. */
 const esc = (s) =>
   String(s ?? "").replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -72,11 +72,50 @@ const yes = (b) => (b ? "Yes" : "No");
 const T = (p, ms = 12000) =>
   Promise.race([p, new Promise((r) => setTimeout(() => r({ __timeout: true }), ms))]);
 
+/**
+ * Sign in here, and come back here.
+ *
+ * Sending somebody to the console means signing in and then landing on HQ,
+ * on a different page, with the thing they came for still unanswered and no
+ * sign of how to get back to it. That has already cost this team a vendor
+ * approval. The link this sends carries the current address as its callback,
+ * so one tap in the inbox returns to this page with the answer on it.
+ */
 function signInPrompt(why) {
   out.innerHTML =
     verdict("wait", "Not signed in on this browser.") +
-    `<p>${esc(why || "")}</p>` +
-    `<p>Sign in at <a href="/console/index.html">the console</a>, then reload this page.</p>`;
+    (why ? `<p>${esc(why)}</p>` : "") +
+    `<p>Send yourself a link and it opens this page, signed in. No password.</p>
+     <form id="magic" style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 0">
+       <label for="email" style="position:absolute;left:-9999px">Your email</label>
+       <input id="email" type="email" required autocomplete="email"
+              placeholder="the address you were invited on"
+              style="flex:1 1 260px;min-height:48px;padding:0 14px;border-radius:10px;
+                     border:1px solid var(--line);background:rgba(255,255,255,.05);
+                     color:var(--paper);font:400 15px/1 var(--sans)" />
+       <button type="submit" style="margin:0">Email me a link</button>
+     </form>
+     <p id="magicsaid" style="margin:12px 0 0"></p>
+     <p class="foot">Rather use a password? <a href="/console/index.html">The console</a> takes one.</p>`;
+
+  const form = document.getElementById("magic");
+  const said = document.getElementById("magicsaid");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    if (!email) return;
+    const button = form.querySelector("button");
+    button.disabled = true;
+    button.textContent = "Sending…";
+    /* The callback is this page. Better Auth checks it against the trusted
+       origin list, and this origin is on it. */
+    const err = await magicLink(email, location.href);
+    button.disabled = false;
+    button.textContent = "Email me a link";
+    said.textContent = err
+      ? err
+      : "Sent. Open it on this device and it lands back here, signed in.";
+  });
 }
 
 try {
@@ -98,14 +137,14 @@ try {
         : null;
 
     const res = await T(
-      fetch("/api/printful-check", {
+      fetch("/api/store-check", {
         headers: { Authorization: "Bearer " + token, Accept: "application/json" },
       }).then(async (r) => ({ ok: r.ok, status: r.status, body: await r.json().catch(() => null) }))
         .catch((e) => ({ __err: e.message }))
     );
 
     if (res && res.__timeout) {
-      out.innerHTML = verdict("bad", "Printful did not answer within 12 seconds.");
+      out.innerHTML = verdict("bad", "The print shop did not answer within 12 seconds.");
     } else if (res && res.__err) {
       out.innerHTML = verdict("bad", "Could not reach the check: " + res.__err);
     } else if (!res.ok) {
@@ -126,7 +165,7 @@ try {
 
       h += row("Key present on this deployment", yes(d.key && d.key.present));
       if (d.key && d.key.present) {
-        h += row("Printful accepted the key", yes(d.key.acceptedByPrintful));
+        h += row("Print shop accepted the key", yes(d.key.accepted));
         h += row("Store it can see", (d.stores || []).map((s) => s.name || s.id).join(", ") || "none");
         h += row("Can read orders", yes(d.ordersReadable));
         h += row("New orders", d.autoConfirmMeaning || "");
