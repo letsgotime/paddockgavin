@@ -1,10 +1,17 @@
 import type { Metadata } from "next"
 import { ranchShare } from "@/lib/events/ranch-share"
+import Image from "next/image"
 import { ApplyPage, ARCHIVO, MONO, CLIP_SM } from "../_apply"
 
-/* The tent does not exist yet, so there is no real photo of it to show.
-   Built typographic rather than forcing a stock or rendered image into a
-   page that otherwise runs on real Rancho Jaramillo photography only. */
+/* The tent does not exist yet, so what heads this block is a concept render
+   and is captioned as one.
+   
+   That caption is the whole point. A sponsor is being asked to buy something
+   unbuilt, and showing them a render is the normal way to sell that. Dropping
+   it in unlabelled beside the ranch's real photography is a different thing:
+   it reads as a photograph of a day that has not happened. The file is named
+   for what it is, too, after two images on this site turned out to be stock
+   that nobody had questioned because the filename looked local. */
 const TENT_PARTNER = "Mechanics on a Mission"
 
 function TentSponsorBlock() {
@@ -12,8 +19,24 @@ function TentSponsorBlock() {
     <section id="tent" style={{ maxWidth: 1180, margin: "0 auto", padding: "0 clamp(16px,5vw,40px) clamp(40px,9vh,96px)" }}>
       <div
         data-r=""
-        style={{ position: "relative", border: "1px solid rgba(255,255,255,.16)", borderTop: "4px solid #E5141A", background: "linear-gradient(165deg,rgba(229,20,26,.14),rgba(10,21,35,.6) 55%)", backdropFilter: "blur(16px) saturate(150%)", WebkitBackdropFilter: "blur(16px) saturate(150%)", clipPath: CLIP_SM, padding: "clamp(28px,4.5vw,52px)", display: "grid", gap: 22 }}
+        style={{ position: "relative", border: "1px solid rgba(255,255,255,.16)", borderTop: "4px solid #E5141A", background: "linear-gradient(165deg,rgba(229,20,26,.14),rgba(10,21,35,.6) 55%)", backdropFilter: "blur(16px) saturate(150%)", WebkitBackdropFilter: "blur(16px) saturate(150%)", clipPath: CLIP_SM, overflow: "hidden" }}
       >
+        <figure style={{ margin: 0, position: "relative" }}>
+          <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
+            <Image
+              src="/images/ranch/ppr-tent-concept.webp"
+              alt="A concept render of the hospitality tent on the show field, cars either side"
+              fill
+              sizes="(max-width: 1180px) 100vw, 1180px"
+              style={{ objectFit: "cover", objectPosition: "center 58%" }}
+            />
+            <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,rgba(10,21,35,0) 45%,rgba(10,21,35,.92) 100%)" }} />
+          </div>
+          <figcaption style={{ position: "absolute", left: "clamp(18px,3vw,34px)", bottom: 14, fontFamily: MONO, fontSize: 11, letterSpacing: ".18em", textTransform: "uppercase", color: "#C9D1DB" }}>
+            Concept, October 2026
+          </figcaption>
+        </figure>
+        <div style={{ padding: "clamp(28px,4.5vw,52px)", display: "grid", gap: 22 }}>
         <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: ".2em", textTransform: "uppercase", color: "#FF1A21" }}>
           Open for the first time
         </span>
@@ -38,6 +61,7 @@ function TentSponsorBlock() {
         >
           Ask about the tent
         </a>
+        </div>
       </div>
     </section>
   )
