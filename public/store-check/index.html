@@ -32,8 +32,11 @@
   a{color:var(--bad)}
   .foot{margin:26px 0 0;padding-top:16px;border-top:1px solid var(--line);
     color:var(--mute);font-size:13px}
-  button{margin:16px 0 0;font:800 14px/1 var(--sans);color:#151000;background:var(--warn);
+  /* Ranch red, not paddock gold. This page carries the ranch's name at the
+     top, and a gold button under it reads as the wrong company's door. */
+  button{margin:16px 0 0;font:800 14px/1 var(--sans);color:#FFFFFF;background:#E5141A;
     border:0;border-radius:10px;padding:13px 22px;cursor:pointer;min-height:44px}
+  button[disabled]{opacity:.65;cursor:default}
 </style>
 </head>
 <body>
