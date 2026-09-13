@@ -81,6 +81,10 @@
   #gate{display:none}
   #gate.on{display:block}
   #gate form{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 0}
+  /* A class selector beats the user agent's [hidden]{display:none}, so the
+     rule above was drawing the code box before anybody had asked for a code.
+     Anything toggled with .hidden needs saying again, louder. */
+  #gate form[hidden],[hidden]{display:none !important}
   #gate input{flex:1 1 250px;min-height:50px;padding:0 14px;border-radius:11px;
     border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--paper);
     font:400 16px/1 var(--sans)}
