@@ -415,6 +415,29 @@ function sponsorT(stage: Stage, v: Vars): Rendered | null {
         signoff: "Reply to this email with the file attached.",
       }
 
+    /* Every other surface had a waitlist and this one did not, so pressing
+       Waitlist on a sponsor moved the row and then failed to mail: the status
+       was already written, the template returned null, and the buttons were
+       gated on pending so the row could never be decided again. A partner
+       held without hearing anything is the worst of the three outcomes to get
+       silently wrong. */
+    case "waitlisted":
+      return {
+        from: FROM.sponsor,
+        subject: "Held on the partner list for 10 October",
+        preheader: "Not a no. Where you stand and what moves it.",
+        eyebrow: "Waitlisted",
+        heading: "Held, not closed",
+        blocks: [
+          { kind: "lead", text: `${first(v)}, ${co} is held rather than placed.` },
+          { kind: "p", text: "The partner list is short on purpose. Each tier carries an allocation of the transport that hauls the cars in, so the number of places is set by how many trucks are moving rather than by how much interest there is." },
+          { kind: "p", text: "Places do open. Tiers get rearranged as the field fills, and not everybody who asks early follows through in September." },
+          { kind: "p", text: "Nothing is needed from you. If a place opens we come back with the tier, what it covers and what we would need from you by when." },
+          WHEN,
+        ],
+        signoff: "Reply to this email if anything changes at your end and we will move you up the thread.",
+      }
+
     case "declined":
       return {
         from: FROM.sponsor,

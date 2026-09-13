@@ -36,6 +36,22 @@ const STAGES: Stage[] = ["approved", "waitlisted", "declined", "received"]
 interface Body {
   id?: number | string
   stage?: string
+  /**
+   * Make the decision here rather than writing the status from the browser
+   * first and calling this second.
+   *
+   * The console did it the other way for months: a PostgREST update from the
+   * page, then this route. Two writes, no transaction, and the row moved
+   * whether or not the person ever heard about it. Sponsor waitlist hit that
+   * every single time, because no template existed: status written, mail
+   * refused, and the buttons were gated on pending so nobody could try again.
+   *
+   * With decide the order is inverted and the failure is recoverable. The
+   * status is written here, and if the mail then fails the row already says
+   * what this call intended, so a plain retry (no decide) passes the drift
+   * check and sends. The desk shows that as a row waiting to be told.
+   */
+  decide?: boolean
   /** Bay, gate, make, loadIn, assetsDue: the per applicant facts the desk knows. */
   vars?: Partial<Pick<Vars, "bay" | "gate" | "make" | "loadIn" | "assetsDue">>
 }
@@ -81,7 +97,55 @@ export async function POST(req: Request) {
   if (!row) return NextResponse.json({ error: "not_found" }, { status: 404 })
   const surface = SURFACE[row.type]
   if (!surface) return NextResponse.json({ error: "bad_type" }, { status: 400 })
-  if (stage !== "received" && row.status !== stage) {
+
+  /**
+   * Refuse before writing anything, not after.
+   *
+   * A decision whose email cannot be rendered must not move the row. This is
+   * the sponsor waitlist failure in one line: the status changed, the render
+   * returned null, and the applicant heard nothing while the desk believed it
+   * had told them.
+   */
+  const previous = row.status
+  const deciding = b.decide === true && stage !== "received"
+  const preflight = ranchTemplate(surface, stage, { name: row.applicant_name })
+  if (!preflight) {
+    return NextResponse.json(
+      { error: "no_template", detail: `There is no ${stage} email for a ${surface}, so nothing was changed.` },
+      { status: 400 },
+    )
+  }
+  /* Checked here, before the row moves, so a decision always means the
+     applicant was told. A row that cannot be written to is worth stopping on:
+     every one of these arrived through a form that validated its address, so
+     a bad one is a sign something is wrong rather than a case to work around. */
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row.email || "")) {
+    return NextResponse.json(
+      { error: "no_address", detail: "This submission has no email address to write to, so nothing was changed." },
+      { status: 422 },
+    )
+  }
+
+  if (deciding) {
+    if (previous === stage) {
+      /* Already there. Fall through and send, which is how a decision whose
+         mail failed the first time gets retried. */
+    } else {
+      const done = await db.query(
+        `update public.submissions set status = $2, updated_at = now()
+          where id = $1 and status = $3`,
+        [id, stage, previous],
+      )
+      /* Somebody else decided it between the read and the write. Theirs
+         stands; say so rather than overwriting it. */
+      if (done.rowCount === 0) {
+        return NextResponse.json(
+          { error: "raced", detail: "Somebody else decided this one a moment ago. Reload to see where it landed." },
+          { status: 409 },
+        )
+      }
+    }
+  } else if (stage !== "received" && row.status !== stage) {
     return NextResponse.json(
       { error: "stage_mismatch", detail: `The row says ${row.status}. Reload and decide it again.` },
       { status: 409 },
@@ -127,7 +191,18 @@ export async function POST(req: Request) {
   if (!res.ok) {
     const detail = await res.text().catch(() => "")
     console.error("[notify] resend refused", res.status, detail.slice(0, 300))
-    return NextResponse.json({ error: "mail_failed", detail: `Resend answered ${res.status}.` }, { status: 502 })
+    return NextResponse.json(
+      {
+        error: "mail_failed",
+        detail: `Resend answered ${res.status}.`,
+        /* The desk needs to know whether the row moved, because that decides
+           what it offers next: a retry of the mail, or the decision again. */
+        decided: deciding,
+        status: deciding ? stage : previous,
+        retryable: true,
+      },
+      { status: 502 },
+    )
   }
 
   /* The row remembers. details is the one column this role may write, and a
@@ -142,5 +217,12 @@ export async function POST(req: Request) {
     [id, JSON.stringify([note])],
   )
 
-  return NextResponse.json({ ok: true, to: row.email, subject: t.subject })
+  return NextResponse.json({
+    ok: true,
+    to: row.email,
+    subject: t.subject,
+    status: deciding ? stage : row.status,
+    previous,
+    decided: deciding && previous !== stage,
+  })
 }

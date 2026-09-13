@@ -41,7 +41,7 @@ const CAN_BLOB = Boolean(process.env.BLOB_READ_WRITE_TOKEN)
 const TOOL_PAGES = [
   "journeys", "board", "asks", "crew", "judging", "map", "site-plan", "site-map", "rsvps",
   "chat", "console", "collateral", "clubs", "spectate", "status", "vote",
-  "diag", "reset", "brand", "store-check",
+  "diag", "reset", "brand", "store-check", "approvals",
 ]
 
 /**

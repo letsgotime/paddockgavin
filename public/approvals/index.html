@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Approvals · The Piston Powered Ranch</title>
+<meta name="robots" content="noindex,nofollow" />
+<script src="/vendor/ranch-return.js?v=2026-09-12"></script>
+<style>
+  :root{
+    --ink:#0A1523; --sink:#0E1B2C; --paper:#EDF1F6; --mute:#8B95A3; --faint:#5F6B7A;
+    --red:#E5141A; --write:#FF1A21; --ok:#00D2BE; --hold:#F2C94C;
+    --line:rgba(255,255,255,.13); --line2:rgba(255,255,255,.07);
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:Archivo,system-ui,-apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--ink);color:var(--paper);font:400 16px/1.55 var(--sans);
+    padding:0 0 calc(30px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px}
+
+  header{padding:calc(20px + env(safe-area-inset-top)) 0 12px}
+  h1{font:900 26px/1.1 var(--sans);letter-spacing:-.02em;margin:0}
+  .sub{color:var(--mute);font-size:14px;margin:5px 0 0}
+  .who{display:none;font:600 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+    color:var(--mute);margin:12px 0 0}
+  .who.on{display:block}
+
+  /* Tabs. Big enough to hit with a thumb on a phone, which is where this
+     actually gets used. */
+  nav{display:flex;gap:8px;margin:16px 0 0;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  nav::-webkit-scrollbar{display:none}
+  nav button{flex:0 0 auto;min-height:46px;padding:0 16px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--line);background:transparent;color:var(--mute);
+    font:700 13px/1 var(--sans);letter-spacing:.04em;white-space:nowrap}
+  nav button[aria-selected="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  nav button .n{font-family:var(--mono);opacity:.75;margin-left:7px}
+
+  .filters{display:flex;gap:7px;margin:12px 0 0;overflow-x:auto;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:0 0 auto;min-height:38px;padding:0 13px;border-radius:9px;cursor:pointer;
+    border:1px solid var(--line);background:transparent;color:var(--mute);
+    font:600 12.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+  .filters button[aria-pressed="true"]{color:var(--paper);border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.06)}
+
+  #find{width:100%;min-height:48px;margin:12px 0 0;padding:0 14px;border-radius:11px;
+    border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--paper);
+    font:400 16px/1 var(--sans)}
+  #find::placeholder{color:var(--faint)}
+
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--sink);
+    padding:15px 15px 13px;margin:12px 0 0}
+  .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .nm{font:800 17px/1.3 var(--sans);margin:0}
+  .org{color:var(--mute);font-size:14.5px;margin:3px 0 0}
+  .meta{color:var(--faint);font:400 12.5px/1.5 var(--mono);margin:8px 0 0;word-break:break-word}
+  .pill{flex:0 0 auto;font:700 10.5px/1 var(--mono);letter-spacing:.13em;text-transform:uppercase;
+    padding:7px 10px;border-radius:999px;border:1px solid}
+  .p-pending{color:var(--hold);border-color:rgba(242,201,76,.5);background:rgba(242,201,76,.12)}
+  .p-approved{color:var(--ok);border-color:rgba(0,210,190,.5);background:rgba(0,210,190,.12)}
+  .p-waitlisted{color:var(--hold);border-color:rgba(242,201,76,.35);background:transparent}
+  .p-declined{color:var(--write);border-color:rgba(255,26,33,.45);background:rgba(255,26,33,.1)}
+
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0 0}
+  .acts button{flex:1 1 auto;min-width:96px;min-height:46px;border-radius:11px;cursor:pointer;
+    border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--paper);
+    font:700 13.5px/1 var(--sans)}
+  .acts button.go{background:var(--red);border-color:var(--red);color:#fff}
+  .acts button[disabled]{opacity:.5;cursor:default}
+  .said{margin:10px 0 0;font-size:13.5px;color:var(--mute)}
+  .said.bad{color:var(--write)} .said.ok{color:var(--ok)}
+  .sent{margin:9px 0 0;font:400 12px/1.55 var(--mono);color:var(--faint)}
+
+  .empty{color:var(--mute);padding:28px 2px;font-size:15px}
+  .foot{margin:26px 0 0;padding-top:15px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+  .foot a{color:var(--write)}
+  button.link{background:none;border:0;color:var(--write);font:600 13px/1 var(--sans);
+    cursor:pointer;min-height:44px;padding:0;text-decoration:underline}
+
+  /* The sign in panel, shown in place of everything else. */
+  #gate{display:none}
+  #gate.on{display:block}
+  #gate form{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 0}
+  #gate input{flex:1 1 250px;min-height:50px;padding:0 14px;border-radius:11px;
+    border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--paper);
+    font:400 16px/1 var(--sans)}
+  #gate button{min-height:50px;padding:0 20px;border-radius:11px;border:0;cursor:pointer;
+    background:var(--red);color:#fff;font:800 14px/1 var(--sans)}
+  #gate button[disabled]{opacity:.6;cursor:default}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Approvals</h1>
+    <p class="sub">Cars, vendors and partners. Decide, and they hear straight away.</p>
+    <p class="who" id="who"><span id="whoTxt"></span></p>
+  </header>
+
+  <section id="gate">
+    <div class="card">
+      <p class="nm" id="gateWhy">Checking your sign in</p>
+      <p class="org" id="gateHint">One moment.</p>
+      <form id="magic" hidden>
+        <label for="email" style="position:absolute;left:-9999px">Your email</label>
+        <input id="email" type="email" autocomplete="email" inputmode="email"
+               placeholder="the address you were invited on" />
+        <button type="submit">Email me a link</button>
+      </form>
+      <p class="said" id="gateSaid"></p>
+    </div>
+  </section>
+
+  <main id="desk" hidden>
+    <nav id="tabs" role="tablist"></nav>
+    <div class="filters" id="filters"></div>
+    <input id="find" type="search" placeholder="Search name, email or car" autocomplete="off" />
+    <div id="list"></div>
+    <p class="foot">
+      Headcount and guest list live on the <a href="/rsvps">RSVP sheet</a>.
+      Every decision here emails the applicant and is written on the record.
+    </p>
+  </main>
+</div>
+
+<script type="module">
+/**
+ * The approvals desk.
+ *
+ * Before this, the only way to reach an approve button was the console's
+ * activity feed, which is capped at the six newest submissions. Thirteen had
+ * come in, so seven of them could not be opened at all: not approved, not
+ * declined, not even read. Eleven cars and two vendors had been sitting at
+ * pending since the end of August, and the reason was not that nobody had got
+ * round to it. There was no door.
+ *
+ * So the first rule here is that every record is reachable, in every state,
+ * and a decision can be made again. The console froze its buttons the moment a
+ * row left pending, which meant a misclick was permanent and a decision whose
+ * email failed could never be retried.
+ *
+ * Built for a phone first. Both people who need it most read their mail on one.
+ */
+import { accessToken, lastTokenError, magicLink, me, db as makeDb, rpc } from "/vendor/ranch-db.js?v=2026-09-02f";
+
+const KINDS = [
+  { key: "vehicle", label: "Cars" },
+  { key: "vendor", label: "Vendors" },
+  { key: "sponsor", label: "Partners" },
+];
+const STATES = ["pending", "approved", "waitlisted", "declined"];
+/* What each button means, in the words the row will end up carrying. */
+const ACTIONS = [
+  { stage: "approved", label: "Approve", go: true },
+  { stage: "waitlisted", label: "Waitlist" },
+  { stage: "declined", label: "Decline" },
+];
+
+let db = null, ROWS = [], kind = "vehicle", state = "pending", q = "";
+
+const el = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function when(iso) {
+  if (!iso) return "";
+  const d = new Date(iso), days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return days + " days ago";
+  return d.toLocaleDateString();
+}
+
+/* A car is its car; a stall or a partner is its company. The forms put that in
+   different keys depending on which one was filled in, so try them in turn. */
+function titleOf(r) {
+  const d = r.details || {};
+  return String(d.vehicle || d.business || d.company || d.org || "").trim();
+}
+
+function lastSent(r) {
+  const n = ((r.details || {}).notified) || [];
+  if (!Array.isArray(n) || !n.length) return null;
+  return n[n.length - 1];
+}
+
+/* ---------------------------------------------------------------- the gate */
+
+function showGate(why, hint, offerLink) {
+  el("desk").hidden = true;
+  el("gate").classList.add("on");
+  el("gateWhy").textContent = why;
+  el("gateHint").textContent = hint || "";
+  el("magic").hidden = !offerLink;
+}
+
+el("magic").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = el("email").value.trim();
+  if (!email) return;
+  const b = el("magic").querySelector("button"), said = el("gateSaid");
+  b.disabled = true; b.textContent = "Sending";
+  /* The callback is this page, so the link in the inbox opens the desk
+     already signed in rather than dropping somebody on HQ. */
+  const err = await magicLink(email, location.href);
+  b.disabled = false; b.textContent = "Email me a link";
+  said.className = "said " + (err ? "bad" : "ok");
+  said.textContent = err || "Sent. Open it on this phone and it lands right here.";
+});
+
+/* ------------------------------------------------------------------ render */
+
+function counts() {
+  const c = {};
+  for (const k of KINDS) c[k.key] = ROWS.filter((r) => r.type === k.key && r.status === "pending").length;
+  return c;
+}
+
+function drawTabs() {
+  const c = counts();
+  el("tabs").innerHTML = KINDS.map((k) =>
+    `<button role="tab" data-kind="${k.key}" aria-selected="${k.key === kind}">${k.label}` +
+    (c[k.key] ? `<span class="n">${c[k.key]}</span>` : "") + `</button>`).join("");
+
+  const mine = ROWS.filter((r) => r.type === kind);
+  el("filters").innerHTML = ["pending", "approved", "waitlisted", "declined", "all"].map((s) => {
+    const n = s === "all" ? mine.length : mine.filter((r) => r.status === s).length;
+    return `<button data-state="${s}" aria-pressed="${s === state}">${s} ${n}</button>`;
+  }).join("");
+}
+
+function drawList() {
+  const needle = q.trim().toLowerCase();
+  const rows = ROWS.filter((r) => r.type === kind)
+    .filter((r) => state === "all" || r.status === state)
+    .filter((r) => !needle ||
+      [r.applicant_name, r.email, titleOf(r)].join(" ").toLowerCase().includes(needle));
+
+  if (!rows.length) {
+    el("list").innerHTML = `<p class="empty">Nothing ${esc(state === "all" ? "here" : state)} in ${esc(
+      (KINDS.find((k) => k.key === kind) || {}).label || "")}.</p>`;
+    return;
+  }
+
+  el("list").innerHTML = rows.map((r) => {
+    const org = titleOf(r), sent = lastSent(r);
+    return `<article class="card" data-row="${esc(r.id)}">
+      <div class="top">
+        <div>
+          <p class="nm">${esc(r.applicant_name || "No name given")}</p>
+          ${org ? `<p class="org">${esc(org)}</p>` : ""}
+        </div>
+        <span class="pill p-${esc(r.status)}">${esc(r.status)}</span>
+      </div>
+      <p class="meta">${esc(r.email || "no address")} · applied ${esc(when(r.created_at))}</p>
+      ${sent ? `<p class="sent">Last told: ${esc(sent.stage)} ${esc(when(sent.at))}${
+        sent.by ? " by " + esc(String(sent.by).split("@")[0]) : ""}</p>`
+        : `<p class="sent">Never told anything.</p>`}
+      <div class="acts">${ACTIONS.map((a) =>
+        `<button data-do="${a.stage}" data-id="${esc(r.id)}"${a.go && r.status !== a.stage ? ' class="go"' : ""}>` +
+        `${r.status === a.stage ? "Tell again" : a.label}</button>`).join("")}</div>
+      <p class="said" data-said="${esc(r.id)}"></p>
+    </article>`;
+  }).join("");
+}
+
+function render() { drawTabs(); drawList(); }
+
+/* ------------------------------------------------------------------- decide */
+
+document.addEventListener("click", async (e) => {
+  const t = e.target.closest("[data-kind]");
+  if (t) { kind = t.getAttribute("data-kind"); state = "pending"; render(); return; }
+  const f = e.target.closest("[data-state]");
+  if (f) { state = f.getAttribute("data-state"); render(); return; }
+
+  const b = e.target.closest("[data-do]");
+  if (!b) return;
+  const id = b.getAttribute("data-id"), stage = b.getAttribute("data-do");
+  const said = document.querySelector(`[data-said="${CSS.escape(id)}"]`);
+  const card = b.closest(".card");
+  card.querySelectorAll("button").forEach((x) => (x.disabled = true));
+  said.className = "said";
+  said.textContent = "Deciding and sending";
+
+  try {
+    const token = await accessToken();
+    const res = await fetch("/api/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+      /* decide:true means the server moves the row AND sends, in that order,
+         refusing before it writes anything if the email cannot be built. */
+      body: JSON.stringify({ id: Number(id), stage, decide: true }),
+    });
+    const d = await res.json().catch(() => ({}));
+    if (res.ok) {
+      said.className = "said ok";
+      said.textContent = "Sent to " + (d.to || "them") + ".";
+      await load();
+      return;
+    }
+    said.className = "said bad";
+    said.textContent = d.detail || d.error || ("The desk answered " + res.status + ".");
+    if (d.decided) said.textContent += " The record did move, so press Tell again to retry the email.";
+    card.querySelectorAll("button").forEach((x) => (x.disabled = false));
+    if (d.decided) await load();
+  } catch (err) {
+    said.className = "said bad";
+    said.textContent = "The connection dropped. Nothing was sent.";
+    card.querySelectorAll("button").forEach((x) => (x.disabled = false));
+  }
+});
+
+document.addEventListener("input", (e) => {
+  if (e.target.id !== "find") return;
+  q = e.target.value;
+  drawList();
+});
+
+/* --------------------------------------------------------------------- load */
+
+async function load() {
+  if (!db) return;
+  const r = await db.from("submissions").select("*").order("created_at", { ascending: false });
+  if (r.error) {
+    showGate("Could not read the list", r.error.message || "The database refused that.", false);
+    return;
+  }
+  ROWS = r.data || [];
+  el("gate").classList.remove("on");
+  el("desk").hidden = false;
+  const a = document.activeElement;
+  if (!a || a.id !== "find") render(); else drawTabs();
+}
+
+try {
+  const token = await accessToken();
+  if (!token) {
+    showGate("Sign in to decide", lastTokenError || "Send yourself a link and it opens this page.", true);
+  } else {
+    try { db = makeDb(); } catch (err) { db = null; }
+    const staff = (await rpc("is_staff")) === true;
+    if (!staff) {
+      showGate("That address is not on the staff list",
+        "You are signed in, but only the people on the roster can decide these. Ask Gavin to add you.", false);
+    } else {
+      const who = await me().catch(() => null);
+      const name = typeof who === "string" ? who : (who && who.email) || "";
+      el("who").classList.add("on");
+      el("whoTxt").textContent = name ? String(name).split("@")[0] : "Staff";
+      await load();
+      /* The three of them work this at the same time on a Saturday. */
+      setInterval(load, 25000);
+    }
+  }
+} catch (err) {
+  showGate("This page broke", (err && err.message) || String(err), false);
+}
+</script>
+</body>
+</html>

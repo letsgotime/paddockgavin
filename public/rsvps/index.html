@@ -300,7 +300,10 @@ if (!e.target.closest("#csv")) return;
           var en = ENTRIES[String(r.email || "").toLowerCase()] || {};
           var row = Object.assign({}, r, { entered_car: en.car || "", entry_status: en.status || "" });
           return head.map(function (k) {
-            return '"' + String(row[k] == null ? "" : r[k]).replace(/"/g, '""') + '"';
+            /* row, not r. The merged object is the one carrying entered_car
+               and entry_status; reading them off the raw spectator row put the
+               literal text "undefined" in both columns of every download. */
+            return '"' + String(row[k] == null ? "" : row[k]).replace(/"/g, '""') + '"';
           }).join(",");
         }));
         var blob = new Blob([lines.join("\n")], { type: "text/csv" });
